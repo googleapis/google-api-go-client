@@ -6,7 +6,7 @@
 
 // Package tagmanager provides access to the Tag Manager API.
 //
-// For product documentation, see: https://developers.google.com/tag-manager/api/v1/
+// For product documentation, see: https://developers.google.com/tag-manager
 //
 // Creating a client
 //
@@ -76,7 +76,7 @@ var _ = context.Canceled
 const apiId = "tagmanager:v1"
 const apiName = "tagmanager"
 const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/tagmanager/v1/"
+const basePath = "https://www.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -307,15 +307,19 @@ type Account struct {
 	AccountId string `json:"accountId,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Account as computed at
-	// storage time. This value is recomputed whenever the account is
-	// modified.
+	// storage time.
+	// This value is recomputed whenever the account is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// Name: Account display name.
+	// @mutable tagmanager.accounts.create
+	// @mutable tagmanager.accounts.update
 	Name string `json:"name,omitempty"`
 
 	// ShareData: Whether the account shares data anonymously with Google
 	// and others.
+	// @mutable tagmanager.accounts.create
+	// @mutable tagmanager.accounts.update
 	ShareData bool `json:"shareData,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -348,16 +352,19 @@ func (s *Account) MarshalJSON() ([]byte, error) {
 // AccountAccess: Defines the Google Tag Manager Account access
 // permissions.
 type AccountAccess struct {
-	// Permission: List of Account permissions. Valid account permissions
-	// are read and manage.
+	// Permission: List of Account permissions.
+	// Valid account permissions are <code>read</code> and
+	// <code>manage</code>.
+	// @mutable tagmanager.accounts.permissions.create
+	// @mutable tagmanager.accounts.permissions.update
 	//
 	// Possible values:
-	//   "delete"
-	//   "edit"
-	//   "editWorkspace"
-	//   "manage"
-	//   "publish"
-	//   "read"
+	//   "READ"
+	//   "EDIT"
+	//   "PUBLISH"
+	//   "DELETE"
+	//   "MANAGE"
+	//   "EDIT_WORKSPACE"
 	Permission []string `json:"permission,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permission") to
@@ -386,32 +393,46 @@ func (s *AccountAccess) MarshalJSON() ([]byte, error) {
 // Condition: Represents a predicate.
 type Condition struct {
 	// Parameter: A list of named parameters (key/value), depending on the
-	// condition's type. Notes:
-	// - For binary operators, include parameters named arg0 and arg1 for
-	// specifying the left and right operands, respectively.
-	// - At this time, the left operand (arg0) must be a reference to a
-	// variable.
-	// - For case-insensitive Regex matching, include a boolean parameter
-	// named ignore_case that is set to true. If not specified or set to any
-	// other value, the matching will be case sensitive.
-	// - To negate an operator, include a boolean parameter named negate
-	// boolean parameter that is set to true.
+	// condition's type.
+	// Notes:<ul>
+	// <li>For binary operators, include parameters named <code>arg0</code>
+	// and
+	//    <code>arg1</code> for specifying the left and right operands,
+	//    respectively.</li>
+	// <li>At this time, the left operand (<code>arg0</code>) must be a
+	// reference
+	//     to a variable.</li>
+	// <li>For case-insensitive Regex matching, include a boolean parameter
+	// named
+	//     <code>ignore_case</code> that is set to <code>true</code>.
+	//     If not specified or set to any other value, the matching will be
+	// case
+	//     sensitive.</li>
+	// <li>To negate an operator, include a boolean parameter named
+	//     <code>negate</code> boolean parameter that is set to
+	// <code>true</code>.
+	//     </li>
+	// </ul>
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	Parameter []*Parameter `json:"parameter,omitempty"`
 
 	// Type: The type of operator for this condition.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	//
 	// Possible values:
-	//   "contains"
-	//   "cssSelector"
-	//   "endsWith"
-	//   "equals"
-	//   "greater"
-	//   "greaterOrEquals"
-	//   "less"
-	//   "lessOrEquals"
-	//   "matchRegex"
-	//   "startsWith"
-	//   "urlMatches"
+	//   "EQUALS"
+	//   "CONTAINS"
+	//   "STARTS_WITH"
+	//   "ENDS_WITH"
+	//   "MATCH_REGEX"
+	//   "GREATER"
+	//   "GREATER_OR_EQUALS"
+	//   "LESS"
+	//   "LESS_OR_EQUALS"
+	//   "CSS_SELECTOR"
+	//   "URL_MATCHES"
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Parameter") to
@@ -447,153 +468,174 @@ type Container struct {
 
 	// DomainName: Optional list of domain names associated with the
 	// Container.
+	// @mutable tagmanager.accounts.containers.create
+	// @mutable tagmanager.accounts.containers.update
 	DomainName []string `json:"domainName,omitempty"`
 
 	// EnabledBuiltInVariable: List of enabled built-in variables. Valid
-	// values include: pageUrl, pageHostname, pagePath, referrer, event,
-	// clickElement, clickClasses, clickId, clickTarget, clickUrl,
-	// clickText, formElement, formClasses, formId, formTarget, formUrl,
-	// formText, errorMessage, errorUrl, errorLine, newHistoryFragment,
-	// oldHistoryFragment, newHistoryState, oldHistoryState, historySource,
-	// containerVersion, debugMode, randomNumber, containerId.
+	// values include: <code>pageUrl,
+	// pageHostname, pagePath, referrer, event, clickElement,
+	// clickClasses,
+	// clickId, clickTarget, clickUrl, clickText, formElement,
+	// formClasses,
+	// formId, formTarget, formUrl, formText, errorMessage, errorUrl,
+	// errorLine,
+	// newHistoryFragment, oldHistoryFragment, newHistoryState,
+	// oldHistoryState,
+	// historySource, containerVersion, debugMode,
+	// randomNumber,
+	// containerId</code>.
+	// @mutable tagmanager.accounts.containers.create
+	// @mutable tagmanager.accounts.containers.update
 	//
 	// Possible values:
-	//   "advertiserId"
-	//   "advertisingTrackingEnabled"
-	//   "ampBrowserLanguage"
-	//   "ampCanonicalHost"
-	//   "ampCanonicalPath"
-	//   "ampCanonicalUrl"
-	//   "ampClientId"
-	//   "ampClientMaxScrollX"
-	//   "ampClientMaxScrollY"
-	//   "ampClientScreenHeight"
-	//   "ampClientScreenWidth"
-	//   "ampClientScrollX"
-	//   "ampClientScrollY"
-	//   "ampClientTimestamp"
-	//   "ampClientTimezone"
-	//   "ampGtmEvent"
-	//   "ampPageDownloadTime"
-	//   "ampPageLoadTime"
-	//   "ampPageViewId"
-	//   "ampReferrer"
-	//   "ampTitle"
-	//   "ampTotalEngagedTime"
-	//   "appId"
-	//   "appName"
-	//   "appVersionCode"
-	//   "appVersionName"
-	//   "clickClasses"
-	//   "clickElement"
-	//   "clickId"
-	//   "clickTarget"
-	//   "clickText"
-	//   "clickUrl"
-	//   "containerId"
-	//   "containerVersion"
-	//   "debugMode"
-	//   "deviceName"
-	//   "elementVisibilityFirstTime"
-	//   "elementVisibilityRatio"
-	//   "elementVisibilityRecentTime"
-	//   "elementVisibilityTime"
-	//   "environmentName"
-	//   "errorLine"
-	//   "errorMessage"
-	//   "errorUrl"
-	//   "event"
-	//   "eventName"
-	//   "firebaseEventParameterCampaign"
-	//   "firebaseEventParameterCampaignAclid"
-	//   "firebaseEventParameterCampaignAnid"
-	//   "firebaseEventParameterCampaignClickTimestamp"
-	//   "firebaseEventParameterCampaignContent"
-	//   "firebaseEventParameterCampaignCp1"
-	//   "firebaseEventParameterCampaignGclid"
-	//   "firebaseEventParameterCampaignSource"
-	//   "firebaseEventParameterCampaignTerm"
-	//   "firebaseEventParameterCurrency"
-	//   "firebaseEventParameterDynamicLinkAcceptTime"
-	//   "firebaseEventParameterDynamicLinkLinkid"
-	//   "firebaseEventParameterNotificationMessageDeviceTime"
-	//   "firebaseEventParameterNotificationMessageId"
-	//   "firebaseEventParameterNotificationMessageName"
-	//   "firebaseEventParameterNotificationMessageTime"
-	//   "firebaseEventParameterNotificationTopic"
-	//   "firebaseEventParameterPreviousAppVersion"
-	//   "firebaseEventParameterPreviousOsVersion"
-	//   "firebaseEventParameterPrice"
-	//   "firebaseEventParameterProductId"
-	//   "firebaseEventParameterQuantity"
-	//   "firebaseEventParameterValue"
-	//   "formClasses"
-	//   "formElement"
-	//   "formId"
-	//   "formTarget"
-	//   "formText"
-	//   "formUrl"
-	//   "historySource"
-	//   "htmlId"
-	//   "language"
-	//   "newHistoryFragment"
-	//   "newHistoryState"
-	//   "newHistoryUrl"
-	//   "oldHistoryFragment"
-	//   "oldHistoryState"
-	//   "oldHistoryUrl"
-	//   "osVersion"
-	//   "pageHostname"
-	//   "pagePath"
-	//   "pageUrl"
-	//   "platform"
-	//   "randomNumber"
-	//   "referrer"
-	//   "resolution"
-	//   "scrollDepthDirection"
-	//   "scrollDepthThreshold"
-	//   "scrollDepthUnits"
-	//   "sdkVersion"
-	//   "videoCurrentTime"
-	//   "videoDuration"
-	//   "videoPercent"
-	//   "videoProvider"
-	//   "videoStatus"
-	//   "videoTitle"
-	//   "videoUrl"
-	//   "videoVisible"
+	//   "PAGE_URL"
+	//   "PAGE_HOSTNAME"
+	//   "PAGE_PATH"
+	//   "REFERRER"
+	//   "EVENT" - For web or mobile.
+	//   "CLICK_ELEMENT"
+	//   "CLICK_CLASSES"
+	//   "CLICK_ID"
+	//   "CLICK_TARGET"
+	//   "CLICK_URL"
+	//   "CLICK_TEXT"
+	//   "FORM_ELEMENT"
+	//   "FORM_CLASSES"
+	//   "FORM_ID"
+	//   "FORM_TARGET"
+	//   "FORM_URL"
+	//   "FORM_TEXT"
+	//   "ENVIRONMENT_NAME"
+	//   "ERROR_MESSAGE"
+	//   "ERROR_URL"
+	//   "ERROR_LINE"
+	//   "NEW_HISTORY_URL"
+	//   "OLD_HISTORY_URL"
+	//   "NEW_HISTORY_FRAGMENT"
+	//   "OLD_HISTORY_FRAGMENT"
+	//   "NEW_HISTORY_STATE"
+	//   "OLD_HISTORY_STATE"
+	//   "HISTORY_SOURCE"
+	//   "CONTAINER_VERSION" - For web or mobile.
+	//   "DEBUG_MODE"
+	//   "RANDOM_NUMBER" - For web or mobile.
+	//   "CONTAINER_ID" - For web or mobile.
+	//   "APP_ID"
+	//   "APP_NAME"
+	//   "APP_VERSION_CODE"
+	//   "APP_VERSION_NAME"
+	//   "LANGUAGE"
+	//   "OS_VERSION"
+	//   "PLATFORM"
+	//   "SDK_VERSION"
+	//   "DEVICE_NAME"
+	//   "RESOLUTION"
+	//   "ADVERTISER_ID"
+	//   "ADVERTISING_TRACKING_ENABLED"
+	//   "HTML_ID"
+	//   "AMP_BROWSER_LANGUAGE"
+	//   "AMP_CANONICAL_PATH"
+	//   "AMP_CANONICAL_URL"
+	//   "AMP_CANONICAL_HOST"
+	//   "AMP_REFERRER"
+	//   "AMP_TITLE"
+	//   "AMP_CLIENT_ID"
+	//   "AMP_CLIENT_TIMEZONE"
+	//   "AMP_CLIENT_TIMESTAMP"
+	//   "AMP_CLIENT_SCREEN_WIDTH"
+	//   "AMP_CLIENT_SCREEN_HEIGHT"
+	//   "AMP_CLIENT_SCROLL_X"
+	//   "AMP_CLIENT_SCROLL_Y"
+	//   "AMP_CLIENT_MAX_SCROLL_X"
+	//   "AMP_CLIENT_MAX_SCROLL_Y"
+	//   "AMP_TOTAL_ENGAGED_TIME"
+	//   "AMP_PAGE_VIEW_ID"
+	//   "AMP_PAGE_LOAD_TIME"
+	//   "AMP_PAGE_DOWNLOAD_TIME"
+	//   "AMP_GTM_EVENT"
+	//   "EVENT_NAME"
+	//   "FIREBASE_EVENT_PARAMETER_CAMPAIGN"
+	//   "FIREBASE_EVENT_PARAMETER_CAMPAIGN_ACLID"
+	//   "FIREBASE_EVENT_PARAMETER_CAMPAIGN_ANID"
+	//   "FIREBASE_EVENT_PARAMETER_CAMPAIGN_CLICK_TIMESTAMP"
+	//   "FIREBASE_EVENT_PARAMETER_CAMPAIGN_CONTENT"
+	//   "FIREBASE_EVENT_PARAMETER_CAMPAIGN_CP1"
+	//   "FIREBASE_EVENT_PARAMETER_CAMPAIGN_GCLID"
+	//   "FIREBASE_EVENT_PARAMETER_CAMPAIGN_SOURCE"
+	//   "FIREBASE_EVENT_PARAMETER_CAMPAIGN_TERM"
+	//   "FIREBASE_EVENT_PARAMETER_CURRENCY"
+	//   "FIREBASE_EVENT_PARAMETER_DYNAMIC_LINK_ACCEPT_TIME"
+	//   "FIREBASE_EVENT_PARAMETER_DYNAMIC_LINK_LINKID"
+	//   "FIREBASE_EVENT_PARAMETER_NOTIFICATION_MESSAGE_DEVICE_TIME"
+	//   "FIREBASE_EVENT_PARAMETER_NOTIFICATION_MESSAGE_ID"
+	//   "FIREBASE_EVENT_PARAMETER_NOTIFICATION_MESSAGE_NAME"
+	//   "FIREBASE_EVENT_PARAMETER_NOTIFICATION_MESSAGE_TIME"
+	//   "FIREBASE_EVENT_PARAMETER_NOTIFICATION_TOPIC"
+	//   "FIREBASE_EVENT_PARAMETER_PREVIOUS_APP_VERSION"
+	//   "FIREBASE_EVENT_PARAMETER_PREVIOUS_OS_VERSION"
+	//   "FIREBASE_EVENT_PARAMETER_PRICE"
+	//   "FIREBASE_EVENT_PARAMETER_PRODUCT_ID"
+	//   "FIREBASE_EVENT_PARAMETER_QUANTITY"
+	//   "FIREBASE_EVENT_PARAMETER_VALUE"
+	//   "VIDEO_PROVIDER"
+	//   "VIDEO_URL"
+	//   "VIDEO_TITLE"
+	//   "VIDEO_DURATION"
+	//   "VIDEO_PERCENT"
+	//   "VIDEO_VISIBLE"
+	//   "VIDEO_STATUS"
+	//   "VIDEO_CURRENT_TIME"
+	//   "SCROLL_DEPTH_THRESHOLD"
+	//   "SCROLL_DEPTH_UNITS"
+	//   "SCROLL_DEPTH_DIRECTION"
+	//   "ELEMENT_VISIBILITY_RATIO"
+	//   "ELEMENT_VISIBILITY_TIME"
+	//   "ELEMENT_VISIBILITY_FIRST_TIME"
+	//   "ELEMENT_VISIBILITY_RECENT_TIME"
 	EnabledBuiltInVariable []string `json:"enabledBuiltInVariable,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Container as computed at
-	// storage time. This value is recomputed whenever the account is
-	// modified.
+	// storage time.  This
+	// value is recomputed whenever the account is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// Name: Container display name.
+	// @mutable tagmanager.accounts.containers.create
+	// @mutable tagmanager.accounts.containers.update
 	Name string `json:"name,omitempty"`
 
 	// Notes: Container Notes.
+	// @mutable tagmanager.accounts.containers.create
+	// @mutable tagmanager.accounts.containers.update
 	Notes string `json:"notes,omitempty"`
 
 	// PublicId: Container Public ID.
 	PublicId string `json:"publicId,omitempty"`
 
 	// TimeZoneCountryId: Container Country ID.
+	// @mutable tagmanager.accounts.containers.create
+	// @mutable tagmanager.accounts.containers.update
 	TimeZoneCountryId string `json:"timeZoneCountryId,omitempty"`
 
 	// TimeZoneId: Container Time Zone ID.
+	// @mutable tagmanager.accounts.containers.create
+	// @mutable tagmanager.accounts.containers.update
 	TimeZoneId string `json:"timeZoneId,omitempty"`
 
 	// UsageContext: List of Usage Contexts for the Container. Valid values
-	// include: web, android, ios.
+	// include: <code>web,
+	// android, ios</code>.
+	// @mutable tagmanager.accounts.containers.create
+	// @mutable tagmanager.accounts.containers.update
 	//
 	// Possible values:
-	//   "amp"
-	//   "android"
-	//   "androidSdk5"
-	//   "ios"
-	//   "iosSdk5"
-	//   "web"
+	//   "WEB"
+	//   "ANDROID"
+	//   "IOS"
+	//   "ANDROID_SDK_5"
+	//   "IOS_SDK_5"
+	//   "AMP"
 	UsageContext []string `json:"usageContext,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -627,18 +669,23 @@ func (s *Container) MarshalJSON() ([]byte, error) {
 // permissions.
 type ContainerAccess struct {
 	// ContainerId: GTM Container ID.
+	// @mutable tagmanager.accounts.permissions.create
+	// @mutable tagmanager.accounts.permissions.update
 	ContainerId string `json:"containerId,omitempty"`
 
-	// Permission: List of Container permissions. Valid container
-	// permissions are: read, edit, delete, publish.
+	// Permission: List of Container permissions.
+	// Valid container permissions are: <code>read, edit, delete,
+	// publish</code>.
+	// @mutable tagmanager.accounts.permissions.create
+	// @mutable tagmanager.accounts.permissions.update
 	//
 	// Possible values:
-	//   "delete"
-	//   "edit"
-	//   "editWorkspace"
-	//   "manage"
-	//   "publish"
-	//   "read"
+	//   "READ"
+	//   "EDIT"
+	//   "PUBLISH"
+	//   "DELETE"
+	//   "MANAGE"
+	//   "EDIT_WORKSPACE"
 	Permission []string `json:"permission,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContainerId") to
@@ -684,8 +731,10 @@ type ContainerVersion struct {
 	Deleted bool `json:"deleted,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Container Version as computed
-	// at storage time. This value is recomputed whenever the container
-	// version is modified.
+	// at
+	// storage time. This value is recomputed whenever the container version
+	// is
+	// modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// Folder: The folders in the container that this version was taken
@@ -696,10 +745,13 @@ type ContainerVersion struct {
 	Macro []*Macro `json:"macro,omitempty"`
 
 	// Name: Container version display name.
+	// @mutable tagmanager.accounts.containers.versions.update
 	Name string `json:"name,omitempty"`
 
-	// Notes: User notes on how to apply this container version in the
+	// Notes: User notes on how to apply this container version in
+	// the
 	// container.
+	// @mutable tagmanager.accounts.containers.versions.update
 	Notes string `json:"notes,omitempty"`
 
 	// Rule: The rules in the container that this version was taken from.
@@ -811,7 +863,8 @@ type CreateContainerVersionRequestVersionOptions struct {
 	Notes string `json:"notes,omitempty"`
 
 	// QuickPreview: The creation of this version may be for quick preview
-	// and shouldn't be saved.
+	// and
+	// shouldn't be saved.
 	QuickPreview bool `json:"quickPreview,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -873,9 +926,10 @@ func (s *CreateContainerVersionResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Environment: Represents a Google Tag Manager Environment. Note that a
-// user can create, delete and update environments of type USER, but can
-// only update the enable_debug and url fields of environments of other
-// types.
+// user can create,
+// delete and update environments of type USER, but can only update
+// the
+// enable_debug and url fields of environments of other types.
 type Environment struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
@@ -893,11 +947,16 @@ type Environment struct {
 	ContainerVersionId string `json:"containerVersionId,omitempty"`
 
 	// Description: The environment description. Can be set or changed only
-	// on USER type environments.
+	// on USER type
+	// environments.
+	// @mutable tagmanager.accounts.containers.environments.create
+	// @mutable tagmanager.accounts.containers.environments.update
 	Description string `json:"description,omitempty"`
 
 	// EnableDebug: Whether or not to enable debug by default on for the
 	// environment.
+	// @mutable tagmanager.accounts.containers.environments.create
+	// @mutable tagmanager.accounts.containers.environments.update
 	EnableDebug bool `json:"enableDebug,omitempty"`
 
 	// EnvironmentId: GTM Environment ID uniquely identifies the GTM
@@ -905,24 +964,35 @@ type Environment struct {
 	EnvironmentId string `json:"environmentId,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM environment as computed at
-	// storage time. This value is recomputed whenever the environment is
-	// modified.
+	// storage time.
+	// This value is recomputed whenever the environment is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// Name: The environment display name. Can be set or changed only on
-	// USER type environments.
+	// USER type
+	// environments.
+	// @mutable tagmanager.accounts.containers.environments.create
+	// @mutable tagmanager.accounts.containers.environments.update
 	Name string `json:"name,omitempty"`
 
 	// Type: The type of this environment.
 	//
 	// Possible values:
-	//   "draft"
-	//   "latest"
-	//   "live"
-	//   "user"
+	//   "USER" - Used for user defined environments.
+	//   "LIVE" - Used for Live environment, which points to the live
+	// published container
+	// version.
+	//   "LATEST" - Used for Latest environment, which points to the latest
+	// created container
+	// version.
+	//   "DRAFT" - Used for Draft environment, which points to the single
+	// draft in
+	// the container.
 	Type string `json:"type,omitempty"`
 
 	// Url: Default preview page url for the environment.
+	// @mutable tagmanager.accounts.containers.environments.create
+	// @mutable tagmanager.accounts.containers.environments.update
 	Url string `json:"url,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -961,13 +1031,16 @@ type Folder struct {
 	ContainerId string `json:"containerId,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Folder as computed at storage
-	// time. This value is recomputed whenever the folder is modified.
+	// time.
+	// This value is recomputed whenever the folder is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// FolderId: The Folder ID uniquely identifies the GTM Folder.
 	FolderId string `json:"folderId,omitempty"`
 
 	// Name: Folder display name.
+	// @mutable tagmanager.accounts.containers.folders.create
+	// @mutable tagmanager.accounts.containers.folders.update
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1337,44 +1410,65 @@ type Macro struct {
 	ContainerId string `json:"containerId,omitempty"`
 
 	// DisablingRuleId: For mobile containers only: A list of rule IDs for
-	// disabling conditional macros; the macro is enabled if one of the
-	// enabling rules is true while all the disabling rules are false.
-	// Treated as an unordered set.
+	// disabling conditional
+	// macros; the macro is enabled if one of the enabling rules is true
+	// while all
+	// the disabling rules are false. Treated as an unordered set.
+	// @mutable tagmanager.accounts.containers.macros.create
+	// @mutable tagmanager.accounts.containers.macros.update
 	DisablingRuleId []string `json:"disablingRuleId,omitempty"`
 
 	// EnablingRuleId: For mobile containers only: A list of rule IDs for
-	// enabling conditional macros; the macro is enabled if one of the
-	// enabling rules is true while all the disabling rules are false.
-	// Treated as an unordered set.
+	// enabling conditional
+	// macros; the macro is enabled if one of the enabling rules is true
+	// while all
+	// the disabling rules are false. Treated as an unordered set.
+	// @mutable tagmanager.accounts.containers.macros.create
+	// @mutable tagmanager.accounts.containers.macros.update
 	EnablingRuleId []string `json:"enablingRuleId,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Macro as computed at storage
-	// time. This value is recomputed whenever the macro is modified.
+	// time.
+	// This value is recomputed whenever the macro is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// MacroId: The Macro ID uniquely identifies the GTM Macro.
 	MacroId string `json:"macroId,omitempty"`
 
 	// Name: Macro display name.
+	// @mutable tagmanager.accounts.containers.macros.create
+	// @mutable tagmanager.accounts.containers.macros.update
 	Name string `json:"name,omitempty"`
 
-	// Notes: User notes on how to apply this macro in the container.
+	// Notes: User notes on how to apply this macro in the
+	// container.
+	// @mutable tagmanager.accounts.containers.macros.create
+	// @mutable tagmanager.accounts.containers.macros.update
 	Notes string `json:"notes,omitempty"`
 
 	// Parameter: The macro's parameters.
+	// @mutable tagmanager.accounts.containers.macros.create
+	// @mutable tagmanager.accounts.containers.macros.update
 	Parameter []*Parameter `json:"parameter,omitempty"`
 
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
 
-	// ScheduleEndMs: The end timestamp in milliseconds to schedule a macro.
+	// ScheduleEndMs: The end timestamp in milliseconds to schedule a
+	// macro.
+	// @mutable tagmanager.accounts.containers.macros.create
+	// @mutable tagmanager.accounts.containers.macros.update
 	ScheduleEndMs int64 `json:"scheduleEndMs,omitempty,string"`
 
 	// ScheduleStartMs: The start timestamp in milliseconds to schedule a
 	// macro.
+	// @mutable tagmanager.accounts.containers.macros.create
+	// @mutable tagmanager.accounts.containers.macros.update
 	ScheduleStartMs int64 `json:"scheduleStartMs,omitempty,string"`
 
 	// Type: GTM Macro Type.
+	// @mutable tagmanager.accounts.containers.macros.create
+	// @mutable tagmanager.accounts.containers.macros.update
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
@@ -1402,41 +1496,83 @@ func (s *Macro) MarshalJSON() ([]byte, error) {
 
 // Parameter: Represents a Google Tag Manager Parameter.
 type Parameter struct {
-	// Key: The named key that uniquely identifies a parameter. Required for
-	// top-level parameters, as well as map values. Ignored for list values.
+	// Key: The named key that uniquely identifies a parameter.  Required
+	// for top-level
+	// parameters, as well as map values.  Ignored for list values.
+	// @mutable tagmanager.accounts.containers.variables.create
+	// @mutable tagmanager.accounts.containers.variables.update
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
+	// @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	Key string `json:"key,omitempty"`
 
-	// List: This list parameter's parameters (keys will be ignored).
+	// List: This list parameter's parameters (keys will be
+	// ignored).
+	// @mutable tagmanager.accounts.containers.variables.create
+	// @mutable tagmanager.accounts.containers.variables.update
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
+	// @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	List []*Parameter `json:"list,omitempty"`
 
 	// Map: This map parameter's parameters (must have keys; keys must be
 	// unique).
+	// @mutable tagmanager.accounts.containers.variables.create
+	// @mutable tagmanager.accounts.containers.variables.update
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
+	// @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	Map []*Parameter `json:"map,omitempty"`
 
-	// Type: The parameter type. Valid values are:
-	// - boolean: The value represents a boolean, represented as 'true' or
-	// 'false'
-	// - integer: The value represents a 64-bit signed integer value, in
-	// base 10
-	// - list: A list of parameters should be specified
-	// - map: A map of parameters should be specified
-	// - template: The value represents any text; this can include variable
-	// references (even variable references that might return non-string
-	// types)
-	// - trigger_reference: The value represents a trigger, represented as
-	// the trigger id
+	// Type: The parameter type.  Valid values
+	// are:<ul>
+	// <li><code>boolean</code>: The value represents a boolean, represented
+	// as
+	//     'true' or 'false'</li>
+	// <li><code>integer</code>: The value represents a 64-bit signed
+	// integer
+	//     value, in base 10</li>
+	// <li><code>list</code>: A list of parameters should be
+	// specified</li>
+	// <li><code>map</code>: A map of parameters should be
+	// specified</li>
+	// <li><code>template</code>: The value represents any text; this can
+	// include
+	//     variable references (even variable references that might return
+	//     non-string types)</li>
+	// <li><code>trigger_reference</code>: The value represents a trigger,
+	//     represented as the trigger id</li>
+	// </ul>
+	// @mutable tagmanager.accounts.containers.variables.create
+	// @mutable tagmanager.accounts.containers.variables.update
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
+	// @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	//
 	// Possible values:
-	//   "boolean"
-	//   "integer"
-	//   "list"
-	//   "map"
-	//   "template"
-	//   "triggerReference"
+	//   "TEMPLATE" - May include variable references (such as
+	// "{{myVariable}}").
+	//   "INTEGER"
+	//   "BOOLEAN"
+	//   "LIST"
+	//   "MAP"
+	//   "TRIGGER_REFERENCE"
 	Type string `json:"type,omitempty"`
 
-	// Value: A parameter's value (may contain variable references such as
-	// "{{myVariable}}") as appropriate to the specified type.
+	// Value: A parameter's value (may contain variable references such
+	// as
+	// "{{myVariable}}")
+	// as appropriate to the specified type.
+	// @mutable tagmanager.accounts.containers.variables.create
+	// @mutable tagmanager.accounts.containers.variables.update
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
+	// @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -1504,19 +1640,27 @@ type Rule struct {
 
 	// Condition: The list of conditions that make up this rule (implicit
 	// AND between them).
+	// @mutable tagmanager.accounts.containers.rules.create
+	// @mutable tagmanager.accounts.containers.rules.update
 	Condition []*Condition `json:"condition,omitempty"`
 
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Rule as computed at storage
-	// time. This value is recomputed whenever the rule is modified.
+	// time.
+	// This value is recomputed whenever the rule is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// Name: Rule display name.
+	// @mutable tagmanager.accounts.containers.rules.create
+	// @mutable tagmanager.accounts.containers.rules.update
 	Name string `json:"name,omitempty"`
 
-	// Notes: User notes on how to apply this rule in the container.
+	// Notes: User notes on how to apply this rule in the
+	// container.
+	// @mutable tagmanager.accounts.containers.rules.create
+	// @mutable tagmanager.accounts.containers.rules.update
 	Notes string `json:"notes,omitempty"`
 
 	// RuleId: The Rule ID uniquely identifies the GTM Rule.
@@ -1547,8 +1691,9 @@ func (s *Rule) MarshalJSON() ([]byte, error) {
 
 type SetupTag struct {
 	// StopOnSetupFailure: If true, fire the main tag if and only if the
-	// setup tag fires successfully. If false, fire the main tag regardless
-	// of setup tag firing status.
+	// setup tag fires
+	// successfully.
+	// If false, fire the main tag regardless of setup tag firing status.
 	StopOnSetupFailure bool `json:"stopOnSetupFailure,omitempty"`
 
 	// TagName: The name of the setup tag.
@@ -1584,60 +1729,95 @@ type Tag struct {
 	AccountId string `json:"accountId,omitempty"`
 
 	// BlockingRuleId: Blocking rule IDs. If any of the listed rules
-	// evaluate to true, the tag will not fire.
+	// evaluate to true, the tag
+	//     will not fire.
+	// @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	BlockingRuleId []string `json:"blockingRuleId,omitempty"`
 
 	// BlockingTriggerId: Blocking trigger IDs. If any of the listed
-	// triggers evaluate to true, the tag will not fire.
+	// triggers evaluate to true, the
+	// tag
+	//     will not fire.
+	// @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	BlockingTriggerId []string `json:"blockingTriggerId,omitempty"`
 
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Tag as computed at storage
-	// time. This value is recomputed whenever the tag is modified.
+	// time.
+	// This value is recomputed whenever the tag is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// FiringRuleId: Firing rule IDs. A tag will fire when any of the listed
-	// rules are true and all of its blockingRuleIds (if any specified) are
+	// rules are true and
+	//     all of its <code>blockingRuleIds</code> (if any specified) are
 	// false.
+	// @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	FiringRuleId []string `json:"firingRuleId,omitempty"`
 
 	// FiringTriggerId: Firing trigger IDs. A tag will fire when any of the
-	// listed triggers are true and all of its blockingTriggerIds (if any
-	// specified) are false.
+	// listed triggers are
+	// true and all of its <code>blockingTriggerIds</code> (if any
+	// specified) are
+	// false.
+	// @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	FiringTriggerId []string `json:"firingTriggerId,omitempty"`
 
 	// LiveOnly: If set to true, this tag will only fire in the live
-	// environment (e.g. not in preview or debug mode).
+	// environment (e.g. not
+	// in preview or debug mode).
+	// @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	LiveOnly bool `json:"liveOnly,omitempty"`
 
 	// Name: Tag display name.
+	// @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	Name string `json:"name,omitempty"`
 
 	// Notes: User notes on how to apply this tag in the container.
+	// @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	Notes string `json:"notes,omitempty"`
 
 	// Parameter: The tag's parameters.
+	// @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	Parameter []*Parameter `json:"parameter,omitempty"`
 
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
 
 	// Paused: True if the tag is paused.
+	// @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	Paused bool `json:"paused,omitempty"`
 
 	// Priority: User defined numeric priority of the tag. Tags are fired
-	// asynchronously in order of priority. Tags with higher numeric value
-	// fire first. A tag's priority can be a positive or negative value. The
-	// default value is 0.
+	// asynchronously in
+	// order of priority. Tags with higher numeric value fire first. A
+	// tag's
+	// priority can be a positive or negative value. The default value is
+	// 0.
+	// @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	Priority *Parameter `json:"priority,omitempty"`
 
-	// ScheduleEndMs: The end timestamp in milliseconds to schedule a tag.
+	// ScheduleEndMs: The end timestamp in milliseconds to schedule a
+	// tag.
+	// @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	ScheduleEndMs int64 `json:"scheduleEndMs,omitempty,string"`
 
 	// ScheduleStartMs: The start timestamp in milliseconds to schedule a
 	// tag.
+	// @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	ScheduleStartMs int64 `json:"scheduleStartMs,omitempty,string"`
 
 	// SetupTag: The list of setup tags. Currently we only allow one.
@@ -1646,9 +1826,12 @@ type Tag struct {
 	// TagFiringOption: Option to fire this tag.
 	//
 	// Possible values:
-	//   "oncePerEvent"
-	//   "oncePerLoad"
-	//   "unlimited"
+	//   "UNLIMITED" - Tag can be fired multiple times per event.
+	//   "ONCE_PER_EVENT" - Tag can only be fired per event but can be fired
+	// multiple times per load
+	// (e.g., app load or page load).
+	//   "ONCE_PER_LOAD" - Tag can only be fired per load (e.g., app load or
+	// page load).
 	TagFiringOption string `json:"tagFiringOption,omitempty"`
 
 	// TagId: The Tag ID uniquely identifies the GTM Tag.
@@ -1658,6 +1841,8 @@ type Tag struct {
 	TeardownTag []*TeardownTag `json:"teardownTag,omitempty"`
 
 	// Type: GTM Tag Type.
+	// @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1689,8 +1874,9 @@ func (s *Tag) MarshalJSON() ([]byte, error) {
 
 type TeardownTag struct {
 	// StopTeardownOnFailure: If true, fire the teardown tag if and only if
-	// the main tag fires successfully. If false, fire the teardown tag
-	// regardless of main tag firing status.
+	// the main tag fires
+	// successfully.
+	// If false, fire the teardown tag regardless of main tag firing status.
 	StopTeardownOnFailure bool `json:"stopTeardownOnFailure,omitempty"`
 
 	// TagName: The name of the teardown tag.
@@ -1727,140 +1913,211 @@ type Trigger struct {
 	AccountId string `json:"accountId,omitempty"`
 
 	// AutoEventFilter: Used in the case of auto event tracking.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	AutoEventFilter []*Condition `json:"autoEventFilter,omitempty"`
 
 	// CheckValidation: Whether or not we should only fire tags if the form
-	// submit or link click event is not cancelled by some other event
-	// handler (e.g. because of validation). Only valid for Form Submission
-	// and Link Click triggers.
+	// submit or link click
+	// event is not cancelled by some other event handler (e.g. because
+	// of
+	// validation). Only valid for Form Submission and Link Click
+	// triggers.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	CheckValidation *Parameter `json:"checkValidation,omitempty"`
 
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
 
 	// ContinuousTimeMinMilliseconds: A visibility trigger minimum
-	// continuous visible time (in milliseconds). Only valid for AMP
-	// Visibility trigger.
+	// continuous visible time (in milliseconds).
+	// Only valid for AMP Visibility trigger.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	ContinuousTimeMinMilliseconds *Parameter `json:"continuousTimeMinMilliseconds,omitempty"`
 
 	// CustomEventFilter: Used in the case of custom event, which is fired
-	// iff all Conditions are true.
+	// iff all Conditions are
+	// true.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	CustomEventFilter []*Condition `json:"customEventFilter,omitempty"`
 
 	// EventName: Name of the GTM event that is fired. Only valid for Timer
 	// triggers.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	EventName *Parameter `json:"eventName,omitempty"`
 
-	// Filter: The trigger will only fire iff all Conditions are true.
+	// Filter: The trigger will only fire iff all Conditions are
+	// true.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	Filter []*Condition `json:"filter,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Trigger as computed at
-	// storage time. This value is recomputed whenever the trigger is
-	// modified.
+	// storage time.
+	// This value is recomputed whenever the trigger is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// HorizontalScrollPercentageList: List of integer percentage values for
-	// scroll triggers. The trigger will fire when each percentage is
-	// reached when the view is scrolled horizontally. Only valid for AMP
-	// scroll triggers.
+	// scroll triggers. The trigger will
+	// fire when each percentage is reached when the view is
+	// scrolled
+	// horizontally. Only valid for AMP scroll triggers.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	HorizontalScrollPercentageList *Parameter `json:"horizontalScrollPercentageList,omitempty"`
 
 	// Interval: Time between triggering recurring Timer Events (in
-	// milliseconds). Only valid for Timer triggers.
+	// milliseconds). Only
+	// valid for Timer triggers.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	Interval *Parameter `json:"interval,omitempty"`
 
 	// IntervalSeconds: Time between Timer Events to fire (in seconds). Only
-	// valid for AMP Timer trigger.
+	// valid for AMP Timer
+	// trigger.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	IntervalSeconds *Parameter `json:"intervalSeconds,omitempty"`
 
 	// Limit: Limit of the number of GTM events this Timer Trigger will
-	// fire. If no limit is set, we will continue to fire GTM events until
-	// the user leaves the page. Only valid for Timer triggers.
+	// fire. If no limit
+	// is set, we will continue to fire GTM events until the user leaves the
+	// page.
+	// Only valid for Timer triggers.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	Limit *Parameter `json:"limit,omitempty"`
 
 	// MaxTimerLengthSeconds: Max time to fire Timer Events (in seconds).
-	// Only valid for AMP Timer trigger.
+	// Only valid for AMP Timer
+	// trigger.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	MaxTimerLengthSeconds *Parameter `json:"maxTimerLengthSeconds,omitempty"`
 
 	// Name: Trigger display name.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	Name string `json:"name,omitempty"`
 
 	// Parameter: Additional parameters.
+	// @mutable
+	// tagmanager.accounts.containers.workspaces.triggers.create
+	// @mutable tagmanager.accounts.containers.workspaces.triggers.update
 	Parameter []*Parameter `json:"parameter,omitempty"`
 
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
 
 	// Selector: A click trigger CSS selector (i.e. "a", "button" etc.).
-	// Only valid for AMP Click trigger.
+	// Only valid for AMP
+	// Click trigger.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	Selector *Parameter `json:"selector,omitempty"`
 
 	// TotalTimeMinMilliseconds: A visibility trigger minimum total visible
-	// time (in milliseconds). Only valid for AMP Visibility trigger.
+	// time (in milliseconds).
+	// Only valid for AMP Visibility trigger.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	TotalTimeMinMilliseconds *Parameter `json:"totalTimeMinMilliseconds,omitempty"`
 
 	// TriggerId: The Trigger ID uniquely identifies the GTM Trigger.
 	TriggerId string `json:"triggerId,omitempty"`
 
 	// Type: Defines the data layer event that causes this trigger.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	//
 	// Possible values:
-	//   "always"
-	//   "ampClick"
-	//   "ampScroll"
-	//   "ampTimer"
-	//   "ampVisibility"
-	//   "click"
-	//   "customEvent"
-	//   "domReady"
-	//   "elementVisibility"
-	//   "formSubmission"
-	//   "historyChange"
-	//   "jsError"
-	//   "linkClick"
-	//   "pageview"
-	//   "scrollDepth"
-	//   "timer"
-	//   "triggerGroup"
-	//   "windowLoaded"
-	//   "youTubeVideo"
+	//   "PAGEVIEW"
+	//   "DOM_READY"
+	//   "WINDOW_LOADED"
+	//   "CUSTOM_EVENT"
+	//   "TRIGGER_GROUP"
+	//   "ALWAYS"
+	//   "FORM_SUBMISSION"
+	//   "CLICK"
+	//   "LINK_CLICK"
+	//   "JS_ERROR"
+	//   "HISTORY_CHANGE"
+	//   "TIMER"
+	//   "AMP_CLICK"
+	//   "AMP_TIMER"
+	//   "AMP_SCROLL"
+	//   "AMP_VISIBILITY"
+	//   "YOU_TUBE_VIDEO"
+	//   "SCROLL_DEPTH"
+	//   "ELEMENT_VISIBILITY"
 	Type string `json:"type,omitempty"`
 
 	// UniqueTriggerId: Globally unique id of the trigger that
-	// auto-generates this (a Form Submit, Link Click or Timer listener) if
-	// any. Used to make incompatible auto-events work together with trigger
-	// filtering based on trigger ids. This value is populated during output
-	// generation since the tags implied by triggers don't exist until then.
-	// Only valid for Form Submit, Link Click and Timer triggers.
+	// auto-generates this (a Form Submit,
+	// Link Click or Timer listener) if any. Used to make incompatible
+	// auto-events
+	// work together with trigger filtering based on trigger ids. This value
+	// is
+	// populated during output generation since the tags implied by triggers
+	// don't
+	// exist until then. Only valid for Form Submit, Link Click and
+	// Timer
+	// triggers.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	UniqueTriggerId *Parameter `json:"uniqueTriggerId,omitempty"`
 
 	// VerticalScrollPercentageList: List of integer percentage values for
-	// scroll triggers. The trigger will fire when each percentage is
-	// reached when the view is scrolled vertically. Only valid for AMP
-	// scroll triggers.
+	// scroll triggers. The trigger will
+	// fire when each percentage is reached when the view is scrolled
+	// vertically.
+	// Only valid for AMP scroll triggers.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	VerticalScrollPercentageList *Parameter `json:"verticalScrollPercentageList,omitempty"`
 
 	// VisibilitySelector: A visibility trigger CSS selector (i.e. "#id").
-	// Only valid for AMP Visibility trigger.
+	// Only valid for AMP
+	// Visibility trigger.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	VisibilitySelector *Parameter `json:"visibilitySelector,omitempty"`
 
 	// VisiblePercentageMax: A visibility trigger maximum percent
-	// visibility. Only valid for AMP Visibility trigger.
+	// visibility. Only valid for AMP
+	// Visibility trigger.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	VisiblePercentageMax *Parameter `json:"visiblePercentageMax,omitempty"`
 
 	// VisiblePercentageMin: A visibility trigger minimum percent
-	// visibility. Only valid for AMP Visibility trigger.
+	// visibility. Only valid for AMP
+	// Visibility trigger.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	VisiblePercentageMin *Parameter `json:"visiblePercentageMin,omitempty"`
 
 	// WaitForTags: Whether or not we should delay the form submissions or
-	// link opening until all of the tags have fired (by preventing the
-	// default action and later simulating the default action). Only valid
-	// for Form Submission and Link Click triggers.
+	// link opening
+	// until all of the tags have fired (by preventing the default
+	// action and later simulating the default action). Only valid for
+	// Form Submission and Link Click triggers.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	WaitForTags *Parameter `json:"waitForTags,omitempty"`
 
 	// WaitForTagsTimeout: How long to wait (in milliseconds) for tags to
-	// fire when 'waits_for_tags' above evaluates to true. Only valid for
-	// Form Submission and Link Click triggers.
+	// fire when 'waits_for_tags'
+	// above evaluates to <code>true</code>.  Only valid for Form Submission
+	// and
+	// Link Click triggers.
+	// @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	WaitForTagsTimeout *Parameter `json:"waitForTagsTimeout,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1894,15 +2151,20 @@ func (s *Trigger) MarshalJSON() ([]byte, error) {
 // container.
 type UserAccess struct {
 	// AccountAccess: GTM Account access permissions.
+	// @mutable tagmanager.accounts.permissions.create
+	// @mutable tagmanager.accounts.permissions.update
 	AccountAccess *AccountAccess `json:"accountAccess,omitempty"`
 
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
 
 	// ContainerAccess: GTM Container access permissions.
+	// @mutable tagmanager.accounts.permissions.create
+	// @mutable tagmanager.accounts.permissions.update
 	ContainerAccess []*ContainerAccess `json:"containerAccess,omitempty"`
 
 	// EmailAddress: User's email address.
+	// @mutable tagmanager.accounts.permissions.create
 	EmailAddress string `json:"emailAddress,omitempty"`
 
 	// PermissionId: Account Permission ID.
@@ -1944,29 +2206,44 @@ type Variable struct {
 	ContainerId string `json:"containerId,omitempty"`
 
 	// DisablingTriggerId: For mobile containers only: A list of trigger IDs
-	// for disabling conditional variables; the variable is enabled if one
-	// of the enabling trigger is true while all the disabling trigger are
-	// false. Treated as an unordered set.
+	// for disabling conditional
+	// variables; the variable is enabled if one of the enabling trigger is
+	// true
+	// while all the disabling trigger are false. Treated as an unordered
+	// set.
+	// @mutable tagmanager.accounts.containers.variables.create
+	// @mutable tagmanager.accounts.containers.variables.update
 	DisablingTriggerId []string `json:"disablingTriggerId,omitempty"`
 
 	// EnablingTriggerId: For mobile containers only: A list of trigger IDs
-	// for enabling conditional variables; the variable is enabled if one of
-	// the enabling triggers is true while all the disabling triggers are
-	// false. Treated as an unordered set.
+	// for enabling conditional
+	// variables; the variable is enabled if one of the enabling triggers is
+	// true
+	// while all the disabling triggers are false. Treated as an unordered
+	// set.
+	// @mutable tagmanager.accounts.containers.variables.create
+	// @mutable tagmanager.accounts.containers.variables.update
 	EnablingTriggerId []string `json:"enablingTriggerId,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Variable as computed at
-	// storage time. This value is recomputed whenever the variable is
-	// modified.
+	// storage time.
+	// This value is recomputed whenever the variable is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// Name: Variable display name.
+	// @mutable tagmanager.accounts.containers.variables.create
+	// @mutable tagmanager.accounts.containers.variables.update
 	Name string `json:"name,omitempty"`
 
-	// Notes: User notes on how to apply this variable in the container.
+	// Notes: User notes on how to apply this variable in the
+	// container.
+	// @mutable tagmanager.accounts.containers.variables.create
+	// @mutable tagmanager.accounts.containers.variables.update
 	Notes string `json:"notes,omitempty"`
 
 	// Parameter: The variable's parameters.
+	// @mutable tagmanager.accounts.containers.variables.create
+	// @mutable tagmanager.accounts.containers.variables.update
 	Parameter []*Parameter `json:"parameter,omitempty"`
 
 	// ParentFolderId: Parent folder id.
@@ -1974,13 +2251,19 @@ type Variable struct {
 
 	// ScheduleEndMs: The end timestamp in milliseconds to schedule a
 	// variable.
+	// @mutable tagmanager.accounts.containers.variables.create
+	// @mutable tagmanager.accounts.containers.variables.update
 	ScheduleEndMs int64 `json:"scheduleEndMs,omitempty,string"`
 
 	// ScheduleStartMs: The start timestamp in milliseconds to schedule a
 	// variable.
+	// @mutable tagmanager.accounts.containers.variables.create
+	// @mutable tagmanager.accounts.containers.variables.update
 	ScheduleStartMs int64 `json:"scheduleStartMs,omitempty,string"`
 
 	// Type: GTM Variable Type.
+	// @mutable tagmanager.accounts.containers.variables.create
+	// @mutable tagmanager.accounts.containers.variables.update
 	Type string `json:"type,omitempty"`
 
 	// VariableId: The Variable ID uniquely identifies the GTM Variable.
@@ -2078,7 +2361,7 @@ func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2130,6 +2413,7 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets a GTM Account.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.get",
 	//   "parameterOrder": [
@@ -2143,7 +2427,7 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}",
 	//   "response": {
 	//     "$ref": "Account"
 	//   },
@@ -2219,7 +2503,7 @@ func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2268,9 +2552,12 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListAccountsRespon
 	return ret, nil
 	// {
 	//   "description": "Lists all GTM Accounts that a user has access to.",
+	//   "flatPath": "tagmanager/v1/accounts",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.list",
-	//   "path": "accounts",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "tagmanager/v1/accounts",
 	//   "response": {
 	//     "$ref": "ListAccountsResponse"
 	//   },
@@ -2303,8 +2590,8 @@ func (r *AccountsService) Update(accountId string, account *Account) *AccountsUp
 }
 
 // Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the account in
-// storage.
+// this fingerprint must match the fingerprint of the account
+// in storage.
 func (c *AccountsUpdateCall) Fingerprint(fingerprint string) *AccountsUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
@@ -2349,7 +2636,7 @@ func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -2401,6 +2688,7 @@ func (c *AccountsUpdateCall) Do(opts ...googleapi.CallOption) (*Account, error) 
 	return ret, nil
 	// {
 	//   "description": "Updates a GTM Account.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}",
 	//   "httpMethod": "PUT",
 	//   "id": "tagmanager.accounts.update",
 	//   "parameterOrder": [
@@ -2414,12 +2702,12 @@ func (c *AccountsUpdateCall) Do(opts ...googleapi.CallOption) (*Account, error) 
 	//       "type": "string"
 	//     },
 	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the account in storage.",
+	//       "description": "When provided, this fingerprint must match the fingerprint of the account\nin storage.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}",
 	//   "request": {
 	//     "$ref": "Account"
 	//   },
@@ -2491,7 +2779,7 @@ func (c *AccountsContainersCreateCall) doRequest(alt string) (*http.Response, er
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -2543,6 +2831,7 @@ func (c *AccountsContainersCreateCall) Do(opts ...googleapi.CallOption) (*Contai
 	return ret, nil
 	// {
 	//   "description": "Creates a Container.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers",
 	//   "httpMethod": "POST",
 	//   "id": "tagmanager.accounts.containers.create",
 	//   "parameterOrder": [
@@ -2556,7 +2845,7 @@ func (c *AccountsContainersCreateCall) Do(opts ...googleapi.CallOption) (*Contai
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers",
 	//   "request": {
 	//     "$ref": "Container"
 	//   },
@@ -2623,7 +2912,7 @@ func (c *AccountsContainersDeleteCall) doRequest(alt string) (*http.Response, er
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -2651,6 +2940,7 @@ func (c *AccountsContainersDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes a Container.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "tagmanager.accounts.containers.delete",
 	//   "parameterOrder": [
@@ -2671,7 +2961,7 @@ func (c *AccountsContainersDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/tagmanager.delete.containers"
 	//   ]
@@ -2746,7 +3036,7 @@ func (c *AccountsContainersGetCall) doRequest(alt string) (*http.Response, error
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2799,6 +3089,7 @@ func (c *AccountsContainersGetCall) Do(opts ...googleapi.CallOption) (*Container
 	return ret, nil
 	// {
 	//   "description": "Gets a Container.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.containers.get",
 	//   "parameterOrder": [
@@ -2819,7 +3110,7 @@ func (c *AccountsContainersGetCall) Do(opts ...googleapi.CallOption) (*Container
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}",
 	//   "response": {
 	//     "$ref": "Container"
 	//   },
@@ -2896,7 +3187,7 @@ func (c *AccountsContainersListCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2948,6 +3239,7 @@ func (c *AccountsContainersListCall) Do(opts ...googleapi.CallOption) (*ListCont
 	return ret, nil
 	// {
 	//   "description": "Lists all Containers that belongs to a GTM Account.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.containers.list",
 	//   "parameterOrder": [
@@ -2961,7 +3253,7 @@ func (c *AccountsContainersListCall) Do(opts ...googleapi.CallOption) (*ListCont
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers",
 	//   "response": {
 	//     "$ref": "ListContainersResponse"
 	//   },
@@ -2995,8 +3287,8 @@ func (r *AccountsContainersService) Update(accountId string, containerId string,
 }
 
 // Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the container in
-// storage.
+// this fingerprint must match the fingerprint of the
+// container in storage.
 func (c *AccountsContainersUpdateCall) Fingerprint(fingerprint string) *AccountsContainersUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
@@ -3041,7 +3333,7 @@ func (c *AccountsContainersUpdateCall) doRequest(alt string) (*http.Response, er
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -3094,6 +3386,7 @@ func (c *AccountsContainersUpdateCall) Do(opts ...googleapi.CallOption) (*Contai
 	return ret, nil
 	// {
 	//   "description": "Updates a Container.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}",
 	//   "httpMethod": "PUT",
 	//   "id": "tagmanager.accounts.containers.update",
 	//   "parameterOrder": [
@@ -3114,12 +3407,12 @@ func (c *AccountsContainersUpdateCall) Do(opts ...googleapi.CallOption) (*Contai
 	//       "type": "string"
 	//     },
 	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the container in storage.",
+	//       "description": "When provided, this fingerprint must match the fingerprint of the\ncontainer in storage.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}",
 	//   "request": {
 	//     "$ref": "Container"
 	//   },
@@ -3193,7 +3486,7 @@ func (c *AccountsContainersEnvironmentsCreateCall) doRequest(alt string) (*http.
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/environments")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -3246,6 +3539,7 @@ func (c *AccountsContainersEnvironmentsCreateCall) Do(opts ...googleapi.CallOpti
 	return ret, nil
 	// {
 	//   "description": "Creates a GTM Environment.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments",
 	//   "httpMethod": "POST",
 	//   "id": "tagmanager.accounts.containers.environments.create",
 	//   "parameterOrder": [
@@ -3266,7 +3560,7 @@ func (c *AccountsContainersEnvironmentsCreateCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/environments",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments",
 	//   "request": {
 	//     "$ref": "Environment"
 	//   },
@@ -3335,7 +3629,7 @@ func (c *AccountsContainersEnvironmentsDeleteCall) doRequest(alt string) (*http.
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/environments/{environmentId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments/{environmentId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -3364,6 +3658,7 @@ func (c *AccountsContainersEnvironmentsDeleteCall) Do(opts ...googleapi.CallOpti
 	return nil
 	// {
 	//   "description": "Deletes a GTM Environment.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "tagmanager.accounts.containers.environments.delete",
 	//   "parameterOrder": [
@@ -3391,7 +3686,7 @@ func (c *AccountsContainersEnvironmentsDeleteCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
 	//   ]
@@ -3468,7 +3763,7 @@ func (c *AccountsContainersEnvironmentsGetCall) doRequest(alt string) (*http.Res
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/environments/{environmentId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments/{environmentId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -3522,6 +3817,7 @@ func (c *AccountsContainersEnvironmentsGetCall) Do(opts ...googleapi.CallOption)
 	return ret, nil
 	// {
 	//   "description": "Gets a GTM Environment.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.containers.environments.get",
 	//   "parameterOrder": [
@@ -3549,7 +3845,7 @@ func (c *AccountsContainersEnvironmentsGetCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
 	//   "response": {
 	//     "$ref": "Environment"
 	//   },
@@ -3628,7 +3924,7 @@ func (c *AccountsContainersEnvironmentsListCall) doRequest(alt string) (*http.Re
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/environments")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -3681,6 +3977,7 @@ func (c *AccountsContainersEnvironmentsListCall) Do(opts ...googleapi.CallOption
 	return ret, nil
 	// {
 	//   "description": "Lists all GTM Environments of a GTM Container.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.containers.environments.list",
 	//   "parameterOrder": [
@@ -3701,7 +3998,7 @@ func (c *AccountsContainersEnvironmentsListCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/environments",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments",
 	//   "response": {
 	//     "$ref": "ListEnvironmentsResponse"
 	//   },
@@ -3737,8 +4034,8 @@ func (r *AccountsContainersEnvironmentsService) Update(accountId string, contain
 }
 
 // Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the environment in
-// storage.
+// this fingerprint must match the fingerprint of the
+// environment in storage.
 func (c *AccountsContainersEnvironmentsUpdateCall) Fingerprint(fingerprint string) *AccountsContainersEnvironmentsUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
@@ -3783,7 +4080,7 @@ func (c *AccountsContainersEnvironmentsUpdateCall) doRequest(alt string) (*http.
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/environments/{environmentId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments/{environmentId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -3837,6 +4134,7 @@ func (c *AccountsContainersEnvironmentsUpdateCall) Do(opts ...googleapi.CallOpti
 	return ret, nil
 	// {
 	//   "description": "Updates a GTM Environment.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
 	//   "httpMethod": "PUT",
 	//   "id": "tagmanager.accounts.containers.environments.update",
 	//   "parameterOrder": [
@@ -3864,12 +4162,12 @@ func (c *AccountsContainersEnvironmentsUpdateCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the environment in storage.",
+	//       "description": "When provided, this fingerprint must match the fingerprint of the\nenvironment in storage.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
 	//   "request": {
 	//     "$ref": "Environment"
 	//   },
@@ -3943,7 +4241,7 @@ func (c *AccountsContainersFoldersCreateCall) doRequest(alt string) (*http.Respo
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/folders")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -3996,6 +4294,7 @@ func (c *AccountsContainersFoldersCreateCall) Do(opts ...googleapi.CallOption) (
 	return ret, nil
 	// {
 	//   "description": "Creates a GTM Folder.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders",
 	//   "httpMethod": "POST",
 	//   "id": "tagmanager.accounts.containers.folders.create",
 	//   "parameterOrder": [
@@ -4016,7 +4315,7 @@ func (c *AccountsContainersFoldersCreateCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/folders",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders",
 	//   "request": {
 	//     "$ref": "Folder"
 	//   },
@@ -4085,7 +4384,7 @@ func (c *AccountsContainersFoldersDeleteCall) doRequest(alt string) (*http.Respo
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/folders/{folderId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -4114,6 +4413,7 @@ func (c *AccountsContainersFoldersDeleteCall) Do(opts ...googleapi.CallOption) e
 	return nil
 	// {
 	//   "description": "Deletes a GTM Folder.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "tagmanager.accounts.containers.folders.delete",
 	//   "parameterOrder": [
@@ -4141,7 +4441,7 @@ func (c *AccountsContainersFoldersDeleteCall) Do(opts ...googleapi.CallOption) e
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/folders/{folderId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
 	//   ]
@@ -4218,7 +4518,7 @@ func (c *AccountsContainersFoldersGetCall) doRequest(alt string) (*http.Response
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/folders/{folderId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -4272,6 +4572,7 @@ func (c *AccountsContainersFoldersGetCall) Do(opts ...googleapi.CallOption) (*Fo
 	return ret, nil
 	// {
 	//   "description": "Gets a GTM Folder.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.containers.folders.get",
 	//   "parameterOrder": [
@@ -4299,7 +4600,7 @@ func (c *AccountsContainersFoldersGetCall) Do(opts ...googleapi.CallOption) (*Fo
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/folders/{folderId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}",
 	//   "response": {
 	//     "$ref": "Folder"
 	//   },
@@ -4378,7 +4679,7 @@ func (c *AccountsContainersFoldersListCall) doRequest(alt string) (*http.Respons
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/folders")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -4431,6 +4732,7 @@ func (c *AccountsContainersFoldersListCall) Do(opts ...googleapi.CallOption) (*L
 	return ret, nil
 	// {
 	//   "description": "Lists all GTM Folders of a Container.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.containers.folders.list",
 	//   "parameterOrder": [
@@ -4451,7 +4753,7 @@ func (c *AccountsContainersFoldersListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/folders",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders",
 	//   "response": {
 	//     "$ref": "ListFoldersResponse"
 	//   },
@@ -4487,7 +4789,8 @@ func (r *AccountsContainersFoldersService) Update(accountId string, containerId 
 }
 
 // Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the folder in storage.
+// this fingerprint must match the fingerprint of the folder in
+// storage.
 func (c *AccountsContainersFoldersUpdateCall) Fingerprint(fingerprint string) *AccountsContainersFoldersUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
@@ -4532,7 +4835,7 @@ func (c *AccountsContainersFoldersUpdateCall) doRequest(alt string) (*http.Respo
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/folders/{folderId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -4586,6 +4889,7 @@ func (c *AccountsContainersFoldersUpdateCall) Do(opts ...googleapi.CallOption) (
 	return ret, nil
 	// {
 	//   "description": "Updates a GTM Folder.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}",
 	//   "httpMethod": "PUT",
 	//   "id": "tagmanager.accounts.containers.folders.update",
 	//   "parameterOrder": [
@@ -4607,7 +4911,7 @@ func (c *AccountsContainersFoldersUpdateCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the folder in storage.",
+	//       "description": "When provided, this fingerprint must match the fingerprint of the folder in\nstorage.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4618,7 +4922,7 @@ func (c *AccountsContainersFoldersUpdateCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/folders/{folderId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}",
 	//   "request": {
 	//     "$ref": "Folder"
 	//   },
@@ -4701,7 +5005,7 @@ func (c *AccountsContainersFoldersEntitiesListCall) doRequest(alt string) (*http
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/folders/{folderId}/entities")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}/entities")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -4755,6 +5059,7 @@ func (c *AccountsContainersFoldersEntitiesListCall) Do(opts ...googleapi.CallOpt
 	return ret, nil
 	// {
 	//   "description": "List all entities in a GTM Folder.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}/entities",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.containers.folders.entities.list",
 	//   "parameterOrder": [
@@ -4782,7 +5087,7 @@ func (c *AccountsContainersFoldersEntitiesListCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/folders/{folderId}/entities",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}/entities",
 	//   "response": {
 	//     "$ref": "FolderEntities"
 	//   },
@@ -4877,7 +5182,7 @@ func (c *AccountsContainersMoveFoldersUpdateCall) doRequest(alt string) (*http.R
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/move_folders/{folderId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/move_folders/{folderId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -4906,6 +5211,7 @@ func (c *AccountsContainersMoveFoldersUpdateCall) Do(opts ...googleapi.CallOptio
 	return nil
 	// {
 	//   "description": "Moves entities to a GTM Folder.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/move_folders/{folderId}",
 	//   "httpMethod": "PUT",
 	//   "id": "tagmanager.accounts.containers.move_folders.update",
 	//   "parameterOrder": [
@@ -4951,7 +5257,7 @@ func (c *AccountsContainersMoveFoldersUpdateCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/move_folders/{folderId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/move_folders/{folderId}",
 	//   "request": {
 	//     "$ref": "Folder"
 	//   },
@@ -5024,7 +5330,7 @@ func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) doRequest(alt stri
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/reauthorize_environments/{environmentId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/reauthorize_environments/{environmentId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -5078,6 +5384,7 @@ func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) Do(opts ...googlea
 	return ret, nil
 	// {
 	//   "description": "Re-generates the authorization code for a GTM Environment.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/reauthorize_environments/{environmentId}",
 	//   "httpMethod": "PUT",
 	//   "id": "tagmanager.accounts.containers.reauthorize_environments.update",
 	//   "parameterOrder": [
@@ -5105,7 +5412,7 @@ func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) Do(opts ...googlea
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/reauthorize_environments/{environmentId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/reauthorize_environments/{environmentId}",
 	//   "request": {
 	//     "$ref": "Environment"
 	//   },
@@ -5179,7 +5486,7 @@ func (c *AccountsContainersTagsCreateCall) doRequest(alt string) (*http.Response
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/tags")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -5232,6 +5539,7 @@ func (c *AccountsContainersTagsCreateCall) Do(opts ...googleapi.CallOption) (*Ta
 	return ret, nil
 	// {
 	//   "description": "Creates a GTM Tag.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags",
 	//   "httpMethod": "POST",
 	//   "id": "tagmanager.accounts.containers.tags.create",
 	//   "parameterOrder": [
@@ -5252,7 +5560,7 @@ func (c *AccountsContainersTagsCreateCall) Do(opts ...googleapi.CallOption) (*Ta
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/tags",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags",
 	//   "request": {
 	//     "$ref": "Tag"
 	//   },
@@ -5321,7 +5629,7 @@ func (c *AccountsContainersTagsDeleteCall) doRequest(alt string) (*http.Response
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/tags/{tagId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags/{tagId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -5350,6 +5658,7 @@ func (c *AccountsContainersTagsDeleteCall) Do(opts ...googleapi.CallOption) erro
 	return nil
 	// {
 	//   "description": "Deletes a GTM Tag.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags/{tagId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "tagmanager.accounts.containers.tags.delete",
 	//   "parameterOrder": [
@@ -5377,7 +5686,7 @@ func (c *AccountsContainersTagsDeleteCall) Do(opts ...googleapi.CallOption) erro
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/tags/{tagId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags/{tagId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
 	//   ]
@@ -5454,7 +5763,7 @@ func (c *AccountsContainersTagsGetCall) doRequest(alt string) (*http.Response, e
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/tags/{tagId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags/{tagId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -5508,6 +5817,7 @@ func (c *AccountsContainersTagsGetCall) Do(opts ...googleapi.CallOption) (*Tag, 
 	return ret, nil
 	// {
 	//   "description": "Gets a GTM Tag.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags/{tagId}",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.containers.tags.get",
 	//   "parameterOrder": [
@@ -5535,7 +5845,7 @@ func (c *AccountsContainersTagsGetCall) Do(opts ...googleapi.CallOption) (*Tag, 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/tags/{tagId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags/{tagId}",
 	//   "response": {
 	//     "$ref": "Tag"
 	//   },
@@ -5614,7 +5924,7 @@ func (c *AccountsContainersTagsListCall) doRequest(alt string) (*http.Response, 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/tags")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -5667,6 +5977,7 @@ func (c *AccountsContainersTagsListCall) Do(opts ...googleapi.CallOption) (*List
 	return ret, nil
 	// {
 	//   "description": "Lists all GTM Tags of a Container.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.containers.tags.list",
 	//   "parameterOrder": [
@@ -5687,7 +5998,7 @@ func (c *AccountsContainersTagsListCall) Do(opts ...googleapi.CallOption) (*List
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/tags",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags",
 	//   "response": {
 	//     "$ref": "ListTagsResponse"
 	//   },
@@ -5723,7 +6034,8 @@ func (r *AccountsContainersTagsService) Update(accountId string, containerId str
 }
 
 // Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the tag in storage.
+// this fingerprint must match the fingerprint of the tag in
+// storage.
 func (c *AccountsContainersTagsUpdateCall) Fingerprint(fingerprint string) *AccountsContainersTagsUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
@@ -5768,7 +6080,7 @@ func (c *AccountsContainersTagsUpdateCall) doRequest(alt string) (*http.Response
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/tags/{tagId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags/{tagId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -5822,6 +6134,7 @@ func (c *AccountsContainersTagsUpdateCall) Do(opts ...googleapi.CallOption) (*Ta
 	return ret, nil
 	// {
 	//   "description": "Updates a GTM Tag.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags/{tagId}",
 	//   "httpMethod": "PUT",
 	//   "id": "tagmanager.accounts.containers.tags.update",
 	//   "parameterOrder": [
@@ -5843,7 +6156,7 @@ func (c *AccountsContainersTagsUpdateCall) Do(opts ...googleapi.CallOption) (*Ta
 	//       "type": "string"
 	//     },
 	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the tag in storage.",
+	//       "description": "When provided, this fingerprint must match the fingerprint of the tag in\nstorage.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5854,7 +6167,7 @@ func (c *AccountsContainersTagsUpdateCall) Do(opts ...googleapi.CallOption) (*Ta
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/tags/{tagId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags/{tagId}",
 	//   "request": {
 	//     "$ref": "Tag"
 	//   },
@@ -5928,7 +6241,7 @@ func (c *AccountsContainersTriggersCreateCall) doRequest(alt string) (*http.Resp
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/triggers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -5981,6 +6294,7 @@ func (c *AccountsContainersTriggersCreateCall) Do(opts ...googleapi.CallOption) 
 	return ret, nil
 	// {
 	//   "description": "Creates a GTM Trigger.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers",
 	//   "httpMethod": "POST",
 	//   "id": "tagmanager.accounts.containers.triggers.create",
 	//   "parameterOrder": [
@@ -6001,7 +6315,7 @@ func (c *AccountsContainersTriggersCreateCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/triggers",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers",
 	//   "request": {
 	//     "$ref": "Trigger"
 	//   },
@@ -6070,7 +6384,7 @@ func (c *AccountsContainersTriggersDeleteCall) doRequest(alt string) (*http.Resp
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/triggers/{triggerId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers/{triggerId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -6099,6 +6413,7 @@ func (c *AccountsContainersTriggersDeleteCall) Do(opts ...googleapi.CallOption) 
 	return nil
 	// {
 	//   "description": "Deletes a GTM Trigger.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers/{triggerId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "tagmanager.accounts.containers.triggers.delete",
 	//   "parameterOrder": [
@@ -6126,7 +6441,7 @@ func (c *AccountsContainersTriggersDeleteCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/triggers/{triggerId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers/{triggerId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
 	//   ]
@@ -6203,7 +6518,7 @@ func (c *AccountsContainersTriggersGetCall) doRequest(alt string) (*http.Respons
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/triggers/{triggerId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers/{triggerId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -6257,6 +6572,7 @@ func (c *AccountsContainersTriggersGetCall) Do(opts ...googleapi.CallOption) (*T
 	return ret, nil
 	// {
 	//   "description": "Gets a GTM Trigger.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers/{triggerId}",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.containers.triggers.get",
 	//   "parameterOrder": [
@@ -6284,7 +6600,7 @@ func (c *AccountsContainersTriggersGetCall) Do(opts ...googleapi.CallOption) (*T
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/triggers/{triggerId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers/{triggerId}",
 	//   "response": {
 	//     "$ref": "Trigger"
 	//   },
@@ -6363,7 +6679,7 @@ func (c *AccountsContainersTriggersListCall) doRequest(alt string) (*http.Respon
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/triggers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -6416,6 +6732,7 @@ func (c *AccountsContainersTriggersListCall) Do(opts ...googleapi.CallOption) (*
 	return ret, nil
 	// {
 	//   "description": "Lists all GTM Triggers of a Container.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.containers.triggers.list",
 	//   "parameterOrder": [
@@ -6436,7 +6753,7 @@ func (c *AccountsContainersTriggersListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/triggers",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers",
 	//   "response": {
 	//     "$ref": "ListTriggersResponse"
 	//   },
@@ -6472,8 +6789,8 @@ func (r *AccountsContainersTriggersService) Update(accountId string, containerId
 }
 
 // Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the trigger in
-// storage.
+// this fingerprint must match the fingerprint of the trigger
+// in storage.
 func (c *AccountsContainersTriggersUpdateCall) Fingerprint(fingerprint string) *AccountsContainersTriggersUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
@@ -6518,7 +6835,7 @@ func (c *AccountsContainersTriggersUpdateCall) doRequest(alt string) (*http.Resp
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/triggers/{triggerId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers/{triggerId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -6572,6 +6889,7 @@ func (c *AccountsContainersTriggersUpdateCall) Do(opts ...googleapi.CallOption) 
 	return ret, nil
 	// {
 	//   "description": "Updates a GTM Trigger.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers/{triggerId}",
 	//   "httpMethod": "PUT",
 	//   "id": "tagmanager.accounts.containers.triggers.update",
 	//   "parameterOrder": [
@@ -6593,7 +6911,7 @@ func (c *AccountsContainersTriggersUpdateCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the trigger in storage.",
+	//       "description": "When provided, this fingerprint must match the fingerprint of the trigger\nin storage.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6604,7 +6922,7 @@ func (c *AccountsContainersTriggersUpdateCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/triggers/{triggerId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers/{triggerId}",
 	//   "request": {
 	//     "$ref": "Trigger"
 	//   },
@@ -6678,7 +6996,7 @@ func (c *AccountsContainersVariablesCreateCall) doRequest(alt string) (*http.Res
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/variables")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -6731,6 +7049,7 @@ func (c *AccountsContainersVariablesCreateCall) Do(opts ...googleapi.CallOption)
 	return ret, nil
 	// {
 	//   "description": "Creates a GTM Variable.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables",
 	//   "httpMethod": "POST",
 	//   "id": "tagmanager.accounts.containers.variables.create",
 	//   "parameterOrder": [
@@ -6751,7 +7070,7 @@ func (c *AccountsContainersVariablesCreateCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/variables",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables",
 	//   "request": {
 	//     "$ref": "Variable"
 	//   },
@@ -6820,7 +7139,7 @@ func (c *AccountsContainersVariablesDeleteCall) doRequest(alt string) (*http.Res
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/variables/{variableId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables/{variableId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -6849,6 +7168,7 @@ func (c *AccountsContainersVariablesDeleteCall) Do(opts ...googleapi.CallOption)
 	return nil
 	// {
 	//   "description": "Deletes a GTM Variable.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables/{variableId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "tagmanager.accounts.containers.variables.delete",
 	//   "parameterOrder": [
@@ -6876,7 +7196,7 @@ func (c *AccountsContainersVariablesDeleteCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/variables/{variableId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables/{variableId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
 	//   ]
@@ -6953,7 +7273,7 @@ func (c *AccountsContainersVariablesGetCall) doRequest(alt string) (*http.Respon
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/variables/{variableId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables/{variableId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -7007,6 +7327,7 @@ func (c *AccountsContainersVariablesGetCall) Do(opts ...googleapi.CallOption) (*
 	return ret, nil
 	// {
 	//   "description": "Gets a GTM Variable.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables/{variableId}",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.containers.variables.get",
 	//   "parameterOrder": [
@@ -7034,7 +7355,7 @@ func (c *AccountsContainersVariablesGetCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/variables/{variableId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables/{variableId}",
 	//   "response": {
 	//     "$ref": "Variable"
 	//   },
@@ -7113,7 +7434,7 @@ func (c *AccountsContainersVariablesListCall) doRequest(alt string) (*http.Respo
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/variables")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -7166,6 +7487,7 @@ func (c *AccountsContainersVariablesListCall) Do(opts ...googleapi.CallOption) (
 	return ret, nil
 	// {
 	//   "description": "Lists all GTM Variables of a Container.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.containers.variables.list",
 	//   "parameterOrder": [
@@ -7186,7 +7508,7 @@ func (c *AccountsContainersVariablesListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/variables",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables",
 	//   "response": {
 	//     "$ref": "ListVariablesResponse"
 	//   },
@@ -7222,8 +7544,8 @@ func (r *AccountsContainersVariablesService) Update(accountId string, containerI
 }
 
 // Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the variable in
-// storage.
+// this fingerprint must match the fingerprint of the variable
+// in storage.
 func (c *AccountsContainersVariablesUpdateCall) Fingerprint(fingerprint string) *AccountsContainersVariablesUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
@@ -7268,7 +7590,7 @@ func (c *AccountsContainersVariablesUpdateCall) doRequest(alt string) (*http.Res
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/variables/{variableId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables/{variableId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -7322,6 +7644,7 @@ func (c *AccountsContainersVariablesUpdateCall) Do(opts ...googleapi.CallOption)
 	return ret, nil
 	// {
 	//   "description": "Updates a GTM Variable.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables/{variableId}",
 	//   "httpMethod": "PUT",
 	//   "id": "tagmanager.accounts.containers.variables.update",
 	//   "parameterOrder": [
@@ -7343,7 +7666,7 @@ func (c *AccountsContainersVariablesUpdateCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the variable in storage.",
+	//       "description": "When provided, this fingerprint must match the fingerprint of the variable\nin storage.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7354,7 +7677,7 @@ func (c *AccountsContainersVariablesUpdateCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/variables/{variableId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables/{variableId}",
 	//   "request": {
 	//     "$ref": "Variable"
 	//   },
@@ -7428,7 +7751,7 @@ func (c *AccountsContainersVersionsCreateCall) doRequest(alt string) (*http.Resp
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/versions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -7481,6 +7804,7 @@ func (c *AccountsContainersVersionsCreateCall) Do(opts ...googleapi.CallOption) 
 	return ret, nil
 	// {
 	//   "description": "Creates a Container Version.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions",
 	//   "httpMethod": "POST",
 	//   "id": "tagmanager.accounts.containers.versions.create",
 	//   "parameterOrder": [
@@ -7501,7 +7825,7 @@ func (c *AccountsContainersVersionsCreateCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/versions",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions",
 	//   "request": {
 	//     "$ref": "CreateContainerVersionRequestVersionOptions"
 	//   },
@@ -7570,7 +7894,7 @@ func (c *AccountsContainersVersionsDeleteCall) doRequest(alt string) (*http.Resp
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -7599,6 +7923,7 @@ func (c *AccountsContainersVersionsDeleteCall) Do(opts ...googleapi.CallOption) 
 	return nil
 	// {
 	//   "description": "Deletes a Container Version.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "tagmanager.accounts.containers.versions.delete",
 	//   "parameterOrder": [
@@ -7626,7 +7951,7 @@ func (c *AccountsContainersVersionsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/tagmanager.edit.containerversions"
 	//   ]
@@ -7703,7 +8028,7 @@ func (c *AccountsContainersVersionsGetCall) doRequest(alt string) (*http.Respons
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -7757,6 +8082,7 @@ func (c *AccountsContainersVersionsGetCall) Do(opts ...googleapi.CallOption) (*C
 	return ret, nil
 	// {
 	//   "description": "Gets a Container Version.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.containers.versions.get",
 	//   "parameterOrder": [
@@ -7778,13 +8104,13 @@ func (c *AccountsContainersVersionsGetCall) Do(opts ...googleapi.CallOption) (*C
 	//       "type": "string"
 	//     },
 	//     "containerVersionId": {
-	//       "description": "The GTM Container Version ID. Specify published to retrieve the currently published version.",
+	//       "description": "The GTM Container Version ID. Specify \u003ccode\u003epublished\u003c/code\u003e to retrieve\nthe currently published version.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}",
 	//   "response": {
 	//     "$ref": "ContainerVersion"
 	//   },
@@ -7878,7 +8204,7 @@ func (c *AccountsContainersVersionsListCall) doRequest(alt string) (*http.Respon
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/versions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -7931,6 +8257,7 @@ func (c *AccountsContainersVersionsListCall) Do(opts ...googleapi.CallOption) (*
 	return ret, nil
 	// {
 	//   "description": "Lists all Container Versions of a GTM Container.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.containers.versions.list",
 	//   "parameterOrder": [
@@ -7963,7 +8290,7 @@ func (c *AccountsContainersVersionsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "boolean"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/versions",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions",
 	//   "response": {
 	//     "$ref": "ListContainerVersionsResponse"
 	//   },
@@ -7998,8 +8325,8 @@ func (r *AccountsContainersVersionsService) Publish(accountId string, containerI
 }
 
 // Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the container version
-// in storage.
+// this fingerprint must match the fingerprint of the
+// container version in storage.
 func (c *AccountsContainersVersionsPublishCall) Fingerprint(fingerprint string) *AccountsContainersVersionsPublishCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
@@ -8039,7 +8366,7 @@ func (c *AccountsContainersVersionsPublishCall) doRequest(alt string) (*http.Res
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/publish")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/publish")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -8093,6 +8420,7 @@ func (c *AccountsContainersVersionsPublishCall) Do(opts ...googleapi.CallOption)
 	return ret, nil
 	// {
 	//   "description": "Publishes a Container Version.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/publish",
 	//   "httpMethod": "POST",
 	//   "id": "tagmanager.accounts.containers.versions.publish",
 	//   "parameterOrder": [
@@ -8120,12 +8448,12 @@ func (c *AccountsContainersVersionsPublishCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the container version in storage.",
+	//       "description": "When provided, this fingerprint must match the fingerprint of the\ncontainer version in storage.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/publish",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/publish",
 	//   "response": {
 	//     "$ref": "PublishContainerVersionResponse"
 	//   },
@@ -8149,9 +8477,12 @@ type AccountsContainersVersionsRestoreCall struct {
 }
 
 // Restore: Restores a Container Version. This will overwrite the
-// container's current configuration (including its variables, triggers
-// and tags). The operation will not have any effect on the version that
-// is being served (i.e. the published version).
+// container's current
+// configuration (including its variables, triggers and tags). The
+// operation
+// will not have any effect on the version that is being served (i.e.
+// the
+// published version).
 func (r *AccountsContainersVersionsService) Restore(accountId string, containerId string, containerVersionId string) *AccountsContainersVersionsRestoreCall {
 	c := &AccountsContainersVersionsRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8194,7 +8525,7 @@ func (c *AccountsContainersVersionsRestoreCall) doRequest(alt string) (*http.Res
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/restore")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/restore")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -8247,7 +8578,8 @@ func (c *AccountsContainersVersionsRestoreCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Restores a Container Version. This will overwrite the container's current configuration (including its variables, triggers and tags). The operation will not have any effect on the version that is being served (i.e. the published version).",
+	//   "description": "Restores a Container Version. This will overwrite the container's current\nconfiguration (including its variables, triggers and tags). The operation\nwill not have any effect on the version that is being served (i.e. the\npublished version).",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/restore",
 	//   "httpMethod": "POST",
 	//   "id": "tagmanager.accounts.containers.versions.restore",
 	//   "parameterOrder": [
@@ -8275,7 +8607,7 @@ func (c *AccountsContainersVersionsRestoreCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/restore",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/restore",
 	//   "response": {
 	//     "$ref": "ContainerVersion"
 	//   },
@@ -8341,7 +8673,7 @@ func (c *AccountsContainersVersionsUndeleteCall) doRequest(alt string) (*http.Re
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/undelete")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/undelete")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -8395,6 +8727,7 @@ func (c *AccountsContainersVersionsUndeleteCall) Do(opts ...googleapi.CallOption
 	return ret, nil
 	// {
 	//   "description": "Undeletes a Container Version.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/undelete",
 	//   "httpMethod": "POST",
 	//   "id": "tagmanager.accounts.containers.versions.undelete",
 	//   "parameterOrder": [
@@ -8422,7 +8755,7 @@ func (c *AccountsContainersVersionsUndeleteCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/undelete",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/undelete",
 	//   "response": {
 	//     "$ref": "ContainerVersion"
 	//   },
@@ -8457,8 +8790,8 @@ func (r *AccountsContainersVersionsService) Update(accountId string, containerId
 }
 
 // Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the container version
-// in storage.
+// this fingerprint must match the fingerprint of the
+// container version in storage.
 func (c *AccountsContainersVersionsUpdateCall) Fingerprint(fingerprint string) *AccountsContainersVersionsUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
@@ -8503,7 +8836,7 @@ func (c *AccountsContainersVersionsUpdateCall) doRequest(alt string) (*http.Resp
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -8557,6 +8890,7 @@ func (c *AccountsContainersVersionsUpdateCall) Do(opts ...googleapi.CallOption) 
 	return ret, nil
 	// {
 	//   "description": "Updates a Container Version.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}",
 	//   "httpMethod": "PUT",
 	//   "id": "tagmanager.accounts.containers.versions.update",
 	//   "parameterOrder": [
@@ -8584,12 +8918,12 @@ func (c *AccountsContainersVersionsUpdateCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the container version in storage.",
+	//       "description": "When provided, this fingerprint must match the fingerprint of the\ncontainer version in storage.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}",
 	//   "request": {
 	//     "$ref": "ContainerVersion"
 	//   },
@@ -8661,7 +8995,7 @@ func (c *AccountsPermissionsCreateCall) doRequest(alt string) (*http.Response, e
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/permissions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/permissions")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -8713,6 +9047,7 @@ func (c *AccountsPermissionsCreateCall) Do(opts ...googleapi.CallOption) (*UserA
 	return ret, nil
 	// {
 	//   "description": "Creates a user's Account \u0026 Container Permissions.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/permissions",
 	//   "httpMethod": "POST",
 	//   "id": "tagmanager.accounts.permissions.create",
 	//   "parameterOrder": [
@@ -8726,7 +9061,7 @@ func (c *AccountsPermissionsCreateCall) Do(opts ...googleapi.CallOption) (*UserA
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/permissions",
+	//   "path": "tagmanager/v1/accounts/{accountId}/permissions",
 	//   "request": {
 	//     "$ref": "UserAccess"
 	//   },
@@ -8752,7 +9087,8 @@ type AccountsPermissionsDeleteCall struct {
 }
 
 // Delete: Removes a user from the account, revoking access to it and
-// all of its containers.
+// all of its
+// containers.
 func (r *AccountsPermissionsService) Delete(accountId string, permissionId string) *AccountsPermissionsDeleteCall {
 	c := &AccountsPermissionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8794,7 +9130,7 @@ func (c *AccountsPermissionsDeleteCall) doRequest(alt string) (*http.Response, e
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/permissions/{permissionId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/permissions/{permissionId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -8821,7 +9157,8 @@ func (c *AccountsPermissionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Removes a user from the account, revoking access to it and all of its containers.",
+	//   "description": "Removes a user from the account, revoking access to it and all of its\ncontainers.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/permissions/{permissionId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "tagmanager.accounts.permissions.delete",
 	//   "parameterOrder": [
@@ -8842,7 +9179,7 @@ func (c *AccountsPermissionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/permissions/{permissionId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/permissions/{permissionId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/tagmanager.manage.users"
 	//   ]
@@ -8917,7 +9254,7 @@ func (c *AccountsPermissionsGetCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/permissions/{permissionId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/permissions/{permissionId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -8970,6 +9307,7 @@ func (c *AccountsPermissionsGetCall) Do(opts ...googleapi.CallOption) (*UserAcce
 	return ret, nil
 	// {
 	//   "description": "Gets a user's Account \u0026 Container Permissions.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/permissions/{permissionId}",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.permissions.get",
 	//   "parameterOrder": [
@@ -8990,7 +9328,7 @@ func (c *AccountsPermissionsGetCall) Do(opts ...googleapi.CallOption) (*UserAcce
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/permissions/{permissionId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/permissions/{permissionId}",
 	//   "response": {
 	//     "$ref": "UserAccess"
 	//   },
@@ -9013,7 +9351,8 @@ type AccountsPermissionsListCall struct {
 }
 
 // List: List all users that have access to the account along with
-// Account and Container Permissions granted to each of them.
+// Account and
+// Container Permissions granted to each of them.
 func (r *AccountsPermissionsService) List(accountId string) *AccountsPermissionsListCall {
 	c := &AccountsPermissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9067,7 +9406,7 @@ func (c *AccountsPermissionsListCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/permissions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/permissions")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -9118,7 +9457,8 @@ func (c *AccountsPermissionsListCall) Do(opts ...googleapi.CallOption) (*ListAcc
 	}
 	return ret, nil
 	// {
-	//   "description": "List all users that have access to the account along with Account and Container Permissions granted to each of them.",
+	//   "description": "List all users that have access to the account along with Account and\nContainer Permissions granted to each of them.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/permissions",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.permissions.list",
 	//   "parameterOrder": [
@@ -9126,13 +9466,13 @@ func (c *AccountsPermissionsListCall) Do(opts ...googleapi.CallOption) (*ListAcc
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
-	//       "description": "The GTM Account ID. @required tagmanager.accounts.permissions.list",
+	//       "description": "The GTM Account ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/permissions",
+	//   "path": "tagmanager/v1/accounts/{accountId}/permissions",
 	//   "response": {
 	//     "$ref": "ListAccountUsersResponse"
 	//   },
@@ -9203,7 +9543,7 @@ func (c *AccountsPermissionsUpdateCall) doRequest(alt string) (*http.Response, e
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/permissions/{permissionId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/permissions/{permissionId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -9256,6 +9596,7 @@ func (c *AccountsPermissionsUpdateCall) Do(opts ...googleapi.CallOption) (*UserA
 	return ret, nil
 	// {
 	//   "description": "Updates a user's Account \u0026 Container Permissions.",
+	//   "flatPath": "tagmanager/v1/accounts/{accountId}/permissions/{permissionId}",
 	//   "httpMethod": "PUT",
 	//   "id": "tagmanager.accounts.permissions.update",
 	//   "parameterOrder": [
@@ -9276,7 +9617,7 @@ func (c *AccountsPermissionsUpdateCall) Do(opts ...googleapi.CallOption) (*UserA
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "accounts/{accountId}/permissions/{permissionId}",
+	//   "path": "tagmanager/v1/accounts/{accountId}/permissions/{permissionId}",
 	//   "request": {
 	//     "$ref": "UserAccess"
 	//   },

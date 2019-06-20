@@ -2864,6 +2864,9 @@ func (s *TestIssue) MarshalJSON() ([]byte, error) {
 // is also being used in ExecutionService in a read only mode for the
 // corresponding step.
 type TestSuiteOverview struct {
+	// ElapsedTime: Elapsed time of test suite.
+	ElapsedTime *Duration `json:"elapsedTime,omitempty"`
+
 	// ErrorCount: Number of test cases in error, typically set by the
 	// service by parsing the xml_source.
 	//
@@ -2903,7 +2906,7 @@ type TestSuiteOverview struct {
 	// - In create/response: optional - In update request: never
 	XmlSource *FileReference `json:"xmlSource,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ErrorCount") to
+	// ForceSendFields is a list of field names (e.g. "ElapsedTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2911,10 +2914,10 @@ type TestSuiteOverview struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ErrorCount") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "ElapsedTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

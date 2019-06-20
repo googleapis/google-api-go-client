@@ -1394,7 +1394,7 @@
       }
     }
   },
-  "revision": "20190609",
+  "revision": "20190616",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
@@ -1610,6 +1610,16 @@
       "description": "Confusion matrix for binary classification models.",
       "id": "BinaryConfusionMatrix",
       "properties": {
+        "accuracy": {
+          "description": "The fraction of predictions given the correct label.",
+          "format": "double",
+          "type": "number"
+        },
+        "f1Score": {
+          "description": "The equally weighted average of recall and precision.",
+          "format": "double",
+          "type": "number"
+        },
         "falseNegatives": {
           "description": "Number of false samples predicted as false.",
           "format": "int64",
@@ -1626,12 +1636,12 @@
           "type": "number"
         },
         "precision": {
-          "description": "Aggregate precision.",
+          "description": "The fraction of actual positive predictions that had positive actual\nlabels.",
           "format": "double",
           "type": "number"
         },
         "recall": {
-          "description": "Aggregate recall.",
+          "description": "The fraction of actual positive labels that were given a positive\nprediction.",
           "format": "double",
           "type": "number"
         },
@@ -2314,8 +2324,12 @@
           "description": "[Optional] Additional options if sourceFormat is set to GOOGLE_SHEETS."
         },
         "hivePartitioningMode": {
-          "description": "[Optional, Experimental] If hive partitioning is enabled, which mode to use. Two modes are supported: - AUTO: automatically infer partition key name(s) and type(s). - STRINGS: automatic infer partition key name(s). All types are strings. Not all storage formats support hive partitioning -- requesting hive partitioning on an unsupported format will lead to an error.",
+          "description": "[Optional, Trusted Tester] If hive partitioning is enabled, which mode to use. Two modes are supported: - AUTO: automatically infer partition key name(s) and type(s). - STRINGS: automatic infer partition key name(s). All types are strings. Not all storage formats support hive partitioning -- requesting hive partitioning on an unsupported format will lead to an error. Note: this setting is in the process of being deprecated in favor of hivePartitioningOptions.",
           "type": "string"
+        },
+        "hivePartitioningOptions": {
+          "$ref": "HivePartitioningOptions",
+          "description": "[Optional, Trusted Tester] Options to configure hive partitioning support."
         },
         "ignoreUnknownValues": {
           "description": "[Optional] Indicates if BigQuery should allow extra values that are not represented in the table schema. If true, the extra values are ignored. If false, records with extra columns are treated as bad records, and if there are too many bad records, an invalid error is returned in the job result. The default value is false. The sourceFormat property determines what BigQuery treats as an extra value: CSV: Trailing columns JSON: Named values that don't match any column names Google Cloud Bigtable: This setting is ignored. Google Cloud Datastore backups: This setting is ignored. Avro: This setting is ignored.",
@@ -2433,6 +2447,20 @@
         "skipLeadingRows": {
           "description": "[Optional] The number of rows at the top of a sheet that BigQuery will skip when reading the data. The default value is 0. This property is useful if you have header rows that should be skipped. When autodetect is on, behavior is the following: * skipLeadingRows unspecified - Autodetect tries to detect headers in the first row. If they are not detected, the row is read as data. Otherwise data is read starting from the second row. * skipLeadingRows is 0 - Instructs autodetect that there are no headers and data should be read starting from the first row. * skipLeadingRows = N \u003e 0 - Autodetect skips N-1 rows and tries to detect headers in row N. If headers are not detected, row N is just skipped. Otherwise row N is used to extract column names for the detected schema.",
           "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "HivePartitioningOptions": {
+      "id": "HivePartitioningOptions",
+      "properties": {
+        "mode": {
+          "description": "[Optional, Trusted Tester] When set, what mode of hive partitioning to use when reading data. Two modes are supported. (1) AUTO: automatically infer partition key name(s) and type(s). (2) STRINGS: automatically infer partition key name(s). All types are interpreted as strings. Not all storage formats support hive partitioning. Requesting hive partitioning on an unsupported format will lead to an error. Currently supported types include: AVRO, CSV, JSON, ORC and Parquet.",
+          "type": "string"
+        },
+        "sourceUriPrefix": {
+          "description": "[Optional, Trusted Tester] When hive partition detection is requested, a common prefix for all source uris should be supplied. The prefix must end immediately before the partition key encoding begins. For example, consider files following this data layout. gs://bucket/path_to_table/dt=2019-01-01/country=BR/id=7/file.avro gs://bucket/path_to_table/dt=2018-12-31/country=CA/id=3/file.avro When hive partitioning is requested with either AUTO or STRINGS detection, the common prefix can be either of gs://bucket/path_to_table or gs://bucket/path_to_table/ (trailing slash does not matter).",
           "type": "string"
         }
       },
@@ -2659,8 +2687,12 @@
           "type": "string"
         },
         "hivePartitioningMode": {
-          "description": "[Optional, Experimental] If hive partitioning is enabled, which mode to use. Two modes are supported: - AUTO: automatically infer partition key name(s) and type(s). - STRINGS: automatic infer partition key name(s). All types are strings. Not all storage formats support hive partitioning -- requesting hive partitioning on an unsupported format will lead to an error.",
+          "description": "[Optional, Trusted Tester] If hive partitioning is enabled, which mode to use. Two modes are supported: - AUTO: automatically infer partition key name(s) and type(s). - STRINGS: automatic infer partition key name(s). All types are strings. Not all storage formats support hive partitioning -- requesting hive partitioning on an unsupported format will lead to an error.",
           "type": "string"
+        },
+        "hivePartitioningOptions": {
+          "$ref": "HivePartitioningOptions",
+          "description": "[Optional, Trusted Tester] Options to configure hive partitioning support."
         },
         "ignoreUnknownValues": {
           "description": "[Optional] Indicates if BigQuery should allow extra values that are not represented in the table schema. If true, the extra values are ignored. If false, records with extra columns are treated as bad records, and if there are too many bad records, an invalid error is returned in the job result. The default value is false. The sourceFormat property determines what BigQuery treats as an extra value: CSV: Trailing columns JSON: Named values that don't match any column names",

@@ -2156,8 +2156,6 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaListWorkerPoolsRequest struct
 	// Example filter:
 	// configuration.labels.key1 = * AND (state = RUNNING OR state =
 	// UPDATING)
-	//
-	// This field is currently ignored in all requests.
 	Filter string `json:"filter,omitempty"`
 
 	// Parent: Resource name of the instance.
@@ -2287,7 +2285,7 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerConfig struct {
 	// International letters are permitted. Keys must start with a letter
 	// but
 	// values are optional.
-	// This field is currently ignored in all requests.
+	// There can not be more than 64 labels per resource.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MachineType: Required. Machine type of the worker, such as
@@ -5179,8 +5177,6 @@ func (r *ProjectsInstancesWorkerpoolsService) List(parent string) *ProjectsInsta
 // Example filter:
 // configuration.labels.key1 = * AND (state = RUNNING OR state =
 // UPDATING)
-//
-// This field is currently ignored in all requests.
 func (c *ProjectsInstancesWorkerpoolsListCall) Filter(filter string) *ProjectsInstancesWorkerpoolsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5296,7 +5292,7 @@ func (c *ProjectsInstancesWorkerpoolsListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. A filter to constrain the pools returned. Filters have the form:\n\n\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e [[AND|OR] \u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e]...\n\n\u003cfield\u003e is the path for a field or map key in the Pool proto message.\ne.g. \"configuration.disk_size_gb\" or \"configuration.labels.key\".\n\u003coperator\u003e can be one of \"\u003c\", \"\u003c=\", \"\u003e=\", \"\u003e\", \"=\", \"!=\", \":\".\n\":\" is a HAS operation for strings and repeated primitive fields.\n\u003cvalue\u003e is the value to test, case-insensitive for strings. \"*\" stands for\nany value and can be used to test for key presence.\nParenthesis determine AND/OR precedence. In space separated restrictions,\nAND is implicit, e.g. \"a = b x = y\" is equivalent to \"a = b AND x = y\".\n\nExample filter:\nconfiguration.labels.key1 = * AND (state = RUNNING OR state = UPDATING)\n\nThis field is currently ignored in all requests.",
+	//       "description": "Optional. A filter to constrain the pools returned. Filters have the form:\n\n\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e [[AND|OR] \u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e]...\n\n\u003cfield\u003e is the path for a field or map key in the Pool proto message.\ne.g. \"configuration.disk_size_gb\" or \"configuration.labels.key\".\n\u003coperator\u003e can be one of \"\u003c\", \"\u003c=\", \"\u003e=\", \"\u003e\", \"=\", \"!=\", \":\".\n\":\" is a HAS operation for strings and repeated primitive fields.\n\u003cvalue\u003e is the value to test, case-insensitive for strings. \"*\" stands for\nany value and can be used to test for key presence.\nParenthesis determine AND/OR precedence. In space separated restrictions,\nAND is implicit, e.g. \"a = b x = y\" is equivalent to \"a = b AND x = y\".\n\nExample filter:\nconfiguration.labels.key1 = * AND (state = RUNNING OR state = UPDATING)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

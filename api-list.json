@@ -1201,7 +1201,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://conversationai.github.io/",
+   "documentationLink": "https://github.com/conversationai/perspectiveapi/blob/master/README.md",
    "preferred": true
   },
   {
@@ -1603,7 +1603,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://cloud.google.com/dialogflow-enterprise/",
+   "documentationLink": "https://cloud.google.com/dialogflow/",
    "preferred": true
   },
   {
@@ -1618,7 +1618,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://cloud.google.com/dialogflow-enterprise/",
+   "documentationLink": "https://cloud.google.com/dialogflow/",
    "preferred": false
   },
   {
@@ -1871,6 +1871,21 @@
    },
    "documentationLink": "https://cloud.google.com/filestore/",
    "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "firebase:v1beta1",
+   "name": "firebase",
+   "version": "v1beta1",
+   "title": "Firebase Management API",
+   "description": "The Firebase Management API enables programmatic setup and management of Firebase projects, including a project's Firebase resources and Firebase apps.",
+   "discoveryRestUrl": "https://firebase.googleapis.com/$discovery/rest?version=v1beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://firebase.google.com",
+   "preferred": true
   },
   {
    "kind": "discovery#directoryItem",
@@ -2536,6 +2551,36 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "osconfig:v1alpha1",
+   "name": "osconfig",
+   "version": "v1alpha1",
+   "title": "Cloud OS Config API",
+   "description": "Manages OS configurations for GCE VM instances.",
+   "discoveryRestUrl": "https://osconfig.googleapis.com/$discovery/rest?version=v1alpha1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "osconfig:v1alpha2",
+   "name": "osconfig",
+   "version": "v1alpha2",
+   "title": "Cloud OS Config API",
+   "description": "Manages OS configurations for GCE VM instances.",
+   "discoveryRestUrl": "https://osconfig.googleapis.com/$discovery/rest?version=v1alpha2",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "oslogin:v1alpha",
    "name": "oslogin",
    "version": "v1alpha",
@@ -2923,6 +2968,21 @@
    },
    "documentationLink": "https://cloud.google.com/run/",
    "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "run:v1beta1",
+   "name": "run",
+   "version": "v1beta1",
+   "title": "Cloud Run API",
+   "description": "Deploy and manage user provided container images that scale automatically based on HTTP traffic.",
+   "discoveryRestUrl": "https://run.googleapis.com/$discovery/rest?version=v1beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/run/",
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",

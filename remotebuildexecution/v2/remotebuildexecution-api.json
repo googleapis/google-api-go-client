@@ -446,7 +446,7 @@
       }
     }
   },
-  "revision": "20190612",
+  "revision": "20190618",
   "rootUrl": "https://remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -1619,7 +1619,7 @@
       "id": "GoogleDevtoolsRemotebuildexecutionAdminV1alphaListWorkerPoolsRequest",
       "properties": {
         "filter": {
-          "description": "Optional. A filter to constrain the pools returned. Filters have the form:\n\n\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e [[AND|OR] \u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e]...\n\n\u003cfield\u003e is the path for a field or map key in the Pool proto message.\ne.g. \"configuration.disk_size_gb\" or \"configuration.labels.key\".\n\u003coperator\u003e can be one of \"\u003c\", \"\u003c=\", \"\u003e=\", \"\u003e\", \"=\", \"!=\", \":\".\n\":\" is a HAS operation for strings and repeated primitive fields.\n\u003cvalue\u003e is the value to test, case-insensitive for strings. \"*\" stands for\nany value and can be used to test for key presence.\nParenthesis determine AND/OR precedence. In space separated restrictions,\nAND is implicit, e.g. \"a = b x = y\" is equivalent to \"a = b AND x = y\".\n\nExample filter:\nconfiguration.labels.key1 = * AND (state = RUNNING OR state = UPDATING)\n\nThis field is currently ignored in all requests.",
+          "description": "Optional. A filter to constrain the pools returned. Filters have the form:\n\n\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e [[AND|OR] \u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e]...\n\n\u003cfield\u003e is the path for a field or map key in the Pool proto message.\ne.g. \"configuration.disk_size_gb\" or \"configuration.labels.key\".\n\u003coperator\u003e can be one of \"\u003c\", \"\u003c=\", \"\u003e=\", \"\u003e\", \"=\", \"!=\", \":\".\n\":\" is a HAS operation for strings and repeated primitive fields.\n\u003cvalue\u003e is the value to test, case-insensitive for strings. \"*\" stands for\nany value and can be used to test for key presence.\nParenthesis determine AND/OR precedence. In space separated restrictions,\nAND is implicit, e.g. \"a = b x = y\" is equivalent to \"a = b AND x = y\".\n\nExample filter:\nconfiguration.labels.key1 = * AND (state = RUNNING OR state = UPDATING)",
           "type": "string"
         },
         "parent": {
@@ -1675,7 +1675,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels associated with the workers.\nLabel keys and values can be no longer than 63 characters, can only contain\nlowercase letters, numeric characters, underscores and dashes.\nInternational letters are permitted. Keys must start with a letter but\nvalues are optional.\nThis field is currently ignored in all requests.",
+          "description": "Labels associated with the workers.\nLabel keys and values can be no longer than 63 characters, can only contain\nlowercase letters, numeric characters, underscores and dashes.\nInternational letters are permitted. Keys must start with a letter but\nvalues are optional.\nThere can not be more than 64 labels per resource.",
           "type": "object"
         },
         "machineType": {

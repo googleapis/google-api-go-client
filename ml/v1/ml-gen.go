@@ -646,6 +646,9 @@ type GoogleCloudMlV1__HyperparameterOutput struct {
 	// Only set for trials of built-in algorithms jobs that have succeeded.
 	BuiltInAlgorithmOutput *GoogleCloudMlV1__BuiltInAlgorithmOutput `json:"builtInAlgorithmOutput,omitempty"`
 
+	// EndTime: Output only. End time for the trial.
+	EndTime string `json:"endTime,omitempty"`
+
 	// FinalMetric: The final objective metric seen for this trial.
 	FinalMetric *GoogleCloudMlV1HyperparameterOutputHyperparameterMetric `json:"finalMetric,omitempty"`
 
@@ -654,6 +657,26 @@ type GoogleCloudMlV1__HyperparameterOutput struct {
 
 	// IsTrialStoppedEarly: True if the trial is stopped early.
 	IsTrialStoppedEarly bool `json:"isTrialStoppedEarly,omitempty"`
+
+	// StartTime: Output only. Start time for the trial.
+	StartTime string `json:"startTime,omitempty"`
+
+	// State: Output only. The detailed state of the trial.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The job state is unspecified.
+	//   "QUEUED" - The job has been just created and processing has not yet
+	// begun.
+	//   "PREPARING" - The service is preparing to run the job.
+	//   "RUNNING" - The job is in progress.
+	//   "SUCCEEDED" - The job completed successfully.
+	//   "FAILED" - The job failed.
+	// `error_message` should contain the details of the failure.
+	//   "CANCELLING" - The job is being cancelled.
+	// `error_message` should describe the reason for the cancellation.
+	//   "CANCELLED" - The job has been cancelled.
+	// `error_message` should describe the reason for the cancellation.
+	State string `json:"state,omitempty"`
 
 	// TrialId: The trial id for these results.
 	TrialId string `json:"trialId,omitempty"`

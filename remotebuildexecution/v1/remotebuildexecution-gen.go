@@ -2192,8 +2192,6 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaListWorkerPoolsRequest struct
 	// Example filter:
 	// configuration.labels.key1 = * AND (state = RUNNING OR state =
 	// UPDATING)
-	//
-	// This field is currently ignored in all requests.
 	Filter string `json:"filter,omitempty"`
 
 	// Parent: Resource name of the instance.
@@ -2319,7 +2317,7 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerConfig struct {
 	// International letters are permitted. Keys must start with a letter
 	// but
 	// values are optional.
-	// This field is currently ignored in all requests.
+	// There can not be more than 64 labels per resource.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MachineType: Required. Machine type of the worker, such as

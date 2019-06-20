@@ -646,6 +646,12 @@ func (s *BinaryClassificationMetrics) MarshalJSON() ([]byte, error) {
 // BinaryConfusionMatrix: Confusion matrix for binary classification
 // models.
 type BinaryConfusionMatrix struct {
+	// Accuracy: The fraction of predictions given the correct label.
+	Accuracy float64 `json:"accuracy,omitempty"`
+
+	// F1Score: The equally weighted average of recall and precision.
+	F1Score float64 `json:"f1Score,omitempty"`
+
 	// FalseNegatives: Number of false samples predicted as false.
 	FalseNegatives int64 `json:"falseNegatives,omitempty,string"`
 
@@ -656,10 +662,14 @@ type BinaryConfusionMatrix struct {
 	// the following metric.
 	PositiveClassThreshold float64 `json:"positiveClassThreshold,omitempty"`
 
-	// Precision: Aggregate precision.
+	// Precision: The fraction of actual positive predictions that had
+	// positive actual
+	// labels.
 	Precision float64 `json:"precision,omitempty"`
 
-	// Recall: Aggregate recall.
+	// Recall: The fraction of actual positive labels that were given a
+	// positive
+	// prediction.
 	Recall float64 `json:"recall,omitempty"`
 
 	// TrueNegatives: Number of true samples predicted as false.
@@ -668,7 +678,7 @@ type BinaryConfusionMatrix struct {
 	// TruePositives: Number of true samples predicted as true.
 	TruePositives int64 `json:"truePositives,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "FalseNegatives") to
+	// ForceSendFields is a list of field names (e.g. "Accuracy") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -676,13 +686,12 @@ type BinaryConfusionMatrix struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FalseNegatives") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Accuracy") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -695,6 +704,8 @@ func (s *BinaryConfusionMatrix) MarshalJSON() ([]byte, error) {
 func (s *BinaryConfusionMatrix) UnmarshalJSON(data []byte) error {
 	type NoMethod BinaryConfusionMatrix
 	var s1 struct {
+		Accuracy               gensupport.JSONFloat64 `json:"accuracy"`
+		F1Score                gensupport.JSONFloat64 `json:"f1Score"`
 		PositiveClassThreshold gensupport.JSONFloat64 `json:"positiveClassThreshold"`
 		Precision              gensupport.JSONFloat64 `json:"precision"`
 		Recall                 gensupport.JSONFloat64 `json:"recall"`
@@ -704,6 +715,8 @@ func (s *BinaryConfusionMatrix) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
+	s.Accuracy = float64(s1.Accuracy)
+	s.F1Score = float64(s1.F1Score)
 	s.PositiveClassThreshold = float64(s1.PositiveClassThreshold)
 	s.Precision = float64(s1.Precision)
 	s.Recall = float64(s1.Recall)
@@ -1840,13 +1853,19 @@ type ExternalDataConfiguration struct {
 	// set to GOOGLE_SHEETS.
 	GoogleSheetsOptions *GoogleSheetsOptions `json:"googleSheetsOptions,omitempty"`
 
-	// HivePartitioningMode: [Optional, Experimental] If hive partitioning
+	// HivePartitioningMode: [Optional, Trusted Tester] If hive partitioning
 	// is enabled, which mode to use. Two modes are supported: - AUTO:
 	// automatically infer partition key name(s) and type(s). - STRINGS:
 	// automatic infer partition key name(s). All types are strings. Not all
 	// storage formats support hive partitioning -- requesting hive
-	// partitioning on an unsupported format will lead to an error.
+	// partitioning on an unsupported format will lead to an error. Note:
+	// this setting is in the process of being deprecated in favor of
+	// hivePartitioningOptions.
 	HivePartitioningMode string `json:"hivePartitioningMode,omitempty"`
+
+	// HivePartitioningOptions: [Optional, Trusted Tester] Options to
+	// configure hive partitioning support.
+	HivePartitioningOptions *HivePartitioningOptions `json:"hivePartitioningOptions,omitempty"`
 
 	// IgnoreUnknownValues: [Optional] Indicates if BigQuery should allow
 	// extra values that are not represented in the table schema. If true,
@@ -2074,6 +2093,53 @@ type GoogleSheetsOptions struct {
 
 func (s *GoogleSheetsOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSheetsOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type HivePartitioningOptions struct {
+	// Mode: [Optional, Trusted Tester] When set, what mode of hive
+	// partitioning to use when reading data. Two modes are supported. (1)
+	// AUTO: automatically infer partition key name(s) and type(s). (2)
+	// STRINGS: automatically infer partition key name(s). All types are
+	// interpreted as strings. Not all storage formats support hive
+	// partitioning. Requesting hive partitioning on an unsupported format
+	// will lead to an error. Currently supported types include: AVRO, CSV,
+	// JSON, ORC and Parquet.
+	Mode string `json:"mode,omitempty"`
+
+	// SourceUriPrefix: [Optional, Trusted Tester] When hive partition
+	// detection is requested, a common prefix for all source uris should be
+	// supplied. The prefix must end immediately before the partition key
+	// encoding begins. For example, consider files following this data
+	// layout.
+	// gs://bucket/path_to_table/dt=2019-01-01/country=BR/id=7/file.avro
+	// gs://bucket/path_to_table/dt=2018-12-31/country=CA/id=3/file.avro
+	// When hive partitioning is requested with either AUTO or STRINGS
+	// detection, the common prefix can be either of
+	// gs://bucket/path_to_table or gs://bucket/path_to_table/ (trailing
+	// slash does not matter).
+	SourceUriPrefix string `json:"sourceUriPrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Mode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Mode") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HivePartitioningOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod HivePartitioningOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2410,13 +2476,17 @@ type JobConfigurationLoad struct {
 	// specify a tab separator. The default value is a comma (',').
 	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
 
-	// HivePartitioningMode: [Optional, Experimental] If hive partitioning
+	// HivePartitioningMode: [Optional, Trusted Tester] If hive partitioning
 	// is enabled, which mode to use. Two modes are supported: - AUTO:
 	// automatically infer partition key name(s) and type(s). - STRINGS:
 	// automatic infer partition key name(s). All types are strings. Not all
 	// storage formats support hive partitioning -- requesting hive
 	// partitioning on an unsupported format will lead to an error.
 	HivePartitioningMode string `json:"hivePartitioningMode,omitempty"`
+
+	// HivePartitioningOptions: [Optional, Trusted Tester] Options to
+	// configure hive partitioning support.
+	HivePartitioningOptions *HivePartitioningOptions `json:"hivePartitioningOptions,omitempty"`
 
 	// IgnoreUnknownValues: [Optional] Indicates if BigQuery should allow
 	// extra values that are not represented in the table schema. If true,

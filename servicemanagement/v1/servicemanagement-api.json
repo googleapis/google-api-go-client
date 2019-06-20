@@ -881,7 +881,7 @@
       }
     }
   },
-  "revision": "20190610",
+  "revision": "20190614",
   "rootUrl": "https://servicemanagement.googleapis.com/",
   "schemas": {
     "Advice": {
@@ -2304,7 +2304,7 @@
       "type": "object"
     },
     "MonitoredResourceDescriptor": {
-      "description": "An object that describes the schema of a MonitoredResource object using a\ntype name and a set of labels.  For example, the monitored resource\ndescriptor for Google Compute Engine VM instances has a type of\n`\"gce_instance\"` and specifies the use of the labels `\"instance_id\"` and\n`\"zone\"` to identify particular VM instances.\n\nDifferent APIs can support different monitored resource types. APIs generally\nprovide a `list` method that returns the monitored resource descriptors used\nby the API.\n\nNext ID: 10",
+      "description": "An object that describes the schema of a MonitoredResource object using a\ntype name and a set of labels.  For example, the monitored resource\ndescriptor for Google Compute Engine VM instances has a type of\n`\"gce_instance\"` and specifies the use of the labels `\"instance_id\"` and\n`\"zone\"` to identify particular VM instances.\n\nDifferent APIs can support different monitored resource types. APIs generally\nprovide a `list` method that returns the monitored resource descriptors used\nby the API.",
       "id": "MonitoredResourceDescriptor",
       "properties": {
         "description": {

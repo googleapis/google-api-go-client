@@ -15,7 +15,7 @@
   "description": "Reads and publishes results from Firebase Test Lab.",
   "discoveryVersion": "v1",
   "documentationLink": "https://firebase.google.com/docs/test-lab/",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/LfQ_G3efMP-O7BZIeolFCEKsFU4\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/vlKNnB9Yf-iJEQaHLy-x7eKICw0\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1271,7 +1271,7 @@
       }
     }
   },
-  "revision": "20190613",
+  "revision": "20190618",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AndroidAppInfo": {
@@ -2646,6 +2646,10 @@
       "description": "A summary of a test suite result either parsed from XML or uploaded directly by a user.\n\nNote: the API related comments are for StepService only. This message is also being used in ExecutionService in a read only mode for the corresponding step.",
       "id": "TestSuiteOverview",
       "properties": {
+        "elapsedTime": {
+          "$ref": "Duration",
+          "description": "Elapsed time of test suite."
+        },
         "errorCount": {
           "description": "Number of test cases in error, typically set by the service by parsing the xml_source.\n\n- In create/response: always set - In update request: never",
           "format": "int32",

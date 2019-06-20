@@ -17,7 +17,7 @@
   "canonicalName": "Dialogflow",
   "description": "Builds conversational interfaces (for example, chatbots, and voice-powered apps and devices).",
   "discoveryVersion": "v1",
-  "documentationLink": "https://cloud.google.com/dialogflow-enterprise/",
+  "documentationLink": "https://cloud.google.com/dialogflow/",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -425,7 +425,7 @@
                   ],
                   "parameters": {
                     "languageCode": {
-                      "description": "Optional. The language of entity synonyms defined in `entity_type`. If not\nspecified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+                      "description": "Optional. The language of entity synonyms defined in `entity_type`. If not\nspecified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
                       "location": "query",
                       "type": "string"
                     },
@@ -485,7 +485,7 @@
                   ],
                   "parameters": {
                     "languageCode": {
-                      "description": "Optional. The language to retrieve entity synonyms for. If not specified,\nthe agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+                      "description": "Optional. The language to retrieve entity synonyms for. If not specified,\nthe agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
                       "location": "query",
                       "type": "string"
                     },
@@ -516,7 +516,7 @@
                   ],
                   "parameters": {
                     "languageCode": {
-                      "description": "Optional. The language to list entity synonyms for. If not specified,\nthe agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+                      "description": "Optional. The language to list entity synonyms for. If not specified,\nthe agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
                       "location": "query",
                       "type": "string"
                     },
@@ -558,7 +558,7 @@
                   ],
                   "parameters": {
                     "languageCode": {
-                      "description": "Optional. The language of entity synonyms defined in `entity_type`. If not\nspecified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+                      "description": "Optional. The language of entity synonyms defined in `entity_type`. If not\nspecified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
                       "location": "query",
                       "type": "string"
                     },
@@ -725,7 +725,7 @@
                           ],
                           "parameters": {
                             "session": {
-                              "description": "Required. The name of the session this query is sent to. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`, or\n`projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e`. If `Environment ID` is not specified, we assume\ndefault 'draft' environment. If `User ID` is not specified, we are using\n\"-\". It’s up to the API caller to choose an appropriate `Session ID` and\n`User Id`. They can be a random numbers or some type of user and session\nidentifiers (preferably hashed). The length of the `Session ID` and\n`User ID` must not exceed 36 characters.",
+                              "description": "Required. The name of the session this query is sent to. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`, or\n`projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e`. If `Environment ID` is not specified, we assume\ndefault 'draft' environment. If `User ID` is not specified, we are using\n\"-\". It's up to the API caller to choose an appropriate `Session ID` and\n`User Id`. They can be a random numbers or some type of user and session\nidentifiers (preferably hashed). The length of the `Session ID` and\n`User ID` must not exceed 36 characters.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
                               "required": true,
@@ -1145,7 +1145,7 @@
                       "type": "string"
                     },
                     "languageCode": {
-                      "description": "Optional. The language of training phrases, parameters and rich messages\ndefined in `intent`. If not specified, the agent's default language is\nused. [Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+                      "description": "Optional. The language of training phrases, parameters and rich messages\ndefined in `intent`. If not specified, the agent's default language is\nused. [Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
                       "location": "query",
                       "type": "string"
                     },
@@ -1214,7 +1214,7 @@
                       "type": "string"
                     },
                     "languageCode": {
-                      "description": "Optional. The language to retrieve training phrases, parameters and rich\nmessages for. If not specified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+                      "description": "Optional. The language to retrieve training phrases, parameters and rich\nmessages for. If not specified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
                       "location": "query",
                       "type": "string"
                     },
@@ -1254,7 +1254,7 @@
                       "type": "string"
                     },
                     "languageCode": {
-                      "description": "Optional. The language to list training phrases, parameters and rich\nmessages for. If not specified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+                      "description": "Optional. The language to list training phrases, parameters and rich\nmessages for. If not specified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
                       "location": "query",
                       "type": "string"
                     },
@@ -1305,7 +1305,7 @@
                       "type": "string"
                     },
                     "languageCode": {
-                      "description": "Optional. The language of training phrases, parameters and rich messages\ndefined in `intent`. If not specified, the agent's default language is\nused. [Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+                      "description": "Optional. The language of training phrases, parameters and rich messages\ndefined in `intent`. If not specified, the agent's default language is\nused. [Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
                       "location": "query",
                       "type": "string"
                     },
@@ -1725,7 +1725,7 @@
                   ],
                   "parameters": {
                     "session": {
-                      "description": "Required. The name of the session this query is sent to. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`, or\n`projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e`. If `Environment ID` is not specified, we assume\ndefault 'draft' environment. If `User ID` is not specified, we are using\n\"-\". It’s up to the API caller to choose an appropriate `Session ID` and\n`User Id`. They can be a random numbers or some type of user and session\nidentifiers (preferably hashed). The length of the `Session ID` and\n`User ID` must not exceed 36 characters.",
+                      "description": "Required. The name of the session this query is sent to. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`, or\n`projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e`. If `Environment ID` is not specified, we assume\ndefault 'draft' environment. If `User ID` is not specified, we are using\n\"-\". It's up to the API caller to choose an appropriate `Session ID` and\n`User Id`. They can be a random numbers or some type of user and session\nidentifiers (preferably hashed). The length of the `Session ID` and\n`User ID` must not exceed 36 characters.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
                       "required": true,
@@ -2447,7 +2447,7 @@
       }
     }
   },
-  "revision": "20190610",
+  "revision": "20190616",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse": {
@@ -2496,7 +2496,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Optional. The collection of parameters associated with this context.\nRefer to [this\ndoc](https://cloud.google.com/dialogflow-enterprise/docs/intents-actions-parameters)\nfor syntax.",
+          "description": "Optional. The collection of parameters associated with this context.\nRefer to [this\ndoc](https://cloud.google.com/dialogflow/docs/intents-actions-parameters)\nfor syntax.",
           "type": "object"
         }
       },
@@ -2573,7 +2573,7 @@
       "id": "GoogleCloudDialogflowV2EventInput",
       "properties": {
         "languageCode": {
-          "description": "Required. The language of this query. See [Language\nSupport](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nfor a list of the currently supported language codes. Note that queries in\nthe same session do not necessarily need to specify the same language.",
+          "description": "Required. The language of this query. See [Language\nSupport](https://cloud.google.com/dialogflow/docs/reference/language)\nfor a list of the currently supported language codes. Note that queries in\nthe same session do not necessarily need to specify the same language.",
           "type": "string"
         },
         "name": {
@@ -3185,7 +3185,7 @@
           "type": "string"
         },
         "prompts": {
-          "description": "Optional. The collection of prompts that the agent can present to the\nuser in order to collect value for the parameter.",
+          "description": "Optional. The collection of prompts that the agent can present to the\nuser in order to collect a value for the parameter.",
           "items": {
             "type": "string"
           },
@@ -3322,7 +3322,7 @@
           "type": "number"
         },
         "languageCode": {
-          "description": "The language that was triggered during intent detection.\nSee [Language\nSupport](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nfor a list of the currently supported language codes.",
+          "description": "The language that was triggered during intent detection.\nSee [Language\nSupport](https://cloud.google.com/dialogflow/docs/reference/language)\nfor a list of the currently supported language codes.",
           "type": "string"
         },
         "outputContexts": {
@@ -3425,7 +3425,7 @@
       "properties": {
         "followupEventInput": {
           "$ref": "GoogleCloudDialogflowV2EventInput",
-          "description": "Optional. Makes the platform immediately invoke another `DetectIntent` call\ninternally with the specified event as input."
+          "description": "Optional. Makes the platform immediately invoke another `DetectIntent` call\ninternally with the specified event as input.\nWhen this field is set, Dialogflow ignores the `fulfillment_text`,\n`fulfillment_messages`, and `payload` fields."
         },
         "fulfillmentMessages": {
           "description": "Optional. The collection of rich messages to present to the user. This\nvalue is passed directly to `QueryResult.fulfillment_messages`.",
@@ -3481,7 +3481,7 @@
           "type": "string"
         },
         "avatarUri": {
-          "description": "Optional. The URI of the agent's avatar.\nAvatars are used throughout the Dialogflow console and in the self-hosted\n[Web\nDemo](https://cloud.google.com/dialogflow-enterprise/docs/integrations/web-demo)\nintegration.",
+          "description": "Optional. The URI of the agent's avatar.\nAvatars are used throughout the Dialogflow console and in the self-hosted\n[Web\nDemo](https://cloud.google.com/dialogflow/docs/integrations/web-demo)\nintegration.",
           "type": "string"
         },
         "classificationThreshold": {
@@ -3490,7 +3490,7 @@
           "type": "number"
         },
         "defaultLanguageCode": {
-          "description": "Required. The default language of the agent as a language tag. See\n[Language\nSupport](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nfor a list of the currently supported language codes. This field cannot be\nset by the `Update` method.",
+          "description": "Required. The default language of the agent as a language tag. See\n[Language\nSupport](https://cloud.google.com/dialogflow/docs/reference/language)\nfor a list of the currently supported language codes. This field cannot be\nset by the `Update` method.",
           "type": "string"
         },
         "description": {
@@ -3565,7 +3565,7 @@
           "type": "array"
         },
         "languageCode": {
-          "description": "Optional. The language of entity synonyms defined in `entities`. If not\nspecified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+          "description": "Optional. The language of entity synonyms defined in `entities`. If not\nspecified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
           "type": "string"
         }
       },
@@ -3583,7 +3583,7 @@
           "type": "array"
         },
         "languageCode": {
-          "description": "Optional. The language of entity synonyms defined in `entities`. If not\nspecified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+          "description": "Optional. The language of entity synonyms defined in `entities`. If not\nspecified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
           "type": "string"
         }
       },
@@ -3629,7 +3629,7 @@
           "type": "array"
         },
         "languageCode": {
-          "description": "Optional. The language of entity synonyms defined in `entities`. If not\nspecified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+          "description": "Optional. The language of entity synonyms defined in `entities`. If not\nspecified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
           "type": "string"
         },
         "updateMask": {
@@ -3653,7 +3653,7 @@
           "type": "string"
         },
         "languageCode": {
-          "description": "Optional. The language of entity synonyms defined in `entity_types`. If not\nspecified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+          "description": "Optional. The language of entity synonyms defined in `entity_types`. If not\nspecified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
           "type": "string"
         },
         "updateMask": {
@@ -3703,7 +3703,7 @@
           "type": "string"
         },
         "languageCode": {
-          "description": "Optional. The language of training phrases, parameters and rich messages\ndefined in `intents`. If not specified, the agent's default language is\nused. [Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+          "description": "Optional. The language of training phrases, parameters and rich messages\ndefined in `intents`. If not specified, the agent's default language is\nused. [Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
           "type": "string"
         },
         "updateMask": {
@@ -3746,7 +3746,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Optional. The collection of parameters associated with this context.\nRefer to [this\ndoc](https://cloud.google.com/dialogflow-enterprise/docs/intents-actions-parameters)\nfor syntax.",
+          "description": "Optional. The collection of parameters associated with this context.\nRefer to [this\ndoc](https://cloud.google.com/dialogflow/docs/intents-actions-parameters)\nfor syntax.",
           "type": "object"
         }
       },
@@ -3945,7 +3945,7 @@
       "id": "GoogleCloudDialogflowV2beta1EventInput",
       "properties": {
         "languageCode": {
-          "description": "Required. The language of this query. See [Language\nSupport](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nfor a list of the currently supported language codes. Note that queries in\nthe same session do not necessarily need to specify the same language.",
+          "description": "Required. The language of this query. See [Language\nSupport](https://cloud.google.com/dialogflow/docs/reference/language)\nfor a list of the currently supported language codes. Note that queries in\nthe same session do not necessarily need to specify the same language.",
           "type": "string"
         },
         "name": {
@@ -4039,7 +4039,7 @@
           "type": "boolean"
         },
         "languageCode": {
-          "description": "Required. The language of the supplied audio. Dialogflow does not do\ntranslations. See [Language\nSupport](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nfor a list of the currently supported language codes. Note that queries in\nthe same session do not necessarily need to specify the same language.",
+          "description": "Required. The language of the supplied audio. Dialogflow does not do\ntranslations. See [Language\nSupport](https://cloud.google.com/dialogflow/docs/reference/language)\nfor a list of the currently supported language codes. Note that queries in\nthe same session do not necessarily need to specify the same language.",
           "type": "string"
         },
         "model": {
@@ -4056,9 +4056,9 @@
           ],
           "enumDescriptions": [
             "No model variant specified. In this case Dialogflow defaults to\nUSE_BEST_AVAILABLE.",
-            "Use the best available variant of the Speech\nmodel that the caller is eligible for.\n\nPlease see the [Dialogflow\ndocs](https://cloud.google.com/dialogflow-enterprise/docs/data-logging) for\nhow to make your project eligible for enhanced models.",
+            "Use the best available variant of the Speech\nmodel that the caller is eligible for.\n\nPlease see the [Dialogflow\ndocs](https://cloud.google.com/dialogflow/docs/data-logging) for\nhow to make your project eligible for enhanced models.",
             "Use standard model variant even if an enhanced model is available.  See the\n[Cloud Speech\ndocumentation](https://cloud.google.com/speech-to-text/docs/enhanced-models)\nfor details about enhanced models.",
-            "Use an enhanced model variant:\n\n* If an enhanced variant does not exist for the given\n  model and request language, Dialogflow falls\n  back to the standard variant.\n\n  The [Cloud Speech\n  documentation](https://cloud.google.com/speech-to-text/docs/enhanced-models)\n  describes which models have enhanced variants.\n\n* If the API caller isn't eligible for enhanced models, Dialogflow returns\n  an error.  Please see the [Dialogflow\n  docs](https://cloud.google.com/dialogflow-enterprise/docs/data-logging)\n  for how to make your project eligible."
+            "Use an enhanced model variant:\n\n* If an enhanced variant does not exist for the given\n  model and request language, Dialogflow falls\n  back to the standard variant.\n\n  The [Cloud Speech\n  documentation](https://cloud.google.com/speech-to-text/docs/enhanced-models)\n  describes which models have enhanced variants.\n\n* If the API caller isn't eligible for enhanced models, Dialogflow returns\n  an error.  Please see the [Dialogflow\n  docs](https://cloud.google.com/dialogflow/docs/data-logging)\n  for how to make your project eligible."
           ],
           "type": "string"
         },
@@ -4730,7 +4730,7 @@
           "type": "string"
         },
         "prompts": {
-          "description": "Optional. The collection of prompts that the agent can present to the\nuser in order to collect value for the parameter.",
+          "description": "Optional. The collection of prompts that the agent can present to the\nuser in order to collect a value for the parameter.",
           "items": {
             "type": "string"
           },
@@ -5174,7 +5174,7 @@
           "description": "The result from Knowledge Connector (if any), ordered by decreasing\n`KnowledgeAnswers.match_confidence`."
         },
         "languageCode": {
-          "description": "The language that was triggered during intent detection.\nSee [Language\nSupport](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nfor a list of the currently supported language codes.",
+          "description": "The language that was triggered during intent detection.\nSee [Language\nSupport](https://cloud.google.com/dialogflow/docs/reference/language)\nfor a list of the currently supported language codes.",
           "type": "string"
         },
         "outputContexts": {
@@ -5369,7 +5369,7 @@
       "id": "GoogleCloudDialogflowV2beta1TextInput",
       "properties": {
         "languageCode": {
-          "description": "Required. The language of this conversational query. See [Language\nSupport](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nfor a list of the currently supported language codes. Note that queries in\nthe same session do not necessarily need to specify the same language.",
+          "description": "Required. The language of this conversational query. See [Language\nSupport](https://cloud.google.com/dialogflow/docs/reference/language)\nfor a list of the currently supported language codes. Note that queries in\nthe same session do not necessarily need to specify the same language.",
           "type": "string"
         },
         "text": {
@@ -5452,7 +5452,7 @@
         },
         "followupEventInput": {
           "$ref": "GoogleCloudDialogflowV2beta1EventInput",
-          "description": "Optional. Makes the platform immediately invoke another `DetectIntent` call\ninternally with the specified event as input."
+          "description": "Optional. Makes the platform immediately invoke another `DetectIntent` call\ninternally with the specified event as input.\nWhen this field is set, Dialogflow ignores the `fulfillment_text`,\n`fulfillment_messages`, and `payload` fields."
         },
         "fulfillmentMessages": {
           "description": "Optional. The collection of rich messages to present to the user. This\nvalue is passed directly to `QueryResult.fulfillment_messages`.",

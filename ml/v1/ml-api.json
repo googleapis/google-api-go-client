@@ -1019,7 +1019,7 @@
       }
     }
   },
-  "revision": "20190530",
+  "revision": "20190614",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1231,6 +1231,11 @@
           "$ref": "GoogleCloudMlV1__BuiltInAlgorithmOutput",
           "description": "Details related to built-in algorithms jobs.\nOnly set for trials of built-in algorithms jobs that have succeeded."
         },
+        "endTime": {
+          "description": "Output only. End time for the trial.",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "finalMetric": {
           "$ref": "GoogleCloudMlV1_HyperparameterOutput_HyperparameterMetric",
           "description": "The final objective metric seen for this trial."
@@ -1245,6 +1250,35 @@
         "isTrialStoppedEarly": {
           "description": "True if the trial is stopped early.",
           "type": "boolean"
+        },
+        "startTime": {
+          "description": "Output only. Start time for the trial.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "state": {
+          "description": "Output only. The detailed state of the trial.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "QUEUED",
+            "PREPARING",
+            "RUNNING",
+            "SUCCEEDED",
+            "FAILED",
+            "CANCELLING",
+            "CANCELLED"
+          ],
+          "enumDescriptions": [
+            "The job state is unspecified.",
+            "The job has been just created and processing has not yet begun.",
+            "The service is preparing to run the job.",
+            "The job is in progress.",
+            "The job completed successfully.",
+            "The job failed.\n`error_message` should contain the details of the failure.",
+            "The job is being cancelled.\n`error_message` should describe the reason for the cancellation.",
+            "The job has been cancelled.\n`error_message` should describe the reason for the cancellation."
+          ],
+          "type": "string"
         },
         "trialId": {
           "description": "The trial id for these results.",

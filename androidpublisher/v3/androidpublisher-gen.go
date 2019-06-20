@@ -1595,6 +1595,7 @@ type ProductPurchase struct {
 	//
 	// - Purchased
 	// - Canceled
+	// - Pending
 	PurchaseState int64 `json:"purchaseState,omitempty"`
 
 	// PurchaseTimeMillis: The time the product was purchased, in
@@ -2271,8 +2272,12 @@ func (s *SubscriptionPurchasesDeferResponse) MarshalJSON() ([]byte, error) {
 }
 
 type Testers struct {
+	// GoogleGroups: A list of all Google Groups, as email addresses, that
+	// define testers for this track.
 	GoogleGroups []string `json:"googleGroups,omitempty"`
 
+	// GooglePlusCommunities: A list of all Google+ Communities, as URLs,
+	// that define testers for this track.
 	GooglePlusCommunities []string `json:"googlePlusCommunities,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

@@ -460,6 +460,11 @@ type DataSourceParameter struct {
 	// AllowedValues: All possible values for the parameter.
 	AllowedValues []string `json:"allowedValues,omitempty"`
 
+	// Deprecated: If true, it should not be used in new transfers, and it
+	// should not be
+	// visible to users.
+	Deprecated bool `json:"deprecated,omitempty"`
+
 	// Description: Parameter description.
 	Description string `json:"description,omitempty"`
 
@@ -1319,9 +1324,9 @@ type TransferRun struct {
 	// Params: Output only. Data transfer specific parameters.
 	Params googleapi.RawMessage `json:"params,omitempty"`
 
-	// RunTime: For batch transfer runs, specifies the date and time
-	// that
-	// data should be ingested.
+	// RunTime: For batch transfer runs, specifies the date and time of the
+	// data should be
+	// ingested.
 	RunTime string `json:"runTime,omitempty"`
 
 	// Schedule: Output only. Describes the schedule of this transfer run if
@@ -2780,7 +2785,7 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) AuthorizationCode(authoriza
 // the
 // version_info claim in the token request. To obtain the version_info,
 // users
-// must use the “none+gsession” response type. which be return
+// must use the "none+gsession" response type. which be return
 // a
 // version_info back in the authorization response which be be put in a
 // JWT
@@ -2901,7 +2906,7 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the “none+gsession” response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
+	//       "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the \"none+gsession\" response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3469,7 +3474,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) UpdateMask(updateMask string
 // the
 // version_info claim in the token request. To obtain the version_info,
 // users
-// must use the “none+gsession” response type. which be return
+// must use the "none+gsession" response type. which be return
 // a
 // version_info back in the authorization response which be be put in a
 // JWT
@@ -3596,7 +3601,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the “none+gsession” response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
+	//       "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the \"none+gsession\" response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4704,7 +4709,7 @@ func (c *ProjectsTransferConfigsCreateCall) AuthorizationCode(authorizationCode 
 // the
 // version_info claim in the token request. To obtain the version_info,
 // users
-// must use the “none+gsession” response type. which be return
+// must use the "none+gsession" response type. which be return
 // a
 // version_info back in the authorization response which be be put in a
 // JWT
@@ -4825,7 +4830,7 @@ func (c *ProjectsTransferConfigsCreateCall) Do(opts ...googleapi.CallOption) (*T
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the “none+gsession” response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
+	//       "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the \"none+gsession\" response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5393,7 +5398,7 @@ func (c *ProjectsTransferConfigsPatchCall) UpdateMask(updateMask string) *Projec
 // the
 // version_info claim in the token request. To obtain the version_info,
 // users
-// must use the “none+gsession” response type. which be return
+// must use the "none+gsession" response type. which be return
 // a
 // version_info back in the authorization response which be be put in a
 // JWT
@@ -5520,7 +5525,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the “none+gsession” response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
+	//       "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the \"none+gsession\" response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

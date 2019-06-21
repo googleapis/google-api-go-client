@@ -408,7 +408,7 @@
                       "type": "string"
                     },
                     "versionInfo": {
-                      "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the “none+gsession” response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
+                      "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the \"none+gsession\" response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
                       "location": "query",
                       "type": "string"
                     }
@@ -549,7 +549,7 @@
                       "type": "string"
                     },
                     "versionInfo": {
-                      "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the “none+gsession” response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
+                      "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the \"none+gsession\" response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
                       "location": "query",
                       "type": "string"
                     }
@@ -827,7 +827,7 @@
                   "type": "string"
                 },
                 "versionInfo": {
-                  "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the “none+gsession” response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
+                  "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the \"none+gsession\" response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
                   "location": "query",
                   "type": "string"
                 }
@@ -968,7 +968,7 @@
                   "type": "string"
                 },
                 "versionInfo": {
-                  "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the “none+gsession” response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
+                  "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the \"none+gsession\" response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
                   "location": "query",
                   "type": "string"
                 }
@@ -1223,7 +1223,7 @@
       }
     }
   },
-  "revision": "20190605",
+  "revision": "20190615",
   "rootUrl": "https://bigquerydatatransfer.googleapis.com/",
   "schemas": {
     "CheckValidCredsRequest": {
@@ -1371,6 +1371,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "deprecated": {
+          "description": "If true, it should not be used in new transfers, and it should not be\nvisible to users.",
+          "type": "boolean"
         },
         "description": {
           "description": "Parameter description.",
@@ -1863,7 +1867,7 @@
           "type": "object"
         },
         "runTime": {
-          "description": "For batch transfer runs, specifies the date and time that\ndata should be ingested.",
+          "description": "For batch transfer runs, specifies the date and time of the data should be\ningested.",
           "format": "google-datetime",
           "type": "string"
         },

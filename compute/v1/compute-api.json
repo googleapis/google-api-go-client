@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/kG6nGNXck7CmI0zhyV65F_DBbKw\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/QPp01-pQWovnKomfKhTDs6ph1VE\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -13445,6 +13445,425 @@
         }
       }
     },
+    "reservations": {
+      "methods": {
+        "aggregatedList": {
+          "description": "Retrieves an aggregated list of reservations.",
+          "httpMethod": "GET",
+          "id": "compute.reservations.aggregatedList",
+          "parameterOrder": [
+            "project"
+          ],
+          "parameters": {
+            "filter": {
+              "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
+              "location": "query",
+              "type": "string"
+            },
+            "maxResults": {
+              "default": "500",
+              "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+              "format": "uint32",
+              "location": "query",
+              "minimum": "0",
+              "type": "integer"
+            },
+            "orderBy": {
+              "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+              "location": "query",
+              "type": "string"
+            },
+            "pageToken": {
+              "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+              "location": "query",
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/aggregated/reservations",
+          "response": {
+            "$ref": "ReservationAggregatedList"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "delete": {
+          "description": "Deletes the specified reservation.",
+          "httpMethod": "DELETE",
+          "id": "compute.reservations.delete",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "reservation"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            },
+            "reservation": {
+              "description": "Name of the reservation to delete.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "zone": {
+              "description": "Name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/zones/{zone}/reservations/{reservation}",
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "get": {
+          "description": "Retrieves all information of the specified reservation.",
+          "httpMethod": "GET",
+          "id": "compute.reservations.get",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "reservation"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "reservation": {
+              "description": "Name of the reservation to retrieve.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "zone": {
+              "description": "Name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/zones/{zone}/reservations/{reservation}",
+          "response": {
+            "$ref": "Reservation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "getIamPolicy": {
+          "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+          "httpMethod": "GET",
+          "id": "compute.reservations.getIamPolicy",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "zone": {
+              "description": "The name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/zones/{zone}/reservations/{resource}/getIamPolicy",
+          "response": {
+            "$ref": "Policy"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "insert": {
+          "description": "Creates a new reservation.",
+          "httpMethod": "POST",
+          "id": "compute.reservations.insert",
+          "parameterOrder": [
+            "project",
+            "zone"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            },
+            "zone": {
+              "description": "Name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/zones/{zone}/reservations",
+          "request": {
+            "$ref": "Reservation"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "list": {
+          "description": "A list all the reservations that have been configured for the specified project in specified zone.",
+          "httpMethod": "GET",
+          "id": "compute.reservations.list",
+          "parameterOrder": [
+            "project",
+            "zone"
+          ],
+          "parameters": {
+            "filter": {
+              "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
+              "location": "query",
+              "type": "string"
+            },
+            "maxResults": {
+              "default": "500",
+              "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+              "format": "uint32",
+              "location": "query",
+              "minimum": "0",
+              "type": "integer"
+            },
+            "orderBy": {
+              "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+              "location": "query",
+              "type": "string"
+            },
+            "pageToken": {
+              "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+              "location": "query",
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "zone": {
+              "description": "Name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/zones/{zone}/reservations",
+          "response": {
+            "$ref": "ReservationList"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "resize": {
+          "description": "Resizes the reservation (applicable to standalone reservations only)",
+          "httpMethod": "POST",
+          "id": "compute.reservations.resize",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "reservation"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            },
+            "reservation": {
+              "description": "Name of the reservation to update.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "zone": {
+              "description": "Name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/zones/{zone}/reservations/{reservation}/resize",
+          "request": {
+            "$ref": "ReservationsResizeRequest"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "setIamPolicy": {
+          "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+          "httpMethod": "POST",
+          "id": "compute.reservations.setIamPolicy",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "zone": {
+              "description": "The name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/zones/{zone}/reservations/{resource}/setIamPolicy",
+          "request": {
+            "$ref": "ZoneSetPolicyRequest"
+          },
+          "response": {
+            "$ref": "Policy"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.",
+          "httpMethod": "POST",
+          "id": "compute.reservations.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "zone": {
+              "description": "The name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/zones/{zone}/reservations/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        }
+      }
+    },
     "resourcePolicies": {
       "methods": {
         "aggregatedList": {
@@ -13584,6 +14003,48 @@
             "https://www.googleapis.com/auth/compute.readonly"
           ]
         },
+        "getIamPolicy": {
+          "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+          "httpMethod": "GET",
+          "id": "compute.resourcePolicies.getIamPolicy",
+          "parameterOrder": [
+            "project",
+            "region",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "The name of the region for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/regions/{region}/resourcePolicies/{resource}/getIamPolicy",
+          "response": {
+            "$ref": "Policy"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
         "insert": {
           "description": "Creates a new resource policy.",
           "httpMethod": "POST",
@@ -13680,6 +14141,50 @@
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/compute",
             "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "setIamPolicy": {
+          "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+          "httpMethod": "POST",
+          "id": "compute.resourcePolicies.setIamPolicy",
+          "parameterOrder": [
+            "project",
+            "region",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "The name of the region for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/regions/{region}/resourcePolicies/{resource}/setIamPolicy",
+          "request": {
+            "$ref": "RegionSetPolicyRequest"
+          },
+          "response": {
+            "$ref": "Policy"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
           ]
         },
         "testIamPermissions": {
@@ -14168,7 +14673,7 @@
           ]
         },
         "update": {
-          "description": "Updates the specified Router resource with the data included in the request.",
+          "description": "Updates the specified Router resource with the data included in the request. This method conforms to PUT semantics, which requests that the state of the target resource be created or replaced with the state defined by the representation enclosed in the request message payload.",
           "httpMethod": "PUT",
           "id": "compute.routers.update",
           "parameterOrder": [
@@ -18847,7 +19352,7 @@
       }
     }
   },
-  "revision": "20190530",
+  "revision": "20190607",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -19748,6 +20253,79 @@
         "subnetworkRangeName": {
           "description": "The name of a subnetwork secondary IP range from which to allocate an IP alias range. If not specified, the primary range of the subnetwork is used.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AllocationSpecificSKUAllocationAllocatedInstancePropertiesReservedDisk": {
+      "id": "AllocationSpecificSKUAllocationAllocatedInstancePropertiesReservedDisk",
+      "properties": {
+        "diskSizeGb": {
+          "description": "Specifies the size of the disk in base-2 GB.",
+          "format": "int64",
+          "type": "string"
+        },
+        "interface": {
+          "description": "Specifies the disk interface to use for attaching this disk, which is either SCSI or NVME. The default is SCSI. For performance characteristics of SCSI over NVMe, see Local SSD performance.",
+          "enum": [
+            "NVME",
+            "SCSI"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AllocationSpecificSKUAllocationReservedInstanceProperties": {
+      "description": "Properties of the SKU instances being reserved.",
+      "id": "AllocationSpecificSKUAllocationReservedInstanceProperties",
+      "properties": {
+        "guestAccelerators": {
+          "description": "Specifies accelerator type and count.",
+          "items": {
+            "$ref": "AcceleratorConfig"
+          },
+          "type": "array"
+        },
+        "localSsds": {
+          "description": "Specifies amount of local ssd to reserve with each instance. The type of disk is local-ssd.",
+          "items": {
+            "$ref": "AllocationSpecificSKUAllocationAllocatedInstancePropertiesReservedDisk"
+          },
+          "type": "array"
+        },
+        "machineType": {
+          "description": "Specifies type of machine (name only) which has fixed number of vCPUs and fixed amount of memory. This also includes specifying custom machine type following custom-NUMBER_OF_CPUS-AMOUNT_OF_MEMORY pattern.",
+          "type": "string"
+        },
+        "minCpuPlatform": {
+          "description": "Minimum cpu platform the reservation.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AllocationSpecificSKUReservation": {
+      "description": "This reservation type allows to pre allocate specific instance configuration.",
+      "id": "AllocationSpecificSKUReservation",
+      "properties": {
+        "count": {
+          "description": "Specifies number of resources that are allocated.",
+          "format": "int64",
+          "type": "string"
+        },
+        "inUseCount": {
+          "description": "[OutputOnly] Indicates how many resource are in use.",
+          "format": "int64",
+          "type": "string"
+        },
+        "instanceProperties": {
+          "$ref": "AllocationSpecificSKUAllocationReservedInstanceProperties",
+          "description": "The instance properties for this specific sku reservation."
         }
       },
       "type": "object"
@@ -21418,6 +21996,13 @@
         "region": {
           "description": "[Output Only] URL of the region where this commitment may be used.",
           "type": "string"
+        },
+        "reservations": {
+          "description": "List of reservations for this commitment.",
+          "items": {
+            "$ref": "Reservation"
+          },
+          "type": "array"
         },
         "resources": {
           "description": "A list of commitment amounts for particular resources. Note that VCPU and MEMORY resource commitments must occur together.",
@@ -25055,6 +25640,10 @@
           },
           "type": "array"
         },
+        "reservationAffinity": {
+          "$ref": "ReservationAffinity",
+          "description": "The configuration of desired reservations from which this Instance can consume capacity from."
+        },
         "scheduling": {
           "$ref": "Scheduling",
           "description": "Sets the scheduling options for this instance."
@@ -26747,6 +27336,10 @@
             "$ref": "NetworkInterface"
           },
           "type": "array"
+        },
+        "reservationAffinity": {
+          "$ref": "ReservationAffinity",
+          "description": "The configuration of desired reservations which this Instance could consume capacity from."
         },
         "scheduling": {
           "$ref": "Scheduling",
@@ -30813,7 +31406,7 @@
       "type": "object"
     },
     "NodeTemplate": {
-      "description": "Represent a sole-tenant Node Template resource.\n\nYou can use a template to define properties for nodes in a node group. For more information, read Creating node groups and instances. (== resource_for beta.nodeTemplates ==) (== resource_for v1.nodeTemplates ==) NextID: 16",
+      "description": "Represent a sole-tenant Node Template resource.\n\nYou can use a template to define properties for nodes in a node group. For more information, read Creating node groups and instances. (== resource_for beta.nodeTemplates ==) (== resource_for v1.nodeTemplates ==) (== NextID: 16 ==)",
       "id": "NodeTemplate",
       "properties": {
         "creationTimestamp": {
@@ -30863,7 +31456,7 @@
         },
         "serverBinding": {
           "$ref": "ServerBinding",
-          "description": "Binding properties for the physical server."
+          "description": "Sets the binding properties for the physical server. Valid values include:  \n- [Default] RESTART_NODE_ON_ANY_SERVER: Restarts VMs on any available physical server \n- RESTART_NODE_ON_MINIMAL_SERVER: Restarts VMs on the same physical server whenever possible  \n\nSee Sole-tenant node options for more information."
         },
         "status": {
           "description": "[Output Only] The status of the node template. One of the following values: CREATING, READY, and DELETING.",
@@ -33498,10 +34091,450 @@
       },
       "type": "object"
     },
+    "Reservation": {
+      "description": "Reservation resource NextID: 13",
+      "id": "Reservation",
+      "properties": {
+        "commitment": {
+          "description": "[OutputOnly] Full or partial url for parent commitment for reservations which are tied to a commitment.",
+          "type": "string"
+        },
+        "creationTimestamp": {
+          "description": "[Output Only] Creation timestamp in RFC3339 text format.",
+          "type": "string"
+        },
+        "description": {
+          "description": "An optional description of this resource. Provide this property when you create the resource.",
+          "type": "string"
+        },
+        "id": {
+          "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+          "format": "uint64",
+          "type": "string"
+        },
+        "kind": {
+          "default": "compute#reservation",
+          "description": "[Output Only] Type of the resource. Always compute#reservations for reservations.",
+          "type": "string"
+        },
+        "name": {
+          "annotations": {
+            "required": [
+              "compute.instances.insert"
+            ]
+          },
+          "description": "The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+          "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+          "type": "string"
+        },
+        "selfLink": {
+          "description": "[Output Only] Server-defined fully-qualified URL for this resource.",
+          "type": "string"
+        },
+        "specificReservation": {
+          "$ref": "AllocationSpecificSKUReservation",
+          "description": "Reservation for instances with specific machine shapes."
+        },
+        "specificReservationRequired": {
+          "description": "Indicates whether the reservation can be consumed by VMs with \"any reservation\" defined. If the field is set, then only VMs that target the reservation by name using --reservation-affinity can consume this reservation.",
+          "type": "boolean"
+        },
+        "status": {
+          "description": "[Output Only] The status of the reservation.",
+          "enum": [
+            "CREATING",
+            "DELETING",
+            "INVALID",
+            "READY",
+            "UPDATING"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "zone": {
+          "description": "Zone in which the reservation resides, must be provided if reservation is created with commitment creation.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ReservationAffinity": {
+      "description": "ReservationAffinity is the configuration of desired reservation which this instance could take capacity from.",
+      "id": "ReservationAffinity",
+      "properties": {
+        "consumeReservationType": {
+          "description": "Specifies the type of reservation from which this instance can consume resources: ANY_RESERVATION (default), SPECIFIC_RESERVATION, or NO_RESERVATION. See  Consuming reserved instances for examples.",
+          "enum": [
+            "ANY_RESERVATION",
+            "NO_RESERVATION",
+            "SPECIFIC_RESERVATION",
+            "UNSPECIFIED"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "key": {
+          "description": "Corresponds to the label key of reservation resource.",
+          "type": "string"
+        },
+        "values": {
+          "description": "Corresponds to the label values of reservation resource.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ReservationAggregatedList": {
+      "description": "Contains a list of reservations.",
+      "id": "ReservationAggregatedList",
+      "properties": {
+        "id": {
+          "description": "[Output Only] Unique identifier for the resource; defined by the server.",
+          "type": "string"
+        },
+        "items": {
+          "additionalProperties": {
+            "$ref": "ReservationsScopedList",
+            "description": "Name of the scope containing this set of reservations."
+          },
+          "description": "A list of Allocation resources.",
+          "type": "object"
+        },
+        "kind": {
+          "default": "compute#reservationAggregatedList",
+          "description": "Type of resource.",
+          "type": "string"
+        },
+        "nextPageToken": {
+          "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.",
+          "type": "string"
+        },
+        "selfLink": {
+          "description": "[Output Only] Server-defined URL for this resource.",
+          "type": "string"
+        },
+        "warning": {
+          "description": "[Output Only] Informational warning message.",
+          "properties": {
+            "code": {
+              "description": "[Output Only] A warning code, if applicable. For example, Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in the response.",
+              "enum": [
+                "CLEANUP_FAILED",
+                "DEPRECATED_RESOURCE_USED",
+                "DEPRECATED_TYPE_USED",
+                "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
+                "EXPERIMENTAL_TYPE_USED",
+                "EXTERNAL_API_WARNING",
+                "FIELD_VALUE_OVERRIDEN",
+                "INJECTED_KERNELS_DEPRECATED",
+                "MISSING_TYPE_DEPENDENCY",
+                "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
+                "NEXT_HOP_CANNOT_IP_FORWARD",
+                "NEXT_HOP_INSTANCE_NOT_FOUND",
+                "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
+                "NEXT_HOP_NOT_RUNNING",
+                "NOT_CRITICAL_ERROR",
+                "NO_RESULTS_ON_PAGE",
+                "REQUIRED_TOS_AGREEMENT",
+                "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
+                "RESOURCE_NOT_DELETED",
+                "SCHEMA_VALIDATION_IGNORED",
+                "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
+                "UNDECLARED_PROPERTIES",
+                "UNREACHABLE"
+              ],
+              "enumDescriptions": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "type": "string"
+            },
+            "data": {
+              "description": "[Output Only] Metadata about this warning in key: value format. For example:\n\"data\": [ { \"key\": \"scope\", \"value\": \"zones/us-east1-d\" }",
+              "items": {
+                "properties": {
+                  "key": {
+                    "description": "[Output Only] A key that provides more detail on the warning being returned. For example, for warnings where there are no results in a list request for a particular zone, this key might be scope and the key value might be the zone name. Other examples might be a key indicating a deprecated resource and a suggested replacement, or a warning about invalid network settings (for example, if an instance attempts to perform IP forwarding but is not enabled for IP forwarding).",
+                    "type": "string"
+                  },
+                  "value": {
+                    "description": "[Output Only] A warning data value corresponding to the key.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "message": {
+              "description": "[Output Only] A human-readable description of the warning code.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "ReservationList": {
+      "id": "ReservationList",
+      "properties": {
+        "id": {
+          "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+          "type": "string"
+        },
+        "items": {
+          "description": "[Output Only] A list of Allocation resources.",
+          "items": {
+            "$ref": "Reservation"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "default": "compute#reservationList",
+          "description": "[Output Only] Type of resource.Always compute#reservationsList for listsof reservations",
+          "type": "string"
+        },
+        "nextPageToken": {
+          "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.",
+          "type": "string"
+        },
+        "selfLink": {
+          "description": "[Output Only] Server-defined URL for this resource.",
+          "type": "string"
+        },
+        "warning": {
+          "description": "[Output Only] Informational warning message.",
+          "properties": {
+            "code": {
+              "description": "[Output Only] A warning code, if applicable. For example, Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in the response.",
+              "enum": [
+                "CLEANUP_FAILED",
+                "DEPRECATED_RESOURCE_USED",
+                "DEPRECATED_TYPE_USED",
+                "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
+                "EXPERIMENTAL_TYPE_USED",
+                "EXTERNAL_API_WARNING",
+                "FIELD_VALUE_OVERRIDEN",
+                "INJECTED_KERNELS_DEPRECATED",
+                "MISSING_TYPE_DEPENDENCY",
+                "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
+                "NEXT_HOP_CANNOT_IP_FORWARD",
+                "NEXT_HOP_INSTANCE_NOT_FOUND",
+                "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
+                "NEXT_HOP_NOT_RUNNING",
+                "NOT_CRITICAL_ERROR",
+                "NO_RESULTS_ON_PAGE",
+                "REQUIRED_TOS_AGREEMENT",
+                "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
+                "RESOURCE_NOT_DELETED",
+                "SCHEMA_VALIDATION_IGNORED",
+                "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
+                "UNDECLARED_PROPERTIES",
+                "UNREACHABLE"
+              ],
+              "enumDescriptions": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "type": "string"
+            },
+            "data": {
+              "description": "[Output Only] Metadata about this warning in key: value format. For example:\n\"data\": [ { \"key\": \"scope\", \"value\": \"zones/us-east1-d\" }",
+              "items": {
+                "properties": {
+                  "key": {
+                    "description": "[Output Only] A key that provides more detail on the warning being returned. For example, for warnings where there are no results in a list request for a particular zone, this key might be scope and the key value might be the zone name. Other examples might be a key indicating a deprecated resource and a suggested replacement, or a warning about invalid network settings (for example, if an instance attempts to perform IP forwarding but is not enabled for IP forwarding).",
+                    "type": "string"
+                  },
+                  "value": {
+                    "description": "[Output Only] A warning data value corresponding to the key.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "message": {
+              "description": "[Output Only] A human-readable description of the warning code.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "ReservationsResizeRequest": {
+      "id": "ReservationsResizeRequest",
+      "properties": {
+        "specificSkuCount": {
+          "description": "Number of allocated resources can be resized with minimum = 1 and maximum = 1000.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ReservationsScopedList": {
+      "id": "ReservationsScopedList",
+      "properties": {
+        "reservations": {
+          "description": "A list of reservations contained in this scope.",
+          "items": {
+            "$ref": "Reservation"
+          },
+          "type": "array"
+        },
+        "warning": {
+          "description": "Informational warning which replaces the list of reservations when the list is empty.",
+          "properties": {
+            "code": {
+              "description": "[Output Only] A warning code, if applicable. For example, Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in the response.",
+              "enum": [
+                "CLEANUP_FAILED",
+                "DEPRECATED_RESOURCE_USED",
+                "DEPRECATED_TYPE_USED",
+                "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
+                "EXPERIMENTAL_TYPE_USED",
+                "EXTERNAL_API_WARNING",
+                "FIELD_VALUE_OVERRIDEN",
+                "INJECTED_KERNELS_DEPRECATED",
+                "MISSING_TYPE_DEPENDENCY",
+                "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
+                "NEXT_HOP_CANNOT_IP_FORWARD",
+                "NEXT_HOP_INSTANCE_NOT_FOUND",
+                "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
+                "NEXT_HOP_NOT_RUNNING",
+                "NOT_CRITICAL_ERROR",
+                "NO_RESULTS_ON_PAGE",
+                "REQUIRED_TOS_AGREEMENT",
+                "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
+                "RESOURCE_NOT_DELETED",
+                "SCHEMA_VALIDATION_IGNORED",
+                "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
+                "UNDECLARED_PROPERTIES",
+                "UNREACHABLE"
+              ],
+              "enumDescriptions": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "type": "string"
+            },
+            "data": {
+              "description": "[Output Only] Metadata about this warning in key: value format. For example:\n\"data\": [ { \"key\": \"scope\", \"value\": \"zones/us-east1-d\" }",
+              "items": {
+                "properties": {
+                  "key": {
+                    "description": "[Output Only] A key that provides more detail on the warning being returned. For example, for warnings where there are no results in a list request for a particular zone, this key might be scope and the key value might be the zone name. Other examples might be a key indicating a deprecated resource and a suggested replacement, or a warning about invalid network settings (for example, if an instance attempts to perform IP forwarding but is not enabled for IP forwarding).",
+                    "type": "string"
+                  },
+                  "value": {
+                    "description": "[Output Only] A warning data value corresponding to the key.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "message": {
+              "description": "[Output Only] A human-readable description of the warning code.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
     "ResourceCommitment": {
       "description": "Commitment for a particular resource (a Commitment is composed of one or more of these).",
       "id": "ResourceCommitment",
       "properties": {
+        "acceleratorType": {
+          "description": "Name of the accelerator type resource. Applicable only when the type is ACCELERATOR.",
+          "type": "string"
+        },
         "amount": {
           "description": "The amount of the resource purchased (in a type-dependent unit, such as bytes). For vCPUs, this can just be an integer. For memory, this must be provided in MB. Memory must be a multiple of 256 MB, with up to 6.5GB of memory per every vCPU.",
           "format": "int64",
@@ -33510,11 +34543,15 @@
         "type": {
           "description": "Type of resource for which this commitment applies. Possible values are VCPU and MEMORY",
           "enum": [
+            "ACCELERATOR",
+            "LOCAL_SSD",
             "MEMORY",
             "UNSPECIFIED",
             "VCPU"
           ],
           "enumDescriptions": [
+            "",
+            "",
             "",
             "",
             ""

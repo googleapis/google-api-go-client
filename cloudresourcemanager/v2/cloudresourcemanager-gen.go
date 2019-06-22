@@ -461,7 +461,7 @@ type Folder struct {
 	// [\p{L}\p{N}]([\p{L}\p{N}_- ]{0,28}[\p{L}\p{N}])?.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// LifecycleState: Output only.  The lifecycle state of the
+	// LifecycleState: Output only. The lifecycle state of the
 	// folder.
 	// Updates to the lifecycle_state must be performed via
 	// DeleteFolder and
@@ -944,19 +944,21 @@ type SearchFoldersRequest struct {
 	//
 	// Some example queries are:
 	//
-	// |Query | Description|
-	// |----- | -----------|
-	// |displayName=Test* | Folders whose display name starts with
-	// "Test".|
-	// |lifecycleState=ACTIVE | Folders whose lifecycleState is
-	// ACTIVE.|
-	// |parent=folders/123 | Folders whose parent is
-	// "folders/123".|
-	// |parent=folders/123 AND lifecycleState=ACTIVE | Active folders whose
-	// parent
-	// is "folders/123".| |displayName=\\"Test String\\"|Folders whose
-	// display
-	// name includes both "Test" and "String".|
+	// * Query `displayName=Test*` returns Folder resources whose display
+	// name
+	// starts with "Test".
+	// * Query `lifecycleState=ACTIVE` returns Folder resources
+	// with
+	// `lifecycleState` set to `ACTIVE`.
+	// * Query `parent=folders/123` returns Folder resources that
+	// have
+	// `folders/123` as a parent resource.
+	// * Query `parent=folders/123 AND lifecycleState=ACTIVE` returns
+	// active
+	// Folder resources that have `folders/123` as a parent resource.
+	// * Query `displayName=\\"Test String\\" returns Folder resources
+	// with
+	// display names that include both "Test" and "String".
 	Query string `json:"query,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PageSize") to

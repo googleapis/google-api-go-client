@@ -1170,7 +1170,7 @@
       }
     }
   },
-  "revision": "20190603",
+  "revision": "20190619",
   "rootUrl": "https://cloudresourcemanager.googleapis.com/",
   "schemas": {
     "Ancestor": {
@@ -1926,7 +1926,7 @@
       "id": "SearchOrganizationsRequest",
       "properties": {
         "filter": {
-          "description": "An optional query string used to filter the Organizations to return in\nthe response. Filter rules are case-insensitive.\n\n\nOrganizations may be filtered by `owner.directoryCustomerId` or by\n`domain`, where the domain is a G Suite domain, for example:\n\nclang-format off\n| Filter                              | Description                      |\n|-------------------------------------|----------------------------------|\n| owner.directorycustomerid:123456789 | Organizations with `owner.directory_customer_id` equal to `123456789`.|\n| domain:google.com                   | Organizations corresponding to the domain `google.com`.|\nclang-format on\n\nThis field is optional.",
+          "description": "An optional query string used to filter the Organizations to return in\nthe response. Filter rules are case-insensitive.\n\n\nOrganizations may be filtered by `owner.directoryCustomerId` or by\n`domain`, where the domain is a G Suite domain, for example:\n\n* Filter `owner.directorycustomerid:123456789` returns Organization\nresources with `owner.directory_customer_id` equal to `123456789`.\n* Filter `domain:google.com` returns Organization resources corresponding\nto the domain `google.com`.\n\nThis field is optional.",
           "type": "string"
         },
         "pageSize": {

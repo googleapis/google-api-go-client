@@ -1610,17 +1610,14 @@ func (r *OrganizationsService) List() *OrganizationsListCall {
 //
 // Organizations may be filtered by `owner.directoryCustomerId` or
 // by
-// `domain`, where the domain is a G Suite domain, for
-// example:
+// `domain`, where the domain is a G Suite domain, for example:
 //
-// |Filter|Description|
-// |------|-----------|
-// |owner.directorycu
-// stomerid:123456789|Organizations with
-// `owner.directory_customer_id` equal to
-// `123456789`.|
-// |domain:google.com|Organizations corresponding to the domain
-// `google.com`.|
+// * Filter `owner.directorycustomerid:123456789` returns
+// Organization
+// resources with `owner.directory_customer_id` equal to `123456789`.
+// * Filter `domain:google.com` returns Organization resources
+// corresponding
+// to the domain `google.com`.
 //
 // This field is optional.
 func (c *OrganizationsListCall) Filter(filter string) *OrganizationsListCall {
@@ -1747,7 +1744,7 @@ func (c *OrganizationsListCall) Do(opts ...googleapi.CallOption) (*ListOrganizat
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An optional query string used to filter the Organizations to return in\nthe response. Filter rules are case-insensitive.\n\n\nOrganizations may be filtered by `owner.directoryCustomerId` or by\n`domain`, where the domain is a G Suite domain, for example:\n\n|Filter|Description|\n|------|-----------|\n|owner.directorycustomerid:123456789|Organizations with\n`owner.directory_customer_id` equal to `123456789`.|\n|domain:google.com|Organizations corresponding to the domain `google.com`.|\n\nThis field is optional.",
+	//       "description": "An optional query string used to filter the Organizations to return in\nthe response. Filter rules are case-insensitive.\n\n\nOrganizations may be filtered by `owner.directoryCustomerId` or by\n`domain`, where the domain is a G Suite domain, for example:\n\n* Filter `owner.directorycustomerid:123456789` returns Organization\nresources with `owner.directory_customer_id` equal to `123456789`.\n* Filter `domain:google.com` returns Organization resources corresponding\nto the domain `google.com`.\n\nThis field is optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

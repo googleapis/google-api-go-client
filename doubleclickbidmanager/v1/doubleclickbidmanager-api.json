@@ -15,7 +15,7 @@
   "description": "API for viewing and managing your reports in DoubleClick Bid Manager.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/bid-manager/",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/xoxKVGyG96QSfwJ57MjgWSZsRxI\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/81Tm1z-js2RXAr8P1nZdtl6PgfQ\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -257,7 +257,7 @@
       }
     }
   },
-  "revision": "20190529",
+  "revision": "20190617",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "DownloadLineItemsRequest": {
@@ -1249,7 +1249,6 @@
               "METRIC_RICH_MEDIA_VIDEO_THIRD_QUARTILE_COMPLETES",
               "METRIC_TEA_TRUEVIEW_IMPRESSIONS",
               "METRIC_TEA_TRUEVIEW_UNIQUE_COOKIES",
-              "METRIC_TEA_TRUEVIEW_UNIQUE_PEOPLE",
               "METRIC_TOTAL_CONVERSIONS",
               "METRIC_TOTAL_MEDIA_COST_ADVERTISER",
               "METRIC_TOTAL_MEDIA_COST_ECPAPC_ADVERTISER",
@@ -1326,7 +1325,6 @@
               "METRIC_VIEWABLE_BID_REQUESTS"
             ],
             "enumDescriptions": [
-              "",
               "",
               "",
               "",

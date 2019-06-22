@@ -449,7 +449,7 @@
       }
     }
   },
-  "revision": "20190603",
+  "revision": "20190619",
   "rootUrl": "https://cloudresourcemanager.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -559,7 +559,7 @@
           "type": "string"
         },
         "lifecycleState": {
-          "description": "Output only.  The lifecycle state of the folder.\nUpdates to the lifecycle_state must be performed via\nDeleteFolder and\nUndeleteFolder.",
+          "description": "Output only. The lifecycle state of the folder.\nUpdates to the lifecycle_state must be performed via\nDeleteFolder and\nUndeleteFolder.",
           "enum": [
             "LIFECYCLE_STATE_UNSPECIFIED",
             "ACTIVE",
@@ -786,7 +786,7 @@
           "type": "string"
         },
         "query": {
-          "description": "Search criteria used to select the Folders to return.\nIf no search criteria is specified then all accessible folders will be\nreturned.\n\nQuery expressions can be used to restrict results based upon displayName,\nlifecycleState and parent, where the operators `=`, `NOT`, `AND` and `OR`\ncan be used along with the suffix wildcard symbol `*`.\n\nThe displayName field in a query expression should use escaped quotes\nfor values that include whitespace to prevent unexpected behavior.\n\nSome example queries are:\n\n|Query | Description|\n|----- | -----------|\n|displayName=Test* | Folders whose display name starts with \"Test\".|\n|lifecycleState=ACTIVE | Folders whose lifecycleState is ACTIVE.|\n|parent=folders/123 | Folders whose parent is \"folders/123\".|\n|parent=folders/123 AND lifecycleState=ACTIVE | Active folders whose parent\nis \"folders/123\".| |displayName=\\\\\"Test String\\\\\"|Folders whose display\nname includes both \"Test\" and \"String\".|",
+          "description": "Search criteria used to select the Folders to return.\nIf no search criteria is specified then all accessible folders will be\nreturned.\n\nQuery expressions can be used to restrict results based upon displayName,\nlifecycleState and parent, where the operators `=`, `NOT`, `AND` and `OR`\ncan be used along with the suffix wildcard symbol `*`.\n\nThe displayName field in a query expression should use escaped quotes\nfor values that include whitespace to prevent unexpected behavior.\n\nSome example queries are:\n\n* Query `displayName=Test*` returns Folder resources whose display name\nstarts with \"Test\".\n* Query `lifecycleState=ACTIVE` returns Folder resources with\n`lifecycleState` set to `ACTIVE`.\n* Query `parent=folders/123` returns Folder resources that have\n`folders/123` as a parent resource.\n* Query `parent=folders/123 AND lifecycleState=ACTIVE` returns active\nFolder resources that have `folders/123` as a parent resource.\n* Query `displayName=\\\\\"Test String\\\\\"` returns Folder resources with\ndisplay names that include both \"Test\" and \"String\".",
           "type": "string"
         }
       },

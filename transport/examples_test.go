@@ -40,7 +40,7 @@ func Example_applicationDefaultCredentials() {
 func Example_withCredentialsFile() {
 	ctx := context.Background()
 
-	// Download service account creds per https://cloud.google.com/docs/authentication/end-user.
+	// Download service account creds per https://cloud.google.com/docs/authentication/production.
 	//
 	// Note: Given the same set of options, transport.NewHTTPClient and
 	// transport.DialGRPC use the same credentials.

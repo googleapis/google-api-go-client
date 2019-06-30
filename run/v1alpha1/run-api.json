@@ -2211,7 +2211,7 @@
       }
     }
   },
-  "revision": "20190522",
+  "revision": "20190624",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -2219,6 +2219,10 @@
       "id": "Addressable",
       "properties": {
         "hostname": {
+          "description": "Deprecated - use url instead.",
+          "type": "string"
+        },
+        "url": {
           "type": "string"
         }
       },
@@ -3702,7 +3706,7 @@
           "type": "integer"
         },
         "containers": {
-          "description": "Containers holds the single container that defines the unit of execution\nfor this Revision. In the context of a Revision, we disallow a number of\nfields on this Container, including: name and lifecycle.",
+          "description": "Containers holds the single container that defines the unit of execution\nfor this Revision. In the context of a Revision, we disallow a number of\nfields on this Container, including: name and lifecycle.\nIn Cloud Run, only a single container may be provided.",
           "items": {
             "$ref": "Container"
           },
@@ -3714,7 +3718,7 @@
           "type": "integer"
         },
         "serviceAccountName": {
-          "description": "Not currently used by Cloud Run.",
+          "description": "Email address of the IAM service account associated with the revision\nof the service. The service account represents the identity of the\nrunning revision, and determines what permissions the revision has. If\nnot provided, the revision will use the project's default service account.",
           "type": "string"
         },
         "servingState": {
@@ -3877,7 +3881,7 @@
       "properties": {
         "address": {
           "$ref": "Addressable",
-          "description": "Similar to domain, information on where the service is available on HTTP."
+          "description": "Similar to url, information on where the service is available on HTTP."
         },
         "conditions": {
           "description": "Conditions communicates information about ongoing/complete\nreconciliation processes that bring the \"spec\" inline with the observed\nstate of the world.",
@@ -3887,11 +3891,11 @@
           "type": "array"
         },
         "domain": {
-          "description": "Domain holds the top-level domain that will distribute traffic over the\nprovided targets. It generally has the form\nhttps://{route-hash}-{project-hash}-{cluster-level-suffix}.a.run.app",
+          "description": "Deprecated - use url instead.\nDomain holds the top-level domain that will distribute traffic over the\nprovided targets.",
           "type": "string"
         },
         "domainInternal": {
-          "description": "For Cloud Run, identifical to domain.",
+          "description": "Deprecated - use address instead.\nFor Cloud Run, identifical to domain.",
           "type": "string"
         },
         "observedGeneration": {
@@ -3905,6 +3909,10 @@
             "$ref": "TrafficTarget"
           },
           "type": "array"
+        },
+        "url": {
+          "description": "URL holds the url that will distribute traffic over the provided traffic\ntargets. It generally has the form\nhttps://{route-hash}-{project-hash}-{cluster-level-suffix}.a.run.app",
+          "type": "string"
         }
       },
       "type": "object"
@@ -4174,7 +4182,7 @@
       "properties": {
         "address": {
           "$ref": "Addressable",
-          "description": "From RouteStatus.\nSimilar to domain, information on where the service is available on HTTP."
+          "description": "From RouteStatus.\nSimilar to url, information on where the service is available on HTTP."
         },
         "conditions": {
           "description": "Conditions communicates information about ongoing/complete\nreconciliation processes that bring the \"spec\" inline with the observed\nstate of the world.",
@@ -4206,6 +4214,10 @@
             "$ref": "TrafficTarget"
           },
           "type": "array"
+        },
+        "url": {
+          "description": "From RouteStatus.\nURL holds the url that will distribute traffic over the provided traffic\ntargets. It generally has the form\nhttps://{route-hash}-{project-hash}-{cluster-level-suffix}.a.run.app",
+          "type": "string"
         }
       },
       "type": "object"

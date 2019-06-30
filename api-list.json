@@ -2555,7 +2555,7 @@
       "name": "osconfig",
       "version": "v1alpha1",
       "title": "Cloud OS Config API",
-      "description": "Manages OS configurations for GCE VM instances.",
+      "description": "OS management tools that can be used for patch management, patch compliance, and configuration management on VM instances.",
       "discoveryRestUrl": "https://osconfig.googleapis.com/$discovery/rest?version=v1alpha1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2570,7 +2570,7 @@
       "name": "osconfig",
       "version": "v1alpha2",
       "title": "Cloud OS Config API",
-      "description": "Manages OS configurations for GCE VM instances.",
+      "description": "OS management tools that can be used for patch management, patch compliance, and configuration management on VM instances.",
       "discoveryRestUrl": "https://osconfig.googleapis.com/$discovery/rest?version=v1alpha2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3828,7 +3828,7 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/security-scanner/",
-      "preferred": true
+      "preferred": false
     },
     {
       "kind": "discovery#directoryItem",
@@ -3844,6 +3844,21 @@
       },
       "documentationLink": "https://cloud.google.com/security-scanner/",
       "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "websecurityscanner:v1",
+      "name": "websecurityscanner",
+      "version": "v1",
+      "title": "Web Security Scanner API",
+      "description": "Scans your Compute and App Engine apps for common web vulnerabilities.",
+      "discoveryRestUrl": "https://websecurityscanner.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/security-scanner/",
+      "preferred": true
     },
     {
       "kind": "discovery#directoryItem",

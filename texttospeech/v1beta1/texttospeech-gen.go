@@ -179,11 +179,10 @@ type AudioConfig struct {
 	// applied
 	// on top of each other in the order they are given.
 	// See
-	//
-	// [audio-profiles](https:
-	// //cloud.google.com/text-to-speech/docs/au
-	// dio-profiles)
-	// for current supported profile ids.
+	// [audio
+	// profiles](https://cloud.google.com/text-to-speech/docs/audi
+	// o-profiles) for
+	// current supported profile ids.
 	EffectsProfileId []string `json:"effectsProfileId,omitempty"`
 
 	// Pitch: Input only. Optional. Speaking pitch, in the range [-20.0,

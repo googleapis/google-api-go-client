@@ -15,7 +15,7 @@
   "description": "API for viewing and managing your reports in DoubleClick Bid Manager.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/bid-manager/",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/81Tm1z-js2RXAr8P1nZdtl6PgfQ\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/EksXu9fzLlIS4f_irK3G9BKBZK8\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -257,7 +257,7 @@
       }
     }
   },
-  "revision": "20190617",
+  "revision": "20190618",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "DownloadLineItemsRequest": {
@@ -462,6 +462,7 @@
             "FILTER_INVENTORY_FORMAT",
             "FILTER_INVENTORY_RATE_TYPE",
             "FILTER_INVENTORY_SOURCE",
+            "FILTER_INVENTORY_SOURCE_EXTERNAL_ID",
             "FILTER_INVENTORY_SOURCE_TYPE",
             "FILTER_KEYWORD",
             "FILTER_LINE_ITEM",
@@ -549,6 +550,7 @@
             "FILTER_ZIP_CODE"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -783,6 +785,7 @@
               "FILTER_INVENTORY_FORMAT",
               "FILTER_INVENTORY_RATE_TYPE",
               "FILTER_INVENTORY_SOURCE",
+              "FILTER_INVENTORY_SOURCE_EXTERNAL_ID",
               "FILTER_INVENTORY_SOURCE_TYPE",
               "FILTER_KEYWORD",
               "FILTER_LINE_ITEM",
@@ -870,6 +873,7 @@
               "FILTER_ZIP_CODE"
             ],
             "enumDescriptions": [
+              "",
               "",
               "",
               "",

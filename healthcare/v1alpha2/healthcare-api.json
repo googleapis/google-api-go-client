@@ -298,6 +298,12 @@
                     "resource"
                   ],
                   "parameters": {
+                    "options.requestedPolicyVersion": {
+                      "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
                     "resource": {
                       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
                       "location": "path",
@@ -969,6 +975,12 @@
                         "resource"
                       ],
                       "parameters": {
+                        "options.requestedPolicyVersion": {
+                          "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
                         "resource": {
                           "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
                           "location": "path",
@@ -1989,6 +2001,12 @@
                         "resource"
                       ],
                       "parameters": {
+                        "options.requestedPolicyVersion": {
+                          "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
                         "resource": {
                           "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
                           "location": "path",
@@ -2665,6 +2683,12 @@
                             "resource"
                           ],
                           "parameters": {
+                            "options.requestedPolicyVersion": {
+                              "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+                              "format": "int32",
+                              "location": "query",
+                              "type": "integer"
+                            },
                             "resource": {
                               "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
                               "location": "path",
@@ -2807,6 +2831,12 @@
                         "resource"
                       ],
                       "parameters": {
+                        "options.requestedPolicyVersion": {
+                          "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
                         "resource": {
                           "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
                           "location": "path",
@@ -3236,7 +3266,7 @@
       }
     }
   },
-  "revision": "20190615",
+  "revision": "20190626",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "Annotation": {
@@ -3789,7 +3819,24 @@
     "GetIamPolicyRequest": {
       "description": "Request message for `GetIamPolicy` method.",
       "id": "GetIamPolicyRequest",
-      "properties": {},
+      "properties": {
+        "options": {
+          "$ref": "GetPolicyOptions",
+          "description": "OPTIONAL: A GetPolicyOptions object for specifying options to GetIamPolicy\nThis field is only used by Cloud IAM."
+        }
+      },
+      "type": "object"
+    },
+    "GetPolicyOptions": {
+      "description": "Encapsulates settings provided to GetIamPolicy.",
+      "id": "GetPolicyOptions",
+      "properties": {
+        "requestedPolicyVersion": {
+          "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
       "type": "object"
     },
     "GoogleCloudHealthcareV1alpha2DicomBigQueryDestination": {

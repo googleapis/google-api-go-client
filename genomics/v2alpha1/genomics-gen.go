@@ -1873,6 +1873,9 @@ type VirtualMachine struct {
 	// labels
 	// imposed by Compute Engine.
 	//
+	// Labels keys with the prefix 'google-' are reserved for use by
+	// Google.
+	//
 	// Labels applied at creation time to the VM. Applied on a best-effort
 	// basis
 	// to attached disk resources shortly after VM creation.

@@ -681,8 +681,8 @@ func (s *ManagedZone) MarshalJSON() ([]byte, error) {
 
 type ManagedZoneDnsSecConfig struct {
 	// DefaultKeySpecs: Specifies parameters that will be used for
-	// generating initial DnsKeys for this ManagedZone. Output only while
-	// state is not OFF.
+	// generating initial DnsKeys for this ManagedZone. Can only be changed
+	// while state is OFF.
 	DefaultKeySpecs []*DnsKeySpec `json:"defaultKeySpecs,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -690,7 +690,8 @@ type ManagedZoneDnsSecConfig struct {
 	Kind string `json:"kind,omitempty"`
 
 	// NonExistence: Specifies the mechanism used to provide authenticated
-	// denial-of-existence responses. Output only while state is not OFF.
+	// denial-of-existence responses. Can only be changed while state is
+	// OFF.
 	//
 	// Possible values:
 	//   "nsec"
@@ -874,11 +875,10 @@ func (s *ManagedZonePeeringConfig) MarshalJSON() ([]byte, error) {
 }
 
 type ManagedZonePeeringConfigTargetNetwork struct {
-	// DeactivateTime: If this zone has been deactivated due to a problem
-	// with the network it targeted, the time at which it was deactivated.
-	// The zone can be deactivated if, for instance, the network it targeted
-	// was deleted. If the targeted network is still present, this will be
-	// the empty string. This is in RFC3339 text format. Output only.
+	// DeactivateTime: If this zone has been deactivated (possibly because
+	// the producer network it targeted was deleted), the time at which it
+	// was deactivated. If the peering connection is still active, this will
+	// be the empty string. This is in RFC3339 text format. Output only.
 	DeactivateTime string `json:"deactivateTime,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed

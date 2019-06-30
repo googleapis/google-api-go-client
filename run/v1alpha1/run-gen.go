@@ -357,7 +357,10 @@ type ProjectsLocationsTriggersService struct {
 
 // Addressable: Information for connecting over HTTP(s).
 type Addressable struct {
+	// Hostname: Deprecated - use url instead.
 	Hostname string `json:"hostname,omitempty"`
+
+	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Hostname") to
 	// unconditionally include in API requests. By default, fields with
@@ -3583,6 +3586,7 @@ type RevisionSpec struct {
 	// for this Revision. In the context of a Revision, we disallow a number
 	// of
 	// fields on this Container, including: name and lifecycle.
+	// In Cloud Run, only a single container may be provided.
 	Containers []*Container `json:"containers,omitempty"`
 
 	// Generation: Deprecated and not currently populated by Cloud Run.
@@ -3594,7 +3598,14 @@ type RevisionSpec struct {
 	// Read-only.
 	Generation int64 `json:"generation,omitempty"`
 
-	// ServiceAccountName: Not currently used by Cloud Run.
+	// ServiceAccountName: Email address of the IAM service account
+	// associated with the revision
+	// of the service. The service account represents the identity of
+	// the
+	// running revision, and determines what permissions the revision has.
+	// If
+	// not provided, the revision will use the project's default service
+	// account.
 	ServiceAccountName string `json:"serviceAccountName,omitempty"`
 
 	// ServingState: ServingState holds a value describing the state the
@@ -3932,7 +3943,7 @@ func (s *RouteSpec) MarshalJSON() ([]byte, error) {
 // (from the
 // controller).
 type RouteStatus struct {
-	// Address: Similar to domain, information on where the service is
+	// Address: Similar to url, information on where the service is
 	// available on HTTP.
 	Address *Addressable `json:"address,omitempty"`
 
@@ -3943,15 +3954,14 @@ type RouteStatus struct {
 	// state of the world.
 	Conditions []*RouteCondition `json:"conditions,omitempty"`
 
-	// Domain: Domain holds the top-level domain that will distribute
-	// traffic over the
-	// provided targets. It generally has the
-	// form
-	// https://{route-hash}-{project-hash}-{cluster-level-suffix}.a.run.
-	// app
+	// Domain: Deprecated - use url instead.
+	// Domain holds the top-level domain that will distribute traffic over
+	// the
+	// provided targets.
 	Domain string `json:"domain,omitempty"`
 
-	// DomainInternal: For Cloud Run, identifical to domain.
+	// DomainInternal: Deprecated - use address instead.
+	// For Cloud Run, identifical to domain.
 	DomainInternal string `json:"domainInternal,omitempty"`
 
 	// ObservedGeneration: ObservedGeneration is the 'Generation' of the
@@ -3979,6 +3989,14 @@ type RouteStatus struct {
 	// the
 	// LatestReadyRevisionName that we last observed.
 	Traffic []*TrafficTarget `json:"traffic,omitempty"`
+
+	// Url: URL holds the url that will distribute traffic over the provided
+	// traffic
+	// targets. It generally has the
+	// form
+	// https://{route-hash}-{project-hash}-{cluster-level-suffix}.a.run.
+	// app
+	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Address") to
 	// unconditionally include in API requests. By default, fields with
@@ -4599,7 +4617,7 @@ func (s *ServiceSpecRunLatest) MarshalJSON() ([]byte, error) {
 // ServiceStatus: The current state of the Service. Output only.
 type ServiceStatus struct {
 	// Address: From RouteStatus.
-	// Similar to domain, information on where the service is available on
+	// Similar to url, information on where the service is available on
 	// HTTP.
 	Address *Addressable `json:"address,omitempty"`
 
@@ -4655,6 +4673,15 @@ type ServiceStatus struct {
 	// the
 	// LatestReadyRevisionName that we last observed.
 	Traffic []*TrafficTarget `json:"traffic,omitempty"`
+
+	// Url: From RouteStatus.
+	// URL holds the url that will distribute traffic over the provided
+	// traffic
+	// targets. It generally has the
+	// form
+	// https://{route-hash}-{project-hash}-{cluster-level-suffix}.a.run.
+	// app
+	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Address") to
 	// unconditionally include in API requests. By default, fields with

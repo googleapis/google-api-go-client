@@ -1155,10 +1155,8 @@ type Detail struct {
 	// obsolete details.
 	IsObsolete bool `json:"isObsolete,omitempty"`
 
-	// MaxAffectedVersion: Deprecated, do not use. Use fixed_location
-	// instead.
-	//
-	// The max version of the package in which the vulnerability exists.
+	// MaxAffectedVersion: The max version of the package in which the
+	// vulnerability exists.
 	MaxAffectedVersion *Version `json:"maxAffectedVersion,omitempty"`
 
 	// MinAffectedVersion: The min version of the package in which the

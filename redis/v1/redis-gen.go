@@ -575,8 +575,16 @@ type Instance struct {
 	// parameters
 	// are:
 	//
+	//  Redis 3.2 and above:
+	//
 	//  *   maxmemory-policy
 	//  *   notify-keyspace-events
+	//
+	//  Redis 4.0 and above:
+	//
+	//  *   activedefrag
+	//  *   lfu-log-factor
+	//  *   lfu-decay-time
 	RedisConfigs map[string]string `json:"redisConfigs,omitempty"`
 
 	// RedisVersion: Optional. The version of Redis software.
@@ -584,7 +592,10 @@ type Instance struct {
 	// the
 	// version will perform an upgrade/downgrade to the new version.
 	// Currently,
-	// the supported values are `REDIS_3_2` for Redis 3.2.
+	// the supported values are:
+	//
+	//  *   `REDIS_4_0` for Redis 4.0 compatibility (default)
+	//  *   `REDIS_3_2` for Redis 3.2 compatibility
 	RedisVersion string `json:"redisVersion,omitempty"`
 
 	// ReservedIpRange: Optional. The CIDR range of internal addresses that

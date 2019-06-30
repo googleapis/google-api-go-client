@@ -264,6 +264,34 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
+                "failover": {
+                  "description": "Initiates a failover of the master node to current replica node for a\nspecific STANDARD tier Cloud Memorystore for Redis instance.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:failover",
+                  "httpMethod": "POST",
+                  "id": "redis.projects.locations.instances.failover",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Redis instance resource name using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\nwhere `location_id` refers to a GCP region.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+name}:failover",
+                  "request": {
+                    "$ref": "FailoverInstanceRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "get": {
                   "description": "Gets the details of a specific Redis instance.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}",
@@ -514,7 +542,7 @@
       }
     }
   },
-  "revision": "20190607",
+  "revision": "20190628",
   "rootUrl": "https://redis.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -530,6 +558,27 @@
         "outputConfig": {
           "$ref": "OutputConfig",
           "description": "Required. Specify data to be exported."
+        }
+      },
+      "type": "object"
+    },
+    "FailoverInstanceRequest": {
+      "description": "Request for Failover.",
+      "id": "FailoverInstanceRequest",
+      "properties": {
+        "dataProtectionMode": {
+          "description": "Optional. Available data protection modes that the user can choose. If it's\nunspecified, data protection mode will be LIMITED_DATA_LOSS by default.",
+          "enum": [
+            "DATA_PROTECTION_MODE_UNSPECIFIED",
+            "LIMITED_DATA_LOSS",
+            "FORCE_DATA_LOSS"
+          ],
+          "enumDescriptions": [
+            "Defaults to LIMITED_DATA_LOSS if a data protection mode is not\nspecified.",
+            "Instance failover will be protected with data loss control. More\nspecifically, the failover will only be performed if the current\nreplication offset diff between master and replica is under a certain\nthreshold.",
+            "Instance failover will be performed without data loss control."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -701,7 +750,7 @@
           "type": "object"
         },
         "redisVersion": {
-          "description": "Optional. The version of Redis software.\nIf not provided, latest supported version will be used. Updating the\nversion will perform an upgrade/downgrade to the new version. Currently,\nthe supported values are:\n\n *   `REDIS_4_0` for Redis 4.0 compatibility\n *   `REDIS_3_2` for Redis 3.2 compatibility (default)",
+          "description": "Optional. The version of Redis software.\nIf not provided, latest supported version will be used. Updating the\nversion will perform an upgrade/downgrade to the new version. Currently,\nthe supported values are:\n\n *   `REDIS_4_0` for Redis 4.0 compatibility (default)\n *   `REDIS_3_2` for Redis 3.2 compatibility",
           "type": "string"
         },
         "reservedIpRange": {

@@ -38,7 +38,7 @@
   "canonicalName": "Cloud Search",
   "description": "Cloud Search provides cloud-based search capabilities over G Suite data.  The Cloud Search API allows indexing of non-G Suite data into Cloud Search.",
   "discoveryVersion": "v1",
-  "documentationLink": "https://gsuite.google.com/products/cloud-search/",
+  "documentationLink": "https://developers.google.com/cloud-search/docs/guides/",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -1429,7 +1429,7 @@
       }
     }
   },
-  "revision": "20190606",
+  "revision": "20190622",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {

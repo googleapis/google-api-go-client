@@ -267,7 +267,7 @@
       }
     }
   },
-  "revision": "20190606",
+  "revision": "20190627",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -1103,7 +1103,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional set of labels to apply to the VM and any attached disk resources.\nThese labels must adhere to the name and value restrictions on VM labels\nimposed by Compute Engine.\n\nLabels applied at creation time to the VM. Applied on a best-effort basis\nto attached disk resources shortly after VM creation.",
+          "description": "Optional set of labels to apply to the VM and any attached disk resources.\nThese labels must adhere to the name and value restrictions on VM labels\nimposed by Compute Engine.\n\nLabels keys with the prefix 'google-' are reserved for use by Google.\n\nLabels applied at creation time to the VM. Applied on a best-effort basis\nto attached disk resources shortly after VM creation.",
           "type": "object"
         },
         "machineType": {

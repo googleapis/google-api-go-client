@@ -261,8 +261,7 @@ func (s *AndroidConfig) MarshalJSON() ([]byte, error) {
 // AndroidFcmOptions: Options for features provided by the FCM SDK for
 // Android.
 type AndroidFcmOptions struct {
-	// AnalyticsLabel: Label that the message's analytics data will be
-	// associated with.
+	// AnalyticsLabel: Label associated with the message's analytics data.
 	AnalyticsLabel string `json:"analyticsLabel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalyticsLabel") to
@@ -448,8 +447,7 @@ func (s *ApnsConfig) MarshalJSON() ([]byte, error) {
 
 // ApnsFcmOptions: Options for features provided by the FCM SDK for iOS.
 type ApnsFcmOptions struct {
-	// AnalyticsLabel: Label that the message's analytics data will be
-	// associated with.
+	// AnalyticsLabel: Label associated with the message's analytics data.
 	AnalyticsLabel string `json:"analyticsLabel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalyticsLabel") to
@@ -479,8 +477,7 @@ func (s *ApnsFcmOptions) MarshalJSON() ([]byte, error) {
 // FcmOptions: Platform independent options for features provided by the
 // FCM SDKs.
 type FcmOptions struct {
-	// AnalyticsLabel: Label that the message's analytics data will be
-	// associated with.
+	// AnalyticsLabel: Label associated with the message's analytics data.
 	AnalyticsLabel string `json:"analyticsLabel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalyticsLabel") to

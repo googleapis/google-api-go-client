@@ -1074,7 +1074,7 @@
       }
     }
   },
-  "revision": "20190606",
+  "revision": "20190619",
   "rootUrl": "https://pubsub.googleapis.com/",
   "schemas": {
     "AcknowledgeRequest": {
@@ -1266,7 +1266,7 @@
       "id": "MessageStoragePolicy",
       "properties": {
         "allowedPersistenceRegions": {
-          "description": "The list of GCP region IDs where messages that are published to the topic\nmay be persisted in storage. Messages published by publishers running in\nnon-allowed GCP regions (or running outside of GCP altogether) will be\nrouted for storage in one of the allowed regions. An empty list indicates a\nmisconfiguration at the project or organization level, which will result in\nall Publish operations failing.",
+          "description": "A list of IDs of GCP regions where messages that are published to the topic\nmay be persisted in storage. Messages published by publishers running in\nnon-allowed GCP regions (or running outside of GCP altogether) will be\nrouted for storage in one of the allowed regions. An empty list means that\nno regions are allowed, and is not a valid configuration.",
           "items": {
             "type": "string"
           },
@@ -1616,7 +1616,7 @@
         },
         "messageStoragePolicy": {
           "$ref": "MessageStoragePolicy",
-          "description": "Policy constraining how messages published to the topic may be stored. It\nis determined when the topic is created based on the policy configured at\nthe project level. It must not be set by the caller in the request to\nCreateTopic or to UpdateTopic. This field will be populated in the\nresponses for GetTopic, CreateTopic, and UpdateTopic: if not present in the\nresponse, then no constraints are in effect."
+          "description": "Policy constraining the set of Google Cloud Platform regions where messages\npublished to the topic may be stored. If not present, then no constraints\nare in effect."
         },
         "name": {
           "description": "The name of the topic. It must have the format\n`\"projects/{project}/topics/{topic}\"`. `{topic}` must start with a letter,\nand contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`),\nunderscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent\nsigns (`%`). It must be between 3 and 255 characters in length, and it\nmust not start with `\"goog\"`.",

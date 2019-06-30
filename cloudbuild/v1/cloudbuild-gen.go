@@ -973,12 +973,6 @@ type CancelBuildRequest struct {
 type CancelOperationRequest struct {
 }
 
-// CheckSuiteFilter: A CheckSuiteFilter is a filter that indicates that
-// we should build on all
-// check suite events.
-type CheckSuiteFilter struct {
-}
-
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated
 // empty messages in your APIs. A typical example is to use it as the
@@ -1034,12 +1028,7 @@ func (s *FileHashes) MarshalJSON() ([]byte, error) {
 //
 // This message is experimental.
 type GitHubEventsConfig struct {
-	// CheckSuite: Output only. Indicates that a build was generated from a
-	// check suite
-	// event.
-	CheckSuite *CheckSuiteFilter `json:"checkSuite,omitempty"`
-
-	// InstallationId: The installationID that emmits the GitHub event.
+	// InstallationId: The installationID that emits the GitHub event.
 	InstallationId int64 `json:"installationId,omitempty,string"`
 
 	// Name: Name of the repository.
@@ -1054,7 +1043,7 @@ type GitHubEventsConfig struct {
 	// Push: filter to match changes in refs like branches, tags.
 	Push *PushFilter `json:"push,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CheckSuite") to
+	// ForceSendFields is a list of field names (e.g. "InstallationId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1062,12 +1051,13 @@ type GitHubEventsConfig struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CheckSuite") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "InstallationId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

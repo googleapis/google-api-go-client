@@ -693,7 +693,7 @@
               "type": "string"
             },
             "maxResults": {
-              "description": "The maximum number of results per page.",
+              "description": "The maximum number of results to return in a single response page.\nLeverage the page tokens to iterate through the entire collection.",
               "format": "uint32",
               "location": "query",
               "type": "integer"
@@ -969,7 +969,7 @@
               "type": "string"
             },
             "maxResults": {
-              "description": "The maximum number of results per page.",
+              "description": "The maximum number of results to return in a single response page.\nLeverage the page tokens to iterate through the entire collection.",
               "format": "uint32",
               "location": "query",
               "type": "integer"
@@ -1394,7 +1394,7 @@
       }
     }
   },
-  "revision": "20190616",
+  "revision": "20190623",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
@@ -1902,6 +1902,9 @@
         "datasetReference": {
           "$ref": "DatasetReference",
           "description": "[Required] A reference that identifies the dataset."
+        },
+        "defaultEncryptionConfiguration": {
+          "$ref": "EncryptionConfiguration"
         },
         "defaultPartitionExpirationMs": {
           "description": "[Optional] The default partition expiration for all partitioned tables in the dataset, in milliseconds. Once this property is set, all newly-created partitioned tables in the dataset will have an expirationMs property in the timePartitioning settings set to this value, and changing the value will only affect new tables, not existing ones. The storage in a partition will have an expiration time of its partition time plus this value. Setting this property overrides the use of defaultTableExpirationMs for partitioned tables: only one of defaultTableExpirationMs and defaultPartitionExpirationMs will be used for any new partitioned table. If you provide an explicit timePartitioning.expirationMs when creating or updating a partitioned table, that value takes precedence over the default partition expiration time indicated by this property.",
@@ -3077,6 +3080,10 @@
           },
           "type": "array"
         },
+        "reservation_id": {
+          "description": "[Output-only] Name of the primary reservation assigned to this job. Note that this could be different than reservations reported in the reservation usage field if parent reservations were used to execute this job.",
+          "type": "string"
+        },
         "startTime": {
           "description": "[Output-only] Start time of this job, in milliseconds since the epoch. This field will be present when the job transitions from the PENDING state to either RUNNING or DONE.",
           "format": "int64",
@@ -3902,7 +3909,7 @@
           "type": "string"
         },
         "definitionBody": {
-          "description": "Required. The body of the routine.\nFor functions, this is the expression in the AS clause.\nIf language=SQL, it is the substring inside (but excluding) the\nparentheses. For example, for the function created with the following\nstatement\n  create function JoinLines(x string, y string) as (concat(x, \"\\n\", y))\ndefinition_body = r'concat(x, \"\\n\", y)' (\\n is not replaced with\nlinebreak).\nIf language=JAVASCRIPT, it is the evaluated string in the AS clause.\nFor example, for the function created with the following statement\n  CREATE FUNCTION f() RETURNS STRING LANGUAGE js AS 'return \"\\n\";\\n'\ndefinition_body = 'return \"\\n\";\\n' (both \\n are replaced with\nlinebreaks).",
+          "description": "Required. The body of the routine.\n\nFor functions, this is the expression in the AS clause.\n\nIf language=SQL, it is the substring inside (but excluding) the\nparentheses. For example, for the function created with the following\nstatement:\n\n`CREATE FUNCTION JoinLines(x string, y string) as (concat(x, \"\\n\", y))`\n\nThe definition_body is `concat(x, \"\\n\", y)` (\\n is not replaced with\nlinebreak).\n\nIf language=JAVASCRIPT, it is the evaluated string in the AS clause.\nFor example, for the function created with the following statement:\n\n`CREATE FUNCTION f() RETURNS STRING LANGUAGE js AS 'return \"\\n\";\\n'`\n\nThe definition_body is\n\n`return \"\\n\";\\n`\n\nNote that both \\n are replaced with linebreaks.",
           "type": "string"
         },
         "etag": {
@@ -3937,7 +3944,7 @@
         },
         "returnType": {
           "$ref": "StandardSqlDataType",
-          "description": "Optional if language = \"SQL\"; required otherwise.\nIf absent, the return type is inferred from definition_body at query time\nin each query that references this routine. If present, then the evaluated\nresult will be cast to the specified returned type at query time.\n\nFor example, for the functions created with the following statements\n  CREATE FUNCTION Add(x FLOAT64, y FLOAT64) RETURNS FLOAT64 AS (x + y);\n  CREATE FUNCTION Increment(x FLOAT64) AS (Add(x, 1));\n  CREATE FUNCTION Decrement(x FLOAT64) RETURNS FLOAT64 AS (Add(x, -1));\nThe return_type is {type_kind: \"FLOAT64\"} for Add and Decrement, and\nis absent for Increment (inferred as FLOAT64 at query time).\nSuppose the function Add is replaced by\n  CREATE OR REPLACE FUNCTION Add(x INT64, y INT64) AS (x + y);\nThen the inferred return type of Increment is automatically changed to\nINT64 at query time, while the return type of Decrement remains FLOAT64."
+          "description": "Optional if language = \"SQL\"; required otherwise.\n\nIf absent, the return type is inferred from definition_body at query time\nin each query that references this routine. If present, then the evaluated\nresult will be cast to the specified returned type at query time.\n\nFor example, for the functions created with the following statements:\n\n* `CREATE FUNCTION Add(x FLOAT64, y FLOAT64) RETURNS FLOAT64 AS (x + y);`\n\n* `CREATE FUNCTION Increment(x FLOAT64) AS (Add(x, 1));`\n\n* `CREATE FUNCTION Decrement(x FLOAT64) RETURNS FLOAT64 AS (Add(x, -1));`\n\nThe return_type is `{type_kind: \"FLOAT64\"}` for `Add` and `Decrement`, and\nis absent for `Increment` (inferred as FLOAT64 at query time).\n\nSuppose the function `Add` is replaced by\n  `CREATE OR REPLACE FUNCTION Add(x INT64, y INT64) AS (x + y);`\n\nThen the inferred return type of `Increment` is automatically changed to\nINT64 at query time, while the return type of `Decrement` remains FLOAT64."
         },
         "routineReference": {
           "$ref": "RoutineReference",

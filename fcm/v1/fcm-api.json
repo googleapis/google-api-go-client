@@ -141,7 +141,7 @@
       }
     }
   },
-  "revision": "20190606",
+  "revision": "20190628",
   "rootUrl": "https://fcm.googleapis.com/",
   "schemas": {
     "AndroidConfig": {
@@ -196,7 +196,7 @@
       "id": "AndroidFcmOptions",
       "properties": {
         "analyticsLabel": {
-          "description": "Label that the message's analytics data will be associated with.",
+          "description": "Label associated with the message's analytics data.",
           "type": "string"
         }
       },
@@ -294,7 +294,7 @@
       "id": "ApnsFcmOptions",
       "properties": {
         "analyticsLabel": {
-          "description": "Label that the message's analytics data will be associated with.",
+          "description": "Label associated with the message's analytics data.",
           "type": "string"
         }
       },
@@ -305,7 +305,7 @@
       "id": "FcmOptions",
       "properties": {
         "analyticsLabel": {
-          "description": "Label that the message's analytics data will be associated with.",
+          "description": "Label associated with the message's analytics data.",
           "type": "string"
         }
       },

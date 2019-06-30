@@ -6,7 +6,7 @@
 
 // Package cloudsearch provides access to the Cloud Search API.
 //
-// For product documentation, see: https://gsuite.google.com/products/cloud-search/
+// For product documentation, see: https://developers.google.com/cloud-search/docs/guides/
 //
 // Creating a client
 //

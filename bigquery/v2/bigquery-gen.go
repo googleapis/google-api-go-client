@@ -1173,6 +1173,8 @@ type Dataset struct {
 	// DatasetReference: [Required] A reference that identifies the dataset.
 	DatasetReference *DatasetReference `json:"datasetReference,omitempty"`
 
+	DefaultEncryptionConfiguration *EncryptionConfiguration `json:"defaultEncryptionConfiguration,omitempty"`
+
 	// DefaultPartitionExpirationMs: [Optional] The default partition
 	// expiration for all partitioned tables in the dataset, in
 	// milliseconds. Once this property is set, all newly-created
@@ -3031,6 +3033,12 @@ type JobStatistics struct {
 	// reservation.
 	ReservationUsage []*JobStatisticsReservationUsage `json:"reservationUsage,omitempty"`
 
+	// ReservationId: [Output-only] Name of the primary reservation assigned
+	// to this job. Note that this could be different than reservations
+	// reported in the reservation usage field if parent reservations were
+	// used to execute this job.
+	ReservationId string `json:"reservation_id,omitempty"`
+
 	// StartTime: [Output-only] Start time of this job, in milliseconds
 	// since the epoch. This field will be present when the job transitions
 	// from the PENDING state to either RUNNING or DONE.
@@ -4388,25 +4396,35 @@ type Routine struct {
 	CreationTime int64 `json:"creationTime,omitempty,string"`
 
 	// DefinitionBody: Required. The body of the routine.
+	//
 	// For functions, this is the expression in the AS clause.
+	//
 	// If language=SQL, it is the substring inside (but excluding)
 	// the
 	// parentheses. For example, for the function created with the
 	// following
-	// statement
-	//   create function JoinLines(x string, y string) as (concat(x, "\n",
-	// y))
-	// definition_body = r'concat(x, "\n", y)' (\n is not replaced
+	// statement:
+	//
+	// `CREATE FUNCTION JoinLines(x string, y string) as (concat(x, "\n",
+	// y))`
+	//
+	// The definition_body is `concat(x, "\n", y)` (\n is not replaced
 	// with
 	// linebreak).
+	//
 	// If language=JAVASCRIPT, it is the evaluated string in the AS
 	// clause.
-	// For example, for the function created with the following statement
-	//   CREATE FUNCTION f() RETURNS STRING LANGUAGE js AS 'return
-	// "\n";\n'
-	// definition_body = 'return "\n";\n' (both \n are replaced
-	// with
-	// linebreaks).
+	// For example, for the function created with the following
+	// statement:
+	//
+	// `CREATE FUNCTION f() RETURNS STRING LANGUAGE js AS 'return
+	// "\n";\n'`
+	//
+	// The definition_body is
+	//
+	// `return "\n";\n`
+	//
+	// Note that both \n are replaced with linebreaks.
 	DefinitionBody string `json:"definitionBody,omitempty"`
 
 	// Etag: Output only. A hash of this resource.
@@ -4431,6 +4449,7 @@ type Routine struct {
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
 
 	// ReturnType: Optional if language = "SQL"; required otherwise.
+	//
 	// If absent, the return type is inferred from definition_body at query
 	// time
 	// in each query that references this routine. If present, then the
@@ -4438,20 +4457,29 @@ type Routine struct {
 	// result will be cast to the specified returned type at query
 	// time.
 	//
-	// For example, for the functions created with the following statements
-	//   CREATE FUNCTION Add(x FLOAT64, y FLOAT64) RETURNS FLOAT64 AS (x +
-	// y);
-	//   CREATE FUNCTION Increment(x FLOAT64) AS (Add(x, 1));
-	//   CREATE FUNCTION Decrement(x FLOAT64) RETURNS FLOAT64 AS (Add(x,
-	// -1));
-	// The return_type is {type_kind: "FLOAT64"} for Add and Decrement,
-	// and
-	// is absent for Increment (inferred as FLOAT64 at query time).
-	// Suppose the function Add is replaced by
-	//   CREATE OR REPLACE FUNCTION Add(x INT64, y INT64) AS (x + y);
-	// Then the inferred return type of Increment is automatically changed
+	// For example, for the functions created with the following
+	// statements:
+	//
+	// * `CREATE FUNCTION Add(x FLOAT64, y FLOAT64) RETURNS FLOAT64 AS (x +
+	// y);`
+	//
+	// * `CREATE FUNCTION Increment(x FLOAT64) AS (Add(x, 1));`
+	//
+	// * `CREATE FUNCTION Decrement(x FLOAT64) RETURNS FLOAT64 AS (Add(x,
+	// -1));`
+	//
+	// The return_type is `{type_kind: "FLOAT64"}` for `Add` and
+	// `Decrement`, and
+	// is absent for `Increment` (inferred as FLOAT64 at query
+	// time).
+	//
+	// Suppose the function `Add` is replaced by
+	//   `CREATE OR REPLACE FUNCTION Add(x INT64, y INT64) AS (x +
+	// y);`
+	//
+	// Then the inferred return type of `Increment` is automatically changed
 	// to
-	// INT64 at query time, while the return type of Decrement remains
+	// INT64 at query time, while the return type of `Decrement` remains
 	// FLOAT64.
 	ReturnType *StandardSqlDataType `json:"returnType,omitempty"`
 
@@ -8220,7 +8248,8 @@ func (r *ModelsService) List(projectId string, datasetId string) *ModelsListCall
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of results per page.
+// number of results to return in a single response page.
+// Leverage the page tokens to iterate through the entire collection.
 func (c *ModelsListCall) MaxResults(maxResults int64) *ModelsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -8350,7 +8379,7 @@ func (c *ModelsListCall) Do(opts ...googleapi.CallOption) (*ListModelsResponse, 
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of results per page.",
+	//       "description": "The maximum number of results to return in a single response page.\nLeverage the page tokens to iterate through the entire collection.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -9363,7 +9392,8 @@ func (r *RoutinesService) List(projectId string, datasetId string) *RoutinesList
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of results per page.
+// number of results to return in a single response page.
+// Leverage the page tokens to iterate through the entire collection.
 func (c *RoutinesListCall) MaxResults(maxResults int64) *RoutinesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -9493,7 +9523,7 @@ func (c *RoutinesListCall) Do(opts ...googleapi.CallOption) (*ListRoutinesRespon
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of results per page.",
+	//       "description": "The maximum number of results to return in a single response page.\nLeverage the page tokens to iterate through the entire collection.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"

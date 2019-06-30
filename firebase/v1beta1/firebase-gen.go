@@ -173,6 +173,8 @@ type OperationsService struct {
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.AndroidApps = NewProjectsAndroidAppsService(s)
+	rs.AvailableLocations = NewProjectsAvailableLocationsService(s)
+	rs.DefaultLocation = NewProjectsDefaultLocationService(s)
 	rs.IosApps = NewProjectsIosAppsService(s)
 	rs.WebApps = NewProjectsWebAppsService(s)
 	return rs
@@ -182,6 +184,10 @@ type ProjectsService struct {
 	s *Service
 
 	AndroidApps *ProjectsAndroidAppsService
+
+	AvailableLocations *ProjectsAvailableLocationsService
+
+	DefaultLocation *ProjectsDefaultLocationService
 
 	IosApps *ProjectsIosAppsService
 
@@ -209,6 +215,24 @@ type ProjectsAndroidAppsShaService struct {
 	s *Service
 }
 
+func NewProjectsAvailableLocationsService(s *Service) *ProjectsAvailableLocationsService {
+	rs := &ProjectsAvailableLocationsService{s: s}
+	return rs
+}
+
+type ProjectsAvailableLocationsService struct {
+	s *Service
+}
+
+func NewProjectsDefaultLocationService(s *Service) *ProjectsDefaultLocationService {
+	rs := &ProjectsDefaultLocationService{s: s}
+	return rs
+}
+
+type ProjectsDefaultLocationService struct {
+	s *Service
+}
+
 func NewProjectsIosAppsService(s *Service) *ProjectsIosAppsService {
 	rs := &ProjectsIosAppsService{s: s}
 	return rs
@@ -229,15 +253,20 @@ type ProjectsWebAppsService struct {
 
 // AddFirebaseRequest: All fields are required.
 type AddFirebaseRequest struct {
-	// LocationId: Deprecated. Instead, call FinalizeDefaultLocation after
-	// you add
-	// Firebase services to your project.
+	// LocationId: Deprecated. Instead, to set your project's default GCP
+	// resource location,
+	// call
+	// [`FinalizeDefaultLocation`](../projects.defaultLocation/finalize)
+	// afte
+	// r you add Firebase services to your project.
 	// <br>
-	// <br>The ID of the project's Cloud resource location. The location
-	// should be
-	// one of the AppEngine locations defined
-	// here:
-	// https://cloud.google.com/appengine/docs/locations
+	// <br>The ID of the project's default GCP resource location. The
+	// location
+	// must be one of the available
+	// [GCP
+	// resource
+	// locations](https://firebase.google.com/docs/projects/location
+	// s).
 	LocationId string `json:"locationId,omitempty"`
 
 	// RegionCode: The region code (CLDR) that the account will use for
@@ -280,11 +309,21 @@ type AdminSdkConfig struct {
 	// DatabaseURL: The default Firebase Realtime Database URL.
 	DatabaseURL string `json:"databaseURL,omitempty"`
 
-	// LocationId: The default resource location of other Firebase
-	// resources
-	// (such as Cloud Firestore).
-	// <br>For examples, see
-	// https://cloud.google.com/appengine/docs/locations.
+	// LocationId: The ID of the project's default GCP resource location.
+	// The location is one
+	// of the available
+	// [GCP
+	// resource
+	// locations](https://firebase.google.com/docs/projects/location
+	// s). <br>
+	// <br>This field is omitted if the default GCP resource location has
+	// not been
+	// finalized yet. To set your project's default GCP resource
+	// location,
+	// call
+	// [`FinalizeDefaultLocation`](../projects.defaultLocation/finalize)
+	// afte
+	// r you add Firebase services to your project.
 	LocationId string `json:"locationId,omitempty"`
 
 	// ProjectId: Immutable. The globally unique, user-assigned project ID
@@ -440,13 +479,21 @@ type DefaultResources struct {
 	// <br><code>myproject123-a5c16</code>
 	HostingSite string `json:"hostingSite,omitempty"`
 
-	// LocationId: The default resource location of other Firebase
-	// resources, such as
-	// Cloud Firestore. This field is omitted if the default resource
-	// location has
-	// not been finalized yet.
-	// <br>For examples, see
-	// https://cloud.google.com/appengine/docs/locations.
+	// LocationId: The ID of the project's default GCP resource location.
+	// The location is one
+	// of the available
+	// [GCP
+	// resource
+	// locations](https://firebase.google.com/docs/projects/location
+	// s). <br>
+	// <br>This field is omitted if the default GCP resource location has
+	// not been
+	// finalized yet. To set your project's default GCP resource
+	// location,
+	// call
+	// [`FinalizeDefaultLocation`](../projects.defaultLocation/finalize)
+	// afte
+	// r you add Firebase services to your project.
 	LocationId string `json:"locationId,omitempty"`
 
 	// RealtimeDatabaseInstance: The default Firebase Realtime Database
@@ -472,9 +519,7 @@ type DefaultResources struct {
 
 	// StorageBucket: The default Cloud Storage for Firebase storage bucket,
 	// in the format:
-	// <br><code><var>projectId</var>.appspot.com</code>. This field is
-	// omitted
-	// if the default resource location has not been finalized yet.
+	// <br><code><var>projectId</var>.appspot.com</code>
 	StorageBucket string `json:"storageBucket,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HostingSite") to
@@ -516,6 +561,39 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+type FinalizeDefaultLocationRequest struct {
+	// LocationId: The ID of the default GCP resource location for the
+	// Project. The location
+	// must be one of the available
+	// [GCP
+	// resource
+	// locations](https://firebase.google.com/docs/projects/location
+	// s).
+	LocationId string `json:"locationId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LocationId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LocationId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FinalizeDefaultLocationRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod FinalizeDefaultLocationRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // FirebaseAppInfo: A high-level summary of an App.
@@ -788,6 +866,51 @@ func (s *ListAndroidAppsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type ListAvailableLocationsResponse struct {
+	// Locations: One page of results from a call to
+	// `ListAvailableLocations`.
+	Locations []*Location `json:"locations,omitempty"`
+
+	// NextPageToken: If the result list is too large to fit in a single
+	// response, then a token
+	// is returned. If the string is empty, then this response is the last
+	// page of
+	// results and all available locations have been listed.
+	// <br>
+	// <br>This token can be used in a subsequent call
+	// to
+	// `ListAvailableLocations` to find more locations.
+	// <br>
+	// <br>Page tokens are short-lived and should not be persisted.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Locations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Locations") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAvailableLocationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAvailableLocationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ListAvailableProjectsResponse struct {
 	// NextPageToken: If the result list is too large to fit in a single
 	// response, then a token
@@ -997,6 +1120,40 @@ func (s *ListWebAppsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Location: A GCP resource location that can be selected for a Project.
+type Location struct {
+	// LocationId: The ID of the default GCP resource location. It must be
+	// one of the
+	// available
+	// [GCP
+	// resource
+	// locations](https://firebase.google.com/docs/projects/location
+	// s).
+	LocationId string `json:"locationId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LocationId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LocationId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Location) MarshalJSON() ([]byte, error) {
+	type NoMethod Location
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MessageSet: This is proto2's version of MessageSet.
 type MessageSet struct {
 }
@@ -1084,17 +1241,22 @@ type ProjectInfo struct {
 	// <code>My App</code>
 	DisplayName string `json:"displayName,omitempty"`
 
-	// LocationId: The default resource location of other Firebase
-	// resources
-	// (such as Cloud Firestore).
-	// <br>Not all projects will have this field populated. If it is
-	// not populated, it means that the project is not yet associated with
-	// any
-	// region. Consequently, a call to AddFirebase <b>must</b> provide a
-	// location
-	// in this case.
-	// <br>For examples, see
-	// https://cloud.google.com/appengine/docs/locations.
+	// LocationId: The ID of the project's default GCP resource location.
+	// The location is one
+	// of the available
+	// [GCP
+	// resource
+	// locations](https://firebase.google.com/docs/projects/location
+	// s). <br> <br>
+	// Not all projects will have this field populated. If it is not
+	// populated, it
+	// means that the project does not yet have a default GCP resource
+	// location.
+	// To set your project's default GCP resource location,
+	// call
+	// [`FinalizeDefaultLocation`](../projects.defaultLocation/finalize)
+	//  after you
+	// add Firebase services to your project.
 	LocationId string `json:"locationId,omitempty"`
 
 	// Project: The resource name of the GCP `Project` to which Firebase
@@ -1463,11 +1625,21 @@ type WebAppConfig struct {
 	// DatabaseURL: The default Firebase Realtime Database URL.
 	DatabaseURL string `json:"databaseURL,omitempty"`
 
-	// LocationId: The default resource location of other Firebase
-	// resources
-	// (such as Cloud Firestore).
-	// <br>For examples, see
-	// https://cloud.google.com/appengine/docs/locations.
+	// LocationId: The ID of the project's default GCP resource location.
+	// The location is one
+	// of the available
+	// [GCP
+	// resource
+	// locations](https://firebase.google.com/docs/projects/location
+	// s). <br>
+	// <br>This field is omitted if the default GCP resource location has
+	// not been
+	// finalized yet. To set your project's default GCP resource
+	// location,
+	// call
+	// [`FinalizeDefaultLocation`](../projects.defaultLocation/finalize)
+	// afte
+	// r you add Firebase services to your project.
 	LocationId string `json:"locationId,omitempty"`
 
 	// MessagingSenderId: The sender ID for use with Firebase Cloud
@@ -4140,6 +4312,438 @@ func (c *ProjectsAndroidAppsShaListCall) Do(opts ...googleapi.CallOption) (*List
 	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/firebase",
 	//     "https://www.googleapis.com/auth/firebase.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "firebase.projects.availableLocations.list":
+
+type ProjectsAvailableLocationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of valid Google Cloud Platform (GCP) resource
+// locations for
+// the specified Project (including a FirebaseProject).
+// <br>
+// <br>The default GCP resource location of a project defines the
+// geographical
+// location where project resources, such as Cloud Firestore, will
+// be
+// provisioned by default.
+// <br>
+// <br>The returned list are the available
+// [GCP
+// resource
+// locations](https://firebase.google.com/docs/projects/location
+// s). <br>
+// <br>This call checks for any location restrictions for the
+// specified
+// Project and, thus, might return a subset of all possible GCP
+// resource
+// locations. To list all GCP resource locations (regardless of
+// any
+// restrictions), call the endpoint without specifying a `projectId`
+// (that
+// is,
+// `/v1beta1/{parent=projects/-}/listAvailableLocations`).
+// <br>
+// <br>T
+// o call `ListAvailableLocations` with a specified project, a
+// member
+// must be at minimum a Viewer of the project. Calls without a
+// specified
+// project do not require any specific project permissions.
+func (r *ProjectsAvailableLocationsService) List(parent string) *ProjectsAvailableLocationsListCall {
+	c := &ProjectsAvailableLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of locations to return in the response.
+// <br>
+// <br>The server may return fewer than this value at its discretion.
+// If no value is specified (or too large a value is specified), then
+// the
+// server will impose its own limit.
+// <br>
+// <br>This value cannot be negative.
+func (c *ProjectsAvailableLocationsListCall) PageSize(pageSize int64) *ProjectsAvailableLocationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token returned
+// from a previous call to `ListAvailableLocations` indicating
+// where in the list of locations to resume listing.
+func (c *ProjectsAvailableLocationsListCall) PageToken(pageToken string) *ProjectsAvailableLocationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsAvailableLocationsListCall) Fields(s ...googleapi.Field) *ProjectsAvailableLocationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsAvailableLocationsListCall) IfNoneMatch(entityTag string) *ProjectsAvailableLocationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsAvailableLocationsListCall) Context(ctx context.Context) *ProjectsAvailableLocationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsAvailableLocationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAvailableLocationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/availableLocations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebase.projects.availableLocations.list" call.
+// Exactly one of *ListAvailableLocationsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListAvailableLocationsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsAvailableLocationsListCall) Do(opts ...googleapi.CallOption) (*ListAvailableLocationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListAvailableLocationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of valid Google Cloud Platform (GCP) resource locations for\nthe specified Project (including a FirebaseProject).\n\u003cbr\u003e\n\u003cbr\u003eThe default GCP resource location of a project defines the geographical\nlocation where project resources, such as Cloud Firestore, will be\nprovisioned by default.\n\u003cbr\u003e\n\u003cbr\u003eThe returned list are the available\n[GCP resource\nlocations](https://firebase.google.com/docs/projects/locations). \u003cbr\u003e\n\u003cbr\u003eThis call checks for any location restrictions for the specified\nProject and, thus, might return a subset of all possible GCP resource\nlocations. To list all GCP resource locations (regardless of any\nrestrictions), call the endpoint without specifying a `projectId` (that is,\n`/v1beta1/{parent=projects/-}/listAvailableLocations`).\n\u003cbr\u003e\n\u003cbr\u003eTo call `ListAvailableLocations` with a specified project, a member\nmust be at minimum a Viewer of the project. Calls without a specified\nproject do not require any specific project permissions.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/availableLocations",
+	//   "httpMethod": "GET",
+	//   "id": "firebase.projects.availableLocations.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of locations to return in the response.\n\u003cbr\u003e\n\u003cbr\u003eThe server may return fewer than this value at its discretion.\nIf no value is specified (or too large a value is specified), then the\nserver will impose its own limit.\n\u003cbr\u003e\n\u003cbr\u003eThis value cannot be negative.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token returned from a previous call to `ListAvailableLocations` indicating\nwhere in the list of locations to resume listing.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "The Project for which to list GCP resource locations, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e\n\u003cbr\u003eIf no project is specified (that is, `projects/-`), the returned list\ndoes not take into account org-specific or project-specific location\nrestrictions.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/availableLocations",
+	//   "response": {
+	//     "$ref": "ListAvailableLocationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsAvailableLocationsListCall) Pages(ctx context.Context, f func(*ListAvailableLocationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "firebase.projects.defaultLocation.finalize":
+
+type ProjectsDefaultLocationFinalizeCall struct {
+	s                              *Service
+	parent                         string
+	finalizedefaultlocationrequest *FinalizeDefaultLocationRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Finalize: Sets the default Google Cloud Platform (GCP) resource
+// location for the
+// specified FirebaseProject.
+// <br>
+// <br>This method creates an App Engine application with a
+// [default Cloud
+// Storage
+// bucket](https://cloud.google.com/appengine/docs/standard/pytho
+// n/googlecloudstorageclient/setting-up-cloud-storage#activating_a_cloud
+// _storage_bucket),
+// located in the
+// specified
+// [`location_id`](#body.request_body.FIELDS.location_id).
+// This
+//  location must be one of the available
+// [GCP
+// resource
+// locations](https://firebase.google.com/docs/projects/location
+// s). <br>
+// <br>After the default GCP resource location is finalized, or if it
+// was
+// already set, it cannot be changed. The default GCP resource location
+// for
+// the specified FirebaseProject might already be set because either
+// the
+// GCP `Project` already has an App Engine application
+// or
+// `FinalizeDefaultLocation` was previously called with a
+// specified
+// `location_id`. Any new calls to `FinalizeDefaultLocation` with
+// a
+// <em>different</em> specified `location_id` will return a 409
+// error.
+// <br>
+// <br>The result of this call is an
+// [`Operation`](../../v1beta1/operations),
+// which can be used to track the provisioning process.
+// The
+// [`response`](../../v1beta1/operations#Operation.FIELDS.response) type
+// of
+// the `Operation` is google.protobuf.Empty.
+// <br>
+// <br>The `Operation` can be polled by its `name` using
+// GetOperation until `done` is
+// true. When `done` is true, the `Operation` has either succeeded or
+// failed.
+// If the `Operation` has succeeded,
+// its
+// [`response`](../../v1beta1/operations#Operation.FIELDS.response) will
+// be
+// set to a google.protobuf.Empty; if the `Operation` has failed,
+// its
+// `error` will be set to a google.rpc.Status. The `Operation`
+// is
+// automatically deleted after completion, so there is no need to
+// call
+// DeleteOperation.
+// <br>
+// <br>All fields listed in the [request body](#request-body) are
+// required.
+// <br>
+// <br>To call `FinalizeDefaultLocation`, a member must be an Owner
+// of the project.
+func (r *ProjectsDefaultLocationService) Finalize(parent string, finalizedefaultlocationrequest *FinalizeDefaultLocationRequest) *ProjectsDefaultLocationFinalizeCall {
+	c := &ProjectsDefaultLocationFinalizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.finalizedefaultlocationrequest = finalizedefaultlocationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDefaultLocationFinalizeCall) Fields(s ...googleapi.Field) *ProjectsDefaultLocationFinalizeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDefaultLocationFinalizeCall) Context(ctx context.Context) *ProjectsDefaultLocationFinalizeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDefaultLocationFinalizeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDefaultLocationFinalizeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.finalizedefaultlocationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/defaultLocation:finalize")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebase.projects.defaultLocation.finalize" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsDefaultLocationFinalizeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the default Google Cloud Platform (GCP) resource location for the\nspecified FirebaseProject.\n\u003cbr\u003e\n\u003cbr\u003eThis method creates an App Engine application with a\n[default Cloud Storage\nbucket](https://cloud.google.com/appengine/docs/standard/python/googlecloudstorageclient/setting-up-cloud-storage#activating_a_cloud_storage_bucket),\nlocated in the specified\n[`location_id`](#body.request_body.FIELDS.location_id).\nThis location must be one of the available\n[GCP resource\nlocations](https://firebase.google.com/docs/projects/locations). \u003cbr\u003e\n\u003cbr\u003eAfter the default GCP resource location is finalized, or if it was\nalready set, it cannot be changed. The default GCP resource location for\nthe specified FirebaseProject might already be set because either the\nGCP `Project` already has an App Engine application or\n`FinalizeDefaultLocation` was previously called with a specified\n`location_id`. Any new calls to `FinalizeDefaultLocation` with a\n\u003cem\u003edifferent\u003c/em\u003e specified `location_id` will return a 409 error.\n\u003cbr\u003e\n\u003cbr\u003eThe result of this call is an [`Operation`](../../v1beta1/operations),\nwhich can be used to track the provisioning process. The\n[`response`](../../v1beta1/operations#Operation.FIELDS.response) type of\nthe `Operation` is google.protobuf.Empty.\n\u003cbr\u003e\n\u003cbr\u003eThe `Operation` can be polled by its `name` using\nGetOperation until `done` is\ntrue. When `done` is true, the `Operation` has either succeeded or failed.\nIf the `Operation` has succeeded, its\n[`response`](../../v1beta1/operations#Operation.FIELDS.response) will be\nset to a google.protobuf.Empty; if the `Operation` has failed, its\n`error` will be set to a google.rpc.Status. The `Operation` is\nautomatically deleted after completion, so there is no need to call\nDeleteOperation.\n\u003cbr\u003e\n\u003cbr\u003eAll fields listed in the [request body](#request-body) are required.\n\u003cbr\u003e\n\u003cbr\u003eTo call `FinalizeDefaultLocation`, a member must be an Owner\nof the project.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/defaultLocation:finalize",
+	//   "httpMethod": "POST",
+	//   "id": "firebase.projects.defaultLocation.finalize",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The resource name of the Project for which the default GCP resource\nlocation will be set, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/defaultLocation:finalize",
+	//   "request": {
+	//     "$ref": "FinalizeDefaultLocationRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 

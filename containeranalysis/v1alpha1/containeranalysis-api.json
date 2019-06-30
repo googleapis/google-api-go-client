@@ -1204,7 +1204,7 @@
       }
     }
   },
-  "revision": "20190604",
+  "revision": "20190625",
   "rootUrl": "https://containeranalysis.googleapis.com/",
   "schemas": {
     "Artifact": {
@@ -1653,7 +1653,7 @@
         },
         "maxAffectedVersion": {
           "$ref": "Version",
-          "description": "Deprecated, do not use. Use fixed_location instead.\n\nThe max version of the package in which the vulnerability exists."
+          "description": "The max version of the package in which the vulnerability exists."
         },
         "minAffectedVersion": {
           "$ref": "Version",

@@ -1365,6 +1365,49 @@
             }
           }
         },
+        "locations": {
+          "resources": {
+            "content": {
+              "methods": {
+                "deidentify": {
+                  "description": "De-identifies potentially sensitive info from a ContentItem.\nThis method has limits on input size and output size.\nSee https://cloud.google.com/dlp/docs/deidentify-sensitive-data to\nlearn more.\n\nWhen no InfoTypes or CustomInfoTypes are specified in this request, the\nsystem will automatically choose what detectors to run. By default this may\nbe all types, but may change over time as detectors are updated.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{location}/content:deidentify",
+                  "httpMethod": "POST",
+                  "id": "dlp.projects.locations.content.deidentify",
+                  "parameterOrder": [
+                    "parent",
+                    "location"
+                  ],
+                  "parameters": {
+                    "location": {
+                      "description": "The geographic location to process de-identification. Reserved for future\nextensions.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "The parent resource name, for example projects/my-project-id.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+parent}/locations/{location}/content:deidentify",
+                  "request": {
+                    "$ref": "GooglePrivacyDlpV2DeidentifyContentRequest"
+                  },
+                  "response": {
+                    "$ref": "GooglePrivacyDlpV2DeidentifyContentResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            }
+          }
+        },
         "storedInfoTypes": {
           "methods": {
             "create": {
@@ -1519,7 +1562,7 @@
       }
     }
   },
-  "revision": "20190607",
+  "revision": "20190629",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -1533,6 +1576,10 @@
         "pubSub": {
           "$ref": "GooglePrivacyDlpV2PublishToPubSub",
           "description": "Publish a notification to a pubsub topic."
+        },
+        "publishFindingsToCloudDataCatalog": {
+          "$ref": "GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog",
+          "description": "Publish findings to Cloud Datahub."
         },
         "publishSummaryToCscc": {
           "$ref": "GooglePrivacyDlpV2PublishSummaryToCscc",
@@ -2515,6 +2562,10 @@
         "item": {
           "$ref": "GooglePrivacyDlpV2ContentItem",
           "description": "The item to de-identify. Will be treated as text."
+        },
+        "location": {
+          "description": "The geographic location to process de-identification. Reserved for future\nextensions.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -4173,6 +4224,12 @@
           "type": "integer"
         }
       },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog": {
+      "description": "Publish findings of a DlpJob to Cloud Data Catalog. Labels summarizing the\nresults of the DlpJob will be applied to the entry for the resource scanned\nin Cloud Data Catalog. Any labels previously written by another DlpJob will\nbe deleted. InfoType naming patterns are strictly enforced when using this\nfeature. Note that the findings will be persisted in Cloud Data Catalog\nstorage and are governed by Data Catalog service-specific policy, see\nhttps://cloud.google.com/terms/service-terms\nOnly a single instance of this action can be specified and only allowed if\nall resources being scanned are BigQuery tables.\nCompatible with: Inspect",
+      "id": "GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog",
+      "properties": {},
       "type": "object"
     },
     "GooglePrivacyDlpV2PublishSummaryToCscc": {

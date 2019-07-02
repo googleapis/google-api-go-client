@@ -200,6 +200,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs.Image = NewProjectsImageService(s)
 	rs.InspectTemplates = NewProjectsInspectTemplatesService(s)
 	rs.JobTriggers = NewProjectsJobTriggersService(s)
+	rs.Locations = NewProjectsLocationsService(s)
 	rs.StoredInfoTypes = NewProjectsStoredInfoTypesService(s)
 	return rs
 }
@@ -218,6 +219,8 @@ type ProjectsService struct {
 	InspectTemplates *ProjectsInspectTemplatesService
 
 	JobTriggers *ProjectsJobTriggersService
+
+	Locations *ProjectsLocationsService
 
 	StoredInfoTypes *ProjectsStoredInfoTypesService
 }
@@ -276,6 +279,27 @@ type ProjectsJobTriggersService struct {
 	s *Service
 }
 
+func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
+	rs := &ProjectsLocationsService{s: s}
+	rs.Content = NewProjectsLocationsContentService(s)
+	return rs
+}
+
+type ProjectsLocationsService struct {
+	s *Service
+
+	Content *ProjectsLocationsContentService
+}
+
+func NewProjectsLocationsContentService(s *Service) *ProjectsLocationsContentService {
+	rs := &ProjectsLocationsContentService{s: s}
+	return rs
+}
+
+type ProjectsLocationsContentService struct {
+	s *Service
+}
+
 func NewProjectsStoredInfoTypesService(s *Service) *ProjectsStoredInfoTypesService {
 	rs := &ProjectsStoredInfoTypesService{s: s}
 	return rs
@@ -296,6 +320,9 @@ type GooglePrivacyDlpV2Action struct {
 
 	// PubSub: Publish a notification to a pubsub topic.
 	PubSub *GooglePrivacyDlpV2PublishToPubSub `json:"pubSub,omitempty"`
+
+	// PublishFindingsToCloudDataCatalog: Publish findings to Cloud Datahub.
+	PublishFindingsToCloudDataCatalog *GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog `json:"publishFindingsToCloudDataCatalog,omitempty"`
 
 	// PublishSummaryToCscc: Publish summary to Cloud Security Command
 	// Center (Alpha).
@@ -2349,6 +2376,11 @@ type GooglePrivacyDlpV2DeidentifyContentRequest struct {
 
 	// Item: The item to de-identify. Will be treated as text.
 	Item *GooglePrivacyDlpV2ContentItem `json:"item,omitempty"`
+
+	// Location: The geographic location to process de-identification.
+	// Reserved for future
+	// extensions.
+	Location string `json:"location,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeidentifyConfig") to
 	// unconditionally include in API requests. By default, fields with
@@ -5706,6 +5738,26 @@ func (s *GooglePrivacyDlpV2Proximity) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Proximity
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog: Publish findings
+// of a DlpJob to Cloud Data Catalog. Labels summarizing the
+// results of the DlpJob will be applied to the entry for the resource
+// scanned
+// in Cloud Data Catalog. Any labels previously written by another
+// DlpJob will
+// be deleted. InfoType naming patterns are strictly enforced when using
+// this
+// feature. Note that the findings will be persisted in Cloud Data
+// Catalog
+// storage and are governed by Data Catalog service-specific policy,
+// see
+// https://cloud.google.com/terms/service-terms
+// Only a single instance of this action can be specified and only
+// allowed if
+// all resources being scanned are BigQuery tables.
+// Compatible with: Inspect
+type GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog struct {
 }
 
 // GooglePrivacyDlpV2PublishSummaryToCscc: Publish the result summary of
@@ -14349,6 +14401,168 @@ func (c *ProjectsJobTriggersPatchCall) Do(opts ...googleapi.CallOption) (*Google
 	//   },
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2JobTrigger"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.projects.locations.content.deidentify":
+
+type ProjectsLocationsContentDeidentifyCall struct {
+	s                                          *Service
+	parent                                     string
+	location                                   string
+	googleprivacydlpv2deidentifycontentrequest *GooglePrivacyDlpV2DeidentifyContentRequest
+	urlParams_                                 gensupport.URLParams
+	ctx_                                       context.Context
+	header_                                    http.Header
+}
+
+// Deidentify: De-identifies potentially sensitive info from a
+// ContentItem.
+// This method has limits on input size and output size.
+// See https://cloud.google.com/dlp/docs/deidentify-sensitive-data
+// to
+// learn more.
+//
+// When no InfoTypes or CustomInfoTypes are specified in this request,
+// the
+// system will automatically choose what detectors to run. By default
+// this may
+// be all types, but may change over time as detectors are updated.
+func (r *ProjectsLocationsContentService) Deidentify(parent string, location string, googleprivacydlpv2deidentifycontentrequest *GooglePrivacyDlpV2DeidentifyContentRequest) *ProjectsLocationsContentDeidentifyCall {
+	c := &ProjectsLocationsContentDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.location = location
+	c.googleprivacydlpv2deidentifycontentrequest = googleprivacydlpv2deidentifycontentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsContentDeidentifyCall) Fields(s ...googleapi.Field) *ProjectsLocationsContentDeidentifyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsContentDeidentifyCall) Context(ctx context.Context) *ProjectsLocationsContentDeidentifyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsContentDeidentifyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsContentDeidentifyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2deidentifycontentrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{location}/content:deidentify")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent":   c.parent,
+		"location": c.location,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.content.deidentify" call.
+// Exactly one of *GooglePrivacyDlpV2DeidentifyContentResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GooglePrivacyDlpV2DeidentifyContentResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsContentDeidentifyCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2DeidentifyContentResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2DeidentifyContentResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "De-identifies potentially sensitive info from a ContentItem.\nThis method has limits on input size and output size.\nSee https://cloud.google.com/dlp/docs/deidentify-sensitive-data to\nlearn more.\n\nWhen no InfoTypes or CustomInfoTypes are specified in this request, the\nsystem will automatically choose what detectors to run. By default this may\nbe all types, but may change over time as detectors are updated.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{location}/content:deidentify",
+	//   "httpMethod": "POST",
+	//   "id": "dlp.projects.locations.content.deidentify",
+	//   "parameterOrder": [
+	//     "parent",
+	//     "location"
+	//   ],
+	//   "parameters": {
+	//     "location": {
+	//       "description": "The geographic location to process de-identification. Reserved for future\nextensions.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "The parent resource name, for example projects/my-project-id.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/locations/{location}/content:deidentify",
+	//   "request": {
+	//     "$ref": "GooglePrivacyDlpV2DeidentifyContentRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2DeidentifyContentResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

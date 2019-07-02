@@ -213,7 +213,7 @@
                   "type": "string"
                 },
                 "fieldMask": {
-                  "description": "Optional.\n\nA field mask to specify the ListAssetsResult fields to be listed in the\nresponse.\nAn empty field mask will list all fields.",
+                  "description": "Optional. A field mask to specify the ListAssetsResult fields to be listed in the\nresponse.\nAn empty field mask will list all fields.",
                   "format": "google-fieldmask",
                   "location": "query",
                   "type": "string"
@@ -741,7 +741,7 @@
                       "type": "string"
                     },
                     "fieldMask": {
-                      "description": "Optional.\n\nA field mask to specify the Finding fields to be listed in the response.\nAn empty field mask will list all fields.",
+                      "description": "Optional. A field mask to specify the Finding fields to be listed in the response.\nAn empty field mask will list all fields.",
                       "format": "google-fieldmask",
                       "location": "query",
                       "type": "string"
@@ -898,7 +898,7 @@
       }
     }
   },
-  "revision": "20190530",
+  "revision": "20190628",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -1133,7 +1133,24 @@
     "GetIamPolicyRequest": {
       "description": "Request message for `GetIamPolicy` method.",
       "id": "GetIamPolicyRequest",
-      "properties": {},
+      "properties": {
+        "options": {
+          "$ref": "GetPolicyOptions",
+          "description": "OPTIONAL: A `GetPolicyOptions` object for specifying options to\n`GetIamPolicy`. This field is only used by Cloud IAM."
+        }
+      },
+      "type": "object"
+    },
+    "GetPolicyOptions": {
+      "description": "Encapsulates settings provided to GetIamPolicy.",
+      "id": "GetPolicyOptions",
+      "properties": {
+        "requestedPolicyVersion": {
+          "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
       "type": "object"
     },
     "GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse": {

@@ -488,6 +488,10 @@ type GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata struct {
 	// the node level's reason will be reported by Eligibility Exporter.
 	Exclusions []*GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion `json:"exclusions,omitempty"`
 
+	// Location: The location of the node, if different from instance
+	// location.
+	Location string `json:"location,omitempty"`
+
 	// NodeId: The id of the node.
 	// This should be equal to SaasInstanceNode.node_id.
 	NodeId string `json:"nodeId,omitempty"`
@@ -770,8 +774,7 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata) MarshalJSON
 
 // Instance: A Cloud Filestore instance.
 type Instance struct {
-	// CreateTime: Output only.
-	// The time when the instance was created.
+	// CreateTime: Output only. The time when the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: Optional. A description of the instance (2048 characters
@@ -790,8 +793,7 @@ type Instance struct {
 	// Labels: Resource labels to represent user provided metadata.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Output only.
-	// The resource name of the instance, in the
+	// Name: Output only. The resource name of the instance, in the
 	// format
 	// projects/{project_id}/locations/{location_id}/instances/{instan
 	// ce_id}.
@@ -801,8 +803,7 @@ type Instance struct {
 	// For this version, only a single network is supported.
 	Networks []*NetworkConfig `json:"networks,omitempty"`
 
-	// State: Output only.
-	// The instance state.
+	// State: Output only. The instance state.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - State not set.
@@ -819,8 +820,8 @@ type Instance struct {
 	// resource.
 	State string `json:"state,omitempty"`
 
-	// StatusMessage: Output only.
-	// Additional information about the instance state, if available.
+	// StatusMessage: Output only. Additional information about the instance
+	// state, if available.
 	StatusMessage string `json:"statusMessage,omitempty"`
 
 	// Tier: The service tier of the instance.
@@ -1038,8 +1039,7 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 
 // NetworkConfig: Network configuration for the instance.
 type NetworkConfig struct {
-	// IpAddresses: Output only.
-	// IPv4 addresses in the format
+	// IpAddresses: Output only. IPv4 addresses in the format
 	// {octet 1}.{octet 2}.{octet 3}.{octet 4} or IPv6 addresses in the
 	// format
 	// {block 1}:{block 2}:{block 3}:{block 4}:{block 5}:{block
@@ -2395,7 +2395,7 @@ func (c *ProjectsLocationsInstancesPatchCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only.\nThe resource name of the instance, in the format\nprojects/{project_id}/locations/{location_id}/instances/{instance_id}.",
+	//       "description": "Output only. The resource name of the instance, in the format\nprojects/{project_id}/locations/{location_id}/instances/{instance_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,

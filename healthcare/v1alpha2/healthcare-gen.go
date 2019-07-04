@@ -1598,6 +1598,16 @@ type FhirStore struct {
 	// the results show up in the streaming destination.
 	StreamConfigs []*StreamConfig `json:"streamConfigs,omitempty"`
 
+	// SubscriptionConfig: Configuration of FHIR
+	// Subscription:
+	// https://www.hl7.org/fhir/subscription.html.
+	SubscriptionConfig *SubscriptionConfig `json:"subscriptionConfig,omitempty"`
+
+	// ValidationConfig: Configuration for how incoming FHIR resources will
+	// be validated against
+	// configured profiles.
+	ValidationConfig *ValidationConfig `json:"validationConfig,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -1720,9 +1730,9 @@ func (s *Finding) MarshalJSON() ([]byte, error) {
 
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
 type GetIamPolicyRequest struct {
-	// Options: OPTIONAL: A GetPolicyOptions object for specifying options
-	// to GetIamPolicy
-	// This field is only used by Cloud IAM.
+	// Options: OPTIONAL: A `GetPolicyOptions` object for specifying options
+	// to
+	// `GetIamPolicy`. This field is only used by Cloud IAM.
 	Options *GetPolicyOptions `json:"options,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Options") to
@@ -3953,6 +3963,95 @@ func (s *StreamConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SubscriptionConfig: Configuration of FHIR
+// Subscription:
+// https://www.hl7.org/fhir/subscription.html.
+type SubscriptionConfig struct {
+	// AllowedRestHookEndpoints: REST hook endpoints that are allowed to
+	// receive subscription notifications.
+	// The create or update operation on a FHIR Subscription resource will
+	// fail if
+	// the FHIR Subscription resource contains a REST hook endpoint that is
+	// not in
+	// this list.
+	// A subscription notification push will fail if the FHIR
+	// Subscription
+	// resource contains a REST hook endpoint that is not in this list.
+	// The REST hook endpoint in a subscription resource will be compared
+	// with the
+	// endpoints in this list by exact matching.
+	// Users must verify their ownership of the domain of an endpoint
+	// before
+	// adding it to this list. To verify domain ownership, go
+	// to
+	// https://search.google.com/search-console/welcome.
+	AllowedRestHookEndpoints []*SubscriptionRestHookEndpoint `json:"allowedRestHookEndpoints,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowedRestHookEndpoints") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedRestHookEndpoints")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SubscriptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscriptionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SubscriptionRestHookEndpoint: REST hook endpoint of FHIR
+// Subscription.
+type SubscriptionRestHookEndpoint struct {
+	// AllowResourcePayload: Whether this endpoint is allowed to receive
+	// full resource payloads. If set
+	// to false, the subscription notificiation sending to this endpoint
+	// with full
+	// resource payload will be blocked.
+	AllowResourcePayload bool `json:"allowResourcePayload,omitempty"`
+
+	// Endpoint: Address of the REST hook endpoint. It must be a valid HTTPS
+	// URL with TLS
+	// certificate.
+	Endpoint string `json:"endpoint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowResourcePayload") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowResourcePayload") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SubscriptionRestHookEndpoint) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscriptionRestHookEndpoint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TagFilterList: List of tags to be filtered.
 type TagFilterList struct {
 	// Tags: Tags to be filtered. Tags must be DICOM Data Elements, File
@@ -4088,6 +4187,58 @@ type TextConfig struct {
 
 func (s *TextConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TextConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ValidationConfig: This structure contains the configuration for FHIR
+// profiles and validation.
+type ValidationConfig struct {
+	// DisableProfileValidation: Whether profile validation should be
+	// disabled for this FHIR store. Set
+	// this to true to disable checking incoming resources for
+	// conformance
+	// against StructureDefinitions in this FHIR store.
+	DisableProfileValidation bool `json:"disableProfileValidation,omitempty"`
+
+	// EnabledImplementationGuides: A list of ImplementationGuide IDs in
+	// this FHIR store that will be used to
+	// configure which profiles are used for validation. For example, to
+	// enable
+	// an implementation guide with ID 1 set `enabled_implementation_guides`
+	// to
+	// `["1"]`. If `enabled_implementation_guides` is empty or omitted
+	// then
+	// incoming resources will only be required to conform to the base
+	// FHIR
+	// profiles. Otherwise, a resource must conform to at least one
+	// profile
+	// listed in the `global` property of one of the
+	// enabled
+	// ImplementationGuides.
+	EnabledImplementationGuides []string `json:"enabledImplementationGuides,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DisableProfileValidation") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisableProfileValidation")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ValidationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ValidationConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

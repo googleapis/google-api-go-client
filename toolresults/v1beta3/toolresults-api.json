@@ -15,7 +15,7 @@
   "description": "Reads and publishes results from Firebase Test Lab.",
   "discoveryVersion": "v1",
   "documentationLink": "https://firebase.google.com/docs/test-lab/",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/vlKNnB9Yf-iJEQaHLy-x7eKICw0\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/ORDEQjJegaR5uEWwAO-Tbqd95Sw\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1271,7 +1271,7 @@
       }
     }
   },
-  "revision": "20190618",
+  "revision": "20190702",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AndroidAppInfo": {
@@ -1762,6 +1762,10 @@
       "properties": {
         "abortedByUser": {
           "description": "If the end user aborted the test execution before a pass or fail could be determined. For example, the user pressed ctrl-c which sent a kill signal to the test runner while the test was running.",
+          "type": "boolean"
+        },
+        "hasErrorLogs": {
+          "description": "If results are being provided to the user in certain cases of infrastructure failures",
           "type": "boolean"
         },
         "infrastructureFailure": {
@@ -2586,6 +2590,7 @@
             "availableDeepLinks",
             "compatibleWithOrchestrator",
             "completeRoboScriptExecution",
+            "crashDialogError",
             "encounteredLoginScreen",
             "encounteredNonAndroidUiWidgetScreen",
             "failedToInstall",
@@ -2608,6 +2613,7 @@
             "usedRoboIgnoreDirective"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",

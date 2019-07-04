@@ -317,7 +317,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Output only.\nThe resource name of the instance, in the format\nprojects/{project_id}/locations/{location_id}/instances/{instance_id}.",
+                      "description": "Output only. The resource name of the instance, in the format\nprojects/{project_id}/locations/{location_id}/instances/{instance_id}.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
                       "required": true,
@@ -471,7 +471,7 @@
       }
     }
   },
-  "revision": "20190613",
+  "revision": "20190627",
   "rootUrl": "https://file.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {
@@ -632,6 +632,10 @@
           },
           "type": "array"
         },
+        "location": {
+          "description": "The location of the node, if different from instance location.",
+          "type": "string"
+        },
         "nodeId": {
           "description": "The id of the node.\nThis should be equal to SaasInstanceNode.node_id.",
           "type": "string"
@@ -753,7 +757,7 @@
       "id": "Instance",
       "properties": {
         "createTime": {
-          "description": "Output only.\nThe time when the instance was created.",
+          "description": "Output only. The time when the instance was created.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -780,7 +784,7 @@
           "type": "object"
         },
         "name": {
-          "description": "Output only.\nThe resource name of the instance, in the format\nprojects/{project_id}/locations/{location_id}/instances/{instance_id}.",
+          "description": "Output only. The resource name of the instance, in the format\nprojects/{project_id}/locations/{location_id}/instances/{instance_id}.",
           "type": "string"
         },
         "networks": {
@@ -791,7 +795,7 @@
           "type": "array"
         },
         "state": {
-          "description": "Output only.\nThe instance state.",
+          "description": "Output only. The instance state.",
           "enum": [
             "STATE_UNSPECIFIED",
             "CREATING",
@@ -811,7 +815,7 @@
           "type": "string"
         },
         "statusMessage": {
-          "description": "Output only.\nAdditional information about the instance state, if available.",
+          "description": "Output only. Additional information about the instance state, if available.",
           "type": "string"
         },
         "tier": {
@@ -931,7 +935,7 @@
       "id": "NetworkConfig",
       "properties": {
         "ipAddresses": {
-          "description": "Output only.\nIPv4 addresses in the format\n{octet 1}.{octet 2}.{octet 3}.{octet 4} or IPv6 addresses in the format\n{block 1}:{block 2}:{block 3}:{block 4}:{block 5}:{block 6}:{block\n7}:{block 8}.",
+          "description": "Output only. IPv4 addresses in the format\n{octet 1}.{octet 2}.{octet 3}.{octet 4} or IPv6 addresses in the format\n{block 1}:{block 2}:{block 3}:{block 4}:{block 5}:{block 6}:{block\n7}:{block 8}.",
           "items": {
             "type": "string"
           },

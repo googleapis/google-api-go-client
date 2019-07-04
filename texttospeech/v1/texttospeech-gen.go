@@ -173,7 +173,7 @@ type AudioConfig struct {
 	// than MP3 while using approximately the same bitrate.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 
-	// EffectsProfileId: Input only. Optional. An identifier which selects
+	// EffectsProfileId: Optional. Input only. An identifier which selects
 	// 'audio effects' profiles
 	// that are applied on (post synthesized) text to speech. Effects are
 	// applied
@@ -185,7 +185,7 @@ type AudioConfig struct {
 	// current supported profile ids.
 	EffectsProfileId []string `json:"effectsProfileId,omitempty"`
 
-	// Pitch: Input only. Optional. Speaking pitch, in the range [-20.0,
+	// Pitch: Optional. Input only. Speaking pitch, in the range [-20.0,
 	// 20.0]. 20 means
 	// increase 20 semitones from the original pitch. -20 means decrease
 	// 20
@@ -207,7 +207,7 @@ type AudioConfig struct {
 	// google.rpc.Code.INVALID_ARGUMENT.
 	SampleRateHertz int64 `json:"sampleRateHertz,omitempty"`
 
-	// SpeakingRate: Input only. Optional. Speaking rate/speed, in the range
+	// SpeakingRate: Optional. Input only. Speaking rate/speed, in the range
 	// [0.25, 4.0]. 1.0 is
 	// the normal native speed supported by the specific voice. 2.0 is twice
 	// as
@@ -216,7 +216,7 @@ type AudioConfig struct {
 	// speed. Any other values < 0.25 or > 4.0 will return an error.
 	SpeakingRate float64 `json:"speakingRate,omitempty"`
 
-	// VolumeGainDb: Input only. Optional. Volume gain (in dB) of the normal
+	// VolumeGainDb: Optional. Input only. Volume gain (in dB) of the normal
 	// native volume
 	// supported by the specific voice, in the range [-96.0, 16.0]. If
 	// unset, or

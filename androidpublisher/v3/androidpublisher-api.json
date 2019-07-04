@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/o45rfRykOnPFOs0ltSGyuwqNk98\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/tLEn1KkE5NEmlpywSz1Qx5p8WMk\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2382,7 +2382,7 @@
       }
     }
   },
-  "revision": "20190618",
+  "revision": "20190702",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -2933,6 +2933,31 @@
       },
       "type": "object"
     },
+    "IntroductoryPriceInfo": {
+      "description": "Contains the introductory price information for a subscription.",
+      "id": "IntroductoryPriceInfo",
+      "properties": {
+        "introductoryPriceAmountMicros": {
+          "description": "Introductory price of the subscription, not including tax. The currency is the same as price_currency_code. Price is expressed in micro-units, where 1,000,000 micro-units represents one unit of the currency. For example, if the subscription price is €1.99, price_amount_micros is 1990000.",
+          "format": "int64",
+          "type": "string"
+        },
+        "introductoryPriceCurrencyCode": {
+          "description": "ISO 4217 currency code for the introductory subscription price. For example, if the price is specified in British pounds sterling, price_currency_code is \"GBP\".",
+          "type": "string"
+        },
+        "introductoryPriceCycles": {
+          "description": "The number of billing period to offer introductory pricing.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "introductoryPricePeriod": {
+          "description": "Introductory price period, specified in ISO 8601 format. Common values are (but not limited to) \"P1W\" (one week), \"P1M\" (one month), \"P3M\" (three months), \"P6M\" (six months), and \"P1Y\" (one year).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Listing": {
       "id": "Listing",
       "properties": {
@@ -3300,6 +3325,10 @@
         "givenName": {
           "description": "The given name of the user when the subscription was purchased. Only present for purchases made with 'Subscribe with Google'.",
           "type": "string"
+        },
+        "introductoryPriceInfo": {
+          "$ref": "IntroductoryPriceInfo",
+          "description": "Introductory price information of the subscription. This is only present when the subscription was purchased with an introductory price.\n\nThis field does not indicate the subscription is currently in introductory price period."
         },
         "kind": {
           "default": "androidpublisher#subscriptionPurchase",

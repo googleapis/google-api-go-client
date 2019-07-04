@@ -4156,6 +4156,21 @@ type GoogleCloudDialogflowV2beta1IntentMessage struct {
 	// QuickReplies: Displays quick replies.
 	QuickReplies *GoogleCloudDialogflowV2beta1IntentMessageQuickReplies `json:"quickReplies,omitempty"`
 
+	// RbmCarouselRichCard: Rich Business Messaging (RBM) carousel rich card
+	// response.
+	RbmCarouselRichCard *GoogleCloudDialogflowV2beta1IntentMessageRbmCarouselCard `json:"rbmCarouselRichCard,omitempty"`
+
+	// RbmStandaloneRichCard: Standalone Rich Business Messaging (RBM) rich
+	// card response.
+	RbmStandaloneRichCard *GoogleCloudDialogflowV2beta1IntentMessageRbmStandaloneCard `json:"rbmStandaloneRichCard,omitempty"`
+
+	// RbmText: Rich Business Messaging (RBM) text response.
+	//
+	// RBM allows businesses to send enriched and branded versions of SMS.
+	// See
+	// https://jibe.google.com/business-messaging.
+	RbmText *GoogleCloudDialogflowV2beta1IntentMessageRbmText `json:"rbmText,omitempty"`
+
 	// SimpleResponses: Returns a voice or text-only response for Actions on
 	// Google.
 	SimpleResponses *GoogleCloudDialogflowV2beta1IntentMessageSimpleResponses `json:"simpleResponses,omitempty"`
@@ -4613,6 +4628,471 @@ type GoogleCloudDialogflowV2beta1IntentMessageQuickReplies struct {
 
 func (s *GoogleCloudDialogflowV2beta1IntentMessageQuickReplies) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageQuickReplies
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1IntentMessageRbmCardContent: Rich
+// Business Messaging (RBM) Card content
+type GoogleCloudDialogflowV2beta1IntentMessageRbmCardContent struct {
+	// Description: Optional. Description of the card (at most 2000
+	// bytes).
+	//
+	// At least one of the title, description or media must be set.
+	Description string `json:"description,omitempty"`
+
+	// Media: Optional. However at least one of the title, description or
+	// media must
+	// be set. Media (image, GIF or a video) to include in the card.
+	Media *GoogleCloudDialogflowV2beta1IntentMessageRbmCardContentRbmMedia `json:"media,omitempty"`
+
+	// Suggestions: Optional. List of suggestions to include in the card.
+	Suggestions []*GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestion `json:"suggestions,omitempty"`
+
+	// Title: Optional. Title of the card (at most 200 bytes).
+	//
+	// At least one of the title, description or media must be set.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmCardContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmCardContent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1IntentMessageRbmCardContentRbmMedia: Rich
+// Business Messaging (RBM) Media displayed in Cards
+// The following media-types are currently supported:
+//
+// ## Image Types
+//
+//  image/jpeg
+//  image/jpg'
+//  image/gif
+//  image/png
+//
+// ## Video Types
+//
+//  video/h263
+//  video/m4v
+//  video/mp4
+//  video/mpeg
+//  video/mpeg4
+//  video/webm
+type GoogleCloudDialogflowV2beta1IntentMessageRbmCardContentRbmMedia struct {
+	// FileUri: Required. Publicly reachable URI of the file. The RBM
+	// platform
+	// determines the MIME type of the file from the content-type field
+	// in
+	// the HTTP headers when the platform fetches the file. The
+	// content-type
+	// field must be present and accurate in the HTTP response from the URL.
+	FileUri string `json:"fileUri,omitempty"`
+
+	// Height: Required for cards with vertical orientation. The height of
+	// the media
+	// within a rich card with a vertical layout.
+	// (https://goo.gl/NeFCjz).
+	// For a standalone card with horizontal layout, height is
+	// not
+	// customizable, and this field is ignored.
+	//
+	// Possible values:
+	//   "HEIGHT_UNSPECIFIED" - Not specified.
+	//   "SHORT" - 112 DP.
+	//   "MEDIUM" - 168 DP.
+	//   "TALL" - 264 DP. Not available for rich card carousels when the
+	// card width
+	// is set to small.
+	Height string `json:"height,omitempty"`
+
+	// ThumbnailUri: Optional. Publicly reachable URI of the thumbnail.If
+	// you don't
+	// provide a thumbnail URI, the RBM platform displays a
+	// blank
+	// placeholder thumbnail until the user's device downloads the
+	// file.
+	// Depending on the user's setting, the file may not
+	// download
+	// automatically and may require the user to tap a download button.
+	ThumbnailUri string `json:"thumbnailUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FileUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FileUri") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmCardContentRbmMedia) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmCardContentRbmMedia
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1IntentMessageRbmCarouselCard: Carousel
+// Rich Business Messaging (RBM) rich card.
+//
+// Rich cards allow you to respond to users with more vivid content,
+// e.g.
+// with media and suggestions.
+//
+// For more details about RBM rich cards, please
+// see:
+// https://developers.google.com/rcs-business-messaging/rbm/guides/b
+// uild/send-messages#rich-cards.
+// If you want to show a single card with more control over the
+// layout,
+// please use RbmStandaloneCard instead.
+type GoogleCloudDialogflowV2beta1IntentMessageRbmCarouselCard struct {
+	// CardContents: Required. The cards in the carousel. A carousel must
+	// have at least
+	// 2 cards and at most 10.
+	CardContents []*GoogleCloudDialogflowV2beta1IntentMessageRbmCardContent `json:"cardContents,omitempty"`
+
+	// CardWidth: Required. The width of the cards in the carousel.
+	//
+	// Possible values:
+	//   "CARD_WIDTH_UNSPECIFIED" - Not specified.
+	//   "SMALL" - 120 DP. Note that tall media cannot be used.
+	//   "MEDIUM" - 232 DP.
+	CardWidth string `json:"cardWidth,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CardContents") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CardContents") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmCarouselCard) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmCarouselCard
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1IntentMessageRbmStandaloneCard:
+// Standalone Rich Business Messaging (RBM) rich card.
+//
+// Rich cards allow you to respond to users with more vivid content,
+// e.g.
+// with media and suggestions.
+//
+// For more details about RBM rich cards, please
+// see:
+// https://developers.google.com/rcs-business-messaging/rbm/guides/b
+// uild/send-messages#rich-cards.
+// You can group multiple rich cards into one using RbmCarouselCard
+// but
+// carousel cards will give you less control over the card layout.
+type GoogleCloudDialogflowV2beta1IntentMessageRbmStandaloneCard struct {
+	// CardContent: Required. Card content.
+	CardContent *GoogleCloudDialogflowV2beta1IntentMessageRbmCardContent `json:"cardContent,omitempty"`
+
+	// CardOrientation: Required. Orientation of the card.
+	//
+	// Possible values:
+	//   "CARD_ORIENTATION_UNSPECIFIED" - Not specified.
+	//   "HORIZONTAL" - Horizontal layout.
+	//   "VERTICAL" - Vertical layout.
+	CardOrientation string `json:"cardOrientation,omitempty"`
+
+	// ThumbnailImageAlignment: Required if orientation is horizontal.
+	// Image preview alignment for standalone cards with horizontal layout.
+	//
+	// Possible values:
+	//   "THUMBNAIL_IMAGE_ALIGNMENT_UNSPECIFIED" - Not specified.
+	//   "LEFT" - Thumbnail preview is left-aligned.
+	//   "RIGHT" - Thumbnail preview is right-aligned.
+	ThumbnailImageAlignment string `json:"thumbnailImageAlignment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CardContent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CardContent") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmStandaloneCard) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmStandaloneCard
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedAction: Rich
+// Business Messaging (RBM) suggested client-side action that the
+// user
+// can choose from the card.
+type GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedAction struct {
+	// Dial: Suggested client side action: Dial a phone number
+	Dial *GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionDial `json:"dial,omitempty"`
+
+	// OpenUrl: Suggested client side action: Open a URI on device
+	OpenUrl *GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionOpenUri `json:"openUrl,omitempty"`
+
+	// PostbackData: Opaque payload that the Dialogflow receives in a user
+	// event
+	// when the user taps the suggested action. This data will be
+	// also
+	// forwarded to webhook to allow performing custom business logic.
+	PostbackData string `json:"postbackData,omitempty"`
+
+	// ShareLocation: Suggested client side action: Share user location
+	ShareLocation *GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionShareLocation `json:"shareLocation,omitempty"`
+
+	// Text: Text to display alongside the action.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dial") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dial") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggeste
+// dActionDial: Opens the user's default dialer app with the specified
+// phone number
+// but does not dial automatically (https://goo.gl/ergbB2).
+type GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionDial struct {
+	// PhoneNumber: Required. The phone number to fill in the default dialer
+	// app.
+	// This field should be in
+	// [E.164](https://en.wikipedia.org/wiki/E.164)
+	// format. An example of a correctly formatted phone
+	// number:
+	// +15556767888.
+	PhoneNumber string `json:"phoneNumber,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PhoneNumber") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PhoneNumber") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionDial) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionDial
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggeste
+// dActionOpenUri: Opens the user's default web browser app to the
+// specified uri
+// (https://goo.gl/6GLJD2). If the user has an app installed that
+// is
+// registered as the default handler for the URL, then this app will
+// be
+// opened instead, and its icon will be used in the suggested action UI.
+type GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionOpenUri struct {
+	// Uri: Required. The uri to open on the user device
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionOpenUri) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionOpenUri
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggeste
+// dActionShareLocation: Opens the device's location chooser so the user
+// can pick a location
+// to send back to the agent (https://goo.gl/GXotJW).
+type GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionShareLocation struct {
+}
+
+// GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedReply: Rich
+// Business Messaging (RBM) suggested reply that the user can
+// click
+// instead of typing in their own response.
+type GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedReply struct {
+	// PostbackData: Opaque payload that the Dialogflow receives in a user
+	// event
+	// when the user taps the suggested reply. This data will be
+	// also
+	// forwarded to webhook to allow performing custom business logic.
+	PostbackData string `json:"postbackData,omitempty"`
+
+	// Text: Suggested reply text.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PostbackData") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PostbackData") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedReply) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedReply
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestion: Rich Business
+// Messaging (RBM) suggestion. Suggestions allow user to
+// easily select/click a predefined response or perform an action
+// (like
+// opening a web uri).
+type GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestion struct {
+	// Action: Predefined client side actions that user can choose
+	Action *GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedAction `json:"action,omitempty"`
+
+	// Reply: Predefined replies for user to select instead of typing
+	Reply *GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedReply `json:"reply,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1IntentMessageRbmText: Rich Business
+// Messaging (RBM) text response with suggestions.
+type GoogleCloudDialogflowV2beta1IntentMessageRbmText struct {
+	// RbmSuggestion: Optional. One or more suggestions to show to the user.
+	RbmSuggestion []*GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestion `json:"rbmSuggestion,omitempty"`
+
+	// Text: Required. Text sent and displayed to the user.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RbmSuggestion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RbmSuggestion") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmText) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1IntentMessageRbmText
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

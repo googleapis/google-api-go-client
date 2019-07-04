@@ -573,7 +573,7 @@
       }
     }
   },
-  "revision": "20190622",
+  "revision": "20190702",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -1126,11 +1126,11 @@
           "type": "string"
         },
         "name": {
-          "description": "Name of the repository.",
+          "description": "Name of the repository. For example: The name for\nhttps://github.com/googlecloudplatform/cloud-builders is \"cloud-builders\".",
           "type": "string"
         },
         "owner": {
-          "description": "Owner of the repository.",
+          "description": "Owner of the repository. For example: The owner for\nhttps://github.com/googlecloudplatform/cloud-builders is\n\"googlecloudplatform\".",
           "type": "string"
         },
         "pullRequest": {

@@ -1364,7 +1364,7 @@
       }
     }
   },
-  "revision": "20190626",
+  "revision": "20190629",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -3507,6 +3507,18 @@
           "$ref": "GoogleCloudDialogflowV2beta1IntentMessageQuickReplies",
           "description": "Displays quick replies."
         },
+        "rbmCarouselRichCard": {
+          "$ref": "GoogleCloudDialogflowV2beta1IntentMessageRbmCarouselCard",
+          "description": "Rich Business Messaging (RBM) carousel rich card response."
+        },
+        "rbmStandaloneRichCard": {
+          "$ref": "GoogleCloudDialogflowV2beta1IntentMessageRbmStandaloneCard",
+          "description": "Standalone Rich Business Messaging (RBM) rich card response."
+        },
+        "rbmText": {
+          "$ref": "GoogleCloudDialogflowV2beta1IntentMessageRbmText",
+          "description": "Rich Business Messaging (RBM) text response.\n\nRBM allows businesses to send enriched and branded versions of SMS. See\nhttps://jibe.google.com/business-messaging."
+        },
         "simpleResponses": {
           "$ref": "GoogleCloudDialogflowV2beta1IntentMessageSimpleResponses",
           "description": "Returns a voice or text-only response for Actions on Google."
@@ -3752,6 +3764,233 @@
         },
         "title": {
           "description": "Optional. The title of the collection of quick replies.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1IntentMessageRbmCardContent": {
+      "description": "Rich Business Messaging (RBM) Card content",
+      "id": "GoogleCloudDialogflowV2beta1IntentMessageRbmCardContent",
+      "properties": {
+        "description": {
+          "description": "Optional. Description of the card (at most 2000 bytes).\n\nAt least one of the title, description or media must be set.",
+          "type": "string"
+        },
+        "media": {
+          "$ref": "GoogleCloudDialogflowV2beta1IntentMessageRbmCardContentRbmMedia",
+          "description": "Optional. However at least one of the title, description or media must\nbe set. Media (image, GIF or a video) to include in the card."
+        },
+        "suggestions": {
+          "description": "Optional. List of suggestions to include in the card.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestion"
+          },
+          "type": "array"
+        },
+        "title": {
+          "description": "Optional. Title of the card (at most 200 bytes).\n\nAt least one of the title, description or media must be set.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1IntentMessageRbmCardContentRbmMedia": {
+      "description": "Rich Business Messaging (RBM) Media displayed in Cards\nThe following media-types are currently supported:\n\n## Image Types\n\n image/jpeg\n image/jpg'\n image/gif\n image/png\n\n## Video Types\n\n video/h263\n video/m4v\n video/mp4\n video/mpeg\n video/mpeg4\n video/webm",
+      "id": "GoogleCloudDialogflowV2beta1IntentMessageRbmCardContentRbmMedia",
+      "properties": {
+        "fileUri": {
+          "description": "Required. Publicly reachable URI of the file. The RBM platform\ndetermines the MIME type of the file from the content-type field in\nthe HTTP headers when the platform fetches the file. The content-type\nfield must be present and accurate in the HTTP response from the URL.",
+          "type": "string"
+        },
+        "height": {
+          "description": "Required for cards with vertical orientation. The height of the media\nwithin a rich card with a vertical layout. (https://goo.gl/NeFCjz).\nFor a standalone card with horizontal layout, height is not\ncustomizable, and this field is ignored.",
+          "enum": [
+            "HEIGHT_UNSPECIFIED",
+            "SHORT",
+            "MEDIUM",
+            "TALL"
+          ],
+          "enumDescriptions": [
+            "Not specified.",
+            "112 DP.",
+            "168 DP.",
+            "264 DP. Not available for rich card carousels when the card width\nis set to small."
+          ],
+          "type": "string"
+        },
+        "thumbnailUri": {
+          "description": "Optional. Publicly reachable URI of the thumbnail.If you don't\nprovide a thumbnail URI, the RBM platform displays a blank\nplaceholder thumbnail until the user's device downloads the file.\nDepending on the user's setting, the file may not download\nautomatically and may require the user to tap a download button.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1IntentMessageRbmCarouselCard": {
+      "description": "Carousel Rich Business Messaging (RBM) rich card.\n\nRich cards allow you to respond to users with more vivid content, e.g.\nwith media and suggestions.\n\nFor more details about RBM rich cards, please see:\nhttps://developers.google.com/rcs-business-messaging/rbm/guides/build/send-messages#rich-cards.\nIf you want to show a single card with more control over the layout,\nplease use RbmStandaloneCard instead.",
+      "id": "GoogleCloudDialogflowV2beta1IntentMessageRbmCarouselCard",
+      "properties": {
+        "cardContents": {
+          "description": "Required. The cards in the carousel. A carousel must have at least\n2 cards and at most 10.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2beta1IntentMessageRbmCardContent"
+          },
+          "type": "array"
+        },
+        "cardWidth": {
+          "description": "Required. The width of the cards in the carousel.",
+          "enum": [
+            "CARD_WIDTH_UNSPECIFIED",
+            "SMALL",
+            "MEDIUM"
+          ],
+          "enumDescriptions": [
+            "Not specified.",
+            "120 DP. Note that tall media cannot be used.",
+            "232 DP."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1IntentMessageRbmStandaloneCard": {
+      "description": "Standalone Rich Business Messaging (RBM) rich card.\n\nRich cards allow you to respond to users with more vivid content, e.g.\nwith media and suggestions.\n\nFor more details about RBM rich cards, please see:\nhttps://developers.google.com/rcs-business-messaging/rbm/guides/build/send-messages#rich-cards.\nYou can group multiple rich cards into one using RbmCarouselCard but\ncarousel cards will give you less control over the card layout.",
+      "id": "GoogleCloudDialogflowV2beta1IntentMessageRbmStandaloneCard",
+      "properties": {
+        "cardContent": {
+          "$ref": "GoogleCloudDialogflowV2beta1IntentMessageRbmCardContent",
+          "description": "Required. Card content."
+        },
+        "cardOrientation": {
+          "description": "Required. Orientation of the card.",
+          "enum": [
+            "CARD_ORIENTATION_UNSPECIFIED",
+            "HORIZONTAL",
+            "VERTICAL"
+          ],
+          "enumDescriptions": [
+            "Not specified.",
+            "Horizontal layout.",
+            "Vertical layout."
+          ],
+          "type": "string"
+        },
+        "thumbnailImageAlignment": {
+          "description": "Required if orientation is horizontal.\nImage preview alignment for standalone cards with horizontal layout.",
+          "enum": [
+            "THUMBNAIL_IMAGE_ALIGNMENT_UNSPECIFIED",
+            "LEFT",
+            "RIGHT"
+          ],
+          "enumDescriptions": [
+            "Not specified.",
+            "Thumbnail preview is left-aligned.",
+            "Thumbnail preview is right-aligned."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedAction": {
+      "description": "Rich Business Messaging (RBM) suggested client-side action that the user\ncan choose from the card.",
+      "id": "GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedAction",
+      "properties": {
+        "dial": {
+          "$ref": "GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionDial",
+          "description": "Suggested client side action: Dial a phone number"
+        },
+        "openUrl": {
+          "$ref": "GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionOpenUri",
+          "description": "Suggested client side action: Open a URI on device"
+        },
+        "postbackData": {
+          "description": "Opaque payload that the Dialogflow receives in a user event\nwhen the user taps the suggested action. This data will be also\nforwarded to webhook to allow performing custom business logic.",
+          "type": "string"
+        },
+        "shareLocation": {
+          "$ref": "GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionShareLocation",
+          "description": "Suggested client side action: Share user location"
+        },
+        "text": {
+          "description": "Text to display alongside the action.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionDial": {
+      "description": "Opens the user's default dialer app with the specified phone number\nbut does not dial automatically (https://goo.gl/ergbB2).",
+      "id": "GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionDial",
+      "properties": {
+        "phoneNumber": {
+          "description": "Required. The phone number to fill in the default dialer app.\nThis field should be in [E.164](https://en.wikipedia.org/wiki/E.164)\nformat. An example of a correctly formatted phone number:\n+15556767888.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionOpenUri": {
+      "description": "Opens the user's default web browser app to the specified uri\n(https://goo.gl/6GLJD2). If the user has an app installed that is\nregistered as the default handler for the URL, then this app will be\nopened instead, and its icon will be used in the suggested action UI.",
+      "id": "GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionOpenUri",
+      "properties": {
+        "uri": {
+          "description": "Required. The uri to open on the user device",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionShareLocation": {
+      "description": "Opens the device's location chooser so the user can pick a location\nto send back to the agent (https://goo.gl/GXotJW).",
+      "id": "GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedActionRbmSuggestedActionShareLocation",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedReply": {
+      "description": "Rich Business Messaging (RBM) suggested reply that the user can click\ninstead of typing in their own response.",
+      "id": "GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedReply",
+      "properties": {
+        "postbackData": {
+          "description": "Opaque payload that the Dialogflow receives in a user event\nwhen the user taps the suggested reply. This data will be also\nforwarded to webhook to allow performing custom business logic.",
+          "type": "string"
+        },
+        "text": {
+          "description": "Suggested reply text.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestion": {
+      "description": "Rich Business Messaging (RBM) suggestion. Suggestions allow user to\neasily select/click a predefined response or perform an action (like\nopening a web uri).",
+      "id": "GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestion",
+      "properties": {
+        "action": {
+          "$ref": "GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedAction",
+          "description": "Predefined client side actions that user can choose"
+        },
+        "reply": {
+          "$ref": "GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestedReply",
+          "description": "Predefined replies for user to select instead of typing"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1IntentMessageRbmText": {
+      "description": "Rich Business Messaging (RBM) text response with suggestions.",
+      "id": "GoogleCloudDialogflowV2beta1IntentMessageRbmText",
+      "properties": {
+        "rbmSuggestion": {
+          "description": "Optional. One or more suggestions to show to the user.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2beta1IntentMessageRbmSuggestion"
+          },
+          "type": "array"
+        },
+        "text": {
+          "description": "Required. Text sent and displayed to the user.",
           "type": "string"
         }
       },

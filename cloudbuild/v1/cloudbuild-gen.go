@@ -1031,10 +1031,17 @@ type GitHubEventsConfig struct {
 	// InstallationId: The installationID that emits the GitHub event.
 	InstallationId int64 `json:"installationId,omitempty,string"`
 
-	// Name: Name of the repository.
+	// Name: Name of the repository. For example: The name
+	// for
+	// https://github.com/googlecloudplatform/cloud-builders is
+	// "cloud-builders".
 	Name string `json:"name,omitempty"`
 
-	// Owner: Owner of the repository.
+	// Owner: Owner of the repository. For example: The owner
+	// for
+	// https://github.com/googlecloudplatform/cloud-builders
+	// is
+	// "googlecloudplatform".
 	Owner string `json:"owner,omitempty"`
 
 	// PullRequest: filter to match changes in pull requests.

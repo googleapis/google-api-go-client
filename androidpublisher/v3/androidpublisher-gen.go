@@ -1361,6 +1361,57 @@ func (s *InternalAppSharingArtifact) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IntroductoryPriceInfo: Contains the introductory price information
+// for a subscription.
+type IntroductoryPriceInfo struct {
+	// IntroductoryPriceAmountMicros: Introductory price of the
+	// subscription, not including tax. The currency is the same as
+	// price_currency_code. Price is expressed in micro-units, where
+	// 1,000,000 micro-units represents one unit of the currency. For
+	// example, if the subscription price is €1.99, price_amount_micros is
+	// 1990000.
+	IntroductoryPriceAmountMicros int64 `json:"introductoryPriceAmountMicros,omitempty,string"`
+
+	// IntroductoryPriceCurrencyCode: ISO 4217 currency code for the
+	// introductory subscription price. For example, if the price is
+	// specified in British pounds sterling, price_currency_code is "GBP".
+	IntroductoryPriceCurrencyCode string `json:"introductoryPriceCurrencyCode,omitempty"`
+
+	// IntroductoryPriceCycles: The number of billing period to offer
+	// introductory pricing.
+	IntroductoryPriceCycles int64 `json:"introductoryPriceCycles,omitempty"`
+
+	// IntroductoryPricePeriod: Introductory price period, specified in ISO
+	// 8601 format. Common values are (but not limited to) "P1W" (one week),
+	// "P1M" (one month), "P3M" (three months), "P6M" (six months), and
+	// "P1Y" (one year).
+	IntroductoryPricePeriod string `json:"introductoryPricePeriod,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "IntroductoryPriceAmountMicros") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "IntroductoryPriceAmountMicros") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IntroductoryPriceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod IntroductoryPriceInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Listing struct {
 	// FullDescription: Full description of the app; this may be up to 4000
 	// characters in length.
@@ -2078,6 +2129,14 @@ type SubscriptionPurchase struct {
 	// purchased. Only present for purchases made with 'Subscribe with
 	// Google'.
 	GivenName string `json:"givenName,omitempty"`
+
+	// IntroductoryPriceInfo: Introductory price information of the
+	// subscription. This is only present when the subscription was
+	// purchased with an introductory price.
+	//
+	// This field does not indicate the subscription is currently in
+	// introductory price period.
+	IntroductoryPriceInfo *IntroductoryPriceInfo `json:"introductoryPriceInfo,omitempty"`
 
 	// Kind: This kind represents a subscriptionPurchase object in the
 	// androidpublisher service.

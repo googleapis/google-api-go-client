@@ -3266,7 +3266,7 @@
       }
     }
   },
-  "revision": "20190626",
+  "revision": "20190628",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "Annotation": {
@@ -3762,6 +3762,14 @@
             "$ref": "StreamConfig"
           },
           "type": "array"
+        },
+        "subscriptionConfig": {
+          "$ref": "SubscriptionConfig",
+          "description": "Configuration of FHIR Subscription:\nhttps://www.hl7.org/fhir/subscription.html."
+        },
+        "validationConfig": {
+          "$ref": "ValidationConfig",
+          "description": "Configuration for how incoming FHIR resources will be validated against\nconfigured profiles."
         }
       },
       "type": "object"
@@ -3822,7 +3830,7 @@
       "properties": {
         "options": {
           "$ref": "GetPolicyOptions",
-          "description": "OPTIONAL: A GetPolicyOptions object for specifying options to GetIamPolicy\nThis field is only used by Cloud IAM."
+          "description": "OPTIONAL: A `GetPolicyOptions` object for specifying options to\n`GetIamPolicy`. This field is only used by Cloud IAM."
         }
       },
       "type": "object"
@@ -4766,6 +4774,35 @@
       },
       "type": "object"
     },
+    "SubscriptionConfig": {
+      "description": "Configuration of FHIR Subscription:\nhttps://www.hl7.org/fhir/subscription.html.",
+      "id": "SubscriptionConfig",
+      "properties": {
+        "allowedRestHookEndpoints": {
+          "description": "REST hook endpoints that are allowed to receive subscription notifications.\nThe create or update operation on a FHIR Subscription resource will fail if\nthe FHIR Subscription resource contains a REST hook endpoint that is not in\nthis list.\nA subscription notification push will fail if the FHIR Subscription\nresource contains a REST hook endpoint that is not in this list.\nThe REST hook endpoint in a subscription resource will be compared with the\nendpoints in this list by exact matching.\nUsers must verify their ownership of the domain of an endpoint before\nadding it to this list. To verify domain ownership, go to\nhttps://search.google.com/search-console/welcome.",
+          "items": {
+            "$ref": "SubscriptionRestHookEndpoint"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SubscriptionRestHookEndpoint": {
+      "description": "REST hook endpoint of FHIR Subscription.",
+      "id": "SubscriptionRestHookEndpoint",
+      "properties": {
+        "allowResourcePayload": {
+          "description": "Whether this endpoint is allowed to receive full resource payloads. If set\nto false, the subscription notificiation sending to this endpoint with full\nresource payload will be blocked.",
+          "type": "boolean"
+        },
+        "endpoint": {
+          "description": "Address of the REST hook endpoint. It must be a valid HTTPS URL with TLS\ncertificate.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "TagFilterList": {
       "description": "List of tags to be filtered.",
       "id": "TagFilterList",
@@ -4819,6 +4856,24 @@
           "description": "The transformations to apply to the detected data.",
           "items": {
             "$ref": "InfoTypeTransformation"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ValidationConfig": {
+      "description": "This structure contains the configuration for FHIR profiles and validation.",
+      "id": "ValidationConfig",
+      "properties": {
+        "disableProfileValidation": {
+          "description": "Whether profile validation should be disabled for this FHIR store. Set\nthis to true to disable checking incoming resources for conformance\nagainst StructureDefinitions in this FHIR store.",
+          "type": "boolean"
+        },
+        "enabledImplementationGuides": {
+          "description": "A list of ImplementationGuide IDs in this FHIR store that will be used to\nconfigure which profiles are used for validation. For example, to enable\nan implementation guide with ID 1 set `enabled_implementation_guides` to\n`[\"1\"]`. If `enabled_implementation_guides` is empty or omitted then\nincoming resources will only be required to conform to the base FHIR\nprofiles. Otherwise, a resource must conform to at least one profile\nlisted in the `global` property of one of the enabled\nImplementationGuides.",
+          "items": {
+            "type": "string"
           },
           "type": "array"
         }

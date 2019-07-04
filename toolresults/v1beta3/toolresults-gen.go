@@ -1218,6 +1218,10 @@ type InconclusiveDetail struct {
 	// running.
 	AbortedByUser bool `json:"abortedByUser,omitempty"`
 
+	// HasErrorLogs: If results are being provided to the user in certain
+	// cases of infrastructure failures
+	HasErrorLogs bool `json:"hasErrorLogs,omitempty"`
+
 	// InfrastructureFailure: If the test runner could not determine success
 	// or failure because the test depends on a component other than the
 	// system under test which failed.
@@ -2808,6 +2812,7 @@ type TestIssue struct {
 	//   "availableDeepLinks"
 	//   "compatibleWithOrchestrator"
 	//   "completeRoboScriptExecution"
+	//   "crashDialogError"
 	//   "encounteredLoginScreen"
 	//   "encounteredNonAndroidUiWidgetScreen"
 	//   "failedToInstall"

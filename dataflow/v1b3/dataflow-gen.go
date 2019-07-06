@@ -3218,6 +3218,17 @@ type LaunchTemplateParameters struct {
 	// Parameters: The runtime parameters to pass to the job.
 	Parameters map[string]string `json:"parameters,omitempty"`
 
+	// TransformNameMapping: Only applicable when updating a pipeline. Map
+	// of transform name prefixes of
+	// the job to be replaced to the corresponding name prefixes of the new
+	// job.
+	TransformNameMapping map[string]string `json:"transformNameMapping,omitempty"`
+
+	// Update: If set, replace the existing pipeline with the name specified
+	// by jobName
+	// with this pipeline, preserving state.
+	Update bool `json:"update,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Environment") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -4525,6 +4536,13 @@ type RuntimeEnvironment struct {
 	// job's temporary directory.
 	// Use with caution.
 	BypassTempDirValidation bool `json:"bypassTempDirValidation,omitempty"`
+
+	// KmsKeyName: Optional. Name for the Cloud KMS key for the job.
+	// Key format
+	// is:
+	// projects/<project>/locations/<location>/keyRings/<keyring>/cryptoK
+	// eys/<key>
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
 	// MachineType: The machine type to use for the job. Defaults to the
 	// value from the

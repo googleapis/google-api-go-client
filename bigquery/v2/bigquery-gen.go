@@ -78,7 +78,7 @@ var _ = context.Canceled
 const apiId = "bigquery:v2"
 const apiName = "bigquery"
 const apiVersion = "v2"
-const basePath = "https://www.googleapis.com/bigquery/v2/"
+const basePath = "https://bigquery.googleapis.com/bigquery/v2/"
 
 // OAuth2 scopes used by this API.
 const (

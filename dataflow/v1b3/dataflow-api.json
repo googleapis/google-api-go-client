@@ -1972,7 +1972,7 @@
       }
     }
   },
-  "revision": "20190607",
+  "revision": "20190628",
   "rootUrl": "https://dataflow.googleapis.com/",
   "schemas": {
     "ApproximateProgress": {
@@ -3570,6 +3570,17 @@
           },
           "description": "The runtime parameters to pass to the job.",
           "type": "object"
+        },
+        "transformNameMapping": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Only applicable when updating a pipeline. Map of transform name prefixes of\nthe job to be replaced to the corresponding name prefixes of the new job.",
+          "type": "object"
+        },
+        "update": {
+          "description": "If set, replace the existing pipeline with the name specified by jobName\nwith this pipeline, preserving state.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -4318,6 +4329,10 @@
         "bypassTempDirValidation": {
           "description": "Whether to bypass the safety checks for the job's temporary directory.\nUse with caution.",
           "type": "boolean"
+        },
+        "kmsKeyName": {
+          "description": "Optional. Name for the Cloud KMS key for the job.\nKey format is:\nprojects/\u003cproject\u003e/locations/\u003clocation\u003e/keyRings/\u003ckeyring\u003e/cryptoKeys/\u003ckey\u003e",
+          "type": "string"
         },
         "machineType": {
           "description": "The machine type to use for the job. Defaults to the value from the\ntemplate if not specified.",

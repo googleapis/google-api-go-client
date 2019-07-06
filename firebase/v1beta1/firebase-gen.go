@@ -1346,7 +1346,7 @@ type ShaCertificate struct {
 	// Name: The fully qualified resource name of the `sha-key`, in the
 	// format:
 	// <br><code>projects/<var>projectId</var>/androidApps/<var>appId
-	// </var>/sha/<var>shaHash</var></code>
+	// </var>/sha/<var>shaId</var></code>
 	Name string `json:"name,omitempty"`
 
 	// ShaHash: The certificate hash for the App.
@@ -4150,7 +4150,7 @@ func (c *ProjectsAndroidAppsShaDeleteCall) Do(opts ...googleapi.CallOption) (*Em
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The fully qualified resource name of the `sha-key`, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e/androidApps/\u003cvar\u003eappId\u003c/var\u003e/sha/\u003cvar\u003eshaHash\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The fully qualified resource name of the `sha-key`, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e/androidApps/\u003cvar\u003eappId\u003c/var\u003e/sha/\u003cvar\u003eshaId\u003c/var\u003e\u003c/code\u003e\n\u003cbr\u003eYou can obtain the full name from the response of\n[`ListShaCertificates`](../projects.androidApps.sha/list) or the original\n[`CreateShaCertificate`](../projects.androidApps.sha/create).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/androidApps/[^/]+/sha/[^/]+$",
 	//       "required": true,

@@ -1857,6 +1857,12 @@
                     "resource"
                   ],
                   "parameters": {
+                    "options.requestedPolicyVersion": {
+                      "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
                     "resource": {
                       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
                       "location": "path",
@@ -2211,7 +2217,7 @@
       }
     }
   },
-  "revision": "20190624",
+  "revision": "20190701",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -2381,7 +2387,7 @@
       "id": "Configuration",
       "properties": {
         "apiVersion": {
-          "description": "The API version for this call such as \"v1alpha1\".",
+          "description": "The API version for this call such as \"serving.knative.dev/v1alpha1\".",
           "type": "string"
         },
         "kind": {
@@ -2450,7 +2456,7 @@
         },
         "template": {
           "$ref": "RevisionTemplate",
-          "description": "Template holds the latest specification for the Revision to be stamped out.\nNot currently supported by Cloud Run."
+          "description": "Template holds the latest specification for the Revision to be stamped out."
         }
       },
       "type": "object"
@@ -2628,7 +2634,7 @@
       "id": "DomainMapping",
       "properties": {
         "apiVersion": {
-          "description": "The API version for this call such as \"v1alpha1\".",
+          "description": "The API version for this call such as \"domains.cloudrun.com/v1alpha1\".",
           "type": "string"
         },
         "kind": {
@@ -2785,7 +2791,7 @@
       "id": "EventType",
       "properties": {
         "apiVersion": {
-          "description": "The API version for this call such as \"v1alpha1\".",
+          "description": "The API version for this call such as \"eventing.knative.dev/v1alpha1\".",
           "type": "string"
         },
         "kind": {
@@ -3031,7 +3037,7 @@
       "id": "ListConfigurationsResponse",
       "properties": {
         "apiVersion": {
-          "description": "The API version for this call such as \"v1alpha1\".",
+          "description": "The API version for this call such as \"serving.knative.dev/v1alpha1\".",
           "type": "string"
         },
         "items": {
@@ -3064,7 +3070,7 @@
       "id": "ListDomainMappingsResponse",
       "properties": {
         "apiVersion": {
-          "description": "The API version for this call such as \"v1alpha1\".",
+          "description": "The API version for this call such as \"domains.cloudrun.com/v1alpha1\".",
           "type": "string"
         },
         "items": {
@@ -3090,7 +3096,7 @@
       "id": "ListEventTypesResponse",
       "properties": {
         "apiVersion": {
-          "description": "The API version for this call such as \"v1alpha1\".",
+          "description": "The API version for this call such as \"eventing.knative.dev/v1alpha1\".",
           "type": "string"
         },
         "items": {
@@ -3160,7 +3166,7 @@
       "id": "ListRevisionsResponse",
       "properties": {
         "apiVersion": {
-          "description": "The API version for this call such as \"v1alpha1\".",
+          "description": "The API version for this call such as \"serving.knative.dev/v1alpha1\".",
           "type": "string"
         },
         "items": {
@@ -3193,7 +3199,7 @@
       "id": "ListRoutesResponse",
       "properties": {
         "apiVersion": {
-          "description": "The API version for this call such as \"v1alpha1\".",
+          "description": "The API version for this call such as \"serving.knative.dev/v1alpha1\".",
           "type": "string"
         },
         "items": {
@@ -3226,7 +3232,7 @@
       "id": "ListServicesResponse",
       "properties": {
         "apiVersion": {
-          "description": "The API version for this call such as \"v1alpha1\".",
+          "description": "The API version for this call such as \"serving.knative.dev/v1alpha1\".",
           "type": "string"
         },
         "items": {
@@ -3259,7 +3265,7 @@
       "id": "ListTriggersResponse",
       "properties": {
         "apiVersion": {
-          "description": "The API version for this call such as \"v1alpha1\".",
+          "description": "The API version for this call such as \"eventing.knative.dev/v1alpha1\".",
           "type": "string"
         },
         "items": {
@@ -3634,7 +3640,7 @@
       "id": "Revision",
       "properties": {
         "apiVersion": {
-          "description": "The API version for this call such as \"v1alpha1\".",
+          "description": "The API version for this call such as \"serving.knative.dev/v1alpha1\".",
           "type": "string"
         },
         "kind": {
@@ -3788,7 +3794,7 @@
       "properties": {
         "metadata": {
           "$ref": "ObjectMeta",
-          "description": "Optional metadata for this Revision, including labels and annotations. Name\nwill be generated by the Configuration."
+          "description": "Optional metadata for this Revision, including labels and annotations. Name\nwill be generated by the Configuration.\nTo set minimum instances for this revision, use the\n\"autoscaling.knative.dev/minScale\" annotation key. (Cloud Run on GKE only).\nTo set maximum instances for this revision, use the\n\"autoscaling.knative.dev/maxScale\" annotation key.\nTo set Cloud SQL connections for the revision, use the\n\"run.googleapis.com/cloudsql-instances\" annotation key. Values should be\ncomma separated."
         },
         "spec": {
           "$ref": "RevisionSpec",
@@ -3802,7 +3808,7 @@
       "id": "Route",
       "properties": {
         "apiVersion": {
-          "description": "The API version for this call such as \"v1alpha1\".",
+          "description": "The API version for this call such as \"serving.knative.dev/v1alpha1\".",
           "type": "string"
         },
         "kind": {
@@ -4028,7 +4034,7 @@
       "id": "Service",
       "properties": {
         "apiVersion": {
-          "description": "The API version for this call such as \"v1alpha1\".",
+          "description": "The API version for this call such as \"serving.knative.dev/v1alpha1\".",
           "type": "string"
         },
         "kind": {
@@ -4109,10 +4115,10 @@
         },
         "template": {
           "$ref": "RevisionTemplate",
-          "description": "Template holds the latest specification for the Revision to\nbe stamped out.\n\nNot currently supported by Cloud Run."
+          "description": "Template holds the latest specification for the Revision to\nbe stamped out."
         },
         "traffic": {
-          "description": "Traffic specifies how to distribute traffic over a collection of Knative\nRevisions and Configurations. This will replace existing service specs\n(ServiceSpecRunLatest, ServiceSpecPinnedType, ServiceSpecReleaseType, and\nServiceSpecManualType).\n\nNot currently supported by Cloud Run.",
+          "description": "Traffic specifies how to distribute traffic over a collection of Knative\nRevisions and Configurations.",
           "items": {
             "$ref": "TrafficTarget"
           },
@@ -4335,7 +4341,7 @@
       "id": "Trigger",
       "properties": {
         "apiVersion": {
-          "description": "The API version for this call such as \"v1alpha1\".",
+          "description": "The API version for this call such as \"eventing.knative.dev/v1alpha1\".",
           "type": "string"
         },
         "kind": {

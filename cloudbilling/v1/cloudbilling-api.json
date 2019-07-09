@@ -158,6 +158,12 @@
             "resource"
           ],
           "parameters": {
+            "options.requestedPolicyVersion": {
+              "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
             "resource": {
               "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
               "location": "path",
@@ -488,7 +494,7 @@
       }
     }
   },
-  "revision": "20190416",
+  "revision": "20190702",
   "rootUrl": "https://cloudbilling.googleapis.com/",
   "schemas": {
     "AggregationInfo": {
@@ -557,6 +563,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "ignoreChildExemptions": {
+          "description": "Specifies whether principals can be exempted for the same LogType in\nlower-level resource policies. If true, any lower-level exemptions will\nbe ignored.",
+          "type": "boolean"
         },
         "logType": {
           "description": "The log type that this config enables.",

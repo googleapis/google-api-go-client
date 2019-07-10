@@ -131,13 +131,13 @@
       "name": "adexchangebuyer2",
       "version": "v2beta1",
       "title": "Ad Exchange Buyer API II",
-      "description": "Accesses the latest features for managing Ad Exchange accounts, Real-Time Bidding configurations and auction metrics, and Marketplace programmatic deals.",
+      "description": "Accesses the latest features for managing Authorized Buyers accounts, Real-Time Bidding configurations and auction metrics, and Marketplace programmatic deals.",
       "discoveryRestUrl": "https://adexchangebuyer.googleapis.com/$discovery/rest?version=v2beta1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/ad-exchange/buyer-rest/reference/rest/",
+      "documentationLink": "https://developers.google.com/authorized-buyers/apis/reference/rest/",
       "preferred": true
     },
     {

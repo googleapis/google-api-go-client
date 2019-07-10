@@ -8129,7 +8129,7 @@ type ProductsCustomBatchRequestEntry struct {
 	// BatchId: An entry ID, unique within the batch request.
 	BatchId int64 `json:"batchId,omitempty"`
 
-	// FeedId: The ContentAPI feed id.
+	// FeedId: The Content API feed id.
 	FeedId uint64 `json:"feedId,omitempty,string"`
 
 	// MerchantId: The ID of the managing account.

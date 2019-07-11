@@ -2483,7 +2483,7 @@
       }
     }
   },
-  "revision": "20190610",
+  "revision": "20190628",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2865,6 +2865,10 @@
           "description": "[Output only] The IP address range of the Kubernetes services in\nthis cluster, in\n[CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)\nnotation (e.g. `1.2.3.4/29`). Service addresses are\ntypically put in the last `/16` from the container CIDR.",
           "type": "string"
         },
+        "shieldedNodes": {
+          "$ref": "ShieldedNodes",
+          "description": "Shielded Nodes configuration."
+        },
         "status": {
           "description": "[Output only] The current status of this cluster.",
           "enum": [
@@ -3022,6 +3026,10 @@
           "$ref": "ResourceUsageExportConfig",
           "description": "The desired configuration for exporting resource usage."
         },
+        "desiredShieldedNodes": {
+          "$ref": "ShieldedNodes",
+          "description": "Configuration for Shielded Nodes."
+        },
         "desiredVerticalPodAutoscaling": {
           "$ref": "VerticalPodAutoscaling",
           "description": "Cluster-level Vertical Pod Autoscaling configuration."
@@ -3167,6 +3175,10 @@
       "description": "GetJSONWebKeysResponse is a valid JSON Web Key Set as specififed in rfc 7517",
       "id": "GetJSONWebKeysResponse",
       "properties": {
+        "cacheHeader": {
+          "$ref": "HttpCacheControlResponseHeader",
+          "description": "OnePlatform automatically extracts this field and uses it to set the HTTP\nCache-Control header."
+        },
         "keys": {
           "description": "The public component of the keys used by the cluster to sign token\nrequests.",
           "items": {
@@ -3181,6 +3193,10 @@
       "description": "GetOpenIDConfigResponse is an OIDC discovery document for the cluster.\nSee the OpenID Connect Discovery 1.0 specification for details.",
       "id": "GetOpenIDConfigResponse",
       "properties": {
+        "cacheHeader": {
+          "$ref": "HttpCacheControlResponseHeader",
+          "description": "OnePlatform automatically extracts this field and uses it to set the HTTP\nCache-Control header."
+        },
         "claims_supported": {
           "description": "Supported claims.",
           "items": {
@@ -3234,6 +3250,26 @@
         "disabled": {
           "description": "Whether the Horizontal Pod Autoscaling feature is enabled in the cluster.\nWhen enabled, it ensures that a Heapster pod is running in the cluster,\nwhich is also used by the Cloud Monitoring service.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "HttpCacheControlResponseHeader": {
+      "description": "RFC-2616: cache control support",
+      "id": "HttpCacheControlResponseHeader",
+      "properties": {
+        "age": {
+          "description": "14.6 response cache age, in seconds since the response is generated",
+          "format": "int64",
+          "type": "string"
+        },
+        "directive": {
+          "description": "14.9 request and response directives",
+          "type": "string"
+        },
+        "expires": {
+          "description": "14.21 response cache expires, in RFC 1123 date format",
+          "type": "string"
         }
       },
       "type": "object"
@@ -4643,6 +4679,17 @@
         },
         "enableSecureBoot": {
           "description": "Defines whether the instance has Secure Boot enabled.\n\nSecure Boot helps ensure that the system only runs authentic software by\nverifying the digital signature of all boot components, and halting the\nboot process if signature verification fails.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "ShieldedNodes": {
+      "description": "Configuration of Shielded Nodes feature.",
+      "id": "ShieldedNodes",
+      "properties": {
+        "enabled": {
+          "description": "Whether Shielded Nodes features are enabled on all nodes in this cluster.",
           "type": "boolean"
         }
       },

@@ -219,7 +219,7 @@ type Binding struct {
 	//
 	// * `user:{emailid}`: An email address that represents a specific
 	// Google
-	//    account. For example, `alice@gmail.com` .
+	//    account. For example, `alice@example.com` .
 	//
 	//
 	// * `serviceAccount:{emailid}`: An email address that represents a
@@ -707,7 +707,7 @@ type Policy struct {
 	//
 	// If no `etag` is provided in the call to `setIamPolicy`, then the
 	// existing
-	// policy is overwritten blindly.
+	// policy is overwritten.
 	Etag string `json:"etag,omitempty"`
 
 	// Version: Deprecated.
@@ -1669,6 +1669,18 @@ func (r *ProjectsConfigsService) GetIamPolicy(resource string) *ProjectsConfigsG
 	return c
 }
 
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The policy format version to be
+// returned.
+// Acceptable values are 0 and 1.
+// If the value is 0, or the field is omitted, policy format version 1
+// will be
+// returned.
+func (c *ProjectsConfigsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsConfigsGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1775,6 +1787,12 @@ func (c *ProjectsConfigsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	//     "resource"
 	//   ],
 	//   "parameters": {
+	//     "options.requestedPolicyVersion": {
+	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
 	//       "location": "path",

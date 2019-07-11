@@ -454,6 +454,13 @@ type AuditLogConfig struct {
 	// Follows the same format of Binding.members.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
+	// IgnoreChildExemptions: Specifies whether principals can be exempted
+	// for the same LogType in
+	// lower-level resource policies. If true, any lower-level exemptions
+	// will
+	// be ignored.
+	IgnoreChildExemptions bool `json:"ignoreChildExemptions,omitempty"`
+
 	// LogType: The log type that this config enables.
 	//
 	// Possible values:
@@ -1785,6 +1792,15 @@ type Documentation struct {
 	// **NOTE:** All service configuration rules follow "last one wins"
 	// order.
 	Rules []*DocumentationRule `json:"rules,omitempty"`
+
+	// ServiceRootUrl: Specifies the service root url if the default one
+	// (the service name
+	// from the yaml file) is not suitable. This can be seen in any
+	// fully
+	// specified service urls as well as sections that show a base that
+	// other
+	// urls are relative to.
+	ServiceRootUrl string `json:"serviceRootUrl,omitempty"`
 
 	// Summary: A short summary of what the service does. Can only be
 	// provided by

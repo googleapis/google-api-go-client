@@ -226,7 +226,7 @@
       }
     }
   },
-  "revision": "20190603",
+  "revision": "20190704",
   "rootUrl": "https://language.googleapis.com/",
   "schemas": {
     "AnalyzeEntitiesRequest": {
@@ -235,7 +235,7 @@
       "properties": {
         "document": {
           "$ref": "Document",
-          "description": "Input document."
+          "description": "Required. Input document."
         },
         "encodingType": {
           "description": "The encoding type used by the API to calculate offsets.",
@@ -280,7 +280,7 @@
       "properties": {
         "document": {
           "$ref": "Document",
-          "description": "Input document."
+          "description": "Required. Input document."
         },
         "encodingType": {
           "description": "The encoding type used by the API to calculate offsets.",
@@ -325,7 +325,7 @@
       "properties": {
         "document": {
           "$ref": "Document",
-          "description": "Input document."
+          "description": "Required. Input document."
         },
         "encodingType": {
           "description": "The encoding type used by the API to calculate sentence offsets for the\nsentence sentiment.",
@@ -374,7 +374,7 @@
       "properties": {
         "document": {
           "$ref": "Document",
-          "description": "Input document."
+          "description": "Required. Input document."
         },
         "encodingType": {
           "description": "The encoding type used by the API to calculate offsets.",
@@ -426,7 +426,7 @@
       "properties": {
         "document": {
           "$ref": "Document",
-          "description": "Input document."
+          "description": "Required. Input document."
         },
         "encodingType": {
           "description": "The encoding type used by the API to calculate offsets.",
@@ -446,7 +446,7 @@
         },
         "features": {
           "$ref": "Features",
-          "description": "The enabled features."
+          "description": "Required. The enabled features."
         }
       },
       "type": "object"
@@ -516,7 +516,7 @@
       "properties": {
         "document": {
           "$ref": "Document",
-          "description": "Input document."
+          "description": "Required. Input document."
         }
       },
       "type": "object"

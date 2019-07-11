@@ -918,7 +918,7 @@
       }
     }
   },
-  "revision": "20190605",
+  "revision": "20190701",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -3424,7 +3424,7 @@
           "type": "string"
         },
         "versionCode": {
-          "description": "The current version of the app.\u003cp\u003eNote that the version can automatically increase during the lifetime of the web app, while Google does internal housekeeping to keep the web app up-to-date.",
+          "description": "The current version of the app.Note that the version can automatically increase during the lifetime of the web app, while Google does internal housekeeping to keep the web app up-to-date.",
           "format": "int64",
           "type": "string"
         }
@@ -3455,7 +3455,7 @@
           "type": "string"
         },
         "permissions": {
-          "description": "Permissions available to an admin in the embedded UI. An admin must have all of these permissions in order to view the UI.",
+          "description": "Permissions available to an admin in the embedded UI. An admin must have all of these permissions in order to view the UI. This field is deprecated.",
           "enumDescriptions": [
             "This value is ignored.",
             "The permission to approve apps for the enterprise."

@@ -881,7 +881,7 @@
       }
     }
   },
-  "revision": "20190628",
+  "revision": "20190704",
   "rootUrl": "https://servicemanagement.googleapis.com/",
   "schemas": {
     "Advice": {
@@ -975,6 +975,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "ignoreChildExemptions": {
+          "description": "Specifies whether principals can be exempted for the same LogType in\nlower-level resource policies. If true, any lower-level exemptions will\nbe ignored.",
+          "type": "boolean"
         },
         "logType": {
           "description": "The log type that this config enables.",
@@ -1504,6 +1508,10 @@
             "$ref": "DocumentationRule"
           },
           "type": "array"
+        },
+        "serviceRootUrl": {
+          "description": "Specifies the service root url if the default one (the service name\nfrom the yaml file) is not suitable. This can be seen in any fully\nspecified service urls as well as sections that show a base that other\nurls are relative to.",
+          "type": "string"
         },
         "summary": {
           "description": "A short summary of what the service does. Can only be provided by\nplain text.",

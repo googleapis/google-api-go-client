@@ -3523,8 +3523,8 @@ type WebApp struct {
 	// amongst a list of other applications, or as a label for an icon).
 	Title string `json:"title,omitempty"`
 
-	// VersionCode: The current version of the app.<p>Note that the version
-	// can automatically increase during the lifetime of the web app, while
+	// VersionCode: The current version of the app.Note that the version can
+	// automatically increase during the lifetime of the web app, while
 	// Google does internal housekeeping to keep the web app up-to-date.
 	VersionCode int64 `json:"versionCode,omitempty,string"`
 
@@ -3602,6 +3602,7 @@ type WebToken struct {
 
 	// Permissions: Permissions available to an admin in the embedded UI. An
 	// admin must have all of these permissions in order to view the UI.
+	// This field is deprecated.
 	//
 	// Possible values:
 	//   "WEB_TOKEN_PERMISSION_UNSPECIFIED" - This value is ignored.

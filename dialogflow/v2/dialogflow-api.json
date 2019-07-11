@@ -1358,13 +1358,55 @@
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/dialogflow"
               ]
+            },
+            "list": {
+              "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+              "flatPath": "v2/projects/{projectsId}/operations",
+              "httpMethod": "GET",
+              "id": "dialogflow.projects.operations.list",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "filter": {
+                  "description": "The standard list filter.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "The name of the operation's parent resource.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "pageSize": {
+                  "description": "The standard list page size.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "The standard list page token.",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+name}/operations",
+              "response": {
+                "$ref": "GoogleLongrunningListOperationsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow"
+              ]
             }
           }
         }
       }
     }
   },
-  "revision": "20190629",
+  "revision": "20190708",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -2816,7 +2858,7 @@
           "description": "The intent that matched the conversational query. Some, not\nall fields are filled in this message, including but not limited to:\n`name`, `display_name` and `webhook_state`."
         },
         "intentDetectionConfidence": {
-          "description": "The intent detection confidence. Values range from 0.0\n(completely uncertain) to 1.0 (completely certain).\nIf there are `multiple knowledge_answers` messages, this value is set to\nthe greatest `knowledgeAnswers.match_confidence` value in the list.",
+          "description": "The intent detection confidence. Values range from 0.0\n(completely uncertain) to 1.0 (completely certain).\nThis value is for informational purpose only and is only used to\nhelp match the best intent within the classification threshold.\nThis value may change for the same end-user expression at any time due to a\nmodel retraining or change in implementation.\nIf there are `multiple knowledge_answers` messages, this value is set to\nthe greatest `knowledgeAnswers.match_confidence` value in the list.",
           "format": "float",
           "type": "number"
         },
@@ -3117,6 +3159,17 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2beta1ArticleSuggestionModelMetadata": {
+      "description": "Metadata for article suggestion models.",
+      "id": "GoogleCloudDialogflowV2beta1ArticleSuggestionModelMetadata",
+      "properties": {
+        "modelType": {
+          "description": "Optional. Type of the article suggestion model. The available values are:\n*   `article-suggestion-gbt-1` - (default) Article Suggestion Gbt model.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2beta1BatchUpdateEntityTypesResponse": {
       "description": "The response message for EntityTypes.BatchUpdateEntityTypes.",
       "id": "GoogleCloudDialogflowV2beta1BatchUpdateEntityTypesResponse",
@@ -3165,6 +3218,65 @@
           },
           "description": "Optional. The collection of parameters associated with this context.\nRefer to [this\ndoc](https://cloud.google.com/dialogflow/docs/intents-actions-parameters)\nfor syntax.",
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1ConversationModel": {
+      "description": "Represents a conversation model.",
+      "id": "GoogleCloudDialogflowV2beta1ConversationModel",
+      "properties": {
+        "articleSuggestionModelMetadata": {
+          "$ref": "GoogleCloudDialogflowV2beta1ArticleSuggestionModelMetadata",
+          "description": "Metadata for article suggestion models."
+        },
+        "createTime": {
+          "description": "Output only. Creation time of this model.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "datasets": {
+          "description": "Required. Datasets used to create model.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2beta1InputDataset"
+          },
+          "type": "array"
+        },
+        "displayName": {
+          "description": "Required. The display name of the model. At most 64 bytes long.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. ConversationModel resource name. Format:\n`projects/\u003cProject ID\u003e/conversationModels/\u003cConversation Model ID\u003e`",
+          "type": "string"
+        },
+        "smartReplyModelMetadata": {
+          "$ref": "GoogleCloudDialogflowV2beta1SmartReplyModelMetadata",
+          "description": "Metadata for smart reply models."
+        },
+        "state": {
+          "description": "Output only. State of the model. A model can only serve prediction requests\nafter it gets deployed.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "CREATING",
+            "UNDEPLOYED",
+            "DEPLOYING",
+            "DEPLOYED",
+            "UNDEPLOYING",
+            "DELETING",
+            "FAILED"
+          ],
+          "enumDescriptions": [
+            "Should not be used, an un-set enum has this value by default.",
+            "Model is creating.",
+            "Model is not deployed but ready to deploy.",
+            "Model is deploying.",
+            "Model is deployed and ready to use.",
+            "Model is undeploying.",
+            "Model is deleting.",
+            "Model is in error state. Not ready to deploy and use."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -3269,6 +3381,17 @@
         },
         "agentUri": {
           "description": "The URI to a file containing the exported agent. This field is populated\nonly if `agent_uri` is specified in `ExportAgentRequest`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1InputDataset": {
+      "description": "InputDataset used to create model or do evaluation.",
+      "id": "GoogleCloudDialogflowV2beta1InputDataset",
+      "properties": {
+        "dataset": {
+          "description": "Required. ConversationDataset resource name. Format:\n`projects/\u003cProject ID\u003e/conversationDatasets/\u003cConversation Dataset ID\u003e`\nor\n`projects/\u003cProject ID\u003e/conversationDatasets/\u003cConversation Dataset\nID\u003e/annotatedConversationDatasets/\u003cAnnotated Conversation Dataset ID\u003e`",
           "type": "string"
         }
       },
@@ -4361,7 +4484,7 @@
           "description": "The intent that matched the conversational query. Some, not\nall fields are filled in this message, including but not limited to:\n`name`, `display_name` and `webhook_state`."
         },
         "intentDetectionConfidence": {
-          "description": "The intent detection confidence. Values range from 0.0\n(completely uncertain) to 1.0 (completely certain).\nIf there are `multiple knowledge_answers` messages, this value is set to\nthe greatest `knowledgeAnswers.match_confidence` value in the list.",
+          "description": "The intent detection confidence. Values range from 0.0\n(completely uncertain) to 1.0 (completely certain).\nThis value is for informational purpose only and is only used to\nhelp match the best intent within the classification threshold.\nThis value may change for the same end-user expression at any time due to a\nmodel retraining or change in implementation.\nIf there are `multiple knowledge_answers` messages, this value is set to\nthe greatest `knowledgeAnswers.match_confidence` value in the list.",
           "format": "float",
           "type": "number"
         },
@@ -4444,6 +4567,12 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2beta1SmartReplyModelMetadata": {
+      "description": "Metadata for smart reply models.",
+      "id": "GoogleCloudDialogflowV2beta1SmartReplyModelMetadata",
+      "properties": {},
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2beta1WebhookRequest": {
       "description": "The request message for a webhook call.",
       "id": "GoogleCloudDialogflowV2beta1WebhookRequest",
@@ -4515,6 +4644,24 @@
         "source": {
           "description": "Optional. This value is passed directly to `QueryResult.webhook_source`.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleLongrunningListOperationsResponse": {
+      "description": "The response message for Operations.ListOperations.",
+      "id": "GoogleLongrunningListOperationsResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "The standard List next-page token.",
+          "type": "string"
+        },
+        "operations": {
+          "description": "A list of operations that matches the specified filter in the request.",
+          "items": {
+            "$ref": "GoogleLongrunningOperation"
+          },
+          "type": "array"
         }
       },
       "type": "object"

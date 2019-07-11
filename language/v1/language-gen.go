@@ -152,7 +152,7 @@ type DocumentsService struct {
 
 // AnalyzeEntitiesRequest: The entity analysis request message.
 type AnalyzeEntitiesRequest struct {
-	// Document: Input document.
+	// Document: Required. Input document.
 	Document *Document `json:"document,omitempty"`
 
 	// EncodingType: The encoding type used by the API to calculate offsets.
@@ -243,7 +243,7 @@ func (s *AnalyzeEntitiesResponse) MarshalJSON() ([]byte, error) {
 // AnalyzeEntitySentimentRequest: The entity-level sentiment analysis
 // request message.
 type AnalyzeEntitySentimentRequest struct {
-	// Document: Input document.
+	// Document: Required. Input document.
 	Document *Document `json:"document,omitempty"`
 
 	// EncodingType: The encoding type used by the API to calculate offsets.
@@ -335,7 +335,7 @@ func (s *AnalyzeEntitySentimentResponse) MarshalJSON() ([]byte, error) {
 
 // AnalyzeSentimentRequest: The sentiment analysis request message.
 type AnalyzeSentimentRequest struct {
-	// Document: Input document.
+	// Document: Required. Input document.
 	Document *Document `json:"document,omitempty"`
 
 	// EncodingType: The encoding type used by the API to calculate sentence
@@ -430,7 +430,7 @@ func (s *AnalyzeSentimentResponse) MarshalJSON() ([]byte, error) {
 
 // AnalyzeSyntaxRequest: The syntax analysis request message.
 type AnalyzeSyntaxRequest struct {
-	// Document: Input document.
+	// Document: Required. Input document.
 	Document *Document `json:"document,omitempty"`
 
 	// EncodingType: The encoding type used by the API to calculate offsets.
@@ -526,7 +526,7 @@ func (s *AnalyzeSyntaxResponse) MarshalJSON() ([]byte, error) {
 // which can perform multiple
 // analysis types (sentiment, entities, and syntax) in one call.
 type AnnotateTextRequest struct {
-	// Document: Input document.
+	// Document: Required. Input document.
 	Document *Document `json:"document,omitempty"`
 
 	// EncodingType: The encoding type used by the API to calculate offsets.
@@ -552,7 +552,7 @@ type AnnotateTextRequest struct {
 	// that uses this encoding natively.
 	EncodingType string `json:"encodingType,omitempty"`
 
-	// Features: The enabled features.
+	// Features: Required. The enabled features.
 	Features *Features `json:"features,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Document") to
@@ -694,7 +694,7 @@ func (s *ClassificationCategory) UnmarshalJSON(data []byte) error {
 
 // ClassifyTextRequest: The document classification request message.
 type ClassifyTextRequest struct {
-	// Document: Input document.
+	// Document: Required. Input document.
 	Document *Document `json:"document,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Document") to

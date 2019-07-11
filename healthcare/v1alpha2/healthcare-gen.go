@@ -350,7 +350,7 @@ type Annotation struct {
 	// tags.
 	ResourceAnnotation *ResourceAnnotation `json:"resourceAnnotation,omitempty"`
 
-	// TextAnnotation: Annotations for sentitive texts, e.g., range of such
+	// TextAnnotation: Annotations for sensitive texts, e.g., range of such
 	// texts.
 	TextAnnotation *SensitiveTextAnnotation `json:"textAnnotation,omitempty"`
 
@@ -492,7 +492,7 @@ func (s *AnnotationStore) MarshalJSON() ([]byte, error) {
 //             {
 //               "log_type": "DATA_READ",
 //               "exempted_members": [
-//                 "user:foo@gmail.com"
+//                 "user:jose@example.com"
 //               ]
 //             },
 //             {
@@ -504,7 +504,7 @@ func (s *AnnotationStore) MarshalJSON() ([]byte, error) {
 //           ]
 //         },
 //         {
-//           "service": "fooservice.googleapis.com"
+//           "service": "sampleservice.googleapis.com"
 //           "audit_log_configs": [
 //             {
 //               "log_type": "DATA_READ",
@@ -512,7 +512,7 @@ func (s *AnnotationStore) MarshalJSON() ([]byte, error) {
 //             {
 //               "log_type": "DATA_WRITE",
 //               "exempted_members": [
-//                 "user:bar@gmail.com"
+//                 "user:aliya@example.com"
 //               ]
 //             }
 //           ]
@@ -520,11 +520,11 @@ func (s *AnnotationStore) MarshalJSON() ([]byte, error) {
 //       ]
 //     }
 //
-// For fooservice, this policy enables DATA_READ, DATA_WRITE and
+// For sampleservice, this policy enables DATA_READ, DATA_WRITE and
 // ADMIN_READ
-// logging. It also exempts foo@gmail.com from DATA_READ logging,
+// logging. It also exempts jose@example.com from DATA_READ logging,
 // and
-// bar@gmail.com from DATA_WRITE logging.
+// aliya@example.com from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -570,7 +570,7 @@ func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 //         {
 //           "log_type": "DATA_READ",
 //           "exempted_members": [
-//             "user:foo@gmail.com"
+//             "user:jose@example.com"
 //           ]
 //         },
 //         {
@@ -581,13 +581,20 @@ func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 //
 // This enables 'DATA_READ' and 'DATA_WRITE' logging, while
 // exempting
-// foo@gmail.com from DATA_READ logging.
+// jose@example.com from DATA_READ logging.
 type AuditLogConfig struct {
 	// ExemptedMembers: Specifies the identities that do not cause logging
 	// for this type of
 	// permission.
 	// Follows the same format of Binding.members.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
+
+	// IgnoreChildExemptions: Specifies whether principals can be exempted
+	// for the same LogType in
+	// lower-level resource policies. If true, any lower-level exemptions
+	// will
+	// be ignored.
+	IgnoreChildExemptions bool `json:"ignoreChildExemptions,omitempty"`
 
 	// LogType: The log type that this config enables.
 	//
@@ -646,7 +653,7 @@ type Binding struct {
 	//
 	// * `user:{emailid}`: An email address that represents a specific
 	// Google
-	//    account. For example, `alice@gmail.com` .
+	//    account. For example, `alice@example.com` .
 	//
 	//
 	// * `serviceAccount:{emailid}`: An email address that represents a
@@ -3538,7 +3545,7 @@ type Policy struct {
 	//
 	// If no `etag` is provided in the call to `setIamPolicy`, then the
 	// existing
-	// policy is overwritten blindly.
+	// policy is overwritten.
 	Etag string `json:"etag,omitempty"`
 
 	// Version: Deprecated.
@@ -6468,7 +6475,8 @@ type ProjectsLocationsDatasetsAnnotationStoresGetIamPolicyCall struct {
 //
 // Authorization requires the Google IAM
 // permission
-// `healthcare.AnnotationStores.getIamPolicy` on the specified resource
+// `healthcare.AnnotationStores.getIamPolicy` on the specified
+// resource
 func (r *ProjectsLocationsDatasetsAnnotationStoresService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsDatasetsAnnotationStoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsAnnotationStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6566,7 +6574,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresGetIamPolicyCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a resource. Returns NOT_FOUND error if\nthe resource does not exist. Returns an empty policy if the resource exists\nbut does not have a policy set.\n\nAuthorization requires the Google IAM permission\n`healthcare.AnnotationStores.getIamPolicy` on the specified resource",
+	//   "description": "Gets the access control policy for a resource. Returns NOT_FOUND error if\nthe resource does not exist. Returns an empty policy if the resource exists\nbut does not have a policy set.\n\nAuthorization requires the Google IAM permission\n`healthcare.AnnotationStores.getIamPolicy` on the specified\nresource",
 	//   "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/annotationStores/{annotationStoresId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.annotationStores.getIamPolicy",
@@ -6979,7 +6987,8 @@ type ProjectsLocationsDatasetsAnnotationStoresSetIamPolicyCall struct {
 //
 // Authorization requires the Google IAM
 // permission
-// 'healthcare.annotationStores.setIamPolicy' on the specified resource
+// `healthcare.annotationStores.setIamPolicy` on the specified
+// resource
 func (r *ProjectsLocationsDatasetsAnnotationStoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsAnnotationStoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsAnnotationStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7077,7 +7086,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresSetIamPolicyCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "POLICIES\nSets the access control policy for a resource. Replaces any existing\npolicy.\n\nAuthorization requires the Google IAM permission\n'healthcare.annotationStores.setIamPolicy' on the specified resource",
+	//   "description": "POLICIES\nSets the access control policy for a resource. Replaces any existing\npolicy.\n\nAuthorization requires the Google IAM permission\n`healthcare.annotationStores.setIamPolicy` on the specified\nresource",
 	//   "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/annotationStores/{annotationStoresId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.annotationStores.setIamPolicy",
@@ -12838,9 +12847,9 @@ type ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall struct {
 //
 // Authorization requires the Google IAM
 // permission
-// 'healthcare.fhirStores.getIamPolicy' for a FHIR store
+// `healthcare.fhirStores.getIamPolicy` for a FHIR store
 // or
-// 'healthcare.securityLabels.getIamPolicy' for a security label
+// `healthcare.securityLabels.getIamPolicy` for a security label
 func (r *ProjectsLocationsDatasetsFhirStoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12957,7 +12966,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a FHIR store or security label within a\nFHIR store. Returns NOT_FOUND error if the resource does not exist. Returns\nan empty policy if the resource exists but does not have a policy set.\n\nAuthorization requires the Google IAM permission\n'healthcare.fhirStores.getIamPolicy' for a FHIR store or\n'healthcare.securityLabels.getIamPolicy' for a security label",
+	//   "description": "Gets the access control policy for a FHIR store or security label within a\nFHIR store. Returns NOT_FOUND error if the resource does not exist. Returns\nan empty policy if the resource exists but does not have a policy set.\n\nAuthorization requires the Google IAM permission\n`healthcare.fhirStores.getIamPolicy` for a FHIR store or\n`healthcare.securityLabels.getIamPolicy` for a security label",
 	//   "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:getIamPolicy",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.getIamPolicy",
@@ -13548,9 +13557,9 @@ type ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall struct {
 //
 // Authorization requires the Google IAM
 // permission
-// 'healthcare.fhirStores.setIamPolicy' for a FHIR store
+// `healthcare.fhirStores.setIamPolicy` for a FHIR store
 // or
-// 'healthcare.securityLabels.setIamPolicy' for a security label
+// `healthcare.securityLabels.setIamPolicy` for a security label
 func (r *ProjectsLocationsDatasetsFhirStoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13648,7 +13657,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy for a FHIR store or security label within a\nFHIR store. Replaces any existing policy.\n\nAuthorization requires the Google IAM permission\n'healthcare.fhirStores.setIamPolicy' for a FHIR store or\n'healthcare.securityLabels.setIamPolicy' for a security label",
+	//   "description": "Sets the access control policy for a FHIR store or security label within a\nFHIR store. Replaces any existing policy.\n\nAuthorization requires the Google IAM permission\n`healthcare.fhirStores.setIamPolicy` for a FHIR store or\n`healthcare.securityLabels.setIamPolicy` for a security label",
 	//   "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.setIamPolicy",
@@ -16140,9 +16149,9 @@ type ProjectsLocationsDatasetsFhirStoresSecurityLabelsGetIamPolicyCall struct {
 //
 // Authorization requires the Google IAM
 // permission
-// 'healthcare.fhirStores.getIamPolicy' for a FHIR store
+// `healthcare.fhirStores.getIamPolicy` for a FHIR store
 // or
-// 'healthcare.securityLabels.getIamPolicy' for a security label
+// `healthcare.securityLabels.getIamPolicy` for a security label
 func (r *ProjectsLocationsDatasetsFhirStoresSecurityLabelsService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsFhirStoresSecurityLabelsGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsFhirStoresSecurityLabelsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -16259,7 +16268,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresSecurityLabelsGetIamPolicyCall) Do(o
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a FHIR store or security label within a\nFHIR store. Returns NOT_FOUND error if the resource does not exist. Returns\nan empty policy if the resource exists but does not have a policy set.\n\nAuthorization requires the Google IAM permission\n'healthcare.fhirStores.getIamPolicy' for a FHIR store or\n'healthcare.securityLabels.getIamPolicy' for a security label",
+	//   "description": "Gets the access control policy for a FHIR store or security label within a\nFHIR store. Returns NOT_FOUND error if the resource does not exist. Returns\nan empty policy if the resource exists but does not have a policy set.\n\nAuthorization requires the Google IAM permission\n`healthcare.fhirStores.getIamPolicy` for a FHIR store or\n`healthcare.securityLabels.getIamPolicy` for a security label",
 	//   "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/securityLabels/{securityLabelsId}:getIamPolicy",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.securityLabels.getIamPolicy",
@@ -16309,9 +16318,9 @@ type ProjectsLocationsDatasetsFhirStoresSecurityLabelsSetIamPolicyCall struct {
 //
 // Authorization requires the Google IAM
 // permission
-// 'healthcare.fhirStores.setIamPolicy' for a FHIR store
+// `healthcare.fhirStores.setIamPolicy` for a FHIR store
 // or
-// 'healthcare.securityLabels.setIamPolicy' for a security label
+// `healthcare.securityLabels.setIamPolicy` for a security label
 func (r *ProjectsLocationsDatasetsFhirStoresSecurityLabelsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsFhirStoresSecurityLabelsSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsFhirStoresSecurityLabelsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -16409,7 +16418,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresSecurityLabelsSetIamPolicyCall) Do(o
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy for a FHIR store or security label within a\nFHIR store. Replaces any existing policy.\n\nAuthorization requires the Google IAM permission\n'healthcare.fhirStores.setIamPolicy' for a FHIR store or\n'healthcare.securityLabels.setIamPolicy' for a security label",
+	//   "description": "Sets the access control policy for a FHIR store or security label within a\nFHIR store. Replaces any existing policy.\n\nAuthorization requires the Google IAM permission\n`healthcare.fhirStores.setIamPolicy` for a FHIR store or\n`healthcare.securityLabels.setIamPolicy` for a security label",
 	//   "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/securityLabels/{securityLabelsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.securityLabels.setIamPolicy",

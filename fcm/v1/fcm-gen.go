@@ -342,6 +342,13 @@ type AndroidNotification struct {
 	// specified in your app manifest.
 	Icon string `json:"icon,omitempty"`
 
+	// Image: Contains the URL of an image that is going to be displayed in
+	// a
+	// notification. If present, it will
+	// override
+	// google.firebase.fcm.v1.Notification.image.
+	Image string `json:"image,omitempty"`
+
 	// Sound: The sound to play when the device receives the
 	// notification.
 	// Supports "default" or the filename of a sound resource bundled in the
@@ -449,6 +456,13 @@ func (s *ApnsConfig) MarshalJSON() ([]byte, error) {
 type ApnsFcmOptions struct {
 	// AnalyticsLabel: Label associated with the message's analytics data.
 	AnalyticsLabel string `json:"analyticsLabel,omitempty"`
+
+	// Image: Contains the URL of an image that is going to be displayed in
+	// a
+	// notification. If present, it will
+	// override
+	// google.firebase.fcm.v1.Notification.image.
+	Image string `json:"image,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalyticsLabel") to
 	// unconditionally include in API requests. By default, fields with
@@ -581,6 +595,20 @@ func (s *Message) MarshalJSON() ([]byte, error) {
 type Notification struct {
 	// Body: The notification's body text.
 	Body string `json:"body,omitempty"`
+
+	// Image: Contains the URL of an image that is going to be downloaded on
+	// the device
+	// and displayed in a notification.
+	// JPEG, PNG, BMP have full support across platforms. Animated GIF and
+	// video
+	// only work on iOS. WebP and HEIF have varying levels of support
+	// across
+	// platforms and platform versions.
+	// Android has 1MB image size limit.
+	// Quota usage and implications/costs for hosting image on Firebase
+	// Storage:
+	// https://firebase.google.com/pricing
+	Image string `json:"image,omitempty"`
 
 	// Title: The notification's title.
 	Title string `json:"title,omitempty"`

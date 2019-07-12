@@ -2217,7 +2217,7 @@
       }
     }
   },
-  "revision": "20190701",
+  "revision": "20190703",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -2262,6 +2262,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "ignoreChildExemptions": {
+          "description": "Specifies whether principals can be exempted for the same LogType in\nlower-level resource policies. If true, any lower-level exemptions will\nbe ignored.",
+          "type": "boolean"
         },
         "logType": {
           "description": "The log type that this config enables.",
@@ -2973,8 +2977,8 @@
         },
         "type": {
           "description": "The type of the value.",
-          "format": "int64",
-          "type": "string"
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -4010,8 +4014,8 @@
         },
         "runAsGroup": {
           "description": "The GID to run the entrypoint of the container process.\nUses runtime default if unset.\nMay also be set in PodSecurityContext.  If set in both SecurityContext and\nPodSecurityContext, the value specified in SecurityContext takes\nprecedence. +optional",
-          "format": "int64",
-          "type": "string"
+          "format": "int32",
+          "type": "integer"
         },
         "runAsNonRoot": {
           "description": "Indicates that the container must run as a non-root user.\nIf true, the Kubelet will validate the image at runtime to ensure that it\ndoes not run as UID 0 (root) and fail to start the container if it does.\nIf unset or false, no such validation will be performed.\nMay also be set in PodSecurityContext.  If set in both SecurityContext and\nPodSecurityContext, the value specified in SecurityContext takes\nprecedence. +optional",
@@ -4019,8 +4023,8 @@
         },
         "runAsUser": {
           "description": "The UID to run the entrypoint of the container process.\nDefaults to user specified in image metadata if unspecified.\nMay also be set in PodSecurityContext.  If set in both SecurityContext and\nPodSecurityContext, the value specified in SecurityContext takes\nprecedence. +optional",
-          "format": "int64",
-          "type": "string"
+          "format": "int32",
+          "type": "integer"
         },
         "seLinuxOptions": {
           "$ref": "SELinuxOptions",
@@ -4310,7 +4314,7 @@
           "type": "string"
         },
         "latestRevision": {
-          "description": "LatestRevision may be optionally provided to indicate that the latest\nready Revision of the Configuration should be used for this traffic\ntarget. When provided LatestRevision must be true if RevisionName is\nempty; it must be false when RevisionName is non-empty.\n\nNot currently supported in Cloud Run.\n+optional",
+          "description": "LatestRevision may be optionally provided to indicate that the latest\nready Revision of the Configuration should be used for this traffic\ntarget. When provided LatestRevision must be true if RevisionName is\nempty; it must be false when RevisionName is non-empty.\n+optional",
           "type": "boolean"
         },
         "name": {

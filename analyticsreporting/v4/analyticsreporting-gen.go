@@ -432,7 +432,6 @@ type CohortGroup struct {
 	//   week and month boundaries.
 	// - The `viewId` must be an
 	//   [app view
-	//
 	// ID](https://support.google.com/analytics/answer/2649553#WebVersusAppVi
 	// ews)
 	LifetimeValue bool `json:"lifetimeValue,omitempty"`
@@ -957,20 +956,17 @@ type GetReportsRequest struct {
 	ReportRequests []*ReportRequest `json:"reportRequests,omitempty"`
 
 	// UseResourceQuotas: Enables
-	// [resource
-	// based
-	// quotas](/analytics/devguides/reporting/core/v4/limits-quotas#ana
-	// lytics_reporting_api_v4),
+	// [resource based
+	// quotas](/analytics/devguides/reporting/core/v4/limits-quotas#analytics
+	// _reporting_api_v4),
 	// (defaults to `False`). If this field is set to `True` the
 	// per view (profile) quotas are governed by the computational
 	// cost of the request. Note that using cost based quotas will
 	// higher enable sampling rates. (10 Million for `SMALL`,
 	// 100M for `LARGE`. See the
-	// [limits and
-	// quotas
-	// documentation](/analytics/devguides/reporting/core/v4/limits-qu
-	// otas#analytics_reporting_api_v4)
-	// for details.
+	// [limits and quotas
+	// documentation](/analytics/devguides/reporting/core/v4/limits-quotas#an
+	// alytics_reporting_api_v4) for details.
 	UseResourceQuotas bool `json:"useResourceQuotas,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ReportRequests") to
@@ -1946,11 +1942,10 @@ type ReportRequest struct {
 	// with
 	// Firefox; `ga:browser=~^Firefox`. For more information on
 	// dimensions
-	// and metric filters,
-	// see
+	// and metric filters, see
 	// [Filters
-	// reference](https://developers.google.com/analytics/devgui
-	// des/reporting/core/v3/reference#filters).
+	// reference](https://developers.google.com/analytics/devguides/reporting
+	// /core/v3/reference#filters).
 	FiltersExpression string `json:"filtersExpression,omitempty"`
 
 	// HideTotals: If set to true, hides the total of all metrics for all

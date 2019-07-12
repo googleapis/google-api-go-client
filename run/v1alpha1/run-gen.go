@@ -506,6 +506,13 @@ type AuditLogConfig struct {
 	// Follows the same format of Binding.members.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
+	// IgnoreChildExemptions: Specifies whether principals can be exempted
+	// for the same LogType in
+	// lower-level resource policies. If true, any lower-level exemptions
+	// will
+	// be ignored.
+	IgnoreChildExemptions bool `json:"ignoreChildExemptions,omitempty"`
+
 	// LogType: The log type that this config enables.
 	//
 	// Possible values:
@@ -2013,7 +2020,7 @@ type IntOrString struct {
 	StrVal string `json:"strVal,omitempty"`
 
 	// Type: The type of the value.
-	Type int64 `json:"type,omitempty,string"`
+	Type int64 `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IntVal") to
 	// unconditionally include in API requests. By default, fields with
@@ -4232,7 +4239,7 @@ type SecurityContext struct {
 	// PodSecurityContext, the value specified in SecurityContext
 	// takes
 	// precedence. +optional
-	RunAsGroup int64 `json:"runAsGroup,omitempty,string"`
+	RunAsGroup int64 `json:"runAsGroup,omitempty"`
 
 	// RunAsNonRoot: Indicates that the container must run as a non-root
 	// user.
@@ -4256,7 +4263,7 @@ type SecurityContext struct {
 	// PodSecurityContext, the value specified in SecurityContext
 	// takes
 	// precedence. +optional
-	RunAsUser int64 `json:"runAsUser,omitempty,string"`
+	RunAsUser int64 `json:"runAsUser,omitempty"`
 
 	// SeLinuxOptions: The SELinux context to be applied to the
 	// container.
@@ -4933,8 +4940,6 @@ type TrafficTarget struct {
 	// target. When provided LatestRevision must be true if RevisionName
 	// is
 	// empty; it must be false when RevisionName is non-empty.
-	//
-	// Not currently supported in Cloud Run.
 	// +optional
 	LatestRevision bool `json:"latestRevision,omitempty"`
 

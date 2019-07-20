@@ -187,9 +187,8 @@ type V2Service struct {
 //
 // Batch delete jobs request.
 type BatchDeleteJobsRequest struct {
-	// Filter: Required.
-	//
-	// The filter string specifies the jobs to be deleted.
+	// Filter: Required. The filter string specifies the jobs to be
+	// deleted.
 	//
 	// Supported operator: =, AND
 	//
@@ -350,9 +349,8 @@ func (s *CommuteInfo) MarshalJSON() ([]byte, error) {
 //
 // Parameters needed for commute search.
 type CommutePreference struct {
-	// AllowNonStreetLevelAddress: Optional.
-	// If `true`, jobs without street level addresses may also be
-	// returned.
+	// AllowNonStreetLevelAddress: Optional. If `true`, jobs without street
+	// level addresses may also be returned.
 	// For city level addresses, the city center is used. For state and
 	// coarser
 	// level addresses, text matching is used.
@@ -361,18 +359,15 @@ type CommutePreference struct {
 	// street level addresses will be returned by commute search.
 	AllowNonStreetLevelAddress bool `json:"allowNonStreetLevelAddress,omitempty"`
 
-	// DepartureHourLocal: Optional.
-	//
-	// The departure hour to use to calculate traffic impact. Accepts
-	// an
+	// DepartureHourLocal: Optional. The departure hour to use to calculate
+	// traffic impact. Accepts an
 	// integer between 0 and 23, representing the hour in the time zone of
 	// the
 	// start_location. Must not be present if road_traffic is specified.
 	DepartureHourLocal int64 `json:"departureHourLocal,omitempty"`
 
-	// Method: Required.
-	//
-	// The method of transportation for which to calculate the commute time.
+	// Method: Required. The method of transportation for which to calculate
+	// the commute time.
 	//
 	// Possible values:
 	//   "COMMUTE_METHOD_UNSPECIFIED" - Commute method is not specified.
@@ -382,10 +377,8 @@ type CommutePreference struct {
 	// subway, etc.
 	Method string `json:"method,omitempty"`
 
-	// RoadTraffic: Optional.
-	//
-	// Specifies the traffic density to use when calculating commute
-	// time.
+	// RoadTraffic: Optional. Specifies the traffic density to use when
+	// calculating commute time.
 	// Must not be present if departure_hour_local is specified.
 	//
 	// Possible values:
@@ -397,17 +390,13 @@ type CommutePreference struct {
 	// traffic impact.
 	RoadTraffic string `json:"roadTraffic,omitempty"`
 
-	// StartLocation: Required.
-	//
-	// The latitude and longitude of the location from which to calculate
-	// the
+	// StartLocation: Required. The latitude and longitude of the location
+	// from which to calculate the
 	// commute time.
 	StartLocation *LatLng `json:"startLocation,omitempty"`
 
-	// TravelTime: Required.
-	//
-	// The maximum travel time in seconds. The maximum allowed value is
-	// `3600s`
+	// TravelTime: Required. The maximum travel time in seconds. The maximum
+	// allowed value is `3600s`
 	// (one hour). Format is `123s`.
 	TravelTime string `json:"travelTime,omitempty"`
 
@@ -442,23 +431,17 @@ func (s *CommutePreference) MarshalJSON() ([]byte, error) {
 // for
 // employing applicants for the job position.
 type Company struct {
-	// CareerPageLink: Optional.
-	//
-	// The URL to employer's career site or careers page on the employer's
-	// web
+	// CareerPageLink: Optional. The URL to employer's career site or
+	// careers page on the employer's web
 	// site.
 	CareerPageLink string `json:"careerPageLink,omitempty"`
 
-	// CompanyInfoSources: Optional.
-	//
-	// Identifiers external to the application that help to further
-	// identify
+	// CompanyInfoSources: Optional. Identifiers external to the application
+	// that help to further identify
 	// the employer.
 	CompanyInfoSources []*CompanyInfoSource `json:"companyInfoSources,omitempty"`
 
-	// CompanySize: Optional.
-	//
-	// The employer's company size.
+	// CompanySize: Optional. The employer's company size.
 	//
 	// Possible values:
 	//   "COMPANY_SIZE_UNSPECIFIED" - Default value if the size is not
@@ -480,16 +463,13 @@ type Company struct {
 	// This field is no longer used. Any value set to it is ignored.
 	DisableLocationOptimization bool `json:"disableLocationOptimization,omitempty"`
 
-	// DisplayName: Required.
-	//
-	// The name of the employer to be displayed with the job,
+	// DisplayName: Required. The name of the employer to be displayed with
+	// the job,
 	// for example, "Google, LLC.".
 	DisplayName string `json:"displayName,omitempty"`
 
-	// DistributorBillingCompanyId: Optional.
-	//
-	// The unique company identifier provided by the client to identify
-	// an
+	// DistributorBillingCompanyId: Optional. The unique company identifier
+	// provided by the client to identify an
 	// employer for billing purposes. Recommended practice is to use
 	// the distributor_company_id.
 	//
@@ -497,9 +477,8 @@ type Company struct {
 	// is not provided.
 	DistributorBillingCompanyId string `json:"distributorBillingCompanyId,omitempty"`
 
-	// DistributorCompanyId: Required.
-	//
-	// A client's company identifier, used to uniquely identify the
+	// DistributorCompanyId: Required. A client's company identifier, used
+	// to uniquely identify the
 	// company. If an employer has a subsidiary or sub-brand, such as
 	// "Alphabet"
 	// and "Google", which the client wishes to use as the company displayed
@@ -511,9 +490,8 @@ type Company struct {
 	// The maximum number of allowed characters is 255.
 	DistributorCompanyId string `json:"distributorCompanyId,omitempty"`
 
-	// EeoText: Optional.
-	//
-	// Equal Employment Opportunity legal disclaimer text to be
+	// EeoText: Optional. Equal Employment Opportunity legal disclaimer text
+	// to be
 	// associated with all jobs, and typically to be displayed in
 	// all
 	// roles.
@@ -521,38 +499,31 @@ type Company struct {
 	// The maximum number of allowed characters is 500.
 	EeoText string `json:"eeoText,omitempty"`
 
-	// HiringAgency: Optional.
-	//
-	// Set to true if it is the hiring agency that post jobs for
-	// other
+	// HiringAgency: Optional. Set to true if it is the hiring agency that
+	// post jobs for other
 	// employers.
 	//
 	// Defaults to false if not provided.
 	HiringAgency bool `json:"hiringAgency,omitempty"`
 
-	// HqLocation: Optional.
-	//
-	// The street address of the company's main headquarters, which may
-	// be
+	// HqLocation: Optional. The street address of the company's main
+	// headquarters, which may be
 	// different from the job location. The service attempts
 	// to geolocate the provided address, and populates a more
 	// specific
 	// location wherever possible in structured_company_hq_location.
 	HqLocation string `json:"hqLocation,omitempty"`
 
-	// ImageUrl: Optional.
-	//
-	// A URL that hosts the employer's company logo. If provided,
+	// ImageUrl: Optional. A URL that hosts the employer's company logo. If
+	// provided,
 	// the logo image should be squared at 80x80 pixels.
 	//
 	// The url must be a Google Photos or Google Album url.
 	// Only images in these Google sub-domains are accepted.
 	ImageUrl string `json:"imageUrl,omitempty"`
 
-	// KeywordSearchableCustomAttributes: Optional.
-	//
-	// A list of keys of filterable Job.custom_attributes,
-	// whose
+	// KeywordSearchableCustomAttributes: Optional. A list of keys of
+	// filterable Job.custom_attributes, whose
 	// corresponding `string_values` are used in keyword search. Jobs
 	// with
 	// `string_values` under these specified field keys are returned if
@@ -589,16 +560,13 @@ type Company struct {
 	// "companies/0000aaaa-1111-bbbb-2222-cccc3333dddd".
 	Name string `json:"name,omitempty"`
 
-	// StructuredCompanyHqLocation: Output only.
-	//
-	// A structured headquarters location of the company,
+	// StructuredCompanyHqLocation: Output only. A structured headquarters
+	// location of the company,
 	// resolved from hq_location if possible.
 	StructuredCompanyHqLocation *JobLocation `json:"structuredCompanyHqLocation,omitempty"`
 
-	// Suspended: Output only.
-	//
-	// Indicates whether a company is flagged to be suspended from
-	// public
+	// Suspended: Output only. Indicates whether a company is flagged to be
+	// suspended from public
 	// availability by the service when job content appears
 	// suspicious,
 	// abusive, or spammy.
@@ -612,10 +580,8 @@ type Company struct {
 	// for example, "Google, LLC.".
 	Title string `json:"title,omitempty"`
 
-	// Website: Optional.
-	//
-	// The URL representing the company's primary web site or home
-	// page,
+	// Website: Optional. The URL representing the company's primary web
+	// site or home page,
 	// such as, "www.google.com".
 	Website string `json:"website,omitempty"`
 
@@ -653,26 +619,21 @@ func (s *Company) MarshalJSON() ([]byte, error) {
 // page.
 // For unsupported types, use `unknown_type_id`.
 type CompanyInfoSource struct {
-	// FreebaseMid: Optional.
-	//
-	// The Google's Knowledge Graph value for the employer's company.
+	// FreebaseMid: Optional. The Google's Knowledge Graph value for the
+	// employer's company.
 	FreebaseMid string `json:"freebaseMid,omitempty"`
 
-	// GplusId: Optional.
-	//
-	// The numeric identifier for the employer's Google+ business page.
+	// GplusId: Optional. The numeric identifier for the employer's Google+
+	// business page.
 	GplusId string `json:"gplusId,omitempty"`
 
-	// MapsCid: Optional.
-	//
-	// The numeric identifier for the employer's headquarters on Google
-	// Maps,
+	// MapsCid: Optional. The numeric identifier for the employer's
+	// headquarters on Google Maps,
 	// namely, the Google Maps CID (cell id).
 	MapsCid string `json:"mapsCid,omitempty"`
 
-	// UnknownTypeId: Optional.
-	//
-	// A Google identifier that does not match any of the other types.
+	// UnknownTypeId: Optional. A Google identifier that does not match any
+	// of the other types.
 	UnknownTypeId string `json:"unknownTypeId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FreebaseMid") to
@@ -709,23 +670,18 @@ func (s *CompanyInfoSource) MarshalJSON() ([]byte, error) {
 // times
 // expected_units_per_year.
 type CompensationEntry struct {
-	// Amount: Optional.
-	//
-	// Compensation amount.
+	// Amount: Optional. Compensation amount.
 	Amount *Money `json:"amount,omitempty"`
 
-	// Description: Optional.
-	//
-	// Compensation description.  For example, could
+	// Description: Optional. Compensation description.  For example,
+	// could
 	// indicate equity terms or provide additional context to an
 	// estimated
 	// bonus.
 	Description string `json:"description,omitempty"`
 
-	// ExpectedUnitsPerYear: Optional.
-	//
-	// Expected number of units paid each year. If not specified,
-	// when
+	// ExpectedUnitsPerYear: Optional. Expected number of units paid each
+	// year. If not specified, when
 	// Job.employment_types is FULLTIME, a default value is inferred
 	// based on unit. Default values:
 	// - HOURLY: 2080
@@ -735,14 +691,10 @@ type CompensationEntry struct {
 	// - ANNUAL: 1
 	ExpectedUnitsPerYear float64 `json:"expectedUnitsPerYear,omitempty"`
 
-	// Range: Optional.
-	//
-	// Compensation range.
+	// Range: Optional. Compensation range.
 	Range *CompensationRange `json:"range,omitempty"`
 
-	// Type: Required.
-	//
-	// Compensation type.
+	// Type: Required. Compensation type.
 	//
 	// Possible values:
 	//   "COMPENSATION_TYPE_UNSPECIFIED" - Default value. Equivalent to
@@ -763,9 +715,7 @@ type CompensationEntry struct {
 	//   "OTHER_COMPENSATION_TYPE" - Other compensation type.
 	Type string `json:"type,omitempty"`
 
-	// Unit: Optional.
-	//
-	// Frequency of the specified amount.
+	// Unit: Optional. Frequency of the specified amount.
 	//
 	// Default is CompensationUnit.COMPENSATION_UNIT_UNSPECIFIED.
 	//
@@ -822,19 +772,14 @@ func (s *CompensationEntry) UnmarshalJSON(data []byte) error {
 //
 // Filter on job compensation type and amount.
 type CompensationFilter struct {
-	// IncludeJobsWithUnspecifiedCompensationRange: Optional.
-	//
-	// Whether to include jobs whose compensation range is unspecified.
+	// IncludeJobsWithUnspecifiedCompensationRange: Optional. Whether to
+	// include jobs whose compensation range is unspecified.
 	IncludeJobsWithUnspecifiedCompensationRange bool `json:"includeJobsWithUnspecifiedCompensationRange,omitempty"`
 
-	// Range: Optional.
-	//
-	// Compensation range.
+	// Range: Optional. Compensation range.
 	Range *CompensationRange `json:"range,omitempty"`
 
-	// Type: Required.
-	//
-	// Type of filter.
+	// Type: Required. Type of filter.
 	//
 	// Possible values:
 	//   "FILTER_TYPE_UNSPECIFIED" - Filter type unspecified. Position
@@ -868,9 +813,7 @@ type CompensationFilter struct {
 	// entry's` unit . Populate range and zero or more units.
 	Type string `json:"type,omitempty"`
 
-	// Units: Required.
-	//
-	// Specify desired `base compensation
+	// Units: Required. Specify desired `base compensation
 	// entry's`
 	// CompensationInfo.CompensationUnit.
 	//
@@ -915,16 +858,12 @@ func (s *CompensationFilter) MarshalJSON() ([]byte, error) {
 //
 // Compensation based histogram request.
 type CompensationHistogramRequest struct {
-	// BucketingOption: Required.
-	//
-	// Numeric histogram options, like buckets, whether include min or max
-	// value.
+	// BucketingOption: Required. Numeric histogram options, like buckets,
+	// whether include min or max value.
 	BucketingOption *NumericBucketingOption `json:"bucketingOption,omitempty"`
 
-	// Type: Required.
-	//
-	// Type of the request, representing which field the histogramming
-	// should be
+	// Type: Required. Type of the request, representing which field the
+	// histogramming should be
 	// performed over. A single request can only specify one histogram of
 	// each
 	// `CompensationHistogramRequestType`.
@@ -1029,9 +968,8 @@ type CompensationInfo struct {
 	// compensation.
 	Amount *Money `json:"amount,omitempty"`
 
-	// AnnualizedBaseCompensationRange: Output only.
-	//
-	// Annualized base compensation range. Computed as
+	// AnnualizedBaseCompensationRange: Output only. Annualized base
+	// compensation range. Computed as
 	// base compensation entry's CompensationEntry.compensation
 	// times
 	// CompensationEntry.expected_units_per_year.
@@ -1039,9 +977,8 @@ type CompensationInfo struct {
 	// See CompensationEntry for explanation on compensation annualization.
 	AnnualizedBaseCompensationRange *CompensationRange `json:"annualizedBaseCompensationRange,omitempty"`
 
-	// AnnualizedTotalCompensationRange: Output only.
-	//
-	// Annualized total compensation range. Computed as
+	// AnnualizedTotalCompensationRange: Output only. Annualized total
+	// compensation range. Computed as
 	// all compensation entries' CompensationEntry.compensation
 	// times
 	// CompensationEntry.expected_units_per_year.
@@ -1049,9 +986,7 @@ type CompensationInfo struct {
 	// See CompensationEntry for explanation on compensation annualization.
 	AnnualizedTotalCompensationRange *CompensationRange `json:"annualizedTotalCompensationRange,omitempty"`
 
-	// Entries: Optional.
-	//
-	// Job compensation information.
+	// Entries: Optional. Job compensation information.
 	//
 	// At most one entry can be of
 	// type
@@ -1121,19 +1056,15 @@ func (s *CompensationInfo) MarshalJSON() ([]byte, error) {
 
 // CompensationRange: Compensation range.
 type CompensationRange struct {
-	// Max: Optional.
-	//
-	// The maximum amount of compensation. If left empty, the value is
-	// set
+	// Max: Optional. The maximum amount of compensation. If left empty, the
+	// value is set
 	// to a maximal compensation value and the currency code is set to
 	// match the currency code of
 	// min_compensation.
 	Max *Money `json:"max,omitempty"`
 
-	// Min: Optional.
-	//
-	// The minimum amount of compensation. If left empty, the value is
-	// set
+	// Min: Optional. The minimum amount of compensation. If left empty, the
+	// value is set
 	// to zero and the currency code is set to match the
 	// currency code of max_compensation.
 	Min *Money `json:"min,omitempty"`
@@ -1257,14 +1188,10 @@ type CreateJobRequest struct {
 	// more precise address for the job.
 	DisableStreetAddressResolution bool `json:"disableStreetAddressResolution,omitempty"`
 
-	// Job: Required.
-	//
-	// The Job to be created.
+	// Job: Required. The Job to be created.
 	Job *Job `json:"job,omitempty"`
 
-	// ProcessingOptions: Optional.
-	//
-	// Options for job processing.
+	// ProcessingOptions: Optional. Options for job processing.
 	ProcessingOptions *JobProcessingOptions `json:"processingOptions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1295,10 +1222,8 @@ func (s *CreateJobRequest) MarshalJSON() ([]byte, error) {
 // CustomAttribute: Custom attribute values that are either filterable
 // or non-filterable.
 type CustomAttribute struct {
-	// Filterable: Optional.
-	//
-	// If the `filterable` flag is true, custom field values are
-	// searchable.
+	// Filterable: Optional. If the `filterable` flag is true, custom field
+	// values are searchable.
 	// If false, values are not searchable.
 	//
 	// Default is false.
@@ -1361,10 +1286,8 @@ func (s *CustomAttribute) MarshalJSON() ([]byte, error) {
 // has
 // been defined.
 type CustomAttributeHistogramRequest struct {
-	// Key: Required.
-	//
-	// Specifies the custom field key to perform a histogram on. If
-	// specified
+	// Key: Required. Specifies the custom field key to perform a histogram
+	// on. If specified
 	// without `long_value_histogram_bucketing_option`, histogram on string
 	// values
 	// of the given `key` is triggered, otherwise histogram is performed on
@@ -1372,10 +1295,8 @@ type CustomAttributeHistogramRequest struct {
 	// values.
 	Key string `json:"key,omitempty"`
 
-	// LongValueHistogramBucketingOption: Optional.
-	//
-	// Specifies buckets used to perform a range histogram on
-	// Job's
+	// LongValueHistogramBucketingOption: Optional. Specifies buckets used
+	// to perform a range histogram on Job's
 	// filterable long custom field values, or min/max value requirements.
 	LongValueHistogramBucketingOption *NumericBucketingOption `json:"longValueHistogramBucketingOption,omitempty"`
 
@@ -1452,9 +1373,7 @@ func (s *CustomAttributeHistogramResult) MarshalJSON() ([]byte, error) {
 // CustomField: Resource that represents the custom data not captured by
 // the standard fields.
 type CustomField struct {
-	// Values: Optional.
-	//
-	// The values of the custom data.
+	// Values: Optional. The values of the custom data.
 	Values []string `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
@@ -1484,14 +1403,10 @@ func (s *CustomField) MarshalJSON() ([]byte, error) {
 //
 // Custom field filter of the search.
 type CustomFieldFilter struct {
-	// Queries: Required.
-	//
-	// The query strings for the filter.
+	// Queries: Required. The query strings for the filter.
 	Queries []string `json:"queries,omitempty"`
 
-	// Type: Optional.
-	//
-	// The type of filter.
+	// Type: Optional. The type of filter.
 	// Defaults to FilterType.OR.
 	//
 	// Possible values:
@@ -1591,18 +1506,14 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 // take
 // up to 5 minutes.
 type DeleteJobsByFilterRequest struct {
-	// DisableFastProcess: Optional.
-	//
-	// If set to true, this call waits for all processing steps to
-	// complete
+	// DisableFastProcess: Optional. If set to true, this call waits for all
+	// processing steps to complete
 	// before the job is cleaned up. Otherwise, the call returns while
 	// some
 	// steps are still taking place asynchronously, hence faster.
 	DisableFastProcess bool `json:"disableFastProcess,omitempty"`
 
-	// Filter: Required.
-	//
-	// Restrictions on the scope of the delete request.
+	// Filter: Required. Restrictions on the scope of the delete request.
 	Filter *Filter `json:"filter,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisableFastProcess")
@@ -1636,9 +1547,7 @@ func (s *DeleteJobsByFilterRequest) MarshalJSON() ([]byte, error) {
 // improves
 // the quality of the search results across devices.
 type DeviceInfo struct {
-	// DeviceType: Optional.
-	//
-	// Type of the device.
+	// DeviceType: Optional. Type of the device.
 	//
 	// Possible values:
 	//   "DEVICE_TYPE_UNSPECIFIED" - The device type isn't specified.
@@ -1656,10 +1565,8 @@ type DeviceInfo struct {
 	//   "OTHER" - Other devices types.
 	DeviceType string `json:"deviceType,omitempty"`
 
-	// Id: Optional.
-	//
-	// A device-specific ID. The ID must be a unique identifier that
-	// distinguishes
+	// Id: Optional. A device-specific ID. The ID must be a unique
+	// identifier that distinguishes
 	// the device from other devices.
 	Id string `json:"id,omitempty"`
 
@@ -1711,14 +1618,10 @@ type Empty struct {
 //
 // Filter on job compensation type and amount.
 type ExtendedCompensationFilter struct {
-	// CompensationRange: Optional.
-	//
-	// Compensation range.
+	// CompensationRange: Optional. Compensation range.
 	CompensationRange *ExtendedCompensationInfoCompensationRange `json:"compensationRange,omitempty"`
 
-	// CompensationUnits: Required.
-	//
-	// Specify desired `base compensation
+	// CompensationUnits: Required. Specify desired `base compensation
 	// entry's`
 	// ExtendedCompensationInfo.CompensationUnit.
 	//
@@ -1734,22 +1637,17 @@ type ExtendedCompensationFilter struct {
 	//   "OTHER_COMPENSATION_UNIT" - Other compensation units.
 	CompensationUnits []string `json:"compensationUnits,omitempty"`
 
-	// Currency: Optional.
-	//
-	// Specify currency in 3-letter
+	// Currency: Optional. Specify currency in 3-letter
 	// [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) format.
 	// If
 	// unspecified, jobs are returned regardless of currency.
 	Currency string `json:"currency,omitempty"`
 
-	// IncludeJobWithUnspecifiedCompensationRange: Optional.
-	//
-	// Whether to include jobs whose compensation range is unspecified.
+	// IncludeJobWithUnspecifiedCompensationRange: Optional. Whether to
+	// include jobs whose compensation range is unspecified.
 	IncludeJobWithUnspecifiedCompensationRange bool `json:"includeJobWithUnspecifiedCompensationRange,omitempty"`
 
-	// Type: Required.
-	//
-	// Type of filter.
+	// Type: Required. Type of filter.
 	//
 	// Possible values:
 	//   "FILTER_TYPE_UNSPECIFIED" - Filter type unspecified. Position
@@ -1819,46 +1717,36 @@ func (s *ExtendedCompensationFilter) MarshalJSON() ([]byte, error) {
 //
 // Describes job compensation.
 type ExtendedCompensationInfo struct {
-	// AnnualizedBaseCompensationRange: Output only.
-	//
-	// Annualized base compensation range.
+	// AnnualizedBaseCompensationRange: Output only. Annualized base
+	// compensation range.
 	AnnualizedBaseCompensationRange *ExtendedCompensationInfoCompensationRange `json:"annualizedBaseCompensationRange,omitempty"`
 
-	// AnnualizedBaseCompensationUnspecified: Output only.
-	//
-	// Indicates annualized base compensation range cannot be derived, due
-	// to
+	// AnnualizedBaseCompensationUnspecified: Output only. Indicates
+	// annualized base compensation range cannot be derived, due to
 	// the job's base compensation entry cannot be annualized.
 	// See CompensationEntry for explanation on annualization and
 	// base
 	// compensation entry.
 	AnnualizedBaseCompensationUnspecified bool `json:"annualizedBaseCompensationUnspecified,omitempty"`
 
-	// AnnualizedTotalCompensationRange: Output only.
-	//
-	// Annualized total compensation range.
+	// AnnualizedTotalCompensationRange: Output only. Annualized total
+	// compensation range.
 	AnnualizedTotalCompensationRange *ExtendedCompensationInfoCompensationRange `json:"annualizedTotalCompensationRange,omitempty"`
 
-	// AnnualizedTotalCompensationUnspecified: Output only.
-	//
-	// Indicates annualized total compensation range cannot be derived, due
-	// to
+	// AnnualizedTotalCompensationUnspecified: Output only. Indicates
+	// annualized total compensation range cannot be derived, due to
 	// the job's all CompensationEntry cannot be annualized.
 	// See CompensationEntry for explanation on annualization and
 	// base
 	// compensation entry.
 	AnnualizedTotalCompensationUnspecified bool `json:"annualizedTotalCompensationUnspecified,omitempty"`
 
-	// Currency: Optional.
-	//
-	// A 3-letter [ISO
+	// Currency: Optional. A 3-letter [ISO
 	// 4217](https://www.iso.org/iso-4217-currency-codes.html)
 	// currency code.
 	Currency string `json:"currency,omitempty"`
 
-	// Entries: Optional.
-	//
-	// Job compensation information.
+	// Entries: Optional. Job compensation information.
 	//
 	// At most one entry can be of
 	// type
@@ -1905,20 +1793,14 @@ func (s *ExtendedCompensationInfo) MarshalJSON() ([]byte, error) {
 // times
 // expected_units_per_year.
 type ExtendedCompensationInfoCompensationEntry struct {
-	// Amount: Optional.
-	//
-	// Monetary amount.
+	// Amount: Optional. Monetary amount.
 	Amount *ExtendedCompensationInfoDecimal `json:"amount,omitempty"`
 
-	// Description: Optional.
-	//
-	// Compensation description.
+	// Description: Optional. Compensation description.
 	Description string `json:"description,omitempty"`
 
-	// ExpectedUnitsPerYear: Optional.
-	//
-	// Expected number of units paid each year. If not specified,
-	// when
+	// ExpectedUnitsPerYear: Optional. Expected number of units paid each
+	// year. If not specified, when
 	// Job.employment_types is FULLTIME, a default value is inferred
 	// based on unit. Default values:
 	// - HOURLY: 2080
@@ -1928,14 +1810,10 @@ type ExtendedCompensationInfoCompensationEntry struct {
 	// - ANNUAL: 1
 	ExpectedUnitsPerYear *ExtendedCompensationInfoDecimal `json:"expectedUnitsPerYear,omitempty"`
 
-	// Range: Optional.
-	//
-	// Compensation range.
+	// Range: Optional. Compensation range.
 	Range *ExtendedCompensationInfoCompensationRange `json:"range,omitempty"`
 
-	// Type: Required.
-	//
-	// Compensation type.
+	// Type: Required. Compensation type.
 	//
 	// Possible values:
 	//   "EXTENDED_COMPENSATION_TYPE_UNSPECIFIED" - Default value.
@@ -1956,9 +1834,7 @@ type ExtendedCompensationInfoCompensationEntry struct {
 	//   "OTHER_COMPENSATION_TYPE" - Other compensation type.
 	Type string `json:"type,omitempty"`
 
-	// Unit: Optional.
-	//
-	// Frequency of the specified amount.
+	// Unit: Optional. Frequency of the specified amount.
 	//
 	// Default is CompensationUnit.COMPENSATION_UNIT_UNSPECIFIED.
 	//
@@ -1974,9 +1850,8 @@ type ExtendedCompensationInfoCompensationEntry struct {
 	//   "OTHER_COMPENSATION_UNIT" - Other compensation units.
 	Unit string `json:"unit,omitempty"`
 
-	// Unspecified: Optional.
-	//
-	// Indicates compensation amount and range are unset.
+	// Unspecified: Optional. Indicates compensation amount and range are
+	// unset.
 	Unspecified bool `json:"unspecified,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Amount") to
@@ -2007,14 +1882,10 @@ func (s *ExtendedCompensationInfoCompensationEntry) MarshalJSON() ([]byte, error
 //
 // Compensation range.
 type ExtendedCompensationInfoCompensationRange struct {
-	// Max: Required.
-	//
-	// Maximum value.
+	// Max: Required. Maximum value.
 	Max *ExtendedCompensationInfoDecimal `json:"max,omitempty"`
 
-	// Min: Required.
-	//
-	// Minimum value.
+	// Min: Required. Minimum value.
 	Min *ExtendedCompensationInfoDecimal `json:"min,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Max") to
@@ -2085,10 +1956,8 @@ func (s *ExtendedCompensationInfoDecimal) MarshalJSON() ([]byte, error) {
 //
 // Filter for jobs to be deleted.
 type Filter struct {
-	// RequisitionId: Required.
-	//
-	// The requisition ID (or posting ID) assigned by the client to identify
-	// a
+	// RequisitionId: Required. The requisition ID (or posting ID) assigned
+	// by the client to identify a
 	// job. This is intended for client identification and tracking
 	// of
 	// listings.
@@ -2127,10 +1996,8 @@ func (s *Filter) MarshalJSON() ([]byte, error) {
 //
 // A request for the `GetHistogram` method.
 type GetHistogramRequest struct {
-	// AllowBroadening: Optional.
-	//
-	// Controls whether to broaden the search to avoid too few results for
-	// a
+	// AllowBroadening: Optional. Controls whether to broaden the search to
+	// avoid too few results for a
 	// given query in instances where a search has sparse results. Results
 	// from a
 	// broadened query is a superset of the results from the original
@@ -2146,10 +2013,8 @@ type GetHistogramRequest struct {
 	// Restrictions on the scope of the histogram.
 	Filters *JobFilters `json:"filters,omitempty"`
 
-	// Query: Optional.
-	//
-	// Query used to search against jobs, such as keyword, location filters,
-	// etc.
+	// Query: Optional. Query used to search against jobs, such as keyword,
+	// location filters, etc.
 	Query *JobQuery `json:"query,omitempty"`
 
 	// RequestMetadata: Meta information, such as `user_id`, collected from
@@ -2161,10 +2026,8 @@ type GetHistogramRequest struct {
 	// unique and consist.
 	RequestMetadata *RequestMetadata `json:"requestMetadata,omitempty"`
 
-	// SearchTypes: Required.
-	//
-	// A list of facets that specify the histogram data to be
-	// calculated
+	// SearchTypes: Required. A list of facets that specify the histogram
+	// data to be calculated
 	// against and returned.
 	//
 	// Histogram response times can be slow, and counts
@@ -2316,16 +2179,14 @@ func (s *GetHistogramResponse) MarshalJSON() ([]byte, error) {
 //
 // Histogram facets to be specified in SearchJobsRequest.
 type HistogramFacets struct {
-	// CompensationHistogramFacets: Optional.
-	//
-	// Specifies compensation field-based histogram requests.
+	// CompensationHistogramFacets: Optional. Specifies compensation
+	// field-based histogram requests.
 	// Duplicate values of CompensationHistogramRequest.type are not
 	// allowed.
 	CompensationHistogramFacets []*CompensationHistogramRequest `json:"compensationHistogramFacets,omitempty"`
 
-	// CustomAttributeHistogramFacets: Optional.
-	//
-	// Specifies the custom attributes histogram requests.
+	// CustomAttributeHistogramFacets: Optional. Specifies the custom
+	// attributes histogram requests.
 	// Duplicate values of CustomAttributeHistogramRequest.key are
 	// not
 	// allowed.
@@ -2646,9 +2507,7 @@ type Job struct {
 	// The maximum number of allowed characters is 2,000.
 	ApplicationUrls []string `json:"applicationUrls,omitempty"`
 
-	// Benefits: Optional.
-	//
-	// The benefits included with the job.
+	// Benefits: Optional. The benefits included with the job.
 	//
 	// Possible values:
 	//   "JOB_BENEFIT_TYPE_UNSPECIFIED" - Default value if the type is not
@@ -2684,9 +2543,8 @@ type Job struct {
 	// insurance plan.
 	Benefits []string `json:"benefits,omitempty"`
 
-	// CompanyDisplayName: Output only.
-	//
-	// The name of the company listing the job.
+	// CompanyDisplayName: Output only. The name of the company listing the
+	// job.
 	CompanyDisplayName string `json:"companyDisplayName,omitempty"`
 
 	// CompanyName: Optional but one of company_name or
@@ -2707,20 +2565,14 @@ type Job struct {
 	// The name of the company listing the job.
 	CompanyTitle string `json:"companyTitle,omitempty"`
 
-	// CompensationInfo: Optional.
-	//
-	// Job compensation information.
+	// CompensationInfo: Optional. Job compensation information.
 	CompensationInfo *CompensationInfo `json:"compensationInfo,omitempty"`
 
-	// CreateTime: Output only.
-	//
-	// The timestamp when this job was created.
+	// CreateTime: Output only. The timestamp when this job was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// CustomAttributes: Optional.
-	//
-	// A map of fields to hold both filterable and non-filterable custom
-	// job
+	// CustomAttributes: Optional. A map of fields to hold both filterable
+	// and non-filterable custom job
 	// attributes that are not covered by the provided structured
 	// fields.
 	//
@@ -2745,19 +2597,15 @@ type Job struct {
 	// is 50KB.
 	CustomAttributes map[string]CustomAttribute `json:"customAttributes,omitempty"`
 
-	// Department: Optional.
-	//
-	// The department or functional area within the company with the
-	// open
+	// Department: Optional. The department or functional area within the
+	// company with the open
 	// position.
 	//
 	// The maximum number of allowed characters is 255.
 	Department string `json:"department,omitempty"`
 
-	// Description: Required.
-	//
-	// The description of the job, which typically includes a
-	// multi-paragraph
+	// Description: Required. The description of the job, which typically
+	// includes a multi-paragraph
 	// description of the company and related information. Separate fields
 	// are
 	// provided on the job object for responsibilities,
@@ -2783,9 +2631,8 @@ type Job struct {
 	// The maximum number of allowed characters is 255.
 	DistributorCompanyId string `json:"distributorCompanyId,omitempty"`
 
-	// EducationLevels: Optional.
-	//
-	// The desired education level for the job, such as
+	// EducationLevels: Optional. The desired education level for the job,
+	// such as
 	// "Bachelors", "Masters", "Doctorate".
 	//
 	// Possible values:
@@ -2800,9 +2647,8 @@ type Job struct {
 	// position.
 	EducationLevels []string `json:"educationLevels,omitempty"`
 
-	// EmploymentTypes: Optional.
-	//
-	// The employment type(s) of a job, for example,
+	// EmploymentTypes: Optional. The employment type(s) of a job, for
+	// example,
 	// full time or
 	// part time.
 	//
@@ -2846,9 +2692,8 @@ type Job struct {
 	//   "OTHER" - The job does not fit any of the other listed types.
 	EmploymentTypes []string `json:"employmentTypes,omitempty"`
 
-	// EndDate: Optional.
-	//
-	// The end date of the job in UTC time zone. Typically this field
+	// EndDate: Optional. The end date of the job in UTC time zone.
+	// Typically this field
 	// is used for contracting engagements.
 	// Dates prior to 1970/1/1 and invalid date formats are ignored.
 	EndDate *Date `json:"endDate,omitempty"`
@@ -3007,29 +2852,25 @@ type Job struct {
 	// provided on job create or update, an error is returned.
 	FilterableCustomFields map[string]CustomField `json:"filterableCustomFields,omitempty"`
 
-	// Incentives: Optional.
-	//
-	// A description of bonus, commission, and other compensation
+	// Incentives: Optional. A description of bonus, commission, and other
+	// compensation
 	// incentives associated with the job not including salary or pay.
 	//
 	// The maximum number of allowed characters is 10,000.
 	Incentives string `json:"incentives,omitempty"`
 
-	// JobLocations: Output only.
-	//
-	// Structured locations of the job, resolved from locations.
+	// JobLocations: Output only. Structured locations of the job, resolved
+	// from locations.
 	JobLocations []*JobLocation `json:"jobLocations,omitempty"`
 
-	// JobTitle: Required.
-	//
-	// The title of the job, such as "Software Engineer"
+	// JobTitle: Required. The title of the job, such as "Software
+	// Engineer"
 	//
 	// The maximum number of allowed characters is 500.
 	JobTitle string `json:"jobTitle,omitempty"`
 
-	// LanguageCode: Optional.
-	//
-	// The language of the posting. This field is distinct from
+	// LanguageCode: Optional. The language of the posting. This field is
+	// distinct from
 	// any requirements for fluency that are associated with the
 	// job.
 	//
@@ -3047,9 +2888,8 @@ type Job struct {
 	// defaults to 'en_US'.
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// Level: Optional.
-	//
-	// The experience level associated with the job, such as "Entry Level".
+	// Level: Optional. The experience level associated with the job, such
+	// as "Entry Level".
 	//
 	// Possible values:
 	//   "JOB_LEVEL_UNSPECIFIED" - The default value if the level is not
@@ -3105,9 +2945,8 @@ type Job struct {
 	// requisition_id since this value is unique.
 	Name string `json:"name,omitempty"`
 
-	// PromotionValue: Optional.
-	//
-	// A promotion value of the job, as determined by the client.
+	// PromotionValue: Optional. A promotion value of the job, as determined
+	// by the client.
 	// The value determines the sort order of the jobs returned when
 	// searching for
 	// jobs using the featured jobs search call, with higher promotional
@@ -3120,16 +2959,13 @@ type Job struct {
 	// Default value is 0, and negative values are treated as 0.
 	PromotionValue int64 `json:"promotionValue,omitempty"`
 
-	// PublishDate: Optional.
-	//
-	// The date this job was most recently published in UTC format. The
-	// default
+	// PublishDate: Optional. The date this job was most recently published
+	// in UTC format. The default
 	// value is the time the request arrives at the server.
 	PublishDate *Date `json:"publishDate,omitempty"`
 
-	// Qualifications: Optional.
-	//
-	// A description of the qualifications required to perform the
+	// Qualifications: Optional. A description of the qualifications
+	// required to perform the
 	// job. The use of this field is recommended
 	// as an alternative to using the more general description field.
 	//
@@ -3139,15 +2975,12 @@ type Job struct {
 	// The maximum number of allowed characters is 10,000.
 	Qualifications string `json:"qualifications,omitempty"`
 
-	// ReferenceUrl: Output only.
-	//
-	// The URL of a web page that displays job details.
+	// ReferenceUrl: Output only. The URL of a web page that displays job
+	// details.
 	ReferenceUrl string `json:"referenceUrl,omitempty"`
 
-	// Region: Optional.
-	//
-	// The job Region (for example, state, country) throughout which the
-	// job
+	// Region: Optional. The job Region (for example, state, country)
+	// throughout which the job
 	// is available. If this field is set, a
 	// LocationFilter in a search query within the job region
 	// finds this job if an exact location match is not specified.
@@ -3177,10 +3010,8 @@ type Job struct {
 	// considered as having a location, but telecommuting is allowed.
 	Region string `json:"region,omitempty"`
 
-	// RequisitionId: Required.
-	//
-	// The requisition ID, also referred to as the posting ID, assigned by
-	// the
+	// RequisitionId: Required. The requisition ID, also referred to as the
+	// posting ID, assigned by the
 	// client to identify a job. This field is intended to be used by
 	// clients
 	// for client identification and tracking of listings. A job is not
@@ -3192,10 +3023,8 @@ type Job struct {
 	// The maximum number of allowed characters is 255.
 	RequisitionId string `json:"requisitionId,omitempty"`
 
-	// Responsibilities: Optional.
-	//
-	// A description of job responsibilities. The use of this field
-	// is
+	// Responsibilities: Optional. A description of job responsibilities.
+	// The use of this field is
 	// recommended as an alternative to using the more general
 	// description
 	// field.
@@ -3206,9 +3035,8 @@ type Job struct {
 	// The maximum number of allowed characters is 10,000.
 	Responsibilities string `json:"responsibilities,omitempty"`
 
-	// StartDate: Optional.
-	//
-	// The start date of the job in UTC time zone. Typically this field
+	// StartDate: Optional. The start date of the job in UTC time zone.
+	// Typically this field
 	// is used for contracting engagements.
 	// Dates prior to 1970/1/1 and invalid date formats are ignored.
 	StartDate *Date `json:"startDate,omitempty"`
@@ -3229,14 +3057,11 @@ type Job struct {
 	// The key of the map can be any valid string.
 	UnindexedCustomFields map[string]CustomField `json:"unindexedCustomFields,omitempty"`
 
-	// UpdateTime: Output only.
-	//
-	// The timestamp when this job was last updated.
+	// UpdateTime: Output only. The timestamp when this job was last
+	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// Visibility: Optional.
-	//
-	// The visibility of the job.
+	// Visibility: Optional. The visibility of the job.
 	// Defaults to JobVisibility.PRIVATE if not specified.
 	// Currently only JobVisibility.PRIVATE is supported.
 	//
@@ -3290,10 +3115,8 @@ func (s *Job) MarshalJSON() ([]byte, error) {
 //
 // The filters required to perform a search query or histogram.
 type JobFilters struct {
-	// Categories: Optional.
-	//
-	// The category filter specifies the categories of jobs to search
-	// against.
+	// Categories: Optional. The category filter specifies the categories of
+	// jobs to search against.
 	// See Category for more information.
 	//
 	// If a value is not specified, jobs from any category are searched
@@ -3362,10 +3185,8 @@ type JobFilters struct {
 	// such as Truck Driver.
 	Categories []string `json:"categories,omitempty"`
 
-	// CommuteFilter: Optional.
-	//
-	//  Allows filtering jobs by commute time with different travel methods
-	// (e.g.
+	// CommuteFilter: Optional. Allows filtering jobs by commute time with
+	// different travel methods (e.g.
 	//  driving or public transit). Note: this only works with COMMUTE
 	//  MODE. When specified, [JobFilters.location_filters] will be
 	//  ignored.
@@ -3373,10 +3194,8 @@ type JobFilters struct {
 	//  Currently we do not support sorting by commute time.
 	CommuteFilter *CommutePreference `json:"commuteFilter,omitempty"`
 
-	// CompanyNames: Optional.
-	//
-	// The company names filter specifies the company entities to
-	// search
+	// CompanyNames: Optional. The company names filter specifies the
+	// company entities to search
 	// against.
 	//
 	// If a value is not specified, jobs are searched for against all
@@ -3389,9 +3208,8 @@ type JobFilters struct {
 	// At most 20 company filters are allowed.
 	CompanyNames []string `json:"companyNames,omitempty"`
 
-	// CompanyTitles: Optional.
-	//
-	// This filter specifies the exact company titles
+	// CompanyTitles: Optional. This filter specifies the exact company
+	// titles
 	// of jobs to search against.
 	//
 	// If a value is not specified, jobs within the search results can
@@ -3405,9 +3223,8 @@ type JobFilters struct {
 	// At most 20 company title filters are allowed.
 	CompanyTitles []string `json:"companyTitles,omitempty"`
 
-	// CompensationFilter: Optional.
-	//
-	// This search filter is applied only to
+	// CompensationFilter: Optional. This search filter is applied only
+	// to
 	// Job.compensation_info. For example, if the filter is specified
 	// as "Hourly job with per-hour compensation > $15", only jobs that
 	// meet
@@ -3416,10 +3233,8 @@ type JobFilters struct {
 	// are searched.
 	CompensationFilter *CompensationFilter `json:"compensationFilter,omitempty"`
 
-	// CustomAttributeFilter: Optional.
-	//
-	// This filter specifies a structured syntax to match against
-	// the
+	// CustomAttributeFilter: Optional. This filter specifies a structured
+	// syntax to match against the
 	// Job.custom_attributes that are marked as `filterable`.
 	//
 	// The syntax for this expression is a subset of Google SQL
@@ -3465,19 +3280,16 @@ type JobFilters struct {
 	// custom_attribute_filter, an error is thrown.
 	CustomFieldFilters map[string]CustomFieldFilter `json:"customFieldFilters,omitempty"`
 
-	// DisableSpellCheck: Optional.
-	//
-	// This flag controls the spell-check feature. If false, the
+	// DisableSpellCheck: Optional. This flag controls the spell-check
+	// feature. If false, the
 	// service attempts to correct a misspelled query,
 	// for example, "enginee" is corrected to "engineer".
 	//
 	// Defaults to false: a spell check is performed.
 	DisableSpellCheck bool `json:"disableSpellCheck,omitempty"`
 
-	// EmploymentTypes: Optional.
-	//
-	// The employment type filter specifies the employment type of jobs
-	// to
+	// EmploymentTypes: Optional. The employment type filter specifies the
+	// employment type of jobs to
 	// search against, such as EmploymentType.FULL_TIME.
 	//
 	// If a value is not specified, jobs in the search results include
@@ -3543,9 +3355,8 @@ type JobFilters struct {
 	// are searched.
 	ExtendedCompensationFilter *ExtendedCompensationFilter `json:"extendedCompensationFilter,omitempty"`
 
-	// LanguageCodes: Optional.
-	//
-	// This filter specifies the locale of jobs to search against,
+	// LanguageCodes: Optional. This filter specifies the locale of jobs to
+	// search against,
 	// for example, "en-US".
 	//
 	// If a value is not specified, the search results may contain jobs in
@@ -3562,10 +3373,8 @@ type JobFilters struct {
 	// At most 10 language code filters are allowed.
 	LanguageCodes []string `json:"languageCodes,omitempty"`
 
-	// LocationFilters: Optional.
-	//
-	// The location filter specifies geo-regions containing the jobs
-	// to
+	// LocationFilters: Optional. The location filter specifies geo-regions
+	// containing the jobs to
 	// search against. See LocationFilter for more information.
 	//
 	// If a location value is not specified, jobs are retrieved
@@ -3582,10 +3391,8 @@ type JobFilters struct {
 	// At most 5 location filters are allowed.
 	LocationFilters []*LocationFilter `json:"locationFilters,omitempty"`
 
-	// PublishDateRange: Optional.
-	//
-	// Jobs published within a range specified by this filter are
-	// searched
+	// PublishDateRange: Optional. Jobs published within a range specified
+	// by this filter are searched
 	// against, for example, DateRange.PAST_MONTH. If a value is
 	// not
 	// specified, all open jobs are searched against regardless of the
@@ -3601,10 +3408,8 @@ type JobFilters struct {
 	//   "PAST_3_DAYS" - The past 3 days
 	PublishDateRange string `json:"publishDateRange,omitempty"`
 
-	// Query: Optional.
-	//
-	// The query filter contains the keywords that match against the
-	// job
+	// Query: Optional. The query filter contains the keywords that match
+	// against the job
 	// title, description, and location fields.
 	//
 	// The maximum query size is 255 bytes/characters.
@@ -3744,15 +3549,13 @@ func (s *JobLocation) UnmarshalJSON(data []byte) error {
 //
 // Options for job processing.
 type JobProcessingOptions struct {
-	// DisableStreetAddressResolution: Optional.
-	//
-	// If set to `true`, the service does not attempt to resolve a
+	// DisableStreetAddressResolution: Optional. If set to `true`, the
+	// service does not attempt to resolve a
 	// more precise address for the job.
 	DisableStreetAddressResolution bool `json:"disableStreetAddressResolution,omitempty"`
 
-	// HtmlSanitization: Optional.
-	//
-	// Option for job HTML content sanitization. Applied fields are:
+	// HtmlSanitization: Optional. Option for job HTML content sanitization.
+	// Applied fields are:
 	//
 	// * description
 	// * applicationInstruction
@@ -3802,10 +3605,8 @@ func (s *JobProcessingOptions) MarshalJSON() ([]byte, error) {
 //
 // The query required to perform a search query or histogram.
 type JobQuery struct {
-	// Categories: Optional.
-	//
-	// The category filter specifies the categories of jobs to search
-	// against.
+	// Categories: Optional. The category filter specifies the categories of
+	// jobs to search against.
 	// See Category for more information.
 	//
 	// If a value is not specified, jobs from any category are searched
@@ -3874,10 +3675,8 @@ type JobQuery struct {
 	// such as Truck Driver.
 	Categories []string `json:"categories,omitempty"`
 
-	// CommuteFilter: Optional.
-	//
-	//  Allows filtering jobs by commute time with different travel methods
-	// (for
+	// CommuteFilter: Optional. Allows filtering jobs by commute time with
+	// different travel methods (for
 	//  example, driving or public transit). Note: This only works with
 	// COMMUTE
 	//  MODE. When specified, [JobQuery.location_filters] is
@@ -3886,9 +3685,8 @@ type JobQuery struct {
 	//  Currently we don't support sorting by commute time.
 	CommuteFilter *CommutePreference `json:"commuteFilter,omitempty"`
 
-	// CompanyDisplayNames: Optional.
-	//
-	// This filter specifies the exact company display
+	// CompanyDisplayNames: Optional. This filter specifies the exact
+	// company display
 	// name of the jobs to search against.
 	//
 	// If a value isn't specified, jobs within the search results
@@ -3902,9 +3700,8 @@ type JobQuery struct {
 	// At most 20 company display name filters are allowed.
 	CompanyDisplayNames []string `json:"companyDisplayNames,omitempty"`
 
-	// CompanyNames: Optional.
-	//
-	// This filter specifies the company entities to search against.
+	// CompanyNames: Optional. This filter specifies the company entities to
+	// search against.
 	//
 	// If a value isn't specified, jobs are searched for against
 	// all
@@ -3917,9 +3714,8 @@ type JobQuery struct {
 	// At most 20 company filters are allowed.
 	CompanyNames []string `json:"companyNames,omitempty"`
 
-	// CompensationFilter: Optional.
-	//
-	// This search filter is applied only to
+	// CompensationFilter: Optional. This search filter is applied only
+	// to
 	// Job.compensation_info. For example, if the filter is specified
 	// as "Hourly job with per-hour compensation > $15", only jobs
 	// meeting
@@ -3928,10 +3724,8 @@ type JobQuery struct {
 	// are searched.
 	CompensationFilter *CompensationFilter `json:"compensationFilter,omitempty"`
 
-	// CustomAttributeFilter: Optional.
-	//
-	// This filter specifies a structured syntax to match against
-	// the
+	// CustomAttributeFilter: Optional. This filter specifies a structured
+	// syntax to match against the
 	// Job.custom_attributes marked as `filterable`.
 	//
 	// The syntax for this expression is a subset of Google SQL
@@ -3961,19 +3755,16 @@ type JobQuery struct {
 	// 100
 	CustomAttributeFilter string `json:"customAttributeFilter,omitempty"`
 
-	// DisableSpellCheck: Optional.
-	//
-	// This flag controls the spell-check feature. If false, the
+	// DisableSpellCheck: Optional. This flag controls the spell-check
+	// feature. If false, the
 	// service attempts to correct a misspelled query,
 	// for example, "enginee" is corrected to "engineer".
 	//
 	// Defaults to false: a spell check is performed.
 	DisableSpellCheck bool `json:"disableSpellCheck,omitempty"`
 
-	// EmploymentTypes: Optional.
-	//
-	// The employment type filter specifies the employment type of jobs
-	// to
+	// EmploymentTypes: Optional. The employment type filter specifies the
+	// employment type of jobs to
 	// search against, such as EmploymentType.FULL_TIME.
 	//
 	// If a value is not specified, jobs in the search results include
@@ -4024,9 +3815,8 @@ type JobQuery struct {
 	//   "OTHER" - The job does not fit any of the other listed types.
 	EmploymentTypes []string `json:"employmentTypes,omitempty"`
 
-	// LanguageCodes: Optional.
-	//
-	// This filter specifies the locale of jobs to search against,
+	// LanguageCodes: Optional. This filter specifies the locale of jobs to
+	// search against,
 	// for example, "en-US".
 	//
 	// If a value isn't specified, the search results can contain jobs in
@@ -4043,10 +3833,8 @@ type JobQuery struct {
 	// At most 10 language code filters are allowed.
 	LanguageCodes []string `json:"languageCodes,omitempty"`
 
-	// LocationFilters: Optional.
-	//
-	// The location filter specifies geo-regions containing the jobs
-	// to
+	// LocationFilters: Optional. The location filter specifies geo-regions
+	// containing the jobs to
 	// search against. See LocationFilter for more information.
 	//
 	// If a location value isn't specified, jobs fitting the other
@@ -4064,10 +3852,8 @@ type JobQuery struct {
 	// At most 5 location filters are allowed.
 	LocationFilters []*LocationFilter `json:"locationFilters,omitempty"`
 
-	// PublishDateRange: Optional.
-	//
-	// Jobs published within a range specified by this filter are
-	// searched
+	// PublishDateRange: Optional. Jobs published within a range specified
+	// by this filter are searched
 	// against, for example, DateRange.PAST_MONTH. If a value
 	// isn't
 	// specified, all open jobs are searched against regardless of
@@ -4084,10 +3870,8 @@ type JobQuery struct {
 	//   "PAST_3_DAYS" - The past 3 days
 	PublishDateRange string `json:"publishDateRange,omitempty"`
 
-	// Query: Optional.
-	//
-	// The query string that matches against the job title, description,
-	// and
+	// Query: Optional. The query string that matches against the job title,
+	// description, and
 	// location fields.
 	//
 	// The maximum query size is 255 bytes.
@@ -4319,19 +4103,15 @@ func (s *ListJobsResponse) MarshalJSON() ([]byte, error) {
 //
 // Geographic region of the search.
 type LocationFilter struct {
-	// DistanceInMiles: Optional.
-	//
-	//
-	// The distance_in_miles is applied when the location being searched for
-	// is
+	// DistanceInMiles: Optional. The distance_in_miles is applied when the
+	// location being searched for is
 	// identified as a city or smaller. When the location being searched for
 	// is a
 	// state or larger, this field is ignored.
 	DistanceInMiles float64 `json:"distanceInMiles,omitempty"`
 
-	// IsTelecommute: Optional.
-	//
-	// Allows the client to return jobs without a
+	// IsTelecommute: Optional. Allows the client to return jobs without
+	// a
 	// set location, specifically, telecommuting jobs (telecomuting is
 	// considered
 	// by the service as a special location.
@@ -4350,22 +4130,17 @@ type LocationFilter struct {
 	// treated as less relevant than other jobs in the search response.
 	IsTelecommute bool `json:"isTelecommute,omitempty"`
 
-	// LatLng: Optional.
-	//
-	// The latitude and longitude of the geographic center from which
-	// to
+	// LatLng: Optional. The latitude and longitude of the geographic center
+	// from which to
 	// search. This field is ignored if `location_name` is provided.
 	LatLng *LatLng `json:"latLng,omitempty"`
 
-	// Name: Optional.
-	//
-	// The address name, such as "Mountain View" or "Bay Area".
+	// Name: Optional. The address name, such as "Mountain View" or "Bay
+	// Area".
 	Name string `json:"name,omitempty"`
 
-	// RegionCode: Optional.
-	//
-	// CLDR region code of the country/region of the address. This will be
-	// used
+	// RegionCode: Optional. CLDR region code of the country/region of the
+	// address. This will be used
 	// to address ambiguity of the user-input location, e.g.
 	// "Liverpool"
 	// against "Liverpool, NY, US" or "Liverpool, UK".
@@ -4523,10 +4298,8 @@ func (s *Money) MarshalJSON() ([]byte, error) {
 // Use this field to specify bucketing option for the histogram search
 // response.
 type NumericBucketingOption struct {
-	// BucketBounds: Required.
-	//
-	// Two adjacent values form a histogram bucket. Values should be
-	// in
+	// BucketBounds: Required. Two adjacent values form a histogram bucket.
+	// Values should be in
 	// ascending order. For example, if [5, 10, 15] are provided, four
 	// buckets are
 	// created: (-inf, 5), 5, 10), [10, 15), [15, inf). At most
@@ -4534,9 +4307,8 @@ type NumericBucketingOption struct {
 	// [buckets_bound is supported.
 	BucketBounds []float64 `json:"bucketBounds,omitempty"`
 
-	// RequiresMinMax: Optional.
-	//
-	// If set to true, the histogram result includes minimum/maximum
+	// RequiresMinMax: Optional. If set to true, the histogram result
+	// includes minimum/maximum
 	// value of the numeric field.
 	RequiresMinMax bool `json:"requiresMinMax,omitempty"`
 
@@ -4636,7 +4408,7 @@ func (s *NumericBucketingResult) UnmarshalJSON(data []byte) error {
 //
 // Advice on address input / editing:
 //  - Use an i18n-ready address widget such as
-//    https://github.com/googlei18n/libaddressinput)
+//    https://github.com/google/libaddressinput)
 // - Users should not be presented with UI elements for input or editing
 // of
 //   fields outside countries where that field is used.
@@ -4806,17 +4578,13 @@ func (s *PostalAddress) MarshalJSON() ([]byte, error) {
 // the
 // performance of the service.
 type RequestMetadata struct {
-	// DeviceInfo: Optional.
-	//
-	// The type of device used by the job seeker at the time of the call to
-	// the
+	// DeviceInfo: Optional. The type of device used by the job seeker at
+	// the time of the call to the
 	// service.
 	DeviceInfo *DeviceInfo `json:"deviceInfo,omitempty"`
 
-	// Domain: Required.
-	//
-	// The client-defined scope or source of the service call, which
-	// typically
+	// Domain: Required. The client-defined scope or source of the service
+	// call, which typically
 	// is the domain on
 	// which the service has been implemented and is currently being
 	// run.
@@ -4836,10 +4604,8 @@ type RequestMetadata struct {
 	// this field being set correctly to some domain.
 	Domain string `json:"domain,omitempty"`
 
-	// SessionId: Required.
-	//
-	// A unique session identification string. A session is defined as
-	// the
+	// SessionId: Required. A unique session identification string. A
+	// session is defined as the
 	// duration of an end user's interaction with the service over a
 	// period.
 	// Obfuscate this field for privacy concerns before
@@ -4852,10 +4618,8 @@ type RequestMetadata struct {
 	// rely on this field being set correctly to some unique session_id.
 	SessionId string `json:"sessionId,omitempty"`
 
-	// UserId: Required.
-	//
-	// A unique user identification string, as determined by the client.
-	// The
+	// UserId: Required. A unique user identification string, as determined
+	// by the client. The
 	// client is responsible for ensuring client-level uniqueness of this
 	// value
 	// in order to have the strongest positive impact on search
@@ -4961,10 +4725,8 @@ func (s *ResponseMetadata) MarshalJSON() ([]byte, error) {
 //
 // The Request body of the `SearchJobs` call.
 type SearchJobsRequest struct {
-	// DisableRelevanceThresholding: Optional.
-	//
-	// Controls whether to disable relevance thresholding.
-	// Relevance
+	// DisableRelevanceThresholding: Optional. Controls whether to disable
+	// relevance thresholding. Relevance
 	// thresholding removes jobs that have low relevance in search
 	// results,
 	// for example, removing "Assistant to the CEO" positions from the
@@ -4978,10 +4740,8 @@ type SearchJobsRequest struct {
 	// Defaults to false.
 	DisableRelevanceThresholding bool `json:"disableRelevanceThresholding,omitempty"`
 
-	// EnableBroadening: Optional.
-	//
-	// Controls whether to broaden the search when it produces sparse
-	// results.
+	// EnableBroadening: Optional. Controls whether to broaden the search
+	// when it produces sparse results.
 	// Broadened queries append results to the end of the matching
 	// results
 	// list.
@@ -4989,10 +4749,8 @@ type SearchJobsRequest struct {
 	// Defaults to false.
 	EnableBroadening bool `json:"enableBroadening,omitempty"`
 
-	// EnablePreciseResultSize: Optional.
-	//
-	// Controls if the search job request requires the return of a
-	// precise
+	// EnablePreciseResultSize: Optional. Controls if the search job request
+	// requires the return of a precise
 	// count of the first 300 results. Setting this to `true`
 	// ensures
 	// consistency in the number of results per page. Best practice is to
@@ -5014,16 +4772,13 @@ type SearchJobsRequest struct {
 	// by location.
 	Filters *JobFilters `json:"filters,omitempty"`
 
-	// HistogramFacets: Optional.
-	//
-	// Restrictions on what fields to perform histogram on, such
-	// as
+	// HistogramFacets: Optional. Restrictions on what fields to perform
+	// histogram on, such as
 	// `COMPANY_SIZE` etc.
 	HistogramFacets *HistogramFacets `json:"histogramFacets,omitempty"`
 
-	// JobView: Optional.
-	//
-	// The number of job attributes returned for jobs in the
+	// JobView: Optional. The number of job attributes returned for jobs in
+	// the
 	// search response. Defaults to JobView.SMALL if no value is specified.
 	//
 	// Possible values:
@@ -5056,9 +4811,7 @@ type SearchJobsRequest struct {
 	// MatchingJob.job_summary fields.
 	JobView string `json:"jobView,omitempty"`
 
-	// Mode: Required.
-	//
-	// Mode of a search.
+	// Mode: Required. Mode of a search.
 	//
 	// Possible values:
 	//   "SEARCH_MODE_UNSPECIFIED" - The mode of the search method isn't
@@ -5080,10 +4833,8 @@ type SearchJobsRequest struct {
 	// The job search matches against jobs suited to email notifications.
 	Mode string `json:"mode,omitempty"`
 
-	// Offset: Optional.
-	//
-	// An integer that specifies the current offset (that is, starting
-	// result
+	// Offset: Optional. An integer that specifies the current offset (that
+	// is, starting result
 	// location, amongst the jobs deemed by the API as relevant) in
 	// search
 	// results. This field is only considered if page_token is unset.
@@ -5138,40 +4889,32 @@ type SearchJobsRequest struct {
 	// the end of search result.
 	OrderBy string `json:"orderBy,omitempty"`
 
-	// PageSize: Optional.
-	//
-	// A limit on the number of jobs returned in the search
-	// results.
+	// PageSize: Optional. A limit on the number of jobs returned in the
+	// search results.
 	// Increasing this value above the default value of 10 can increase
 	// search
 	// response time. The value can be between 1 and 100.
 	PageSize int64 `json:"pageSize,omitempty"`
 
-	// PageToken: Optional.
-	//
-	// The token specifying the current offset within
+	// PageToken: Optional. The token specifying the current offset
+	// within
 	// search results. See SearchJobsResponse.next_page_token for
 	// an explanation of how to obtain the next set of query results.
 	PageToken string `json:"pageToken,omitempty"`
 
-	// Query: Optional.
-	//
-	// Query used to search against jobs, such as keyword, location filters,
-	// etc.
+	// Query: Optional. Query used to search against jobs, such as keyword,
+	// location filters, etc.
 	Query *JobQuery `json:"query,omitempty"`
 
-	// RequestMetadata: Required.
-	//
-	// The meta information collected about the job searcher, used to
-	// improve the
+	// RequestMetadata: Required. The meta information collected about the
+	// job searcher, used to improve the
 	// search quality of the service. The identifiers, (such as `user_id`)
 	// are
 	// provided by users, and must be unique and consistent.
 	RequestMetadata *RequestMetadata `json:"requestMetadata,omitempty"`
 
-	// SortBy: Optional.
-	//
-	// The criteria determining how search results are sorted.
+	// SortBy: Optional. The criteria determining how search results are
+	// sorted.
 	// Defaults to SortBy.RELEVANCE_DESC if no value is specified.
 	//
 	// Possible values:
@@ -5398,9 +5141,7 @@ func (s *SpellingCorrection) MarshalJSON() ([]byte, error) {
 
 // StringValues: Represents array of string values.
 type StringValues struct {
-	// Values: Required.
-	//
-	// String values.
+	// Values: Required. String values.
 	Values []string `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
@@ -5441,14 +5182,10 @@ type UpdateJobRequest struct {
 	// address for the job.
 	DisableStreetAddressResolution bool `json:"disableStreetAddressResolution,omitempty"`
 
-	// Job: Required.
-	//
-	// The Job to be updated.
+	// Job: Required. The Job to be updated.
 	Job *Job `json:"job,omitempty"`
 
-	// ProcessingOptions: Optional.
-	//
-	// Options for job
+	// ProcessingOptions: Optional. Options for job
 	// processing.
 	//
 	// UpdateJobRequest.disable_street_address_resolution is ignored if
@@ -5756,7 +5493,7 @@ func (c *CompaniesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required.\n\nThe resource name of the company to be deleted,\nsuch as, \"companies/0000aaaa-1111-bbbb-2222-cccc3333dddd\".",
+	//       "description": "Required. The resource name of the company to be deleted,\nsuch as, \"companies/0000aaaa-1111-bbbb-2222-cccc3333dddd\".",
 	//       "location": "path",
 	//       "pattern": "^companies/[^/]+$",
 	//       "required": true,
@@ -5900,7 +5637,7 @@ func (c *CompaniesGetCall) Do(opts ...googleapi.CallOption) (*Company, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required.\n\nResource name of the company to retrieve,\nsuch as \"companies/0000aaaa-1111-bbbb-2222-cccc3333dddd\".",
+	//       "description": "Required. Resource name of the company to retrieve,\nsuch as \"companies/0000aaaa-1111-bbbb-2222-cccc3333dddd\".",
 	//       "location": "path",
 	//       "pattern": "^companies/[^/]+$",
 	//       "required": true,
@@ -6065,18 +5802,18 @@ func (c *CompaniesListCall) Do(opts ...googleapi.CallOption) (*ListCompaniesResp
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "mustHaveOpenJobs": {
-	//       "description": "Optional.\n\nSet to true if the companies request must have open jobs.\n\nDefaults to false.\n\nIf true, at most page_size of companies are fetched, among which\nonly those with open jobs are returned.",
+	//       "description": "Optional. Set to true if the companies request must have open jobs.\n\nDefaults to false.\n\nIf true, at most page_size of companies are fetched, among which\nonly those with open jobs are returned.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional.\n\nThe maximum number of companies to be returned, at most 100.\nDefault is 100 if a non-positive number is provided.",
+	//       "description": "Optional. The maximum number of companies to be returned, at most 100.\nDefault is 100 if a non-positive number is provided.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional.\n\nThe starting indicator from which to return results.",
+	//       "description": "Optional. The starting indicator from which to return results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6478,14 +6215,14 @@ func (c *CompaniesJobsListCall) Do(opts ...googleapi.CallOption) (*ListCompanyJo
 	//   ],
 	//   "parameters": {
 	//     "companyName": {
-	//       "description": "Required.\n\nThe resource name of the company that owns the jobs to be listed,\nsuch as, \"companies/0000aaaa-1111-bbbb-2222-cccc3333dddd\".",
+	//       "description": "Required. The resource name of the company that owns the jobs to be listed,\nsuch as, \"companies/0000aaaa-1111-bbbb-2222-cccc3333dddd\".",
 	//       "location": "path",
 	//       "pattern": "^companies/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "idsOnly": {
-	//       "description": "Optional.\n\nIf set to `true`, only job ID, job requisition ID and language code will be\nreturned.\n\nA typical use is to synchronize job repositories.\n\nDefaults to false.",
+	//       "description": "Optional. If set to `true`, only job ID, job requisition ID and language code will be\nreturned.\n\nA typical use is to synchronize job repositories.\n\nDefaults to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -6495,18 +6232,18 @@ func (c *CompaniesJobsListCall) Do(opts ...googleapi.CallOption) (*ListCompanyJo
 	//       "type": "boolean"
 	//     },
 	//     "jobRequisitionId": {
-	//       "description": "Optional.\n\nThe requisition ID, also known as posting ID, assigned by the company\nto the job.\n\nThe maximum number of allowable characters is 225.",
+	//       "description": "Optional. The requisition ID, also known as posting ID, assigned by the company\nto the job.\n\nThe maximum number of allowable characters is 225.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional.\n\nThe maximum number of jobs to be returned per page of results.\n\nIf ids_only is set to true, the maximum allowed page size\nis 1000. Otherwise, the maximum allowed page size is 100.\n\nDefault is 100 if empty or a number \u003c 1 is specified.",
+	//       "description": "Optional. The maximum number of jobs to be returned per page of results.\n\nIf ids_only is set to true, the maximum allowed page size\nis 1000. Otherwise, the maximum allowed page size is 100.\n\nDefault is 100 if empty or a number \u003c 1 is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional.\n\nThe starting point of a query result.",
+	//       "description": "Optional. The starting point of a query result.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6933,7 +6670,7 @@ func (c *JobsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Required.\n\nThe resource name of the job to be deleted, such as \"jobs/11111111\".",
+	//       "description": "Required. The resource name of the job to be deleted, such as \"jobs/11111111\".",
 	//       "location": "path",
 	//       "pattern": "^jobs/[^/]+$",
 	//       "required": true,
@@ -7210,7 +6947,7 @@ func (c *JobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required.\n\nThe resource name of the job to retrieve, such as \"jobs/11111111\".",
+	//       "description": "Required. The resource name of the job to retrieve, such as \"jobs/11111111\".",
 	//       "location": "path",
 	//       "pattern": "^jobs/[^/]+$",
 	//       "required": true,
@@ -7386,9 +7123,8 @@ func (r *JobsService) List() *JobsListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": Required.
-//
-// The filter string specifies the jobs to be enumerated.
+// Filter sets the optional parameter "filter": Required. The filter
+// string specifies the jobs to be enumerated.
 //
 // Supported operator: =, AND
 //
@@ -7539,23 +7275,23 @@ func (c *JobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsResponse, erro
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Required.\n\nThe filter string specifies the jobs to be enumerated.\n\nSupported operator: =, AND\n\nThe fields eligible for filtering are:\n\n* `companyName` (Required)\n* `requisitionId` (Optional)\n\nSample Query:\n\n* companyName = \"companies/123\"\n* companyName = \"companies/123\" AND requisitionId = \"req-1\"",
+	//       "description": "Required. The filter string specifies the jobs to be enumerated.\n\nSupported operator: =, AND\n\nThe fields eligible for filtering are:\n\n* `companyName` (Required)\n* `requisitionId` (Optional)\n\nSample Query:\n\n* companyName = \"companies/123\"\n* companyName = \"companies/123\" AND requisitionId = \"req-1\"",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "idsOnly": {
-	//       "description": "Optional.\n\nIf set to `true`, only Job.name, Job.requisition_id and\nJob.language_code will be returned.\n\nA typical use case is to synchronize job repositories.\n\nDefaults to false.",
+	//       "description": "Optional. If set to `true`, only Job.name, Job.requisition_id and\nJob.language_code will be returned.\n\nA typical use case is to synchronize job repositories.\n\nDefaults to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional.\n\nThe maximum number of jobs to be returned per page of results.\n\nIf ids_only is set to true, the maximum allowed page size\nis 1000. Otherwise, the maximum allowed page size is 100.\n\nDefault is 100 if empty or a number \u003c 1 is specified.",
+	//       "description": "Optional. The maximum number of jobs to be returned per page of results.\n\nIf ids_only is set to true, the maximum allowed page size\nis 1000. Otherwise, the maximum allowed page size is 100.\n\nDefault is 100 if empty or a number \u003c 1 is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional.\n\nThe starting point of a query result.",
+	//       "description": "Optional. The starting point of a query result.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -8073,9 +7809,7 @@ func (c *V2CompleteCall) CompanyName(companyName string) *V2CompleteCall {
 	return c
 }
 
-// LanguageCode sets the optional parameter "languageCode":
-// Required.
-//
+// LanguageCode sets the optional parameter "languageCode": Required.
 // The language of the query. This is
 // the BCP-47 language code, such as "en-US" or "sr-Latn".
 // For more information, see
@@ -8100,19 +7834,16 @@ func (c *V2CompleteCall) LanguageCode(languageCode string) *V2CompleteCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize":
-// Required.
-//
-// Completion result count.
+// PageSize sets the optional parameter "pageSize": Required. Completion
+// result count.
 // The maximum allowed page size is 10.
 func (c *V2CompleteCall) PageSize(pageSize int64) *V2CompleteCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// Query sets the optional parameter "query": Required.
-//
-// The query used to generate suggestions.
+// Query sets the optional parameter "query": Required. The query used
+// to generate suggestions.
 func (c *V2CompleteCall) Query(query string) *V2CompleteCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -8245,28 +7976,28 @@ func (c *V2CompleteCall) Do(opts ...googleapi.CallOption) (*CompleteQueryRespons
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "companyName": {
-	//       "description": "Optional.\n\nIf provided, restricts completion to the specified company.",
+	//       "description": "Optional. If provided, restricts completion to the specified company.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Required.\n\nThe language of the query. This is\nthe BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47).\n\nFor CompletionType.JOB_TITLE type, only open jobs with same\nlanguage_code are returned.\n\nFor CompletionType.COMPANY_NAME type,\nonly companies having open jobs with same language_code are\nreturned.\n\nFor CompletionType.COMBINED type, only open jobs with same\nlanguage_code or companies having open jobs with same\nlanguage_code are returned.",
+	//       "description": "Required. The language of the query. This is\nthe BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47).\n\nFor CompletionType.JOB_TITLE type, only open jobs with same\nlanguage_code are returned.\n\nFor CompletionType.COMPANY_NAME type,\nonly companies having open jobs with same language_code are\nreturned.\n\nFor CompletionType.COMBINED type, only open jobs with same\nlanguage_code or companies having open jobs with same\nlanguage_code are returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Required.\n\nCompletion result count.\nThe maximum allowed page size is 10.",
+	//       "description": "Required. Completion result count.\nThe maximum allowed page size is 10.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "query": {
-	//       "description": "Required.\n\nThe query used to generate suggestions.",
+	//       "description": "Required. The query used to generate suggestions.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "scope": {
-	//       "description": "Optional.\n\nThe scope of the completion. The defaults is CompletionScope.PUBLIC.",
+	//       "description": "Optional. The scope of the completion. The defaults is CompletionScope.PUBLIC.",
 	//       "enum": [
 	//         "COMPLETION_SCOPE_UNSPECIFIED",
 	//         "TENANT",
@@ -8276,7 +8007,7 @@ func (c *V2CompleteCall) Do(opts ...googleapi.CallOption) (*CompleteQueryRespons
 	//       "type": "string"
 	//     },
 	//     "type": {
-	//       "description": "Optional.\n\nThe completion topic. The default is CompletionType.COMBINED.",
+	//       "description": "Optional. The completion topic. The default is CompletionType.COMBINED.",
 	//       "enum": [
 	//         "COMPLETION_TYPE_UNSPECIFIED",
 	//         "JOB_TITLE",

@@ -27,7 +27,7 @@
     }
   },
   "basePath": "/bigquery/v2/",
-  "baseUrl": "https://bigquery.googleapis.com/bigquery/v2/",
+  "baseUrl": "https://www.googleapis.com/bigquery/v2/",
   "batchPath": "batch/bigquery/v2",
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
@@ -1394,8 +1394,8 @@
       }
     }
   },
-  "revision": "20190630",
-  "rootUrl": "https://bigquery.googleapis.com/",
+  "revision": "20190712",
+  "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
       "description": "Aggregate metrics for classification/classifier models. For multi-class\nmodels, the metrics are either macro-averaged or micro-averaged. When\nmacro-averaged, the metrics are calculated for each label and then an\nunweighted average is taken of those values. When micro-averaged, the\nmetric is calculated globally by counting the total number of correctly\npredicted rows.",
@@ -3154,6 +3154,13 @@
           "description": "[Output-only] Describes execution plan for the query.",
           "items": {
             "$ref": "ExplainQueryStage"
+          },
+          "type": "array"
+        },
+        "referencedRoutines": {
+          "description": "[Output-only] Referenced routines (persistent user-defined functions and stored procedures) for the job.",
+          "items": {
+            "$ref": "RoutineReference"
           },
           "type": "array"
         },

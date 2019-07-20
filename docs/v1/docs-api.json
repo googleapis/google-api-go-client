@@ -209,7 +209,7 @@
       }
     }
   },
-  "revision": "20190627",
+  "revision": "20190711",
   "rootUrl": "https://docs.googleapis.com/",
   "schemas": {
     "AutoText": {
@@ -2571,6 +2571,10 @@
           "$ref": "UpdateParagraphStyleRequest",
           "description": "Updates the paragraph style at the specified range."
         },
+        "updateTableCellStyle": {
+          "$ref": "UpdateTableCellStyleRequest",
+          "description": "Updates the style of table cells."
+        },
         "updateTableColumnProperties": {
           "$ref": "UpdateTableColumnPropertiesRequest",
           "description": "Updates the properties of columns in a table."
@@ -3343,6 +3347,27 @@
       },
       "type": "object"
     },
+    "TableRange": {
+      "description": "A table range represents a reference to a subset of a table.\n\nIt's important to note that the cells specified by a table range do not\nnecessarily form a rectangle. For example, let's say we have a 3 x 3 table\nwhere all the cells of the last row are merged together. The table looks\nlike this:\n\n              \n     [             ]\n\nA table range with table cell location = (table_start_location, row = 0,\ncolumn = 0), row span = 3 and column span = 2 specifies the following cells:\n\n      x     x \n     [ x    x    x ]",
+      "id": "TableRange",
+      "properties": {
+        "columnSpan": {
+          "description": "The column span of the table range.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "rowSpan": {
+          "description": "The row span of the table range.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "tableCellLocation": {
+          "$ref": "TableCellLocation",
+          "description": "The cell location where the table range starts."
+        }
+      },
+      "type": "object"
+    },
     "TableRow": {
       "description": "The contents and style of a row in a Table.",
       "id": "TableRow",
@@ -3594,6 +3619,30 @@
         "range": {
           "$ref": "Range",
           "description": "The range overlapping the paragraphs to style."
+        }
+      },
+      "type": "object"
+    },
+    "UpdateTableCellStyleRequest": {
+      "description": "Updates the style of a range of table cells.",
+      "id": "UpdateTableCellStyleRequest",
+      "properties": {
+        "fields": {
+          "description": "The fields that should be updated.\n\nAt least one field must be specified. The root `tableCellStyle` is implied\nand should not be specified. A single `\"*\"` can be used as short-hand for\nlisting every field.\n\nFor example to update the table cell background color, set `fields` to\n`\"backgroundColor\"`.\n\nTo reset a property to its default value, include its field name in the\nfield mask but leave the field itself unset.",
+          "format": "google-fieldmask",
+          "type": "string"
+        },
+        "tableCellStyle": {
+          "$ref": "TableCellStyle",
+          "description": "The style to set on the table cells.\n\nWhen updating borders, if a cell shares a border with an adjacent cell, the\ncorresponding border property of the adjacent cell is updated as well.\nBorders that are merged and invisible are not updated.\n\nSince updating a border shared by adjacent cells in the same request can\ncause conflicting border updates, border updates are applied in the\nfollowing order:\n\n- `border_right`\n- `border_left`\n- `border_bottom`\n- `border_top`"
+        },
+        "tableRange": {
+          "$ref": "TableRange",
+          "description": "The table range representing the subset of the table to which the updates\nare applied."
+        },
+        "tableStartLocation": {
+          "$ref": "Location",
+          "description": "The location where the table starts in the document. When specified, the\nupdates are applied to all the cells in the table."
         }
       },
       "type": "object"

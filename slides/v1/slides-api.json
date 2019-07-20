@@ -303,7 +303,7 @@
       }
     }
   },
-  "revision": "20190702",
+  "revision": "20190718",
   "rootUrl": "https://slides.googleapis.com/",
   "schemas": {
     "AffineTransform": {
@@ -2130,7 +2130,7 @@
       "properties": {
         "colorScheme": {
           "$ref": "ColorScheme",
-          "description": "The color scheme of the page. If unset, the color scheme is inherited from\na parent page. If the page has no parent, the color scheme uses a default\nSlides color scheme, matching the defaults in the Slides editor.\n\nOnly the concrete colors of the first 12 ThemeColorTypes are editable. In addition, only\nthe color scheme on Master\npages can be updated. To update the field, a color scheme containing\nmappings from all the first 12 ThemeColorTypes to their concrete colors\nmust be provided. Colors for the remaining ThemeColorTypes will be ignored."
+          "description": "The color scheme of the page. If unset, the color scheme is inherited from\na parent page. If the page has no parent, the color scheme uses a default\nSlides color scheme, matching the defaults in the Slides editor.\n\nOnly the concrete colors of the first 12 ThemeColorTypes are editable. In addition, only\nthe color scheme on `Master` pages can be updated. To update the field, a\ncolor scheme containing mappings from all the first 12 ThemeColorTypes to\ntheir concrete colors must be provided. Colors for the remaining\nThemeColorTypes will be ignored."
         },
         "pageBackgroundFill": {
           "$ref": "PageBackgroundFill",

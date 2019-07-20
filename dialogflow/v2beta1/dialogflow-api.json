@@ -2489,7 +2489,7 @@
       }
     }
   },
-  "revision": "20190708",
+  "revision": "20190717",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse": {
@@ -3595,6 +3595,44 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2beta1AnnotatedConversationDataset": {
+      "description": "Represents an annotated conversation dataset.\nConversationDataset can have multiple AnnotatedConversationDataset, each of\nthem represents one result from one annotation task.\nAnnotatedConversationDataset can only be generated from annotation task,\nwhich will be triggered by LabelConversation.",
+      "id": "GoogleCloudDialogflowV2beta1AnnotatedConversationDataset",
+      "properties": {
+        "completedExampleCount": {
+          "description": "Output only. Number of examples that have annotations in the annotated\nconversation dataset.",
+          "format": "int64",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Output only. Creation time of this annotated conversation dataset.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "description": {
+          "description": "Optional. The description of the annotated conversation dataset.\nMaximum of 10000 bytes.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Required. The display name of the annotated conversation dataset.\nIt's specified when user starts an annotation task. Maximum of 64 bytes.",
+          "type": "string"
+        },
+        "exampleCount": {
+          "description": "Output only. Number of examples in the annotated conversation dataset.",
+          "format": "int64",
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. AnnotatedConversationDataset resource name. Format:\n`projects/\u003cProject ID\u003e/conversationDatasets/\u003cConversation Dataset\nID\u003e/annotatedConversationDatasets/\u003cAnnotated Conversation Dataset ID\u003e`",
+          "type": "string"
+        },
+        "questionTypeName": {
+          "description": "Output only. Question type name that identifies a labeling task.\nA question is a single task that a worker answers. A question type is set\nof related questions. Each question belongs to a particular question type.\nIt can be used in CrowdCompute UI to filter and manage labeling tasks.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2beta1ArticleSuggestionModelMetadata": {
       "description": "Metadata for article suggestion models.",
       "id": "GoogleCloudDialogflowV2beta1ArticleSuggestionModelMetadata",
@@ -3832,10 +3870,6 @@
         "name": {
           "description": "Output only. ConversationModel resource name. Format:\n`projects/\u003cProject ID\u003e/conversationModels/\u003cConversation Model ID\u003e`",
           "type": "string"
-        },
-        "smartReplyModelMetadata": {
-          "$ref": "GoogleCloudDialogflowV2beta1SmartReplyModelMetadata",
-          "description": "Metadata for smart reply models."
         },
         "state": {
           "description": "Output only. State of the model. A model can only serve prediction requests\nafter it gets deployed.",
@@ -5261,6 +5295,17 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2beta1LabelConversationResponse": {
+      "description": "The response for\nConversationDatasets.LabelConversation",
+      "id": "GoogleCloudDialogflowV2beta1LabelConversationResponse",
+      "properties": {
+        "annotatedConversationDataset": {
+          "$ref": "GoogleCloudDialogflowV2beta1AnnotatedConversationDataset",
+          "description": "New annotated conversation dataset created by the labeling task."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2beta1ListContextsResponse": {
       "description": "The response message for Contexts.ListContexts.",
       "id": "GoogleCloudDialogflowV2beta1ListContextsResponse",
@@ -5695,12 +5740,6 @@
           "type": "string"
         }
       },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1SmartReplyModelMetadata": {
-      "description": "Metadata for smart reply models.",
-      "id": "GoogleCloudDialogflowV2beta1SmartReplyModelMetadata",
-      "properties": {},
       "type": "object"
     },
     "GoogleCloudDialogflowV2beta1SynthesizeSpeechConfig": {

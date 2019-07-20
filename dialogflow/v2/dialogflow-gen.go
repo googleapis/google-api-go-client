@@ -3871,6 +3871,83 @@ func (s *GoogleCloudDialogflowV2WebhookResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1AnnotatedConversationDataset: Represents
+// an annotated conversation dataset.
+// ConversationDataset can have multiple AnnotatedConversationDataset,
+// each of
+// them represents one result from one annotation
+// task.
+// AnnotatedConversationDataset can only be generated from annotation
+// task,
+// which will be triggered by LabelConversation.
+type GoogleCloudDialogflowV2beta1AnnotatedConversationDataset struct {
+	// CompletedExampleCount: Output only. Number of examples that have
+	// annotations in the annotated
+	// conversation dataset.
+	CompletedExampleCount int64 `json:"completedExampleCount,omitempty,string"`
+
+	// CreateTime: Output only. Creation time of this annotated conversation
+	// dataset.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Optional. The description of the annotated conversation
+	// dataset.
+	// Maximum of 10000 bytes.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Required. The display name of the annotated conversation
+	// dataset.
+	// It's specified when user starts an annotation task. Maximum of 64
+	// bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ExampleCount: Output only. Number of examples in the annotated
+	// conversation dataset.
+	ExampleCount int64 `json:"exampleCount,omitempty,string"`
+
+	// Name: Output only. AnnotatedConversationDataset resource name.
+	// Format:
+	// `projects/<Project ID>/conversationDatasets/<Conversation
+	// Dataset
+	// ID>/annotatedConversationDatasets/<Annotated Conversation Dataset
+	// ID>`
+	Name string `json:"name,omitempty"`
+
+	// QuestionTypeName: Output only. Question type name that identifies a
+	// labeling task.
+	// A question is a single task that a worker answers. A question type is
+	// set
+	// of related questions. Each question belongs to a particular question
+	// type.
+	// It can be used in CrowdCompute UI to filter and manage labeling
+	// tasks.
+	QuestionTypeName string `json:"questionTypeName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CompletedExampleCount") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CompletedExampleCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1AnnotatedConversationDataset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1AnnotatedConversationDataset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1ArticleSuggestionModelMetadata: Metadata
 // for article suggestion models.
 type GoogleCloudDialogflowV2beta1ArticleSuggestionModelMetadata struct {
@@ -4043,9 +4120,6 @@ type GoogleCloudDialogflowV2beta1ConversationModel struct {
 	// Format:
 	// `projects/<Project ID>/conversationModels/<Conversation Model ID>`
 	Name string `json:"name,omitempty"`
-
-	// SmartReplyModelMetadata: Metadata for smart reply models.
-	SmartReplyModelMetadata *GoogleCloudDialogflowV2beta1SmartReplyModelMetadata `json:"smartReplyModelMetadata,omitempty"`
 
 	// State: Output only. State of the model. A model can only serve
 	// prediction requests
@@ -6386,6 +6460,39 @@ func (s *GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata) MarshalJSON() (
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1LabelConversationResponse: The response
+// for
+// ConversationDatasets.LabelConversation
+type GoogleCloudDialogflowV2beta1LabelConversationResponse struct {
+	// AnnotatedConversationDataset: New annotated conversation dataset
+	// created by the labeling task.
+	AnnotatedConversationDataset *GoogleCloudDialogflowV2beta1AnnotatedConversationDataset `json:"annotatedConversationDataset,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AnnotatedConversationDataset") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AnnotatedConversationDataset") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1LabelConversationResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1LabelConversationResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1OriginalDetectIntentRequest: Represents
 // the contents of the original request that was passed to
 // the `[Streaming]DetectIntent` call.
@@ -6691,11 +6798,6 @@ func (s *GoogleCloudDialogflowV2beta1SentimentAnalysisResult) MarshalJSON() ([]b
 	type NoMethod GoogleCloudDialogflowV2beta1SentimentAnalysisResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowV2beta1SmartReplyModelMetadata: Metadata for
-// smart reply models.
-type GoogleCloudDialogflowV2beta1SmartReplyModelMetadata struct {
 }
 
 // GoogleCloudDialogflowV2beta1WebhookRequest: The request message for a

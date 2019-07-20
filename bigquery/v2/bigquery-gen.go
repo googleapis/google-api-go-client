@@ -78,7 +78,7 @@ var _ = context.Canceled
 const apiId = "bigquery:v2"
 const apiName = "bigquery"
 const apiVersion = "v2"
-const basePath = "https://bigquery.googleapis.com/bigquery/v2/"
+const basePath = "https://www.googleapis.com/bigquery/v2/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -3171,6 +3171,10 @@ type JobStatistics2 struct {
 
 	// QueryPlan: [Output-only] Describes execution plan for the query.
 	QueryPlan []*ExplainQueryStage `json:"queryPlan,omitempty"`
+
+	// ReferencedRoutines: [Output-only] Referenced routines (persistent
+	// user-defined functions and stored procedures) for the job.
+	ReferencedRoutines []*RoutineReference `json:"referencedRoutines,omitempty"`
 
 	// ReferencedTables: [Output-only] Referenced tables for the job.
 	// Queries that reference more than 50 tables will not have a complete

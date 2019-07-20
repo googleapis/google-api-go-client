@@ -3634,6 +3634,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "translate:v3beta1",
+      "name": "translate",
+      "version": "v3beta1",
+      "title": "Cloud Translation API",
+      "description": "Integrates text translation into your website or application.",
+      "discoveryRestUrl": "https://translation.googleapis.com/$discovery/rest?version=v3beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/translate/docs/quickstarts",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "urlshortener:v1",
       "name": "urlshortener",
       "version": "v1",

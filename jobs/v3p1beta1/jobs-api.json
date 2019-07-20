@@ -119,7 +119,7 @@
           ],
           "parameters": {
             "companyName": {
-              "description": "Optional.\n\nIf provided, restricts completion to specified company.\n\nThe format is \"projects/{project_id}/companies/{company_id}\", for example,\n\"projects/api-test-project/companies/foo\".",
+              "description": "Optional. If provided, restricts completion to specified company.\n\nThe format is \"projects/{project_id}/companies/{company_id}\", for example,\n\"projects/api-test-project/companies/foo\".",
               "location": "query",
               "type": "string"
             },
@@ -129,31 +129,31 @@
               "type": "string"
             },
             "languageCodes": {
-              "description": "Optional.\n\nThe list of languages of the query. This is\nthe BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47).\n\nFor CompletionType.JOB_TITLE type, only open jobs with the same\nlanguage_codes are returned.\n\nFor CompletionType.COMPANY_NAME type,\nonly companies having open jobs with the same language_codes are\nreturned.\n\nFor CompletionType.COMBINED type, only open jobs with the same\nlanguage_codes or companies having open jobs with the same\nlanguage_codes are returned.\n\nThe maximum number of allowed characters is 255.",
+              "description": "Optional. The list of languages of the query. This is\nthe BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47).\n\nFor CompletionType.JOB_TITLE type, only open jobs with the same\nlanguage_codes are returned.\n\nFor CompletionType.COMPANY_NAME type,\nonly companies having open jobs with the same language_codes are\nreturned.\n\nFor CompletionType.COMBINED type, only open jobs with the same\nlanguage_codes or companies having open jobs with the same\nlanguage_codes are returned.\n\nThe maximum number of allowed characters is 255.",
               "location": "query",
               "repeated": true,
               "type": "string"
             },
             "name": {
-              "description": "Required.\n\nResource name of project the completion is performed within.\n\nThe format is \"projects/{project_id}\", for example,\n\"projects/api-test-project\".",
+              "description": "Required. Resource name of project the completion is performed within.\n\nThe format is \"projects/{project_id}\", for example,\n\"projects/api-test-project\".",
               "location": "path",
               "pattern": "^projects/[^/]+$",
               "required": true,
               "type": "string"
             },
             "pageSize": {
-              "description": "Required.\n\nCompletion result count.\n\nThe maximum allowed page size is 10.",
+              "description": "Required. Completion result count.\n\nThe maximum allowed page size is 10.",
               "format": "int32",
               "location": "query",
               "type": "integer"
             },
             "query": {
-              "description": "Required.\n\nThe query used to generate suggestions.\n\nThe maximum number of allowed characters is 255.",
+              "description": "Required. The query used to generate suggestions.\n\nThe maximum number of allowed characters is 255.",
               "location": "query",
               "type": "string"
             },
             "scope": {
-              "description": "Optional.\n\nThe scope of the completion. The defaults is CompletionScope.PUBLIC.",
+              "description": "Optional. The scope of the completion. The defaults is CompletionScope.PUBLIC.",
               "enum": [
                 "COMPLETION_SCOPE_UNSPECIFIED",
                 "TENANT",
@@ -163,7 +163,7 @@
               "type": "string"
             },
             "type": {
-              "description": "Optional.\n\nThe completion topic. The default is CompletionType.COMBINED.",
+              "description": "Optional. The completion topic. The default is CompletionType.COMBINED.",
               "enum": [
                 "COMPLETION_TYPE_UNSPECIFIED",
                 "JOB_TITLE",
@@ -230,7 +230,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required.\n\nResource name of the project under which the company is created.\n\nThe format is \"projects/{project_id}\", for example,\n\"projects/api-test-project\".",
+                  "description": "Required. Resource name of the project under which the company is created.\n\nThe format is \"projects/{project_id}\", for example,\n\"projects/api-test-project\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -259,7 +259,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required.\n\nThe resource name of the company to be deleted.\n\nThe format is \"projects/{project_id}/companies/{company_id}\", for example,\n\"projects/api-test-project/companies/foo\".",
+                  "description": "Required. The resource name of the company to be deleted.\n\nThe format is \"projects/{project_id}/companies/{company_id}\", for example,\n\"projects/api-test-project/companies/foo\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+/companies/[^/]+$",
                   "required": true,
@@ -285,7 +285,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required.\n\nThe resource name of the company to be retrieved.\n\nThe format is \"projects/{project_id}/companies/{company_id}\", for example,\n\"projects/api-test-project/companies/foo\".",
+                  "description": "Required. The resource name of the company to be retrieved.\n\nThe format is \"projects/{project_id}/companies/{company_id}\", for example,\n\"projects/api-test-project/companies/foo\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+/companies/[^/]+$",
                   "required": true,
@@ -311,25 +311,25 @@
               ],
               "parameters": {
                 "pageSize": {
-                  "description": "Optional.\n\nThe maximum number of companies to be returned, at most 100.\nDefault is 100 if a non-positive number is provided.",
+                  "description": "Optional. The maximum number of companies to be returned, at most 100.\nDefault is 100 if a non-positive number is provided.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "Optional.\n\nThe starting indicator from which to return results.",
+                  "description": "Optional. The starting indicator from which to return results.",
                   "location": "query",
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required.\n\nResource name of the project under which the company is created.\n\nThe format is \"projects/{project_id}\", for example,\n\"projects/api-test-project\".",
+                  "description": "Required. Resource name of the project under which the company is created.\n\nThe format is \"projects/{project_id}\", for example,\n\"projects/api-test-project\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
                   "type": "string"
                 },
                 "requireOpenJobs": {
-                  "description": "Optional.\n\nSet to true if the companies requested must have open jobs.\n\nDefaults to false.\n\nIf true, at most page_size of companies are fetched, among which\nonly those with open jobs are returned.",
+                  "description": "Optional. Set to true if the companies requested must have open jobs.\n\nDefaults to false.\n\nIf true, at most page_size of companies are fetched, among which\nonly those with open jobs are returned.",
                   "location": "query",
                   "type": "boolean"
                 }
@@ -386,7 +386,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required.\n\nThe resource name of the project under which the job is created.\n\nThe format is \"projects/{project_id}\", for example,\n\"projects/api-test-project\".",
+                  "description": "Required. The resource name of the project under which the job is created.\n\nThe format is \"projects/{project_id}\", for example,\n\"projects/api-test-project\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -415,7 +415,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required.\n\nThe resource name of the project under which the job is created.\n\nThe format is \"projects/{project_id}\", for example,\n\"projects/api-test-project\".",
+                  "description": "Required. The resource name of the project under which the job is created.\n\nThe format is \"projects/{project_id}\", for example,\n\"projects/api-test-project\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -444,7 +444,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required.\n\nThe resource name of the job to be deleted.\n\nThe format is \"projects/{project_id}/jobs/{job_id}\",\nfor example, \"projects/api-test-project/jobs/1234\".",
+                  "description": "Required. The resource name of the job to be deleted.\n\nThe format is \"projects/{project_id}/jobs/{job_id}\",\nfor example, \"projects/api-test-project/jobs/1234\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+/jobs/[^/]+$",
                   "required": true,
@@ -470,7 +470,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required.\n\nThe resource name of the job to retrieve.\n\nThe format is \"projects/{project_id}/jobs/{job_id}\",\nfor example, \"projects/api-test-project/jobs/1234\".",
+                  "description": "Required. The resource name of the job to retrieve.\n\nThe format is \"projects/{project_id}/jobs/{job_id}\",\nfor example, \"projects/api-test-project/jobs/1234\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+/jobs/[^/]+$",
                   "required": true,
@@ -496,12 +496,12 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "Required.\n\nThe filter string specifies the jobs to be enumerated.\n\nSupported operator: =, AND\n\nThe fields eligible for filtering are:\n\n* `companyName` (Required)\n* `requisitionId` (Optional)\n\nSample Query:\n\n* companyName = \"projects/api-test-project/companies/123\"\n* companyName = \"projects/api-test-project/companies/123\" AND requisitionId\n= \"req-1\"",
+                  "description": "Required. The filter string specifies the jobs to be enumerated.\n\nSupported operator: =, AND\n\nThe fields eligible for filtering are:\n\n* `companyName` (Required)\n* `requisitionId` (Optional)\n\nSample Query:\n\n* companyName = \"projects/api-test-project/companies/123\"\n* companyName = \"projects/api-test-project/companies/123\" AND requisitionId\n= \"req-1\"",
                   "location": "query",
                   "type": "string"
                 },
                 "jobView": {
-                  "description": "Optional.\n\nThe desired job attributes returned for jobs in the\nsearch response. Defaults to JobView.JOB_VIEW_FULL if no value is\nspecified.",
+                  "description": "Optional. The desired job attributes returned for jobs in the\nsearch response. Defaults to JobView.JOB_VIEW_FULL if no value is\nspecified.",
                   "enum": [
                     "JOB_VIEW_UNSPECIFIED",
                     "JOB_VIEW_ID_ONLY",
@@ -513,18 +513,18 @@
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "Optional.\n\nThe maximum number of jobs to be returned per page of results.\n\nIf job_view is set to JobView.JOB_VIEW_ID_ONLY, the maximum allowed\npage size is 1000. Otherwise, the maximum allowed page size is 100.\n\nDefault is 100 if empty or a number \u003c 1 is specified.",
+                  "description": "Optional. The maximum number of jobs to be returned per page of results.\n\nIf job_view is set to JobView.JOB_VIEW_ID_ONLY, the maximum allowed\npage size is 1000. Otherwise, the maximum allowed page size is 100.\n\nDefault is 100 if empty or a number \u003c 1 is specified.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "Optional.\n\nThe starting point of a query result.",
+                  "description": "Optional. The starting point of a query result.",
                   "location": "query",
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required.\n\nThe resource name of the project under which the job is created.\n\nThe format is \"projects/{project_id}\", for example,\n\"projects/api-test-project\".",
+                  "description": "Required. The resource name of the project under which the job is created.\n\nThe format is \"projects/{project_id}\", for example,\n\"projects/api-test-project\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -579,7 +579,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required.\n\nThe resource name of the project to search within.\n\nThe format is \"projects/{project_id}\", for example,\n\"projects/api-test-project\".",
+                  "description": "Required. The resource name of the project to search within.\n\nThe format is \"projects/{project_id}\", for example,\n\"projects/api-test-project\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -608,7 +608,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required.\n\nThe resource name of the project to search within.\n\nThe format is \"projects/{project_id}\", for example,\n\"projects/api-test-project\".",
+                  "description": "Required. The resource name of the project to search within.\n\nThe format is \"projects/{project_id}\", for example,\n\"projects/api-test-project\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -662,7 +662,7 @@
       }
     }
   },
-  "revision": "20190701",
+  "revision": "20190712",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {
@@ -695,7 +695,7 @@
       "id": "BatchDeleteJobsRequest",
       "properties": {
         "filter": {
-          "description": "Required.\n\nThe filter string specifies the jobs to be deleted.\n\nSupported operator: =, AND\n\nThe fields eligible for filtering are:\n\n* `companyName` (Required)\n* `requisitionId` (Required)\n\nSample Query: companyName = \"projects/api-test-project/companies/123\" AND\nrequisitionId = \"req-1\"",
+          "description": "Required. The filter string specifies the jobs to be deleted.\n\nSupported operator: =, AND\n\nThe fields eligible for filtering are:\n\n* `companyName` (Required)\n* `requisitionId` (Required)\n\nSample Query: companyName = \"projects/api-test-project/companies/123\" AND\nrequisitionId = \"req-1\"",
           "type": "string"
         }
       },
@@ -739,19 +739,19 @@
       "id": "ClientEvent",
       "properties": {
         "createTime": {
-          "description": "Required.\n\nThe timestamp of the event.",
+          "description": "Required. The timestamp of the event.",
           "format": "google-datetime",
           "type": "string"
         },
         "eventId": {
-          "description": "Required.\n\nA unique identifier, generated by the client application. This `event_id`\nis used to establish the relationship between different events\n(see parent_event_id).",
+          "description": "Required. A unique identifier, generated by the client application. This `event_id`\nis used to establish the relationship between different events\n(see parent_event_id).",
           "type": "string"
         },
         "extraInfo": {
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional.\n\nExtra information about this event. Used for storing information with no\nmatching field in event payload, for example, user application specific\ncontext or details.\n\nAt most 20 keys are supported. The maximum total size of all keys and\nvalues is 2 KB.",
+          "description": "Optional. Extra information about this event. Used for storing information with no\nmatching field in event payload, for example, user application specific\ncontext or details.\n\nAt most 20 keys are supported. The maximum total size of all keys and\nvalues is 2 KB.",
           "type": "object"
         },
         "jobEvent": {
@@ -759,11 +759,11 @@
           "description": "A event issued when a job seeker interacts with the application that\nimplements Cloud Talent Solution."
         },
         "parentEventId": {
-          "description": "Optional.\n\nThe event_id of an event that resulted in the current event. For example, a\nJob view event usually follows a parent\nimpression event: A job seeker first does a\nsearch where a list of jobs appears\n(impression). The job seeker then selects a\nresult and views the description of a particular job (Job\nview).",
+          "description": "Optional. The event_id of an event that resulted in the current event. For example, a\nJob view event usually follows a parent\nimpression event: A job seeker first does a\nsearch where a list of jobs appears\n(impression). The job seeker then selects a\nresult and views the description of a particular job (Job\nview).",
           "type": "string"
         },
         "requestId": {
-          "description": "Required.\n\nA unique ID generated in the API responses. It can be found in\nResponseMetadata.request_id.",
+          "description": "Required. A unique ID generated in the API responses. It can be found in\nResponseMetadata.request_id.",
           "type": "string"
         }
       },
@@ -774,11 +774,11 @@
       "id": "CommuteFilter",
       "properties": {
         "allowImpreciseAddresses": {
-          "description": "Optional.\nIf true, jobs without \"precise\" addresses (street level addresses or GPS\ncoordinates) might also be returned. For city and coarser level addresses,\ntext matching is used. If this field is set to false or is not specified,\nonly jobs that include precise addresses are returned by Commute\nSearch.\n\nNote: If `allow_imprecise_addresses` is set to true, Commute Search is not\nable to calculate accurate commute times to jobs with city level and\ncoarser address information. Jobs with imprecise addresses will return a\n`travel_duration` time of 0 regardless of distance from the job seeker.",
+          "description": "Optional. If true, jobs without \"precise\" addresses (street level addresses or GPS\ncoordinates) might also be returned. For city and coarser level addresses,\ntext matching is used. If this field is set to false or is not specified,\nonly jobs that include precise addresses are returned by Commute\nSearch.\n\nNote: If `allow_imprecise_addresses` is set to true, Commute Search is not\nable to calculate accurate commute times to jobs with city level and\ncoarser address information. Jobs with imprecise addresses will return a\n`travel_duration` time of 0 regardless of distance from the job seeker.",
           "type": "boolean"
         },
         "commuteMethod": {
-          "description": "Required.\n\nThe method of transportation for which to calculate the commute time.",
+          "description": "Required. The method of transportation for which to calculate the commute time.",
           "enum": [
             "COMMUTE_METHOD_UNSPECIFIED",
             "DRIVING",
@@ -797,10 +797,10 @@
         },
         "departureTime": {
           "$ref": "TimeOfDay",
-          "description": "Optional.\n\nThe departure time used to calculate traffic impact, represented as\ngoogle.type.TimeOfDay in local time zone.\n\nCurrently traffic model is restricted to hour level resolution."
+          "description": "Optional. The departure time used to calculate traffic impact, represented as\ngoogle.type.TimeOfDay in local time zone.\n\nCurrently traffic model is restricted to hour level resolution."
         },
         "roadTraffic": {
-          "description": "Optional.\n\nSpecifies the traffic density to use when calculating commute time.",
+          "description": "Optional. Specifies the traffic density to use when calculating commute time.",
           "enum": [
             "ROAD_TRAFFIC_UNSPECIFIED",
             "TRAFFIC_FREE",
@@ -815,10 +815,10 @@
         },
         "startCoordinates": {
           "$ref": "LatLng",
-          "description": "Required.\n\nThe latitude and longitude of the location from which to calculate the\ncommute time."
+          "description": "Required. The latitude and longitude of the location from which to calculate the\ncommute time."
         },
         "travelDuration": {
-          "description": "Required.\n\nThe maximum travel time in seconds. The maximum allowed value is `3600s`\n(one hour). Format is `123s`.",
+          "description": "Required. The maximum travel time in seconds. The maximum allowed value is `3600s`\n(one hour). Format is `123s`.",
           "format": "google-duration",
           "type": "string"
         }
@@ -846,7 +846,7 @@
       "id": "Company",
       "properties": {
         "careerSiteUri": {
-          "description": "Optional.\n\nThe URI to employer's career site or careers page on the employer's web\nsite, for example, \"https://careers.google.com\".",
+          "description": "Optional. The URI to employer's career site or careers page on the employer's web\nsite, for example, \"https://careers.google.com\".",
           "type": "string"
         },
         "derivedInfo": {
@@ -854,31 +854,31 @@
           "description": "Output only. Derived details about the company."
         },
         "displayName": {
-          "description": "Required.\n\nThe display name of the company, for example, \"Google, LLC\".",
+          "description": "Required. The display name of the company, for example, \"Google LLC\".",
           "type": "string"
         },
         "eeoText": {
-          "description": "Optional.\n\nEqual Employment Opportunity legal disclaimer text to be\nassociated with all jobs, and typically to be displayed in all\nroles.\n\nThe maximum number of allowed characters is 500.",
+          "description": "Optional. Equal Employment Opportunity legal disclaimer text to be\nassociated with all jobs, and typically to be displayed in all\nroles.\n\nThe maximum number of allowed characters is 500.",
           "type": "string"
         },
         "externalId": {
-          "description": "Required.\n\nClient side company identifier, used to uniquely identify the\ncompany.\n\nThe maximum number of allowed characters is 255.",
+          "description": "Required. Client side company identifier, used to uniquely identify the\ncompany.\n\nThe maximum number of allowed characters is 255.",
           "type": "string"
         },
         "headquartersAddress": {
-          "description": "Optional.\n\nThe street address of the company's main headquarters, which may be\ndifferent from the job location. The service attempts\nto geolocate the provided address, and populates a more specific\nlocation wherever possible in DerivedInfo.headquarters_location.",
+          "description": "Optional. The street address of the company's main headquarters, which may be\ndifferent from the job location. The service attempts\nto geolocate the provided address, and populates a more specific\nlocation wherever possible in DerivedInfo.headquarters_location.",
           "type": "string"
         },
         "hiringAgency": {
-          "description": "Optional.\n\nSet to true if it is the hiring agency that post jobs for other\nemployers.\n\nDefaults to false if not provided.",
+          "description": "Optional. Set to true if it is the hiring agency that post jobs for other\nemployers.\n\nDefaults to false if not provided.",
           "type": "boolean"
         },
         "imageUri": {
-          "description": "Optional.\n\nA URI that hosts the employer's company logo.",
+          "description": "Optional. A URI that hosts the employer's company logo.",
           "type": "string"
         },
         "keywordSearchableJobCustomAttributes": {
-          "description": "Optional.\n\nA list of keys of filterable Job.custom_attributes, whose\ncorresponding `string_values` are used in keyword search. Jobs with\n`string_values` under these specified field keys are returned if any\nof the values matches the search keyword. Custom field values with\nparenthesis, brackets and special symbols won't be properly searchable,\nand those keyword queries need to be surrounded by quotes.",
+          "description": "Optional. A list of keys of filterable Job.custom_attributes, whose\ncorresponding `string_values` are used in keyword search. Jobs with\n`string_values` under these specified field keys are returned if any\nof the values matches the search keyword. Custom field values with\nparenthesis, brackets and special symbols won't be properly searchable,\nand those keyword queries need to be surrounded by quotes.",
           "items": {
             "type": "string"
           },
@@ -889,7 +889,7 @@
           "type": "string"
         },
         "size": {
-          "description": "Optional.\n\nThe employer's company size.",
+          "description": "Optional. The employer's company size.",
           "enum": [
             "COMPANY_SIZE_UNSPECIFIED",
             "MINI",
@@ -917,7 +917,7 @@
           "type": "boolean"
         },
         "websiteUri": {
-          "description": "Optional.\n\nThe URI representing the company's primary web site or home page,\nfor example, \"https://www.google.com\".\n\nThe maximum number of allowed characters is 255.",
+          "description": "Optional. The URI representing the company's primary web site or home page,\nfor example, \"https://www.google.com\".\n\nThe maximum number of allowed characters is 255.",
           "type": "string"
         }
       },
@@ -940,23 +940,23 @@
       "properties": {
         "amount": {
           "$ref": "Money",
-          "description": "Optional.\n\nCompensation amount."
+          "description": "Optional. Compensation amount."
         },
         "description": {
-          "description": "Optional.\n\nCompensation description.  For example, could\nindicate equity terms or provide additional context to an estimated\nbonus.",
+          "description": "Optional. Compensation description.  For example, could\nindicate equity terms or provide additional context to an estimated\nbonus.",
           "type": "string"
         },
         "expectedUnitsPerYear": {
-          "description": "Optional.\n\nExpected number of units paid each year. If not specified, when\nJob.employment_types is FULLTIME, a default value is inferred\nbased on unit. Default values:\n- HOURLY: 2080\n- DAILY: 260\n- WEEKLY: 52\n- MONTHLY: 12\n- ANNUAL: 1",
+          "description": "Optional. Expected number of units paid each year. If not specified, when\nJob.employment_types is FULLTIME, a default value is inferred\nbased on unit. Default values:\n- HOURLY: 2080\n- DAILY: 260\n- WEEKLY: 52\n- MONTHLY: 12\n- ANNUAL: 1",
           "format": "double",
           "type": "number"
         },
         "range": {
           "$ref": "CompensationRange",
-          "description": "Optional.\n\nCompensation range."
+          "description": "Optional. Compensation range."
         },
         "type": {
-          "description": "Optional.\n\nCompensation type.\n\nDefault is CompensationUnit.COMPENSATION_TYPE_UNSPECIFIED.",
+          "description": "Optional. Compensation type.\n\nDefault is CompensationUnit.COMPENSATION_TYPE_UNSPECIFIED.",
           "enum": [
             "COMPENSATION_TYPE_UNSPECIFIED",
             "BASE",
@@ -982,7 +982,7 @@
           "type": "string"
         },
         "unit": {
-          "description": "Optional.\n\nFrequency of the specified amount.\n\nDefault is CompensationUnit.COMPENSATION_UNIT_UNSPECIFIED.",
+          "description": "Optional. Frequency of the specified amount.\n\nDefault is CompensationUnit.COMPENSATION_UNIT_UNSPECIFIED.",
           "enum": [
             "COMPENSATION_UNIT_UNSPECIFIED",
             "HOURLY",
@@ -1013,15 +1013,15 @@
       "id": "CompensationFilter",
       "properties": {
         "includeJobsWithUnspecifiedCompensationRange": {
-          "description": "Optional.\n\nIf set to true, jobs with unspecified compensation range fields are\nincluded.",
+          "description": "Optional. If set to true, jobs with unspecified compensation range fields are\nincluded.",
           "type": "boolean"
         },
         "range": {
           "$ref": "CompensationRange",
-          "description": "Optional.\n\nCompensation range."
+          "description": "Optional. Compensation range."
         },
         "type": {
-          "description": "Required.\n\nType of filter.",
+          "description": "Required. Type of filter.",
           "enum": [
             "FILTER_TYPE_UNSPECIFIED",
             "UNIT_ONLY",
@@ -1039,7 +1039,7 @@
           "type": "string"
         },
         "units": {
-          "description": "Required.\n\nSpecify desired `base compensation entry's`\nCompensationInfo.CompensationUnit.",
+          "description": "Required. Specify desired `base compensation entry's`\nCompensationInfo.CompensationUnit.",
           "enumDescriptions": [
             "Default value.",
             "Hourly.",
@@ -1074,10 +1074,10 @@
       "properties": {
         "bucketingOption": {
           "$ref": "NumericBucketingOption",
-          "description": "Required.\n\nNumeric histogram options, like buckets, whether include min or max value."
+          "description": "Required. Numeric histogram options, like buckets, whether include min or max value."
         },
         "type": {
-          "description": "Required.\n\nType of the request, representing which field the histogramming should be\nperformed over. A single request can only specify one histogram of each\n`CompensationHistogramRequestType`.",
+          "description": "Required. Type of the request, representing which field the histogramming should be\nperformed over. A single request can only specify one histogram of each\n`CompensationHistogramRequestType`.",
           "enum": [
             "COMPENSATION_HISTOGRAM_REQUEST_TYPE_UNSPECIFIED",
             "BASE",
@@ -1135,7 +1135,7 @@
           "description": "Output only. Annualized total compensation range. Computed as\nall compensation entries' CompensationEntry.compensation times\nCompensationEntry.expected_units_per_year.\n\nSee CompensationEntry for explanation on compensation annualization."
         },
         "entries": {
-          "description": "Optional.\n\nJob compensation information.\n\nAt most one entry can be of type\nCompensationInfo.CompensationType.BASE, which is\nreferred as ** base compensation entry ** for the job.",
+          "description": "Optional. Job compensation information.\n\nAt most one entry can be of type\nCompensationInfo.CompensationType.BASE, which is\nreferred as ** base compensation entry ** for the job.",
           "items": {
             "$ref": "CompensationEntry"
           },
@@ -1150,11 +1150,11 @@
       "properties": {
         "maxCompensation": {
           "$ref": "Money",
-          "description": "Optional.\n\nThe maximum amount of compensation. If left empty, the value is set\nto a maximal compensation value and the currency code is set to\nmatch the currency code of\nmin_compensation."
+          "description": "Optional. The maximum amount of compensation. If left empty, the value is set\nto a maximal compensation value and the currency code is set to\nmatch the currency code of\nmin_compensation."
         },
         "minCompensation": {
           "$ref": "Money",
-          "description": "Optional.\n\nThe minimum amount of compensation. If left empty, the value is set\nto zero and the currency code is set to match the\ncurrency code of max_compensation."
+          "description": "Optional. The minimum amount of compensation. If left empty, the value is set\nto zero and the currency code is set to match the\ncurrency code of max_compensation."
         }
       },
       "type": "object"
@@ -1214,7 +1214,7 @@
       "properties": {
         "clientEvent": {
           "$ref": "ClientEvent",
-          "description": "Required.\n\nEvents issued when end user interacts with customer's application that\nuses Cloud Talent Solution."
+          "description": "Required. Events issued when end user interacts with customer's application that\nuses Cloud Talent Solution."
         }
       },
       "type": "object"
@@ -1225,7 +1225,7 @@
       "properties": {
         "company": {
           "$ref": "Company",
-          "description": "Required.\n\nThe company to be created."
+          "description": "Required. The company to be created."
         }
       },
       "type": "object"
@@ -1236,7 +1236,7 @@
       "properties": {
         "job": {
           "$ref": "Job",
-          "description": "Required.\n\nThe Job to be created."
+          "description": "Required. The Job to be created."
         }
       },
       "type": "object"
@@ -1246,7 +1246,7 @@
       "id": "CustomAttribute",
       "properties": {
         "filterable": {
-          "description": "Optional.\n\nIf the `filterable` flag is true, custom field values are searchable.\nIf false, values are not searchable.\n\nDefault is false.",
+          "description": "Optional. If the `filterable` flag is true, custom field values are searchable.\nIf false, values are not searchable.\n\nDefault is false.",
           "type": "boolean"
         },
         "longValues": {
@@ -1272,12 +1272,12 @@
       "id": "CustomAttributeHistogramRequest",
       "properties": {
         "key": {
-          "description": "Required.\n\nSpecifies the custom field key to perform a histogram on. If specified\nwithout `long_value_histogram_bucketing_option`, histogram on string values\nof the given `key` is triggered, otherwise histogram is performed on long\nvalues.",
+          "description": "Required. Specifies the custom field key to perform a histogram on. If specified\nwithout `long_value_histogram_bucketing_option`, histogram on string values\nof the given `key` is triggered, otherwise histogram is performed on long\nvalues.",
           "type": "string"
         },
         "longValueHistogramBucketingOption": {
           "$ref": "NumericBucketingOption",
-          "description": "Optional.\n\nSpecifies buckets used to perform a range histogram on Job's\nfilterable long custom field values, or min/max value requirements."
+          "description": "Optional. Specifies buckets used to perform a range histogram on Job's\nfilterable long custom field values, or min/max value requirements."
         },
         "stringValueHistogram": {
           "description": "Optional. If set to true, the response includes the histogram value for\neach key as a string.",
@@ -1314,7 +1314,7 @@
       "id": "CustomRankingInfo",
       "properties": {
         "importanceLevel": {
-          "description": "Required.\n\nControls over how important the score of\nCustomRankingInfo.ranking_expression gets applied to job's final\nranking position.\n\nAn error is thrown if not specified.",
+          "description": "Required. Controls over how important the score of\nCustomRankingInfo.ranking_expression gets applied to job's final\nranking position.\n\nAn error is thrown if not specified.",
           "enum": [
             "IMPORTANCE_LEVEL_UNSPECIFIED",
             "NONE",
@@ -1336,7 +1336,7 @@
           "type": "string"
         },
         "rankingExpression": {
-          "description": "Required.\n\nControls over how job documents get ranked on top of existing relevance\nscore (determined by API algorithm). The product of ranking expression\nand relevance score is used to determine job's final ranking position.\n\nThe syntax for this expression is a subset of Google SQL syntax.\n\nSupported operators are: +, -, *, /, where the left and right side of\nthe operator is either a numeric Job.custom_attributes key,\ninteger/double value or an expression that can be evaluated to a number.\n\nParenthesis are supported to adjust calculation precedence. The\nexpression must be \u003c 100 characters in length.\n\nSample ranking expression\n(year + 25) * 0.25 - (freshness / 0.5)",
+          "description": "Required. Controls over how job documents get ranked on top of existing relevance\nscore (determined by API algorithm). The product of ranking expression\nand relevance score is used to determine job's final ranking position.\n\nThe syntax for this expression is a subset of Google SQL syntax.\n\nSupported operators are: +, -, *, /, where the left and right side of\nthe operator is either a numeric Job.custom_attributes key,\ninteger/double value or an expression that can be evaluated to a number.\n\nParenthesis are supported to adjust calculation precedence. The\nexpression must be \u003c 100 characters in length.\n\nSample ranking expression\n(year + 25) * 0.25 - (freshness / 0.5)",
           "type": "string"
         }
       },
@@ -1347,7 +1347,7 @@
       "id": "DeviceInfo",
       "properties": {
         "deviceType": {
-          "description": "Optional.\n\nType of the device.",
+          "description": "Optional. Type of the device.",
           "enum": [
             "DEVICE_TYPE_UNSPECIFIED",
             "WEB",
@@ -1369,7 +1369,7 @@
           "type": "string"
         },
         "id": {
-          "description": "Optional.\n\nA device-specific ID. The ID must be a unique identifier that\ndistinguishes the device from other devices.",
+          "description": "Optional. A device-specific ID. The ID must be a unique identifier that\ndistinguishes the device from other devices.",
           "type": "string"
         }
       },
@@ -1386,21 +1386,21 @@
       "id": "HistogramFacets",
       "properties": {
         "compensationHistogramFacets": {
-          "description": "Optional.\n\nSpecifies compensation field-based histogram requests.\nDuplicate values of CompensationHistogramRequest.type are not allowed.",
+          "description": "Optional. Specifies compensation field-based histogram requests.\nDuplicate values of CompensationHistogramRequest.type are not allowed.",
           "items": {
             "$ref": "CompensationHistogramRequest"
           },
           "type": "array"
         },
         "customAttributeHistogramFacets": {
-          "description": "Optional.\n\nSpecifies the custom attributes histogram requests.\nDuplicate values of CustomAttributeHistogramRequest.key are not\nallowed.",
+          "description": "Optional. Specifies the custom attributes histogram requests.\nDuplicate values of CustomAttributeHistogramRequest.key are not\nallowed.",
           "items": {
             "$ref": "CustomAttributeHistogramRequest"
           },
           "type": "array"
         },
         "simpleHistogramFacets": {
-          "description": "Optional.\n\nSpecifies the simple type of histogram facets, for example,\n`COMPANY_SIZE`, `EMPLOYMENT_TYPE` etc.",
+          "description": "Optional. Specifies the simple type of histogram facets, for example,\n`COMPANY_SIZE`, `EMPLOYMENT_TYPE` etc.",
           "enumDescriptions": [
             "The default value if search type is not specified.",
             "Filter by the company id field.",
@@ -1582,22 +1582,22 @@
           "type": "string"
         },
         "companyName": {
-          "description": "Required.\n\nThe resource name of the company listing the job, such as\n\"projects/api-test-project/companies/foo\".",
+          "description": "Required. The resource name of the company listing the job, such as\n\"projects/api-test-project/companies/foo\".",
           "type": "string"
         },
         "compensationInfo": {
           "$ref": "CompensationInfo",
-          "description": "Optional.\n\nJob compensation information."
+          "description": "Optional. Job compensation information."
         },
         "customAttributes": {
           "additionalProperties": {
             "$ref": "CustomAttribute"
           },
-          "description": "Optional.\n\nA map of fields to hold both filterable and non-filterable custom job\nattributes that are not covered by the provided structured fields.\n\nThe keys of the map are strings up to 64 bytes and must match the\npattern: a-zA-Z*. For example, key0LikeThis or\nKEY_1_LIKE_THIS.\n\nAt most 100 filterable and at most 100 unfilterable keys are supported.\nFor filterable `string_values`, across all keys at most 200 values are\nallowed, with each string no more than 255 characters. For unfilterable\n`string_values`, the maximum total size of `string_values` across all keys\nis 50KB.",
+          "description": "Optional. A map of fields to hold both filterable and non-filterable custom job\nattributes that are not covered by the provided structured fields.\n\nThe keys of the map are strings up to 64 bytes and must match the\npattern: a-zA-Z*. For example, key0LikeThis or\nKEY_1_LIKE_THIS.\n\nAt most 100 filterable and at most 100 unfilterable keys are supported.\nFor filterable `string_values`, across all keys at most 200 values are\nallowed, with each string no more than 255 characters. For unfilterable\n`string_values`, the maximum total size of `string_values` across all keys\nis 50KB.",
           "type": "object"
         },
         "degreeTypes": {
-          "description": "Optional.\n\nThe desired education degrees for the job, such as Bachelors, Masters.",
+          "description": "Optional. The desired education degrees for the job, such as Bachelors, Masters.",
           "enumDescriptions": [
             "Default value. Represents no degree, or early childhood education.\nMaps to ISCED code 0.\nEx) Kindergarten",
             "Primary education which is typically the first stage of compulsory\neducation. ISCED code 1.\nEx) Elementary school",
@@ -1626,7 +1626,7 @@
           "type": "array"
         },
         "department": {
-          "description": "Optional.\n\nThe department or functional area within the company with the open\nposition.\n\nThe maximum number of allowed characters is 255.",
+          "description": "Optional. The department or functional area within the company with the open\nposition.\n\nThe maximum number of allowed characters is 255.",
           "type": "string"
         },
         "derivedInfo": {
@@ -1634,11 +1634,11 @@
           "description": "Output only. Derived details about the job posting."
         },
         "description": {
-          "description": "Required.\n\nThe description of the job, which typically includes a multi-paragraph\ndescription of the company and related information. Separate fields are\nprovided on the job object for responsibilities,\nqualifications, and other job characteristics. Use of\nthese separate job fields is recommended.\n\nThis field accepts and sanitizes HTML input, and also accepts\nbold, italic, ordered list, and unordered list markup tags.\n\nThe maximum number of allowed characters is 100,000.",
+          "description": "Required. The description of the job, which typically includes a multi-paragraph\ndescription of the company and related information. Separate fields are\nprovided on the job object for responsibilities,\nqualifications, and other job characteristics. Use of\nthese separate job fields is recommended.\n\nThis field accepts and sanitizes HTML input, and also accepts\nbold, italic, ordered list, and unordered list markup tags.\n\nThe maximum number of allowed characters is 100,000.",
           "type": "string"
         },
         "employmentTypes": {
-          "description": "Optional.\n\nThe employment type(s) of a job, for example,\nfull time or\npart time.",
+          "description": "Optional. The employment type(s) of a job, for example,\nfull time or\npart time.",
           "enumDescriptions": [
             "The default value if the employment type is not specified.",
             "The job requires working a number of hours that constitute full\ntime employment, typically 40 or more hours per week.",
@@ -1671,11 +1671,11 @@
           "type": "array"
         },
         "incentives": {
-          "description": "Optional.\n\nA description of bonus, commission, and other compensation\nincentives associated with the job not including salary or pay.\n\nThe maximum number of allowed characters is 10,000.",
+          "description": "Optional. A description of bonus, commission, and other compensation\nincentives associated with the job not including salary or pay.\n\nThe maximum number of allowed characters is 10,000.",
           "type": "string"
         },
         "jobBenefits": {
-          "description": "Optional.\n\nThe benefits included with the job.",
+          "description": "Optional. The benefits included with the job.",
           "enumDescriptions": [
             "Default value if the type is not specified.",
             "The job includes access to programs that support child care, such\nas daycare.",
@@ -1710,12 +1710,12 @@
           "type": "array"
         },
         "jobEndTime": {
-          "description": "Optional.\n\nThe end timestamp of the job. Typically this field is used for contracting\nengagements. Invalid timestamps are ignored.",
+          "description": "Optional. The end timestamp of the job. Typically this field is used for contracting\nengagements. Invalid timestamps are ignored.",
           "format": "google-datetime",
           "type": "string"
         },
         "jobLevel": {
-          "description": "Optional.\n\nThe experience level associated with the job, such as \"Entry Level\".",
+          "description": "Optional. The experience level associated with the job, such as \"Entry Level\".",
           "enum": [
             "JOB_LEVEL_UNSPECIFIED",
             "ENTRY_LEVEL",
@@ -1735,12 +1735,12 @@
           "type": "string"
         },
         "jobStartTime": {
-          "description": "Optional.\n\nThe start timestamp of the job in UTC time zone. Typically this field\nis used for contracting engagements. Invalid timestamps are ignored.",
+          "description": "Optional. The start timestamp of the job in UTC time zone. Typically this field\nis used for contracting engagements. Invalid timestamps are ignored.",
           "format": "google-datetime",
           "type": "string"
         },
         "languageCode": {
-          "description": "Optional.\n\nThe language of the posting. This field is distinct from\nany requirements for fluency that are associated with the job.\n\nLanguage codes must be in BCP-47 format, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47){:\nclass=\"external\" target=\"_blank\" }.\n\nIf this field is unspecified and Job.description is present, detected\nlanguage code based on Job.description is assigned, otherwise\ndefaults to 'en_US'.",
+          "description": "Optional. The language of the posting. This field is distinct from\nany requirements for fluency that are associated with the job.\n\nLanguage codes must be in BCP-47 format, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47){:\nclass=\"external\" target=\"_blank\" }.\n\nIf this field is unspecified and Job.description is present, detected\nlanguage code based on Job.description is assigned, otherwise\ndefaults to 'en_US'.",
           "type": "string"
         },
         "name": {
@@ -1758,12 +1758,12 @@
           "type": "string"
         },
         "postingPublishTime": {
-          "description": "Optional.\n\nThe timestamp this job posting was most recently published. The default\nvalue is the time the request arrives at the server. Invalid timestamps are\nignored.",
+          "description": "Optional. The timestamp this job posting was most recently published. The default\nvalue is the time the request arrives at the server. Invalid timestamps are\nignored.",
           "format": "google-datetime",
           "type": "string"
         },
         "postingRegion": {
-          "description": "Optional.\n\nThe job PostingRegion (for example, state, country) throughout which\nthe job is available. If this field is set, a\nLocationFilter in a search query within the job region\nfinds this job posting if an exact location match isn't specified.\nIf this field is set to PostingRegion.NATION or\nPostingRegion.ADMINISTRATIVE_AREA, setting job Job.addresses\nto the same location level as this field is strongly recommended.",
+          "description": "Optional. The job PostingRegion (for example, state, country) throughout which\nthe job is available. If this field is set, a\nLocationFilter in a search query within the job region\nfinds this job posting if an exact location match isn't specified.\nIf this field is set to PostingRegion.NATION or\nPostingRegion.ADMINISTRATIVE_AREA, setting job Job.addresses\nto the same location level as this field is strongly recommended.",
           "enum": [
             "POSTING_REGION_UNSPECIFIED",
             "ADMINISTRATIVE_AREA",
@@ -1785,31 +1785,31 @@
         },
         "processingOptions": {
           "$ref": "ProcessingOptions",
-          "description": "Optional.\n\nOptions for job processing."
+          "description": "Optional. Options for job processing."
         },
         "promotionValue": {
-          "description": "Optional.\n\nA promotion value of the job, as determined by the client.\nThe value determines the sort order of the jobs returned when searching for\njobs using the featured jobs search call, with higher promotional values\nbeing returned first and ties being resolved by relevance sort. Only the\njobs with a promotionValue \u003e0 are returned in a FEATURED_JOB_SEARCH.\n\nDefault value is 0, and negative values are treated as 0.",
+          "description": "Optional. A promotion value of the job, as determined by the client.\nThe value determines the sort order of the jobs returned when searching for\njobs using the featured jobs search call, with higher promotional values\nbeing returned first and ties being resolved by relevance sort. Only the\njobs with a promotionValue \u003e0 are returned in a FEATURED_JOB_SEARCH.\n\nDefault value is 0, and negative values are treated as 0.",
           "format": "int32",
           "type": "integer"
         },
         "qualifications": {
-          "description": "Optional.\n\nA description of the qualifications required to perform the\njob. The use of this field is recommended\nas an alternative to using the more general description field.\n\nThis field accepts and sanitizes HTML input, and also accepts\nbold, italic, ordered list, and unordered list markup tags.\n\nThe maximum number of allowed characters is 10,000.",
+          "description": "Optional. A description of the qualifications required to perform the\njob. The use of this field is recommended\nas an alternative to using the more general description field.\n\nThis field accepts and sanitizes HTML input, and also accepts\nbold, italic, ordered list, and unordered list markup tags.\n\nThe maximum number of allowed characters is 10,000.",
           "type": "string"
         },
         "requisitionId": {
-          "description": "Required.\n\nThe requisition ID, also referred to as the posting ID, assigned by the\nclient to identify a job. This field is intended to be used by clients\nfor client identification and tracking of postings. A job is not allowed\nto be created if there is another job with the same [company_name],\nlanguage_code and requisition_id.\n\nThe maximum number of allowed characters is 255.",
+          "description": "Required. The requisition ID, also referred to as the posting ID, assigned by the\nclient to identify a job. This field is intended to be used by clients\nfor client identification and tracking of postings. A job is not allowed\nto be created if there is another job with the same [company_name],\nlanguage_code and requisition_id.\n\nThe maximum number of allowed characters is 255.",
           "type": "string"
         },
         "responsibilities": {
-          "description": "Optional.\n\nA description of job responsibilities. The use of this field is\nrecommended as an alternative to using the more general description\nfield.\n\nThis field accepts and sanitizes HTML input, and also accepts\nbold, italic, ordered list, and unordered list markup tags.\n\nThe maximum number of allowed characters is 10,000.",
+          "description": "Optional. A description of job responsibilities. The use of this field is\nrecommended as an alternative to using the more general description\nfield.\n\nThis field accepts and sanitizes HTML input, and also accepts\nbold, italic, ordered list, and unordered list markup tags.\n\nThe maximum number of allowed characters is 10,000.",
           "type": "string"
         },
         "title": {
-          "description": "Required.\n\nThe title of the job, such as \"Software Engineer\"\n\nThe maximum number of allowed characters is 500.",
+          "description": "Required. The title of the job, such as \"Software Engineer\"\n\nThe maximum number of allowed characters is 500.",
           "type": "string"
         },
         "visibility": {
-          "description": "Optional.\n\nThe visibility of the job.\n\nDefaults to Visibility.ACCOUNT_ONLY if not specified.",
+          "description": "Optional. The visibility of the job.\n\nDefaults to Visibility.ACCOUNT_ONLY if not specified.",
           "enum": [
             "VISIBILITY_UNSPECIFIED",
             "ACCOUNT_ONLY",
@@ -1919,14 +1919,14 @@
       "id": "JobEvent",
       "properties": {
         "jobs": {
-          "description": "Required.\n\nThe job name(s) associated with this event.\nFor example, if this is an impression event,\nthis field contains the identifiers of all jobs shown to the job seeker.\nIf this was a view event, this field contains the\nidentifier of the viewed job.",
+          "description": "Required. The job name(s) associated with this event.\nFor example, if this is an impression event,\nthis field contains the identifiers of all jobs shown to the job seeker.\nIf this was a view event, this field contains the\nidentifier of the viewed job.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "type": {
-          "description": "Required.\n\nThe type of the event (see JobEventType).",
+          "description": "Required. The type of the event (see JobEventType).",
           "enum": [
             "JOB_EVENT_TYPE_UNSPECIFIED",
             "IMPRESSION",
@@ -1976,17 +1976,17 @@
       "properties": {
         "commuteFilter": {
           "$ref": "CommuteFilter",
-          "description": "Optional.\n\n Allows filtering jobs by commute time with different travel methods (for\n example, driving or public transit). Note: This only works with COMMUTE\n MODE. When specified, [JobQuery.location_filters] is\n ignored.\n\n Currently we don't support sorting by commute time."
+          "description": "Optional. Allows filtering jobs by commute time with different travel methods (for\n example, driving or public transit). Note: This only works with COMMUTE\n MODE. When specified, [JobQuery.location_filters] is\n ignored.\n\n Currently we don't support sorting by commute time."
         },
         "companyDisplayNames": {
-          "description": "Optional.\n\nThis filter specifies the exact company display\nname of the jobs to search against.\n\nIf a value isn't specified, jobs within the search results are\nassociated with any company.\n\nIf multiple values are specified, jobs within the search results may be\nassociated with any of the specified companies.\n\nAt most 20 company display name filters are allowed.",
+          "description": "Optional. This filter specifies the exact company display\nname of the jobs to search against.\n\nIf a value isn't specified, jobs within the search results are\nassociated with any company.\n\nIf multiple values are specified, jobs within the search results may be\nassociated with any of the specified companies.\n\nAt most 20 company display name filters are allowed.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "companyNames": {
-          "description": "Optional.\n\nThis filter specifies the company entities to search against.\n\nIf a value isn't specified, jobs are searched for against all\ncompanies.\n\nIf multiple values are specified, jobs are searched against the\ncompanies specified.\n\nThe format is \"projects/{project_id}/companies/{company_id}\", for example,\n\"projects/api-test-project/companies/foo\".\n\nAt most 20 company filters are allowed.",
+          "description": "Optional. This filter specifies the company entities to search against.\n\nIf a value isn't specified, jobs are searched for against all\ncompanies.\n\nIf multiple values are specified, jobs are searched against the\ncompanies specified.\n\nThe format is \"projects/{project_id}/companies/{company_id}\", for example,\n\"projects/api-test-project/companies/foo\".\n\nAt most 20 company filters are allowed.",
           "items": {
             "type": "string"
           },
@@ -1994,18 +1994,18 @@
         },
         "compensationFilter": {
           "$ref": "CompensationFilter",
-          "description": "Optional.\n\nThis search filter is applied only to\nJob.compensation_info. For example, if the filter is specified\nas \"Hourly job with per-hour compensation \u003e $15\", only jobs meeting\nthese criteria are searched. If a filter isn't defined, all open jobs\nare searched."
+          "description": "Optional. This search filter is applied only to\nJob.compensation_info. For example, if the filter is specified\nas \"Hourly job with per-hour compensation \u003e $15\", only jobs meeting\nthese criteria are searched. If a filter isn't defined, all open jobs\nare searched."
         },
         "customAttributeFilter": {
-          "description": "Optional.\n\nThis filter specifies a structured syntax to match against the\nJob.custom_attributes marked as `filterable`.\n\nThe syntax for this expression is a subset of SQL syntax.\n\nSupported operators are: `=`, `!=`, `\u003c`, `\u003c=`, `\u003e`, and `\u003e=` where the\nleft of the operator is a custom field key and the right of the operator\nis a number or a quoted string. You must escape backslash (\\\\) and\nquote (\\\") characters.\n\nSupported functions are `LOWER([field_name])` to\nperform a case insensitive match and `EMPTY([field_name])` to filter on the\nexistence of a key.\n\nBoolean expressions (AND/OR/NOT) are supported up to 3 levels of\nnesting (for example, \"((A AND B AND C) OR NOT D) AND E\"), a maximum of 100\ncomparisons or functions are allowed in the expression. The expression\nmust be \u003c 3000 bytes in length.\n\nSample Query:\n`(LOWER(driving_license)=\"class \\\"a\\\"\" OR EMPTY(driving_license)) AND\ndriving_years \u003e 10`",
+          "description": "Optional. This filter specifies a structured syntax to match against the\nJob.custom_attributes marked as `filterable`.\n\nThe syntax for this expression is a subset of SQL syntax.\n\nSupported operators are: `=`, `!=`, `\u003c`, `\u003c=`, `\u003e`, and `\u003e=` where the\nleft of the operator is a custom field key and the right of the operator\nis a number or a quoted string. You must escape backslash (\\\\) and\nquote (\\\") characters.\n\nSupported functions are `LOWER([field_name])` to\nperform a case insensitive match and `EMPTY([field_name])` to filter on the\nexistence of a key.\n\nBoolean expressions (AND/OR/NOT) are supported up to 3 levels of\nnesting (for example, \"((A AND B AND C) OR NOT D) AND E\"), a maximum of 100\ncomparisons or functions are allowed in the expression. The expression\nmust be \u003c 6000 bytes in length.\n\nSample Query:\n`(LOWER(driving_license)=\"class \\\"a\\\"\" OR EMPTY(driving_license)) AND\ndriving_years \u003e 10`",
           "type": "string"
         },
         "disableSpellCheck": {
-          "description": "Optional.\n\nThis flag controls the spell-check feature. If false, the\nservice attempts to correct a misspelled query,\nfor example, \"enginee\" is corrected to \"engineer\".\n\nDefaults to false: a spell check is performed.",
+          "description": "Optional. This flag controls the spell-check feature. If false, the\nservice attempts to correct a misspelled query,\nfor example, \"enginee\" is corrected to \"engineer\".\n\nDefaults to false: a spell check is performed.",
           "type": "boolean"
         },
         "employmentTypes": {
-          "description": "Optional.\n\nThe employment type filter specifies the employment type of jobs to\nsearch against, such as EmploymentType.FULL_TIME.\n\nIf a value is not specified, jobs in the search results includes any\nemployment type.\n\nIf multiple values are specified, jobs in the search results include\nany of the specified employment types.",
+          "description": "Optional. The employment type filter specifies the employment type of jobs to\nsearch against, such as EmploymentType.FULL_TIME.\n\nIf a value is not specified, jobs in the search results includes any\nemployment type.\n\nIf multiple values are specified, jobs in the search results include\nany of the specified employment types.",
           "enumDescriptions": [
             "The default value if the employment type is not specified.",
             "The job requires working a number of hours that constitute full\ntime employment, typically 40 or more hours per week.",
@@ -2038,14 +2038,14 @@
           "type": "array"
         },
         "excludedJobs": {
-          "description": "Optional.\n\nThis filter specifies a list of job names to be excluded during search.\n\nAt most 400 excluded job names are allowed.",
+          "description": "Optional. This filter specifies a list of job names to be excluded during search.\n\nAt most 400 excluded job names are allowed.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "jobCategories": {
-          "description": "Optional.\n\nThe category filter specifies the categories of jobs to search against.\nSee Category for more information.\n\nIf a value is not specified, jobs from any category are searched against.\n\nIf multiple values are specified, jobs from any of the specified\ncategories are searched against.",
+          "description": "Optional. The category filter specifies the categories of jobs to search against.\nSee Category for more information.\n\nIf a value is not specified, jobs from any category are searched against.\n\nIf multiple values are specified, jobs from any of the specified\ncategories are searched against.",
           "enumDescriptions": [
             "The default value if the category isn't specified.",
             "An accounting and finance job, such as an Accountant.",
@@ -2118,14 +2118,14 @@
           "type": "array"
         },
         "languageCodes": {
-          "description": "Optional.\n\nThis filter specifies the locale of jobs to search against,\nfor example, \"en-US\".\n\nIf a value isn't specified, the search results can contain jobs in any\nlocale.\n\n\nLanguage codes should be in BCP-47 format, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47).\n\nAt most 10 language code filters are allowed.",
+          "description": "Optional. This filter specifies the locale of jobs to search against,\nfor example, \"en-US\".\n\nIf a value isn't specified, the search results can contain jobs in any\nlocale.\n\n\nLanguage codes should be in BCP-47 format, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47).\n\nAt most 10 language code filters are allowed.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "locationFilters": {
-          "description": "Optional.\n\nThe location filter specifies geo-regions containing the jobs to\nsearch against. See LocationFilter for more information.\n\nIf a location value isn't specified, jobs fitting the other search\ncriteria are retrieved regardless of where they're located.\n\nIf multiple values are specified, jobs are retrieved from any of the\nspecified locations. If different values are specified for the\nLocationFilter.distance_in_miles parameter, the maximum provided\ndistance is used for all locations.\n\nAt most 5 location filters are allowed.",
+          "description": "Optional. The location filter specifies geo-regions containing the jobs to\nsearch against. See LocationFilter for more information.\n\nIf a location value isn't specified, jobs fitting the other search\ncriteria are retrieved regardless of where they're located.\n\nIf multiple values are specified, jobs are retrieved from any of the\nspecified locations. If different values are specified for the\nLocationFilter.distance_in_miles parameter, the maximum provided\ndistance is used for all locations.\n\nAt most 5 location filters are allowed.",
           "items": {
             "$ref": "LocationFilter"
           },
@@ -2133,10 +2133,10 @@
         },
         "publishTimeRange": {
           "$ref": "TimestampRange",
-          "description": "Optional.\n\nJobs published within a range specified by this filter are searched\nagainst."
+          "description": "Optional. Jobs published within a range specified by this filter are searched\nagainst."
         },
         "query": {
-          "description": "Optional.\n\nThe query string that matches against the job title, description, and\nlocation fields.\n\nThe maximum number of allowed characters is 255.",
+          "description": "Optional. The query string that matches against the job title, description, and\nlocation fields.\n\nThe maximum number of allowed characters is 255.",
           "type": "string"
         }
       },
@@ -2258,24 +2258,24 @@
       "id": "LocationFilter",
       "properties": {
         "address": {
-          "description": "Optional.\n\nThe address name, such as \"Mountain View\" or \"Bay Area\".",
+          "description": "Optional. The address name, such as \"Mountain View\" or \"Bay Area\".",
           "type": "string"
         },
         "distanceInMiles": {
-          "description": "Optional.\n\n\nThe distance_in_miles is applied when the location being searched for is\nidentified as a city or smaller. When the location being searched for is a\nstate or larger, this field is ignored.",
+          "description": "Optional. The distance_in_miles is applied when the location being searched for is\nidentified as a city or smaller. When the location being searched for is a\nstate or larger, this field is ignored.",
           "format": "double",
           "type": "number"
         },
         "latLng": {
           "$ref": "LatLng",
-          "description": "Optional.\n\nThe latitude and longitude of the geographic center from which to\nsearch. This field's ignored if `address` is provided."
+          "description": "Optional. The latitude and longitude of the geographic center from which to\nsearch. This field's ignored if `address` is provided."
         },
         "regionCode": {
-          "description": "Optional.\n\nCLDR region code of the country/region of the address. This is used\nto address ambiguity of the user-input location, for example, \"Liverpool\"\nagainst \"Liverpool, NY, US\" or \"Liverpool, UK\".\n\nSet this field if all the jobs to search against are from a same region,\nor jobs are world-wide, but the job seeker is from a specific region.\n\nSee http://cldr.unicode.org/ and\nhttp://www.unicode.org/cldr/charts/30/supplemental/territory_information.html\nfor details. Example: \"CH\" for Switzerland.",
+          "description": "Optional. CLDR region code of the country/region of the address. This is used\nto address ambiguity of the user-input location, for example, \"Liverpool\"\nagainst \"Liverpool, NY, US\" or \"Liverpool, UK\".\n\nSet this field if all the jobs to search against are from a same region,\nor jobs are world-wide, but the job seeker is from a specific region.\n\nSee http://cldr.unicode.org/ and\nhttp://www.unicode.org/cldr/charts/30/supplemental/territory_information.html\nfor details. Example: \"CH\" for Switzerland.",
           "type": "string"
         },
         "telecommutePreference": {
-          "description": "Optional.\n\nAllows the client to return jobs without a\nset location, specifically, telecommuting jobs (telecommuting is considered\nby the service as a special location.\nJob.posting_region indicates if a job permits telecommuting.\nIf this field is set to TelecommutePreference.TELECOMMUTE_ALLOWED,\ntelecommuting jobs are searched, and address and lat_lng are\nignored. If not set or set to\nTelecommutePreference.TELECOMMUTE_EXCLUDED, telecommute job are not\nsearched.\n\nThis filter can be used by itself to search exclusively for telecommuting\njobs, or it can be combined with another location\nfilter to search for a combination of job locations,\nsuch as \"Mountain View\" or \"telecommuting\" jobs. However, when used in\ncombination with other location filters, telecommuting jobs can be\ntreated as less relevant than other jobs in the search response.",
+          "description": "Optional. Allows the client to return jobs without a\nset location, specifically, telecommuting jobs (telecommuting is considered\nby the service as a special location.\nJob.posting_region indicates if a job permits telecommuting.\nIf this field is set to TelecommutePreference.TELECOMMUTE_ALLOWED,\ntelecommuting jobs are searched, and address and lat_lng are\nignored. If not set or set to\nTelecommutePreference.TELECOMMUTE_EXCLUDED, telecommute job are not\nsearched.\n\nThis filter can be used by itself to search exclusively for telecommuting\njobs, or it can be combined with another location\nfilter to search for a combination of job locations,\nsuch as \"Mountain View\" or \"telecommuting\" jobs. However, when used in\ncombination with other location filters, telecommuting jobs can be\ntreated as less relevant than other jobs in the search response.",
           "enum": [
             "TELECOMMUTE_PREFERENCE_UNSPECIFIED",
             "TELECOMMUTE_EXCLUDED",
@@ -2344,7 +2344,7 @@
       "id": "NumericBucketingOption",
       "properties": {
         "bucketBounds": {
-          "description": "Required.\n\nTwo adjacent values form a histogram bucket. Values should be in\nascending order. For example, if [5, 10, 15] are provided, four buckets are\ncreated: (-inf, 5), 5, 10), [10, 15), [15, inf). At most 20\n[buckets_bound is supported.",
+          "description": "Required. Two adjacent values form a histogram bucket. Values should be in\nascending order. For example, if [5, 10, 15] are provided, four buckets are\ncreated: (-inf, 5), 5, 10), [10, 15), [15, inf). At most 20\n[buckets_bound is supported.",
           "items": {
             "format": "double",
             "type": "number"
@@ -2352,7 +2352,7 @@
           "type": "array"
         },
         "requiresMinMax": {
-          "description": "Optional.\n\nIf set to true, the histogram result includes minimum/maximum\nvalue of the numeric field.",
+          "description": "Optional. If set to true, the histogram result includes minimum/maximum\nvalue of the numeric field.",
           "type": "boolean"
         }
       },
@@ -2418,7 +2418,7 @@
       "type": "object"
     },
     "PostalAddress": {
-      "description": "Represents a postal address, e.g. for postal delivery or payments addresses.\nGiven a postal address, a postal service can deliver items to a premise, P.O.\nBox or similar.\nIt is not intended to model geographical locations (roads, towns,\nmountains).\n\nIn typical usage an address would be created via user input or from importing\nexisting data, depending on the type of process.\n\nAdvice on address input / editing:\n - Use an i18n-ready address widget such as\n   https://github.com/googlei18n/libaddressinput)\n- Users should not be presented with UI elements for input or editing of\n  fields outside countries where that field is used.\n\nFor more guidance on how to use this schema, please see:\nhttps://support.google.com/business/answer/6397478",
+      "description": "Represents a postal address, e.g. for postal delivery or payments addresses.\nGiven a postal address, a postal service can deliver items to a premise, P.O.\nBox or similar.\nIt is not intended to model geographical locations (roads, towns,\nmountains).\n\nIn typical usage an address would be created via user input or from importing\nexisting data, depending on the type of process.\n\nAdvice on address input / editing:\n - Use an i18n-ready address widget such as\n   https://github.com/google/libaddressinput)\n- Users should not be presented with UI elements for input or editing of\n  fields outside countries where that field is used.\n\nFor more guidance on how to use this schema, please see:\nhttps://support.google.com/business/answer/6397478",
       "id": "PostalAddress",
       "properties": {
         "addressLines": {
@@ -2480,11 +2480,11 @@
       "id": "ProcessingOptions",
       "properties": {
         "disableStreetAddressResolution": {
-          "description": "Optional.\n\nIf set to `true`, the service does not attempt to resolve a\nmore precise address for the job.",
+          "description": "Optional. If set to `true`, the service does not attempt to resolve a\nmore precise address for the job.",
           "type": "boolean"
         },
         "htmlSanitization": {
-          "description": "Optional.\n\nOption for job HTML content sanitization. Applied fields are:\n\n* description\n* applicationInfo.instruction\n* incentives\n* qualifications\n* responsibilities\n\nHTML tags in these fields may be stripped if sanitiazation is not\ndisabled.\n\nDefaults to HtmlSanitization.SIMPLE_FORMATTING_ONLY.",
+          "description": "Optional. Option for job HTML content sanitization. Applied fields are:\n\n* description\n* applicationInfo.instruction\n* incentives\n* qualifications\n* responsibilities\n\nHTML tags in these fields may be stripped if sanitiazation is not\ndisabled.\n\nDefaults to HtmlSanitization.SIMPLE_FORMATTING_ONLY.",
           "enum": [
             "HTML_SANITIZATION_UNSPECIFIED",
             "HTML_SANITIZATION_DISABLED",
@@ -2506,18 +2506,18 @@
       "properties": {
         "deviceInfo": {
           "$ref": "DeviceInfo",
-          "description": "Optional.\n\nThe type of device used by the job seeker at the time of the call to the\nservice."
+          "description": "Optional. The type of device used by the job seeker at the time of the call to the\nservice."
         },
         "domain": {
-          "description": "Required.\n\nThe client-defined scope or source of the service call, which typically\nis the domain on\nwhich the service has been implemented and is currently being run.\n\nFor example, if the service is being run by client \u003cem\u003eFoo, Inc.\u003c/em\u003e, on\njob board www.foo.com and career site www.bar.com, then this field is\nset to \"foo.com\" for use on the job board, and \"bar.com\" for use on the\ncareer site.\n\nIf this field isn't available for some reason, send \"UNKNOWN\".\nAny improvements to the model for a particular tenant site rely on this\nfield being set correctly to a domain.\n\nThe maximum number of allowed characters is 255.",
+          "description": "Required. The client-defined scope or source of the service call, which typically\nis the domain on\nwhich the service has been implemented and is currently being run.\n\nFor example, if the service is being run by client \u003cem\u003eFoo, Inc.\u003c/em\u003e, on\njob board www.foo.com and career site www.bar.com, then this field is\nset to \"foo.com\" for use on the job board, and \"bar.com\" for use on the\ncareer site.\n\nIf this field isn't available for some reason, send \"UNKNOWN\".\nAny improvements to the model for a particular tenant site rely on this\nfield being set correctly to a domain.\n\nThe maximum number of allowed characters is 255.",
           "type": "string"
         },
         "sessionId": {
-          "description": "Required.\n\nA unique session identification string. A session is defined as the\nduration of an end user's interaction with the service over a certain\nperiod.\nObfuscate this field for privacy concerns before\nproviding it to the service.\n\nIf this field is not available for some reason, send \"UNKNOWN\". Note\nthat any improvements to the model for a particular tenant\nsite, rely on this field being set correctly to some unique session_id.\n\nThe maximum number of allowed characters is 255.",
+          "description": "Required. A unique session identification string. A session is defined as the\nduration of an end user's interaction with the service over a certain\nperiod.\nObfuscate this field for privacy concerns before\nproviding it to the service.\n\nIf this field is not available for some reason, send \"UNKNOWN\". Note\nthat any improvements to the model for a particular tenant\nsite, rely on this field being set correctly to some unique session_id.\n\nThe maximum number of allowed characters is 255.",
           "type": "string"
         },
         "userId": {
-          "description": "Required.\n\nA unique user identification string, as determined by the client.\nTo have the strongest positive impact on search quality\nmake sure the client-level is unique.\nObfuscate this field for privacy concerns before\nproviding it to the service.\n\nIf this field is not available for some reason, send \"UNKNOWN\". Note\nthat any improvements to the model for a particular tenant\nsite, rely on this field being set correctly to a unique user_id.\n\nThe maximum number of allowed characters is 255.",
+          "description": "Required. A unique user identification string, as determined by the client.\nTo have the strongest positive impact on search quality\nmake sure the client-level is unique.\nObfuscate this field for privacy concerns before\nproviding it to the service.\n\nIf this field is not available for some reason, send \"UNKNOWN\". Note\nthat any improvements to the model for a particular tenant\nsite, rely on this field being set correctly to a unique user_id.\n\nThe maximum number of allowed characters is 255.",
           "type": "string"
         }
       },
@@ -2540,14 +2540,14 @@
       "properties": {
         "customRankingInfo": {
           "$ref": "CustomRankingInfo",
-          "description": "Optional.\n\nControls over how job documents get ranked on top of existing relevance\nscore (determined by API algorithm)."
+          "description": "Optional. Controls over how job documents get ranked on top of existing relevance\nscore (determined by API algorithm)."
         },
         "disableKeywordMatch": {
-          "description": "Optional.\n\nControls whether to disable exact keyword match on Job.job_title,\nJob.description, Job.company_display_name, Job.locations,\nJob.qualifications. When disable keyword match is turned off, a\nkeyword match returns jobs that do not match given category filters when\nthere are matching keywords. For example, the query \"program manager,\" a\nresult is returned even if the job posting has the title \"software\ndeveloper,\" which does not fall into \"program manager\" ontology, but does\nhave \"program manager\" appearing in its description.\n\nFor queries like \"cloud\" that does not contain title or\nlocation specific ontology, jobs with \"cloud\" keyword matches are returned\nregardless of this flag's value.\n\nPlease use Company.keyword_searchable_custom_fields or\nCompany.keyword_searchable_custom_attributes if company specific\nglobally matched custom field/attribute string values is needed. Enabling\nkeyword match improves recall of subsequent search requests.\n\nDefaults to false.",
+          "description": "Optional. Controls whether to disable exact keyword match on Job.job_title,\nJob.description, Job.company_display_name, Job.locations,\nJob.qualifications. When disable keyword match is turned off, a\nkeyword match returns jobs that do not match given category filters when\nthere are matching keywords. For example, the query \"program manager,\" a\nresult is returned even if the job posting has the title \"software\ndeveloper,\" which does not fall into \"program manager\" ontology, but does\nhave \"program manager\" appearing in its description.\n\nFor queries like \"cloud\" that does not contain title or\nlocation specific ontology, jobs with \"cloud\" keyword matches are returned\nregardless of this flag's value.\n\nPlease use Company.keyword_searchable_custom_fields or\nCompany.keyword_searchable_custom_attributes if company specific\nglobally matched custom field/attribute string values is needed. Enabling\nkeyword match improves recall of subsequent search requests.\n\nDefaults to false.",
           "type": "boolean"
         },
         "diversificationLevel": {
-          "description": "Optional.\n\nControls whether highly similar jobs are returned next to each other in\nthe search results. Jobs are identified as highly similar based on\ntheir titles, job categories, and locations. Highly similar results are\nclustered so that only one representative job of the cluster is\ndisplayed to the job seeker higher up in the results, with the other jobs\nbeing displayed lower down in the results.\n\nDefaults to DiversificationLevel.SIMPLE if no value\nis specified.",
+          "description": "Optional. Controls whether highly similar jobs are returned next to each other in\nthe search results. Jobs are identified as highly similar based on\ntheir titles, job categories, and locations. Highly similar results are\nclustered so that only one representative job of the cluster is\ndisplayed to the job seeker higher up in the results, with the other jobs\nbeing displayed lower down in the results.\n\nDefaults to DiversificationLevel.SIMPLE if no value\nis specified.",
           "enum": [
             "DIVERSIFICATION_LEVEL_UNSPECIFIED",
             "DISABLED",
@@ -2561,15 +2561,15 @@
           "type": "string"
         },
         "enableBroadening": {
-          "description": "Optional.\n\nControls whether to broaden the search when it produces sparse results.\nBroadened queries append results to the end of the matching results\nlist.\n\nDefaults to false.",
+          "description": "Optional. Controls whether to broaden the search when it produces sparse results.\nBroadened queries append results to the end of the matching results\nlist.\n\nDefaults to false.",
           "type": "boolean"
         },
         "histogramFacets": {
           "$ref": "HistogramFacets",
-          "description": "Optional.\n\nHistogram requests for jobs matching JobQuery."
+          "description": "Optional. Histogram requests for jobs matching JobQuery."
         },
         "histogramQueries": {
-          "description": "Optional.\n\nExpression based histogram requests for jobs matching JobQuery.",
+          "description": "Optional. Expression based histogram requests for jobs matching JobQuery.",
           "items": {
             "$ref": "HistogramQuery"
           },
@@ -2577,10 +2577,10 @@
         },
         "jobQuery": {
           "$ref": "JobQuery",
-          "description": "Optional.\n\nQuery used to search against jobs, such as keyword, location filters, etc."
+          "description": "Optional. Query used to search against jobs, such as keyword, location filters, etc."
         },
         "jobView": {
-          "description": "Optional.\n\nThe desired job attributes returned for jobs in the\nsearch response. Defaults to JobView.SMALL if no value is specified.",
+          "description": "Optional. The desired job attributes returned for jobs in the\nsearch response. Defaults to JobView.SMALL if no value is specified.",
           "enum": [
             "JOB_VIEW_UNSPECIFIED",
             "JOB_VIEW_ID_ONLY",
@@ -2598,33 +2598,33 @@
           "type": "string"
         },
         "offset": {
-          "description": "Optional.\n\nAn integer that specifies the current offset (that is, starting result\nlocation, amongst the jobs deemed by the API as relevant) in search\nresults. This field is only considered if page_token is unset.\n\nFor example, 0 means to  return results starting from the first matching\njob, and 10 means to return from the 11th job. This can be used for\npagination, (for example, pageSize = 10 and offset = 10 means to return\nfrom the second page).",
+          "description": "Optional. An integer that specifies the current offset (that is, starting result\nlocation, amongst the jobs deemed by the API as relevant) in search\nresults. This field is only considered if page_token is unset.\n\nFor example, 0 means to  return results starting from the first matching\njob, and 10 means to return from the 11th job. This can be used for\npagination, (for example, pageSize = 10 and offset = 10 means to return\nfrom the second page).",
           "format": "int32",
           "type": "integer"
         },
         "orderBy": {
-          "description": "Optional.\n\nThe criteria determining how search results are sorted. Default is\n\"relevance desc\".\n\nSupported options are:\n\n* `\"relevance desc\"`: By relevance descending, as determined by the API\nalgorithms. Relevance thresholding of query results is only available\nwith this ordering.\n* `\"posting_publish_time desc\"`: By Job.posting_publish_time\ndescending.\n* `\"posting_update_time desc\"`: By Job.posting_update_time\ndescending.\n* `\"title\"`: By Job.title ascending.\n* `\"title desc\"`: By Job.title descending.\n* `\"annualized_base_compensation\"`: By job's\nCompensationInfo.annualized_base_compensation_range ascending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* `\"annualized_base_compensation desc\"`: By job's\nCompensationInfo.annualized_base_compensation_range descending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* `\"annualized_total_compensation\"`: By job's\nCompensationInfo.annualized_total_compensation_range ascending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* `\"annualized_total_compensation desc\"`: By job's\nCompensationInfo.annualized_total_compensation_range descending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* `\"custom_ranking desc\"`: By the relevance score adjusted to the\nSearchJobsRequest.custom_ranking_info.ranking_expression with weight\nfactor assigned by\nSearchJobsRequest.custom_ranking_info.importance_level in descending\norder.\n* Location sorting: Use the special syntax to order jobs by distance:\u003cbr\u003e\n\"`distance_from('Hawaii')`\": Order by distance from Hawaii.\u003cbr\u003e\n\"`distance_from(19.89, 155.5)`\": Order by distance from a coordinate.\u003cbr\u003e\n\"`distance_from('Hawaii'), distance_from('Puerto Rico')`\": Order by\nmultiple locations. See details below.\u003cbr\u003e\n\"`distance_from('Hawaii'), distance_from(19.89, 155.5)`\": Order by\nmultiple locations. See details below.\u003cbr\u003e\nThe string can have a maximum of 256 characters. When multiple distance\ncenters are provided, a job that is close to any of the distance centers\nwould have a high rank. When a job has multiple locations, the job location\nclosest to one of the distance centers will be used. Jobs that don't have\nlocations will be ranked at the bottom. Distance is calculated with a\nprecision of 11.3 meters (37.4 feet). Diversification strategy is still\napplied unless explicitly disabled in\ndiversification_level.",
+          "description": "Optional. The criteria determining how search results are sorted. Default is\n\"relevance desc\".\n\nSupported options are:\n\n* `\"relevance desc\"`: By relevance descending, as determined by the API\nalgorithms. Relevance thresholding of query results is only available\nwith this ordering.\n* `\"posting_publish_time desc\"`: By Job.posting_publish_time\ndescending.\n* `\"posting_update_time desc\"`: By Job.posting_update_time\ndescending.\n* `\"title\"`: By Job.title ascending.\n* `\"title desc\"`: By Job.title descending.\n* `\"annualized_base_compensation\"`: By job's\nCompensationInfo.annualized_base_compensation_range ascending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* `\"annualized_base_compensation desc\"`: By job's\nCompensationInfo.annualized_base_compensation_range descending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* `\"annualized_total_compensation\"`: By job's\nCompensationInfo.annualized_total_compensation_range ascending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* `\"annualized_total_compensation desc\"`: By job's\nCompensationInfo.annualized_total_compensation_range descending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* `\"custom_ranking desc\"`: By the relevance score adjusted to the\nSearchJobsRequest.custom_ranking_info.ranking_expression with weight\nfactor assigned by\nSearchJobsRequest.custom_ranking_info.importance_level in descending\norder.\n* Location sorting: Use the special syntax to order jobs by distance:\u003cbr\u003e\n\"`distance_from('Hawaii')`\": Order by distance from Hawaii.\u003cbr\u003e\n\"`distance_from(19.89, 155.5)`\": Order by distance from a coordinate.\u003cbr\u003e\n\"`distance_from('Hawaii'), distance_from('Puerto Rico')`\": Order by\nmultiple locations. See details below.\u003cbr\u003e\n\"`distance_from('Hawaii'), distance_from(19.89, 155.5)`\": Order by\nmultiple locations. See details below.\u003cbr\u003e\nThe string can have a maximum of 256 characters. When multiple distance\ncenters are provided, a job that is close to any of the distance centers\nwould have a high rank. When a job has multiple locations, the job location\nclosest to one of the distance centers will be used. Jobs that don't have\nlocations will be ranked at the bottom. Distance is calculated with a\nprecision of 11.3 meters (37.4 feet). Diversification strategy is still\napplied unless explicitly disabled in\ndiversification_level.",
           "type": "string"
         },
         "pageSize": {
-          "description": "Optional.\n\nA limit on the number of jobs returned in the search results.\nIncreasing this value above the default value of 10 can increase search\nresponse time. The value can be between 1 and 100.",
+          "description": "Optional. A limit on the number of jobs returned in the search results.\nIncreasing this value above the default value of 10 can increase search\nresponse time. The value can be between 1 and 100.",
           "format": "int32",
           "type": "integer"
         },
         "pageToken": {
-          "description": "Optional.\n\nThe token specifying the current offset within\nsearch results. See SearchJobsResponse.next_page_token for\nan explanation of how to obtain the next set of query results.",
+          "description": "Optional. The token specifying the current offset within\nsearch results. See SearchJobsResponse.next_page_token for\nan explanation of how to obtain the next set of query results.",
           "type": "string"
         },
         "requestMetadata": {
           "$ref": "RequestMetadata",
-          "description": "Required.\n\nThe meta information collected about the job searcher, used to improve the\nsearch quality of the service. The identifiers (such as `user_id`) are\nprovided by users, and must be unique and consistent."
+          "description": "Required. The meta information collected about the job searcher, used to improve the\nsearch quality of the service. The identifiers (such as `user_id`) are\nprovided by users, and must be unique and consistent."
         },
         "requirePreciseResultSize": {
-          "description": "Optional.\n\nControls if the search job request requires the return of a precise\ncount of the first 300 results. Setting this to `true` ensures\nconsistency in the number of results per page. Best practice is to set this\nvalue to true if a client allows users to jump directly to a\nnon-sequential search results page.\n\nEnabling this flag may adversely impact performance.\n\nDefaults to false.",
+          "description": "Optional. Controls if the search job request requires the return of a precise\ncount of the first 300 results. Setting this to `true` ensures\nconsistency in the number of results per page. Best practice is to set this\nvalue to true if a client allows users to jump directly to a\nnon-sequential search results page.\n\nEnabling this flag may adversely impact performance.\n\nDefaults to false.",
           "type": "boolean"
         },
         "searchMode": {
-          "description": "Optional.\n\nMode of a search.\n\nDefaults to SearchMode.JOB_SEARCH.",
+          "description": "Optional. Mode of a search.\n\nDefaults to SearchMode.JOB_SEARCH.",
           "enum": [
             "SEARCH_MODE_UNSPECIFIED",
             "JOB_SEARCH",
@@ -2791,7 +2791,7 @@
       "properties": {
         "company": {
           "$ref": "Company",
-          "description": "Required.\n\nThe company resource to replace the current resource in the system."
+          "description": "Required. The company resource to replace the current resource in the system."
         },
         "updateMask": {
           "description": "Optional but strongly recommended for the best service\nexperience.\n\nIf update_mask is provided, only the specified fields in\ncompany are updated. Otherwise all the fields are updated.\n\nA field mask to specify the company fields to be updated. Only\ntop level fields of Company are supported.",
@@ -2807,7 +2807,7 @@
       "properties": {
         "job": {
           "$ref": "Job",
-          "description": "Required.\n\nThe Job to be updated."
+          "description": "Required. The Job to be updated."
         },
         "updateMask": {
           "description": "Optional but strongly recommended to be provided for the best service\nexperience.\n\nIf update_mask is provided, only the specified fields in\njob are updated. Otherwise all the fields are updated.\n\nA field mask to restrict the fields that are updated. Only\ntop level fields of Job are supported.",

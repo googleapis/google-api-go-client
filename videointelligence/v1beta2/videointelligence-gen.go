@@ -1043,6 +1043,9 @@ type GoogleCloudVideointelligenceV1VideoAnnotationResults struct {
 	// tracked in video.
 	ObjectAnnotations []*GoogleCloudVideointelligenceV1ObjectTrackingAnnotation `json:"objectAnnotations,omitempty"`
 
+	// Segment: Video segment on which the annotation is run.
+	Segment *GoogleCloudVideointelligenceV1VideoSegment `json:"segment,omitempty"`
+
 	// SegmentLabelAnnotations: Topical label annotations on video level or
 	// user specified segment level.
 	// There is exactly one element for each unique label.
@@ -2576,6 +2579,9 @@ type GoogleCloudVideointelligenceV1beta2VideoAnnotationResults struct {
 	// tracked in video.
 	ObjectAnnotations []*GoogleCloudVideointelligenceV1beta2ObjectTrackingAnnotation `json:"objectAnnotations,omitempty"`
 
+	// Segment: Video segment on which the annotation is run.
+	Segment *GoogleCloudVideointelligenceV1beta2VideoSegment `json:"segment,omitempty"`
+
 	// SegmentLabelAnnotations: Topical label annotations on video level or
 	// user specified segment level.
 	// There is exactly one element for each unique label.
@@ -3701,6 +3707,9 @@ type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationResults struct {
 	// tracked in video.
 	ObjectAnnotations []*GoogleCloudVideointelligenceV1p1beta1ObjectTrackingAnnotation `json:"objectAnnotations,omitempty"`
 
+	// Segment: Video segment on which the annotation is run.
+	Segment *GoogleCloudVideointelligenceV1p1beta1VideoSegment `json:"segment,omitempty"`
+
 	// SegmentLabelAnnotations: Topical label annotations on video level or
 	// user specified segment level.
 	// There is exactly one element for each unique label.
@@ -4771,6 +4780,9 @@ type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationResults struct {
 	// ObjectAnnotations: Annotations for list of objects detected and
 	// tracked in video.
 	ObjectAnnotations []*GoogleCloudVideointelligenceV1p2beta1ObjectTrackingAnnotation `json:"objectAnnotations,omitempty"`
+
+	// Segment: Video segment on which the annotation is run.
+	Segment *GoogleCloudVideointelligenceV1p2beta1VideoSegment `json:"segment,omitempty"`
 
 	// SegmentLabelAnnotations: Topical label annotations on video level or
 	// user specified segment level.
@@ -6130,6 +6142,9 @@ type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationResults struct {
 	// ObjectAnnotations: Annotations for list of objects detected and
 	// tracked in video.
 	ObjectAnnotations []*GoogleCloudVideointelligenceV1p3beta1ObjectTrackingAnnotation `json:"objectAnnotations,omitempty"`
+
+	// Segment: Video segment on which the annotation is run.
+	Segment *GoogleCloudVideointelligenceV1p3beta1VideoSegment `json:"segment,omitempty"`
 
 	// SegmentLabelAnnotations: Topical label annotations on video level or
 	// user specified segment level.

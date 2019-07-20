@@ -383,6 +383,37 @@
             "https://www.googleapis.com/auth/contacts"
           ]
         },
+        "deleteContactPhoto": {
+          "description": "Delete a contact's photo.",
+          "flatPath": "v1/people/{peopleId}:deleteContactPhoto",
+          "httpMethod": "DELETE",
+          "id": "people.people.deleteContactPhoto",
+          "parameterOrder": [
+            "resourceName"
+          ],
+          "parameters": {
+            "personFields": {
+              "description": "**Optional.** Not specifying any fields will skip the post mutate read.\nA field mask to restrict which fields on the person are\nreturned. Multiple fields can be specified by separating them with commas.\nValid values are:\n\n* addresses\n* ageRanges\n* biographies\n* birthdays\n* braggingRights\n* coverPhotos\n* emailAddresses\n* events\n* genders\n* imClients\n* interests\n* locales\n* memberships\n* metadata\n* names\n* nicknames\n* occupations\n* organizations\n* phoneNumbers\n* photos\n* relations\n* relationshipInterests\n* relationshipStatuses\n* residences\n* sipAddresses\n* skills\n* taglines\n* urls\n* userDefined",
+              "format": "google-fieldmask",
+              "location": "query",
+              "type": "string"
+            },
+            "resourceName": {
+              "description": "The resource name of the contact whose photo will be deleted.",
+              "location": "path",
+              "pattern": "^people/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+resourceName}:deleteContactPhoto",
+          "response": {
+            "$ref": "DeleteContactPhotoResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/contacts"
+          ]
+        },
         "get": {
           "description": "Provides information about a person by specifying a resource name. Use\n`people/me` to indicate the authenticated user.\n\u003cbr\u003e\nThe request throws a 400 error if 'personFields' is not specified.",
           "flatPath": "v1/people/{peopleId}",
@@ -501,6 +532,34 @@
           "scopes": [
             "https://www.googleapis.com/auth/contacts"
           ]
+        },
+        "updateContactPhoto": {
+          "description": "Update a contact's photo.",
+          "flatPath": "v1/people/{peopleId}:updateContactPhoto",
+          "httpMethod": "PATCH",
+          "id": "people.people.updateContactPhoto",
+          "parameterOrder": [
+            "resourceName"
+          ],
+          "parameters": {
+            "resourceName": {
+              "description": "Person resource name",
+              "location": "path",
+              "pattern": "^people/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+resourceName}:updateContactPhoto",
+          "request": {
+            "$ref": "UpdateContactPhotoRequest"
+          },
+          "response": {
+            "$ref": "UpdateContactPhotoResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/contacts"
+          ]
         }
       },
       "resources": {
@@ -581,7 +640,7 @@
       }
     }
   },
-  "revision": "20190611",
+  "revision": "20190718",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {
@@ -894,6 +953,17 @@
           "description": "Year of date. Must be from 1 to 9999, or 0 if specifying a date without\na year.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "DeleteContactPhotoResponse": {
+      "description": "The response for deleteing a contact's photo.",
+      "id": "DeleteContactPhotoResponse",
+      "properties": {
+        "person": {
+          "$ref": "Person",
+          "description": "The updated person, if person_fields is set in the\nDeleteContactPhotoRequest; otherwise this will be unset."
         }
       },
       "type": "object"
@@ -1959,6 +2029,34 @@
         "contactGroup": {
           "$ref": "ContactGroup",
           "description": "The contact group to update."
+        }
+      },
+      "type": "object"
+    },
+    "UpdateContactPhotoRequest": {
+      "description": "A request to update an existing contact's photo.\nAll requests must have a valid photo format: JPEG or PNG.",
+      "id": "UpdateContactPhotoRequest",
+      "properties": {
+        "personFields": {
+          "description": "**Optional.** Not specifying any fields will skip the post mutate read.\nA field mask to restrict which fields on the person are\nreturned. Multiple fields can be specified by separating them with commas.\nValid values are:\n\n* addresses\n* ageRanges\n* biographies\n* birthdays\n* braggingRights\n* coverPhotos\n* emailAddresses\n* events\n* genders\n* imClients\n* interests\n* locales\n* memberships\n* metadata\n* names\n* nicknames\n* occupations\n* organizations\n* phoneNumbers\n* photos\n* relations\n* relationshipInterests\n* relationshipStatuses\n* residences\n* sipAddresses\n* skills\n* taglines\n* urls\n* userDefined",
+          "format": "google-fieldmask",
+          "type": "string"
+        },
+        "photoBytes": {
+          "description": "Raw photo bytes",
+          "format": "byte",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UpdateContactPhotoResponse": {
+      "description": "The response for updating a contact's photo.",
+      "id": "UpdateContactPhotoResponse",
+      "properties": {
+        "person": {
+          "$ref": "Person",
+          "description": "The updated person, if person_fields is set in the\nUpdateContactPhotoRequest; otherwise this will be unset."
         }
       },
       "type": "object"

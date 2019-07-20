@@ -4497,6 +4497,9 @@ type Request struct {
 	// range.
 	UpdateParagraphStyle *UpdateParagraphStyleRequest `json:"updateParagraphStyle,omitempty"`
 
+	// UpdateTableCellStyle: Updates the style of table cells.
+	UpdateTableCellStyle *UpdateTableCellStyleRequest `json:"updateTableCellStyle,omitempty"`
+
 	// UpdateTableColumnProperties: Updates the properties of columns in a
 	// table.
 	UpdateTableColumnProperties *UpdateTableColumnPropertiesRequest `json:"updateTableColumnProperties,omitempty"`
@@ -5906,6 +5909,60 @@ func (s *TableOfContents) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TableRange: A table range represents a reference to a subset of a
+// table.
+//
+// It's important to note that the cells specified by a table range do
+// not
+// necessarily form a rectangle. For example, let's say we have a 3 x 3
+// table
+// where all the cells of the last row are merged together. The table
+// looks
+// like this:
+//
+//
+//      [             ]
+//
+// A table range with table cell location = (table_start_location, row =
+// 0,
+// column = 0), row span = 3 and column span = 2 specifies the following
+// cells:
+//
+//       x     x
+//      [ x    x    x ]
+type TableRange struct {
+	// ColumnSpan: The column span of the table range.
+	ColumnSpan int64 `json:"columnSpan,omitempty"`
+
+	// RowSpan: The row span of the table range.
+	RowSpan int64 `json:"rowSpan,omitempty"`
+
+	// TableCellLocation: The cell location where the table range starts.
+	TableCellLocation *TableCellLocation `json:"tableCellLocation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ColumnSpan") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ColumnSpan") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TableRange) MarshalJSON() ([]byte, error) {
+	type NoMethod TableRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TableRow: The contents and style of a row in a Table.
 type TableRow struct {
 	// EndIndex: The zero-based end index of this row, exclusive, in UTF-16
@@ -6380,6 +6437,79 @@ type UpdateParagraphStyleRequest struct {
 
 func (s *UpdateParagraphStyleRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateParagraphStyleRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateTableCellStyleRequest: Updates the style of a range of table
+// cells.
+type UpdateTableCellStyleRequest struct {
+	// Fields: The fields that should be updated.
+	//
+	// At least one field must be specified. The root `tableCellStyle` is
+	// implied
+	// and should not be specified. A single "*" can be used as short-hand
+	// for
+	// listing every field.
+	//
+	// For example to update the table cell background color, set `fields`
+	// to
+	// "backgroundColor".
+	//
+	// To reset a property to its default value, include its field name in
+	// the
+	// field mask but leave the field itself unset.
+	Fields string `json:"fields,omitempty"`
+
+	// TableCellStyle: The style to set on the table cells.
+	//
+	// When updating borders, if a cell shares a border with an adjacent
+	// cell, the
+	// corresponding border property of the adjacent cell is updated as
+	// well.
+	// Borders that are merged and invisible are not updated.
+	//
+	// Since updating a border shared by adjacent cells in the same request
+	// can
+	// cause conflicting border updates, border updates are applied in
+	// the
+	// following order:
+	//
+	// - `border_right`
+	// - `border_left`
+	// - `border_bottom`
+	// - `border_top`
+	TableCellStyle *TableCellStyle `json:"tableCellStyle,omitempty"`
+
+	// TableRange: The table range representing the subset of the table to
+	// which the updates
+	// are applied.
+	TableRange *TableRange `json:"tableRange,omitempty"`
+
+	// TableStartLocation: The location where the table starts in the
+	// document. When specified, the
+	// updates are applied to all the cells in the table.
+	TableStartLocation *Location `json:"tableStartLocation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Fields") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateTableCellStyleRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateTableCellStyleRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

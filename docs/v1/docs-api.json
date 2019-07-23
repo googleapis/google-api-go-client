@@ -209,7 +209,7 @@
       }
     }
   },
-  "revision": "20190711",
+  "revision": "20190718",
   "rootUrl": "https://docs.googleapis.com/",
   "schemas": {
     "AutoText": {
@@ -762,47 +762,47 @@
       "properties": {
         "background": {
           "$ref": "Background",
-          "description": "The background of the document."
+          "description": "The background of the document. Documents cannot have a transparent\nbackground color."
         },
         "defaultFooterId": {
-          "description": "The ID of the default footer. If not set, there is no default footer.",
+          "description": "The ID of the default footer. If not set, there is no default footer.\n\nThis property is read-only.",
           "type": "string"
         },
         "defaultHeaderId": {
-          "description": "The ID of the default header. If not set, there is no default header.",
+          "description": "The ID of the default header. If not set, there is no default header.\n\nThis property is read-only.",
           "type": "string"
         },
         "evenPageFooterId": {
-          "description": "The ID of the footer used only for even pages. The value of\nuse_even_page_header_footer determines\nwhether to use the default_footer_id or this value for the\nfooter on even pages. If not set, there is no even page footer.",
+          "description": "The ID of the footer used only for even pages. The value of\nuse_even_page_header_footer determines\nwhether to use the default_footer_id or this value for the\nfooter on even pages. If not set, there is no even page footer.\n\nThis property is read-only.",
           "type": "string"
         },
         "evenPageHeaderId": {
-          "description": "The ID of the header used only for even pages. The value of\nuse_even_page_header_footer determines\nwhether to use the default_header_id or this value for the\nheader on even pages. If not set, there is no even page header.",
+          "description": "The ID of the header used only for even pages. The value of\nuse_even_page_header_footer determines\nwhether to use the default_header_id or this value for the\nheader on even pages. If not set, there is no even page header.\n\nThis property is read-only.",
           "type": "string"
         },
         "firstPageFooterId": {
-          "description": "The ID of the footer used only for the first page. If not set then\na unique footer for the first page does not exist. The value of\nuse_first_page_header_footer determines\nwhether to use the default_footer_id or this value for the\nfooter on the first page. If not set, there is no first page footer.",
+          "description": "The ID of the footer used only for the first page. If not set then\na unique footer for the first page does not exist. The value of\nuse_first_page_header_footer determines\nwhether to use the default_footer_id or this value for the\nfooter on the first page. If not set, there is no first page footer.\n\nThis property is read-only.",
           "type": "string"
         },
         "firstPageHeaderId": {
-          "description": "The ID of the header used only for the first page. If not set then\na unique header for the first page does not exist.\nThe value of use_first_page_header_footer determines\nwhether to use the default_header_id or this value for the\nheader on the first page. If not set, there is no first page header.",
+          "description": "The ID of the header used only for the first page. If not set then\na unique header for the first page does not exist.\nThe value of use_first_page_header_footer determines\nwhether to use the default_header_id or this value for the\nheader on the first page. If not set, there is no first page header.\n\nThis property is read-only.",
           "type": "string"
         },
         "marginBottom": {
           "$ref": "Dimension",
-          "description": "The bottom page margin."
+          "description": "The bottom page margin.\n\nUpdating the bottom page margin on the document style clears the bottom\npage margin on all section styles."
         },
         "marginLeft": {
           "$ref": "Dimension",
-          "description": "The left page margin."
+          "description": "The left page margin.\n\nUpdating the left page margin on the document style clears the left page\nmargin on all section styles. It may also cause columns to resize in all\nsections."
         },
         "marginRight": {
           "$ref": "Dimension",
-          "description": "The right page margin."
+          "description": "The right page margin.\n\nUpdating the right page margin on the document style clears the right page\nmargin on all section styles. It may also cause columns to resize in all\nsections."
         },
         "marginTop": {
           "$ref": "Dimension",
-          "description": "The top page margin."
+          "description": "The top page margin.\n\nUpdating the top page margin on the document style clears the top page\nmargin on all section styles."
         },
         "pageNumberStart": {
           "description": "The page number from which to start counting the number of pages.",
@@ -814,11 +814,11 @@
           "description": "The size of a page in the document."
         },
         "useEvenPageHeaderFooter": {
-          "description": "Indicates whether to use the even page header / footer IDs for the even\npages.",
+          "description": "Indicates whether to use the even page header / footer IDs for the even\npages.\n\nThis property is read-only.",
           "type": "boolean"
         },
         "useFirstPageHeaderFooter": {
-          "description": "Indicates whether to use the first page header / footer IDs for the first\npage.",
+          "description": "Indicates whether to use the first page header / footer IDs for the first\npage.\n\nThis property is read-only.",
           "type": "boolean"
         }
       },
@@ -2159,7 +2159,7 @@
           "type": "string"
         },
         "headingId": {
-          "description": "The heading ID of the paragraph. If empty, then this paragraph is not a\nheading. This property is read-only.",
+          "description": "The heading ID of the paragraph. If empty, then this paragraph is not a\nheading.\n\nThis property is read-only.",
           "type": "string"
         },
         "indentEnd": {
@@ -2242,7 +2242,7 @@
           "type": "string"
         },
         "tabStops": {
-          "description": "A list of the tab stops for this paragraph. The list of tab stops is not\ninherited. This property is read-only.",
+          "description": "A list of the tab stops for this paragraph. The list of tab stops is not\ninherited.\n\nThis property is read-only.",
           "items": {
             "$ref": "TabStop"
           },
@@ -2566,6 +2566,10 @@
         "replaceAllText": {
           "$ref": "ReplaceAllTextRequest",
           "description": "Replaces all instances of the specified text."
+        },
+        "updateDocumentStyle": {
+          "$ref": "UpdateDocumentStyleRequest",
+          "description": "Updates the style of the document."
         },
         "updateParagraphStyle": {
           "$ref": "UpdateParagraphStyleRequest",
@@ -3193,7 +3197,7 @@
           "description": "The top border of the cell."
         },
         "columnSpan": {
-          "description": "The column span of the cell. This property is read-only.",
+          "description": "The column span of the cell.\n\nThis property is read-only.",
           "format": "int32",
           "type": "integer"
         },
@@ -3232,7 +3236,7 @@
           "description": "The top padding of the cell."
         },
         "rowSpan": {
-          "description": "The row span of the cell. This property is read-only.",
+          "description": "The row span of the cell.\n\nThis property is read-only.",
           "format": "int32",
           "type": "integer"
         }
@@ -3599,6 +3603,22 @@
         "weightedFontFamilySuggested": {
           "description": "Indicates if there was a suggested change to weighted_font_family.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "UpdateDocumentStyleRequest": {
+      "description": "Updates the DocumentStyle.",
+      "id": "UpdateDocumentStyleRequest",
+      "properties": {
+        "documentStyle": {
+          "$ref": "DocumentStyle",
+          "description": "The styles to set on the document.\n\nCertain document style changes may cause other changes in order to mirror\nthe behavior of the Docs editor. See the documentation of DocumentStyle for more information."
+        },
+        "fields": {
+          "description": "The fields that should be updated.\n\nAt least one field must be specified. The root `document_style` is\nimplied and should not be specified. A single `\"*\"` can be used as\nshort-hand for listing every field.\n\nFor example to update the background, set `fields` to `\"background\"`.",
+          "format": "google-fieldmask",
+          "type": "string"
         }
       },
       "type": "object"

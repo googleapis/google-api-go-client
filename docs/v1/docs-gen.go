@@ -1269,15 +1269,21 @@ func (s *Document) MarshalJSON() ([]byte, error) {
 
 // DocumentStyle: The style of the document.
 type DocumentStyle struct {
-	// Background: The background of the document.
+	// Background: The background of the document. Documents cannot have a
+	// transparent
+	// background color.
 	Background *Background `json:"background,omitempty"`
 
 	// DefaultFooterId: The ID of the default footer. If not set, there is
 	// no default footer.
+	//
+	// This property is read-only.
 	DefaultFooterId string `json:"defaultFooterId,omitempty"`
 
 	// DefaultHeaderId: The ID of the default header. If not set, there is
 	// no default header.
+	//
+	// This property is read-only.
 	DefaultHeaderId string `json:"defaultHeaderId,omitempty"`
 
 	// EvenPageFooterId: The ID of the footer used only for even pages. The
@@ -1285,6 +1291,8 @@ type DocumentStyle struct {
 	// use_even_page_header_footer determines
 	// whether to use the default_footer_id or this value for the
 	// footer on even pages. If not set, there is no even page footer.
+	//
+	// This property is read-only.
 	EvenPageFooterId string `json:"evenPageFooterId,omitempty"`
 
 	// EvenPageHeaderId: The ID of the header used only for even pages. The
@@ -1292,6 +1300,8 @@ type DocumentStyle struct {
 	// use_even_page_header_footer determines
 	// whether to use the default_header_id or this value for the
 	// header on even pages. If not set, there is no even page header.
+	//
+	// This property is read-only.
 	EvenPageHeaderId string `json:"evenPageHeaderId,omitempty"`
 
 	// FirstPageFooterId: The ID of the footer used only for the first page.
@@ -1300,7 +1310,10 @@ type DocumentStyle struct {
 	// of
 	// use_first_page_header_footer determines
 	// whether to use the default_footer_id or this value for the
-	// footer on the first page. If not set, there is no first page footer.
+	// footer on the first page. If not set, there is no first page
+	// footer.
+	//
+	// This property is read-only.
 	FirstPageFooterId string `json:"firstPageFooterId,omitempty"`
 
 	// FirstPageHeaderId: The ID of the header used only for the first page.
@@ -1308,19 +1321,42 @@ type DocumentStyle struct {
 	// a unique header for the first page does not exist.
 	// The value of use_first_page_header_footer determines
 	// whether to use the default_header_id or this value for the
-	// header on the first page. If not set, there is no first page header.
+	// header on the first page. If not set, there is no first page
+	// header.
+	//
+	// This property is read-only.
 	FirstPageHeaderId string `json:"firstPageHeaderId,omitempty"`
 
 	// MarginBottom: The bottom page margin.
+	//
+	// Updating the bottom page margin on the document style clears the
+	// bottom
+	// page margin on all section styles.
 	MarginBottom *Dimension `json:"marginBottom,omitempty"`
 
 	// MarginLeft: The left page margin.
+	//
+	// Updating the left page margin on the document style clears the left
+	// page
+	// margin on all section styles. It may also cause columns to resize in
+	// all
+	// sections.
 	MarginLeft *Dimension `json:"marginLeft,omitempty"`
 
 	// MarginRight: The right page margin.
+	//
+	// Updating the right page margin on the document style clears the right
+	// page
+	// margin on all section styles. It may also cause columns to resize in
+	// all
+	// sections.
 	MarginRight *Dimension `json:"marginRight,omitempty"`
 
 	// MarginTop: The top page margin.
+	//
+	// Updating the top page margin on the document style clears the top
+	// page
+	// margin on all section styles.
 	MarginTop *Dimension `json:"marginTop,omitempty"`
 
 	// PageNumberStart: The page number from which to start counting the
@@ -1333,11 +1369,15 @@ type DocumentStyle struct {
 	// UseEvenPageHeaderFooter: Indicates whether to use the even page
 	// header / footer IDs for the even
 	// pages.
+	//
+	// This property is read-only.
 	UseEvenPageHeaderFooter bool `json:"useEvenPageHeaderFooter,omitempty"`
 
 	// UseFirstPageHeaderFooter: Indicates whether to use the first page
 	// header / footer IDs for the first
 	// page.
+	//
+	// This property is read-only.
 	UseFirstPageHeaderFooter bool `json:"useFirstPageHeaderFooter,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Background") to
@@ -3867,7 +3907,9 @@ type ParagraphStyle struct {
 
 	// HeadingId: The heading ID of the paragraph. If empty, then this
 	// paragraph is not a
-	// heading. This property is read-only.
+	// heading.
+	//
+	// This property is read-only.
 	HeadingId string `json:"headingId,omitempty"`
 
 	// IndentEnd: The amount of indentation for the paragraph on the side
@@ -3956,7 +3998,9 @@ type ParagraphStyle struct {
 
 	// TabStops: A list of the tab stops for this paragraph. The list of tab
 	// stops is not
-	// inherited. This property is read-only.
+	// inherited.
+	//
+	// This property is read-only.
 	TabStops []*TabStop `json:"tabStops,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alignment") to
@@ -4492,6 +4536,9 @@ type Request struct {
 
 	// ReplaceAllText: Replaces all instances of the specified text.
 	ReplaceAllText *ReplaceAllTextRequest `json:"replaceAllText,omitempty"`
+
+	// UpdateDocumentStyle: Updates the style of the document.
+	UpdateDocumentStyle *UpdateDocumentStyleRequest `json:"updateDocumentStyle,omitempty"`
 
 	// UpdateParagraphStyle: Updates the paragraph style at the specified
 	// range.
@@ -5680,7 +5727,9 @@ type TableCellStyle struct {
 	// BorderTop: The top border of the cell.
 	BorderTop *TableCellBorder `json:"borderTop,omitempty"`
 
-	// ColumnSpan: The column span of the cell. This property is read-only.
+	// ColumnSpan: The column span of the cell.
+	//
+	// This property is read-only.
 	ColumnSpan int64 `json:"columnSpan,omitempty"`
 
 	// ContentAlignment: The alignment of the content in the table cell. The
@@ -5716,7 +5765,9 @@ type TableCellStyle struct {
 	// PaddingTop: The top padding of the cell.
 	PaddingTop *Dimension `json:"paddingTop,omitempty"`
 
-	// RowSpan: The row span of the cell. This property is read-only.
+	// RowSpan: The row span of the cell.
+	//
+	// This property is read-only.
 	RowSpan int64 `json:"rowSpan,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BackgroundColor") to
@@ -6385,6 +6436,50 @@ type TextStyleSuggestionState struct {
 
 func (s *TextStyleSuggestionState) MarshalJSON() ([]byte, error) {
 	type NoMethod TextStyleSuggestionState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateDocumentStyleRequest: Updates the DocumentStyle.
+type UpdateDocumentStyleRequest struct {
+	// DocumentStyle: The styles to set on the document.
+	//
+	// Certain document style changes may cause other changes in order to
+	// mirror
+	// the behavior of the Docs editor. See the documentation of
+	// DocumentStyle for more information.
+	DocumentStyle *DocumentStyle `json:"documentStyle,omitempty"`
+
+	// Fields: The fields that should be updated.
+	//
+	// At least one field must be specified. The root `document_style`
+	// is
+	// implied and should not be specified. A single "*" can be used
+	// as
+	// short-hand for listing every field.
+	//
+	// For example to update the background, set `fields` to "background".
+	Fields string `json:"fields,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DocumentStyle") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DocumentStyle") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateDocumentStyleRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateDocumentStyleRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -809,7 +809,7 @@
       }
     }
   },
-  "revision": "20190708",
+  "revision": "20190715",
   "rootUrl": "https://sheets.googleapis.com/",
   "schemas": {
     "AddBandingRequest": {
@@ -2825,6 +2825,36 @@
       },
       "type": "object"
     },
+    "DeleteDuplicatesRequest": {
+      "description": "Removes rows within this range containing duplicate values in the specified\ncolumns. Rows with identical values but different letter cases, formatting,\nor formulas are considered to be duplicates.\n\nThis request also removes duplicate rows hidden from view (for example, due\nto a filter). When removing duplicates, the first instance of each duplicate\nrow scanning from the top downwards is kept in the resulting range. Content\noutside of the specified range isn't removed, and rows considered duplicates\ndo not have to be adjacent to each other in the range.",
+      "id": "DeleteDuplicatesRequest",
+      "properties": {
+        "comparisonColumns": {
+          "description": "The columns in the range to analyze for duplicate values. If no columns are\nselected then all columns are analyzed for duplicates.",
+          "items": {
+            "$ref": "DimensionRange"
+          },
+          "type": "array"
+        },
+        "range": {
+          "$ref": "GridRange",
+          "description": "The range to remove duplicates rows from."
+        }
+      },
+      "type": "object"
+    },
+    "DeleteDuplicatesResponse": {
+      "description": "The result of removing duplicates in a range.",
+      "id": "DeleteDuplicatesResponse",
+      "properties": {
+        "duplicatesRemovedCount": {
+          "description": "The number of duplicate rows removed.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "DeleteEmbeddedObjectRequest": {
       "description": "Deletes the embedded object with the given ID.",
       "id": "DeleteEmbeddedObjectRequest",
@@ -4611,6 +4641,10 @@
           "$ref": "DeleteDimensionGroupRequest",
           "description": "Deletes a group over the specified range."
         },
+        "deleteDuplicates": {
+          "$ref": "DeleteDuplicatesRequest",
+          "description": "Removes rows containing duplicate values in specified columns of a cell\nrange."
+        },
         "deleteEmbeddedObject": {
           "$ref": "DeleteEmbeddedObjectRequest",
           "description": "Deletes an embedded object (e.g, chart, image) in a sheet."
@@ -4690,6 +4724,10 @@
         "textToColumns": {
           "$ref": "TextToColumnsRequest",
           "description": "Converts a column of text into many columns of text."
+        },
+        "trimWhitespace": {
+          "$ref": "TrimWhitespaceRequest",
+          "description": "Trims cells of whitespace (such as spaces, tabs, or new lines)."
         },
         "unmergeCells": {
           "$ref": "UnmergeCellsRequest",
@@ -4802,6 +4840,10 @@
           "$ref": "DeleteDimensionGroupResponse",
           "description": "A reply from deleting a dimension group."
         },
+        "deleteDuplicates": {
+          "$ref": "DeleteDuplicatesResponse",
+          "description": "A reply from removing rows containing duplicate values."
+        },
         "duplicateFilterView": {
           "$ref": "DuplicateFilterViewResponse",
           "description": "A reply from duplicating a filter view."
@@ -4813,6 +4855,10 @@
         "findReplace": {
           "$ref": "FindReplaceResponse",
           "description": "A reply from doing a find/replace."
+        },
+        "trimWhitespace": {
+          "$ref": "TrimWhitespaceResponse",
+          "description": "A reply from trimming whitespace."
         },
         "updateConditionalFormatRule": {
           "$ref": "UpdateConditionalFormatRuleResponse",
@@ -5396,6 +5442,29 @@
         "textFormat": {
           "$ref": "TextFormat",
           "description": "The text format for all labels on the chart."
+        }
+      },
+      "type": "object"
+    },
+    "TrimWhitespaceRequest": {
+      "description": "Trims the whitespace (such as spaces, tabs, or new lines) in every cell in\nthe specified range. This request removes all whitespace from the start and\nend of each cell's text, and reduces any sub-sequence of remaining whitespace\ncharacters to a single space. If the resulting trimmed text starts with a '+'\nor '=' character, the text remains as a string value and is not interpreted\nas a formula.",
+      "id": "TrimWhitespaceRequest",
+      "properties": {
+        "range": {
+          "$ref": "GridRange",
+          "description": "The range whose cells to trim."
+        }
+      },
+      "type": "object"
+    },
+    "TrimWhitespaceResponse": {
+      "description": "The result of trimming whitespace in cells.",
+      "id": "TrimWhitespaceResponse",
+      "properties": {
+        "cellsChangedCount": {
+          "description": "The number of cells that were trimmed of whitespace.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"

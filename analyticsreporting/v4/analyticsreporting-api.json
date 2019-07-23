@@ -154,7 +154,7 @@
       }
     }
   },
-  "revision": "20190715",
+  "revision": "20190719",
   "rootUrl": "https://analyticsreporting.googleapis.com/",
   "schemas": {
     "Activity": {
@@ -1117,7 +1117,7 @@
           "type": "array"
         },
         "dimensions": {
-          "description": "The dimensions requested.\nRequests can have a total of 7 dimensions.",
+          "description": "The dimensions requested.\nRequests can have a total of 9 dimensions.",
           "items": {
             "$ref": "Dimension"
           },

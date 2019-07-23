@@ -388,7 +388,7 @@
       }
     }
   },
-  "revision": "20190606",
+  "revision": "20190719",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {
@@ -1257,6 +1257,10 @@
       "properties": {
         "instance": {
           "description": "The worker's instance name.",
+          "type": "string"
+        },
+        "machineType": {
+          "description": "The machine type that was assigned for the worker.",
           "type": "string"
         },
         "zone": {

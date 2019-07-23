@@ -2090,6 +2090,9 @@ type WorkerAssignedEvent struct {
 	// Instance: The worker's instance name.
 	Instance string `json:"instance,omitempty"`
 
+	// MachineType: The machine type that was assigned for the worker.
+	MachineType string `json:"machineType,omitempty"`
+
 	// Zone: The zone the worker is running in.
 	Zone string `json:"zone,omitempty"`
 

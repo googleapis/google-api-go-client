@@ -4130,6 +4130,85 @@ func (s *DeleteDimensionRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DeleteDuplicatesRequest: Removes rows within this range containing
+// duplicate values in the specified
+// columns. Rows with identical values but different letter cases,
+// formatting,
+// or formulas are considered to be duplicates.
+//
+// This request also removes duplicate rows hidden from view (for
+// example, due
+// to a filter). When removing duplicates, the first instance of each
+// duplicate
+// row scanning from the top downwards is kept in the resulting range.
+// Content
+// outside of the specified range isn't removed, and rows considered
+// duplicates
+// do not have to be adjacent to each other in the range.
+type DeleteDuplicatesRequest struct {
+	// ComparisonColumns: The columns in the range to analyze for duplicate
+	// values. If no columns are
+	// selected then all columns are analyzed for duplicates.
+	ComparisonColumns []*DimensionRange `json:"comparisonColumns,omitempty"`
+
+	// Range: The range to remove duplicates rows from.
+	Range *GridRange `json:"range,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ComparisonColumns")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ComparisonColumns") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeleteDuplicatesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteDuplicatesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeleteDuplicatesResponse: The result of removing duplicates in a
+// range.
+type DeleteDuplicatesResponse struct {
+	// DuplicatesRemovedCount: The number of duplicate rows removed.
+	DuplicatesRemovedCount int64 `json:"duplicatesRemovedCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DuplicatesRemovedCount") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DuplicatesRemovedCount")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeleteDuplicatesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteDuplicatesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DeleteEmbeddedObjectRequest: Deletes the embedded object with the
 // given ID.
 type DeleteEmbeddedObjectRequest struct {
@@ -7320,6 +7399,11 @@ type Request struct {
 	// DeleteDimensionGroup: Deletes a group over the specified range.
 	DeleteDimensionGroup *DeleteDimensionGroupRequest `json:"deleteDimensionGroup,omitempty"`
 
+	// DeleteDuplicates: Removes rows containing duplicate values in
+	// specified columns of a cell
+	// range.
+	DeleteDuplicates *DeleteDuplicatesRequest `json:"deleteDuplicates,omitempty"`
+
 	// DeleteEmbeddedObject: Deletes an embedded object (e.g, chart, image)
 	// in a sheet.
 	DeleteEmbeddedObject *DeleteEmbeddedObjectRequest `json:"deleteEmbeddedObject,omitempty"`
@@ -7383,6 +7467,10 @@ type Request struct {
 
 	// TextToColumns: Converts a column of text into many columns of text.
 	TextToColumns *TextToColumnsRequest `json:"textToColumns,omitempty"`
+
+	// TrimWhitespace: Trims cells of whitespace (such as spaces, tabs, or
+	// new lines).
+	TrimWhitespace *TrimWhitespaceRequest `json:"trimWhitespace,omitempty"`
 
 	// UnmergeCells: Unmerges merged cells.
 	UnmergeCells *UnmergeCellsRequest `json:"unmergeCells,omitempty"`
@@ -7492,6 +7580,10 @@ type Response struct {
 	// DeleteDimensionGroup: A reply from deleting a dimension group.
 	DeleteDimensionGroup *DeleteDimensionGroupResponse `json:"deleteDimensionGroup,omitempty"`
 
+	// DeleteDuplicates: A reply from removing rows containing duplicate
+	// values.
+	DeleteDuplicates *DeleteDuplicatesResponse `json:"deleteDuplicates,omitempty"`
+
 	// DuplicateFilterView: A reply from duplicating a filter view.
 	DuplicateFilterView *DuplicateFilterViewResponse `json:"duplicateFilterView,omitempty"`
 
@@ -7500,6 +7592,9 @@ type Response struct {
 
 	// FindReplace: A reply from doing a find/replace.
 	FindReplace *FindReplaceResponse `json:"findReplace,omitempty"`
+
+	// TrimWhitespace: A reply from trimming whitespace.
+	TrimWhitespace *TrimWhitespaceResponse `json:"trimWhitespace,omitempty"`
 
 	// UpdateConditionalFormatRule: A reply from updating a conditional
 	// format rule.
@@ -8492,6 +8587,74 @@ func (s *TreemapChartSpec) UnmarshalJSON(data []byte) error {
 	s.MaxValue = float64(s1.MaxValue)
 	s.MinValue = float64(s1.MinValue)
 	return nil
+}
+
+// TrimWhitespaceRequest: Trims the whitespace (such as spaces, tabs, or
+// new lines) in every cell in
+// the specified range. This request removes all whitespace from the
+// start and
+// end of each cell's text, and reduces any sub-sequence of remaining
+// whitespace
+// characters to a single space. If the resulting trimmed text starts
+// with a '+'
+// or '=' character, the text remains as a string value and is not
+// interpreted
+// as a formula.
+type TrimWhitespaceRequest struct {
+	// Range: The range whose cells to trim.
+	Range *GridRange `json:"range,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Range") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Range") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TrimWhitespaceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod TrimWhitespaceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TrimWhitespaceResponse: The result of trimming whitespace in cells.
+type TrimWhitespaceResponse struct {
+	// CellsChangedCount: The number of cells that were trimmed of
+	// whitespace.
+	CellsChangedCount int64 `json:"cellsChangedCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CellsChangedCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CellsChangedCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TrimWhitespaceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod TrimWhitespaceResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // UnmergeCellsRequest: Unmerges cells in the given range.

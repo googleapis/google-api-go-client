@@ -1933,7 +1933,7 @@ type ReportRequest struct {
 	DimensionFilterClauses []*DimensionFilterClause `json:"dimensionFilterClauses,omitempty"`
 
 	// Dimensions: The dimensions requested.
-	// Requests can have a total of 7 dimensions.
+	// Requests can have a total of 9 dimensions.
 	Dimensions []*Dimension `json:"dimensions,omitempty"`
 
 	// FiltersExpression: Dimension or metric filters that restrict the data

@@ -786,7 +786,7 @@
       }
     }
   },
-  "revision": "20190618",
+  "revision": "20190531",
   "rootUrl": "https://cloudtasks.googleapis.com/",
   "schemas": {
     "AcknowledgeTaskRequest": {
@@ -1025,7 +1025,7 @@
           "type": "string"
         },
         "leaseDuration": {
-          "description": "Required.\n\nThe duration of the lease.\n\nEach task returned in the response will\nhave its schedule_time set to the current\ntime plus the `lease_duration`. The task is leased until its\nschedule_time; thus, the task will not be\nreturned to another LeaseTasks call\nbefore its schedule_time.\n\n\nAfter the worker has successfully finished the work associated\nwith the task, the worker must call via\nAcknowledgeTask before the\nschedule_time. Otherwise the task will be\nreturned to a later LeaseTasks call so\nthat another worker can retry it.\n\nThe maximum lease duration is 1 week.\n`lease_duration` will be truncated to the nearest second.",
+          "description": "\nAfter the worker has successfully finished the work associated\nwith the task, the worker must call via\nAcknowledgeTask before the\nschedule_time. Otherwise the task will be\nreturned to a later LeaseTasks call so\nthat another worker can retry it.\n\nThe maximum lease duration is 1 week.\n`lease_duration` will be truncated to the nearest second.",
           "format": "google-duration",
           "type": "string"
         },

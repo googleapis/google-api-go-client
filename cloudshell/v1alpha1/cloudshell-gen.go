@@ -318,6 +318,11 @@ type Environment struct {
 	// if another environment is started.
 	State string `json:"state,omitempty"`
 
+	// WebHost: Output only. Host to which clients can connect to initiate
+	// HTTPS or WSS
+	// connections with the environment.
+	WebHost string `json:"webHost,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

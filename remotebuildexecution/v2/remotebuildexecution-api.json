@@ -446,7 +446,7 @@
       }
     }
   },
-  "revision": "20190618",
+  "revision": "20190723",
   "rootUrl": "https://remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -1619,7 +1619,7 @@
       "id": "GoogleDevtoolsRemotebuildexecutionAdminV1alphaListWorkerPoolsRequest",
       "properties": {
         "filter": {
-          "description": "Optional. A filter to constrain the pools returned. Filters have the form:\n\n\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e [[AND|OR] \u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e]...\n\n\u003cfield\u003e is the path for a field or map key in the Pool proto message.\ne.g. \"configuration.disk_size_gb\" or \"configuration.labels.key\".\n\u003coperator\u003e can be one of \"\u003c\", \"\u003c=\", \"\u003e=\", \"\u003e\", \"=\", \"!=\", \":\".\n\":\" is a HAS operation for strings and repeated primitive fields.\n\u003cvalue\u003e is the value to test, case-insensitive for strings. \"*\" stands for\nany value and can be used to test for key presence.\nParenthesis determine AND/OR precedence. In space separated restrictions,\nAND is implicit, e.g. \"a = b x = y\" is equivalent to \"a = b AND x = y\".\n\nExample filter:\nconfiguration.labels.key1 = * AND (state = RUNNING OR state = UPDATING)",
+          "description": "Optional. A filter expression that filters resources listed in\nthe response. The expression must specify the field name, a comparison\noperator, and the value that you want to use for filtering. The value\nmust be a string, a number, or a boolean. String values are\ncase-insensitive.\nThe comparison operator must be either `:`, `=`, `!=`, `\u003e`, `\u003e=`, `\u003c=` or\n`\u003c`.\nThe `:` operator can be used with string fields to match substrings.\nFor non-string fields it is equivalent to the `=` operator.\nThe `:*` comparison can be used to test  whether a key has been defined.\n\nYou can also filter on nested fields.\n\nTo filter on multiple expressions, you can separate expression using\n`AND` and `OR` operators, using parentheses to specify precedence. If\nneither operator is specified, `AND` is assumed.\n\nExamples:\n\nInclude only pools with more than 100 reserved workers:\n`(worker_count \u003e 100) (worker_config.reserved = true)`\n\nInclude only pools with a certain label or machines of the n1-standard\nfamily:\n`worker_config.labels.key1 : * OR worker_config.machine_type: n1-standard`",
           "type": "string"
         },
         "parent": {
@@ -1675,7 +1675,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels associated with the workers.\nLabel keys and values can be no longer than 63 characters, can only contain\nlowercase letters, numeric characters, underscores and dashes.\nInternational letters are permitted. Keys must start with a letter but\nvalues are optional.\nThere can not be more than 64 labels per resource.",
+          "description": "Labels associated with the workers.\nLabel keys and values can be no longer than 63 characters, can only contain\nlowercase letters, numeric characters, underscores and dashes.\nInternational letters are permitted. Label keys must start with a letter.\nLabel values are optional.\nThere can not be more than 64 labels per resource.",
           "type": "object"
         },
         "machineType": {

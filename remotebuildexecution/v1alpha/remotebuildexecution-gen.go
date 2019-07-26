@@ -2132,30 +2132,43 @@ func (s *GoogleDevtoolsRemotebuildexecutionAdminV1alphaListInstancesResponse) Ma
 }
 
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaListWorkerPoolsRequest struct {
-	// Filter: Optional. A filter to constrain the pools returned. Filters
-	// have the form:
+	// Filter: Optional. A filter expression that filters resources listed
+	// in
+	// the response. The expression must specify the field name, a
+	// comparison
+	// operator, and the value that you want to use for filtering. The
+	// value
+	// must be a string, a number, or a boolean. String values
+	// are
+	// case-insensitive.
+	// The comparison operator must be either `:`, `=`, `!=`, `>`, `>=`,
+	// `<=` or
+	// `<`.
+	// The `:` operator can be used with string fields to match
+	// substrings.
+	// For non-string fields it is equivalent to the `=` operator.
+	// The `:*` comparison can be used to test  whether a key has been
+	// defined.
 	//
-	// <field> <operator> <value> [[AND|OR] <field> <operator>
-	// <value>]...
+	// You can also filter on nested fields.
 	//
-	// <field> is the path for a field or map key in the Pool proto
-	// message.
-	// e.g. "configuration.disk_size_gb" or
-	// "configuration.labels.key".
-	// <operator> can be one of "<", "<=", ">=", ">", "=", "!=", ":".
-	// ":" is a HAS operation for strings and repeated primitive
-	// fields.
-	// <value> is the value to test, case-insensitive for strings. "*"
-	// stands for
-	// any value and can be used to test for key presence.
-	// Parenthesis determine AND/OR precedence. In space separated
-	// restrictions,
-	// AND is implicit, e.g. "a = b x = y" is equivalent to "a = b AND x =
-	// y".
+	// To filter on multiple expressions, you can separate expression
+	// using
+	// `AND` and `OR` operators, using parentheses to specify precedence.
+	// If
+	// neither operator is specified, `AND` is assumed.
 	//
-	// Example filter:
-	// configuration.labels.key1 = * AND (state = RUNNING OR state =
-	// UPDATING)
+	// Examples:
+	//
+	// Include only pools with more than 100 reserved
+	// workers:
+	// `(worker_count > 100) (worker_config.reserved = true)`
+	//
+	// Include only pools with a certain label or machines of the
+	// n1-standard
+	// family:
+	// `worker_config.labels.key1 : * OR worker_config.machine_type:
+	// n1-standard`
 	Filter string `json:"filter,omitempty"`
 
 	// Parent: Resource name of the instance.
@@ -2282,9 +2295,9 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerConfig struct {
 	// contain
 	// lowercase letters, numeric characters, underscores and
 	// dashes.
-	// International letters are permitted. Keys must start with a letter
-	// but
-	// values are optional.
+	// International letters are permitted. Label keys must start with a
+	// letter.
+	// Label values are optional.
 	// There can not be more than 64 labels per resource.
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -5153,30 +5166,43 @@ func (r *ProjectsInstancesWorkerpoolsService) List(parent string) *ProjectsInsta
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter to constrain
-// the pools returned. Filters have the form:
+// Filter sets the optional parameter "filter": A filter expression that
+// filters resources listed in
+// the response. The expression must specify the field name, a
+// comparison
+// operator, and the value that you want to use for filtering. The
+// value
+// must be a string, a number, or a boolean. String values
+// are
+// case-insensitive.
+// The comparison operator must be either `:`, `=`, `!=`, `>`, `>=`,
+// `<=` or
+// `<`.
+// The `:` operator can be used with string fields to match
+// substrings.
+// For non-string fields it is equivalent to the `=` operator.
+// The `:*` comparison can be used to test  whether a key has been
+// defined.
 //
-// <field> <operator> <value> [[AND|OR] <field> <operator>
-// <value>]...
+// You can also filter on nested fields.
 //
-// <field> is the path for a field or map key in the Pool proto
-// message.
-// e.g. "configuration.disk_size_gb" or
-// "configuration.labels.key".
-// <operator> can be one of "<", "<=", ">=", ">", "=", "!=", ":".
-// ":" is a HAS operation for strings and repeated primitive
-// fields.
-// <value> is the value to test, case-insensitive for strings. "*"
-// stands for
-// any value and can be used to test for key presence.
-// Parenthesis determine AND/OR precedence. In space separated
-// restrictions,
-// AND is implicit, e.g. "a = b x = y" is equivalent to "a = b AND x =
-// y".
+// To filter on multiple expressions, you can separate expression
+// using
+// `AND` and `OR` operators, using parentheses to specify precedence.
+// If
+// neither operator is specified, `AND` is assumed.
 //
-// Example filter:
-// configuration.labels.key1 = * AND (state = RUNNING OR state =
-// UPDATING)
+// Examples:
+//
+// Include only pools with more than 100 reserved
+// workers:
+// `(worker_count > 100) (worker_config.reserved = true)`
+//
+// Include only pools with a certain label or machines of the
+// n1-standard
+// family:
+// `worker_config.labels.key1 : * OR worker_config.machine_type:
+// n1-standard`
 func (c *ProjectsInstancesWorkerpoolsListCall) Filter(filter string) *ProjectsInstancesWorkerpoolsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5292,7 +5318,7 @@ func (c *ProjectsInstancesWorkerpoolsListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. A filter to constrain the pools returned. Filters have the form:\n\n\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e [[AND|OR] \u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e]...\n\n\u003cfield\u003e is the path for a field or map key in the Pool proto message.\ne.g. \"configuration.disk_size_gb\" or \"configuration.labels.key\".\n\u003coperator\u003e can be one of \"\u003c\", \"\u003c=\", \"\u003e=\", \"\u003e\", \"=\", \"!=\", \":\".\n\":\" is a HAS operation for strings and repeated primitive fields.\n\u003cvalue\u003e is the value to test, case-insensitive for strings. \"*\" stands for\nany value and can be used to test for key presence.\nParenthesis determine AND/OR precedence. In space separated restrictions,\nAND is implicit, e.g. \"a = b x = y\" is equivalent to \"a = b AND x = y\".\n\nExample filter:\nconfiguration.labels.key1 = * AND (state = RUNNING OR state = UPDATING)",
+	//       "description": "Optional. A filter expression that filters resources listed in\nthe response. The expression must specify the field name, a comparison\noperator, and the value that you want to use for filtering. The value\nmust be a string, a number, or a boolean. String values are\ncase-insensitive.\nThe comparison operator must be either `:`, `=`, `!=`, `\u003e`, `\u003e=`, `\u003c=` or\n`\u003c`.\nThe `:` operator can be used with string fields to match substrings.\nFor non-string fields it is equivalent to the `=` operator.\nThe `:*` comparison can be used to test  whether a key has been defined.\n\nYou can also filter on nested fields.\n\nTo filter on multiple expressions, you can separate expression using\n`AND` and `OR` operators, using parentheses to specify precedence. If\nneither operator is specified, `AND` is assumed.\n\nExamples:\n\nInclude only pools with more than 100 reserved workers:\n`(worker_count \u003e 100) (worker_config.reserved = true)`\n\nInclude only pools with a certain label or machines of the n1-standard\nfamily:\n`worker_config.labels.key1 : * OR worker_config.machine_type: n1-standard`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

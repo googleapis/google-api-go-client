@@ -233,6 +233,11 @@ type Environment struct {
 	// if another environment is started.
 	State string `json:"state,omitempty"`
 
+	// WebHost: Output only. Host to which clients can connect to initiate
+	// HTTPS or WSS
+	// connections with the environment.
+	WebHost string `json:"webHost,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DockerImage") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

@@ -228,7 +228,7 @@
       }
     }
   },
-  "revision": "20190610",
+  "revision": "20190724",
   "rootUrl": "https://cloudshell.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {
@@ -293,6 +293,10 @@
             "The environment is being started but is not yet ready to accept\nconnections.",
             "The environment is running and ready to accept connections. It will\nautomatically transition back to DISABLED after a period of inactivity or\nif another environment is started."
           ],
+          "type": "string"
+        },
+        "webHost": {
+          "description": "Output only. Host to which clients can connect to initiate HTTPS or WSS\nconnections with the environment.",
           "type": "string"
         }
       },

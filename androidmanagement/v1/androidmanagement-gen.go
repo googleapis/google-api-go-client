@@ -474,10 +474,17 @@ type ApplicationPolicy struct {
 	//   "REQUIRED_FOR_SETUP" - The app is automatically installed and can't
 	// be removed by the user and will prevent setup from completion until
 	// installation is complete.
+	//   "KIOSK" - The app is automatically installed in kiosk mode: it's
+	// set as the preferred home intent and whitelisted for lock task mode.
+	// Device setup won't complete until the app is installed. After
+	// installation, users won't be able to remove the app. You can only set
+	// this installType for one app per policy. When this is present in the
+	// policy, status bar will be automatically disabled.
 	InstallType string `json:"installType,omitempty"`
 
 	// LockTaskAllowed: Whether the app is allowed to lock itself in
-	// full-screen mode.
+	// full-screen mode. DEPRECATED. Use InstallType KIOSK or
+	// kioskCustomLauncherEnabled to to configure a dedicated device.
 	LockTaskAllowed bool `json:"lockTaskAllowed,omitempty"`
 
 	// ManagedConfiguration: Managed configuration applied to the app. The
@@ -2428,7 +2435,8 @@ func (s *PermissionGrant) MarshalJSON() ([]byte, error) {
 }
 
 // PersistentPreferredActivity: A default activity for handling intents
-// that match a particular intent filter.
+// that match a particular intent filter. Note: To set up a kiosk, use
+// InstallType to KIOSK rather than use persistent preferred activities.
 type PersistentPreferredActivity struct {
 	// Actions: The intent actions to match in the filter. If any actions
 	// are included in the filter, then an intent's action must be one of
@@ -2656,9 +2664,8 @@ type Policy struct {
 	// KioskCustomLauncherEnabled: Whether the kiosk custom launcher is
 	// enabled. This replaces the home screen with a launcher that locks
 	// down the device to the apps installed via the applications setting.
-	// The apps appear on a single page in alphabetical order. It is
-	// recommended to also use status_bar_disabled to block access to device
-	// settings.
+	// Apps appear on a single page in alphabetical order. The status bar is
+	// disabled when this is set.
 	KioskCustomLauncherEnabled bool `json:"kioskCustomLauncherEnabled,omitempty"`
 
 	// LocationMode: The degree of location detection enabled. The user may
@@ -2817,7 +2824,9 @@ type Policy struct {
 
 	// StatusBarDisabled: Whether the status bar is disabled. This disables
 	// notifications, quick settings, and other screen overlays that allow
-	// escape from full-screen mode.
+	// escape from full-screen mode. DEPRECATED. To disable the status bar
+	// on a kiosk device, use InstallType KIOSK or
+	// kioskCustomLauncherEnabled.
 	StatusBarDisabled bool `json:"statusBarDisabled,omitempty"`
 
 	// StatusReportingSettings: Status reporting settings

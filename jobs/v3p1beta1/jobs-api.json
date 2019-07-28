@@ -662,7 +662,7 @@
       }
     }
   },
-  "revision": "20190722",
+  "revision": "20190720",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {
@@ -1258,7 +1258,7 @@
           "type": "array"
         },
         "stringValues": {
-          "description": "Optional but exactly one of string_values or long_values must\nbe specified.\n\nThis field is used to perform a string match (`CASE_SENSITIVE_MATCH` or\n`CASE_INSENSITIVE_MATCH`) search.\nFor filterable `string_value`s, a maximum total number of 200 values\nis allowed, with each `string_value` has a byte size of no more than\n500B. For unfilterable `string_values`, the maximum total byte size of\nunfilterable `string_values` is 50KB.\n\nEmpty string is not allowed.",
+          "description": "Optional but exactly one of string_values or long_values must\nbe specified.\n\nThis field is used to perform a string match (`CASE_SENSITIVE_MATCH` or\n`CASE_INSENSITIVE_MATCH`) search.\nFor filterable `string_value`s, a maximum total number of 200 values\nis allowed, with each `string_value` has a byte size of no more than\n255B. For unfilterable `string_values`, the maximum total byte size of\nunfilterable `string_values` is 50KB.\n\nEmpty string is not allowed.",
           "items": {
             "type": "string"
           },

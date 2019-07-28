@@ -317,7 +317,7 @@ type Alert struct {
 	// * Mobile device management
 	// * Gmail phishing
 	// * Domain wide takeout
-	// * Government attack warning
+	// * State sponsored attack
 	// * Google identity
 	Source string `json:"source,omitempty"`
 

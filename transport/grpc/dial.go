@@ -71,6 +71,11 @@ func dial(ctx context.Context, insecure bool, opts []option.ClientOption) (*grpc
 		if err != nil {
 			return nil, err
 		}
+
+		if o.QuotaProject == "" {
+			o.QuotaProject = internal.QuotaProjectFromCreds(creds)
+		}
+
 		// Attempt Direct Path only if:
 		// * The endpoint is a host:port (or dns:///host:port).
 		// * Credentials are obtained via GCE metadata server, using the default

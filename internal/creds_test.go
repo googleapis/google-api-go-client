@@ -115,3 +115,29 @@ const validServiceAccountJSON = `{
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dumba-504%40appspot.gserviceaccount.com"
 }`
+
+func TestQuotaProjectFromCreds(t *testing.T) {
+	ctx := context.Background()
+
+	cred, err := credentialsFromJSON(ctx, []byte(validServiceAccountJSON), "foo.googleapis.com", nil, nil)
+	if err != nil {
+		t.Fatalf("got %v, wanted no error", err)
+	}
+	if want, got := "", QuotaProjectFromCreds(cred); want != got {
+		t.Errorf("QuotaProjectFromCreds(validServiceAccountJSON): want %q, got %q", want, got)
+	}
+
+	quotaProjectJSON := []byte(`
+{
+	"type": "authorized_user",
+	"quota_project_id": "foobar"
+}`)
+
+	cred, err = credentialsFromJSON(ctx, []byte(quotaProjectJSON), "foo.googleapis.com", nil, nil)
+	if err != nil {
+		t.Fatalf("got %v, wanted no error", err)
+	}
+	if want, got := "foobar", QuotaProjectFromCreds(cred); want != got {
+		t.Errorf("QuotaProjectFromCreds(quotaProjectJSON): want %q, got %q", want, got)
+	}
+}

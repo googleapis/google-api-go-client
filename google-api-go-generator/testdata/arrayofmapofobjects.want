@@ -105,16 +105,17 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client    *http.Client
-	BasePath  string // API endpoint base URL
-	UserAgent string // optional additional User-Agent fragment
+	client          *http.Client
+	BasePath        string // API endpoint base URL
+	UserAgent       string // optional additional User-Agent fragment
+	UserAgentPrefix string // optional User-Agent prefix fragment
 }
 
 func (s *Service) userAgent() string {
-	if s.UserAgent == "" {
+	if s.UserAgent == "" && s.UserAgentPrefix == "" {
 		return googleapi.UserAgent
 	}
-	return googleapi.UserAgent + " " + s.UserAgent
+	return strings.Trim(s.UserAgentPrefix + " " + googleapi.UserAgent + " " + s.UserAgent)
 }
 
 type Analyze struct {

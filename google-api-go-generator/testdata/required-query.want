@@ -212,6 +212,7 @@ func (c *TechsCountCall) Header() http.Header {
 
 func (c *TechsCountCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/00000000")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

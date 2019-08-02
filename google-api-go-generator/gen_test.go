@@ -17,10 +17,13 @@ package main
 import (
 	"bytes"
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"google.golang.org/api/internal/version"
 )
 
 var updateGolden = flag.Bool("update_golden", false, "If true, causes TestAPIs to update golden files")
@@ -54,34 +57,39 @@ func TestAPIs(t *testing.T) {
 		"wrapnewlines",
 	}
 	for _, name := range names {
-		t.Logf("TEST %s", name)
-		api, err := apiFromFile(filepath.Join("testdata", name+".json"))
-		if err != nil {
-			t.Errorf("Error loading API testdata/%s.json: %v", name, err)
-			continue
-		}
-		clean, err := api.GenerateCode()
-		if err != nil {
-			t.Errorf("Error generating code for %s: %v", name, err)
-			continue
-		}
-		goldenFile := filepath.Join("testdata", name+".want")
-		if *updateGolden {
-			if err := ioutil.WriteFile(goldenFile, clean, 0644); err != nil {
+		t.Run(name, func(t *testing.T) {
+			api, err := apiFromFile(filepath.Join("testdata", name+".json"))
+			if err != nil {
+				t.Fatalf("Error loading API testdata/%s.json: %v", name, err)
+			}
+			clean, err := api.GenerateCode()
+			if err != nil {
+				t.Fatalf("Error generating code for %s: %v", name, err)
+			}
+			goldenFile := filepath.Join("testdata", name+".want")
+			if *updateGolden {
+				if err := ioutil.WriteFile(goldenFile, clean, 0644); err != nil {
+					t.Fatal(err)
+				}
+			}
+			want, err := ioutil.ReadFile(goldenFile)
+			if err != nil {
 				t.Fatal(err)
 			}
-		}
-		want, err := ioutil.ReadFile(goldenFile)
-		if err != nil {
-			t.Error(err)
-			continue
-		}
-		if !bytes.Equal(want, clean) {
-			tf, _ := ioutil.TempFile("", "api-"+name+"-got-json.")
-			tf.Write(clean)
-			tf.Close()
-			t.Errorf("Output for API %s differs: diff -u %s %s", name, goldenFile, tf.Name())
-		}
+			wantStr := strings.Replace(string(want), "gl-go/1.12.5", fmt.Sprintf("gl-go/%s", version.Go()), -1)
+			wantStr = strings.Replace(wantStr, "gdcl/00000000", fmt.Sprintf("gdcl/%s", version.Repo), -1)
+			want = []byte(wantStr)
+			if !bytes.Equal(want, clean) {
+				tf, _ := ioutil.TempFile("", "api-"+name+"-got-json.")
+				if _, err := tf.Write(clean); err != nil {
+					t.Fatal(err)
+				}
+				if err := tf.Close(); err != nil {
+					t.Fatal(err)
+				}
+				t.Errorf("Output for API %s differs: diff -u %s %s", name, goldenFile, tf.Name())
+			}
+		})
 	}
 }
 

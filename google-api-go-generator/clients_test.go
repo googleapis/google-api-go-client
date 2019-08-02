@@ -36,7 +36,6 @@ import (
 
 //go:generate -command api go run gen.go docurls.go replacements.go -install -api
 
-//go:generate api dfareporting:v2.8
 //go:generate api monitoring:v3
 //go:generate api storage:v1
 

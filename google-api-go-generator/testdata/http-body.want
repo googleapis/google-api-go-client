@@ -322,6 +322,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateResourceCall) Header() htt
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateResourceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/00000000")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -464,6 +465,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/00000000")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

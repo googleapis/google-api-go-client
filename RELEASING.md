@@ -5,6 +5,7 @@
    version `$NV`.
 1. On master, run `git log $CV..` to list all the changes since the last
    release.
+1. `cd internal/version && go generate && cd ../..`
 1. Edit `CHANGES.md` to include a summary of the changes.
 1. Mail the CL containing the `CHANGES.md` changes. When the CL is approved,
    submit it.

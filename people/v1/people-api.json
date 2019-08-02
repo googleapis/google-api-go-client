@@ -640,7 +640,7 @@
       }
     }
   },
-  "revision": "20190718",
+  "revision": "20190727",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {
@@ -1249,6 +1249,13 @@
       "description": "The response to a modify contact group members request.",
       "id": "ModifyContactGroupMembersResponse",
       "properties": {
+        "canNotRemoveLastContactGroupResourceNames": {
+          "description": "The contact people resource names that cannot be removed from their\nlast contact group.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "notFoundResourceNames": {
           "description": "The contact people resource names that were not found.",
           "items": {

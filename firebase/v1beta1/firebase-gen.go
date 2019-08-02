@@ -305,6 +305,48 @@ func (s *AddFirebaseRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type AddGoogleAnalyticsRequest struct {
+	// AnalyticsAccountId: The ID for the existing
+	// [Google Analytics account](http://www.google.com/analytics/) that
+	// you
+	// want to link with your `FirebaseProject`.
+	// <br>
+	// <br>Specifying this field will provision a new Google
+	// Analytics
+	// property in your Google Analytics account and associate the new
+	// property
+	// with your `FirebaseProject`.
+	AnalyticsAccountId string `json:"analyticsAccountId,omitempty"`
+
+	// AnalyticsPropertyId: The ID for the existing Google Analytics
+	// property that you want to
+	// associate with your `FirebaseProject`.
+	AnalyticsPropertyId string `json:"analyticsPropertyId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnalyticsAccountId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnalyticsAccountId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AddGoogleAnalyticsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AddGoogleAnalyticsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type AdminSdkConfig struct {
 	// DatabaseURL: The default Firebase Realtime Database URL.
 	DatabaseURL string `json:"databaseURL,omitempty"`
@@ -358,6 +400,94 @@ type AdminSdkConfig struct {
 
 func (s *AdminSdkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AdminSdkConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AnalyticsDetails struct {
+	// AnalyticsProperty: The Analytics Property object associated with the
+	// specified
+	// `FirebaseProject`.
+	// <br>
+	// <br>This object contains the details of the Google Analytics
+	// property
+	// associated with the specified `FirebaseProject`.
+	AnalyticsProperty *AnalyticsProperty `json:"analyticsProperty,omitempty"`
+
+	// StreamMappings: A map of `AppId` to `StreamId` for each Firebase App
+	// in the specified
+	// `FirebaseProject`. Each `AppId` and `StreamId` appears only once.
+	StreamMappings []*StreamMapping `json:"streamMappings,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AnalyticsProperty")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnalyticsProperty") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyticsDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyticsDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AnalyticsProperty: Details of a Google Analytics property
+type AnalyticsProperty struct {
+	// DisplayName: The display name of the Google Analytics property
+	// associated with the
+	// specified `FirebaseProject`.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Id: The globally unique, Google-assigned identifier of the Google
+	// Analytics
+	// property associated with the specified `FirebaseProject`.
+	// <br>
+	// <br>If you
+	// called
+	// [`AddGoogleAnalytics`](../../v1beta1/projects/addGoogleAnalytic
+	// s) to link
+	// your `FirebaseProject` with a Google Analytics account, the value in
+	// this
+	// `id` field is the same as the ID of the property either specified
+	// or
+	// provisioned with that call to `AddGoogleAnalytics`.
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyticsProperty) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyticsProperty
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1288,6 +1418,47 @@ func (s *ProjectInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type RemoveAnalyticsRequest struct {
+	// AnalyticsPropertyId: Optional. The ID of the Google Analytics
+	// property associated with the
+	// specified `FirebaseProject`.
+	// <ul>
+	// <li>If not set, then the Google Analytics property that is
+	// currently
+	// associated with the specified `FirebaseProject` is
+	// removed.</li>
+	// <li>If set, and the specified `FirebaseProject` is currently
+	// associated
+	// with a <em>different</em> Google Analytics property, then the
+	// response is a
+	// `412 Precondition Failed` error.</li>
+	// </ul>
+	AnalyticsPropertyId string `json:"analyticsPropertyId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnalyticsPropertyId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnalyticsPropertyId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemoveAnalyticsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoveAnalyticsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type SearchFirebaseAppsResponse struct {
 	// Apps: One page of results from a call to `SearchFirebaseApps`.
 	Apps []*FirebaseAppInfo `json:"apps,omitempty"`
@@ -1501,6 +1672,54 @@ type StatusProto struct {
 
 func (s *StatusProto) MarshalJSON() ([]byte, error) {
 	type NoMethod StatusProto
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StreamMapping: A mapping of a Firebase App to a Google Analytics data
+// stream
+type StreamMapping struct {
+	// App: The fully qualified resource name of the Firebase App associated
+	// with the
+	// Google Analytics data stream, in the
+	// format:
+	// <br><code>projects/<var>projectId</var>/iosApps/<var>appId</va
+	// r></code>
+	// or
+	// <br><code>projects/<var>projectId</var>/androidApps/<var>
+	// appId</var></code>
+	App string `json:"app,omitempty"`
+
+	// StreamId: The unique Google-assigned identifier of the Google
+	// Analytics data stream
+	// associated with the Firebase App.
+	// <br>
+	// <br>Learn more about Google Analytics data streams in
+	// the
+	// [Analytics
+	// documentation](https://support.google.com/analytics/ans
+	// wer/9303323).
+	StreamId int64 `json:"streamId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "App") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "App") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StreamMapping) MarshalJSON() ([]byte, error) {
+	type NoMethod StreamMapping
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2224,6 +2443,219 @@ func (c *ProjectsAddFirebaseCall) Do(opts ...googleapi.CallOption) (*Operation, 
 
 }
 
+// method id "firebase.projects.addGoogleAnalytics":
+
+type ProjectsAddGoogleAnalyticsCall struct {
+	s                         *Service
+	parent                    string
+	addgoogleanalyticsrequest *AddGoogleAnalyticsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// AddGoogleAnalytics: Links a FirebaseProject with an existing
+// [Google Analytics
+// account](http://www.google.com/analytics/).
+// <br>
+// <br>Using this call, you can either:
+// <ul>
+// <li>Provision a new Google Analytics property and associate the
+// new
+// property with your `FirebaseProject`.</li>
+// <li>Associate an existing Google Analytics property with
+// your
+// `FirebaseProject`.</li>
+// </ul>
+// <br>
+// Note that when you call `AddGoogleAnalytics`:
+// <ul>
+// <li>Any Firebase Apps already in your `FirebaseProject`
+// are
+// automatically provisioned as new <em>data streams</em> in the
+// Google
+// Analytics property.</li>
+// <li>Any <em>data streams</em> already in the Google Analytics
+// property are
+// automatically associated with their corresponding Firebase Apps
+// (only
+// applies when an app's `packageName` or `bundleId` match those for
+// an
+// existing data stream).</li>
+// </ul>
+// Learn more about the hierarchy and structure of Google
+// Analytics
+// accounts in
+// the
+// [Analytics
+// documentation](https://support.google.com/analytics/ans
+// wer/9303323).
+// <br>
+// <br>The result of this call is an
+// [`Operation`](../../v1beta1/operations).
+// Poll the `Operation` to track the provisioning process by
+// calling
+// GetOperation
+// until
+// [`done`](../../v1beta1/operations#Operation.FIELDS.done) is `true`.
+// When
+// `done` is `true`, the `Operation` has either succeeded or failed. If
+// the
+// `Operation` succeeded,
+// its
+// [`response`](../../v1beta1/operations#Operation.FIELDS.response) is
+// set to
+// an AnalyticsDetails; if the `Operation` failed,
+// its
+// [`error`](../../v1beta1/operations#Operation.FIELDS.error) is set to
+// a
+// google.rpc.Status.
+// <br>
+// <br>To call `AddGoogleAnalytics`, a member must be an Owner for
+// the existing `FirebaseProject` and have the
+// [`Edit`
+// permission](https://support.google.com/analytics/answer/2884495)
+// for the Google Analytics account.
+// <br>
+// <br>If a `FirebaseProject` already has Google Analytics enabled, and
+// you
+// call `AddGoogleAnalytics` using an `analyticsPropertyId` that's
+// different
+// from the currently associated property, then the call will fail.
+// Analytics
+// may have already been enabled in the Firebase console or by
+// specifying
+// `timeZone` and `regionCode` in the call
+// to
+// [`AddFirebase`](../../v1beta1/projects/addFirebase).
+func (r *ProjectsService) AddGoogleAnalytics(parent string, addgoogleanalyticsrequest *AddGoogleAnalyticsRequest) *ProjectsAddGoogleAnalyticsCall {
+	c := &ProjectsAddGoogleAnalyticsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.addgoogleanalyticsrequest = addgoogleanalyticsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsAddGoogleAnalyticsCall) Fields(s ...googleapi.Field) *ProjectsAddGoogleAnalyticsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsAddGoogleAnalyticsCall) Context(ctx context.Context) *ProjectsAddGoogleAnalyticsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsAddGoogleAnalyticsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAddGoogleAnalyticsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addgoogleanalyticsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}:addGoogleAnalytics")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebase.projects.addGoogleAnalytics" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsAddGoogleAnalyticsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Links a FirebaseProject with an existing\n[Google Analytics account](http://www.google.com/analytics/).\n\u003cbr\u003e\n\u003cbr\u003eUsing this call, you can either:\n\u003cul\u003e\n\u003cli\u003eProvision a new Google Analytics property and associate the new\nproperty with your `FirebaseProject`.\u003c/li\u003e\n\u003cli\u003eAssociate an existing Google Analytics property with your\n`FirebaseProject`.\u003c/li\u003e\n\u003c/ul\u003e\n\u003cbr\u003e\nNote that when you call `AddGoogleAnalytics`:\n\u003cul\u003e\n\u003cli\u003eAny Firebase Apps already in your `FirebaseProject` are\nautomatically provisioned as new \u003cem\u003edata streams\u003c/em\u003e in the Google\nAnalytics property.\u003c/li\u003e\n\u003cli\u003eAny \u003cem\u003edata streams\u003c/em\u003e already in the Google Analytics property are\nautomatically associated with their corresponding Firebase Apps (only\napplies when an app's `packageName` or `bundleId` match those for an\nexisting data stream).\u003c/li\u003e\n\u003c/ul\u003e\nLearn more about the hierarchy and structure of Google Analytics\naccounts in the\n[Analytics\ndocumentation](https://support.google.com/analytics/answer/9303323).\n\u003cbr\u003e\n\u003cbr\u003eThe result of this call is an [`Operation`](../../v1beta1/operations).\nPoll the `Operation` to track the provisioning process by calling\nGetOperation until\n[`done`](../../v1beta1/operations#Operation.FIELDS.done) is `true`. When\n`done` is `true`, the `Operation` has either succeeded or failed. If the\n`Operation` succeeded, its\n[`response`](../../v1beta1/operations#Operation.FIELDS.response) is set to\nan AnalyticsDetails; if the `Operation` failed, its\n[`error`](../../v1beta1/operations#Operation.FIELDS.error) is set to a\ngoogle.rpc.Status.\n\u003cbr\u003e\n\u003cbr\u003eTo call `AddGoogleAnalytics`, a member must be an Owner for\nthe existing `FirebaseProject` and have the\n[`Edit` permission](https://support.google.com/analytics/answer/2884495)\nfor the Google Analytics account.\n\u003cbr\u003e\n\u003cbr\u003eIf a `FirebaseProject` already has Google Analytics enabled, and you\ncall `AddGoogleAnalytics` using an `analyticsPropertyId` that's different\nfrom the currently associated property, then the call will fail. Analytics\nmay have already been enabled in the Firebase console or by specifying\n`timeZone` and `regionCode` in the call to\n[`AddFirebase`](../../v1beta1/projects/addFirebase).",
+	//   "flatPath": "v1beta1/projects/{projectsId}:addGoogleAnalytics",
+	//   "httpMethod": "POST",
+	//   "id": "firebase.projects.addGoogleAnalytics",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The parent `FirebaseProject` to link to an existing Google Analytics\naccount, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}:addGoogleAnalytics",
+	//   "request": {
+	//     "$ref": "AddGoogleAnalyticsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
 // method id "firebase.projects.get":
 
 type ProjectsGetCall struct {
@@ -2513,6 +2945,158 @@ func (c *ProjectsGetAdminSdkConfigCall) Do(opts ...googleapi.CallOption) (*Admin
 	//   "path": "v1beta1/{+name}",
 	//   "response": {
 	//     "$ref": "AdminSdkConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "firebase.projects.getAnalyticsDetails":
+
+type ProjectsGetAnalyticsDetailsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetAnalyticsDetails: Gets the Google Analytics details currently
+// associated with a
+// FirebaseProject.
+// <br>
+// <br>If the `FirebaseProject` is not yet linked to Google Analytics,
+// then
+// the response to `GetAnalyticsDetails` is NOT_FOUND.
+func (r *ProjectsService) GetAnalyticsDetails(name string) *ProjectsGetAnalyticsDetailsCall {
+	c := &ProjectsGetAnalyticsDetailsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsGetAnalyticsDetailsCall) Fields(s ...googleapi.Field) *ProjectsGetAnalyticsDetailsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsGetAnalyticsDetailsCall) IfNoneMatch(entityTag string) *ProjectsGetAnalyticsDetailsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsGetAnalyticsDetailsCall) Context(ctx context.Context) *ProjectsGetAnalyticsDetailsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGetAnalyticsDetailsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetAnalyticsDetailsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebase.projects.getAnalyticsDetails" call.
+// Exactly one of *AnalyticsDetails or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AnalyticsDetails.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsGetAnalyticsDetailsCall) Do(opts ...googleapi.CallOption) (*AnalyticsDetails, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AnalyticsDetails{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the Google Analytics details currently associated with a\nFirebaseProject.\n\u003cbr\u003e\n\u003cbr\u003eIf the `FirebaseProject` is not yet linked to Google Analytics, then\nthe response to `GetAnalyticsDetails` is NOT_FOUND.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/analyticsDetails",
+	//   "httpMethod": "GET",
+	//   "id": "firebase.projects.getAnalyticsDetails",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The fully qualified resource name, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e/analyticsDetails\u003c/code\u003e",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/analyticsDetails$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "AnalyticsDetails"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -2886,6 +3470,165 @@ func (c *ProjectsPatchCall) Do(opts ...googleapi.CallOption) (*FirebaseProject, 
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebase.projects.removeAnalytics":
+
+type ProjectsRemoveAnalyticsCall struct {
+	s                      *Service
+	parent                 string
+	removeanalyticsrequest *RemoveAnalyticsRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// RemoveAnalytics: Unlinks the specified `FirebaseProject` from its
+// Google Analytics account.
+// <br>
+// <br>This call removes the association of the specified
+// `FirebaseProject`
+// with its current Google Analytics property. However, this call does
+// not
+// delete the Google Analytics resources, such as the Google
+// Analytics
+// property or any data streams.
+// <br>
+// <br>These resources may be re-associated later to the
+// `FirebaseProject`
+// by
+// calling
+// [`AddGoogleAnalytics`](../../v1beta1/projects/addGoogleAnal
+// ytics) and
+// specifying the same `analyticsPropertyId`.
+// <br>
+// <br>To call `RemoveAnalytics`, a member must be an Owner for
+// the `FirebaseProject`.
+func (r *ProjectsService) RemoveAnalytics(parent string, removeanalyticsrequest *RemoveAnalyticsRequest) *ProjectsRemoveAnalyticsCall {
+	c := &ProjectsRemoveAnalyticsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.removeanalyticsrequest = removeanalyticsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsRemoveAnalyticsCall) Fields(s ...googleapi.Field) *ProjectsRemoveAnalyticsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsRemoveAnalyticsCall) Context(ctx context.Context) *ProjectsRemoveAnalyticsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRemoveAnalyticsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsRemoveAnalyticsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.removeanalyticsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}:removeAnalytics")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebase.projects.removeAnalytics" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsRemoveAnalyticsCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Unlinks the specified `FirebaseProject` from its Google Analytics account.\n\u003cbr\u003e\n\u003cbr\u003eThis call removes the association of the specified `FirebaseProject`\nwith its current Google Analytics property. However, this call does not\ndelete the Google Analytics resources, such as the Google Analytics\nproperty or any data streams.\n\u003cbr\u003e\n\u003cbr\u003eThese resources may be re-associated later to the `FirebaseProject` by\ncalling\n[`AddGoogleAnalytics`](../../v1beta1/projects/addGoogleAnalytics) and\nspecifying the same `analyticsPropertyId`.\n\u003cbr\u003e\n\u003cbr\u003eTo call `RemoveAnalytics`, a member must be an Owner for\nthe `FirebaseProject`.",
+	//   "flatPath": "v1beta1/projects/{projectsId}:removeAnalytics",
+	//   "httpMethod": "POST",
+	//   "id": "firebase.projects.removeAnalytics",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The parent `FirebaseProject` to unlink from its Google Analytics account,\nin the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}:removeAnalytics",
+	//   "request": {
+	//     "$ref": "RemoveAnalyticsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 

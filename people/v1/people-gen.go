@@ -1365,6 +1365,11 @@ func (s *ModifyContactGroupMembersRequest) MarshalJSON() ([]byte, error) {
 // ModifyContactGroupMembersResponse: The response to a modify contact
 // group members request.
 type ModifyContactGroupMembersResponse struct {
+	// CanNotRemoveLastContactGroupResourceNames: The contact people
+	// resource names that cannot be removed from their
+	// last contact group.
+	CanNotRemoveLastContactGroupResourceNames []string `json:"canNotRemoveLastContactGroupResourceNames,omitempty"`
+
 	// NotFoundResourceNames: The contact people resource names that were
 	// not found.
 	NotFoundResourceNames []string `json:"notFoundResourceNames,omitempty"`
@@ -1374,21 +1379,21 @@ type ModifyContactGroupMembersResponse struct {
 	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "NotFoundResourceNames") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// "CanNotRemoveLastContactGroupResourceNames") to unconditionally
+	// include in API requests. By default, fields with empty values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NotFoundResourceNames") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "CanNotRemoveLastContactGroupResourceNames") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

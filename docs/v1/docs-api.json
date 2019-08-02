@@ -209,7 +209,7 @@
       }
     }
   },
-  "revision": "20190718",
+  "revision": "20190729",
   "rootUrl": "https://docs.googleapis.com/",
   "schemas": {
     "AutoText": {
@@ -3734,7 +3734,7 @@
         },
         "range": {
           "$ref": "Range",
-          "description": "The range of text to style.\n\nThe range may be extended to include adjacent newlines.\n\nIf the range fully contains a paragraph belonging to a list, the\nparagraph's bullet is also updated with the matching text style."
+          "description": "The range of text to style.\n\nThe range may be extended to include adjacent newlines.\n\nIf the range fully contains a paragraph belonging to a list, the\nparagraph's bullet is also updated with the matching text style.\n\nRanges cannot be inserted inside a relative UpdateTextStyleRequest."
         },
         "textStyle": {
           "$ref": "TextStyle",

@@ -604,7 +604,7 @@
       }
     }
   },
-  "revision": "20190422",
+  "revision": "20190801",
   "rootUrl": "https://firebasehosting.googleapis.com/",
   "schemas": {
     "ActingUser": {
@@ -983,7 +983,7 @@
         },
         "version": {
           "$ref": "Version",
-          "description": "Output only.  The configuration and content that was released."
+          "description": "Output only. The configuration and content that was released."
         }
       },
       "type": "object"

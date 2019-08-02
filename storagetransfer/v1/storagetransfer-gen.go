@@ -517,8 +517,8 @@ type ErrorSummary struct {
 
 	// ErrorLogEntries: Error samples.
 	//
-	// No more than 100 error log entries may be recorded for a given
-	// error code for a single task.
+	// At most 5 error log entries will be recorded for a given
+	// error code for a single transfer operation.
 	ErrorLogEntries []*ErrorLogEntry `json:"errorLogEntries,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ErrorCode") to

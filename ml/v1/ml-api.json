@@ -1002,7 +1002,7 @@
       }
     }
   },
-  "revision": "20190704",
+  "revision": "20190727",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1846,7 +1846,7 @@
           "type": "string"
         },
         "tpuTfVersion": {
-          "description": "TensorFlow version used in the custom container. This field is required if\nthe replica is a TPU worker that uses a custom container. Otherwise, do not\nspecify this field.",
+          "description": "The AI Platform runtime version that includes a TensorFlow version matching\nthe one used in the custom container. This field is required if the replica\nis a TPU worker that uses a custom container. Otherwise, do not specify\nthis field. This must be a [runtime version that currently supports\ntraining with\nTPUs](/ml-engine/docs/tensorflow/runtime-version-list#tpu-support).\n\nNote that the version of TensorFlow included in a runtime version may\ndiffer from the numbering of the runtime version itself, because it may\nhave a different [patch\nversion](https://www.tensorflow.org/guide/version_compat#semantic_versioning_20).\nIn this field, you must specify the runtime version (TensorFlow minor\nversion). For example, if your custom container runs TensorFlow `1.x.y`,\nspecify `1.x`.",
           "type": "string"
         }
       },

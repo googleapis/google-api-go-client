@@ -1003,6 +1003,10 @@ type Device struct {
 	// chronological order.
 	PreviousDeviceNames []string `json:"previousDeviceNames,omitempty"`
 
+	// SecurityPosture: Device's security posture value that reflects how
+	// secure the device is.
+	SecurityPosture *SecurityPosture `json:"securityPosture,omitempty"`
+
 	// SoftwareInfo: Detailed information about the device software. This
 	// information is only available if softwareInfoEnabled is true in the
 	// device's policy.
@@ -2953,6 +2957,47 @@ func (s *PolicyEnforcementRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PostureDetail: Detail that provides further information if the device
+// is not in the most secure state.
+type PostureDetail struct {
+	// Advice: Corresponding pieces of advice to mitigate the security risk.
+	Advice []*UserFacingMessage `json:"advice,omitempty"`
+
+	// SecurityRisk: The risk that makes the device not in the most secure
+	// state.
+	//
+	// Possible values:
+	//   "SECURITY_RISK_UNSPECIFIED" - Unspecified. Cannot determine the
+	// risk detail.
+	//   "UNKNOWN_OS" - SafetyNet detects that the device uses an unknown OS
+	// (basicIntegrity check passes while ctsProfileMatch fails).
+	//   "COMPROMISED_OS" - SafetyNet detects that the device uses a
+	// compromised OS (basicIntegrity check fails).
+	SecurityRisk string `json:"securityRisk,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Advice") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Advice") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PostureDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod PostureDetail
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PowerManagementEvent: A power management event.
 type PowerManagementEvent struct {
 	// BatteryLevel: For BATTERY_LEVEL_COLLECTED events, the battery level
@@ -3049,6 +3094,52 @@ type ProxyInfo struct {
 
 func (s *ProxyInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ProxyInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SecurityPosture: . Device's security posture value that reflects how
+// secure the device is.
+type SecurityPosture struct {
+	// DevicePosture: Device's security posture value.
+	//
+	// Possible values:
+	//   "POSTURE_UNSPECIFIED" - Unspecified. It is unable to determine the
+	// correct device posture because of insufficient data (for example, in
+	// the case of SafetyNet outage, there is no SafetyNet result). There is
+	// no posture detail for this posture value.
+	//   "SECURE" - The device is in the most secure state (both SafetyNet's
+	// ctsProfileMatch check and basicIntegrity check pass).
+	//   "AT_RISK" - The device is at risk (both SafetyNet's ctsProfileMatch
+	// check and basicIntegrity check pass).
+	//   "POTENTIALLY_COMPROMISED" - The device is potentially compromised
+	// (either SafetyNet's ctsProfileMatch check or basicIntegrity check
+	// fails).
+	DevicePosture string `json:"devicePosture,omitempty"`
+
+	// PostureDetails: Details that provide further information if the
+	// device is not in the most secure state.
+	PostureDetails []*PostureDetail `json:"postureDetails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DevicePosture") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DevicePosture") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecurityPosture) MarshalJSON() ([]byte, error) {
+	type NoMethod SecurityPosture
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

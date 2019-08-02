@@ -918,7 +918,7 @@
       }
     }
   },
-  "revision": "20190722",
+  "revision": "20190801",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -1530,6 +1530,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "securityPosture": {
+          "$ref": "SecurityPosture",
+          "description": "Device's security posture value that reflects how secure the device is."
         },
         "softwareInfo": {
           "$ref": "SoftwareInfo",
@@ -3069,6 +3073,34 @@
       },
       "type": "object"
     },
+    "PostureDetail": {
+      "description": "Detail that provides further information if the device is not in the most secure state.",
+      "id": "PostureDetail",
+      "properties": {
+        "advice": {
+          "description": "Corresponding pieces of advice to mitigate the security risk.",
+          "items": {
+            "$ref": "UserFacingMessage"
+          },
+          "type": "array"
+        },
+        "securityRisk": {
+          "description": "The risk that makes the device not in the most secure state.",
+          "enum": [
+            "SECURITY_RISK_UNSPECIFIED",
+            "UNKNOWN_OS",
+            "COMPROMISED_OS"
+          ],
+          "enumDescriptions": [
+            "Unspecified. Cannot determine the risk detail.",
+            "SafetyNet detects that the device uses an unknown OS (basicIntegrity check passes while ctsProfileMatch fails).",
+            "SafetyNet detects that the device uses a compromised OS (basicIntegrity check fails)."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "PowerManagementEvent": {
       "description": "A power management event.",
       "id": "PowerManagementEvent",
@@ -3133,6 +3165,36 @@
           "description": "The port of the direct proxy.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "SecurityPosture": {
+      "description": ". Device's security posture value that reflects how secure the device is.",
+      "id": "SecurityPosture",
+      "properties": {
+        "devicePosture": {
+          "description": "Device's security posture value.",
+          "enum": [
+            "POSTURE_UNSPECIFIED",
+            "SECURE",
+            "AT_RISK",
+            "POTENTIALLY_COMPROMISED"
+          ],
+          "enumDescriptions": [
+            "Unspecified. It is unable to determine the correct device posture because of insufficient data (for example, in the case of SafetyNet outage, there is no SafetyNet result). There is no posture detail for this posture value.",
+            "The device is in the most secure state (both SafetyNet's ctsProfileMatch check and basicIntegrity check pass).",
+            "The device is at risk (both SafetyNet's ctsProfileMatch check and basicIntegrity check pass).",
+            "The device is potentially compromised (either SafetyNet's ctsProfileMatch check or basicIntegrity check fails)."
+          ],
+          "type": "string"
+        },
+        "postureDetails": {
+          "description": "Details that provide further information if the device is not in the most secure state.",
+          "items": {
+            "$ref": "PostureDetail"
+          },
+          "type": "array"
         }
       },
       "type": "object"

@@ -1676,11 +1676,32 @@ type GoogleCloudMlV1__ReplicaConfig struct {
 	// containers](/ml-engine/docs/distributed-training-containers).
 	ImageUri string `json:"imageUri,omitempty"`
 
-	// TpuTfVersion: TensorFlow version used in the custom container. This
-	// field is required if
-	// the replica is a TPU worker that uses a custom container. Otherwise,
-	// do not
-	// specify this field.
+	// TpuTfVersion: The AI Platform runtime version that includes a
+	// TensorFlow version matching
+	// the one used in the custom container. This field is required if the
+	// replica
+	// is a TPU worker that uses a custom container. Otherwise, do not
+	// specify
+	// this field. This must be a [runtime version that currently
+	// supports
+	// training
+	// with
+	// TPUs](/ml-engine/docs/tensorflow/runtime-version-list#tpu-support
+	// ).
+	//
+	// Note that the version of TensorFlow included in a runtime version
+	// may
+	// differ from the numbering of the runtime version itself, because it
+	// may
+	// have a different
+	// [patch
+	// version](https://www.tensorflow.org/guide/version_compat#semant
+	// ic_versioning_20).
+	// In this field, you must specify the runtime version (TensorFlow
+	// minor
+	// version). For example, if your custom container runs TensorFlow
+	// `1.x.y`,
+	// specify `1.x`.
 	TpuTfVersion string `json:"tpuTfVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AcceleratorConfig")

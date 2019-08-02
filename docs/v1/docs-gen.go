@@ -6739,7 +6739,10 @@ type UpdateTextStyleRequest struct {
 	//
 	// If the range fully contains a paragraph belonging to a list,
 	// the
-	// paragraph's bullet is also updated with the matching text style.
+	// paragraph's bullet is also updated with the matching text
+	// style.
+	//
+	// Ranges cannot be inserted inside a relative UpdateTextStyleRequest.
 	Range *Range `json:"range,omitempty"`
 
 	// TextStyle: The styles to set on the text.

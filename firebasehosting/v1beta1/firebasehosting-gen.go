@@ -881,7 +881,7 @@ type Release struct {
 	// as if the site never existed.
 	Type string `json:"type,omitempty"`
 
-	// Version: Output only.  The configuration and content that was
+	// Version: Output only. The configuration and content that was
 	// released.
 	Version *Version `json:"version,omitempty"`
 

@@ -181,6 +181,9 @@ type PlatformSummary struct {
 	LastChangeTime string `json:"lastChangeTime,omitempty"`
 
 	// Region: The assigned regions for the site and platform.
+	// No longer populated, because there is no longer any semantic
+	// difference
+	// between sites in different regions.
 	//
 	// Possible values:
 	//   "REGION_UNKNOWN" - Ad standard not yet defined for your region.

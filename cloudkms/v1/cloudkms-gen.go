@@ -311,6 +311,11 @@ func (s *AsymmetricSignRequest) MarshalJSON() ([]byte, error) {
 // AsymmetricSignResponse: Response message for
 // KeyManagementService.AsymmetricSign.
 type AsymmetricSignResponse struct {
+	// Name: The resource name of the CryptoKeyVersion used for signing.
+	// Check
+	// this field to verify that the intended resource was used for signing.
+	Name string `json:"name,omitempty"`
+
 	// Signature: The created signature.
 	Signature string `json:"signature,omitempty"`
 
@@ -318,7 +323,7 @@ type AsymmetricSignResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Signature") to
+	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -326,8 +331,8 @@ type AsymmetricSignResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Signature") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -365,7 +370,7 @@ func (s *AsymmetricSignResponse) MarshalJSON() ([]byte, error) {
 //             {
 //               "log_type": "DATA_READ",
 //               "exempted_members": [
-//                 "user:foo@gmail.com"
+//                 "user:jose@example.com"
 //               ]
 //             },
 //             {
@@ -377,7 +382,7 @@ func (s *AsymmetricSignResponse) MarshalJSON() ([]byte, error) {
 //           ]
 //         },
 //         {
-//           "service": "fooservice.googleapis.com"
+//           "service": "sampleservice.googleapis.com"
 //           "audit_log_configs": [
 //             {
 //               "log_type": "DATA_READ",
@@ -385,7 +390,7 @@ func (s *AsymmetricSignResponse) MarshalJSON() ([]byte, error) {
 //             {
 //               "log_type": "DATA_WRITE",
 //               "exempted_members": [
-//                 "user:bar@gmail.com"
+//                 "user:aliya@example.com"
 //               ]
 //             }
 //           ]
@@ -393,11 +398,11 @@ func (s *AsymmetricSignResponse) MarshalJSON() ([]byte, error) {
 //       ]
 //     }
 //
-// For fooservice, this policy enables DATA_READ, DATA_WRITE and
+// For sampleservice, this policy enables DATA_READ, DATA_WRITE and
 // ADMIN_READ
-// logging. It also exempts foo@gmail.com from DATA_READ logging,
+// logging. It also exempts jose@example.com from DATA_READ logging,
 // and
-// bar@gmail.com from DATA_WRITE logging.
+// aliya@example.com from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -443,7 +448,7 @@ func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 //         {
 //           "log_type": "DATA_READ",
 //           "exempted_members": [
-//             "user:foo@gmail.com"
+//             "user:jose@example.com"
 //           ]
 //         },
 //         {
@@ -454,7 +459,7 @@ func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 //
 // This enables 'DATA_READ' and 'DATA_WRITE' logging, while
 // exempting
-// foo@gmail.com from DATA_READ logging.
+// jose@example.com from DATA_READ logging.
 type AuditLogConfig struct {
 	// ExemptedMembers: Specifies the identities that do not cause logging
 	// for this type of
@@ -519,7 +524,7 @@ type Binding struct {
 	//
 	// * `user:{emailid}`: An email address that represents a specific
 	// Google
-	//    account. For example, `alice@gmail.com` .
+	//    account. For example, `alice@example.com` .
 	//
 	//
 	// * `serviceAccount:{emailid}`: An email address that represents a
@@ -1111,6 +1116,9 @@ type EncryptResponse struct {
 	Ciphertext string `json:"ciphertext,omitempty"`
 
 	// Name: The resource name of the CryptoKeyVersion used in encryption.
+	// Check
+	// this field to verify that the intended resource was used for
+	// encryption.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1905,7 +1913,7 @@ type Policy struct {
 	//
 	// If no `etag` is provided in the call to `setIamPolicy`, then the
 	// existing
-	// policy is overwritten blindly.
+	// policy is overwritten.
 	Etag string `json:"etag,omitempty"`
 
 	// Version: Deprecated.
@@ -1977,6 +1985,10 @@ type PublicKey struct {
 	//   "EC_SIGN_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384
 	// digest.
 	Algorithm string `json:"algorithm,omitempty"`
+
+	// Name: The name of the CryptoKeyVersion public key.
+	// Provided here for verification.
+	Name string `json:"name,omitempty"`
 
 	// Pem: The public key, encoded in PEM format. For more information, see
 	// the
@@ -3030,9 +3042,12 @@ func (r *ProjectsLocationsKeyRingsService) List(parent string) *ProjectsLocation
 }
 
 // Filter sets the optional parameter "filter": Only include resources
-// that match the filter in the
-// response
-// (https://cloud.google.com/kms/docs/sorting-and-filtering).
+// that match the filter in the response. For
+// more information, see
+// [Sorting and filtering
+// list
+// results](https://cloud.google.com/kms/docs/sorting-and-filtering)
+// .
 func (c *ProjectsLocationsKeyRingsListCall) Filter(filter string) *ProjectsLocationsKeyRingsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3040,9 +3055,12 @@ func (c *ProjectsLocationsKeyRingsListCall) Filter(filter string) *ProjectsLocat
 
 // OrderBy sets the optional parameter "orderBy": Specify how the
 // results should be sorted. If not specified, the
-// results will be sorted in the default
-// order
-// (https://cloud.google.com/kms/docs/sorting-and-filtering).
+// results will be sorted in the default order.  For more information,
+// see
+// [Sorting and filtering
+// list
+// results](https://cloud.google.com/kms/docs/sorting-and-filtering)
+// .
 func (c *ProjectsLocationsKeyRingsListCall) OrderBy(orderBy string) *ProjectsLocationsKeyRingsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -3176,12 +3194,12 @@ func (c *ProjectsLocationsKeyRingsListCall) Do(opts ...googleapi.CallOption) (*L
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Only include resources that match the filter in the response\n(https://cloud.google.com/kms/docs/sorting-and-filtering).",
+	//       "description": "Optional. Only include resources that match the filter in the response. For\nmore information, see\n[Sorting and filtering list\nresults](https://cloud.google.com/kms/docs/sorting-and-filtering).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. Specify how the results should be sorted. If not specified, the\nresults will be sorted in the default order\n(https://cloud.google.com/kms/docs/sorting-and-filtering).",
+	//       "description": "Optional. Specify how the results should be sorted. If not specified, the\nresults will be sorted in the default order.  For more information, see\n[Sorting and filtering list\nresults](https://cloud.google.com/kms/docs/sorting-and-filtering).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4317,9 +4335,12 @@ func (r *ProjectsLocationsKeyRingsCryptoKeysService) List(parent string) *Projec
 }
 
 // Filter sets the optional parameter "filter": Only include resources
-// that match the filter in the
-// response
-// (https://cloud.google.com/kms/docs/sorting-and-filtering).
+// that match the filter in the response. For
+// more information, see
+// [Sorting and filtering
+// list
+// results](https://cloud.google.com/kms/docs/sorting-and-filtering)
+// .
 func (c *ProjectsLocationsKeyRingsCryptoKeysListCall) Filter(filter string) *ProjectsLocationsKeyRingsCryptoKeysListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4327,9 +4348,12 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysListCall) Filter(filter string) *Pro
 
 // OrderBy sets the optional parameter "orderBy": Specify how the
 // results should be sorted. If not specified, the
-// results will be sorted in the default
-// order
-// (https://cloud.google.com/kms/docs/sorting-and-filtering).
+// results will be sorted in the default order. For more information,
+// see
+// [Sorting and filtering
+// list
+// results](https://cloud.google.com/kms/docs/sorting-and-filtering)
+// .
 func (c *ProjectsLocationsKeyRingsCryptoKeysListCall) OrderBy(orderBy string) *ProjectsLocationsKeyRingsCryptoKeysListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -4475,12 +4499,12 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysListCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Only include resources that match the filter in the response\n(https://cloud.google.com/kms/docs/sorting-and-filtering).",
+	//       "description": "Optional. Only include resources that match the filter in the response. For\nmore information, see\n[Sorting and filtering list\nresults](https://cloud.google.com/kms/docs/sorting-and-filtering).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. Specify how the results should be sorted. If not specified, the\nresults will be sorted in the default order\n(https://cloud.google.com/kms/docs/sorting-and-filtering).",
+	//       "description": "Optional. Specify how the results should be sorted. If not specified, the\nresults will be sorted in the default order. For more information, see\n[Sorting and filtering list\nresults](https://cloud.google.com/kms/docs/sorting-and-filtering).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6174,9 +6198,12 @@ func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) List(paren
 }
 
 // Filter sets the optional parameter "filter": Only include resources
-// that match the filter in the
-// response
-// (https://cloud.google.com/kms/docs/sorting-and-filtering).
+// that match the filter in the response. For
+// more information, see
+// [Sorting and filtering
+// list
+// results](https://cloud.google.com/kms/docs/sorting-and-filtering)
+// .
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall) Filter(filter string) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6184,9 +6211,12 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall) Filter(fi
 
 // OrderBy sets the optional parameter "orderBy": Specify how the
 // results should be sorted. If not specified, the
-// results will be sorted in the default
-// order
-// (https://cloud.google.com/kms/docs/sorting-and-filtering).
+// results will be sorted in the default order. For more information,
+// see
+// [Sorting and filtering
+// list
+// results](https://cloud.google.com/kms/docs/sorting-and-filtering)
+// .
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall) OrderBy(orderBy string) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -6332,12 +6362,12 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Only include resources that match the filter in the response\n(https://cloud.google.com/kms/docs/sorting-and-filtering).",
+	//       "description": "Optional. Only include resources that match the filter in the response. For\nmore information, see\n[Sorting and filtering list\nresults](https://cloud.google.com/kms/docs/sorting-and-filtering).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. Specify how the results should be sorted. If not specified, the\nresults will be sorted in the default order\n(https://cloud.google.com/kms/docs/sorting-and-filtering).",
+	//       "description": "Optional. Specify how the results should be sorted. If not specified, the\nresults will be sorted in the default order. For more information, see\n[Sorting and filtering list\nresults](https://cloud.google.com/kms/docs/sorting-and-filtering).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7193,9 +7223,12 @@ func (r *ProjectsLocationsKeyRingsImportJobsService) List(parent string) *Projec
 }
 
 // Filter sets the optional parameter "filter": Only include resources
-// that match the filter in the
-// response
-// (https://cloud.google.com/kms/docs/sorting-and-filtering).
+// that match the filter in the response. For
+// more information, see
+// [Sorting and filtering
+// list
+// results](https://cloud.google.com/kms/docs/sorting-and-filtering)
+// .
 func (c *ProjectsLocationsKeyRingsImportJobsListCall) Filter(filter string) *ProjectsLocationsKeyRingsImportJobsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -7203,9 +7236,12 @@ func (c *ProjectsLocationsKeyRingsImportJobsListCall) Filter(filter string) *Pro
 
 // OrderBy sets the optional parameter "orderBy": Specify how the
 // results should be sorted. If not specified, the
-// results will be sorted in the default
-// order
-// (https://cloud.google.com/kms/docs/sorting-and-filtering).
+// results will be sorted in the default order. For more information,
+// see
+// [Sorting and filtering
+// list
+// results](https://cloud.google.com/kms/docs/sorting-and-filtering)
+// .
 func (c *ProjectsLocationsKeyRingsImportJobsListCall) OrderBy(orderBy string) *ProjectsLocationsKeyRingsImportJobsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -7339,12 +7375,12 @@ func (c *ProjectsLocationsKeyRingsImportJobsListCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Only include resources that match the filter in the response\n(https://cloud.google.com/kms/docs/sorting-and-filtering).",
+	//       "description": "Optional. Only include resources that match the filter in the response. For\nmore information, see\n[Sorting and filtering list\nresults](https://cloud.google.com/kms/docs/sorting-and-filtering).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. Specify how the results should be sorted. If not specified, the\nresults will be sorted in the default order\n(https://cloud.google.com/kms/docs/sorting-and-filtering).",
+	//       "description": "Optional. Specify how the results should be sorted. If not specified, the\nresults will be sorted in the default order. For more information, see\n[Sorting and filtering list\nresults](https://cloud.google.com/kms/docs/sorting-and-filtering).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

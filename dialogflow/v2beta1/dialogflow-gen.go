@@ -2022,7 +2022,7 @@ type GoogleCloudDialogflowV2QueryResult struct {
 	// not
 	// all fields are filled in this message, including but not limited
 	// to:
-	// `name`, `display_name` and `webhook_state`.
+	// `name`, `display_name`, `end_interaction` and `is_fallback`.
 	Intent *GoogleCloudDialogflowV2Intent `json:"intent,omitempty"`
 
 	// IntentDetectionConfidence: The intent detection confidence. Values
@@ -3866,6 +3866,16 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	// precedence
 	// over StreamingDetectIntentRequest.single_utterance.
 	SingleUtterance bool `json:"singleUtterance,omitempty"`
+
+	// SpeechContexts: Optional. Context information to assist speech
+	// recognition.
+	//
+	// See [the Cloud
+	// Speech
+	// documentation](https://cloud.google.com/speech-to-text/docs/bas
+	// ics#phrase-hints)
+	// for more details.
+	SpeechContexts []*GoogleCloudDialogflowV2beta1SpeechContext `json:"speechContexts,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AudioEncoding") to
 	// unconditionally include in API requests. By default, fields with
@@ -6308,6 +6318,62 @@ func (s *GoogleCloudDialogflowV2beta1ListSessionEntityTypesResponse) MarshalJSON
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1ModelEvaluationMetadata: The status
+// update for performing NLU model evaluation given a dataset.
+// Metadata of the returned long running operation
+// for
+// ModelEvaluations.EvaluateModel.
+type GoogleCloudDialogflowV2beta1ModelEvaluationMetadata struct {
+	// SamplesWithIntentDetected: Optional. Number of samples that have
+	// already received the predicted
+	// intents from Dialogflow server.
+	SamplesWithIntentDetected int64 `json:"samplesWithIntentDetected,omitempty"`
+
+	// State: Required. Represents the job that the batch worker is
+	// currently working on.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not specified. This value should never be
+	// used.
+	//   "PARSING_DATASET" - Parsing the customer-provided dataset in Cloud
+	// Storage, which is a CVS
+	// file.
+	//   "DETECTING_INTENTS" - Calling the Dialogflow backend server to
+	// detect the corresponding intent
+	// for each query.
+	//   "CALCULATING_METRICS" - Calculating the evaluation metrics for the
+	// dataset.
+	//   "SUCCESS" - Job succeeded.
+	State string `json:"state,omitempty"`
+
+	// TotalSamples: Required. Total number of samples in the dataset.
+	TotalSamples int64 `json:"totalSamples,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "SamplesWithIntentDetected") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "SamplesWithIntentDetected") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1ModelEvaluationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ModelEvaluationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1OriginalDetectIntentRequest: Represents
 // the contents of the original request that was passed to
 // the `[Streaming]DetectIntent` call.
@@ -6581,7 +6647,7 @@ type GoogleCloudDialogflowV2beta1QueryResult struct {
 	// not
 	// all fields are filled in this message, including but not limited
 	// to:
-	// `name`, `display_name` and `webhook_state`.
+	// `name`, `display_name`, `end_interaction` and `is_fallback`.
 	Intent *GoogleCloudDialogflowV2beta1Intent `json:"intent,omitempty"`
 
 	// IntentDetectionConfidence: The intent detection confidence. Values
@@ -7009,6 +7075,78 @@ func (s *GoogleCloudDialogflowV2beta1SessionEntityType) MarshalJSON() ([]byte, e
 	type NoMethod GoogleCloudDialogflowV2beta1SessionEntityType
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1SpeechContext: Hints for the speech
+// recognizer to help with recognition in a specific
+// conversation state.
+type GoogleCloudDialogflowV2beta1SpeechContext struct {
+	// Boost: Optional. Boost for this context compared to other contexts:
+	// * If the boost is positive, Dialogflow will increase the probability
+	// that
+	//   the phrases in this context are recognized over similar sounding
+	// phrases.
+	// * If the boost is unspecified or non-positive, Dialogflow will not
+	// apply
+	//   any boost.
+	//
+	// Dialogflow recommends that you use boosts in the range (0, 20] and
+	// that you
+	// find a value that fits your use case with binary search.
+	Boost float64 `json:"boost,omitempty"`
+
+	// Phrases: Optional. A list of strings containing words and phrases
+	// that the speech
+	// recognizer should recognize with higher likelihood.
+	//
+	// This list can be used to:
+	// * improve accuracy for words and phrases you expect the user to say,
+	//   e.g. typical commands for your Dialogflow agent
+	// * add additional words to the speech recognizer vocabulary
+	// * ...
+	//
+	// See the [Cloud
+	// Speech
+	// documentation](https://cloud.google.com/speech-to-text/quotas) for
+	// usage
+	// limits.
+	Phrases []string `json:"phrases,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Boost") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Boost") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1SpeechContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1SpeechContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV2beta1SpeechContext) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV2beta1SpeechContext
+	var s1 struct {
+		Boost gensupport.JSONFloat64 `json:"boost"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Boost = float64(s1.Boost)
+	return nil
 }
 
 // GoogleCloudDialogflowV2beta1SynthesizeSpeechConfig: Configuration of

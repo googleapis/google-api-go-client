@@ -1283,11 +1283,6 @@ type Empty struct {
 // GetJSONWebKeysResponse: GetJSONWebKeysResponse is a valid JSON Web
 // Key Set as specififed in rfc 7517
 type GetJSONWebKeysResponse struct {
-	// CacheHeader: OnePlatform automatically extracts this field and uses
-	// it to set the HTTP
-	// Cache-Control header.
-	CacheHeader *HttpCacheControlResponseHeader `json:"cacheHeader,omitempty"`
-
 	// Keys: The public component of the keys used by the cluster to sign
 	// token
 	// requests.
@@ -1297,7 +1292,7 @@ type GetJSONWebKeysResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CacheHeader") to
+	// ForceSendFields is a list of field names (e.g. "Keys") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1305,10 +1300,10 @@ type GetJSONWebKeysResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CacheHeader") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Keys") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1324,11 +1319,6 @@ func (s *GetJSONWebKeysResponse) MarshalJSON() ([]byte, error) {
 // document for the cluster.
 // See the OpenID Connect Discovery 1.0 specification for details.
 type GetOpenIDConfigResponse struct {
-	// CacheHeader: OnePlatform automatically extracts this field and uses
-	// it to set the HTTP
-	// Cache-Control header.
-	CacheHeader *HttpCacheControlResponseHeader `json:"cacheHeader,omitempty"`
-
 	// ClaimsSupported: Supported claims.
 	ClaimsSupported []string `json:"claims_supported,omitempty"`
 
@@ -1355,7 +1345,7 @@ type GetOpenIDConfigResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CacheHeader") to
+	// ForceSendFields is a list of field names (e.g. "ClaimsSupported") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1363,12 +1353,13 @@ type GetOpenIDConfigResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CacheHeader") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClaimsSupported") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1410,41 +1401,6 @@ type HorizontalPodAutoscaling struct {
 
 func (s *HorizontalPodAutoscaling) MarshalJSON() ([]byte, error) {
 	type NoMethod HorizontalPodAutoscaling
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// HttpCacheControlResponseHeader: RFC-2616: cache control support
-type HttpCacheControlResponseHeader struct {
-	// Age: 14.6 response cache age, in seconds since the response is
-	// generated
-	Age int64 `json:"age,omitempty,string"`
-
-	// Directive: 14.9 request and response directives
-	Directive string `json:"directive,omitempty"`
-
-	// Expires: 14.21 response cache expires, in RFC 1123 date format
-	Expires string `json:"expires,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Age") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Age") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *HttpCacheControlResponseHeader) MarshalJSON() ([]byte, error) {
-	type NoMethod HttpCacheControlResponseHeader
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

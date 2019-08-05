@@ -2489,7 +2489,7 @@
       }
     }
   },
-  "revision": "20190717",
+  "revision": "20190801",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse": {
@@ -3356,7 +3356,7 @@
         },
         "intent": {
           "$ref": "GoogleCloudDialogflowV2Intent",
-          "description": "The intent that matched the conversational query. Some, not\nall fields are filled in this message, including but not limited to:\n`name`, `display_name` and `webhook_state`."
+          "description": "The intent that matched the conversational query. Some, not\nall fields are filled in this message, including but not limited to:\n`name`, `display_name`, `end_interaction` and `is_fallback`."
         },
         "intentDetectionConfidence": {
           "description": "The intent detection confidence. Values range from 0.0\n(completely uncertain) to 1.0 (completely certain).\nThis value is for informational purpose only and is only used to\nhelp match the best intent within the classification threshold.\nThis value may change for the same end-user expression at any time due to a\nmodel retraining or change in implementation.\nIf there are `multiple knowledge_answers` messages, this value is set to\nthe greatest `knowledgeAnswers.match_confidence` value in the list.",
@@ -4223,6 +4223,13 @@
         "singleUtterance": {
           "description": "Optional. If `false` (default), recognition does not cease until the\nclient closes the stream.\nIf `true`, the recognizer will detect a single spoken utterance in input\naudio. Recognition ceases when it detects the audio's voice has\nstopped or paused. In this case, once a detected intent is received, the\nclient should close the stream and start a new request with a new stream as\nneeded.\nNote: This setting is relevant only for streaming methods.\nNote: When specified, InputAudioConfig.single_utterance takes precedence\nover StreamingDetectIntentRequest.single_utterance.",
           "type": "boolean"
+        },
+        "speechContexts": {
+          "description": "Optional. Context information to assist speech recognition.\n\nSee [the Cloud Speech\ndocumentation](https://cloud.google.com/speech-to-text/docs/basics#phrase-hints)\nfor more details.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2beta1SpeechContext"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -5414,6 +5421,41 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2beta1ModelEvaluationMetadata": {
+      "description": "The status update for performing NLU model evaluation given a dataset.\nMetadata of the returned long running operation for\nModelEvaluations.EvaluateModel.",
+      "id": "GoogleCloudDialogflowV2beta1ModelEvaluationMetadata",
+      "properties": {
+        "samplesWithIntentDetected": {
+          "description": "Optional. Number of samples that have already received the predicted\nintents from Dialogflow server.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "state": {
+          "description": "Required. Represents the job that the batch worker is currently working on.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "PARSING_DATASET",
+            "DETECTING_INTENTS",
+            "CALCULATING_METRICS",
+            "SUCCESS"
+          ],
+          "enumDescriptions": [
+            "Not specified. This value should never be used.",
+            "Parsing the customer-provided dataset in Cloud Storage, which is a CVS\nfile.",
+            "Calling the Dialogflow backend server to detect the corresponding intent\nfor each query.",
+            "Calculating the evaluation metrics for the dataset.",
+            "Job succeeded."
+          ],
+          "type": "string"
+        },
+        "totalSamples": {
+          "description": "Required. Total number of samples in the dataset.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2beta1OriginalDetectIntentRequest": {
       "description": "Represents the contents of the original request that was passed to\nthe `[Streaming]DetectIntent` call.",
       "id": "GoogleCloudDialogflowV2beta1OriginalDetectIntentRequest",
@@ -5573,7 +5615,7 @@
         },
         "intent": {
           "$ref": "GoogleCloudDialogflowV2beta1Intent",
-          "description": "The intent that matched the conversational query. Some, not\nall fields are filled in this message, including but not limited to:\n`name`, `display_name` and `webhook_state`."
+          "description": "The intent that matched the conversational query. Some, not\nall fields are filled in this message, including but not limited to:\n`name`, `display_name`, `end_interaction` and `is_fallback`."
         },
         "intentDetectionConfidence": {
           "description": "The intent detection confidence. Values range from 0.0\n(completely uncertain) to 1.0 (completely certain).\nThis value is for informational purpose only and is only used to\nhelp match the best intent within the classification threshold.\nThis value may change for the same end-user expression at any time due to a\nmodel retraining or change in implementation.\nIf there are `multiple knowledge_answers` messages, this value is set to\nthe greatest `knowledgeAnswers.match_confidence` value in the list.",
@@ -5738,6 +5780,25 @@
         "name": {
           "description": "Required. The unique identifier of this session entity type. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e/entityTypes/\u003cEntity Type\nDisplay Name\u003e`, or\n`projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e/entityTypes/\u003cEntity Type Display Name\u003e`.\nIf `Environment ID` is not specified, we assume default 'draft'\nenvironment. If `User ID` is not specified, we assume default '-' user.\n\n`\u003cEntity Type Display Name\u003e` must be the display name of an existing entity\ntype in the same agent that will be overridden or supplemented.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1SpeechContext": {
+      "description": "Hints for the speech recognizer to help with recognition in a specific\nconversation state.",
+      "id": "GoogleCloudDialogflowV2beta1SpeechContext",
+      "properties": {
+        "boost": {
+          "description": "Optional. Boost for this context compared to other contexts:\n* If the boost is positive, Dialogflow will increase the probability that\n  the phrases in this context are recognized over similar sounding phrases.\n* If the boost is unspecified or non-positive, Dialogflow will not apply\n  any boost.\n\nDialogflow recommends that you use boosts in the range (0, 20] and that you\nfind a value that fits your use case with binary search.",
+          "format": "float",
+          "type": "number"
+        },
+        "phrases": {
+          "description": "Optional. A list of strings containing words and phrases that the speech\nrecognizer should recognize with higher likelihood.\n\nThis list can be used to:\n* improve accuracy for words and phrases you expect the user to say,\n  e.g. typical commands for your Dialogflow agent\n* add additional words to the speech recognizer vocabulary\n* ...\n\nSee the [Cloud Speech\ndocumentation](https://cloud.google.com/speech-to-text/quotas) for usage\nlimits.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"

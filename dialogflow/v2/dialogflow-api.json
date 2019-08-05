@@ -1406,7 +1406,7 @@
       }
     }
   },
-  "revision": "20190717",
+  "revision": "20190801",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -2855,7 +2855,7 @@
         },
         "intent": {
           "$ref": "GoogleCloudDialogflowV2Intent",
-          "description": "The intent that matched the conversational query. Some, not\nall fields are filled in this message, including but not limited to:\n`name`, `display_name` and `webhook_state`."
+          "description": "The intent that matched the conversational query. Some, not\nall fields are filled in this message, including but not limited to:\n`name`, `display_name`, `end_interaction` and `is_fallback`."
         },
         "intentDetectionConfidence": {
           "description": "The intent detection confidence. Values range from 0.0\n(completely uncertain) to 1.0 (completely certain).\nThis value is for informational purpose only and is only used to\nhelp match the best intent within the classification threshold.\nThis value may change for the same end-user expression at any time due to a\nmodel retraining or change in implementation.\nIf there are `multiple knowledge_answers` messages, this value is set to\nthe greatest `knowledgeAnswers.match_confidence` value in the list.",
@@ -4470,6 +4470,41 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2beta1ModelEvaluationMetadata": {
+      "description": "The status update for performing NLU model evaluation given a dataset.\nMetadata of the returned long running operation for\nModelEvaluations.EvaluateModel.",
+      "id": "GoogleCloudDialogflowV2beta1ModelEvaluationMetadata",
+      "properties": {
+        "samplesWithIntentDetected": {
+          "description": "Optional. Number of samples that have already received the predicted\nintents from Dialogflow server.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "state": {
+          "description": "Required. Represents the job that the batch worker is currently working on.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "PARSING_DATASET",
+            "DETECTING_INTENTS",
+            "CALCULATING_METRICS",
+            "SUCCESS"
+          ],
+          "enumDescriptions": [
+            "Not specified. This value should never be used.",
+            "Parsing the customer-provided dataset in Cloud Storage, which is a CVS\nfile.",
+            "Calling the Dialogflow backend server to detect the corresponding intent\nfor each query.",
+            "Calculating the evaluation metrics for the dataset.",
+            "Job succeeded."
+          ],
+          "type": "string"
+        },
+        "totalSamples": {
+          "description": "Required. Total number of samples in the dataset.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2beta1OriginalDetectIntentRequest": {
       "description": "Represents the contents of the original request that was passed to\nthe `[Streaming]DetectIntent` call.",
       "id": "GoogleCloudDialogflowV2beta1OriginalDetectIntentRequest",
@@ -4526,7 +4561,7 @@
         },
         "intent": {
           "$ref": "GoogleCloudDialogflowV2beta1Intent",
-          "description": "The intent that matched the conversational query. Some, not\nall fields are filled in this message, including but not limited to:\n`name`, `display_name` and `webhook_state`."
+          "description": "The intent that matched the conversational query. Some, not\nall fields are filled in this message, including but not limited to:\n`name`, `display_name`, `end_interaction` and `is_fallback`."
         },
         "intentDetectionConfidence": {
           "description": "The intent detection confidence. Values range from 0.0\n(completely uncertain) to 1.0 (completely certain).\nThis value is for informational purpose only and is only used to\nhelp match the best intent within the classification threshold.\nThis value may change for the same end-user expression at any time due to a\nmodel retraining or change in implementation.\nIf there are `multiple knowledge_answers` messages, this value is set to\nthe greatest `knowledgeAnswers.match_confidence` value in the list.",

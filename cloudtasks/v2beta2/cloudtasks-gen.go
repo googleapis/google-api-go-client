@@ -1088,19 +1088,7 @@ type LeaseTasksRequest struct {
 	// tag will be displayed as empty in Cloud Tasks.
 	Filter string `json:"filter,omitempty"`
 
-	// LeaseDuration: Required.
-	//
-	// The duration of the lease.
-	//
-	// Each task returned in the response will
-	// have its schedule_time set to the current
-	// time plus the `lease_duration`. The task is leased until
-	// its
-	// schedule_time; thus, the task will not be
-	// returned to another LeaseTasks call
-	// before its schedule_time.
-	//
-	//
+	// LeaseDuration:
 	// After the worker has successfully finished the work associated
 	// with the task, the worker must call via
 	// AcknowledgeTask before the

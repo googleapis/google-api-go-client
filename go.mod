@@ -6,6 +6,7 @@ require (
 	cloud.google.com/go v0.38.0 // indirect
 	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/google/go-cmp v0.3.0
+	github.com/googleapis/gax-go/v2 v2.0.5
 	github.com/hashicorp/golang-lru v0.5.1 // indirect
 	go.opencensus.io v0.21.0
 	golang.org/x/lint v0.0.0-20190409202823-959b441ac422

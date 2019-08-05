@@ -1420,6 +1420,7 @@ func (c *BeaconinfoGetforobservedCall) Header() http.Header {
 
 func (c *BeaconinfoGetforobservedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1564,6 +1565,7 @@ func (c *BeaconsActivateCall) Header() http.Header {
 
 func (c *BeaconsActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1721,6 +1723,7 @@ func (c *BeaconsDeactivateCall) Header() http.Header {
 
 func (c *BeaconsDeactivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1877,6 +1880,7 @@ func (c *BeaconsDecommissionCall) Header() http.Header {
 
 func (c *BeaconsDecommissionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2029,6 +2033,7 @@ func (c *BeaconsDeleteCall) Header() http.Header {
 
 func (c *BeaconsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2201,6 +2206,7 @@ func (c *BeaconsGetCall) Header() http.Header {
 
 func (c *BeaconsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2474,6 +2480,7 @@ func (c *BeaconsListCall) Header() http.Header {
 
 func (c *BeaconsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2655,6 +2662,7 @@ func (c *BeaconsRegisterCall) Header() http.Header {
 
 func (c *BeaconsRegisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2814,6 +2822,7 @@ func (c *BeaconsUpdateCall) Header() http.Header {
 
 func (c *BeaconsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2995,6 +3004,7 @@ func (c *BeaconsAttachmentsBatchDeleteCall) Header() http.Header {
 
 func (c *BeaconsAttachmentsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3167,6 +3177,7 @@ func (c *BeaconsAttachmentsCreateCall) Header() http.Header {
 
 func (c *BeaconsAttachmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3331,6 +3342,7 @@ func (c *BeaconsAttachmentsDeleteCall) Header() http.Header {
 
 func (c *BeaconsAttachmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3514,6 +3526,7 @@ func (c *BeaconsAttachmentsListCall) Header() http.Header {
 
 func (c *BeaconsAttachmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3717,6 +3730,7 @@ func (c *BeaconsDiagnosticsListCall) Header() http.Header {
 
 func (c *BeaconsDiagnosticsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3924,6 +3938,7 @@ func (c *NamespacesListCall) Header() http.Header {
 
 func (c *NamespacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4063,6 +4078,7 @@ func (c *NamespacesUpdateCall) Header() http.Header {
 
 func (c *NamespacesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4226,6 +4242,7 @@ func (c *V1beta1GetEidparamsCall) Header() http.Header {
 
 func (c *V1beta1GetEidparamsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

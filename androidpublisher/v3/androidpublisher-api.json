@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/tLEn1KkE5NEmlpywSz1Qx5p8WMk\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/3tx6VdUXP7L7Yr2512fVLQnP1WA\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2382,7 +2382,7 @@
       }
     }
   },
-  "revision": "20190702",
+  "revision": "20190730",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -2776,6 +2776,10 @@
         },
         "sha1": {
           "description": "A sha1 hash of the image that was uploaded.",
+          "type": "string"
+        },
+        "sha256": {
+          "description": "A sha256 hash of the image that was uploaded.",
           "type": "string"
         },
         "url": {

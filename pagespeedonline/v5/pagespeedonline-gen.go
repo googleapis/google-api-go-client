@@ -1049,6 +1049,7 @@ func (c *PagespeedapiRunpagespeedCall) Header() http.Header {
 
 func (c *PagespeedapiRunpagespeedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1156,7 +1157,7 @@ func (c *PagespeedapiRunpagespeedCall) Do(opts ...googleapi.CallOption) (*Pagesp
 	//     "url": {
 	//       "description": "The URL to fetch and analyze",
 	//       "location": "query",
-	//       "pattern": "(?i)http(s)?://.*",
+	//       "pattern": "(?i)(site:|origin:)?http(s)?://.*",
 	//       "required": true,
 	//       "type": "string"
 	//     },

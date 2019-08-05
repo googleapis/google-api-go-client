@@ -5,7 +5,7 @@
   "description": "Analyzes the performance of a web page and provides tailored suggestions to make that page faster.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/speed/docs/insights/v5/get-started",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/Ta6I-MdyzU28jP7YoMs8WuXC-dg\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/FH8hr1vcSrDlKiGXDM8sQApgVtA\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/pagespeed-16.png",
     "x32": "https://www.google.com/images/icons/product/pagespeed-32.png"
@@ -114,7 +114,7 @@
             "url": {
               "description": "The URL to fetch and analyze",
               "location": "query",
-              "pattern": "(?i)http(s)?://.*",
+              "pattern": "(?i)(site:|origin:)?http(s)?://.*",
               "required": true,
               "type": "string"
             },
@@ -137,7 +137,7 @@
       }
     }
   },
-  "revision": "20190507",
+  "revision": "20190725",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "GoogleprotobufValue": {

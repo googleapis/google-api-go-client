@@ -809,7 +809,7 @@
       }
     }
   },
-  "revision": "20190715",
+  "revision": "20190730",
   "rootUrl": "https://sheets.googleapis.com/",
   "schemas": {
     "AddBandingRequest": {
@@ -1167,6 +1167,10 @@
         "titleTextPosition": {
           "$ref": "TextPosition",
           "description": "The axis title text position."
+        },
+        "viewWindowOptions": {
+          "$ref": "ChartAxisViewWindowOptions",
+          "description": "The view window options for this axis."
         }
       },
       "type": "object"
@@ -2238,6 +2242,39 @@
             "This wrap strategy represents the old Google Sheets wrap strategy where\nwords that are longer than a line are clipped rather than broken. This\nstrategy is not supported on all platforms and is being phased out.\nExample:\n\n    | Cell has a |\n    | loooooooooo| \u003c- Word is clipped.\n    | word.      |",
             "Lines that are longer than the cell width will be clipped.\nThe text will never wrap to the next line unless the user manually\ninserts a new line.\nExample:\n\n    | First sentence. |\n    | Manual newline t| \u003c- Text is clipped\n    | Next newline.   |",
             "Words that are longer than a line are wrapped at the character level\nrather than clipped.\nExample:\n\n    | Cell has a |\n    | loooooooooo| \u003c- Word is broken.\n    | ong word.  |"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ChartAxisViewWindowOptions": {
+      "description": "The options that define a \"view window\" for a chart (such as the visible\nvalues in an axis).",
+      "id": "ChartAxisViewWindowOptions",
+      "properties": {
+        "viewWindowMax": {
+          "description": "The maximum numeric value to be shown in this view window. If unset, will\nautomatically determine a maximum value that looks good for the data.",
+          "format": "double",
+          "type": "number"
+        },
+        "viewWindowMin": {
+          "description": "The minimum numeric value to be shown in this view window. If unset, will\nautomatically determine a minimum value that looks good for the data.",
+          "format": "double",
+          "type": "number"
+        },
+        "viewWindowMode": {
+          "description": "The view window's mode.",
+          "enum": [
+            "DEFAULT_VIEW_WINDOW_MODE",
+            "VIEW_WINDOW_MODE_UNSUPPORTED",
+            "EXPLICIT",
+            "PRETTY"
+          ],
+          "enumDescriptions": [
+            "The default view window mode used in the Sheets editor for this chart\ntype. In most cases, if set, the default mode is equivalent to\n`PRETTY`.",
+            "Do not use. Represents that the currently set mode is not supported by\nthe API.",
+            "Follows the min and max exactly if specified. If a value is unspecified,\nit will fall back to the `PRETTY` value.",
+            "Chooses a min and max that make the chart look good. Both min and max are\nignored in this mode."
           ],
           "type": "string"
         }

@@ -30,7 +30,7 @@
   "description": "Supports core YouTube features, such as uploading videos, creating and managing playlists, searching for content, and much more.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/youtube/v3",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/iJCWgcHgub352FxdGhLwKx-bej4\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/rWYUaGpny8LTCuJElOojAsmREFw\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/youtube-16.png",
     "x32": "https://www.google.com/images/icons/product/youtube-32.png"
@@ -3141,7 +3141,7 @@
               "application/octet-stream",
               "video/*"
             ],
-            "maxSize": "64GB",
+            "maxSize": "128GB",
             "protocols": {
               "resumable": {
                 "multipart": true,
@@ -3493,7 +3493,7 @@
       }
     }
   },
-  "revision": "20190513",
+  "revision": "20190722",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AccessPolicy": {
@@ -4154,9 +4154,11 @@
           "enum": [
             "dash",
             "hls",
-            "rtmp"
+            "rtmp",
+            "webrtc"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             ""
@@ -4869,11 +4871,9 @@
           "enum": [
             "private",
             "public",
-            "unlisted",
-            "unlisted_new"
+            "unlisted"
           ],
           "enumDescriptions": [
-            "",
             "",
             "",
             ""
@@ -7452,6 +7452,33 @@
           "format": "date-time",
           "type": "string"
         },
+        "broadcastType": {
+          "enum": [
+            "fludd",
+            "fluddArchive",
+            "gplusHoa",
+            "lcrEncoder",
+            "mobile",
+            "persistent",
+            "premiere",
+            "unspecified",
+            "webcam",
+            "ytHoa"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
         "channelId": {
           "description": "The ID that YouTube uses to uniquely identify the channel that is publishing the broadcast.",
           "type": "string"
@@ -7574,11 +7601,9 @@
           "enum": [
             "private",
             "public",
-            "unlisted",
-            "unlisted_new"
+            "unlisted"
           ],
           "enumDescriptions": [
-            "",
             "",
             "",
             ""
@@ -8790,11 +8815,9 @@
           "enum": [
             "private",
             "public",
-            "unlisted",
-            "unlisted_new"
+            "unlisted"
           ],
           "enumDescriptions": [
-            "",
             "",
             "",
             ""
@@ -8934,11 +8957,9 @@
           "enum": [
             "private",
             "public",
-            "unlisted",
-            "unlisted_new"
+            "unlisted"
           ],
           "enumDescriptions": [
-            "",
             "",
             "",
             ""
@@ -10642,11 +10663,9 @@
           "enum": [
             "private",
             "public",
-            "unlisted",
-            "unlisted_new"
+            "unlisted"
           ],
           "enumDescriptions": [
-            "",
             "",
             "",
             ""

@@ -15,7 +15,7 @@
   "description": "The Management API for Google Play Game Services.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/games/services",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/fbu2xixSl1VJRlkPZJJp8HH5rXU\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/vcdwxLzKGppxpNOMwv3fTq_I4eo\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -523,7 +523,7 @@
       }
     }
   },
-  "revision": "20190222",
+  "revision": "20190725",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AchievementResetAllResponse": {
@@ -832,7 +832,6 @@
           "type": "string"
         },
         "profileVisible": {
-          "description": "The player's current profile visibility. This field is visible to both 1P and 3P APIs.",
           "type": "boolean"
         }
       },

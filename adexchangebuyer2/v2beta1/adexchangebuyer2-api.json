@@ -2485,7 +2485,7 @@
       }
     }
   },
-  "revision": "20190530",
+  "revision": "20190802",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -3093,14 +3093,18 @@
             "NOT_CHECKED",
             "CONDITIONALLY_APPROVED",
             "APPROVED",
-            "DISAPPROVED"
+            "DISAPPROVED",
+            "PENDING_REVIEW",
+            "STATUS_TYPE_UNSPECIFIED"
           ],
           "enumDescriptions": [
             "The status is unknown.",
             "The creative has not been checked.",
             "The creative has been conditionally approved.\nSee serving_restrictions for details.",
             "The creative has been approved.",
-            "The creative has been disapproved."
+            "The creative has been disapproved.",
+            "Placeholder for transition to v1beta1. Currently not used.",
+            "Placeholder for transition to v1beta1. Currently not used."
           ],
           "type": "string"
         },
@@ -3171,14 +3175,18 @@
             "NOT_CHECKED",
             "CONDITIONALLY_APPROVED",
             "APPROVED",
-            "DISAPPROVED"
+            "DISAPPROVED",
+            "PENDING_REVIEW",
+            "STATUS_TYPE_UNSPECIFIED"
           ],
           "enumDescriptions": [
             "The status is unknown.",
             "The creative has not been checked.",
             "The creative has been conditionally approved.\nSee serving_restrictions for details.",
             "The creative has been approved.",
-            "The creative has been disapproved."
+            "The creative has been disapproved.",
+            "Placeholder for transition to v1beta1. Currently not used.",
+            "Placeholder for transition to v1beta1. Currently not used."
           ],
           "type": "string"
         },

@@ -15,7 +15,7 @@
   "description": "Manages the deployment of apps to Android for Work users.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android/work/play/emm-api",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/GOyaohosJtPtOLAbitwIhilRmds\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/FM_8jB_Nba90IkIzNz2nu5XOmo8\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2919,7 +2919,7 @@
       }
     }
   },
-  "revision": "20190530",
+  "revision": "20190731",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Administrator": {
@@ -2963,7 +2963,7 @@
           "description": "Options for displaying the Managed Configuration page."
         },
         "parent": {
-          "description": "The URI of the parent frame hosting the iframe. To prevent XSS, the iframe may not be hosted at other URIs. This URI must be https.",
+          "description": "The URI of the parent frame hosting the iframe. To prevent XSS, the iframe may not be hosted at other URIs. This URI must be https. Use whitespaces to separate multiple parent URIs.",
           "type": "string"
         },
         "permission": {

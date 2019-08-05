@@ -1519,6 +1519,7 @@ func (c *ManagedShortLinksCreateCall) Header() http.Header {
 
 func (c *ManagedShortLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1655,6 +1656,7 @@ func (c *ShortLinksCreateCall) Header() http.Header {
 
 func (c *ShortLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1807,6 +1809,7 @@ func (c *V1GetLinkStatsCall) Header() http.Header {
 
 func (c *V1GetLinkStatsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1950,6 +1953,7 @@ func (c *V1InstallAttributionCall) Header() http.Header {
 
 func (c *V1InstallAttributionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2076,6 +2080,7 @@ func (c *V1ReopenAttributionCall) Header() http.Header {
 
 func (c *V1ReopenAttributionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

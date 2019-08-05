@@ -15,7 +15,7 @@
   "description": "API for viewing and managing your reports in DoubleClick Bid Manager.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/bid-manager/",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/EksXu9fzLlIS4f_irK3G9BKBZK8\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/xgvireT-Vynv--FFkFbMWRLKz6E\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -257,7 +257,7 @@
       }
     }
   },
-  "revision": "20190618",
+  "revision": "20190715",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "DownloadLineItemsRequest": {
@@ -426,7 +426,7 @@
             "FILTER_ADVERTISER_TIMEZONE",
             "FILTER_AD_POSITION",
             "FILTER_AGE",
-            "FILTER_AUTHORIZED_SELLER_STATE_ID",
+            "FILTER_AUTHORIZED_SELLER_STATE",
             "FILTER_BRANDSAFE_CHANNEL_ID",
             "FILTER_BROWSER",
             "FILTER_BUDGET_SEGMENT_DESCRIPTION",
@@ -451,10 +451,8 @@
             "FILTER_DEVICE_TYPE",
             "FILTER_DFP_ORDER_ID",
             "FILTER_DMA",
-            "FILTER_DV360_ACTIVITY_ID",
             "FILTER_EXCHANGE_ID",
             "FILTER_FLOODLIGHT_ACTIVITY_ID",
-            "FILTER_FLOODLIGHT_PIXEL_ID",
             "FILTER_GENDER",
             "FILTER_INSERTION_ORDER",
             "FILTER_INVENTORY_COMMITMENT_TYPE",
@@ -676,8 +674,6 @@
             "",
             "",
             "",
-            "",
-            "",
             ""
           ],
           "type": "string"
@@ -749,7 +745,7 @@
               "FILTER_ADVERTISER_TIMEZONE",
               "FILTER_AD_POSITION",
               "FILTER_AGE",
-              "FILTER_AUTHORIZED_SELLER_STATE_ID",
+              "FILTER_AUTHORIZED_SELLER_STATE",
               "FILTER_BRANDSAFE_CHANNEL_ID",
               "FILTER_BROWSER",
               "FILTER_BUDGET_SEGMENT_DESCRIPTION",
@@ -774,10 +770,8 @@
               "FILTER_DEVICE_TYPE",
               "FILTER_DFP_ORDER_ID",
               "FILTER_DMA",
-              "FILTER_DV360_ACTIVITY_ID",
               "FILTER_EXCHANGE_ID",
               "FILTER_FLOODLIGHT_ACTIVITY_ID",
-              "FILTER_FLOODLIGHT_PIXEL_ID",
               "FILTER_GENDER",
               "FILTER_INSERTION_ORDER",
               "FILTER_INVENTORY_COMMITMENT_TYPE",
@@ -873,8 +867,6 @@
               "FILTER_ZIP_CODE"
             ],
             "enumDescriptions": [
-              "",
-              "",
               "",
               "",
               "",

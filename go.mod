@@ -1,5 +1,7 @@
 module google.golang.org/api
 
+go 1.9
+
 require (
 	cloud.google.com/go v0.38.0 // indirect
 	github.com/golang/protobuf v1.3.1 // indirect

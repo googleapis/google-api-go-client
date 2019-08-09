@@ -1493,6 +1493,11 @@ type LogEntry struct {
 	//   "EMERGENCY" - (800) One or more systems are unusable.
 	Severity string `json:"severity,omitempty"`
 
+	// SourceLocation: Optional. Source code location information associated
+	// with the log entry,
+	// if any.
+	SourceLocation *LogEntrySourceLocation `json:"sourceLocation,omitempty"`
+
 	// StructPayload: The log entry payload, represented as a structure
 	// that
 	// is expressed as a JSON object.
@@ -1584,6 +1589,56 @@ type LogEntryOperation struct {
 
 func (s *LogEntryOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod LogEntryOperation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LogEntrySourceLocation: Additional information about the source code
+// location that produced the log
+// entry.
+type LogEntrySourceLocation struct {
+	// File: Optional. Source file name. Depending on the runtime
+	// environment, this
+	// might be a simple name or a fully-qualified name.
+	File string `json:"file,omitempty"`
+
+	// Function: Optional. Human-readable name of the function or method
+	// being invoked, with
+	// optional context such as the class or package name. This information
+	// may be
+	// used in contexts such as the logs viewer, where a file and line
+	// number are
+	// less meaningful. The format can vary by language. For
+	// example:
+	// `qual.if.ied.Class.method` (Java), `dir/package.func` (Go),
+	// `function`
+	// (Python).
+	Function string `json:"function,omitempty"`
+
+	// Line: Optional. Line within the source file. 1-based; 0 indicates no
+	// line number
+	// available.
+	Line int64 `json:"line,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "File") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "File") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LogEntrySourceLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod LogEntrySourceLocation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1907,9 +1962,8 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // network request.
 // The node can be either a service or an application that sends,
 // forwards,
-// or receives the request. Service peers should fill in the
-// `service`,
-// `principal`, and `labels` as appropriate.
+// or receives the request. Service peers should fill in
+// `principal` and `labels` as appropriate.
 type Peer struct {
 	// Ip: The IP address of the peer.
 	Ip string `json:"ip,omitempty"`
@@ -1932,11 +1986,6 @@ type Peer struct {
 	// the
 	// physical location where this peer is running.
 	RegionCode string `json:"regionCode,omitempty"`
-
-	// Service: The canonical service name of the peer.
-	//
-	// NOTE: different systems may have different service naming schemes.
-	Service string `json:"service,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Ip") to
 	// unconditionally include in API requests. By default, fields with
@@ -2471,9 +2520,6 @@ type Request struct {
 	// Derived from the HTTP request `Authorization` header or equivalent.
 	Auth *Auth `json:"auth,omitempty"`
 
-	// Fragment: The HTTP URL fragment. No URL decoding is performed.
-	Fragment string `json:"fragment,omitempty"`
-
 	// Headers: The HTTP request headers. If multiple headers share the same
 	// key, they
 	// must be merged according to the HTTP spec. All header keys must
@@ -2681,9 +2727,11 @@ type Resource struct {
 	// hostname that actually serves the request.
 	Service string `json:"service,omitempty"`
 
-	// Type: The type of the resource. The scheme is platform-specific
+	// Type: The type of the resource. The syntax is platform-specific
 	// because
 	// different platforms define their resources differently.
+	//
+	// For Google APIs, the type format must be "{service}/{kind}".
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to
@@ -2982,7 +3030,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3144,7 +3192,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3303,7 +3351,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

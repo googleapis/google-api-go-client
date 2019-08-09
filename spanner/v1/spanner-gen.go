@@ -747,32 +747,43 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// ExecuteBatchDmlRequest: The request for ExecuteBatchDml
+// ExecuteBatchDmlRequest: The request for ExecuteBatchDml.
 type ExecuteBatchDmlRequest struct {
 	// Seqno: A per-transaction sequence number used to identify this
-	// request. This is
-	// used in the same space as the seqno in
-	// ExecuteSqlRequest. See more details
-	// in ExecuteSqlRequest.
+	// request. This field
+	// makes each request idempotent such that if the request is received
+	// multiple
+	// times, at most one will succeed.
+	//
+	// The sequence number must be monotonically increasing within
+	// the
+	// transaction. If a request arrives for the first time with an
+	// out-of-order
+	// sequence number, the transaction may be aborted. Replays of
+	// previously
+	// handled requests will yield the same response as the first execution.
 	Seqno int64 `json:"seqno,omitempty,string"`
 
 	// Statements: The list of statements to execute in this batch.
 	// Statements are executed
-	// serially, such that the effects of statement i are visible to
+	// serially, such that the effects of statement `i` are visible to
 	// statement
-	// i+1. Each statement must be a DML statement. Execution will stop at
+	// `i+1`. Each statement must be a DML statement. Execution stops at
 	// the
-	// first failed statement; the remaining statements will not
-	// run.
+	// first failed statement; the remaining statements are not
+	// executed.
 	//
-	// REQUIRES: `statements_size()` > 0.
+	// Callers must provide at least one statement.
 	Statements []*Statement `json:"statements,omitempty"`
 
-	// Transaction: The transaction to use. A ReadWrite transaction is
-	// required. Single-use
-	// transactions are not supported (to avoid replay).  The caller must
-	// either
-	// supply an existing transaction ID or begin a new transaction.
+	// Transaction: The transaction to use. Must be a read-write
+	// transaction.
+	//
+	// To protect against replays, single-use transactions are not
+	// supported. The
+	// caller must either supply an existing transaction ID or begin a
+	// new
+	// transaction.
 	Transaction *TransactionSelector `json:"transaction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Seqno") to
@@ -800,52 +811,55 @@ func (s *ExecuteBatchDmlRequest) MarshalJSON() ([]byte, error) {
 
 // ExecuteBatchDmlResponse: The response for ExecuteBatchDml. Contains a
 // list
-// of ResultSet, one for each DML statement that has successfully
-// executed.
-// If a statement fails, the error is returned as part of the response
-// payload.
-// Clients can determine whether all DML statements have run
-// successfully, or if
-// a statement failed, using one of the following approaches:
+// of ResultSet messages, one for each DML statement that has
+// successfully
+// executed, in the same order as the statements in the request. If a
+// statement
+// fails, the status in the response body identifies the cause of the
+// failure.
 //
-//   1. Check if `'status'` field is `OkStatus`.
-//   2. Check if `result_sets_size()` equals the number of statements
-// in
-//      ExecuteBatchDmlRequest.
+// To check for DML statements that failed, use the following
+// approach:
 //
-// Example 1: A request with 5 DML statements, all executed
+// 1. Check the status in the response message. The google.rpc.Code
+// enum
+//    value `OK` indicates that all statements were executed
 // successfully.
+// 2. If the status was not `OK`, check the number of result sets in
+// the
+//    response. If the response contains `N` ResultSet messages, then
+//    statement `N+1` in the request failed.
 //
-// Result: A response with 5 ResultSets, one for each statement in the
-// same
-// order, and an `OkStatus`.
+// Example 1:
 //
-// Example 2: A request with 5 DML statements. The 3rd statement has a
-// syntax
+// * Request: 5 DML statements, all executed successfully.
+// * Response: 5 ResultSet messages, with the status `OK`.
+//
+// Example 2:
+//
+// * Request: 5 DML statements. The third statement has a syntax
 // error.
-//
-// Result: A response with 2 ResultSets, for the first 2 statements
-// that
-// run successfully, and a syntax error (`INVALID_ARGUMENT`) status.
-// From
-// `result_set_size()` client can determine that the 3rd statement has
-// failed.
+// * Response: 2 ResultSet messages, and a syntax error
+// (`INVALID_ARGUMENT`)
+//   status. The number of ResultSet messages indicates that the third
+//   statement failed, and the fourth and fifth statements were not
+// executed.
 type ExecuteBatchDmlResponse struct {
-	// ResultSets: ResultSets, one for each statement in the request that
-	// ran successfully, in
-	// the same order as the statements in the request. Each ResultSet
-	// will
+	// ResultSets: One ResultSet for each statement in the request that ran
+	// successfully,
+	// in the same order as the statements in the request. Each ResultSet
+	// does
 	// not contain any rows. The ResultSetStats in each ResultSet
-	// will
-	// contain the number of rows modified by the statement.
+	// contain
+	// the number of rows modified by the statement.
 	//
-	// Only the first ResultSet in the response contains a
+	// Only the first ResultSet in the response contains
 	// valid
 	// ResultSetMetadata.
 	ResultSets []*ResultSet `json:"resultSets,omitempty"`
 
-	// Status: If all DML statements are executed successfully, status will
-	// be OK.
+	// Status: If all DML statements are executed successfully, the status
+	// is `OK`.
 	// Otherwise, the error status of the first failed statement.
 	Status *Status `json:"status,omitempty"`
 
@@ -892,24 +906,22 @@ type ExecuteSqlRequest struct {
 	// about SQL types.
 	ParamTypes map[string]Type `json:"paramTypes,omitempty"`
 
-	// Params: The SQL string can contain parameter placeholders. A
-	// parameter
-	// placeholder consists of `'@'` followed by the parameter
-	// name. Parameter names consist of any combination of letters,
-	// numbers, and underscores.
+	// Params: Parameter names and values that bind to placeholders in the
+	// SQL string.
+	//
+	// A parameter placeholder consists of the `@` character followed by
+	// the
+	// parameter name (for example, `@firstName`). Parameter names can
+	// contain
+	// letters, numbers, and underscores.
 	//
 	// Parameters can appear anywhere that a literal value is expected.  The
 	// same
 	// parameter name can be used more than once, for example:
-	//   "WHERE id > @msg_id AND id < @msg_id + 100"
 	//
-	// It is an error to execute an SQL statement with unbound
-	// parameters.
+	// "WHERE id > @msg_id AND id < @msg_id + 100"
 	//
-	// Parameter values are specified using `params`, which is a JSON
-	// object whose keys are parameter names, and whose values are
-	// the
-	// corresponding parameter values.
+	// It is an error to execute a SQL statement with unbound parameters.
 	Params googleapi.RawMessage `json:"params,omitempty"`
 
 	// PartitionToken: If present, results will be restricted to the
@@ -950,7 +962,7 @@ type ExecuteSqlRequest struct {
 	ResumeToken string `json:"resumeToken,omitempty"`
 
 	// Seqno: A per-transaction sequence number used to identify this
-	// request. This
+	// request. This field
 	// makes each request idempotent such that if the request is received
 	// multiple
 	// times, at most one will succeed.
@@ -970,24 +982,20 @@ type ExecuteSqlRequest struct {
 	// Sql: Required. The SQL string.
 	Sql string `json:"sql,omitempty"`
 
-	// Transaction: The transaction to use. If none is provided, the default
-	// is a
-	// temporary read-only transaction with strong concurrency.
-	//
-	// The transaction to use.
+	// Transaction: The transaction to use.
 	//
 	// For queries, if none is provided, the default is a temporary
 	// read-only
 	// transaction with strong concurrency.
 	//
-	// Standard DML statements require a ReadWrite transaction.
-	// Single-use
-	// transactions are not supported (to avoid replay).  The caller
-	// must
-	// either supply an existing transaction ID or begin a new
+	// Standard DML statements require a read-write transaction. To
+	// protect
+	// against replays, single-use transactions are not supported.  The
+	// caller
+	// must either supply an existing transaction ID or begin a new
 	// transaction.
 	//
-	// Partitioned DML requires an existing PartitionedDml transaction ID.
+	// Partitioned DML requires an existing Partitioned DML transaction ID.
 	Transaction *TransactionSelector `json:"transaction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ParamTypes") to
@@ -2079,24 +2087,22 @@ type PartitionQueryRequest struct {
 	// about SQL types.
 	ParamTypes map[string]Type `json:"paramTypes,omitempty"`
 
-	// Params: The SQL query string can contain parameter placeholders. A
-	// parameter
-	// placeholder consists of `'@'` followed by the parameter
-	// name. Parameter names consist of any combination of letters,
-	// numbers, and underscores.
+	// Params: Parameter names and values that bind to placeholders in the
+	// SQL string.
+	//
+	// A parameter placeholder consists of the `@` character followed by
+	// the
+	// parameter name (for example, `@firstName`). Parameter names can
+	// contain
+	// letters, numbers, and underscores.
 	//
 	// Parameters can appear anywhere that a literal value is expected.  The
 	// same
 	// parameter name can be used more than once, for example:
-	//   "WHERE id > @msg_id AND id < @msg_id + 100"
 	//
-	// It is an error to execute an SQL query with unbound
-	// parameters.
+	// "WHERE id > @msg_id AND id < @msg_id + 100"
 	//
-	// Parameter values are specified using `params`, which is a JSON
-	// object whose keys are parameter names, and whose values are
-	// the
-	// corresponding parameter values.
+	// It is an error to execute a SQL statement with unbound parameters.
 	Params googleapi.RawMessage `json:"params,omitempty"`
 
 	// PartitionOptions: Additional options that affect how many partitions
@@ -3063,24 +3069,22 @@ type Statement struct {
 	// about SQL types.
 	ParamTypes map[string]Type `json:"paramTypes,omitempty"`
 
-	// Params: The DML string can contain parameter placeholders. A
-	// parameter
-	// placeholder consists of `'@'` followed by the parameter
-	// name. Parameter names consist of any combination of letters,
-	// numbers, and underscores.
+	// Params: Parameter names and values that bind to placeholders in the
+	// DML string.
+	//
+	// A parameter placeholder consists of the `@` character followed by
+	// the
+	// parameter name (for example, `@firstName`). Parameter names can
+	// contain
+	// letters, numbers, and underscores.
 	//
 	// Parameters can appear anywhere that a literal value is expected.
 	// The
 	// same parameter name can be used more than once, for example:
-	//   "WHERE id > @msg_id AND id < @msg_id + 100"
 	//
-	// It is an error to execute an SQL statement with unbound
-	// parameters.
+	// "WHERE id > @msg_id AND id < @msg_id + 100"
 	//
-	// Parameter values are specified using `params`, which is a JSON
-	// object whose keys are parameter names, and whose values are
-	// the
-	// corresponding parameter values.
+	// It is an error to execute a SQL statement with unbound parameters.
 	Params googleapi.RawMessage `json:"params,omitempty"`
 
 	// Sql: Required. The DML string.
@@ -4175,7 +4179,7 @@ func (c *ProjectsInstanceConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsInstanceConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4338,7 +4342,7 @@ func (c *ProjectsInstanceConfigsListCall) Header() http.Header {
 
 func (c *ProjectsInstanceConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4546,7 +4550,7 @@ func (c *ProjectsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4696,7 +4700,7 @@ func (c *ProjectsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4838,7 +4842,7 @@ func (c *ProjectsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4980,7 +4984,7 @@ func (c *ProjectsInstancesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5175,7 +5179,7 @@ func (c *ProjectsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5396,7 +5400,7 @@ func (c *ProjectsInstancesPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5542,7 +5546,7 @@ func (c *ProjectsInstancesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5692,7 +5696,7 @@ func (c *ProjectsInstancesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsInstancesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5842,7 +5846,7 @@ func (c *ProjectsInstancesDatabasesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5981,7 +5985,7 @@ func (c *ProjectsInstancesDatabasesDropDatabaseCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesDropDatabaseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6123,7 +6127,7 @@ func (c *ProjectsInstancesDatabasesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6272,7 +6276,7 @@ func (c *ProjectsInstancesDatabasesGetDdlCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesGetDdlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6415,7 +6419,7 @@ func (c *ProjectsInstancesDatabasesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6582,7 +6586,7 @@ func (c *ProjectsInstancesDatabasesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6755,7 +6759,7 @@ func (c *ProjectsInstancesDatabasesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6903,7 +6907,7 @@ func (c *ProjectsInstancesDatabasesTestIamPermissionsCall) Header() http.Header 
 
 func (c *ProjectsInstancesDatabasesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7053,7 +7057,7 @@ func (c *ProjectsInstancesDatabasesUpdateDdlCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesUpdateDdlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7209,7 +7213,7 @@ func (c *ProjectsInstancesDatabasesOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7346,7 +7350,7 @@ func (c *ProjectsInstancesDatabasesOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7492,7 +7496,7 @@ func (c *ProjectsInstancesDatabasesOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7674,7 +7678,7 @@ func (c *ProjectsInstancesDatabasesOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7851,7 +7855,7 @@ func (c *ProjectsInstancesDatabasesSessionsBeginTransactionCall) Header() http.H
 
 func (c *ProjectsInstancesDatabasesSessionsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8003,7 +8007,7 @@ func (c *ProjectsInstancesDatabasesSessionsCommitCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8127,10 +8131,9 @@ type ProjectsInstancesDatabasesSessionsCreateCall struct {
 // transaction
 // limit.
 //
-// Cloud Spanner limits the number of sessions that can exist at any
-// given
-// time; thus, it is a good idea to delete idle and/or unneeded
-// sessions.
+// Active sessions use additional server resources, so it is a good idea
+// to
+// delete idle and unneeded sessions.
 // Aside from explicit deletes, Cloud Spanner can delete sessions for
 // which no
 // operations are sent for more than an hour. If a session is
@@ -8174,7 +8177,7 @@ func (c *ProjectsInstancesDatabasesSessionsCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8238,7 +8241,7 @@ func (c *ProjectsInstancesDatabasesSessionsCreateCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new session. A session can be used to perform\ntransactions that read and/or modify data in a Cloud Spanner database.\nSessions are meant to be reused for many consecutive\ntransactions.\n\nSessions can only execute one transaction at a time. To execute\nmultiple concurrent read-write/write-only transactions, create\nmultiple sessions. Note that standalone reads and queries use a\ntransaction internally, and count toward the one transaction\nlimit.\n\nCloud Spanner limits the number of sessions that can exist at any given\ntime; thus, it is a good idea to delete idle and/or unneeded sessions.\nAside from explicit deletes, Cloud Spanner can delete sessions for which no\noperations are sent for more than an hour. If a session is deleted,\nrequests to it return `NOT_FOUND`.\n\nIdle sessions can be kept alive by sending a trivial SQL query\nperiodically, e.g., `\"SELECT 1\"`.",
+	//   "description": "Creates a new session. A session can be used to perform\ntransactions that read and/or modify data in a Cloud Spanner database.\nSessions are meant to be reused for many consecutive\ntransactions.\n\nSessions can only execute one transaction at a time. To execute\nmultiple concurrent read-write/write-only transactions, create\nmultiple sessions. Note that standalone reads and queries use a\ntransaction internally, and count toward the one transaction\nlimit.\n\nActive sessions use additional server resources, so it is a good idea to\ndelete idle and unneeded sessions.\nAside from explicit deletes, Cloud Spanner can delete sessions for which no\noperations are sent for more than an hour. If a session is deleted,\nrequests to it return `NOT_FOUND`.\n\nIdle sessions can be kept alive by sending a trivial SQL query\nperiodically, e.g., `\"SELECT 1\"`.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.sessions.create",
@@ -8317,7 +8320,7 @@ func (c *ProjectsInstancesDatabasesSessionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8421,28 +8424,17 @@ type ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall struct {
 // with
 // ExecuteSql.
 //
-// Statements are executed in order,
-// sequentially.
-// ExecuteBatchDmlResponse will contain a
-// ResultSet for each DML statement that has successfully executed. If
-// a
-// statement fails, its error status will be returned as part of
-// the
-// ExecuteBatchDmlResponse. Execution will
-// stop at the first failed statement; the remaining statements will not
-// run.
-//
-// ExecuteBatchDml is expected to return an OK status with a response
+// Statements are executed in sequential order. A request can succeed
 // even if
-// there was an error while processing one of the DML statements.
+// a statement fails. The ExecuteBatchDmlResponse.status field in
+// the
+// response provides information about the statement that failed.
 // Clients must
-// inspect response.status to determine if there were any errors
-// while
-// processing the request.
+// inspect this field to determine whether an error occurred.
 //
-// See more details in
-// ExecuteBatchDmlRequest and
-// ExecuteBatchDmlResponse.
+// Execution stops after the first failed statement; the remaining
+// statements
+// are not executed.
 func (r *ProjectsInstancesDatabasesSessionsService) ExecuteBatchDml(session string, executebatchdmlrequest *ExecuteBatchDmlRequest) *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall {
 	c := &ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -8477,7 +8469,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall) Header() http.He
 
 func (c *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8541,7 +8533,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall) Do(opts ...googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Executes a batch of SQL DML statements. This method allows many statements\nto be run with lower latency than submitting them sequentially with\nExecuteSql.\n\nStatements are executed in order, sequentially.\nExecuteBatchDmlResponse will contain a\nResultSet for each DML statement that has successfully executed. If a\nstatement fails, its error status will be returned as part of the\nExecuteBatchDmlResponse. Execution will\nstop at the first failed statement; the remaining statements will not run.\n\nExecuteBatchDml is expected to return an OK status with a response even if\nthere was an error while processing one of the DML statements. Clients must\ninspect response.status to determine if there were any errors while\nprocessing the request.\n\nSee more details in\nExecuteBatchDmlRequest and\nExecuteBatchDmlResponse.",
+	//   "description": "Executes a batch of SQL DML statements. This method allows many statements\nto be run with lower latency than submitting them sequentially with\nExecuteSql.\n\nStatements are executed in sequential order. A request can succeed even if\na statement fails. The ExecuteBatchDmlResponse.status field in the\nresponse provides information about the statement that failed. Clients must\ninspect this field to determine whether an error occurred.\n\nExecution stops after the first failed statement; the remaining statements\nare not executed.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:executeBatchDml",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.sessions.executeBatchDml",
@@ -8631,7 +8623,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteSqlCall) Header() http.Header 
 
 func (c *ProjectsInstancesDatabasesSessionsExecuteSqlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8777,7 +8769,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall) Header() htt
 
 func (c *ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8931,7 +8923,7 @@ func (c *ProjectsInstancesDatabasesSessionsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9110,7 +9102,7 @@ func (c *ProjectsInstancesDatabasesSessionsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9301,7 +9293,7 @@ func (c *ProjectsInstancesDatabasesSessionsPartitionQueryCall) Header() http.Hea
 
 func (c *ProjectsInstancesDatabasesSessionsPartitionQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9464,7 +9456,7 @@ func (c *ProjectsInstancesDatabasesSessionsPartitionReadCall) Header() http.Head
 
 func (c *ProjectsInstancesDatabasesSessionsPartitionReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9620,7 +9612,7 @@ func (c *ProjectsInstancesDatabasesSessionsReadCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9770,7 +9762,7 @@ func (c *ProjectsInstancesDatabasesSessionsRollbackCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9915,7 +9907,7 @@ func (c *ProjectsInstancesDatabasesSessionsStreamingReadCall) Header() http.Head
 
 func (c *ProjectsInstancesDatabasesSessionsStreamingReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10071,7 +10063,7 @@ func (c *ProjectsInstancesOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10208,7 +10200,7 @@ func (c *ProjectsInstancesOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10354,7 +10346,7 @@ func (c *ProjectsInstancesOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10536,7 +10528,7 @@ func (c *ProjectsInstancesOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.12.5 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

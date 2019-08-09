@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/hj-d01L770JuCnaFsM_lH4oszNE\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/Ln97Ynt9iS4z2dTHc6ML6w6WgMw\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1827,7 +1827,7 @@
           ]
         },
         "instorerefundlineitem": {
-          "description": "Notifies that item return and refund was handled directly by merchant outside of Google payments processing (e.g. cash refund done in store).\nNote: We recommend calling the returnrefundlineitem method to refund in-store returns. We will issue the refund directly to the customer. This helps to prevent possible differences arising between merchant and Google transaction records. We also recommend having the point of sale system communicate with Google to ensure that customers do not receive a double refund by first refunding via Google then via an in-store return.",
+          "description": "Deprecated. Notifies that item return and refund was handled directly by merchant outside of Google payments processing (e.g. cash refund done in store).\nNote: We recommend calling the returnrefundlineitem method to refund in-store returns. We will issue the refund directly to the customer. This helps to prevent possible differences arising between merchant and Google transaction records. We also recommend having the point of sale system communicate with Google to ensure that customers do not receive a double refund by first refunding via Google then via an in-store return.",
           "httpMethod": "POST",
           "id": "content.orders.instorerefundlineitem",
           "parameterOrder": [
@@ -2890,7 +2890,7 @@
       }
     }
   },
-  "revision": "20190705",
+  "revision": "20190805",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -4127,7 +4127,7 @@
           "type": "array"
         },
         "includedDestinations": {
-          "description": "The list of destinations to include for this target (corresponds to checked check boxes in Merchant Center). Default destinations are always included unless provided in the excluded_destination field.",
+          "description": "The list of destinations to include for this target (corresponds to checked check boxes in Merchant Center). Default destinations are always included unless provided in excludedDestinations.",
           "items": {
             "type": "string"
           },
@@ -5256,9 +5256,31 @@
           "description": "Full name of the customer.",
           "type": "string"
         },
+        "invoiceReceivingEmail": {
+          "description": "Email address for receiving merchant issued value-added tax or invoice documentation of this order.",
+          "type": "string"
+        },
+        "loyaltyInfo": {
+          "$ref": "OrderCustomerLoyaltyInfo",
+          "description": "Loyalty program information."
+        },
         "marketingRightsInfo": {
           "$ref": "OrderCustomerMarketingRightsInfo",
           "description": "Customer's marketing preferences. Contains the marketing opt-in information that is current at the time that the merchant call. User preference selections can change from one order to the next so preferences must be checked with every order."
+        }
+      },
+      "type": "object"
+    },
+    "OrderCustomerLoyaltyInfo": {
+      "id": "OrderCustomerLoyaltyInfo",
+      "properties": {
+        "loyaltyNumber": {
+          "description": "The loyalty card/membership number.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of card/membership holder, this field will be populated when",
+          "type": "string"
         }
       },
       "type": "object"
@@ -5848,7 +5870,7 @@
       "id": "OrderShipment",
       "properties": {
         "carrier": {
-          "description": "The carrier handling the shipment.\n\nAcceptable values for US are:  \n- \"gsx\" \n- \"ups\" \n- \"usps\" \n- \"fedex\" \n- \"dhl\" \n- \"ecourier\" \n- \"cxt\" \n- \"google\" \n- \"ontrac\" \n- \"emsy\" \n- \"ont\" \n- \"deliv\" \n- \"dynamex\" \n- \"lasership\" \n- \"mpx\" \n- \"uds\" \n- \"efw\"  \n\nAcceptable values for FR are:  \n- \"colissimo\" \n- \"chronopost\" \n- \"gls\" \n- \"dpd\" \n- \"bpost\"",
+          "description": "The carrier handling the shipment.\n\nAcceptable values for US are:  \n- \"gsx\" \n- \"ups\" \n- \"usps\" \n- \"fedex\" \n- \"dhl\" \n- \"ecourier\" \n- \"cxt\" \n- \"google\" \n- \"ontrac\" \n- \"emsy\" \n- \"ont\" \n- \"deliv\" \n- \"dynamex\" \n- \"lasership\" \n- \"mpx\" \n- \"uds\" \n- \"efw\"  \n\nAcceptable values for FR are:  \n- \"colissimo\" \n- \"chronopost\" \n- \"gls\" \n- \"dpd\" \n- \"bpost\" \n- \"colis priv�\" \n- \"boxtal\" \n- \"geodis\"",
           "type": "string"
         },
         "creationDate": {
@@ -5869,6 +5891,10 @@
             "$ref": "OrderShipmentLineItemShipment"
           },
           "type": "array"
+        },
+        "shipmentGroupId": {
+          "description": "The shipment group ID of the shipment. This is set in shiplineitems request.",
+          "type": "string"
         },
         "status": {
           "description": "The status of the shipment.",
@@ -7602,7 +7628,7 @@
           "type": "string"
         },
         "includedDestinations": {
-          "description": "The list of destinations to include for this target (corresponds to checked check boxes in Merchant Center). Default destinations are always included unless provided in the excluded_destination field.",
+          "description": "The list of destinations to include for this target (corresponds to checked check boxes in Merchant Center). Default destinations are always included unless provided in excludedDestinations.",
           "items": {
             "type": "string"
           },
@@ -8842,7 +8868,7 @@
               "content.orders.createtestorder"
             ]
           },
-          "description": "The price of shipping for all items. Shipping tax is automatically calculated for MFL orders. For non-MFL orders, tax settings from Merchant Center are applied. Note that shipping is not taxed in certain states."
+          "description": "The price of shipping for all items. Shipping tax is automatically calculated for orders where marketplace facilitator tax laws are applicable. Otherwise, tax settings from Merchant Center are applied. Note that shipping is not taxed in certain states."
         },
         "shippingOption": {
           "annotations": {
@@ -8968,7 +8994,7 @@
               "content.orders.createtestorder"
             ]
           },
-          "description": "The price for the product. Tax is automatically calculated for MFL orders. For non-MFL orders, tax settings from Merchant Center are applied."
+          "description": "The price for the product. Tax is automatically calculated for orders where marketplace facilitator tax laws are applicable. Otherwise, tax settings from Merchant Center are applied."
         },
         "targetCountry": {
           "annotations": {

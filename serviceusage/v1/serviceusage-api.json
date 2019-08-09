@@ -236,7 +236,7 @@
     "services": {
       "methods": {
         "batchEnable": {
-          "description": "Enable multiple services on a project. The operation is atomic: if enabling\nany service fails, then the entire batch fails, and no state changes occur.",
+          "description": "Enable multiple services on a project. The operation is atomic: if enabling\nany service fails, then the entire batch fails, and no state changes occur.\nTo enable a single service, use the `EnableService` method instead.",
           "flatPath": "v1/{v1Id}/{v1Id1}/services:batchEnable",
           "httpMethod": "POST",
           "id": "serviceusage.services.batchEnable",
@@ -393,7 +393,7 @@
       }
     }
   },
-  "revision": "20190708",
+  "revision": "20190807",
   "rootUrl": "https://serviceusage.googleapis.com/",
   "schemas": {
     "Api": {
@@ -631,7 +631,7 @@
       "id": "BatchEnableServicesRequest",
       "properties": {
         "serviceIds": {
-          "description": "The identifiers of the services to enable on the project.\n\nA valid identifier would be:\nserviceusage.googleapis.com\n\nEnabling services requires that each service is public or is shared with\nthe user enabling the service.\n\nTwo or more services must be specified. To enable a single service,\nuse the `EnableService` method instead.\n\nA single request can enable a maximum of 20 services at a time. If more\nthan 20 services are specified, the request will fail, and no state changes\nwill occur.",
+          "description": "The identifiers of the services to enable on the project.\n\nA valid identifier would be:\nserviceusage.googleapis.com\n\nEnabling services requires that each service is public or is shared with\nthe user enabling the service.\n\nA single request can enable a maximum of 20 services at a time. If more\nthan 20 services are specified, the request will fail, and no state changes\nwill occur.",
           "items": {
             "type": "string"
           },

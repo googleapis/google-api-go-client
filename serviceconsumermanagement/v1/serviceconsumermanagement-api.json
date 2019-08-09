@@ -359,7 +359,7 @@
               ]
             },
             "create": {
-              "description": "Creates a tenancy unit with no tenant resources.",
+              "description": "Creates a tenancy unit with no tenant resources.\nIf tenancy unit already exists, it will be returned,\nhowever, in this case, returned TenancyUnit does not have tenant_resources\nfield set and ListTenancyUnit has to be used to get a complete\nTenancyUnit with all fields populated.",
               "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits",
               "httpMethod": "POST",
               "id": "serviceconsumermanagement.services.tenancyUnits.create",
@@ -541,7 +541,7 @@
       }
     }
   },
-  "revision": "20190708",
+  "revision": "20190807",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "AddTenantProjectRequest": {

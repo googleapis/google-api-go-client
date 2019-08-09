@@ -871,7 +871,7 @@
                       ]
                     },
                     "create": {
-                      "description": "Creates a new session. A session can be used to perform\ntransactions that read and/or modify data in a Cloud Spanner database.\nSessions are meant to be reused for many consecutive\ntransactions.\n\nSessions can only execute one transaction at a time. To execute\nmultiple concurrent read-write/write-only transactions, create\nmultiple sessions. Note that standalone reads and queries use a\ntransaction internally, and count toward the one transaction\nlimit.\n\nCloud Spanner limits the number of sessions that can exist at any given\ntime; thus, it is a good idea to delete idle and/or unneeded sessions.\nAside from explicit deletes, Cloud Spanner can delete sessions for which no\noperations are sent for more than an hour. If a session is deleted,\nrequests to it return `NOT_FOUND`.\n\nIdle sessions can be kept alive by sending a trivial SQL query\nperiodically, e.g., `\"SELECT 1\"`.",
+                      "description": "Creates a new session. A session can be used to perform\ntransactions that read and/or modify data in a Cloud Spanner database.\nSessions are meant to be reused for many consecutive\ntransactions.\n\nSessions can only execute one transaction at a time. To execute\nmultiple concurrent read-write/write-only transactions, create\nmultiple sessions. Note that standalone reads and queries use a\ntransaction internally, and count toward the one transaction\nlimit.\n\nActive sessions use additional server resources, so it is a good idea to\ndelete idle and unneeded sessions.\nAside from explicit deletes, Cloud Spanner can delete sessions for which no\noperations are sent for more than an hour. If a session is deleted,\nrequests to it return `NOT_FOUND`.\n\nIdle sessions can be kept alive by sending a trivial SQL query\nperiodically, e.g., `\"SELECT 1\"`.",
                       "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions",
                       "httpMethod": "POST",
                       "id": "spanner.projects.instances.databases.sessions.create",
@@ -926,7 +926,7 @@
                       ]
                     },
                     "executeBatchDml": {
-                      "description": "Executes a batch of SQL DML statements. This method allows many statements\nto be run with lower latency than submitting them sequentially with\nExecuteSql.\n\nStatements are executed in order, sequentially.\nExecuteBatchDmlResponse will contain a\nResultSet for each DML statement that has successfully executed. If a\nstatement fails, its error status will be returned as part of the\nExecuteBatchDmlResponse. Execution will\nstop at the first failed statement; the remaining statements will not run.\n\nExecuteBatchDml is expected to return an OK status with a response even if\nthere was an error while processing one of the DML statements. Clients must\ninspect response.status to determine if there were any errors while\nprocessing the request.\n\nSee more details in\nExecuteBatchDmlRequest and\nExecuteBatchDmlResponse.",
+                      "description": "Executes a batch of SQL DML statements. This method allows many statements\nto be run with lower latency than submitting them sequentially with\nExecuteSql.\n\nStatements are executed in sequential order. A request can succeed even if\na statement fails. The ExecuteBatchDmlResponse.status field in the\nresponse provides information about the statement that failed. Clients must\ninspect this field to determine whether an error occurred.\n\nExecution stops after the first failed statement; the remaining statements\nare not executed.",
                       "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:executeBatchDml",
                       "httpMethod": "POST",
                       "id": "spanner.projects.instances.databases.sessions.executeBatchDml",
@@ -1358,7 +1358,7 @@
       }
     }
   },
-  "revision": "20190613",
+  "revision": "20190723",
   "rootUrl": "https://spanner.googleapis.com/",
   "schemas": {
     "BeginTransactionRequest": {
@@ -1577,16 +1577,16 @@
       "type": "object"
     },
     "ExecuteBatchDmlRequest": {
-      "description": "The request for ExecuteBatchDml",
+      "description": "The request for ExecuteBatchDml.",
       "id": "ExecuteBatchDmlRequest",
       "properties": {
         "seqno": {
-          "description": "A per-transaction sequence number used to identify this request. This is\nused in the same space as the seqno in\nExecuteSqlRequest. See more details\nin ExecuteSqlRequest.",
+          "description": "A per-transaction sequence number used to identify this request. This field\nmakes each request idempotent such that if the request is received multiple\ntimes, at most one will succeed.\n\nThe sequence number must be monotonically increasing within the\ntransaction. If a request arrives for the first time with an out-of-order\nsequence number, the transaction may be aborted. Replays of previously\nhandled requests will yield the same response as the first execution.",
           "format": "int64",
           "type": "string"
         },
         "statements": {
-          "description": "The list of statements to execute in this batch. Statements are executed\nserially, such that the effects of statement i are visible to statement\ni+1. Each statement must be a DML statement. Execution will stop at the\nfirst failed statement; the remaining statements will not run.\n\nREQUIRES: `statements_size()` \u003e 0.",
+          "description": "The list of statements to execute in this batch. Statements are executed\nserially, such that the effects of statement `i` are visible to statement\n`i+1`. Each statement must be a DML statement. Execution stops at the\nfirst failed statement; the remaining statements are not executed.\n\nCallers must provide at least one statement.",
           "items": {
             "$ref": "Statement"
           },
@@ -1594,17 +1594,17 @@
         },
         "transaction": {
           "$ref": "TransactionSelector",
-          "description": "The transaction to use. A ReadWrite transaction is required. Single-use\ntransactions are not supported (to avoid replay).  The caller must either\nsupply an existing transaction ID or begin a new transaction."
+          "description": "The transaction to use. Must be a read-write transaction.\n\nTo protect against replays, single-use transactions are not supported. The\ncaller must either supply an existing transaction ID or begin a new\ntransaction."
         }
       },
       "type": "object"
     },
     "ExecuteBatchDmlResponse": {
-      "description": "The response for ExecuteBatchDml. Contains a list\nof ResultSet, one for each DML statement that has successfully executed.\nIf a statement fails, the error is returned as part of the response payload.\nClients can determine whether all DML statements have run successfully, or if\na statement failed, using one of the following approaches:\n\n  1. Check if `'status'` field is `OkStatus`.\n  2. Check if `result_sets_size()` equals the number of statements in\n     ExecuteBatchDmlRequest.\n\nExample 1: A request with 5 DML statements, all executed successfully.\n\nResult: A response with 5 ResultSets, one for each statement in the same\norder, and an `OkStatus`.\n\nExample 2: A request with 5 DML statements. The 3rd statement has a syntax\nerror.\n\nResult: A response with 2 ResultSets, for the first 2 statements that\nrun successfully, and a syntax error (`INVALID_ARGUMENT`) status. From\n`result_set_size()` client can determine that the 3rd statement has failed.",
+      "description": "The response for ExecuteBatchDml. Contains a list\nof ResultSet messages, one for each DML statement that has successfully\nexecuted, in the same order as the statements in the request. If a statement\nfails, the status in the response body identifies the cause of the failure.\n\nTo check for DML statements that failed, use the following approach:\n\n1. Check the status in the response message. The google.rpc.Code enum\n   value `OK` indicates that all statements were executed successfully.\n2. If the status was not `OK`, check the number of result sets in the\n   response. If the response contains `N` ResultSet messages, then\n   statement `N+1` in the request failed.\n\nExample 1:\n\n* Request: 5 DML statements, all executed successfully.\n* Response: 5 ResultSet messages, with the status `OK`.\n\nExample 2:\n\n* Request: 5 DML statements. The third statement has a syntax error.\n* Response: 2 ResultSet messages, and a syntax error (`INVALID_ARGUMENT`)\n  status. The number of ResultSet messages indicates that the third\n  statement failed, and the fourth and fifth statements were not executed.",
       "id": "ExecuteBatchDmlResponse",
       "properties": {
         "resultSets": {
-          "description": "ResultSets, one for each statement in the request that ran successfully, in\nthe same order as the statements in the request. Each ResultSet will\nnot contain any rows. The ResultSetStats in each ResultSet will\ncontain the number of rows modified by the statement.\n\nOnly the first ResultSet in the response contains a valid\nResultSetMetadata.",
+          "description": "One ResultSet for each statement in the request that ran successfully,\nin the same order as the statements in the request. Each ResultSet does\nnot contain any rows. The ResultSetStats in each ResultSet contain\nthe number of rows modified by the statement.\n\nOnly the first ResultSet in the response contains valid\nResultSetMetadata.",
           "items": {
             "$ref": "ResultSet"
           },
@@ -1612,7 +1612,7 @@
         },
         "status": {
           "$ref": "Status",
-          "description": "If all DML statements are executed successfully, status will be OK.\nOtherwise, the error status of the first failed statement."
+          "description": "If all DML statements are executed successfully, the status is `OK`.\nOtherwise, the error status of the first failed statement."
         }
       },
       "type": "object"
@@ -1633,7 +1633,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The SQL string can contain parameter placeholders. A parameter\nplaceholder consists of `'@'` followed by the parameter\nname. Parameter names consist of any combination of letters,\nnumbers, and underscores.\n\nParameters can appear anywhere that a literal value is expected.  The same\nparameter name can be used more than once, for example:\n  `\"WHERE id \u003e @msg_id AND id \u003c @msg_id + 100\"`\n\nIt is an error to execute an SQL statement with unbound parameters.\n\nParameter values are specified using `params`, which is a JSON\nobject whose keys are parameter names, and whose values are the\ncorresponding parameter values.",
+          "description": "Parameter names and values that bind to placeholders in the SQL string.\n\nA parameter placeholder consists of the `@` character followed by the\nparameter name (for example, `@firstName`). Parameter names can contain\nletters, numbers, and underscores.\n\nParameters can appear anywhere that a literal value is expected.  The same\nparameter name can be used more than once, for example:\n\n`\"WHERE id \u003e @msg_id AND id \u003c @msg_id + 100\"`\n\nIt is an error to execute a SQL statement with unbound parameters.",
           "type": "object"
         },
         "partitionToken": {
@@ -1661,7 +1661,7 @@
           "type": "string"
         },
         "seqno": {
-          "description": "A per-transaction sequence number used to identify this request. This\nmakes each request idempotent such that if the request is received multiple\ntimes, at most one will succeed.\n\nThe sequence number must be monotonically increasing within the\ntransaction. If a request arrives for the first time with an out-of-order\nsequence number, the transaction may be aborted. Replays of previously\nhandled requests will yield the same response as the first execution.\n\nRequired for DML statements. Ignored for queries.",
+          "description": "A per-transaction sequence number used to identify this request. This field\nmakes each request idempotent such that if the request is received multiple\ntimes, at most one will succeed.\n\nThe sequence number must be monotonically increasing within the\ntransaction. If a request arrives for the first time with an out-of-order\nsequence number, the transaction may be aborted. Replays of previously\nhandled requests will yield the same response as the first execution.\n\nRequired for DML statements. Ignored for queries.",
           "format": "int64",
           "type": "string"
         },
@@ -1671,7 +1671,7 @@
         },
         "transaction": {
           "$ref": "TransactionSelector",
-          "description": "The transaction to use. If none is provided, the default is a\ntemporary read-only transaction with strong concurrency.\n\nThe transaction to use.\n\nFor queries, if none is provided, the default is a temporary read-only\ntransaction with strong concurrency.\n\nStandard DML statements require a ReadWrite transaction. Single-use\ntransactions are not supported (to avoid replay).  The caller must\neither supply an existing transaction ID or begin a new transaction.\n\nPartitioned DML requires an existing PartitionedDml transaction ID."
+          "description": "The transaction to use.\n\nFor queries, if none is provided, the default is a temporary read-only\ntransaction with strong concurrency.\n\nStandard DML statements require a read-write transaction. To protect\nagainst replays, single-use transactions are not supported.  The caller\nmust either supply an existing transaction ID or begin a new transaction.\n\nPartitioned DML requires an existing Partitioned DML transaction ID."
         }
       },
       "type": "object"
@@ -2092,7 +2092,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The SQL query string can contain parameter placeholders. A parameter\nplaceholder consists of `'@'` followed by the parameter\nname. Parameter names consist of any combination of letters,\nnumbers, and underscores.\n\nParameters can appear anywhere that a literal value is expected.  The same\nparameter name can be used more than once, for example:\n  `\"WHERE id \u003e @msg_id AND id \u003c @msg_id + 100\"`\n\nIt is an error to execute an SQL query with unbound parameters.\n\nParameter values are specified using `params`, which is a JSON\nobject whose keys are parameter names, and whose values are the\ncorresponding parameter values.",
+          "description": "Parameter names and values that bind to placeholders in the SQL string.\n\nA parameter placeholder consists of the `@` character followed by the\nparameter name (for example, `@firstName`). Parameter names can contain\nletters, numbers, and underscores.\n\nParameters can appear anywhere that a literal value is expected.  The same\nparameter name can be used more than once, for example:\n\n`\"WHERE id \u003e @msg_id AND id \u003c @msg_id + 100\"`\n\nIt is an error to execute a SQL statement with unbound parameters.",
           "type": "object"
         },
         "partitionOptions": {
@@ -2534,7 +2534,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The DML string can contain parameter placeholders. A parameter\nplaceholder consists of `'@'` followed by the parameter\nname. Parameter names consist of any combination of letters,\nnumbers, and underscores.\n\nParameters can appear anywhere that a literal value is expected.  The\nsame parameter name can be used more than once, for example:\n  `\"WHERE id \u003e @msg_id AND id \u003c @msg_id + 100\"`\n\nIt is an error to execute an SQL statement with unbound parameters.\n\nParameter values are specified using `params`, which is a JSON\nobject whose keys are parameter names, and whose values are the\ncorresponding parameter values.",
+          "description": "Parameter names and values that bind to placeholders in the DML string.\n\nA parameter placeholder consists of the `@` character followed by the\nparameter name (for example, `@firstName`). Parameter names can contain\nletters, numbers, and underscores.\n\nParameters can appear anywhere that a literal value is expected.  The\nsame parameter name can be used more than once, for example:\n\n`\"WHERE id \u003e @msg_id AND id \u003c @msg_id + 100\"`\n\nIt is an error to execute a SQL statement with unbound parameters.",
           "type": "object"
         },
         "sql": {

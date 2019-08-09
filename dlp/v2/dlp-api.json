@@ -1562,7 +1562,7 @@
       }
     }
   },
-  "revision": "20190629",
+  "revision": "20190804",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -3505,7 +3505,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Unique resource name for the triggeredJob, assigned by the service when the\ntriggeredJob is created, for example\n`projects/dlp-test-project/triggeredJobs/53234423`.",
+          "description": "Unique resource name for the triggeredJob, assigned by the service when the\ntriggeredJob is created, for example\n`projects/dlp-test-project/jobTriggers/53234423`.",
           "type": "string"
         },
         "status": {

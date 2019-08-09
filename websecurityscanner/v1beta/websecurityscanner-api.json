@@ -525,7 +525,7 @@
       }
     }
   },
-  "revision": "20190629",
+  "revision": "20190805",
   "rootUrl": "https://websecurityscanner.googleapis.com/",
   "schemas": {
     "Authentication": {
@@ -1143,7 +1143,7 @@
             "Indicates an authentication error, usually due to outdated ScanConfig\nauthentication settings.",
             "Indicates a scan operation timeout, usually caused by a very large site.",
             "Indicates that a scan encountered excessive redirects, either to\nauthentication or some other page outside of the scan scope.",
-            "Indicates that a scan encountered numerous errors from the web site\npages. When available, most_common_http_error_code field indicates the\nthe most common HTTP error code encountered during the scan."
+            "Indicates that a scan encountered numerous errors from the web site\npages. When available, most_common_http_error_code field indicates the\nmost common HTTP error code encountered during the scan."
           ],
           "type": "string"
         },

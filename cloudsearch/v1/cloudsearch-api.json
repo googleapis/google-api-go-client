@@ -756,7 +756,7 @@
                   ]
                 },
                 "upload": {
-                  "description": "Creates an upload session for uploading item content. For items smaller\nthan 100 KiB, it's easier to embed the content\ninline within\nupdate.",
+                  "description": "Creates an upload session for uploading item content. For items smaller\nthan 100 KB, it's easier to embed the content\ninline within\nan index request.",
                   "flatPath": "v1/indexing/datasources/{datasourcesId}/items/{itemsId}:upload",
                   "httpMethod": "POST",
                   "id": "cloudsearch.indexing.datasources.items.upload",
@@ -793,7 +793,7 @@
     "media": {
       "methods": {
         "upload": {
-          "description": "Uploads media for indexing.\n\nThe upload endpoint supports direct and resumable upload protocols and\nis intended for large items that can not be inlined during index requests. To\nindex large content:\n\n1. Call upload to begin\n   a session and get the item reference.\n1. Upload the content using the item reference's resource name.\n1. Call index with the item\n   reference as the content.\n\nFor additional information, see\n[Create a content connector using the REST API](https://developers.google.com/cloud-search/docs/guides/content-connector#rest).",
+          "description": "Uploads media for indexing.\n\nThe upload endpoint supports direct and resumable upload protocols and\nis intended for large items that can not be\n[inlined during index requests](https://developers.google.com/cloud-search/docs/reference/rest/v1/indexing.datasources.items#itemcontent).\nTo index large content:\n\n1. Call\n   indexing.datasources.items.upload\n   with the resource name to begin an upload session and retrieve the\n   UploadItemRef.\n1. Call media.upload to upload the content using the same resource name from step 1.\n1. Call indexing.datasources.items.index\n   to index the item. Populate the\n   [ItemContent](/cloud-search/docs/reference/rest/v1/indexing.datasources.items#ItemContent)\n   with the UploadItemRef from step 1.\n\n\nFor additional information, see\n[Create a content connector using the REST API](https://developers.google.com/cloud-search/docs/guides/content-connector#rest).",
           "flatPath": "v1/media/{mediaId}",
           "httpMethod": "POST",
           "id": "cloudsearch.media.upload",
@@ -1429,7 +1429,7 @@
       }
     }
   },
-  "revision": "20190622",
+  "revision": "20190802",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -4166,10 +4166,6 @@
       "description": "Set search results crowding limits. Crowding is a situation in which\nmultiple results from the same source or host \"crowd out\" other results,\ndiminishing the quality of search for users. To foster better search quality\nand source diversity in search results, you can set a condition to reduce\nrepetitive results by source.",
       "id": "SourceCrowdingConfig",
       "properties": {
-        "field": {
-          "description": "Use a field to control results crowding. For example, if you want to\ncontrol overly similar results from Gmail topics, use `thread_id`.\nFor similar pages from Google Sites, you can use `webspace_id`.\nWhen matching query results contain the same field value in\n`GenericMetadata`, crowding limits are set on those records.",
-          "type": "string"
-        },
         "numResults": {
           "description": "Maximum number of results allowed from a source.\nNo limits will be set on results if this value is less than or equal to 0.",
           "format": "int32",
@@ -4179,10 +4175,6 @@
           "description": "Maximum number of suggestions allowed from a source.\nNo limits will be set on results if this value is less than or equal to 0.",
           "format": "int32",
           "type": "integer"
-        },
-        "source": {
-          "description": "Control results by content source. This option limits the total number\nof results from a given source and ignores field-based crowding control.",
-          "type": "boolean"
         }
       },
       "type": "object"

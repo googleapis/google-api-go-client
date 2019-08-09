@@ -182,7 +182,7 @@
     "projects": {
       "methods": {
         "addFirebase": {
-          "description": "Adds Firebase resources to the specified existing\n[Google Cloud Platform (GCP) `Project`]\n(https://cloud.google.com/resource-manager/reference/rest/v1/projects).\n\u003cbr\u003e\n\u003cbr\u003eSince a FirebaseProject is actually also a GCP `Project`, a\n`FirebaseProject` uses underlying GCP identifiers (most importantly,\nthe `projectId`) as its own for easy interop with GCP APIs.\n\u003cbr\u003e\n\u003cbr\u003eThe result of this call is an [`Operation`](../../v1beta1/operations).\nPoll the `Operation` to track the provisioning process by calling\nGetOperation until\n[`done`](../../v1beta1/operations#Operation.FIELDS.done) is `true`. When\n`done` is `true`, the `Operation` has either succeeded or failed. If the\n`Operation` succeeded, its\n[`response`](../../v1beta1/operations#Operation.FIELDS.response) is set to\na FirebaseProject; if the `Operation` failed, its\n[`error`](../../v1beta1/operations#Operation.FIELDS.error) is set to a\ngoogle.rpc.Status. The `Operation` is automatically deleted after\ncompletion, so there is no need to call\nDeleteOperation.\n\u003cbr\u003e\n\u003cbr\u003eThis method does not modify any billing account information on the\nunderlying GCP `Project`.\n\u003cbr\u003e\n\u003cbr\u003eAll fields listed in the [request body](#request-body) are required.\n\u003cbr\u003e\n\u003cbr\u003eTo call `AddFirebase`, a member must be an Editor or Owner for the\nexisting GCP `Project`. Service accounts cannot call `AddFirebase`.",
+          "description": "Adds Firebase resources to the specified existing\n[Google Cloud Platform (GCP) `Project`]\n(https://cloud.google.com/resource-manager/reference/rest/v1/projects).\n\u003cbr\u003e\n\u003cbr\u003eSince a FirebaseProject is actually also a GCP `Project`, a\n`FirebaseProject` uses underlying GCP identifiers (most importantly,\nthe `projectId`) as its own for easy interop with GCP APIs.\n\u003cbr\u003e\n\u003cbr\u003eThe result of this call is an [`Operation`](../../v1beta1/operations).\nPoll the `Operation` to track the provisioning process by calling\nGetOperation until\n[`done`](../../v1beta1/operations#Operation.FIELDS.done) is `true`. When\n`done` is `true`, the `Operation` has either succeeded or failed. If the\n`Operation` succeeded, its\n[`response`](../../v1beta1/operations#Operation.FIELDS.response) is set to\na FirebaseProject; if the `Operation` failed, its\n[`error`](../../v1beta1/operations#Operation.FIELDS.error) is set to a\ngoogle.rpc.Status. The `Operation` is automatically deleted after\ncompletion, so there is no need to call\nDeleteOperation.\n\u003cbr\u003e\n\u003cbr\u003eThis method does not modify any billing account information on the\nunderlying GCP `Project`.\n\u003cbr\u003e\n\u003cbr\u003eTo call `AddFirebase`, a member must be an Editor or Owner for the\nexisting GCP `Project`. Service accounts cannot call `AddFirebase`.",
           "flatPath": "v1beta1/projects/{projectsId}:addFirebase",
           "httpMethod": "POST",
           "id": "firebase.projects.addFirebase",
@@ -1104,7 +1104,7 @@
       }
     }
   },
-  "revision": "20190730",
+  "revision": "20190807",
   "rootUrl": "https://firebase.googleapis.com/",
   "schemas": {
     "AddFirebaseRequest": {
@@ -1112,15 +1112,15 @@
       "id": "AddFirebaseRequest",
       "properties": {
         "locationId": {
-          "description": "Deprecated. Instead, to set your project's default GCP resource location,\ncall [`FinalizeDefaultLocation`](../projects.defaultLocation/finalize)\nafter you add Firebase services to your project.\n\u003cbr\u003e\n\u003cbr\u003eThe ID of the project's default GCP resource location. The location\nmust be one of the available\n[GCP resource\nlocations](https://firebase.google.com/docs/projects/locations).",
+          "description": "Deprecated. Instead, to set your project's default GCP resource location,\ncall [`FinalizeDefaultLocation`](../projects.defaultLocation/finalize)\nafter you add Firebase resources to your project.\n\u003cbr\u003e\n\u003cbr\u003eThe ID of the project's default GCP resource location. The location\nmust be one of the available\n[GCP resource\nlocations](https://firebase.google.com/docs/projects/locations).",
           "type": "string"
         },
         "regionCode": {
-          "description": "The region code (CLDR) that the account will use for Firebase Analytics\ndata.\n\u003cbr\u003eFor example: US, GB, or DE\n\u003cbr\u003e\n\u003cbr\u003eIn Java, use `com.google.i18n.identifiers.RegionCode`.",
+          "description": "Deprecated. Instead, to link your Project with a Google Analytics account,\ncall [`AddGoogleAnalytics`](../../v1beta1/projects/addGoogleAnalytics)\nafter you add Firebase resources to your Project.\n\u003cbr\u003e\n\u003cbr\u003eThe region code (CLDR) that the account will use for Firebase Analytics\ndata.\n\u003cbr\u003eFor example: US, GB, or DE\n\u003cbr\u003e\n\u003cbr\u003eIn Java, use `com.google.i18n.identifiers.RegionCode`.",
           "type": "string"
         },
         "timeZone": {
-          "description": "The time zone that the account will use for Firebase Analytics data.\n\u003cbr\u003eFor example: America/Los_Angeles or Africa/Abidjan",
+          "description": "Deprecated. Instead, to link your Project with a Google Analytics account,\ncall [`AddGoogleAnalytics`](../../v1beta1/projects/addGoogleAnalytics)\nafter you add Firebase resources to your Project.\n\u003cbr\u003e\n\u003cbr\u003eThe time zone that the account will use for Firebase Analytics data.\n\u003cbr\u003eFor example: America/Los_Angeles or Africa/Abidjan",
           "type": "string"
         }
       },
@@ -1562,7 +1562,7 @@
           "type": "string"
         },
         "locationId": {
-          "description": "The ID of the project's default GCP resource location. The location is one\nof the available\n[GCP resource\nlocations](https://firebase.google.com/docs/projects/locations). \u003cbr\u003e \u003cbr\u003e\nNot all projects will have this field populated. If it is not populated, it\nmeans that the project does not yet have a default GCP resource location.\nTo set your project's default GCP resource location, call\n[`FinalizeDefaultLocation`](../projects.defaultLocation/finalize) after you\nadd Firebase services to your project.",
+          "description": "The ID of the project's default GCP resource location. The location is one\nof the available\n[GCP resource\nlocations](https://firebase.google.com/docs/projects/locations). \u003cbr\u003e \u003cbr\u003e\nNot all projects will have this field populated. If it is not populated, it\nmeans that the project does not yet have a default GCP resource location.\nTo set your project's default GCP resource location, call\n[`FinalizeDefaultLocation`](../projects.defaultLocation/finalize) after you\nadd Firebase resources to your project.",
           "type": "string"
         },
         "project": {

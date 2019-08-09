@@ -918,7 +918,7 @@
       }
     }
   },
-  "revision": "20190801",
+  "revision": "20190805",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -3366,6 +3366,10 @@
         },
         "softwareInfoEnabled": {
           "description": "Whether software info reporting is enabled.",
+          "type": "boolean"
+        },
+        "systemPropertiesEnabled": {
+          "description": "Whether system properties reporting is enabled.",
           "type": "boolean"
         }
       },

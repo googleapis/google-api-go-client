@@ -196,7 +196,7 @@
       }
     }
   },
-  "revision": "20190618",
+  "revision": "20190804",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -948,6 +948,10 @@
           ],
           "type": "string"
         },
+        "sourceLocation": {
+          "$ref": "LogEntrySourceLocation",
+          "description": "Optional. Source code location information associated with the log entry,\nif any."
+        },
         "structPayload": {
           "additionalProperties": {
             "description": "Properties of the object.",
@@ -990,6 +994,26 @@
         },
         "producer": {
           "description": "Optional. An arbitrary producer identifier. The combination of\n`id` and `producer` must be globally unique.  Examples for `producer`:\n`\"MyDivision.MyBigCompany.com\"`, `\"github.com/MyProject/MyApplication\"`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LogEntrySourceLocation": {
+      "description": "Additional information about the source code location that produced the log\nentry.",
+      "id": "LogEntrySourceLocation",
+      "properties": {
+        "file": {
+          "description": "Optional. Source file name. Depending on the runtime environment, this\nmight be a simple name or a fully-qualified name.",
+          "type": "string"
+        },
+        "function": {
+          "description": "Optional. Human-readable name of the function or method being invoked, with\noptional context such as the class or package name. This information may be\nused in contexts such as the logs viewer, where a file and line number are\nless meaningful. The format can vary by language. For example:\n`qual.if.ied.Class.method` (Java), `dir/package.func` (Go), `function`\n(Python).",
+          "type": "string"
+        },
+        "line": {
+          "description": "Optional. Line within the source file. 1-based; 0 indicates no line number\navailable.",
+          "format": "int64",
           "type": "string"
         }
       },
@@ -1171,7 +1195,7 @@
       "type": "object"
     },
     "Peer": {
-      "description": "This message defines attributes for a node that handles a network request.\nThe node can be either a service or an application that sends, forwards,\nor receives the request. Service peers should fill in the `service`,\n`principal`, and `labels` as appropriate.",
+      "description": "This message defines attributes for a node that handles a network request.\nThe node can be either a service or an application that sends, forwards,\nor receives the request. Service peers should fill in\n`principal` and `labels` as appropriate.",
       "id": "Peer",
       "properties": {
         "ip": {
@@ -1196,10 +1220,6 @@
         },
         "regionCode": {
           "description": "The CLDR country/region code associated with the above IP address.\nIf the IP address is private, the `region_code` should reflect the\nphysical location where this peer is running.",
-          "type": "string"
-        },
-        "service": {
-          "description": "The canonical service name of the peer.\n\nNOTE: different systems may have different service naming schemes.",
           "type": "string"
         }
       },
@@ -1442,10 +1462,6 @@
           "$ref": "Auth",
           "description": "The request authentication. May be absent for unauthenticated requests.\nDerived from the HTTP request `Authorization` header or equivalent."
         },
-        "fragment": {
-          "description": "The HTTP URL fragment. No URL decoding is performed.",
-          "type": "string"
-        },
         "headers": {
           "additionalProperties": {
             "type": "string"
@@ -1545,7 +1561,7 @@
           "type": "string"
         },
         "type": {
-          "description": "The type of the resource. The scheme is platform-specific because\ndifferent platforms define their resources differently.",
+          "description": "The type of the resource. The syntax is platform-specific because\ndifferent platforms define their resources differently.\n\nFor Google APIs, the type format must be \"{service}/{kind}\".",
           "type": "string"
         }
       },

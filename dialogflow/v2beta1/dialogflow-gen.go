@@ -6318,62 +6318,6 @@ func (s *GoogleCloudDialogflowV2beta1ListSessionEntityTypesResponse) MarshalJSON
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowV2beta1ModelEvaluationMetadata: The status
-// update for performing NLU model evaluation given a dataset.
-// Metadata of the returned long running operation
-// for
-// ModelEvaluations.EvaluateModel.
-type GoogleCloudDialogflowV2beta1ModelEvaluationMetadata struct {
-	// SamplesWithIntentDetected: Optional. Number of samples that have
-	// already received the predicted
-	// intents from Dialogflow server.
-	SamplesWithIntentDetected int64 `json:"samplesWithIntentDetected,omitempty"`
-
-	// State: Required. Represents the job that the batch worker is
-	// currently working on.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Not specified. This value should never be
-	// used.
-	//   "PARSING_DATASET" - Parsing the customer-provided dataset in Cloud
-	// Storage, which is a CVS
-	// file.
-	//   "DETECTING_INTENTS" - Calling the Dialogflow backend server to
-	// detect the corresponding intent
-	// for each query.
-	//   "CALCULATING_METRICS" - Calculating the evaluation metrics for the
-	// dataset.
-	//   "SUCCESS" - Job succeeded.
-	State string `json:"state,omitempty"`
-
-	// TotalSamples: Required. Total number of samples in the dataset.
-	TotalSamples int64 `json:"totalSamples,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "SamplesWithIntentDetected") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "SamplesWithIntentDetected") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. However, any field with an empty value appearing in
-	// NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV2beta1ModelEvaluationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV2beta1ModelEvaluationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDialogflowV2beta1OriginalDetectIntentRequest: Represents
 // the contents of the original request that was passed to
 // the `[Streaming]DetectIntent` call.

@@ -1406,7 +1406,7 @@
       }
     }
   },
-  "revision": "20190801",
+  "revision": "20190730",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -4466,41 +4466,6 @@
         "annotatedConversationDataset": {
           "$ref": "GoogleCloudDialogflowV2beta1AnnotatedConversationDataset",
           "description": "New annotated conversation dataset created by the labeling task."
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1ModelEvaluationMetadata": {
-      "description": "The status update for performing NLU model evaluation given a dataset.\nMetadata of the returned long running operation for\nModelEvaluations.EvaluateModel.",
-      "id": "GoogleCloudDialogflowV2beta1ModelEvaluationMetadata",
-      "properties": {
-        "samplesWithIntentDetected": {
-          "description": "Optional. Number of samples that have already received the predicted\nintents from Dialogflow server.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "state": {
-          "description": "Required. Represents the job that the batch worker is currently working on.",
-          "enum": [
-            "STATE_UNSPECIFIED",
-            "PARSING_DATASET",
-            "DETECTING_INTENTS",
-            "CALCULATING_METRICS",
-            "SUCCESS"
-          ],
-          "enumDescriptions": [
-            "Not specified. This value should never be used.",
-            "Parsing the customer-provided dataset in Cloud Storage, which is a CVS\nfile.",
-            "Calling the Dialogflow backend server to detect the corresponding intent\nfor each query.",
-            "Calculating the evaluation metrics for the dataset.",
-            "Job succeeded."
-          ],
-          "type": "string"
-        },
-        "totalSamples": {
-          "description": "Required. Total number of samples in the dataset.",
-          "format": "int32",
-          "type": "integer"
         }
       },
       "type": "object"

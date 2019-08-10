@@ -950,8 +950,9 @@ func (s *ListLogMetricsResponse) MarshalJSON() ([]byte, error) {
 // ListLogsResponse: Result returned from ListLogs.
 type ListLogsResponse struct {
 	// LogNames: A list of log names. For example,
-	// "projects/my-project/syslog" or
-	// "organizations/123/cloudresourcemanager.googleapis.com%2Factivity".
+	// "projects/my-project/logs/syslog" or
+	// "organizations/123/logs/cloudresourcemanager.googleapis.com%2Factivity
+	// ".
 	LogNames []string `json:"logNames,omitempty"`
 
 	// NextPageToken: If there might be more results than those appearing in

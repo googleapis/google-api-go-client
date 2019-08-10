@@ -93,7 +93,7 @@
   "description": "Manages enterprise resources such as users and groups, administrative notifications, security features, and more.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/admin-sdk/directory/",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/PEYqbC-uxgiBkr1DN_hihusF4Ac\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/eWNDpeAZuk1gV8zhFqMfz4qmrho\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -348,11 +348,9 @@
               "type": "string"
             },
             "maxResults": {
-              "default": "100",
-              "description": "Maximum number of results to return.",
+              "description": "Maximum number of results to return. Default is 100",
               "format": "int32",
               "location": "query",
-              "maximum": "200",
               "minimum": "1",
               "type": "integer"
             },
@@ -940,11 +938,9 @@
               "type": "string"
             },
             "maxResults": {
-              "default": "200",
-              "description": "Maximum number of results to return.",
+              "description": "Maximum number of results to return. Default is 200",
               "format": "int32",
               "location": "query",
-              "maximum": "200",
               "minimum": "1",
               "type": "integer"
             },
@@ -983,7 +979,7 @@
               "type": "string"
             },
             "userKey": {
-              "description": "Email or immutable ID of the user if only those groups are to be listed, the given user is a member of. If it's an ID, it should match with the ID of the user object.",
+              "description": "Email or immutable Id of the user if only those groups are to be listed, the given user is a member of. If Id, it should match with id of user object",
               "location": "query",
               "type": "string"
             }
@@ -1278,11 +1274,9 @@
               "type": "boolean"
             },
             "maxResults": {
-              "default": "200",
-              "description": "Maximum number of results to return.",
+              "description": "Maximum number of results to return. Default is 200",
               "format": "int32",
               "location": "query",
-              "maximum": "200",
               "minimum": "1",
               "type": "integer"
             },
@@ -1498,11 +1492,9 @@
               "type": "string"
             },
             "maxResults": {
-              "default": "100",
-              "description": "Maximum number of results to return.",
+              "description": "Maximum number of results to return. Default is 100",
               "format": "int32",
               "location": "query",
-              "maximum": "100",
               "minimum": "1",
               "type": "integer"
             },
@@ -3386,8 +3378,7 @@
               "type": "string"
             },
             "maxResults": {
-              "default": "100",
-              "description": "Maximum number of results to return.",
+              "description": "Maximum number of results to return. Default is 100. Max allowed is 500",
               "format": "int32",
               "location": "query",
               "maximum": "500",
@@ -3436,7 +3427,7 @@
               "type": "string"
             },
             "showDeleted": {
-              "description": "If set to true, retrieves the list of deleted users. (Default: false)",
+              "description": "If set to true retrieves the list of deleted users. Default is false",
               "location": "query",
               "type": "string"
             },
@@ -3616,8 +3607,7 @@
               "type": "string"
             },
             "maxResults": {
-              "default": "100",
-              "description": "Maximum number of results to return.",
+              "description": "Maximum number of results to return. Default is 100. Max allowed is 500",
               "format": "int32",
               "location": "query",
               "maximum": "500",
@@ -3666,7 +3656,7 @@
               "type": "string"
             },
             "showDeleted": {
-              "description": "If set to true, retrieves the list of deleted users. (Default: false)",
+              "description": "If set to true retrieves the list of deleted users. Default is false",
               "location": "query",
               "type": "string"
             },
@@ -4027,7 +4017,7 @@
       }
     }
   },
-  "revision": "20190708",
+  "revision": "20190214",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Alias": {
@@ -4504,11 +4494,6 @@
           "description": "User of the device",
           "type": "string"
         },
-        "autoUpdateExpiration": {
-          "description": "(Read-only) The timestamp after which the device will stop receiving Chrome updates or support",
-          "format": "int64",
-          "type": "string"
-        },
         "bootMode": {
           "description": "Chromebook boot mode (Read-only)",
           "type": "string"
@@ -4614,20 +4599,12 @@
           },
           "type": "array"
         },
-        "dockMacAddress": {
-          "description": "(Read-only) Built-in MAC address for the docking station that the device connected to. Factory sets Media access control address (MAC address) assigned for use by a dock. Currently this is only supported on the Dell Arcada / Sarien devices and the Dell WD19 / WD19TB Docking Station. It is reserved specifically for MAC pass through device policy. The format is twelve (12) hexadecimal digits without any delimiter (uppercase letters). This is only relevant for Dell devices.",
-          "type": "string"
-        },
         "etag": {
           "description": "ETag of the resource.",
           "type": "string"
         },
         "ethernetMacAddress": {
           "description": "Chromebook Mac Address on ethernet network interface (Read-only)",
-          "type": "string"
-        },
-        "ethernetMacAddress0": {
-          "description": "(Read-only) MAC address used by the Chromebook’s internal ethernet port, and for onboard network (ethernet) interface. The format is twelve (12) hexadecimal digits without any delimiter (uppercase letters). This is only relevant for Dell devices.",
           "type": "string"
         },
         "firmwareVersion": {
@@ -4651,10 +4628,6 @@
         },
         "macAddress": {
           "description": "Chromebook Mac Address on wifi network interface (Read-only)",
-          "type": "string"
-        },
-        "manufactureDate": {
-          "description": "(Read-only) The date the device was manufactured in yyyy-mm-dd format.",
           "type": "string"
         },
         "meid": {
@@ -5243,7 +5216,7 @@
           "type": "string"
         },
         "id": {
-          "description": "The unique ID of the group member. A member id can be used as a member request URI's memberKey. Unique identifier of group (Read-only) Unique identifier of member (Read-only)",
+          "description": "Unique identifier of customer member (Read-only) Unique identifier of group (Read-only) Unique identifier of member (Read-only)",
           "type": "string"
         },
         "kind": {
@@ -5736,7 +5709,7 @@
           "type": "string"
         },
         "serviceId": {
-          "description": "The obfuscated ID of the service this privilege is for. This value is returned with Privileges.list().",
+          "description": "The obfuscated ID of the service this privilege is for.",
           "type": "string"
         },
         "serviceName": {
@@ -5822,7 +5795,7 @@
                 "type": "string"
               },
               "serviceId": {
-                "description": "The obfuscated ID of the service this privilege is for. This value is returned with Privileges.list().",
+                "description": "The obfuscated ID of the service this privilege is for.",
                 "type": "string"
               }
             },
@@ -6720,7 +6693,7 @@
           "type": "string"
         },
         "fullTimeEquivalent": {
-          "description": "The full-time equivalent millipercent within the organization (100000 = 100%).",
+          "description": "The full-time equivalent percent within the organization (100000 = 100%).",
           "format": "int32",
           "type": "integer"
         },

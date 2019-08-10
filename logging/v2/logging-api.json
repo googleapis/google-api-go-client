@@ -2535,7 +2535,7 @@
       }
     }
   },
-  "revision": "20190608",
+  "revision": "20190803",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "BucketOptions": {
@@ -2820,7 +2820,7 @@
       "id": "ListLogsResponse",
       "properties": {
         "logNames": {
-          "description": "A list of log names. For example, \"projects/my-project/syslog\" or \"organizations/123/cloudresourcemanager.googleapis.com%2Factivity\".",
+          "description": "A list of log names. For example, \"projects/my-project/logs/syslog\" or \"organizations/123/logs/cloudresourcemanager.googleapis.com%2Factivity\".",
           "items": {
             "type": "string"
           },

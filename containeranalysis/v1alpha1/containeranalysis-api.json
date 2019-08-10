@@ -601,7 +601,8 @@
                     "PACKAGE_MANAGER",
                     "DEPLOYABLE",
                     "DISCOVERY",
-                    "ATTESTATION_AUTHORITY"
+                    "ATTESTATION_AUTHORITY",
+                    "UPGRADE"
                   ],
                   "location": "query",
                   "type": "string"
@@ -1204,7 +1205,7 @@
       }
     }
   },
-  "revision": "20190627",
+  "revision": "20190805",
   "rootUrl": "https://containeranalysis.googleapis.com/",
   "schemas": {
     "Artifact": {
@@ -1265,7 +1266,7 @@
       "type": "object"
     },
     "AuditConfig": {
-      "description": "Specifies the audit configuration for a service.\nThe configuration determines which permission types are logged, and what\nidentities, if any, are exempted from logging.\nAn AuditConfig must have one or more AuditLogConfigs.\n\nIf there are AuditConfigs for both `allServices` and a specific service,\nthe union of the two AuditConfigs is used for that service: the log_types\nspecified in each AuditConfig are enabled, and the exempted_members in each\nAuditLogConfig are exempted.\n\nExample Policy with multiple AuditConfigs:\n\n    {\n      \"audit_configs\": [\n        {\n          \"service\": \"allServices\"\n          \"audit_log_configs\": [\n            {\n              \"log_type\": \"DATA_READ\",\n              \"exempted_members\": [\n                \"user:foo@gmail.com\"\n              ]\n            },\n            {\n              \"log_type\": \"DATA_WRITE\",\n            },\n            {\n              \"log_type\": \"ADMIN_READ\",\n            }\n          ]\n        },\n        {\n          \"service\": \"fooservice.googleapis.com\"\n          \"audit_log_configs\": [\n            {\n              \"log_type\": \"DATA_READ\",\n            },\n            {\n              \"log_type\": \"DATA_WRITE\",\n              \"exempted_members\": [\n                \"user:bar@gmail.com\"\n              ]\n            }\n          ]\n        }\n      ]\n    }\n\nFor fooservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ\nlogging. It also exempts foo@gmail.com from DATA_READ logging, and\nbar@gmail.com from DATA_WRITE logging.",
+      "description": "Specifies the audit configuration for a service.\nThe configuration determines which permission types are logged, and what\nidentities, if any, are exempted from logging.\nAn AuditConfig must have one or more AuditLogConfigs.\n\nIf there are AuditConfigs for both `allServices` and a specific service,\nthe union of the two AuditConfigs is used for that service: the log_types\nspecified in each AuditConfig are enabled, and the exempted_members in each\nAuditLogConfig are exempted.\n\nExample Policy with multiple AuditConfigs:\n\n    {\n      \"audit_configs\": [\n        {\n          \"service\": \"allServices\"\n          \"audit_log_configs\": [\n            {\n              \"log_type\": \"DATA_READ\",\n              \"exempted_members\": [\n                \"user:jose@example.com\"\n              ]\n            },\n            {\n              \"log_type\": \"DATA_WRITE\",\n            },\n            {\n              \"log_type\": \"ADMIN_READ\",\n            }\n          ]\n        },\n        {\n          \"service\": \"sampleservice.googleapis.com\"\n          \"audit_log_configs\": [\n            {\n              \"log_type\": \"DATA_READ\",\n            },\n            {\n              \"log_type\": \"DATA_WRITE\",\n              \"exempted_members\": [\n                \"user:aliya@example.com\"\n              ]\n            }\n          ]\n        }\n      ]\n    }\n\nFor sampleservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ\nlogging. It also exempts jose@example.com from DATA_READ logging, and\naliya@example.com from DATA_WRITE logging.",
       "id": "AuditConfig",
       "properties": {
         "auditLogConfigs": {
@@ -1283,7 +1284,7 @@
       "type": "object"
     },
     "AuditLogConfig": {
-      "description": "Provides the configuration for logging a type of permissions.\nExample:\n\n    {\n      \"audit_log_configs\": [\n        {\n          \"log_type\": \"DATA_READ\",\n          \"exempted_members\": [\n            \"user:foo@gmail.com\"\n          ]\n        },\n        {\n          \"log_type\": \"DATA_WRITE\",\n        }\n      ]\n    }\n\nThis enables 'DATA_READ' and 'DATA_WRITE' logging, while exempting\nfoo@gmail.com from DATA_READ logging.",
+      "description": "Provides the configuration for logging a type of permissions.\nExample:\n\n    {\n      \"audit_log_configs\": [\n        {\n          \"log_type\": \"DATA_READ\",\n          \"exempted_members\": [\n            \"user:jose@example.com\"\n          ]\n        },\n        {\n          \"log_type\": \"DATA_WRITE\",\n        }\n      ]\n    }\n\nThis enables 'DATA_READ' and 'DATA_WRITE' logging, while exempting\njose@example.com from DATA_READ logging.",
       "id": "AuditLogConfig",
       "properties": {
         "exemptedMembers": {
@@ -1292,6 +1293,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "ignoreChildExemptions": {
+          "description": "Specifies whether principals can be exempted for the same LogType in\nlower-level resource policies. If true, any lower-level exemptions will\nbe ignored.",
+          "type": "boolean"
         },
         "logType": {
           "description": "The log type that this config enables.",
@@ -1336,7 +1341,7 @@
           "description": "The condition that is associated with this binding.\nNOTE: An unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
         },
         "members": {
-          "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
+          "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@example.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
           "items": {
             "type": "string"
           },
@@ -1737,7 +1742,8 @@
             "PACKAGE_MANAGER",
             "DEPLOYABLE",
             "DISCOVERY",
-            "ATTESTATION_AUTHORITY"
+            "ATTESTATION_AUTHORITY",
+            "UPGRADE"
           ],
           "enumDescriptions": [
             "Unknown",
@@ -1747,7 +1753,8 @@
             "This represents a package installed via a package manager.",
             "The note and occurrence track deployment events.",
             "The note and occurrence track the initial discovery status of a resource.",
-            "This represents a logical \"role\" that can attest to artifacts."
+            "This represents a logical \"role\" that can attest to artifacts.",
+            "This represents an available software upgrade."
           ],
           "type": "string"
         }
@@ -1876,7 +1883,7 @@
       "id": "GetPolicyOptions",
       "properties": {
         "requestedPolicyVersion": {
-          "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+          "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
           "format": "int32",
           "type": "integer"
         }
@@ -1971,7 +1978,7 @@
       "id": "GoogleDevtoolsContaineranalysisV1alpha1GitSourceContext",
       "properties": {
         "revisionId": {
-          "description": "Required.\nGit commit hash.",
+          "description": "Required. Git commit hash.",
           "type": "string"
         },
         "url": {
@@ -2286,7 +2293,8 @@
             "PACKAGE_MANAGER",
             "DEPLOYABLE",
             "DISCOVERY",
-            "ATTESTATION_AUTHORITY"
+            "ATTESTATION_AUTHORITY",
+            "UPGRADE"
           ],
           "enumDescriptions": [
             "Unknown",
@@ -2296,7 +2304,8 @@
             "This represents a package installed via a package manager.",
             "The note and occurrence track deployment events.",
             "The note and occurrence track the initial discovery status of a resource.",
-            "This represents a logical \"role\" that can attest to artifacts."
+            "This represents a logical \"role\" that can attest to artifacts.",
+            "This represents an available software upgrade."
           ],
           "type": "string"
         },
@@ -2305,7 +2314,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The name of the note in the form\n\"providers/{provider_id}/notes/{NOTE_ID}\"",
+          "description": "The name of the note in the form\n\"projects/{provider_project_id}/notes/{NOTE_ID}\"",
           "type": "string"
         },
         "package": {
@@ -2327,6 +2336,10 @@
           "description": "Output only. The time this note was last updated. This field can be used as\na filter in list requests.",
           "format": "google-datetime",
           "type": "string"
+        },
+        "upgrade": {
+          "$ref": "UpgradeNote",
+          "description": "A note describing an upgrade."
         },
         "vulnerabilityType": {
           "$ref": "VulnerabilityType",
@@ -2378,7 +2391,8 @@
             "PACKAGE_MANAGER",
             "DEPLOYABLE",
             "DISCOVERY",
-            "ATTESTATION_AUTHORITY"
+            "ATTESTATION_AUTHORITY",
+            "UPGRADE"
           ],
           "enumDescriptions": [
             "Unknown",
@@ -2388,7 +2402,8 @@
             "This represents a package installed via a package manager.",
             "The note and occurrence track deployment events.",
             "The note and occurrence track the initial discovery status of a resource.",
-            "This represents a logical \"role\" that can attest to artifacts."
+            "This represents a logical \"role\" that can attest to artifacts.",
+            "This represents an available software upgrade."
           ],
           "type": "string"
         },
@@ -2416,6 +2431,10 @@
           "description": "Output only. The time this `Occurrence` was last updated.",
           "format": "google-datetime",
           "type": "string"
+        },
+        "upgrade": {
+          "$ref": "UpgradeOccurrence",
+          "description": "Describes an upgrade."
         },
         "vulnerabilityDetails": {
           "$ref": "VulnerabilityDetails",
@@ -2541,7 +2560,7 @@
           "type": "array"
         },
         "etag": {
-          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a policy from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform policy updates in order to avoid race\nconditions: An `etag` is returned in the response to `getIamPolicy`, and\nsystems are expected to put that etag in the request to `setIamPolicy` to\nensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing\npolicy is overwritten blindly.",
+          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a policy from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform policy updates in order to avoid race\nconditions: An `etag` is returned in the response to `getIamPolicy`, and\nsystems are expected to put that etag in the request to `setIamPolicy` to\nensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing\npolicy is overwritten.",
           "format": "byte",
           "type": "string"
         },
@@ -2815,6 +2834,73 @@
           "description": "The fields to update.",
           "format": "google-fieldmask",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UpgradeDistribution": {
+      "description": "The Upgrade Distribution represents metadata about the Upgrade for each\noperating system (CPE). Some distributions have additional metadata around\nupdates, classifying them into various categories and severities.",
+      "id": "UpgradeDistribution",
+      "properties": {
+        "classification": {
+          "description": "The operating system classification of this Upgrade, as specified by the\nupstream operating system upgrade feed.",
+          "type": "string"
+        },
+        "cpeUri": {
+          "description": "Required - The specific operating system this metadata applies to. See\nhttps://cpe.mitre.org/specification/.",
+          "type": "string"
+        },
+        "cve": {
+          "description": "The cve that would be resolved by this upgrade.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "severity": {
+          "description": "The severity as specified by the upstream operating system.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UpgradeNote": {
+      "description": "An Upgrade Note represents a potential upgrade of a package to a given\nversion. For each package version combination (i.e. bash 4.0, bash 4.1,\nbash 4.1.2), there will be a Upgrade Note.",
+      "id": "UpgradeNote",
+      "properties": {
+        "distributions": {
+          "description": "Metadata about the upgrade for each specific operating system.",
+          "items": {
+            "$ref": "UpgradeDistribution"
+          },
+          "type": "array"
+        },
+        "package": {
+          "description": "Required - The package this Upgrade is for.",
+          "type": "string"
+        },
+        "version": {
+          "$ref": "Version",
+          "description": "Required - The version of the package in machine + human readable form."
+        }
+      },
+      "type": "object"
+    },
+    "UpgradeOccurrence": {
+      "description": "An Upgrade Occurrence represents that a specific resource_url could install a\nspecific upgrade. This presence is supplied via local sources (i.e. it is\npresent in the mirror and the running system has noticed its availability).",
+      "id": "UpgradeOccurrence",
+      "properties": {
+        "distribution": {
+          "$ref": "UpgradeDistribution",
+          "description": "Metadata about the upgrade for available for the specific operating system\nfor the resource_url. This allows efficient filtering, as well as\nmaking it easier to use the occurrence."
+        },
+        "package": {
+          "description": "Required - The package this Upgrade is for.",
+          "type": "string"
+        },
+        "parsedVersion": {
+          "$ref": "Version",
+          "description": "Required - The version of the package in a machine + human readable form."
         }
       },
       "type": "object"

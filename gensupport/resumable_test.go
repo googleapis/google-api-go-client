@@ -13,6 +13,7 @@ import (
 	"reflect"
 	"strings"
 	"testing"
+	"time"
 )
 
 type unexpectedReader struct{}
@@ -64,6 +65,9 @@ func (tc *trackingCloser) Open() {
 }
 
 func (t *interruptibleTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	if len(t.events) == 0 {
+		panic("Ran out of events, but got a request")
+	}
 	ev := t.events[0]
 	t.events = t.events[1:]
 	if got, want := req.Header.Get("Content-Range"), ev.byteRange; got != want {
@@ -291,5 +295,120 @@ func TestCancelUpload(t *testing.T) {
 	}
 	if len(tr.bodies) > 0 {
 		t.Errorf("unclosed request bodies: %v", tr.bodies)
+	}
+}
+
+func TestRetry_Bounded(t *testing.T) {
+	const (
+		chunkSize = 90
+		mediaSize = 300
+	)
+	media := strings.NewReader(strings.Repeat("a", mediaSize))
+
+	tr := &interruptibleTransport{
+		buf: make([]byte, 0, mediaSize),
+		events: []event{
+			{"bytes 0-89/*", http.StatusServiceUnavailable},
+			{"bytes 0-89/*", http.StatusServiceUnavailable},
+		},
+		bodies: bodyTracker{},
+	}
+
+	rx := &ResumableUpload{
+		Client:    &http.Client{Transport: tr},
+		Media:     NewMediaBuffer(media, chunkSize),
+		MediaType: "text/plain",
+		Callback:  func(int64) {},
+	}
+
+	oldRetryDeadline := retryDeadline
+	retryDeadline = time.Second
+	defer func() { retryDeadline = oldRetryDeadline }()
+
+	oldBackoff := backoff
+	backoff = func() Backoff { return new(PauseForeverBackoff) }
+	defer func() { backoff = oldBackoff }()
+
+	resCode := make(chan int)
+	go func() {
+		resp, err := rx.Upload(context.Background())
+		if err != nil {
+			t.Error(err)
+			return
+		}
+		resCode <- resp.StatusCode
+	}()
+
+	select {
+	case <-time.After(5 * time.Second):
+		t.Fatal("timed out waiting for Upload to complete")
+	case got := <-resCode:
+		if want, got := http.StatusServiceUnavailable, got; got != want {
+			t.Fatalf("want %d, got %d", want, got)
+		}
+	}
+}
+
+func TestRetry_EachChunkHasItsOwnRetryDeadline(t *testing.T) {
+	const (
+		chunkSize = 90
+		mediaSize = 300
+	)
+	media := strings.NewReader(strings.Repeat("a", mediaSize))
+
+	tr := &interruptibleTransport{
+		buf: make([]byte, 0, mediaSize),
+		events: []event{
+			{"bytes 0-89/*", http.StatusServiceUnavailable},
+			// cum: 1s sleep
+			{"bytes 0-89/*", http.StatusServiceUnavailable},
+			// cum: 2s sleep
+			{"bytes 0-89/*", http.StatusServiceUnavailable},
+			// cum: 3s sleep
+			{"bytes 0-89/*", http.StatusServiceUnavailable},
+			// cum: 4s sleep
+			{"bytes 0-89/*", 308},
+			// cum: 1s sleep <-- resets because it's a new chunk
+			{"bytes 90-179/*", 308},
+			// cum: 1s sleep <-- resets because it's a new chunk
+			{"bytes 180-269/*", 308},
+			// cum: 1s sleep <-- resets because it's a new chunk
+			{"bytes 270-299/300", 200},
+		},
+		bodies: bodyTracker{},
+	}
+
+	rx := &ResumableUpload{
+		Client:    &http.Client{Transport: tr},
+		Media:     NewMediaBuffer(media, chunkSize),
+		MediaType: "text/plain",
+		Callback:  func(int64) {},
+	}
+
+	oldRetryDeadline := retryDeadline
+	retryDeadline = 5 * time.Second
+	defer func() { retryDeadline = oldRetryDeadline }()
+
+	oldBackoff := backoff
+	backoff = func() Backoff { return new(PauseOneSecond) }
+	defer func() { backoff = oldBackoff }()
+
+	resCode := make(chan int, 1)
+	go func() {
+		resp, err := rx.Upload(context.Background())
+		if err != nil {
+			t.Error(err)
+			return
+		}
+		resCode <- resp.StatusCode
+	}()
+
+	select {
+	case <-time.After(15 * time.Second):
+		t.Fatal("timed out waiting for Upload to complete")
+	case got := <-resCode:
+		if want := http.StatusOK; got != want {
+			t.Fatalf("want %d, got %d", want, got)
+		}
 	}
 }

@@ -27,7 +27,17 @@ func (er *errReader) Read(p []byte) (int, error) {
 	return n, nil
 }
 
-// NoPauseBackoff implements backoff strategy with infinite 0-length pauses.
+// NoPauseBackoff implements backoff with infinite 0-length pauses.
 type NoPauseBackoff struct{}
 
 func (bo *NoPauseBackoff) Pause() time.Duration { return 0 }
+
+// PauseOneSecond implements backoff with infinite 1s pauses.
+type PauseOneSecond struct{}
+
+func (bo *PauseOneSecond) Pause() time.Duration { return time.Second }
+
+// PauseForeverBackoff implements backoff with infinite 1h pauses.
+type PauseForeverBackoff struct{}
+
+func (bo *PauseForeverBackoff) Pause() time.Duration { return time.Hour }

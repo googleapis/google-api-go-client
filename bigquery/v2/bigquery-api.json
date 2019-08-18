@@ -522,6 +522,11 @@
               "location": "query",
               "type": "string"
             },
+            "parentJobId": {
+              "description": "If set, retrieves only jobs whose parent is this job. Otherwise, retrieves only jobs which have no parent",
+              "location": "query",
+              "type": "string"
+            },
             "projectId": {
               "description": "Project ID of the jobs to list",
               "location": "path",
@@ -680,6 +685,7 @@
           },
           "scopes": [
             "https://www.googleapis.com/auth/bigquery",
+            "https://www.googleapis.com/auth/bigquery.readonly",
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/cloud-platform.read-only"
           ]
@@ -726,6 +732,7 @@
           },
           "scopes": [
             "https://www.googleapis.com/auth/bigquery",
+            "https://www.googleapis.com/auth/bigquery.readonly",
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/cloud-platform.read-only"
           ]
@@ -921,6 +928,7 @@
           },
           "scopes": [
             "https://www.googleapis.com/auth/bigquery",
+            "https://www.googleapis.com/auth/bigquery.readonly",
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/cloud-platform.read-only"
           ]
@@ -1004,6 +1012,7 @@
           },
           "scopes": [
             "https://www.googleapis.com/auth/bigquery",
+            "https://www.googleapis.com/auth/bigquery.readonly",
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/cloud-platform.read-only"
           ]
@@ -1408,7 +1417,7 @@
       }
     }
   },
-  "revision": "20190724",
+  "revision": "20190807",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
@@ -1764,6 +1773,60 @@
       },
       "type": "object"
     },
+    "CategoricalValue": {
+      "description": "Representative value of a categorical feature.",
+      "id": "CategoricalValue",
+      "properties": {
+        "categoryCounts": {
+          "description": "Counts of all categories for the categorical feature. If there are\nmore than ten categories, we return top ten (by count) and return\none more CategoryCount with category \"_OTHER_\" and count as\naggregate counts of remaining categories.",
+          "items": {
+            "$ref": "CategoryCount"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "CategoryCount": {
+      "description": "Represents the count of a single category within the cluster.",
+      "id": "CategoryCount",
+      "properties": {
+        "category": {
+          "description": "The name of category.",
+          "type": "string"
+        },
+        "count": {
+          "description": "The count of training samples matching the category within the\ncluster.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Cluster": {
+      "description": "Message containing the information about one cluster.",
+      "id": "Cluster",
+      "properties": {
+        "centroidId": {
+          "description": "Centroid id.",
+          "format": "int64",
+          "type": "string"
+        },
+        "count": {
+          "description": "Count of training data rows that were assigned to this cluster.",
+          "format": "int64",
+          "type": "string"
+        },
+        "featureValues": {
+          "description": "Values of highly variant features for this cluster.",
+          "items": {
+            "$ref": "FeatureValue"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "ClusterInfo": {
       "description": "Information about a single cluster for clustering model.",
       "id": "ClusterInfo",
@@ -1803,6 +1866,13 @@
       "description": "Evaluation metrics for clustering models.",
       "id": "ClusteringMetrics",
       "properties": {
+        "clusters": {
+          "description": "[Beta] Information for all clusters.",
+          "items": {
+            "$ref": "Cluster"
+          },
+          "type": "array"
+        },
         "daviesBouldinIndex": {
           "description": "Davies-Bouldin index.",
           "format": "double",
@@ -2133,7 +2203,7 @@
         },
         "clusteringMetrics": {
           "$ref": "ClusteringMetrics",
-          "description": "[Beta] Populated for clustering models."
+          "description": "Populated for clustering models."
         },
         "multiClassClassificationMetrics": {
           "$ref": "MultiClassClassificationMetrics",
@@ -2375,6 +2445,26 @@
       },
       "type": "object"
     },
+    "FeatureValue": {
+      "description": "Representative value of a single feature within the cluster.",
+      "id": "FeatureValue",
+      "properties": {
+        "categoricalValue": {
+          "$ref": "CategoricalValue",
+          "description": "The categorical feature value."
+        },
+        "featureColumn": {
+          "description": "The feature column name.",
+          "type": "string"
+        },
+        "numericalValue": {
+          "description": "The numerical feature value. This is the centroid value for this\nfeature.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "GetQueryResultsResponse": {
       "id": "GetQueryResultsResponse",
       "properties": {
@@ -2488,7 +2578,7 @@
       "id": "IterationResult",
       "properties": {
         "clusterInfos": {
-          "description": "[Beta] Information about top clusters for clustering models.",
+          "description": "Information about top clusters for clustering models.",
           "items": {
             "$ref": "ClusterInfo"
           },
@@ -3467,7 +3557,7 @@
             "",
             "Linear regression model.",
             "Logistic regression based classification model.",
-            "[Beta] K-means clustering model.",
+            "K-means clustering model.",
             "[Beta] An imported TensorFlow model."
           ],
           "type": "string"
@@ -4610,7 +4700,7 @@
           "type": "string"
         },
         "distanceType": {
-          "description": "[Beta] Distance type for clustering models.",
+          "description": "Distance type for clustering models.",
           "enum": [
             "DISTANCE_TYPE_UNSPECIFIED",
             "EUCLIDEAN",
@@ -4638,6 +4728,24 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "kmeansInitializationColumn": {
+          "description": "The column used to provide the initial centroids for kmeans algorithm\nwhen kmeans_initialization_method is CUSTOM.",
+          "type": "string"
+        },
+        "kmeansInitializationMethod": {
+          "description": "The method used to initialize the centroids for kmeans algorithm.",
+          "enum": [
+            "KMEANS_INITIALIZATION_METHOD_UNSPECIFIED",
+            "RANDOM",
+            "CUSTOM"
+          ],
+          "enumDescriptions": [
+            "",
+            "Initializes the centroids randomly.",
+            "Initializes the centroids using data specified in\nkmeans_initialization_column."
+          ],
+          "type": "string"
         },
         "l1Regularization": {
           "description": "L1 regularization coefficient.",
@@ -4705,7 +4813,7 @@
           "type": "string"
         },
         "numClusters": {
-          "description": "[Beta] Number of clusters for clustering models.",
+          "description": "Number of clusters for clustering models.",
           "format": "int64",
           "type": "string"
         },

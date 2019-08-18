@@ -32,7 +32,7 @@
   "description": "Views and manages your Google Analytics data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/analytics/",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/H4vWgpd1MCO4wKLGF823qtL1fw0\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/o_TVyaWurnALX6ZIQ952-U5m22Y\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/analytics-16.png",
     "x32": "https://www.google.com/images/icons/product/analytics-32.png"
@@ -3805,7 +3805,7 @@
       }
     }
   },
-  "revision": "20190604",
+  "revision": "20190807",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -7172,6 +7172,10 @@
         "kind": {
           "default": "analytics#userDeletionRequest",
           "description": "Value is \"analytics#userDeletionRequest\".",
+          "type": "string"
+        },
+        "propertyId": {
+          "description": "Property ID",
           "type": "string"
         },
         "webPropertyId": {

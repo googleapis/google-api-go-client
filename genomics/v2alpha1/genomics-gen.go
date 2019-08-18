@@ -1694,7 +1694,8 @@ type ServiceAccount struct {
 
 	// Scopes: List of scopes to be enabled for this service account on the
 	// VM, in
-	// addition to the Cloud Genomics API scope.
+	// addition to the cloud-platform API scope that will be added by
+	// default.
 	Scopes []string `json:"scopes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Email") to

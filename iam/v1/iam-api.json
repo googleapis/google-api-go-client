@@ -1199,7 +1199,7 @@
       }
     }
   },
-  "revision": "20190802",
+  "revision": "20190809",
   "rootUrl": "https://iam.googleapis.com/",
   "schemas": {
     "AdminAuditData": {
@@ -1325,7 +1325,7 @@
         },
         "condition": {
           "$ref": "Expr",
-          "description": "Unimplemented. The condition that is associated with this binding.\nThis field is logged only for Cloud Audit Logging."
+          "description": "The condition that is associated with this binding. This field is logged\nonly for Cloud Audit Logging."
         },
         "member": {
           "description": "A single identity requesting access for a Cloud Platform resource.\nFollows the same format of Binding.members.\nRequired",

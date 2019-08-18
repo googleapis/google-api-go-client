@@ -350,6 +350,7 @@ type GoogleCloudMlV1__AcceleratorConfig struct {
 	//   "NVIDIA_TESLA_P4" - Nvidia Tesla P4 GPU.
 	//   "NVIDIA_TESLA_T4" - Nvidia Tesla T4 GPU.
 	//   "TPU_V2" - TPU v2.
+	//   "TPU_V3" - TPU v3.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Count") to
@@ -514,6 +515,7 @@ type GoogleCloudMlV1__Capability struct {
 	//   "NVIDIA_TESLA_P4" - Nvidia Tesla P4 GPU.
 	//   "NVIDIA_TESLA_T4" - Nvidia Tesla T4 GPU.
 	//   "TPU_V2" - TPU v2.
+	//   "TPU_V3" - TPU v3.
 	AvailableAccelerators []string `json:"availableAccelerators,omitempty"`
 
 	// Possible values:
@@ -1728,6 +1730,67 @@ func (s *GoogleCloudMlV1__ReplicaConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudMlV1__RequestLoggingConfig: Configurations for logging
+// request-response pairs. Currently only BigQuery
+// logging is supported. The request and response will be converted to
+// raw
+// string and stored within the specified BigQuery table. The schema
+// is:
+//   model: STRING
+//   version: STRING
+//   time: Timestamp
+//   raw_data: STRING
+//   raw_prediction: STRING
+//   ground_truth: STRING
+type GoogleCloudMlV1__RequestLoggingConfig struct {
+	// BigqueryTableName: Fully qualified BigQuery table name in the format
+	// of
+	// "[project_id].[dataset_name].[table_name]".
+	BigqueryTableName string `json:"bigqueryTableName,omitempty"`
+
+	// SamplingPercentage: Percentage of the request being logged. The
+	// sampling window is the lifetime
+	// of the Version. Defaults to 0.
+	SamplingPercentage float64 `json:"samplingPercentage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BigqueryTableName")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BigqueryTableName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__RequestLoggingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__RequestLoggingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudMlV1__RequestLoggingConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudMlV1__RequestLoggingConfig
+	var s1 struct {
+		SamplingPercentage gensupport.JSONFloat64 `json:"samplingPercentage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SamplingPercentage = float64(s1.SamplingPercentage)
+	return nil
+}
+
 // GoogleCloudMlV1__SetDefaultVersionRequest: Request message for the
 // SetDefaultVersion request.
 type GoogleCloudMlV1__SetDefaultVersionRequest struct {
@@ -2467,6 +2530,11 @@ type GoogleCloudMlV1__Version struct {
 	// to '1.4' and above. Python '2.7' works with all supported runtime
 	// versions.
 	PythonVersion string `json:"pythonVersion,omitempty"`
+
+	// RequestLoggingConfig: Optional. Configures the request-response pair
+	// logging on predictions from
+	// this Version.
+	RequestLoggingConfig *GoogleCloudMlV1__RequestLoggingConfig `json:"requestLoggingConfig,omitempty"`
 
 	// RuntimeVersion: Optional. The AI Platform runtime version to use for
 	// this deployment.

@@ -15,7 +15,7 @@
   "description": "API for viewing and managing your reports in DoubleClick Bid Manager.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/bid-manager/",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/xgvireT-Vynv--FFkFbMWRLKz6E\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/a_K-vEOgmKHsfpZUj_abkDcULlY\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -257,7 +257,7 @@
       }
     }
   },
-  "revision": "20190715",
+  "revision": "20190807",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "DownloadLineItemsRequest": {
@@ -536,6 +536,7 @@
             "FILTER_VIDEO_CREATIVE_DURATION",
             "FILTER_VIDEO_CREATIVE_DURATION_SKIPPABLE",
             "FILTER_VIDEO_DURATION_SECONDS",
+            "FILTER_VIDEO_DURATION_SECONDS_RANGE",
             "FILTER_VIDEO_FORMAT_SUPPORT",
             "FILTER_VIDEO_INVENTORY_TYPE",
             "FILTER_VIDEO_PLAYER_SIZE",
@@ -548,6 +549,7 @@
             "FILTER_ZIP_CODE"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -855,6 +857,7 @@
               "FILTER_VIDEO_CREATIVE_DURATION",
               "FILTER_VIDEO_CREATIVE_DURATION_SKIPPABLE",
               "FILTER_VIDEO_DURATION_SECONDS",
+              "FILTER_VIDEO_DURATION_SECONDS_RANGE",
               "FILTER_VIDEO_FORMAT_SUPPORT",
               "FILTER_VIDEO_INVENTORY_TYPE",
               "FILTER_VIDEO_PLAYER_SIZE",
@@ -867,6 +870,7 @@
               "FILTER_ZIP_CODE"
             ],
             "enumDescriptions": [
+              "",
               "",
               "",
               "",

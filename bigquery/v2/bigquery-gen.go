@@ -911,6 +911,108 @@ func (s *BqmlTrainingRunTrainingOptions) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// CategoricalValue: Representative value of a categorical feature.
+type CategoricalValue struct {
+	// CategoryCounts: Counts of all categories for the categorical feature.
+	// If there are
+	// more than ten categories, we return top ten (by count) and return
+	// one more CategoryCount with category "_OTHER_" and count as
+	// aggregate counts of remaining categories.
+	CategoryCounts []*CategoryCount `json:"categoryCounts,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CategoryCounts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CategoryCounts") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CategoricalValue) MarshalJSON() ([]byte, error) {
+	type NoMethod CategoricalValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CategoryCount: Represents the count of a single category within the
+// cluster.
+type CategoryCount struct {
+	// Category: The name of category.
+	Category string `json:"category,omitempty"`
+
+	// Count: The count of training samples matching the category within
+	// the
+	// cluster.
+	Count int64 `json:"count,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Category") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CategoryCount) MarshalJSON() ([]byte, error) {
+	type NoMethod CategoryCount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Cluster: Message containing the information about one cluster.
+type Cluster struct {
+	// CentroidId: Centroid id.
+	CentroidId int64 `json:"centroidId,omitempty,string"`
+
+	// Count: Count of training data rows that were assigned to this
+	// cluster.
+	Count int64 `json:"count,omitempty,string"`
+
+	// FeatureValues: Values of highly variant features for this cluster.
+	FeatureValues []*FeatureValue `json:"featureValues,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CentroidId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CentroidId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Cluster) MarshalJSON() ([]byte, error) {
+	type NoMethod Cluster
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ClusterInfo: Information about a single cluster for clustering model.
 type ClusterInfo struct {
 	// CentroidId: Centroid id.
@@ -994,6 +1096,9 @@ func (s *Clustering) MarshalJSON() ([]byte, error) {
 
 // ClusteringMetrics: Evaluation metrics for clustering models.
 type ClusteringMetrics struct {
+	// Clusters: [Beta] Information for all clusters.
+	Clusters []*Cluster `json:"clusters,omitempty"`
+
 	// DaviesBouldinIndex: Davies-Bouldin index.
 	DaviesBouldinIndex float64 `json:"daviesBouldinIndex,omitempty"`
 
@@ -1001,21 +1106,20 @@ type ClusteringMetrics struct {
 	// its cluster centroid.
 	MeanSquaredDistance float64 `json:"meanSquaredDistance,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DaviesBouldinIndex")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "Clusters") to
+	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DaviesBouldinIndex") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Clusters") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1616,7 +1720,7 @@ type EvaluationMetrics struct {
 	// classification/classifier models.
 	BinaryClassificationMetrics *BinaryClassificationMetrics `json:"binaryClassificationMetrics,omitempty"`
 
-	// ClusteringMetrics: [Beta] Populated for clustering models.
+	// ClusteringMetrics: Populated for clustering models.
 	ClusteringMetrics *ClusteringMetrics `json:"clusteringMetrics,omitempty"`
 
 	// MultiClassClassificationMetrics: Populated for multi-class
@@ -1943,6 +2047,58 @@ func (s *ExternalDataConfiguration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FeatureValue: Representative value of a single feature within the
+// cluster.
+type FeatureValue struct {
+	// CategoricalValue: The categorical feature value.
+	CategoricalValue *CategoricalValue `json:"categoricalValue,omitempty"`
+
+	// FeatureColumn: The feature column name.
+	FeatureColumn string `json:"featureColumn,omitempty"`
+
+	// NumericalValue: The numerical feature value. This is the centroid
+	// value for this
+	// feature.
+	NumericalValue float64 `json:"numericalValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CategoricalValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CategoricalValue") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FeatureValue) MarshalJSON() ([]byte, error) {
+	type NoMethod FeatureValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *FeatureValue) UnmarshalJSON(data []byte) error {
+	type NoMethod FeatureValue
+	var s1 struct {
+		NumericalValue gensupport.JSONFloat64 `json:"numericalValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.NumericalValue = float64(s1.NumericalValue)
+	return nil
+}
+
 type GetQueryResultsResponse struct {
 	// CacheHit: Whether the query result was fetched from the query cache.
 	CacheHit bool `json:"cacheHit,omitempty"`
@@ -2155,8 +2311,7 @@ func (s *HivePartitioningOptions) MarshalJSON() ([]byte, error) {
 // IterationResult: Information about a single iteration of the training
 // run.
 type IterationResult struct {
-	// ClusterInfos: [Beta] Information about top clusters for clustering
-	// models.
+	// ClusterInfos: Information about top clusters for clustering models.
 	ClusterInfos []*ClusterInfo `json:"clusterInfos,omitempty"`
 
 	// DurationMs: Time taken to run the iteration in milliseconds.
@@ -3621,7 +3776,7 @@ type Model struct {
 	//   "LINEAR_REGRESSION" - Linear regression model.
 	//   "LOGISTIC_REGRESSION" - Logistic regression based classification
 	// model.
-	//   "KMEANS" - [Beta] K-means clustering model.
+	//   "KMEANS" - K-means clustering model.
 	//   "TENSORFLOW" - [Beta] An imported TensorFlow model.
 	ModelType string `json:"modelType,omitempty"`
 
@@ -5543,7 +5698,7 @@ type TrainingOptions struct {
 	// Otherwise uses RANDOM.
 	DataSplitMethod string `json:"dataSplitMethod,omitempty"`
 
-	// DistanceType: [Beta] Distance type for clustering models.
+	// DistanceType: Distance type for clustering models.
 	//
 	// Possible values:
 	//   "DISTANCE_TYPE_UNSPECIFIED"
@@ -5565,6 +5720,22 @@ type TrainingOptions struct {
 
 	// InputLabelColumns: Name of input label columns in training data.
 	InputLabelColumns []string `json:"inputLabelColumns,omitempty"`
+
+	// KmeansInitializationColumn: The column used to provide the initial
+	// centroids for kmeans algorithm
+	// when kmeans_initialization_method is CUSTOM.
+	KmeansInitializationColumn string `json:"kmeansInitializationColumn,omitempty"`
+
+	// KmeansInitializationMethod: The method used to initialize the
+	// centroids for kmeans algorithm.
+	//
+	// Possible values:
+	//   "KMEANS_INITIALIZATION_METHOD_UNSPECIFIED"
+	//   "RANDOM" - Initializes the centroids randomly.
+	//   "CUSTOM" - Initializes the centroids using data specified
+	// in
+	// kmeans_initialization_column.
+	KmeansInitializationMethod string `json:"kmeansInitializationMethod,omitempty"`
 
 	// L1Regularization: L1 regularization coefficient.
 	L1Regularization float64 `json:"l1Regularization,omitempty"`
@@ -5616,7 +5787,7 @@ type TrainingOptions struct {
 	// applicable for imported models.
 	ModelUri string `json:"modelUri,omitempty"`
 
-	// NumClusters: [Beta] Number of clusters for clustering models.
+	// NumClusters: Number of clusters for clustering models.
 	NumClusters int64 `json:"numClusters,omitempty,string"`
 
 	// OptimizationStrategy: Optimization strategy for training linear
@@ -7594,6 +7765,14 @@ func (c *JobsListCall) PageToken(pageToken string) *JobsListCall {
 	return c
 }
 
+// ParentJobId sets the optional parameter "parentJobId": If set,
+// retrieves only jobs whose parent is this job. Otherwise, retrieves
+// only jobs which have no parent
+func (c *JobsListCall) ParentJobId(parentJobId string) *JobsListCall {
+	c.urlParams_.Set("parentJobId", parentJobId)
+	return c
+}
+
 // Projection sets the optional parameter "projection": Restrict
 // information returned to a set of selected fields
 //
@@ -7748,6 +7927,11 @@ func (c *JobsListCall) Do(opts ...googleapi.CallOption) (*JobList, error) {
 	//     },
 	//     "pageToken": {
 	//       "description": "Page token, returned by a previous call, to request the next page of results",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parentJobId": {
+	//       "description": "If set, retrieves only jobs whose parent is this job. Otherwise, retrieves only jobs which have no parent",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8250,6 +8434,7 @@ func (c *ModelsGetCall) Do(opts ...googleapi.CallOption) (*Model, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/bigquery.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
@@ -8436,6 +8621,7 @@ func (c *ModelsListCall) Do(opts ...googleapi.CallOption) (*ListModelsResponse, 
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/bigquery.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
@@ -9251,6 +9437,7 @@ func (c *RoutinesGetCall) Do(opts ...googleapi.CallOption) (*Routine, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/bigquery.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
@@ -9589,6 +9776,7 @@ func (c *RoutinesListCall) Do(opts ...googleapi.CallOption) (*ListRoutinesRespon
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/bigquery.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]

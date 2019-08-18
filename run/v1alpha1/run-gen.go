@@ -506,13 +506,6 @@ type AuditLogConfig struct {
 	// Follows the same format of Binding.members.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
-	// IgnoreChildExemptions: Specifies whether principals can be exempted
-	// for the same LogType in
-	// lower-level resource policies. If true, any lower-level exemptions
-	// will
-	// be ignored.
-	IgnoreChildExemptions bool `json:"ignoreChildExemptions,omitempty"`
-
 	// LogType: The log type that this config enables.
 	//
 	// Possible values:
@@ -726,6 +719,57 @@ type ConfigMapEnvSource struct {
 
 func (s *ConfigMapEnvSource) MarshalJSON() ([]byte, error) {
 	type NoMethod ConfigMapEnvSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConfigMapKeySelector: Cloud Run fully managed: not supported
+//
+// Cloud Run on GKE: supported
+//
+// Selects a key from a ConfigMap.
+type ConfigMapKeySelector struct {
+	// Key: Cloud Run fully managed: not supported
+	//
+	// Cloud Run on GKE: supported
+	//
+	// The key to select.
+	Key string `json:"key,omitempty"`
+
+	// LocalObjectReference: Cloud Run fully managed: not supported
+	//
+	// Cloud Run on GKE: supported
+	//
+	// The ConfigMap to select from.
+	LocalObjectReference *LocalObjectReference `json:"localObjectReference,omitempty"`
+
+	// Optional: Cloud Run fully managed: not supported
+	//
+	// Cloud Run on GKE: supported
+	//
+	// Specify whether the ConfigMap or its key must be defined
+	// +optional
+	Optional bool `json:"optional,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConfigMapKeySelector) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigMapKeySelector
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1613,6 +1657,15 @@ type EnvVar struct {
 	// +optional
 	Value string `json:"value,omitempty"`
 
+	// ValueFrom: Cloud Run fully managed: not supported
+	//
+	// Cloud Run on GKE: supported
+	//
+	// Source for the environment variable's value. Cannot be used if value
+	// is not
+	// empty. +optional
+	ValueFrom *EnvVarSource `json:"valueFrom,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1632,6 +1685,52 @@ type EnvVar struct {
 
 func (s *EnvVar) MarshalJSON() ([]byte, error) {
 	type NoMethod EnvVar
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnvVarSource: Cloud Run fully managed: not supported
+//
+// Cloud Run on GKE: supported
+//
+// EnvVarSource represents a source for the value of an EnvVar.
+type EnvVarSource struct {
+	// ConfigMapKeyRef: Cloud Run fully managed: not supported
+	//
+	// Cloud Run on GKE: supported
+	//
+	// Selects a key of a ConfigMap.
+	// +optional
+	ConfigMapKeyRef *ConfigMapKeySelector `json:"configMapKeyRef,omitempty"`
+
+	// SecretKeyRef: Cloud Run fully managed: not supported
+	//
+	// Cloud Run on GKE: supported
+	//
+	// Selects a key of a secret in the pod's namespace
+	// +optional
+	SecretKeyRef *SecretKeySelector `json:"secretKeyRef,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConfigMapKeyRef") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConfigMapKeyRef") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnvVarSource) MarshalJSON() ([]byte, error) {
+	type NoMethod EnvVarSource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4202,6 +4301,57 @@ type SecretEnvSource struct {
 
 func (s *SecretEnvSource) MarshalJSON() ([]byte, error) {
 	type NoMethod SecretEnvSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SecretKeySelector: Cloud Run fully managed: not supported
+//
+// Cloud Run on GKE: supported
+//
+// SecretKeySelector selects a key of a Secret.
+type SecretKeySelector struct {
+	// Key: Cloud Run fully managed: not supported
+	//
+	// Cloud Run on GKE: supported
+	//
+	// The key of the secret to select from.  Must be a valid secret key.
+	Key string `json:"key,omitempty"`
+
+	// LocalObjectReference: Cloud Run fully managed: not supported
+	//
+	// Cloud Run on GKE: supported
+	//
+	// The name of the secret in the pod's namespace to select from.
+	LocalObjectReference *LocalObjectReference `json:"localObjectReference,omitempty"`
+
+	// Optional: Cloud Run fully managed: not supported
+	//
+	// Cloud Run on GKE: supported
+	//
+	// Specify whether the Secret or its key must be defined
+	// +optional
+	Optional bool `json:"optional,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecretKeySelector) MarshalJSON() ([]byte, error) {
+	type NoMethod SecretKeySelector
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -13105,7 +13255,7 @@ func (r *ProjectsLocationsServicesService) GetIamPolicy(resource string) *Projec
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
 // returned.
-// Acceptable values are 0 and 1.
+// Acceptable values are 0, 1, and 3.
 // If the value is 0, or the field is omitted, policy format version 1
 // will be
 // returned.
@@ -13222,7 +13372,7 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

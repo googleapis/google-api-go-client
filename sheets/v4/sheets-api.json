@@ -809,7 +809,7 @@
       }
     }
   },
-  "revision": "20190730",
+  "revision": "20190813",
   "rootUrl": "https://sheets.googleapis.com/",
   "schemas": {
     "AddBandingRequest": {
@@ -2863,7 +2863,7 @@
       "type": "object"
     },
     "DeleteDuplicatesRequest": {
-      "description": "Removes rows within this range containing duplicate values in the specified\ncolumns. Rows with identical values but different letter cases, formatting,\nor formulas are considered to be duplicates.\n\nThis request also removes duplicate rows hidden from view (for example, due\nto a filter). When removing duplicates, the first instance of each duplicate\nrow scanning from the top downwards is kept in the resulting range. Content\noutside of the specified range isn't removed, and rows considered duplicates\ndo not have to be adjacent to each other in the range.",
+      "description": "Removes rows within this range that contain values in the specified columns\nthat are duplicates of values in any previous row. Rows with identical values\nbut different letter cases, formatting, or formulas are considered to be\nduplicates.\n\nThis request also removes duplicate rows hidden from view (for example, due\nto a filter). When removing duplicates, the first instance of each duplicate\nrow scanning from the top downwards is kept in the resulting range. Content\noutside of the specified range isn't removed, and rows considered duplicates\ndo not have to be adjacent to each other in the range.",
       "id": "DeleteDuplicatesRequest",
       "properties": {
         "comparisonColumns": {
@@ -5484,7 +5484,7 @@
       "type": "object"
     },
     "TrimWhitespaceRequest": {
-      "description": "Trims the whitespace (such as spaces, tabs, or new lines) in every cell in\nthe specified range. This request removes all whitespace from the start and\nend of each cell's text, and reduces any sub-sequence of remaining whitespace\ncharacters to a single space. If the resulting trimmed text starts with a '+'\nor '=' character, the text remains as a string value and is not interpreted\nas a formula.",
+      "description": "Trims the whitespace (such as spaces, tabs, or new lines) in every cell in\nthe specified range. This request removes all whitespace from the start and\nend of each cell's text, and reduces any subsequence of remaining whitespace\ncharacters to a single space. If the resulting trimmed text starts with a '+'\nor '=' character, the text remains as a string value and isn't interpreted\nas a formula.",
       "id": "TrimWhitespaceRequest",
       "properties": {
         "range": {

@@ -565,14 +565,20 @@ type Empty struct {
 // custom headers to
 // add to a response should the request URL path match the pattern.
 type Header struct {
-	// Glob: Required. The user-supplied
-	// [glob pattern](/docs/hosting/full-config#glob_pattern_matching) to
+	// Glob: The user-supplied
+	// [glob
+	// pattern](/docs/hosting/full-config#glob_pattern_matching) to
 	// match
 	// against the request URL path.
 	Glob string `json:"glob,omitempty"`
 
 	// Headers: Required. The additional headers to add to the response.
 	Headers map[string]string `json:"headers,omitempty"`
+
+	// Regex: The user-supplied RE2 regular expression to match against the
+	// request
+	// URL path.
+	Regex string `json:"regex,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Glob") to
 	// unconditionally include in API requests. By default, fields with
@@ -789,8 +795,9 @@ func (s *PopulateVersionFilesResponse) MarshalJSON() ([]byte, error) {
 // matching
 // request URL path.
 type Redirect struct {
-	// Glob: Required. The user-supplied
-	// [glob pattern](/docs/hosting/full-config#glob_pattern_matching) to
+	// Glob: The user-supplied
+	// [glob
+	// pattern](/docs/hosting/full-config#glob_pattern_matching) to
 	// match
 	// against the request URL path.
 	Glob string `json:"glob,omitempty"`
@@ -807,6 +814,11 @@ type Redirect struct {
 	// <br>"statusCode": 301,
 	// <br>"location": "https://example.com/foo/:capture"</code>
 	Location string `json:"location,omitempty"`
+
+	// Regex: The user-supplied RE2 regular expression to match against the
+	// request
+	// URL path.
+	Regex string `json:"regex,omitempty"`
 
 	// StatusCode: Required. The status HTTP code to return in the response.
 	// It must be a
@@ -929,14 +941,20 @@ type Rewrite struct {
 	// name exactly.
 	Function string `json:"function,omitempty"`
 
-	// Glob: Required. The user-supplied
-	// [glob pattern](/docs/hosting/full-config#glob_pattern_matching) to
+	// Glob: The user-supplied
+	// [glob
+	// pattern](/docs/hosting/full-config#glob_pattern_matching) to
 	// match
 	// against the request URL path.
 	Glob string `json:"glob,omitempty"`
 
 	// Path: The URL path to rewrite the request to.
 	Path string `json:"path,omitempty"`
+
+	// Regex: The user-supplied RE2 regular expression to match against the
+	// request
+	// URL path.
+	Regex string `json:"regex,omitempty"`
 
 	// Run: The request will be forwarded to Cloud Run.
 	Run *CloudRunRewrite `json:"run,omitempty"`

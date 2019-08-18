@@ -812,6 +812,35 @@
                 },
                 "sessions": {
                   "methods": {
+                    "batchCreate": {
+                      "description": "Creates multiple new sessions. If the requested number of sessions would\ncause the database to exceed its session limit, returns a\nRESOURCE_EXHAUSTED error.\n\nThis API can be used to initialize a session cache on the clients.\nSee https://goo.gl/TgSFN2 for best practices on session cache management.",
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions:batchCreate",
+                      "httpMethod": "POST",
+                      "id": "spanner.projects.instances.databases.sessions.batchCreate",
+                      "parameterOrder": [
+                        "database"
+                      ],
+                      "parameters": {
+                        "database": {
+                          "description": "Required. The database in which the new sessions are created.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+database}/sessions:batchCreate",
+                      "request": {
+                        "$ref": "BatchCreateSessionsRequest"
+                      },
+                      "response": {
+                        "$ref": "BatchCreateSessionsResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.data"
+                      ]
+                    },
                     "beginTransaction": {
                       "description": "Begins a new transaction. This step can often be skipped:\nRead, ExecuteSql and\nCommit can begin a new transaction as a\nside-effect.",
                       "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:beginTransaction",
@@ -1358,9 +1387,39 @@
       }
     }
   },
-  "revision": "20190723",
+  "revision": "20190719",
   "rootUrl": "https://spanner.googleapis.com/",
   "schemas": {
+    "BatchCreateSessionsRequest": {
+      "description": "The request for BatchCreateSessions.",
+      "id": "BatchCreateSessionsRequest",
+      "properties": {
+        "sessionCount": {
+          "description": "Required. The number of sessions to be created in this batch call.\nThe API may return fewer than the requested number of sessions. If a\nspecific number of sessions are desired, the client can make additional\ncalls to BatchCreateSessions (adjusting\nsession_count as necessary).\nThe maximum allowed sessions are documented at https://goo.gl/hBUQED.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "sessionTemplate": {
+          "$ref": "Session",
+          "description": "Parameters to be applied to each created session."
+        }
+      },
+      "type": "object"
+    },
+    "BatchCreateSessionsResponse": {
+      "description": "The response for BatchCreateSessions.",
+      "id": "BatchCreateSessionsResponse",
+      "properties": {
+        "session": {
+          "description": "The freshly created sessions.",
+          "items": {
+            "$ref": "Session"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "BeginTransactionRequest": {
       "description": "The request for BeginTransaction.",
       "id": "BeginTransactionRequest",
@@ -1381,7 +1440,7 @@
           "description": "The condition that is associated with this binding.\nNOTE: An unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
         },
         "members": {
-          "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
+          "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@example.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
           "items": {
             "type": "string"
           },
@@ -1731,7 +1790,24 @@
     "GetIamPolicyRequest": {
       "description": "Request message for `GetIamPolicy` method.",
       "id": "GetIamPolicyRequest",
-      "properties": {},
+      "properties": {
+        "options": {
+          "$ref": "GetPolicyOptions",
+          "description": "OPTIONAL: A `GetPolicyOptions` object for specifying options to\n`GetIamPolicy`. This field is only used by Cloud IAM."
+        }
+      },
+      "type": "object"
+    },
+    "GetPolicyOptions": {
+      "description": "Encapsulates settings provided to GetIamPolicy.",
+      "id": "GetPolicyOptions",
+      "properties": {
+        "requestedPolicyVersion": {
+          "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
       "type": "object"
     },
     "Instance": {
@@ -2237,7 +2313,7 @@
           "type": "array"
         },
         "etag": {
-          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a policy from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform policy updates in order to avoid race\nconditions: An `etag` is returned in the response to `getIamPolicy`, and\nsystems are expected to put that etag in the request to `setIamPolicy` to\nensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing\npolicy is overwritten blindly.",
+          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a policy from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform policy updates in order to avoid race\nconditions: An `etag` is returned in the response to `getIamPolicy`, and\nsystems are expected to put that etag in the request to `setIamPolicy` to\nensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing\npolicy is overwritten.",
           "format": "byte",
           "type": "string"
         },

@@ -5445,6 +5445,9 @@ type UserDeletionRequest struct {
 	// Kind: Value is "analytics#userDeletionRequest".
 	Kind string `json:"kind,omitempty"`
 
+	// PropertyId: Property ID
+	PropertyId string `json:"propertyId,omitempty"`
+
 	// WebPropertyId: Web property ID of the form UA-XXXXX-YY.
 	WebPropertyId string `json:"webPropertyId,omitempty"`
 

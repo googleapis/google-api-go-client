@@ -662,8 +662,8 @@ type RecognitionConfig struct {
 	// SpeechContexts: *Optional* array of SpeechContext.
 	// A means to provide context to assist the speech recognition. For
 	// more
-	// information, see [Phrase
-	// Hints](/speech-to-text/docs/basics#phrase-hints).
+	// information, see
+	// [speech adaptation](/speech-to-text/docs/context-strength).
 	SpeechContexts []*SpeechContext `json:"speechContexts,omitempty"`
 
 	// UseEnhanced: *Optional* Set to true to use an enhanced model for

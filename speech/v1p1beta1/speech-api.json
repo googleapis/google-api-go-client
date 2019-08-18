@@ -289,7 +289,7 @@
       }
     }
   },
-  "revision": "20190730",
+  "revision": "20190809",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "ListOperationsResponse": {
@@ -510,7 +510,7 @@
           "type": "integer"
         },
         "speechContexts": {
-          "description": "*Optional* array of SpeechContext.\nA means to provide context to assist the speech recognition. For more\ninformation, see [Phrase Hints](/speech-to-text/docs/basics#phrase-hints).",
+          "description": "*Optional* array of SpeechContext.\nA means to provide context to assist the speech recognition. For more\ninformation, see\n[speech adaptation](/speech-to-text/docs/context-strength).",
           "items": {
             "$ref": "SpeechContext"
           },

@@ -160,7 +160,7 @@ type PlatformSummary struct {
 	// Possible values:
 	//   "UNKNOWN" - Not reviewed.
 	//   "PASSING" - Passing.
-	//   "WARNING" - Warning.
+	//   "WARNING" - Warning. No longer a possible status.
 	//   "FAILING" - Failing.
 	BetterAdsStatus string `json:"betterAdsStatus,omitempty"`
 

@@ -152,7 +152,7 @@
       }
     }
   },
-  "revision": "20190729",
+  "revision": "20190814",
   "rootUrl": "https://adexperiencereport.googleapis.com/",
   "schemas": {
     "PlatformSummary": {
@@ -170,7 +170,7 @@
           "enumDescriptions": [
             "Not reviewed.",
             "Passing.",
-            "Warning.",
+            "Warning. No longer a possible status.",
             "Failing."
           ],
           "type": "string"

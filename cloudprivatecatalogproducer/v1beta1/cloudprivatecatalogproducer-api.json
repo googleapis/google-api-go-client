@@ -973,7 +973,7 @@
       }
     }
   },
-  "revision": "20190804",
+  "revision": "20190810",
   "rootUrl": "https://cloudprivatecatalogproducer.googleapis.com/",
   "schemas": {
     "GoogleCloudPrivatecatalogproducerV1beta1Association": {
@@ -1239,10 +1239,6 @@
             "type": "string"
           },
           "type": "array"
-        },
-        "ignoreChildExemptions": {
-          "description": "Specifies whether principals can be exempted for the same LogType in\nlower-level resource policies. If true, any lower-level exemptions will\nbe ignored.",
-          "type": "boolean"
         },
         "logType": {
           "description": "The log type that this config enables.",

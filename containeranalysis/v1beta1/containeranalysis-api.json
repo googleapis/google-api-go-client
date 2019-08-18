@@ -852,7 +852,7 @@
       }
     }
   },
-  "revision": "20190805",
+  "revision": "20190809",
   "rootUrl": "https://containeranalysis.googleapis.com/",
   "schemas": {
     "AliasContext": {
@@ -946,10 +946,6 @@
             "type": "string"
           },
           "type": "array"
-        },
-        "ignoreChildExemptions": {
-          "description": "Specifies whether principals can be exempted for the same LogType in\nlower-level resource policies. If true, any lower-level exemptions will\nbe ignored.",
-          "type": "boolean"
         },
         "logType": {
           "description": "The log type that this config enables.",

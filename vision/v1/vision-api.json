@@ -354,8 +354,256 @@
     },
     "projects": {
       "resources": {
+        "files": {
+          "methods": {
+            "annotate": {
+              "description": "Service that performs image detection and annotation for a batch of files.\nNow only \"application/pdf\", \"image/tiff\" and \"image/gif\" are supported.\n\nThis service will extract at most 5 (customers can specify which 5 in\nAnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each\nfile provided and perform detection and annotation for each image\nextracted.",
+              "flatPath": "v1/projects/{projectsId}/files:annotate",
+              "httpMethod": "POST",
+              "id": "vision.projects.files.annotate",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/files:annotate",
+              "request": {
+                "$ref": "BatchAnnotateFilesRequest"
+              },
+              "response": {
+                "$ref": "BatchAnnotateFilesResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-vision"
+              ]
+            },
+            "asyncBatchAnnotate": {
+              "description": "Run asynchronous image detection and annotation for a list of generic\nfiles, such as PDF files, which may contain multiple pages and multiple\nimages per page. Progress and results can be retrieved through the\n`google.longrunning.Operations` interface.\n`Operation.metadata` contains `OperationMetadata` (metadata).\n`Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).",
+              "flatPath": "v1/projects/{projectsId}/files:asyncBatchAnnotate",
+              "httpMethod": "POST",
+              "id": "vision.projects.files.asyncBatchAnnotate",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/files:asyncBatchAnnotate",
+              "request": {
+                "$ref": "AsyncBatchAnnotateFilesRequest"
+              },
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-vision"
+              ]
+            }
+          }
+        },
+        "images": {
+          "methods": {
+            "annotate": {
+              "description": "Run image detection and annotation for a batch of images.",
+              "flatPath": "v1/projects/{projectsId}/images:annotate",
+              "httpMethod": "POST",
+              "id": "vision.projects.images.annotate",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/images:annotate",
+              "request": {
+                "$ref": "BatchAnnotateImagesRequest"
+              },
+              "response": {
+                "$ref": "BatchAnnotateImagesResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-vision"
+              ]
+            },
+            "asyncBatchAnnotate": {
+              "description": "Run asynchronous image detection and annotation for a list of images.\n\nProgress and results can be retrieved through the\n`google.longrunning.Operations` interface.\n`Operation.metadata` contains `OperationMetadata` (metadata).\n`Operation.response` contains `AsyncBatchAnnotateImagesResponse` (results).\n\nThis service will write image annotation outputs to json files in customer\nGCS bucket, each json file containing BatchAnnotateImagesResponse proto.",
+              "flatPath": "v1/projects/{projectsId}/images:asyncBatchAnnotate",
+              "httpMethod": "POST",
+              "id": "vision.projects.images.asyncBatchAnnotate",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/images:asyncBatchAnnotate",
+              "request": {
+                "$ref": "AsyncBatchAnnotateImagesRequest"
+              },
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-vision"
+              ]
+            }
+          }
+        },
         "locations": {
           "resources": {
+            "files": {
+              "methods": {
+                "annotate": {
+                  "description": "Service that performs image detection and annotation for a batch of files.\nNow only \"application/pdf\", \"image/tiff\" and \"image/gif\" are supported.\n\nThis service will extract at most 5 (customers can specify which 5 in\nAnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each\nfile provided and perform detection and annotation for each image\nextracted.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/files:annotate",
+                  "httpMethod": "POST",
+                  "id": "vision.projects.locations.files.annotate",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/files:annotate",
+                  "request": {
+                    "$ref": "BatchAnnotateFilesRequest"
+                  },
+                  "response": {
+                    "$ref": "BatchAnnotateFilesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-vision"
+                  ]
+                },
+                "asyncBatchAnnotate": {
+                  "description": "Run asynchronous image detection and annotation for a list of generic\nfiles, such as PDF files, which may contain multiple pages and multiple\nimages per page. Progress and results can be retrieved through the\n`google.longrunning.Operations` interface.\n`Operation.metadata` contains `OperationMetadata` (metadata).\n`Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/files:asyncBatchAnnotate",
+                  "httpMethod": "POST",
+                  "id": "vision.projects.locations.files.asyncBatchAnnotate",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/files:asyncBatchAnnotate",
+                  "request": {
+                    "$ref": "AsyncBatchAnnotateFilesRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-vision"
+                  ]
+                }
+              }
+            },
+            "images": {
+              "methods": {
+                "annotate": {
+                  "description": "Run image detection and annotation for a batch of images.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/images:annotate",
+                  "httpMethod": "POST",
+                  "id": "vision.projects.locations.images.annotate",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/images:annotate",
+                  "request": {
+                    "$ref": "BatchAnnotateImagesRequest"
+                  },
+                  "response": {
+                    "$ref": "BatchAnnotateImagesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-vision"
+                  ]
+                },
+                "asyncBatchAnnotate": {
+                  "description": "Run asynchronous image detection and annotation for a list of images.\n\nProgress and results can be retrieved through the\n`google.longrunning.Operations` interface.\n`Operation.metadata` contains `OperationMetadata` (metadata).\n`Operation.response` contains `AsyncBatchAnnotateImagesResponse` (results).\n\nThis service will write image annotation outputs to json files in customer\nGCS bucket, each json file containing BatchAnnotateImagesResponse proto.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/images:asyncBatchAnnotate",
+                  "httpMethod": "POST",
+                  "id": "vision.projects.locations.images.asyncBatchAnnotate",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/images:asyncBatchAnnotate",
+                  "request": {
+                    "$ref": "AsyncBatchAnnotateImagesRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-vision"
+                  ]
+                }
+              }
+            },
             "operations": {
               "methods": {
                 "get": {
@@ -1004,7 +1252,7 @@
       }
     }
   },
-  "revision": "20190718",
+  "revision": "20190809",
   "rootUrl": "https://vision.googleapis.com/",
   "schemas": {
     "AddProductToProductSetRequest": {
@@ -1215,6 +1463,10 @@
       "description": "Multiple async file annotation requests are batched into a single service\ncall.",
       "id": "AsyncBatchAnnotateFilesRequest",
       "properties": {
+        "parent": {
+          "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+          "type": "string"
+        },
         "requests": {
           "description": "Individual async file annotation requests for this batch.",
           "items": {
@@ -1247,6 +1499,10 @@
           "$ref": "OutputConfig",
           "description": "Required. The desired output location and metadata (e.g. format)."
         },
+        "parent": {
+          "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+          "type": "string"
+        },
         "requests": {
           "description": "Individual image annotation requests for this batch.",
           "items": {
@@ -1272,6 +1528,10 @@
       "description": "A list of requests to annotate files using the BatchAnnotateFiles API.",
       "id": "BatchAnnotateFilesRequest",
       "properties": {
+        "parent": {
+          "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+          "type": "string"
+        },
         "requests": {
           "description": "The list of file annotation requests. Right now we support only one\nAnnotateFileRequest in BatchAnnotateFilesRequest.",
           "items": {
@@ -1300,6 +1560,10 @@
       "description": "Multiple image annotation requests are batched into a single service call.",
       "id": "BatchAnnotateImagesRequest",
       "properties": {
+        "parent": {
+          "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+          "type": "string"
+        },
         "requests": {
           "description": "Individual image annotation requests for this batch.",
           "items": {
@@ -1666,11 +1930,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -1686,11 +1950,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -1719,11 +1983,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -1739,11 +2003,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -1781,11 +2045,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -1801,11 +2065,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -1826,11 +2090,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         }
@@ -2244,11 +2508,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -2264,11 +2528,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -2297,11 +2561,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -2317,11 +2581,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -2359,11 +2623,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -2379,11 +2643,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -2404,11 +2668,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         }
@@ -2907,11 +3171,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -2927,11 +3191,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -2947,11 +3211,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -2967,11 +3231,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -2987,11 +3251,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         }
@@ -3618,11 +3882,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -3638,11 +3902,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -3671,11 +3935,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -3691,11 +3955,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -3733,11 +3997,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -3753,11 +4017,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -3778,11 +4042,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         }
@@ -4281,11 +4545,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -4301,11 +4565,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -4321,11 +4585,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -4341,11 +4605,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -4361,11 +4625,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         }
@@ -5027,11 +5291,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -5047,11 +5311,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -5080,11 +5344,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -5100,11 +5364,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -5142,11 +5406,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -5162,11 +5426,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -5187,11 +5451,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         }
@@ -5733,11 +5997,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -5753,11 +6017,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -5773,11 +6037,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -5793,11 +6057,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -5813,11 +6077,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         }
@@ -6512,11 +6776,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -6532,11 +6796,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -6565,11 +6829,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -6585,11 +6849,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -6627,11 +6891,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -6647,11 +6911,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -6672,11 +6936,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         }
@@ -6824,7 +7088,13 @@
     "GoogleCloudVisionV1p4beta1ImageQuality": {
       "description": "Stores image quality scores, could be aesthetic quality or technical quality.",
       "id": "GoogleCloudVisionV1p4beta1ImageQuality",
-      "properties": {},
+      "properties": {
+        "qualityScore": {
+          "description": "A score representing the aesthetic/technical quality of the image. The\nscore is in range [0, 1]. Higher value corresponds to more professional\nlooking photos. 0 means the image looks very bad, 1 means the image with\nvery high quality.",
+          "format": "float",
+          "type": "number"
+        }
+      },
       "type": "object"
     },
     "GoogleCloudVisionV1p4beta1ImportProductSetsResponse": {
@@ -7256,13 +7526,18 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
+        },
+        "adultConfidence": {
+          "description": "Confidence of adult_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
+          "format": "float",
+          "type": "number"
         },
         "medical": {
           "description": "Likelihood that this is a medical image.",
@@ -7276,13 +7551,23 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
+        },
+        "medicalConfidence": {
+          "description": "Confidence of medical_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
+          "format": "float",
+          "type": "number"
+        },
+        "nsfwConfidence": {
+          "description": "Confidence of nsfw_score. Range [0, 1]. 0 means not confident, 1 means very\nconfident.",
+          "format": "float",
+          "type": "number"
         },
         "racy": {
           "description": "Likelihood that the request image contains racy content. Racy content may\ninclude (but is not limited to) skimpy or sheer clothing, strategically\ncovered nudity, lewd or provocative poses, or close-ups of sensitive\nbody areas.",
@@ -7296,13 +7581,18 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
+        },
+        "racyConfidence": {
+          "description": "Confidence of racy_score. Range [0, 1]. 0 means not confident, 1 means very\nconfident.",
+          "format": "float",
+          "type": "number"
         },
         "spoof": {
           "description": "Spoof likelihood. The likelihood that an modification\nwas made to the image's canonical version to make it appear\nfunny or offensive.",
@@ -7316,13 +7606,18 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
+        },
+        "spoofConfidence": {
+          "description": "Confidence of spoof_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
+          "format": "float",
+          "type": "number"
         },
         "violence": {
           "description": "Likelihood that this image contains violent content.",
@@ -7336,13 +7631,18 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
+        },
+        "violenceConfidence": {
+          "description": "Confidence of violence_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
+          "format": "float",
+          "type": "number"
         }
       },
       "type": "object"
@@ -8041,11 +8341,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -8061,11 +8361,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -8094,11 +8394,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -8114,11 +8414,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -8156,11 +8456,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -8176,11 +8476,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         },
@@ -8201,11 +8501,11 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
         }
@@ -8782,13 +9082,18 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
+        },
+        "adultConfidence": {
+          "description": "Confidence of adult_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
+          "format": "float",
+          "type": "number"
         },
         "medical": {
           "description": "Likelihood that this is a medical image.",
@@ -8802,13 +9107,23 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
+        },
+        "medicalConfidence": {
+          "description": "Confidence of medical_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
+          "format": "float",
+          "type": "number"
+        },
+        "nsfwConfidence": {
+          "description": "Confidence of nsfw_score. Range [0, 1]. 0 means not confident, 1 means very\nconfident.",
+          "format": "float",
+          "type": "number"
         },
         "racy": {
           "description": "Likelihood that the request image contains racy content. Racy content may\ninclude (but is not limited to) skimpy or sheer clothing, strategically\ncovered nudity, lewd or provocative poses, or close-ups of sensitive\nbody areas.",
@@ -8822,13 +9137,18 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
+        },
+        "racyConfidence": {
+          "description": "Confidence of racy_score. Range [0, 1]. 0 means not confident, 1 means very\nconfident.",
+          "format": "float",
+          "type": "number"
         },
         "spoof": {
           "description": "Spoof likelihood. The likelihood that an modification\nwas made to the image's canonical version to make it appear\nfunny or offensive.",
@@ -8842,13 +9162,18 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
+        },
+        "spoofConfidence": {
+          "description": "Confidence of spoof_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
+          "format": "float",
+          "type": "number"
         },
         "violence": {
           "description": "Likelihood that this image contains violent content.",
@@ -8862,13 +9187,18 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
+        },
+        "violenceConfidence": {
+          "description": "Confidence of violence_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
+          "format": "float",
+          "type": "number"
         }
       },
       "type": "object"
@@ -10052,13 +10382,18 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
+        },
+        "adultConfidence": {
+          "description": "Confidence of adult_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
+          "format": "float",
+          "type": "number"
         },
         "medical": {
           "description": "Likelihood that this is a medical image.",
@@ -10072,13 +10407,23 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
+        },
+        "medicalConfidence": {
+          "description": "Confidence of medical_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
+          "format": "float",
+          "type": "number"
+        },
+        "nsfwConfidence": {
+          "description": "Confidence of nsfw_score. Range [0, 1]. 0 means not confident, 1 means very\nconfident.",
+          "format": "float",
+          "type": "number"
         },
         "racy": {
           "description": "Likelihood that the request image contains racy content. Racy content may\ninclude (but is not limited to) skimpy or sheer clothing, strategically\ncovered nudity, lewd or provocative poses, or close-ups of sensitive\nbody areas.",
@@ -10092,13 +10437,18 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
+        },
+        "racyConfidence": {
+          "description": "Confidence of racy_score. Range [0, 1]. 0 means not confident, 1 means very\nconfident.",
+          "format": "float",
+          "type": "number"
         },
         "spoof": {
           "description": "Spoof likelihood. The likelihood that an modification\nwas made to the image's canonical version to make it appear\nfunny or offensive.",
@@ -10112,13 +10462,18 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
+        },
+        "spoofConfidence": {
+          "description": "Confidence of spoof_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
+          "format": "float",
+          "type": "number"
         },
         "violence": {
           "description": "Likelihood that this image contains violent content.",
@@ -10132,13 +10487,18 @@
           ],
           "enumDescriptions": [
             "Unknown likelihood.",
-            "It is very unlikely that the image belongs to the specified vertical.",
-            "It is unlikely that the image belongs to the specified vertical.",
-            "It is possible that the image belongs to the specified vertical.",
-            "It is likely that the image belongs to the specified vertical.",
-            "It is very likely that the image belongs to the specified vertical."
+            "It is very unlikely.",
+            "It is unlikely.",
+            "It is possible.",
+            "It is likely.",
+            "It is very likely."
           ],
           "type": "string"
+        },
+        "violenceConfidence": {
+          "description": "Confidence of violence_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
+          "format": "float",
+          "type": "number"
         }
       },
       "type": "object"

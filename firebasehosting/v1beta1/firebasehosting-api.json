@@ -604,7 +604,7 @@
       }
     }
   },
-  "revision": "20190801",
+  "revision": "20190813",
   "rootUrl": "https://firebasehosting.googleapis.com/",
   "schemas": {
     "ActingUser": {
@@ -830,7 +830,7 @@
       "id": "Header",
       "properties": {
         "glob": {
-          "description": "Required. The user-supplied\n[glob pattern](/docs/hosting/full-config#glob_pattern_matching) to match\nagainst the request URL path.",
+          "description": "The user-supplied [glob\npattern](/docs/hosting/full-config#glob_pattern_matching) to match\nagainst the request URL path.",
           "type": "string"
         },
         "headers": {
@@ -839,6 +839,10 @@
           },
           "description": "Required. The additional headers to add to the response.",
           "type": "object"
+        },
+        "regex": {
+          "description": "The user-supplied RE2 regular expression to match against the request\nURL path.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -929,11 +933,15 @@
       "id": "Redirect",
       "properties": {
         "glob": {
-          "description": "Required. The user-supplied\n[glob pattern](/docs/hosting/full-config#glob_pattern_matching) to match\nagainst the request URL path.",
+          "description": "The user-supplied [glob\npattern](/docs/hosting/full-config#glob_pattern_matching) to match\nagainst the request URL path.",
           "type": "string"
         },
         "location": {
           "description": "Required. The value to put in the HTTP location header of the response.\n\u003cbr\u003eThe location can contain capture group values from the pattern using\na `:` prefix to identify the segment and an optional `*` to capture the\nrest of the URL.\nFor example:\n\u003ccode\u003e\"glob\": \"/:capture*\",\n\u003cbr\u003e\"statusCode\": 301,\n\u003cbr\u003e\"location\": \"https://example.com/foo/:capture\"\u003c/code\u003e",
+          "type": "string"
+        },
+        "regex": {
+          "description": "The user-supplied RE2 regular expression to match against the request\nURL path.",
           "type": "string"
         },
         "statusCode": {
@@ -1001,11 +1009,15 @@
           "type": "string"
         },
         "glob": {
-          "description": "Required. The user-supplied\n[glob pattern](/docs/hosting/full-config#glob_pattern_matching) to match\nagainst the request URL path.",
+          "description": "The user-supplied [glob\npattern](/docs/hosting/full-config#glob_pattern_matching) to match\nagainst the request URL path.",
           "type": "string"
         },
         "path": {
           "description": "The URL path to rewrite the request to.",
+          "type": "string"
+        },
+        "regex": {
+          "description": "The user-supplied RE2 regular expression to match against the request\nURL path.",
           "type": "string"
         },
         "run": {

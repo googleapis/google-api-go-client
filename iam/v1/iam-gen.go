@@ -569,9 +569,9 @@ type BindingDelta struct {
 	//   "REMOVE" - Removal of a Binding.
 	Action string `json:"action,omitempty"`
 
-	// Condition: Unimplemented. The condition that is associated with this
-	// binding.
-	// This field is logged only for Cloud Audit Logging.
+	// Condition: The condition that is associated with this binding. This
+	// field is logged
+	// only for Cloud Audit Logging.
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Member: A single identity requesting access for a Cloud Platform

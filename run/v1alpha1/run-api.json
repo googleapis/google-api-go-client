@@ -1858,7 +1858,7 @@
                   ],
                   "parameters": {
                     "options.requestedPolicyVersion": {
-                      "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+                      "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
@@ -2217,7 +2217,7 @@
       }
     }
   },
-  "revision": "20190731",
+  "revision": "20190809",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -2262,10 +2262,6 @@
             "type": "string"
           },
           "type": "array"
-        },
-        "ignoreChildExemptions": {
-          "description": "Specifies whether principals can be exempted for the same LogType in\nlower-level resource policies. If true, any lower-level exemptions will\nbe ignored.",
-          "type": "boolean"
         },
         "logType": {
           "description": "The log type that this config enables.",
@@ -2354,6 +2350,25 @@
         },
         "optional": {
           "description": "Specify whether the ConfigMap must be defined\n+optional",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "ConfigMapKeySelector": {
+      "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nSelects a key from a ConfigMap.",
+      "id": "ConfigMapKeySelector",
+      "properties": {
+        "key": {
+          "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nThe key to select.",
+          "type": "string"
+        },
+        "localObjectReference": {
+          "$ref": "LocalObjectReference",
+          "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nThe ConfigMap to select from."
+        },
+        "optional": {
+          "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nSpecify whether the ConfigMap or its key must be defined\n+optional",
           "type": "boolean"
         }
       },
@@ -2787,6 +2802,25 @@
         "value": {
           "description": "Variable references $(VAR_NAME) are expanded\nusing the previous defined environment variables in the container and\nany route environment variables. If a variable cannot be resolved,\nthe reference in the input string will be unchanged. The $(VAR_NAME)\nsyntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped\nreferences will never be expanded, regardless of whether the variable\nexists or not.\nDefaults to \"\".\n+optional",
           "type": "string"
+        },
+        "valueFrom": {
+          "$ref": "EnvVarSource",
+          "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nSource for the environment variable's value. Cannot be used if value is not\nempty. +optional"
+        }
+      },
+      "type": "object"
+    },
+    "EnvVarSource": {
+      "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nEnvVarSource represents a source for the value of an EnvVar.",
+      "id": "EnvVarSource",
+      "properties": {
+        "configMapKeyRef": {
+          "$ref": "ConfigMapKeySelector",
+          "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nSelects a key of a ConfigMap.\n+optional"
+        },
+        "secretKeyRef": {
+          "$ref": "SecretKeySelector",
+          "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nSelects a key of a secret in the pod's namespace\n+optional"
         }
       },
       "type": "object"
@@ -3999,6 +4033,25 @@
         },
         "optional": {
           "description": "Specify whether the Secret must be defined\n+optional",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "SecretKeySelector": {
+      "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nSecretKeySelector selects a key of a Secret.",
+      "id": "SecretKeySelector",
+      "properties": {
+        "key": {
+          "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nThe key of the secret to select from.  Must be a valid secret key.",
+          "type": "string"
+        },
+        "localObjectReference": {
+          "$ref": "LocalObjectReference",
+          "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nThe name of the secret in the pod's namespace to select from."
+        },
+        "optional": {
+          "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nSpecify whether the Secret or its key must be defined\n+optional",
           "type": "boolean"
         }
       },

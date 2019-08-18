@@ -196,14 +196,14 @@
       }
     }
   },
-  "revision": "20190804",
+  "revision": "20190810",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
       "id": "AllocateInfo",
       "properties": {
         "unusedArguments": {
-          "description": "A list of label keys that were unused by the server in processing the\nrequest. Thus, for similar requests repeated in a certain future time\nwindow, the caller can choose to ignore these labels in the requests\nto achieve better client-side cache hits and quota aggregation.",
+          "description": "A list of label keys that were unused by the server in processing the\nrequest. Thus, for similar requests repeated in a certain future time\nwindow, the caller can choose to ignore these labels in the requests\nto achieve better client-side cache hits and quota aggregation for rate\nquota. This field is not populated for allocation quota checks.",
           "items": {
             "type": "string"
           },

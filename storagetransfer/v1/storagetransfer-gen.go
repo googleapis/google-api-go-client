@@ -544,14 +544,14 @@ func (s *ErrorSummary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GcsData: In a GcsData resource, an object's name is the Google Cloud
-// Storage object's
+// GcsData: In a GcsData resource, an object's name is the Cloud Storage
+// object's
 // name and its `lastModificationTime` refers to the object's updated
 // time,
 // which changes when the content or the metadata of the object is
 // updated.
 type GcsData struct {
-	// BucketName: Required. Google Cloud Storage bucket name (see
+	// BucketName: Required. Cloud Storage bucket name (see
 	// [Bucket
 	// Name
 	// Requirements](https://cloud.google.com/storage/docs/naming#requir
@@ -659,7 +659,7 @@ func (s *GoogleServiceAccount) MarshalJSON() ([]byte, error) {
 //
 // * Ensure that each URL you specify is publicly accessible.
 // For
-// example, in Google Cloud Storage you can
+// example, in Cloud Storage you can
 // [share an object
 // publicly]
 // (https://cloud.google.com/storage/docs/cloud-console#_sharin
@@ -780,7 +780,7 @@ func (s *ListTransferJobsResponse) MarshalJSON() ([]byte, error) {
 
 // ObjectConditions: Conditions that determine which objects will be
 // transferred. Applies only
-// to S3 and GCS objects.
+// to S3 and Cloud Storage objects.
 type ObjectConditions struct {
 	// ExcludePrefixes: `excludePrefixes` must follow the requirements
 	// described for
@@ -855,7 +855,9 @@ type ObjectConditions struct {
 	// the
 	// object's content or metadata - specifically, this would be the
 	// `updated`
-	// property of GCS objects and the `LastModified` field of S3 objects.
+	// property of Cloud Storage objects and the `LastModified` field of
+	// S3
+	// objects.
 	MaxTimeElapsedSinceLastModification string `json:"maxTimeElapsedSinceLastModification,omitempty"`
 
 	// MinTimeElapsedSinceLastModification: If specified, only objects with
@@ -872,7 +874,9 @@ type ObjectConditions struct {
 	// the
 	// object's content or metadata - specifically, this would be the
 	// `updated`
-	// property of GCS objects and the `LastModified` field of S3 objects.
+	// property of Cloud Storage objects and the `LastModified` field of
+	// S3
+	// objects.
 	MinTimeElapsedSinceLastModification string `json:"minTimeElapsedSinceLastModification,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExcludePrefixes") to
@@ -1433,10 +1437,10 @@ type TransferSpec struct {
 	// AwsS3DataSource: An AWS S3 data source.
 	AwsS3DataSource *AwsS3Data `json:"awsS3DataSource,omitempty"`
 
-	// GcsDataSink: A Google Cloud Storage data sink.
+	// GcsDataSink: A Cloud Storage data sink.
 	GcsDataSink *GcsData `json:"gcsDataSink,omitempty"`
 
-	// GcsDataSource: A Google Cloud Storage data source.
+	// GcsDataSource: A Cloud Storage data source.
 	GcsDataSource *GcsData `json:"gcsDataSource,omitempty"`
 
 	// HttpDataSource: An HTTP URL data source.

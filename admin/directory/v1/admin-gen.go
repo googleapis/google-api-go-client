@@ -1206,6 +1206,10 @@ type ChromeOsDevice struct {
 	// AnnotatedUser: User of the device
 	AnnotatedUser string `json:"annotatedUser,omitempty"`
 
+	// AutoUpdateExpiration: (Read-only) The timestamp after which the
+	// device will stop receiving Chrome updates or support
+	AutoUpdateExpiration int64 `json:"autoUpdateExpiration,omitempty,string"`
+
 	// BootMode: Chromebook boot mode (Read-only)
 	BootMode string `json:"bootMode,omitempty"`
 
@@ -1223,12 +1227,29 @@ type ChromeOsDevice struct {
 	// mounted/connected volumes.
 	DiskVolumeReports []*ChromeOsDeviceDiskVolumeReports `json:"diskVolumeReports,omitempty"`
 
+	// DockMacAddress: (Read-only) Built-in MAC address for the docking
+	// station that the device connected to. Factory sets Media access
+	// control address (MAC address) assigned for use by a dock. Currently
+	// this is only supported on the Dell Arcada / Sarien devices and the
+	// Dell WD19 / WD19TB Docking Station. It is reserved specifically for
+	// MAC pass through device policy. The format is twelve (12) hexadecimal
+	// digits without any delimiter (uppercase letters). This is only
+	// relevant for Dell devices.
+	DockMacAddress string `json:"dockMacAddress,omitempty"`
+
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
 	// EthernetMacAddress: Chromebook Mac Address on ethernet network
 	// interface (Read-only)
 	EthernetMacAddress string `json:"ethernetMacAddress,omitempty"`
+
+	// EthernetMacAddress0: (Read-only) MAC address used by the
+	// Chromebook’s internal ethernet port, and for onboard network
+	// (ethernet) interface. The format is twelve (12) hexadecimal digits
+	// without any delimiter (uppercase letters). This is only relevant for
+	// Dell devices.
+	EthernetMacAddress0 string `json:"ethernetMacAddress0,omitempty"`
 
 	// FirmwareVersion: Chromebook firmware version (Read-only)
 	FirmwareVersion string `json:"firmwareVersion,omitempty"`
@@ -1248,6 +1269,10 @@ type ChromeOsDevice struct {
 	// MacAddress: Chromebook Mac Address on wifi network interface
 	// (Read-only)
 	MacAddress string `json:"macAddress,omitempty"`
+
+	// ManufactureDate: (Read-only) The date the device was manufactured in
+	// yyyy-mm-dd format.
+	ManufactureDate string `json:"manufactureDate,omitempty"`
 
 	// Meid: Mobile Equipment identifier for the 3G mobile card in the
 	// Chromebook (Read-only)
@@ -2271,9 +2296,9 @@ type Member struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: Unique identifier of customer member (Read-only) Unique
-	// identifier of group (Read-only) Unique identifier of member
-	// (Read-only)
+	// Id: The unique ID of the group member. A member id can be used as a
+	// member request URI's memberKey. Unique identifier of group
+	// (Read-only) Unique identifier of member (Read-only)
 	Id string `json:"id,omitempty"`
 
 	// Kind: Kind of resource this is.
@@ -2879,6 +2904,7 @@ type Privilege struct {
 	PrivilegeName string `json:"privilegeName,omitempty"`
 
 	// ServiceId: The obfuscated ID of the service this privilege is for.
+	// This value is returned with Privileges.list().
 	ServiceId string `json:"serviceId,omitempty"`
 
 	// ServiceName: The name of the service this privilege is for.
@@ -3007,6 +3033,7 @@ type RoleRolePrivileges struct {
 	PrivilegeName string `json:"privilegeName,omitempty"`
 
 	// ServiceId: The obfuscated ID of the service this privilege is for.
+	// This value is returned with Privileges.list().
 	ServiceId string `json:"serviceId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PrivilegeName") to
@@ -3660,6 +3687,14 @@ type User struct {
 	// PrimaryEmail: username of User
 	PrimaryEmail string `json:"primaryEmail,omitempty"`
 
+	// RecoveryEmail: Recovery email of the user.
+	RecoveryEmail string `json:"recoveryEmail,omitempty"`
+
+	// RecoveryPhone: Recovery phone of the user. The phone number must be
+	// in the E.164 format, starting with the plus sign (+). Example:
+	// +16506661212.
+	RecoveryPhone string `json:"recoveryPhone,omitempty"`
+
 	Relations interface{} `json:"relations,omitempty"`
 
 	SshPublicKeys interface{} `json:"sshPublicKeys,omitempty"`
@@ -4180,7 +4215,7 @@ type UserOrganization struct {
 	// Domain: The domain to which the organization belongs to.
 	Domain string `json:"domain,omitempty"`
 
-	// FullTimeEquivalent: The full-time equivalent percent within the
+	// FullTimeEquivalent: The full-time equivalent millipercent within the
 	// organization (100000 = 100%).
 	FullTimeEquivalent int64 `json:"fullTimeEquivalent,omitempty"`
 
@@ -5469,7 +5504,7 @@ func (r *ChromeosdevicesService) List(customerId string) *ChromeosdevicesListCal
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return. Default is 100
+// of results to return. Max allowed value is 200.
 func (c *ChromeosdevicesListCall) MaxResults(maxResults int64) *ChromeosdevicesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -5651,7 +5686,8 @@ func (c *ChromeosdevicesListCall) Do(opts ...googleapi.CallOption) (*ChromeOsDev
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "Maximum number of results to return. Default is 100",
+	//       "default": "100",
+	//       "description": "Maximum number of results to return. Max allowed value is 200.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "minimum": "1",
@@ -8138,7 +8174,7 @@ func (c *GroupsListCall) Domain(domain string) *GroupsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return. Default is 200
+// of results to return. Max allowed value is 200.
 func (c *GroupsListCall) MaxResults(maxResults int64) *GroupsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -8181,9 +8217,10 @@ func (c *GroupsListCall) SortOrder(sortOrder string) *GroupsListCall {
 	return c
 }
 
-// UserKey sets the optional parameter "userKey": Email or immutable Id
+// UserKey sets the optional parameter "userKey": Email or immutable ID
 // of the user if only those groups are to be listed, the given user is
-// a member of. If Id, it should match with id of user object
+// a member of. If it's an ID, it should match with the ID of the user
+// object.
 func (c *GroupsListCall) UserKey(userKey string) *GroupsListCall {
 	c.urlParams_.Set("userKey", userKey)
 	return c
@@ -8300,7 +8337,8 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "Maximum number of results to return. Default is 200",
+	//       "default": "200",
+	//       "description": "Maximum number of results to return. Max allowed value is 200.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "minimum": "1",
@@ -8341,7 +8379,7 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
 	//       "type": "string"
 	//     },
 	//     "userKey": {
-	//       "description": "Email or immutable Id of the user if only those groups are to be listed, the given user is a member of. If Id, it should match with id of user object",
+	//       "description": "Email or immutable ID of the user if only those groups are to be listed, the given user is a member of. If it's an ID, it should match with the ID of the user object.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -9635,7 +9673,7 @@ func (c *MembersListCall) IncludeDerivedMembership(includeDerivedMembership bool
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return. Default is 200
+// of results to return. Max allowed value is 200.
 func (c *MembersListCall) MaxResults(maxResults int64) *MembersListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -9773,7 +9811,8 @@ func (c *MembersListCall) Do(opts ...googleapi.CallOption) (*Members, error) {
 	//       "type": "boolean"
 	//     },
 	//     "maxResults": {
-	//       "description": "Maximum number of results to return. Default is 200",
+	//       "default": "200",
+	//       "description": "Maximum number of results to return. Max allowed value is 200.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "minimum": "1",
@@ -10553,7 +10592,7 @@ func (r *MobiledevicesService) List(customerId string) *MobiledevicesListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return. Default is 100
+// of results to return. Max allowed value is 100.
 func (c *MobiledevicesListCall) MaxResults(maxResults int64) *MobiledevicesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -10728,7 +10767,8 @@ func (c *MobiledevicesListCall) Do(opts ...googleapi.CallOption) (*MobileDevices
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "Maximum number of results to return. Default is 100",
+	//       "default": "100",
+	//       "description": "Maximum number of results to return. Max allowed value is 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "minimum": "1",
@@ -19025,7 +19065,7 @@ func (c *UsersListCall) Event(event string) *UsersListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return. Default is 100. Max allowed is 500
+// of results to return.
 func (c *UsersListCall) MaxResults(maxResults int64) *UsersListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -19071,8 +19111,8 @@ func (c *UsersListCall) Query(query string) *UsersListCall {
 	return c
 }
 
-// ShowDeleted sets the optional parameter "showDeleted": If set to true
-// retrieves the list of deleted users. Default is false
+// ShowDeleted sets the optional parameter "showDeleted": If set to
+// true, retrieves the list of deleted users. (Default: false)
 func (c *UsersListCall) ShowDeleted(showDeleted string) *UsersListCall {
 	c.urlParams_.Set("showDeleted", showDeleted)
 	return c
@@ -19235,7 +19275,8 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*Users, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "Maximum number of results to return. Default is 100. Max allowed is 500",
+	//       "default": "100",
+	//       "description": "Maximum number of results to return.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -19284,7 +19325,7 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*Users, error) {
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "If set to true retrieves the list of deleted users. Default is false",
+	//       "description": "If set to true, retrieves the list of deleted users. (Default: false)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19902,7 +19943,7 @@ func (c *UsersWatchCall) Event(event string) *UsersWatchCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return. Default is 100. Max allowed is 500
+// of results to return.
 func (c *UsersWatchCall) MaxResults(maxResults int64) *UsersWatchCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -19948,8 +19989,8 @@ func (c *UsersWatchCall) Query(query string) *UsersWatchCall {
 	return c
 }
 
-// ShowDeleted sets the optional parameter "showDeleted": If set to true
-// retrieves the list of deleted users. Default is false
+// ShowDeleted sets the optional parameter "showDeleted": If set to
+// true, retrieves the list of deleted users. (Default: false)
 func (c *UsersWatchCall) ShowDeleted(showDeleted string) *UsersWatchCall {
 	c.urlParams_.Set("showDeleted", showDeleted)
 	return c
@@ -20104,7 +20145,8 @@ func (c *UsersWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "Maximum number of results to return. Default is 100. Max allowed is 500",
+	//       "default": "100",
+	//       "description": "Maximum number of results to return.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -20153,7 +20195,7 @@ func (c *UsersWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "If set to true retrieves the list of deleted users. Default is false",
+	//       "description": "If set to true, retrieves the list of deleted users. (Default: false)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

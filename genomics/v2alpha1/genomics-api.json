@@ -267,7 +267,7 @@
       }
     }
   },
-  "revision": "20190719",
+  "revision": "20190813",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -1011,7 +1011,7 @@
           "type": "string"
         },
         "scopes": {
-          "description": "List of scopes to be enabled for this service account on the VM, in\naddition to the Cloud Genomics API scope.",
+          "description": "List of scopes to be enabled for this service account on the VM, in\naddition to the cloud-platform API scope that will be added by default.",
           "items": {
             "type": "string"
           },

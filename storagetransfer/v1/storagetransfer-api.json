@@ -420,7 +420,7 @@
       }
     }
   },
-  "revision": "20190729",
+  "revision": "20190810",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AwsAccessKey": {
@@ -561,11 +561,11 @@
       "type": "object"
     },
     "GcsData": {
-      "description": "In a GcsData resource, an object's name is the Google Cloud Storage object's\nname and its `lastModificationTime` refers to the object's updated time,\nwhich changes when the content or the metadata of the object is updated.",
+      "description": "In a GcsData resource, an object's name is the Cloud Storage object's\nname and its `lastModificationTime` refers to the object's updated time,\nwhich changes when the content or the metadata of the object is updated.",
       "id": "GcsData",
       "properties": {
         "bucketName": {
-          "description": "Required. Google Cloud Storage bucket name (see\n[Bucket Name\nRequirements](https://cloud.google.com/storage/docs/naming#requirements)).",
+          "description": "Required. Cloud Storage bucket name (see\n[Bucket Name\nRequirements](https://cloud.google.com/storage/docs/naming#requirements)).",
           "type": "string"
         }
       },
@@ -583,7 +583,7 @@
       "type": "object"
     },
     "HttpData": {
-      "description": "An HttpData resource specifies a list of objects on the web to be transferred\nover HTTP.  The information of the objects to be transferred is contained in\na file referenced by a URL. The first line in the file must be\n\"TsvHttpData-1.0\", which specifies the format of the file.  Subsequent lines\nspecify the information of the list of objects, one object per list entry.\nEach entry has the following tab-delimited fields:\n\n* HTTP URL - The location of the object.\n\n* Length - The size of the object in bytes.\n\n* MD5 - The base64-encoded MD5 hash of the object.\n\nFor an example of a valid TSV file, see\n[Transferring data from\nURLs](https://cloud.google.com/storage/transfer/create-url-list).\n\nWhen transferring data based on a URL list, keep the following in mind:\n\n* When an object located at `http(s)://hostname:port/\u003cURL-path\u003e` is\ntransferred to a data sink, the name of the object at the data sink is\n`\u003chostname\u003e/\u003cURL-path\u003e`.\n\n* If the specified size of an object does not match the actual size of the\nobject fetched, the object will not be transferred.\n\n* If the specified MD5 does not match the MD5 computed from the transferred\nbytes, the object transfer will fail. For more information, see\n[Generating MD5 hashes](https://cloud.google.com/storage/transfer/#md5)\n\n* Ensure that each URL you specify is publicly accessible. For\nexample, in Google Cloud Storage you can\n[share an object publicly]\n(https://cloud.google.com/storage/docs/cloud-console#_sharingdata) and get\na link to it.\n\n* Storage Transfer Service obeys `robots.txt` rules and requires the source\nHTTP server to support `Range` requests and to return a `Content-Length`\nheader in each response.\n\n* [ObjectConditions](#ObjectConditions) have no effect when filtering objects\nto transfer.",
+      "description": "An HttpData resource specifies a list of objects on the web to be transferred\nover HTTP.  The information of the objects to be transferred is contained in\na file referenced by a URL. The first line in the file must be\n\"TsvHttpData-1.0\", which specifies the format of the file.  Subsequent lines\nspecify the information of the list of objects, one object per list entry.\nEach entry has the following tab-delimited fields:\n\n* HTTP URL - The location of the object.\n\n* Length - The size of the object in bytes.\n\n* MD5 - The base64-encoded MD5 hash of the object.\n\nFor an example of a valid TSV file, see\n[Transferring data from\nURLs](https://cloud.google.com/storage/transfer/create-url-list).\n\nWhen transferring data based on a URL list, keep the following in mind:\n\n* When an object located at `http(s)://hostname:port/\u003cURL-path\u003e` is\ntransferred to a data sink, the name of the object at the data sink is\n`\u003chostname\u003e/\u003cURL-path\u003e`.\n\n* If the specified size of an object does not match the actual size of the\nobject fetched, the object will not be transferred.\n\n* If the specified MD5 does not match the MD5 computed from the transferred\nbytes, the object transfer will fail. For more information, see\n[Generating MD5 hashes](https://cloud.google.com/storage/transfer/#md5)\n\n* Ensure that each URL you specify is publicly accessible. For\nexample, in Cloud Storage you can\n[share an object publicly]\n(https://cloud.google.com/storage/docs/cloud-console#_sharingdata) and get\na link to it.\n\n* Storage Transfer Service obeys `robots.txt` rules and requires the source\nHTTP server to support `Range` requests and to return a `Content-Length`\nheader in each response.\n\n* [ObjectConditions](#ObjectConditions) have no effect when filtering objects\nto transfer.",
       "id": "HttpData",
       "properties": {
         "listUrl": {
@@ -630,7 +630,7 @@
       "type": "object"
     },
     "ObjectConditions": {
-      "description": "Conditions that determine which objects will be transferred. Applies only\nto S3 and GCS objects.",
+      "description": "Conditions that determine which objects will be transferred. Applies only\nto S3 and Cloud Storage objects.",
       "id": "ObjectConditions",
       "properties": {
         "excludePrefixes": {
@@ -648,12 +648,12 @@
           "type": "array"
         },
         "maxTimeElapsedSinceLastModification": {
-          "description": "If specified, only objects with a `lastModificationTime` on or after\n`NOW` - `maxTimeElapsedSinceLastModification` and objects that don't have\na `lastModificationTime` are transferred.\n\nNote that, for each `TransferOperation` started by this `TransferJob`,\n`NOW` refers to the `start_time` of the 'TransferOperation`. Also,\n`lastModificationTime` refers to the time of the last change to the\nobject's content or metadata - specifically, this would be the `updated`\nproperty of GCS objects and the `LastModified` field of S3 objects.",
+          "description": "If specified, only objects with a `lastModificationTime` on or after\n`NOW` - `maxTimeElapsedSinceLastModification` and objects that don't have\na `lastModificationTime` are transferred.\n\nNote that, for each `TransferOperation` started by this `TransferJob`,\n`NOW` refers to the `start_time` of the 'TransferOperation`. Also,\n`lastModificationTime` refers to the time of the last change to the\nobject's content or metadata - specifically, this would be the `updated`\nproperty of Cloud Storage objects and the `LastModified` field of S3\nobjects.",
           "format": "google-duration",
           "type": "string"
         },
         "minTimeElapsedSinceLastModification": {
-          "description": "If specified, only objects with a `lastModificationTime` before\n`NOW` - `minTimeElapsedSinceLastModification` and objects that don't have a\n`lastModificationTime` are transferred.\n\nNote that, for each `TransferOperation` started by this `TransferJob`,\n`NOW` refers to the `start_time` of the 'TransferOperation`. Also,\n`lastModificationTime` refers to the time of the last change to the\nobject's content or metadata - specifically, this would be the `updated`\nproperty of GCS objects and the `LastModified` field of S3 objects.",
+          "description": "If specified, only objects with a `lastModificationTime` before\n`NOW` - `minTimeElapsedSinceLastModification` and objects that don't have a\n`lastModificationTime` are transferred.\n\nNote that, for each `TransferOperation` started by this `TransferJob`,\n`NOW` refers to the `start_time` of the 'TransferOperation`. Also,\n`lastModificationTime` refers to the time of the last change to the\nobject's content or metadata - specifically, this would be the `updated`\nproperty of Cloud Storage objects and the `LastModified` field of S3\nobjects.",
           "format": "google-duration",
           "type": "string"
         }
@@ -1018,11 +1018,11 @@
         },
         "gcsDataSink": {
           "$ref": "GcsData",
-          "description": "A Google Cloud Storage data sink."
+          "description": "A Cloud Storage data sink."
         },
         "gcsDataSource": {
           "$ref": "GcsData",
-          "description": "A Google Cloud Storage data source."
+          "description": "A Cloud Storage data source."
         },
         "httpDataSource": {
           "$ref": "HttpData",

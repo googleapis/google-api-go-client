@@ -202,6 +202,8 @@ type OperationsService struct {
 
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
+	rs.Files = NewProjectsFilesService(s)
+	rs.Images = NewProjectsImagesService(s)
 	rs.Locations = NewProjectsLocationsService(s)
 	rs.Operations = NewProjectsOperationsService(s)
 	return rs
@@ -210,13 +212,37 @@ func NewProjectsService(s *Service) *ProjectsService {
 type ProjectsService struct {
 	s *Service
 
+	Files *ProjectsFilesService
+
+	Images *ProjectsImagesService
+
 	Locations *ProjectsLocationsService
 
 	Operations *ProjectsOperationsService
 }
 
+func NewProjectsFilesService(s *Service) *ProjectsFilesService {
+	rs := &ProjectsFilesService{s: s}
+	return rs
+}
+
+type ProjectsFilesService struct {
+	s *Service
+}
+
+func NewProjectsImagesService(s *Service) *ProjectsImagesService {
+	rs := &ProjectsImagesService{s: s}
+	return rs
+}
+
+type ProjectsImagesService struct {
+	s *Service
+}
+
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.Files = NewProjectsLocationsFilesService(s)
+	rs.Images = NewProjectsLocationsImagesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.ProductSets = NewProjectsLocationsProductSetsService(s)
 	rs.Products = NewProjectsLocationsProductsService(s)
@@ -226,11 +252,33 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	Files *ProjectsLocationsFilesService
+
+	Images *ProjectsLocationsImagesService
+
 	Operations *ProjectsLocationsOperationsService
 
 	ProductSets *ProjectsLocationsProductSetsService
 
 	Products *ProjectsLocationsProductsService
+}
+
+func NewProjectsLocationsFilesService(s *Service) *ProjectsLocationsFilesService {
+	rs := &ProjectsLocationsFilesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsFilesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsImagesService(s *Service) *ProjectsLocationsImagesService {
+	rs := &ProjectsLocationsImagesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsImagesService struct {
+	s *Service
 }
 
 func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperationsService {
@@ -617,10 +665,26 @@ func (s *AsyncAnnotateFileResponse) MarshalJSON() ([]byte, error) {
 // requests are batched into a single service
 // call.
 type AsyncBatchAnnotateFilesRequest struct {
+	// Parent: Optional. Target project and location to make a
+	// call.
+	//
+	// Format: `projects/{project-id}/locations/{location-id}`.
+	//
+	// If no parent is specified, a region will be chosen
+	// automatically.
+	//
+	// Supported location-ids:
+	//     `us`: USA country only,
+	//     `asia`: East asia areas, like Japan, Taiwan,
+	//     `eu`: The European Union.
+	//
+	// Example: `projects/project-A/locations/eu`.
+	Parent string `json:"parent,omitempty"`
+
 	// Requests: Individual async file annotation requests for this batch.
 	Requests []*AsyncAnnotateFileRequest `json:"requests,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// ForceSendFields is a list of field names (e.g. "Parent") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -628,8 +692,8 @@ type AsyncBatchAnnotateFilesRequest struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Requests") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -680,6 +744,22 @@ type AsyncBatchAnnotateImagesRequest struct {
 	// OutputConfig: Required. The desired output location and metadata
 	// (e.g. format).
 	OutputConfig *OutputConfig `json:"outputConfig,omitempty"`
+
+	// Parent: Optional. Target project and location to make a
+	// call.
+	//
+	// Format: `projects/{project-id}/locations/{location-id}`.
+	//
+	// If no parent is specified, a region will be chosen
+	// automatically.
+	//
+	// Supported location-ids:
+	//     `us`: USA country only,
+	//     `asia`: East asia areas, like Japan, Taiwan,
+	//     `eu`: The European Union.
+	//
+	// Example: `projects/project-A/locations/eu`.
+	Parent string `json:"parent,omitempty"`
 
 	// Requests: Individual image annotation requests for this batch.
 	Requests []*AnnotateImageRequest `json:"requests,omitempty"`
@@ -740,12 +820,28 @@ func (s *AsyncBatchAnnotateImagesResponse) MarshalJSON() ([]byte, error) {
 // BatchAnnotateFilesRequest: A list of requests to annotate files using
 // the BatchAnnotateFiles API.
 type BatchAnnotateFilesRequest struct {
+	// Parent: Optional. Target project and location to make a
+	// call.
+	//
+	// Format: `projects/{project-id}/locations/{location-id}`.
+	//
+	// If no parent is specified, a region will be chosen
+	// automatically.
+	//
+	// Supported location-ids:
+	//     `us`: USA country only,
+	//     `asia`: East asia areas, like Japan, Taiwan,
+	//     `eu`: The European Union.
+	//
+	// Example: `projects/project-A/locations/eu`.
+	Parent string `json:"parent,omitempty"`
+
 	// Requests: The list of file annotation requests. Right now we support
 	// only one
 	// AnnotateFileRequest in BatchAnnotateFilesRequest.
 	Requests []*AnnotateFileRequest `json:"requests,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// ForceSendFields is a list of field names (e.g. "Parent") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -753,8 +849,8 @@ type BatchAnnotateFilesRequest struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Requests") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -805,10 +901,26 @@ func (s *BatchAnnotateFilesResponse) MarshalJSON() ([]byte, error) {
 // BatchAnnotateImagesRequest: Multiple image annotation requests are
 // batched into a single service call.
 type BatchAnnotateImagesRequest struct {
+	// Parent: Optional. Target project and location to make a
+	// call.
+	//
+	// Format: `projects/{project-id}/locations/{location-id}`.
+	//
+	// If no parent is specified, a region will be chosen
+	// automatically.
+	//
+	// Supported location-ids:
+	//     `us`: USA country only,
+	//     `asia`: East asia areas, like Japan, Taiwan,
+	//     `eu`: The European Union.
+	//
+	// Example: `projects/project-A/locations/eu`.
+	Parent string `json:"parent,omitempty"`
+
 	// Requests: Individual image annotation requests for this batch.
 	Requests []*AnnotateImageRequest `json:"requests,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// ForceSendFields is a list of field names (e.g. "Parent") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -816,8 +928,8 @@ type BatchAnnotateImagesRequest struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Requests") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1672,32 +1784,22 @@ type FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	AngerLikelihood string `json:"angerLikelihood,omitempty"`
 
 	// BlurredLikelihood: Blurred likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	BlurredLikelihood string `json:"blurredLikelihood,omitempty"`
 
 	// BoundingPoly: The bounding polygon around the face. The coordinates
@@ -1732,32 +1834,22 @@ type FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	HeadwearLikelihood string `json:"headwearLikelihood,omitempty"`
 
 	// JoyLikelihood: Joy likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	JoyLikelihood string `json:"joyLikelihood,omitempty"`
 
 	// LandmarkingConfidence: Face landmarking confidence. Range [0, 1].
@@ -1784,32 +1876,22 @@ type FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	SorrowLikelihood string `json:"sorrowLikelihood,omitempty"`
 
 	// SurpriseLikelihood: Surprise likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	SurpriseLikelihood string `json:"surpriseLikelihood,omitempty"`
 
 	// TiltAngle: Pitch angle, which indicates the upwards/downwards angle
@@ -1821,16 +1903,11 @@ type FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	UnderExposedLikelihood string `json:"underExposedLikelihood,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AngerLikelihood") to
@@ -2624,32 +2701,22 @@ type GoogleCloudVisionV1p1beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	AngerLikelihood string `json:"angerLikelihood,omitempty"`
 
 	// BlurredLikelihood: Blurred likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	BlurredLikelihood string `json:"blurredLikelihood,omitempty"`
 
 	// BoundingPoly: The bounding polygon around the face. The coordinates
@@ -2684,32 +2751,22 @@ type GoogleCloudVisionV1p1beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	HeadwearLikelihood string `json:"headwearLikelihood,omitempty"`
 
 	// JoyLikelihood: Joy likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	JoyLikelihood string `json:"joyLikelihood,omitempty"`
 
 	// LandmarkingConfidence: Face landmarking confidence. Range [0, 1].
@@ -2736,32 +2793,22 @@ type GoogleCloudVisionV1p1beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	SorrowLikelihood string `json:"sorrowLikelihood,omitempty"`
 
 	// SurpriseLikelihood: Surprise likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	SurpriseLikelihood string `json:"surpriseLikelihood,omitempty"`
 
 	// TiltAngle: Pitch angle, which indicates the upwards/downwards angle
@@ -2773,16 +2820,11 @@ type GoogleCloudVisionV1p1beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	UnderExposedLikelihood string `json:"underExposedLikelihood,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AngerLikelihood") to
@@ -3812,32 +3854,22 @@ type GoogleCloudVisionV1p1beta1SafeSearchAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Adult string `json:"adult,omitempty"`
 
 	// Medical: Likelihood that this is a medical image.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Medical string `json:"medical,omitempty"`
 
 	// Racy: Likelihood that the request image contains racy content. Racy
@@ -3850,16 +3882,11 @@ type GoogleCloudVisionV1p1beta1SafeSearchAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Racy string `json:"racy,omitempty"`
 
 	// Spoof: Spoof likelihood. The likelihood that an modification
@@ -3868,32 +3895,22 @@ type GoogleCloudVisionV1p1beta1SafeSearchAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Spoof string `json:"spoof,omitempty"`
 
 	// Violence: Likelihood that this image contains violent content.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Violence string `json:"violence,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Adult") to
@@ -5092,32 +5109,22 @@ type GoogleCloudVisionV1p2beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	AngerLikelihood string `json:"angerLikelihood,omitempty"`
 
 	// BlurredLikelihood: Blurred likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	BlurredLikelihood string `json:"blurredLikelihood,omitempty"`
 
 	// BoundingPoly: The bounding polygon around the face. The coordinates
@@ -5152,32 +5159,22 @@ type GoogleCloudVisionV1p2beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	HeadwearLikelihood string `json:"headwearLikelihood,omitempty"`
 
 	// JoyLikelihood: Joy likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	JoyLikelihood string `json:"joyLikelihood,omitempty"`
 
 	// LandmarkingConfidence: Face landmarking confidence. Range [0, 1].
@@ -5204,32 +5201,22 @@ type GoogleCloudVisionV1p2beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	SorrowLikelihood string `json:"sorrowLikelihood,omitempty"`
 
 	// SurpriseLikelihood: Surprise likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	SurpriseLikelihood string `json:"surpriseLikelihood,omitempty"`
 
 	// TiltAngle: Pitch angle, which indicates the upwards/downwards angle
@@ -5241,16 +5228,11 @@ type GoogleCloudVisionV1p2beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	UnderExposedLikelihood string `json:"underExposedLikelihood,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AngerLikelihood") to
@@ -6280,32 +6262,22 @@ type GoogleCloudVisionV1p2beta1SafeSearchAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Adult string `json:"adult,omitempty"`
 
 	// Medical: Likelihood that this is a medical image.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Medical string `json:"medical,omitempty"`
 
 	// Racy: Likelihood that the request image contains racy content. Racy
@@ -6318,16 +6290,11 @@ type GoogleCloudVisionV1p2beta1SafeSearchAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Racy string `json:"racy,omitempty"`
 
 	// Spoof: Spoof likelihood. The likelihood that an modification
@@ -6336,32 +6303,22 @@ type GoogleCloudVisionV1p2beta1SafeSearchAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Spoof string `json:"spoof,omitempty"`
 
 	// Violence: Likelihood that this image contains violent content.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Violence string `json:"violence,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Adult") to
@@ -7616,32 +7573,22 @@ type GoogleCloudVisionV1p3beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	AngerLikelihood string `json:"angerLikelihood,omitempty"`
 
 	// BlurredLikelihood: Blurred likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	BlurredLikelihood string `json:"blurredLikelihood,omitempty"`
 
 	// BoundingPoly: The bounding polygon around the face. The coordinates
@@ -7676,32 +7623,22 @@ type GoogleCloudVisionV1p3beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	HeadwearLikelihood string `json:"headwearLikelihood,omitempty"`
 
 	// JoyLikelihood: Joy likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	JoyLikelihood string `json:"joyLikelihood,omitempty"`
 
 	// LandmarkingConfidence: Face landmarking confidence. Range [0, 1].
@@ -7728,32 +7665,22 @@ type GoogleCloudVisionV1p3beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	SorrowLikelihood string `json:"sorrowLikelihood,omitempty"`
 
 	// SurpriseLikelihood: Surprise likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	SurpriseLikelihood string `json:"surpriseLikelihood,omitempty"`
 
 	// TiltAngle: Pitch angle, which indicates the upwards/downwards angle
@@ -7765,16 +7692,11 @@ type GoogleCloudVisionV1p3beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	UnderExposedLikelihood string `json:"underExposedLikelihood,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AngerLikelihood") to
@@ -8912,32 +8834,22 @@ type GoogleCloudVisionV1p3beta1SafeSearchAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Adult string `json:"adult,omitempty"`
 
 	// Medical: Likelihood that this is a medical image.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Medical string `json:"medical,omitempty"`
 
 	// Racy: Likelihood that the request image contains racy content. Racy
@@ -8950,16 +8862,11 @@ type GoogleCloudVisionV1p3beta1SafeSearchAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Racy string `json:"racy,omitempty"`
 
 	// Spoof: Spoof likelihood. The likelihood that an modification
@@ -8968,32 +8875,22 @@ type GoogleCloudVisionV1p3beta1SafeSearchAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Spoof string `json:"spoof,omitempty"`
 
 	// Violence: Likelihood that this image contains violent content.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Violence string `json:"violence,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Adult") to
@@ -10317,32 +10214,22 @@ type GoogleCloudVisionV1p4beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	AngerLikelihood string `json:"angerLikelihood,omitempty"`
 
 	// BlurredLikelihood: Blurred likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	BlurredLikelihood string `json:"blurredLikelihood,omitempty"`
 
 	// BoundingPoly: The bounding polygon around the face. The coordinates
@@ -10377,32 +10264,22 @@ type GoogleCloudVisionV1p4beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	HeadwearLikelihood string `json:"headwearLikelihood,omitempty"`
 
 	// JoyLikelihood: Joy likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	JoyLikelihood string `json:"joyLikelihood,omitempty"`
 
 	// LandmarkingConfidence: Face landmarking confidence. Range [0, 1].
@@ -10429,32 +10306,22 @@ type GoogleCloudVisionV1p4beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	SorrowLikelihood string `json:"sorrowLikelihood,omitempty"`
 
 	// SurpriseLikelihood: Surprise likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	SurpriseLikelihood string `json:"surpriseLikelihood,omitempty"`
 
 	// TiltAngle: Pitch angle, which indicates the upwards/downwards angle
@@ -10466,16 +10333,11 @@ type GoogleCloudVisionV1p4beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	UnderExposedLikelihood string `json:"underExposedLikelihood,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AngerLikelihood") to
@@ -10755,6 +10617,50 @@ func (s *GoogleCloudVisionV1p4beta1ImageProperties) MarshalJSON() ([]byte, error
 // GoogleCloudVisionV1p4beta1ImageQuality: Stores image quality scores,
 // could be aesthetic quality or technical quality.
 type GoogleCloudVisionV1p4beta1ImageQuality struct {
+	// QualityScore: A score representing the aesthetic/technical quality of
+	// the image. The
+	// score is in range [0, 1]. Higher value corresponds to more
+	// professional
+	// looking photos. 0 means the image looks very bad, 1 means the image
+	// with
+	// very high quality.
+	QualityScore float64 `json:"qualityScore,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "QualityScore") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "QualityScore") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p4beta1ImageQuality) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p4beta1ImageQuality
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVisionV1p4beta1ImageQuality) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p4beta1ImageQuality
+	var s1 struct {
+		QualityScore gensupport.JSONFloat64 `json:"qualityScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.QualityScore = float64(s1.QualityScore)
+	return nil
 }
 
 // GoogleCloudVisionV1p4beta1ImportProductSetsResponse: Response message
@@ -11678,33 +11584,38 @@ type GoogleCloudVisionV1p4beta1SafeSearchAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Adult string `json:"adult,omitempty"`
+
+	// AdultConfidence: Confidence of adult_score. Range [0, 1]. 0 means not
+	// confident, 1 means
+	// very confident.
+	AdultConfidence float64 `json:"adultConfidence,omitempty"`
 
 	// Medical: Likelihood that this is a medical image.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Medical string `json:"medical,omitempty"`
+
+	// MedicalConfidence: Confidence of medical_score. Range [0, 1]. 0 means
+	// not confident, 1 means
+	// very confident.
+	MedicalConfidence float64 `json:"medicalConfidence,omitempty"`
+
+	// NsfwConfidence: Confidence of nsfw_score. Range [0, 1]. 0 means not
+	// confident, 1 means very
+	// confident.
+	NsfwConfidence float64 `json:"nsfwConfidence,omitempty"`
 
 	// Racy: Likelihood that the request image contains racy content. Racy
 	// content may
@@ -11716,17 +11627,17 @@ type GoogleCloudVisionV1p4beta1SafeSearchAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Racy string `json:"racy,omitempty"`
+
+	// RacyConfidence: Confidence of racy_score. Range [0, 1]. 0 means not
+	// confident, 1 means very
+	// confident.
+	RacyConfidence float64 `json:"racyConfidence,omitempty"`
 
 	// Spoof: Spoof likelihood. The likelihood that an modification
 	// was made to the image's canonical version to make it appear
@@ -11734,33 +11645,33 @@ type GoogleCloudVisionV1p4beta1SafeSearchAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Spoof string `json:"spoof,omitempty"`
+
+	// SpoofConfidence: Confidence of spoof_score. Range [0, 1]. 0 means not
+	// confident, 1 means
+	// very confident.
+	SpoofConfidence float64 `json:"spoofConfidence,omitempty"`
 
 	// Violence: Likelihood that this image contains violent content.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Violence string `json:"violence,omitempty"`
+
+	// ViolenceConfidence: Confidence of violence_score. Range [0, 1]. 0
+	// means not confident, 1 means
+	// very confident.
+	ViolenceConfidence float64 `json:"violenceConfidence,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Adult") to
 	// unconditionally include in API requests. By default, fields with
@@ -11783,6 +11694,30 @@ func (s *GoogleCloudVisionV1p4beta1SafeSearchAnnotation) MarshalJSON() ([]byte, 
 	type NoMethod GoogleCloudVisionV1p4beta1SafeSearchAnnotation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVisionV1p4beta1SafeSearchAnnotation) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p4beta1SafeSearchAnnotation
+	var s1 struct {
+		AdultConfidence    gensupport.JSONFloat64 `json:"adultConfidence"`
+		MedicalConfidence  gensupport.JSONFloat64 `json:"medicalConfidence"`
+		NsfwConfidence     gensupport.JSONFloat64 `json:"nsfwConfidence"`
+		RacyConfidence     gensupport.JSONFloat64 `json:"racyConfidence"`
+		SpoofConfidence    gensupport.JSONFloat64 `json:"spoofConfidence"`
+		ViolenceConfidence gensupport.JSONFloat64 `json:"violenceConfidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AdultConfidence = float64(s1.AdultConfidence)
+	s.MedicalConfidence = float64(s1.MedicalConfidence)
+	s.NsfwConfidence = float64(s1.NsfwConfidence)
+	s.RacyConfidence = float64(s1.RacyConfidence)
+	s.SpoofConfidence = float64(s1.SpoofConfidence)
+	s.ViolenceConfidence = float64(s1.ViolenceConfidence)
+	return nil
 }
 
 // GoogleCloudVisionV1p4beta1Symbol: A single symbol representation.
@@ -13096,32 +13031,22 @@ type GoogleCloudVisionV1p5beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	AngerLikelihood string `json:"angerLikelihood,omitempty"`
 
 	// BlurredLikelihood: Blurred likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	BlurredLikelihood string `json:"blurredLikelihood,omitempty"`
 
 	// BoundingPoly: The bounding polygon around the face. The coordinates
@@ -13156,32 +13081,22 @@ type GoogleCloudVisionV1p5beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	HeadwearLikelihood string `json:"headwearLikelihood,omitempty"`
 
 	// JoyLikelihood: Joy likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	JoyLikelihood string `json:"joyLikelihood,omitempty"`
 
 	// LandmarkingConfidence: Face landmarking confidence. Range [0, 1].
@@ -13208,32 +13123,22 @@ type GoogleCloudVisionV1p5beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	SorrowLikelihood string `json:"sorrowLikelihood,omitempty"`
 
 	// SurpriseLikelihood: Surprise likelihood.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	SurpriseLikelihood string `json:"surpriseLikelihood,omitempty"`
 
 	// TiltAngle: Pitch angle, which indicates the upwards/downwards angle
@@ -13245,16 +13150,11 @@ type GoogleCloudVisionV1p5beta1FaceAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	UnderExposedLikelihood string `json:"underExposedLikelihood,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AngerLikelihood") to
@@ -14457,33 +14357,38 @@ type GoogleCloudVisionV1p5beta1SafeSearchAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Adult string `json:"adult,omitempty"`
+
+	// AdultConfidence: Confidence of adult_score. Range [0, 1]. 0 means not
+	// confident, 1 means
+	// very confident.
+	AdultConfidence float64 `json:"adultConfidence,omitempty"`
 
 	// Medical: Likelihood that this is a medical image.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Medical string `json:"medical,omitempty"`
+
+	// MedicalConfidence: Confidence of medical_score. Range [0, 1]. 0 means
+	// not confident, 1 means
+	// very confident.
+	MedicalConfidence float64 `json:"medicalConfidence,omitempty"`
+
+	// NsfwConfidence: Confidence of nsfw_score. Range [0, 1]. 0 means not
+	// confident, 1 means very
+	// confident.
+	NsfwConfidence float64 `json:"nsfwConfidence,omitempty"`
 
 	// Racy: Likelihood that the request image contains racy content. Racy
 	// content may
@@ -14495,17 +14400,17 @@ type GoogleCloudVisionV1p5beta1SafeSearchAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Racy string `json:"racy,omitempty"`
+
+	// RacyConfidence: Confidence of racy_score. Range [0, 1]. 0 means not
+	// confident, 1 means very
+	// confident.
+	RacyConfidence float64 `json:"racyConfidence,omitempty"`
 
 	// Spoof: Spoof likelihood. The likelihood that an modification
 	// was made to the image's canonical version to make it appear
@@ -14513,33 +14418,33 @@ type GoogleCloudVisionV1p5beta1SafeSearchAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Spoof string `json:"spoof,omitempty"`
+
+	// SpoofConfidence: Confidence of spoof_score. Range [0, 1]. 0 means not
+	// confident, 1 means
+	// very confident.
+	SpoofConfidence float64 `json:"spoofConfidence,omitempty"`
 
 	// Violence: Likelihood that this image contains violent content.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Violence string `json:"violence,omitempty"`
+
+	// ViolenceConfidence: Confidence of violence_score. Range [0, 1]. 0
+	// means not confident, 1 means
+	// very confident.
+	ViolenceConfidence float64 `json:"violenceConfidence,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Adult") to
 	// unconditionally include in API requests. By default, fields with
@@ -14562,6 +14467,30 @@ func (s *GoogleCloudVisionV1p5beta1SafeSearchAnnotation) MarshalJSON() ([]byte, 
 	type NoMethod GoogleCloudVisionV1p5beta1SafeSearchAnnotation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVisionV1p5beta1SafeSearchAnnotation) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p5beta1SafeSearchAnnotation
+	var s1 struct {
+		AdultConfidence    gensupport.JSONFloat64 `json:"adultConfidence"`
+		MedicalConfidence  gensupport.JSONFloat64 `json:"medicalConfidence"`
+		NsfwConfidence     gensupport.JSONFloat64 `json:"nsfwConfidence"`
+		RacyConfidence     gensupport.JSONFloat64 `json:"racyConfidence"`
+		SpoofConfidence    gensupport.JSONFloat64 `json:"spoofConfidence"`
+		ViolenceConfidence gensupport.JSONFloat64 `json:"violenceConfidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AdultConfidence = float64(s1.AdultConfidence)
+	s.MedicalConfidence = float64(s1.MedicalConfidence)
+	s.NsfwConfidence = float64(s1.NsfwConfidence)
+	s.RacyConfidence = float64(s1.RacyConfidence)
+	s.SpoofConfidence = float64(s1.SpoofConfidence)
+	s.ViolenceConfidence = float64(s1.ViolenceConfidence)
+	return nil
 }
 
 // GoogleCloudVisionV1p5beta1Symbol: A single symbol representation.
@@ -17102,33 +17031,38 @@ type SafeSearchAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Adult string `json:"adult,omitempty"`
+
+	// AdultConfidence: Confidence of adult_score. Range [0, 1]. 0 means not
+	// confident, 1 means
+	// very confident.
+	AdultConfidence float64 `json:"adultConfidence,omitempty"`
 
 	// Medical: Likelihood that this is a medical image.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Medical string `json:"medical,omitempty"`
+
+	// MedicalConfidence: Confidence of medical_score. Range [0, 1]. 0 means
+	// not confident, 1 means
+	// very confident.
+	MedicalConfidence float64 `json:"medicalConfidence,omitempty"`
+
+	// NsfwConfidence: Confidence of nsfw_score. Range [0, 1]. 0 means not
+	// confident, 1 means very
+	// confident.
+	NsfwConfidence float64 `json:"nsfwConfidence,omitempty"`
 
 	// Racy: Likelihood that the request image contains racy content. Racy
 	// content may
@@ -17140,17 +17074,17 @@ type SafeSearchAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Racy string `json:"racy,omitempty"`
+
+	// RacyConfidence: Confidence of racy_score. Range [0, 1]. 0 means not
+	// confident, 1 means very
+	// confident.
+	RacyConfidence float64 `json:"racyConfidence,omitempty"`
 
 	// Spoof: Spoof likelihood. The likelihood that an modification
 	// was made to the image's canonical version to make it appear
@@ -17158,33 +17092,33 @@ type SafeSearchAnnotation struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Spoof string `json:"spoof,omitempty"`
+
+	// SpoofConfidence: Confidence of spoof_score. Range [0, 1]. 0 means not
+	// confident, 1 means
+	// very confident.
+	SpoofConfidence float64 `json:"spoofConfidence,omitempty"`
 
 	// Violence: Likelihood that this image contains violent content.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
-	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
-	// specified vertical.
-	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
-	// vertical.
-	//   "POSSIBLE" - It is possible that the image belongs to the specified
-	// vertical.
-	//   "LIKELY" - It is likely that the image belongs to the specified
-	// vertical.
-	//   "VERY_LIKELY" - It is very likely that the image belongs to the
-	// specified vertical.
+	//   "VERY_UNLIKELY" - It is very unlikely.
+	//   "UNLIKELY" - It is unlikely.
+	//   "POSSIBLE" - It is possible.
+	//   "LIKELY" - It is likely.
+	//   "VERY_LIKELY" - It is very likely.
 	Violence string `json:"violence,omitempty"`
+
+	// ViolenceConfidence: Confidence of violence_score. Range [0, 1]. 0
+	// means not confident, 1 means
+	// very confident.
+	ViolenceConfidence float64 `json:"violenceConfidence,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Adult") to
 	// unconditionally include in API requests. By default, fields with
@@ -17207,6 +17141,30 @@ func (s *SafeSearchAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod SafeSearchAnnotation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *SafeSearchAnnotation) UnmarshalJSON(data []byte) error {
+	type NoMethod SafeSearchAnnotation
+	var s1 struct {
+		AdultConfidence    gensupport.JSONFloat64 `json:"adultConfidence"`
+		MedicalConfidence  gensupport.JSONFloat64 `json:"medicalConfidence"`
+		NsfwConfidence     gensupport.JSONFloat64 `json:"nsfwConfidence"`
+		RacyConfidence     gensupport.JSONFloat64 `json:"racyConfidence"`
+		SpoofConfidence    gensupport.JSONFloat64 `json:"spoofConfidence"`
+		ViolenceConfidence gensupport.JSONFloat64 `json:"violenceConfidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AdultConfidence = float64(s1.AdultConfidence)
+	s.MedicalConfidence = float64(s1.MedicalConfidence)
+	s.NsfwConfidence = float64(s1.NsfwConfidence)
+	s.RacyConfidence = float64(s1.RacyConfidence)
+	s.SpoofConfidence = float64(s1.SpoofConfidence)
+	s.ViolenceConfidence = float64(s1.ViolenceConfidence)
+	return nil
 }
 
 // Status: The `Status` type defines a logical error model that is
@@ -19131,6 +19089,1204 @@ func (c *OperationsListCall) Pages(ctx context.Context, f func(*ListOperationsRe
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "vision.projects.files.annotate":
+
+type ProjectsFilesAnnotateCall struct {
+	s                         *Service
+	parent                    string
+	batchannotatefilesrequest *BatchAnnotateFilesRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Annotate: Service that performs image detection and annotation for a
+// batch of files.
+// Now only "application/pdf", "image/tiff" and "image/gif" are
+// supported.
+//
+// This service will extract at most 5 (customers can specify which 5
+// in
+// AnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from
+// each
+// file provided and perform detection and annotation for each
+// image
+// extracted.
+func (r *ProjectsFilesService) Annotate(parent string, batchannotatefilesrequest *BatchAnnotateFilesRequest) *ProjectsFilesAnnotateCall {
+	c := &ProjectsFilesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchannotatefilesrequest = batchannotatefilesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsFilesAnnotateCall) Fields(s ...googleapi.Field) *ProjectsFilesAnnotateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsFilesAnnotateCall) Context(ctx context.Context) *ProjectsFilesAnnotateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsFilesAnnotateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsFilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchannotatefilesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/files:annotate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vision.projects.files.annotate" call.
+// Exactly one of *BatchAnnotateFilesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchAnnotateFilesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsFilesAnnotateCall) Do(opts ...googleapi.CallOption) (*BatchAnnotateFilesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchAnnotateFilesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Service that performs image detection and annotation for a batch of files.\nNow only \"application/pdf\", \"image/tiff\" and \"image/gif\" are supported.\n\nThis service will extract at most 5 (customers can specify which 5 in\nAnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each\nfile provided and perform detection and annotation for each image\nextracted.",
+	//   "flatPath": "v1/projects/{projectsId}/files:annotate",
+	//   "httpMethod": "POST",
+	//   "id": "vision.projects.files.annotate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/files:annotate",
+	//   "request": {
+	//     "$ref": "BatchAnnotateFilesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchAnnotateFilesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-vision"
+	//   ]
+	// }
+
+}
+
+// method id "vision.projects.files.asyncBatchAnnotate":
+
+type ProjectsFilesAsyncBatchAnnotateCall struct {
+	s                              *Service
+	parent                         string
+	asyncbatchannotatefilesrequest *AsyncBatchAnnotateFilesRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// AsyncBatchAnnotate: Run asynchronous image detection and annotation
+// for a list of generic
+// files, such as PDF files, which may contain multiple pages and
+// multiple
+// images per page. Progress and results can be retrieved through
+// the
+// `google.longrunning.Operations` interface.
+// `Operation.metadata` contains `OperationMetadata`
+// (metadata).
+// `Operation.response` contains `AsyncBatchAnnotateFilesResponse`
+// (results).
+func (r *ProjectsFilesService) AsyncBatchAnnotate(parent string, asyncbatchannotatefilesrequest *AsyncBatchAnnotateFilesRequest) *ProjectsFilesAsyncBatchAnnotateCall {
+	c := &ProjectsFilesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.asyncbatchannotatefilesrequest = asyncbatchannotatefilesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsFilesAsyncBatchAnnotateCall) Fields(s ...googleapi.Field) *ProjectsFilesAsyncBatchAnnotateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsFilesAsyncBatchAnnotateCall) Context(ctx context.Context) *ProjectsFilesAsyncBatchAnnotateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsFilesAsyncBatchAnnotateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.asyncbatchannotatefilesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/files:asyncBatchAnnotate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vision.projects.files.asyncBatchAnnotate" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsFilesAsyncBatchAnnotateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Run asynchronous image detection and annotation for a list of generic\nfiles, such as PDF files, which may contain multiple pages and multiple\nimages per page. Progress and results can be retrieved through the\n`google.longrunning.Operations` interface.\n`Operation.metadata` contains `OperationMetadata` (metadata).\n`Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).",
+	//   "flatPath": "v1/projects/{projectsId}/files:asyncBatchAnnotate",
+	//   "httpMethod": "POST",
+	//   "id": "vision.projects.files.asyncBatchAnnotate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/files:asyncBatchAnnotate",
+	//   "request": {
+	//     "$ref": "AsyncBatchAnnotateFilesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-vision"
+	//   ]
+	// }
+
+}
+
+// method id "vision.projects.images.annotate":
+
+type ProjectsImagesAnnotateCall struct {
+	s                          *Service
+	parent                     string
+	batchannotateimagesrequest *BatchAnnotateImagesRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// Annotate: Run image detection and annotation for a batch of images.
+func (r *ProjectsImagesService) Annotate(parent string, batchannotateimagesrequest *BatchAnnotateImagesRequest) *ProjectsImagesAnnotateCall {
+	c := &ProjectsImagesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchannotateimagesrequest = batchannotateimagesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsImagesAnnotateCall) Fields(s ...googleapi.Field) *ProjectsImagesAnnotateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsImagesAnnotateCall) Context(ctx context.Context) *ProjectsImagesAnnotateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsImagesAnnotateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchannotateimagesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/images:annotate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vision.projects.images.annotate" call.
+// Exactly one of *BatchAnnotateImagesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchAnnotateImagesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsImagesAnnotateCall) Do(opts ...googleapi.CallOption) (*BatchAnnotateImagesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchAnnotateImagesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Run image detection and annotation for a batch of images.",
+	//   "flatPath": "v1/projects/{projectsId}/images:annotate",
+	//   "httpMethod": "POST",
+	//   "id": "vision.projects.images.annotate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/images:annotate",
+	//   "request": {
+	//     "$ref": "BatchAnnotateImagesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchAnnotateImagesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-vision"
+	//   ]
+	// }
+
+}
+
+// method id "vision.projects.images.asyncBatchAnnotate":
+
+type ProjectsImagesAsyncBatchAnnotateCall struct {
+	s                               *Service
+	parent                          string
+	asyncbatchannotateimagesrequest *AsyncBatchAnnotateImagesRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// AsyncBatchAnnotate: Run asynchronous image detection and annotation
+// for a list of images.
+//
+// Progress and results can be retrieved through
+// the
+// `google.longrunning.Operations` interface.
+// `Operation.metadata` contains `OperationMetadata`
+// (metadata).
+// `Operation.response` contains `AsyncBatchAnnotateImagesResponse`
+// (results).
+//
+// This service will write image annotation outputs to json files in
+// customer
+// GCS bucket, each json file containing BatchAnnotateImagesResponse
+// proto.
+func (r *ProjectsImagesService) AsyncBatchAnnotate(parent string, asyncbatchannotateimagesrequest *AsyncBatchAnnotateImagesRequest) *ProjectsImagesAsyncBatchAnnotateCall {
+	c := &ProjectsImagesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.asyncbatchannotateimagesrequest = asyncbatchannotateimagesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsImagesAsyncBatchAnnotateCall) Fields(s ...googleapi.Field) *ProjectsImagesAsyncBatchAnnotateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsImagesAsyncBatchAnnotateCall) Context(ctx context.Context) *ProjectsImagesAsyncBatchAnnotateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsImagesAsyncBatchAnnotateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.asyncbatchannotateimagesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/images:asyncBatchAnnotate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vision.projects.images.asyncBatchAnnotate" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsImagesAsyncBatchAnnotateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Run asynchronous image detection and annotation for a list of images.\n\nProgress and results can be retrieved through the\n`google.longrunning.Operations` interface.\n`Operation.metadata` contains `OperationMetadata` (metadata).\n`Operation.response` contains `AsyncBatchAnnotateImagesResponse` (results).\n\nThis service will write image annotation outputs to json files in customer\nGCS bucket, each json file containing BatchAnnotateImagesResponse proto.",
+	//   "flatPath": "v1/projects/{projectsId}/images:asyncBatchAnnotate",
+	//   "httpMethod": "POST",
+	//   "id": "vision.projects.images.asyncBatchAnnotate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/images:asyncBatchAnnotate",
+	//   "request": {
+	//     "$ref": "AsyncBatchAnnotateImagesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-vision"
+	//   ]
+	// }
+
+}
+
+// method id "vision.projects.locations.files.annotate":
+
+type ProjectsLocationsFilesAnnotateCall struct {
+	s                         *Service
+	parent                    string
+	batchannotatefilesrequest *BatchAnnotateFilesRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Annotate: Service that performs image detection and annotation for a
+// batch of files.
+// Now only "application/pdf", "image/tiff" and "image/gif" are
+// supported.
+//
+// This service will extract at most 5 (customers can specify which 5
+// in
+// AnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from
+// each
+// file provided and perform detection and annotation for each
+// image
+// extracted.
+func (r *ProjectsLocationsFilesService) Annotate(parent string, batchannotatefilesrequest *BatchAnnotateFilesRequest) *ProjectsLocationsFilesAnnotateCall {
+	c := &ProjectsLocationsFilesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchannotatefilesrequest = batchannotatefilesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFilesAnnotateCall) Fields(s ...googleapi.Field) *ProjectsLocationsFilesAnnotateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFilesAnnotateCall) Context(ctx context.Context) *ProjectsLocationsFilesAnnotateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFilesAnnotateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchannotatefilesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/files:annotate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vision.projects.locations.files.annotate" call.
+// Exactly one of *BatchAnnotateFilesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchAnnotateFilesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsFilesAnnotateCall) Do(opts ...googleapi.CallOption) (*BatchAnnotateFilesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchAnnotateFilesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Service that performs image detection and annotation for a batch of files.\nNow only \"application/pdf\", \"image/tiff\" and \"image/gif\" are supported.\n\nThis service will extract at most 5 (customers can specify which 5 in\nAnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each\nfile provided and perform detection and annotation for each image\nextracted.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/files:annotate",
+	//   "httpMethod": "POST",
+	//   "id": "vision.projects.locations.files.annotate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/files:annotate",
+	//   "request": {
+	//     "$ref": "BatchAnnotateFilesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchAnnotateFilesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-vision"
+	//   ]
+	// }
+
+}
+
+// method id "vision.projects.locations.files.asyncBatchAnnotate":
+
+type ProjectsLocationsFilesAsyncBatchAnnotateCall struct {
+	s                              *Service
+	parent                         string
+	asyncbatchannotatefilesrequest *AsyncBatchAnnotateFilesRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// AsyncBatchAnnotate: Run asynchronous image detection and annotation
+// for a list of generic
+// files, such as PDF files, which may contain multiple pages and
+// multiple
+// images per page. Progress and results can be retrieved through
+// the
+// `google.longrunning.Operations` interface.
+// `Operation.metadata` contains `OperationMetadata`
+// (metadata).
+// `Operation.response` contains `AsyncBatchAnnotateFilesResponse`
+// (results).
+func (r *ProjectsLocationsFilesService) AsyncBatchAnnotate(parent string, asyncbatchannotatefilesrequest *AsyncBatchAnnotateFilesRequest) *ProjectsLocationsFilesAsyncBatchAnnotateCall {
+	c := &ProjectsLocationsFilesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.asyncbatchannotatefilesrequest = asyncbatchannotatefilesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) Fields(s ...googleapi.Field) *ProjectsLocationsFilesAsyncBatchAnnotateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) Context(ctx context.Context) *ProjectsLocationsFilesAsyncBatchAnnotateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.asyncbatchannotatefilesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/files:asyncBatchAnnotate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vision.projects.locations.files.asyncBatchAnnotate" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Run asynchronous image detection and annotation for a list of generic\nfiles, such as PDF files, which may contain multiple pages and multiple\nimages per page. Progress and results can be retrieved through the\n`google.longrunning.Operations` interface.\n`Operation.metadata` contains `OperationMetadata` (metadata).\n`Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/files:asyncBatchAnnotate",
+	//   "httpMethod": "POST",
+	//   "id": "vision.projects.locations.files.asyncBatchAnnotate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/files:asyncBatchAnnotate",
+	//   "request": {
+	//     "$ref": "AsyncBatchAnnotateFilesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-vision"
+	//   ]
+	// }
+
+}
+
+// method id "vision.projects.locations.images.annotate":
+
+type ProjectsLocationsImagesAnnotateCall struct {
+	s                          *Service
+	parent                     string
+	batchannotateimagesrequest *BatchAnnotateImagesRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// Annotate: Run image detection and annotation for a batch of images.
+func (r *ProjectsLocationsImagesService) Annotate(parent string, batchannotateimagesrequest *BatchAnnotateImagesRequest) *ProjectsLocationsImagesAnnotateCall {
+	c := &ProjectsLocationsImagesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchannotateimagesrequest = batchannotateimagesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsImagesAnnotateCall) Fields(s ...googleapi.Field) *ProjectsLocationsImagesAnnotateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsImagesAnnotateCall) Context(ctx context.Context) *ProjectsLocationsImagesAnnotateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsImagesAnnotateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchannotateimagesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/images:annotate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vision.projects.locations.images.annotate" call.
+// Exactly one of *BatchAnnotateImagesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchAnnotateImagesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsImagesAnnotateCall) Do(opts ...googleapi.CallOption) (*BatchAnnotateImagesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchAnnotateImagesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Run image detection and annotation for a batch of images.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/images:annotate",
+	//   "httpMethod": "POST",
+	//   "id": "vision.projects.locations.images.annotate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/images:annotate",
+	//   "request": {
+	//     "$ref": "BatchAnnotateImagesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchAnnotateImagesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-vision"
+	//   ]
+	// }
+
+}
+
+// method id "vision.projects.locations.images.asyncBatchAnnotate":
+
+type ProjectsLocationsImagesAsyncBatchAnnotateCall struct {
+	s                               *Service
+	parent                          string
+	asyncbatchannotateimagesrequest *AsyncBatchAnnotateImagesRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// AsyncBatchAnnotate: Run asynchronous image detection and annotation
+// for a list of images.
+//
+// Progress and results can be retrieved through
+// the
+// `google.longrunning.Operations` interface.
+// `Operation.metadata` contains `OperationMetadata`
+// (metadata).
+// `Operation.response` contains `AsyncBatchAnnotateImagesResponse`
+// (results).
+//
+// This service will write image annotation outputs to json files in
+// customer
+// GCS bucket, each json file containing BatchAnnotateImagesResponse
+// proto.
+func (r *ProjectsLocationsImagesService) AsyncBatchAnnotate(parent string, asyncbatchannotateimagesrequest *AsyncBatchAnnotateImagesRequest) *ProjectsLocationsImagesAsyncBatchAnnotateCall {
+	c := &ProjectsLocationsImagesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.asyncbatchannotateimagesrequest = asyncbatchannotateimagesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) Fields(s ...googleapi.Field) *ProjectsLocationsImagesAsyncBatchAnnotateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) Context(ctx context.Context) *ProjectsLocationsImagesAsyncBatchAnnotateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.asyncbatchannotateimagesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/images:asyncBatchAnnotate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vision.projects.locations.images.asyncBatchAnnotate" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Run asynchronous image detection and annotation for a list of images.\n\nProgress and results can be retrieved through the\n`google.longrunning.Operations` interface.\n`Operation.metadata` contains `OperationMetadata` (metadata).\n`Operation.response` contains `AsyncBatchAnnotateImagesResponse` (results).\n\nThis service will write image annotation outputs to json files in customer\nGCS bucket, each json file containing BatchAnnotateImagesResponse proto.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/images:asyncBatchAnnotate",
+	//   "httpMethod": "POST",
+	//   "id": "vision.projects.locations.images.asyncBatchAnnotate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/images:asyncBatchAnnotate",
+	//   "request": {
+	//     "$ref": "AsyncBatchAnnotateImagesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-vision"
+	//   ]
+	// }
+
 }
 
 // method id "vision.projects.locations.operations.get":

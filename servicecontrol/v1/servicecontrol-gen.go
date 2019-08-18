@@ -154,7 +154,9 @@ type AllocateInfo struct {
 	// time
 	// window, the caller can choose to ignore these labels in the
 	// requests
-	// to achieve better client-side cache hits and quota aggregation.
+	// to achieve better client-side cache hits and quota aggregation for
+	// rate
+	// quota. This field is not populated for allocation quota checks.
 	UnusedArguments []string `json:"unusedArguments,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "UnusedArguments") to

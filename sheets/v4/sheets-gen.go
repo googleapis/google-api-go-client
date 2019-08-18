@@ -4205,11 +4205,13 @@ func (s *DeleteDimensionRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DeleteDuplicatesRequest: Removes rows within this range containing
-// duplicate values in the specified
-// columns. Rows with identical values but different letter cases,
-// formatting,
-// or formulas are considered to be duplicates.
+// DeleteDuplicatesRequest: Removes rows within this range that contain
+// values in the specified columns
+// that are duplicates of values in any previous row. Rows with
+// identical values
+// but different letter cases, formatting, or formulas are considered to
+// be
+// duplicates.
 //
 // This request also removes duplicate rows hidden from view (for
 // example, due
@@ -8668,11 +8670,11 @@ func (s *TreemapChartSpec) UnmarshalJSON(data []byte) error {
 // new lines) in every cell in
 // the specified range. This request removes all whitespace from the
 // start and
-// end of each cell's text, and reduces any sub-sequence of remaining
+// end of each cell's text, and reduces any subsequence of remaining
 // whitespace
 // characters to a single space. If the resulting trimmed text starts
 // with a '+'
-// or '=' character, the text remains as a string value and is not
+// or '=' character, the text remains as a string value and isn't
 // interpreted
 // as a formula.
 type TrimWhitespaceRequest struct {

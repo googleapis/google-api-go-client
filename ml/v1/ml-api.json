@@ -1002,7 +1002,7 @@
       }
     }
   },
-  "revision": "20190801",
+  "revision": "20190808",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1067,7 +1067,8 @@
             "NVIDIA_TESLA_V100",
             "NVIDIA_TESLA_P4",
             "NVIDIA_TESLA_T4",
-            "TPU_V2"
+            "TPU_V2",
+            "TPU_V3"
           ],
           "enumDescriptions": [
             "Unspecified accelerator type. Default to no GPU.",
@@ -1076,7 +1077,8 @@
             "Nvidia Tesla V100 GPU.",
             "Nvidia Tesla P4 GPU.",
             "Nvidia Tesla T4 GPU.",
-            "TPU v2."
+            "TPU v2.",
+            "TPU v3."
           ],
           "type": "string"
         }
@@ -1136,7 +1138,8 @@
             "Nvidia Tesla V100 GPU.",
             "Nvidia Tesla P4 GPU.",
             "Nvidia Tesla T4 GPU.",
-            "TPU v2."
+            "TPU v2.",
+            "TPU v3."
           ],
           "items": {
             "enum": [
@@ -1146,7 +1149,8 @@
               "NVIDIA_TESLA_V100",
               "NVIDIA_TESLA_P4",
               "NVIDIA_TESLA_T4",
-              "TPU_V2"
+              "TPU_V2",
+              "TPU_V3"
             ],
             "type": "string"
           },
@@ -1852,6 +1856,22 @@
       },
       "type": "object"
     },
+    "GoogleCloudMlV1__RequestLoggingConfig": {
+      "description": "Configurations for logging request-response pairs. Currently only BigQuery\nlogging is supported. The request and response will be converted to raw\nstring and stored within the specified BigQuery table. The schema is:\n  model: STRING\n  version: STRING\n  time: Timestamp\n  raw_data: STRING\n  raw_prediction: STRING\n  ground_truth: STRING",
+      "id": "GoogleCloudMlV1__RequestLoggingConfig",
+      "properties": {
+        "bigqueryTableName": {
+          "description": "Fully qualified BigQuery table name in the format of\n\"[project_id].[dataset_name].[table_name]\".",
+          "type": "string"
+        },
+        "samplingPercentage": {
+          "description": "Percentage of the request being logged. The sampling window is the lifetime\nof the Version. Defaults to 0.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudMlV1__SetDefaultVersionRequest": {
       "description": "Request message for the SetDefaultVersion request.",
       "id": "GoogleCloudMlV1__SetDefaultVersionRequest",
@@ -2090,6 +2110,10 @@
         "pythonVersion": {
           "description": "Optional. The version of Python used in prediction. If not set, the default\nversion is '2.7'. Python '3.5' is available when `runtime_version` is set\nto '1.4' and above. Python '2.7' works with all supported runtime versions.",
           "type": "string"
+        },
+        "requestLoggingConfig": {
+          "$ref": "GoogleCloudMlV1__RequestLoggingConfig",
+          "description": "Optional. Configures the request-response pair logging on predictions from\nthis Version."
         },
         "runtimeVersion": {
           "description": "Optional. The AI Platform runtime version to use for this deployment.\nIf not set, AI Platform uses the default stable version, 1.0. For more\ninformation, see the\n[runtime version list](/ml-engine/docs/runtime-version-list) and\n[how to manage runtime versions](/ml-engine/docs/versioning).",

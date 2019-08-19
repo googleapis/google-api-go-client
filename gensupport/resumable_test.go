@@ -329,7 +329,7 @@ func TestRetry_Bounded(t *testing.T) {
 	backoff = func() Backoff { return new(PauseForeverBackoff) }
 	defer func() { backoff = oldBackoff }()
 
-	resCode := make(chan int)
+	resCode := make(chan int, 1)
 	go func() {
 		resp, err := rx.Upload(context.Background())
 		if err != nil {

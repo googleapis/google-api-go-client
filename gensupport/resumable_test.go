@@ -213,6 +213,9 @@ func TestCancelUploadFast(t *testing.T) {
 
 	tr := &interruptibleTransport{
 		buf: make([]byte, 0, mediaSize),
+		// Shouldn't really need an event, but sometimes the test loses the
+		// race. So, this is just a filler event.
+		events: []event{{"bytes 0-9/*", http.StatusServiceUnavailable}},
 	}
 
 	pr := progressRecorder{}

@@ -2640,13 +2640,37 @@ type VoidedPurchase struct {
 	// androidpublisher service.
 	Kind string `json:"kind,omitempty"`
 
+	// OrderId: The order id which uniquely identifies a one-time purchase,
+	// subscription purchase, or subscription renewal.
+	OrderId string `json:"orderId,omitempty"`
+
 	// PurchaseTimeMillis: The time at which the purchase was made, in
 	// milliseconds since the epoch (Jan 1, 1970).
 	PurchaseTimeMillis int64 `json:"purchaseTimeMillis,omitempty,string"`
 
-	// PurchaseToken: The token that was generated when a purchase was made.
-	// This uniquely identifies a purchase.
+	// PurchaseToken: The token which uniquely identifies a one-time
+	// purchase or subscription. To uniquely identify subscription renewals
+	// use order_id (available starting from version 3 of the API).
 	PurchaseToken string `json:"purchaseToken,omitempty"`
+
+	// VoidedReason: The reason why the purchase was voided, possible values
+	// are:
+	// - Other
+	// - Remorse
+	// - Not_received
+	// - Defective
+	// - Accidental_purchase
+	// - Fraud
+	// - Friendly_fraud
+	// - Chargeback
+	VoidedReason int64 `json:"voidedReason,omitempty"`
+
+	// VoidedSource: The initiator of voided purchase, possible values are:
+	//
+	// - User
+	// - Developer
+	// - Google
+	VoidedSource int64 `json:"voidedSource,omitempty"`
 
 	// VoidedTimeMillis: The time at which the purchase was
 	// canceled/refunded/charged-back, in milliseconds since the epoch (Jan
@@ -11176,13 +11200,12 @@ func (r *PurchasesVoidedpurchasesService) List(packageName string) *PurchasesVoi
 }
 
 // EndTime sets the optional parameter "endTime": The time, in
-// milliseconds since the Epoch, of the newest voided in-app product
-// purchase that you want to see in the response. The value of this
-// parameter cannot be greater than the current time and is ignored if a
-// pagination token is set. Default value is current time. Note: This
-// filter is applied on the time at which the record is seen as voided
-// by our systems and not the actual voided time returned in the
-// response.
+// milliseconds since the Epoch, of the newest voided purchase that you
+// want to see in the response. The value of this parameter cannot be
+// greater than the current time and is ignored if a pagination token is
+// set. Default value is current time. Note: This filter is applied on
+// the time at which the record is seen as voided by our systems and not
+// the actual voided time returned in the response.
 func (c *PurchasesVoidedpurchasesListCall) EndTime(endTime int64) *PurchasesVoidedpurchasesListCall {
 	c.urlParams_.Set("endTime", fmt.Sprint(endTime))
 	return c
@@ -11201,13 +11224,12 @@ func (c *PurchasesVoidedpurchasesListCall) StartIndex(startIndex int64) *Purchas
 }
 
 // StartTime sets the optional parameter "startTime": The time, in
-// milliseconds since the Epoch, of the oldest voided in-app product
-// purchase that you want to see in the response. The value of this
-// parameter cannot be older than 30 days and is ignored if a pagination
-// token is set. Default value is current time minus 30 days. Note: This
-// filter is applied on the time at which the record is seen as voided
-// by our systems and not the actual voided time returned in the
-// response.
+// milliseconds since the Epoch, of the oldest voided purchase that you
+// want to see in the response. The value of this parameter cannot be
+// older than 30 days and is ignored if a pagination token is set.
+// Default value is current time minus 30 days. Note: This filter is
+// applied on the time at which the record is seen as voided by our
+// systems and not the actual voided time returned in the response.
 func (c *PurchasesVoidedpurchasesListCall) StartTime(startTime int64) *PurchasesVoidedpurchasesListCall {
 	c.urlParams_.Set("startTime", fmt.Sprint(startTime))
 	return c
@@ -11216,6 +11238,22 @@ func (c *PurchasesVoidedpurchasesListCall) StartTime(startTime int64) *Purchases
 // Token sets the optional parameter "token":
 func (c *PurchasesVoidedpurchasesListCall) Token(token string) *PurchasesVoidedpurchasesListCall {
 	c.urlParams_.Set("token", token)
+	return c
+}
+
+// Type sets the optional parameter "type": The type of voided purchases
+// that you want to see in the response. Possible values are:
+// - 0: Only voided in-app product purchases will be returned in the
+// response. This is the default value.
+// - 1: Both voided in-app purchases and voided subscription purchases
+// will be returned in the response.  Note: Before requesting to receive
+// voided subscription purchases, you must switch to use orderId in the
+// response which uniquely identifies one-time purchases and
+// subscriptions. Otherwise, you will receive multiple subscription
+// orders with the same PurchaseToken, because subscription renewal
+// orders share the same PurchaseToken.
+func (c *PurchasesVoidedpurchasesListCall) Type(type_ int64) *PurchasesVoidedpurchasesListCall {
+	c.urlParams_.Set("type", fmt.Sprint(type_))
 	return c
 }
 
@@ -11326,7 +11364,7 @@ func (c *PurchasesVoidedpurchasesListCall) Do(opts ...googleapi.CallOption) (*Vo
 	//   ],
 	//   "parameters": {
 	//     "endTime": {
-	//       "description": "The time, in milliseconds since the Epoch, of the newest voided in-app product purchase that you want to see in the response. The value of this parameter cannot be greater than the current time and is ignored if a pagination token is set. Default value is current time. Note: This filter is applied on the time at which the record is seen as voided by our systems and not the actual voided time returned in the response.",
+	//       "description": "The time, in milliseconds since the Epoch, of the newest voided purchase that you want to see in the response. The value of this parameter cannot be greater than the current time and is ignored if a pagination token is set. Default value is current time. Note: This filter is applied on the time at which the record is seen as voided by our systems and not the actual voided time returned in the response.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -11348,7 +11386,7 @@ func (c *PurchasesVoidedpurchasesListCall) Do(opts ...googleapi.CallOption) (*Vo
 	//       "type": "integer"
 	//     },
 	//     "startTime": {
-	//       "description": "The time, in milliseconds since the Epoch, of the oldest voided in-app product purchase that you want to see in the response. The value of this parameter cannot be older than 30 days and is ignored if a pagination token is set. Default value is current time minus 30 days. Note: This filter is applied on the time at which the record is seen as voided by our systems and not the actual voided time returned in the response.",
+	//       "description": "The time, in milliseconds since the Epoch, of the oldest voided purchase that you want to see in the response. The value of this parameter cannot be older than 30 days and is ignored if a pagination token is set. Default value is current time minus 30 days. Note: This filter is applied on the time at which the record is seen as voided by our systems and not the actual voided time returned in the response.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -11356,6 +11394,12 @@ func (c *PurchasesVoidedpurchasesListCall) Do(opts ...googleapi.CallOption) (*Vo
 	//     "token": {
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "type": {
+	//       "description": "The type of voided purchases that you want to see in the response. Possible values are:  \n- 0: Only voided in-app product purchases will be returned in the response. This is the default value.\n- 1: Both voided in-app purchases and voided subscription purchases will be returned in the response.  Note: Before requesting to receive voided subscription purchases, you must switch to use orderId in the response which uniquely identifies one-time purchases and subscriptions. Otherwise, you will receive multiple subscription orders with the same PurchaseToken, because subscription renewal orders share the same PurchaseToken.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
 	//     }
 	//   },
 	//   "path": "{packageName}/purchases/voidedpurchases",

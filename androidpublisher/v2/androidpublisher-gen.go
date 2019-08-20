@@ -2426,8 +2426,9 @@ type VoidedPurchase struct {
 	// milliseconds since the epoch (Jan 1, 1970).
 	PurchaseTimeMillis int64 `json:"purchaseTimeMillis,omitempty,string"`
 
-	// PurchaseToken: The token that was generated when a purchase was made.
-	// This uniquely identifies a purchase.
+	// PurchaseToken: The token which uniquely identifies a one-time
+	// purchase or subscription. To uniquely identify subscription renewals
+	// use order_id (available starting from version 3 of the API).
 	PurchaseToken string `json:"purchaseToken,omitempty"`
 
 	// VoidedTimeMillis: The time at which the purchase was
@@ -11194,13 +11195,12 @@ func (r *PurchasesVoidedpurchasesService) List(packageName string) *PurchasesVoi
 }
 
 // EndTime sets the optional parameter "endTime": The time, in
-// milliseconds since the Epoch, of the newest voided in-app product
-// purchase that you want to see in the response. The value of this
-// parameter cannot be greater than the current time and is ignored if a
-// pagination token is set. Default value is current time. Note: This
-// filter is applied on the time at which the record is seen as voided
-// by our systems and not the actual voided time returned in the
-// response.
+// milliseconds since the Epoch, of the newest voided purchase that you
+// want to see in the response. The value of this parameter cannot be
+// greater than the current time and is ignored if a pagination token is
+// set. Default value is current time. Note: This filter is applied on
+// the time at which the record is seen as voided by our systems and not
+// the actual voided time returned in the response.
 func (c *PurchasesVoidedpurchasesListCall) EndTime(endTime int64) *PurchasesVoidedpurchasesListCall {
 	c.urlParams_.Set("endTime", fmt.Sprint(endTime))
 	return c
@@ -11219,13 +11219,12 @@ func (c *PurchasesVoidedpurchasesListCall) StartIndex(startIndex int64) *Purchas
 }
 
 // StartTime sets the optional parameter "startTime": The time, in
-// milliseconds since the Epoch, of the oldest voided in-app product
-// purchase that you want to see in the response. The value of this
-// parameter cannot be older than 30 days and is ignored if a pagination
-// token is set. Default value is current time minus 30 days. Note: This
-// filter is applied on the time at which the record is seen as voided
-// by our systems and not the actual voided time returned in the
-// response.
+// milliseconds since the Epoch, of the oldest voided purchase that you
+// want to see in the response. The value of this parameter cannot be
+// older than 30 days and is ignored if a pagination token is set.
+// Default value is current time minus 30 days. Note: This filter is
+// applied on the time at which the record is seen as voided by our
+// systems and not the actual voided time returned in the response.
 func (c *PurchasesVoidedpurchasesListCall) StartTime(startTime int64) *PurchasesVoidedpurchasesListCall {
 	c.urlParams_.Set("startTime", fmt.Sprint(startTime))
 	return c
@@ -11344,7 +11343,7 @@ func (c *PurchasesVoidedpurchasesListCall) Do(opts ...googleapi.CallOption) (*Vo
 	//   ],
 	//   "parameters": {
 	//     "endTime": {
-	//       "description": "The time, in milliseconds since the Epoch, of the newest voided in-app product purchase that you want to see in the response. The value of this parameter cannot be greater than the current time and is ignored if a pagination token is set. Default value is current time. Note: This filter is applied on the time at which the record is seen as voided by our systems and not the actual voided time returned in the response.",
+	//       "description": "The time, in milliseconds since the Epoch, of the newest voided purchase that you want to see in the response. The value of this parameter cannot be greater than the current time and is ignored if a pagination token is set. Default value is current time. Note: This filter is applied on the time at which the record is seen as voided by our systems and not the actual voided time returned in the response.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -11366,7 +11365,7 @@ func (c *PurchasesVoidedpurchasesListCall) Do(opts ...googleapi.CallOption) (*Vo
 	//       "type": "integer"
 	//     },
 	//     "startTime": {
-	//       "description": "The time, in milliseconds since the Epoch, of the oldest voided in-app product purchase that you want to see in the response. The value of this parameter cannot be older than 30 days and is ignored if a pagination token is set. Default value is current time minus 30 days. Note: This filter is applied on the time at which the record is seen as voided by our systems and not the actual voided time returned in the response.",
+	//       "description": "The time, in milliseconds since the Epoch, of the oldest voided purchase that you want to see in the response. The value of this parameter cannot be older than 30 days and is ignored if a pagination token is set. Default value is current time minus 30 days. Note: This filter is applied on the time at which the record is seen as voided by our systems and not the actual voided time returned in the response.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"

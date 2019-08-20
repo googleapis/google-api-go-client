@@ -199,7 +199,7 @@ type ProjectsLocationsFunctionsService struct {
 //             {
 //               "log_type": "DATA_READ",
 //               "exempted_members": [
-//                 "user:foo@gmail.com"
+//                 "user:jose@example.com"
 //               ]
 //             },
 //             {
@@ -211,7 +211,7 @@ type ProjectsLocationsFunctionsService struct {
 //           ]
 //         },
 //         {
-//           "service": "fooservice.googleapis.com"
+//           "service": "sampleservice.googleapis.com"
 //           "audit_log_configs": [
 //             {
 //               "log_type": "DATA_READ",
@@ -219,7 +219,7 @@ type ProjectsLocationsFunctionsService struct {
 //             {
 //               "log_type": "DATA_WRITE",
 //               "exempted_members": [
-//                 "user:bar@gmail.com"
+//                 "user:aliya@example.com"
 //               ]
 //             }
 //           ]
@@ -227,11 +227,11 @@ type ProjectsLocationsFunctionsService struct {
 //       ]
 //     }
 //
-// For fooservice, this policy enables DATA_READ, DATA_WRITE and
+// For sampleservice, this policy enables DATA_READ, DATA_WRITE and
 // ADMIN_READ
-// logging. It also exempts foo@gmail.com from DATA_READ logging,
+// logging. It also exempts jose@example.com from DATA_READ logging,
 // and
-// bar@gmail.com from DATA_WRITE logging.
+// aliya@example.com from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -277,7 +277,7 @@ func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 //         {
 //           "log_type": "DATA_READ",
 //           "exempted_members": [
-//             "user:foo@gmail.com"
+//             "user:jose@example.com"
 //           ]
 //         },
 //         {
@@ -288,7 +288,7 @@ func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 //
 // This enables 'DATA_READ' and 'DATA_WRITE' logging, while
 // exempting
-// foo@gmail.com from DATA_READ logging.
+// jose@example.com from DATA_READ logging.
 type AuditLogConfig struct {
 	// ExemptedMembers: Specifies the identities that do not cause logging
 	// for this type of
@@ -353,7 +353,7 @@ type Binding struct {
 	//
 	// * `user:{emailid}`: An email address that represents a specific
 	// Google
-	//    account. For example, `alice@gmail.com` .
+	//    account. For example, `alice@example.com` .
 	//
 	//
 	// * `serviceAccount:{emailid}`: An email address that represents a
@@ -476,7 +476,6 @@ func (s *CallFunctionResponse) MarshalJSON() ([]byte, error) {
 // computation executed in
 // response to an event. It encapsulate function and triggers
 // configurations.
-// LINT.IfChange
 type CloudFunction struct {
 	// AvailableMemoryMb: The amount of memory in MB available for a
 	// function.
@@ -546,24 +545,21 @@ type CloudFunction struct {
 	// See [the VPC
 	// documentation](https://cloud.google.com/compute/docs/vpc) for
 	// more information on connecting Cloud projects.
-	//
-	// This feature is currently in alpha, available only for whitelisted
-	// users.
 	Network string `json:"network,omitempty"`
 
-	// Runtime: Required. The runtime in which the function is going to run.
-	// Choices:
-	//
-	// * `nodejs6`: Node.js 6
-	// * `nodejs8`: Node.js 8
-	// * `nodejs10`: Node.js 10
-	// * `python37`: Python 3.7
-	// * `go111`: Go 1.11
+	// Runtime: The runtime in which to run the function. Required when
+	// deploying a new
+	// function, optional when updating an existing function. For a
+	// complete
+	// list of possible choices, see the
+	// [`gcloud`
+	// command
+	// reference](/sdk/gcloud/reference/functions/deploy#--runtime).
 	Runtime string `json:"runtime,omitempty"`
 
 	// ServiceAccountEmail: The email of the function's service account. If
 	// empty, defaults to
-	// {project_id}@appspot.gserviceaccount.com.
+	// `{project_id}@appspot.gserviceaccount.com`.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 
 	// SourceArchiveUrl: The Google Cloud Storage URL, starting with gs://,
@@ -607,9 +603,8 @@ type CloudFunction struct {
 	// Function.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// VersionId: Output only.
-	// The version identifier of the Cloud Function. Each deployment
-	// attempt
+	// VersionId: Output only. The version identifier of the Cloud Function.
+	// Each deployment attempt
 	// results in a new version of a function being created.
 	VersionId int64 `json:"versionId,omitempty,string"`
 
@@ -628,9 +623,6 @@ type CloudFunction struct {
 	// See [the VPC
 	// documentation](https://cloud.google.com/compute/docs/vpc) for
 	// more information on connecting Cloud projects.
-	//
-	// This feature is currently in alpha, available only for whitelisted
-	// users.
 	VpcConnector string `json:"vpcConnector,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1384,7 +1376,7 @@ type Policy struct {
 	//
 	// If no `etag` is provided in the call to `setIamPolicy`, then the
 	// existing
-	// policy is overwritten blindly.
+	// policy is overwritten.
 	Etag string `json:"etag,omitempty"`
 
 	// Version: Deprecated.
@@ -3127,6 +3119,18 @@ func (r *ProjectsLocationsFunctionsService) GetIamPolicy(resource string) *Proje
 	return c
 }
 
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The policy format version to be
+// returned.
+// Acceptable values are 0, 1, and 3.
+// If the value is 0, or the field is omitted, policy format version 1
+// will be
+// returned.
+func (c *ProjectsLocationsFunctionsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsFunctionsGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3234,6 +3238,12 @@ func (c *ProjectsLocationsFunctionsGetIamPolicyCall) Do(opts ...googleapi.CallOp
 	//     "resource"
 	//   ],
 	//   "parameters": {
+	//     "options.requestedPolicyVersion": {
+	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
 	//       "location": "path",

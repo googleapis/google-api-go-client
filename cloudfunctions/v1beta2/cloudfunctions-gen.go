@@ -323,24 +323,21 @@ type CloudFunction struct {
 	// See [the VPC
 	// documentation](https://cloud.google.com/compute/docs/vpc) for
 	// more information on connecting Cloud projects.
-	//
-	// This feature is currently in alpha, available only for whitelisted
-	// users.
 	Network string `json:"network,omitempty"`
 
-	// Runtime: Required. The runtime in which the function is going to run.
-	// Choices:
-	//
-	// * `nodejs6`: Node.js 6
-	// * `nodejs8`: Node.js 8
-	// * `nodejs10`: Node.js 10
-	// * `python37`: Python 3.7
-	// * `go111`: Go 1.11
+	// Runtime: The runtime in which to run the function. Required when
+	// deploying a new
+	// function, optional when updating an existing function. For a
+	// complete
+	// list of possible choices, see the
+	// [`gcloud`
+	// command
+	// reference](/sdk/gcloud/reference/functions/deploy#--runtime).
 	Runtime string `json:"runtime,omitempty"`
 
 	// ServiceAccount: The email of the function's service account. If
 	// empty, defaults to
-	// {project_id}@appspot.gserviceaccount.com.
+	// `{project_id}@appspot.gserviceaccount.com`.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// SourceArchiveUrl: The Google Cloud Storage URL, starting with gs://,
@@ -403,9 +400,8 @@ type CloudFunction struct {
 	// Function.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// VersionId: Output only.
-	// The version identifier of the Cloud Function. Each deployment
-	// attempt
+	// VersionId: Output only. The version identifier of the Cloud Function.
+	// Each deployment attempt
 	// results in a new version of a function being created.
 	VersionId int64 `json:"versionId,omitempty,string"`
 
@@ -424,9 +420,6 @@ type CloudFunction struct {
 	// See [the VPC
 	// documentation](https://cloud.google.com/compute/docs/vpc) for
 	// more information on connecting Cloud projects.
-	//
-	// This feature is currently in alpha, available only for whitelisted
-	// users.
 	VpcConnector string `json:"vpcConnector,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

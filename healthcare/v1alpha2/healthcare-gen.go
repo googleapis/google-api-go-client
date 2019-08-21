@@ -324,7 +324,7 @@ type Annotation struct {
 	// AnnotationSource: Details of the source.
 	AnnotationSource *AnnotationSource `json:"annotationSource,omitempty"`
 
-	// ImageAnnotation: Annnotations for images, e.g., bounding polygons.
+	// ImageAnnotation: Annotations for images, e.g., bounding polygons.
 	ImageAnnotation *ImageAnnotation `json:"imageAnnotation,omitempty"`
 
 	// Name: Output only. Resource name of the Annotation, of the
@@ -577,13 +577,6 @@ type AuditLogConfig struct {
 	// Follows the same format of Binding.members.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
-	// IgnoreChildExemptions: Specifies whether principals can be exempted
-	// for the same LogType in
-	// lower-level resource policies. If true, any lower-level exemptions
-	// will
-	// be ignored.
-	IgnoreChildExemptions bool `json:"ignoreChildExemptions,omitempty"`
-
 	// LogType: The log type that this config enables.
 	//
 	// Possible values:
@@ -813,9 +806,9 @@ func (s *CreateMessageRequest) MarshalJSON() ([]byte, error) {
 type CryptoHashConfig struct {
 	// CryptoKey: An AES 128/192/256 bit key. Causes the hash to be computed
 	// based on this
-	// key. A default key is generated for each DeidentifyDataset operation
-	// and is
-	// used wherever crypto_key is not specified.
+	// key. A default key is generated for each Deidentify operation and is
+	// used
+	// wherever crypto_key is not specified.
 	CryptoKey string `json:"cryptoKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CryptoKey") to
@@ -899,8 +892,7 @@ type DateShiftConfig struct {
 	// computed based on this
 	// key and the patient ID. A default key is generated for
 	// each
-	// DeidentifyDataset operation and is used wherever crypto_key is
-	// not
+	// Deidentify operation and is used wherever crypto_key is not
 	// specified.
 	CryptoKey string `json:"cryptoKey,omitempty"`
 
@@ -1757,7 +1749,7 @@ func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 type GetPolicyOptions struct {
 	// RequestedPolicyVersion: Optional. The policy format version to be
 	// returned.
-	// Acceptable values are 0 and 1.
+	// Acceptable values are 0, 1, and 3.
 	// If the value is 0, or the field is omitted, policy format version 1
 	// will be
 	// returned.
@@ -5242,7 +5234,7 @@ func (r *ProjectsLocationsDatasetsService) GetIamPolicy(resource string) *Projec
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
 // returned.
-// Acceptable values are 0 and 1.
+// Acceptable values are 0, 1, and 3.
 // If the value is 0, or the field is omitted, policy format version 1
 // will be
 // returned.
@@ -5359,7 +5351,7 @@ func (c *ProjectsLocationsDatasetsGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -8648,7 +8640,7 @@ func (r *ProjectsLocationsDatasetsDicomStoresService) GetIamPolicy(resource stri
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
 // returned.
-// Acceptable values are 0 and 1.
+// Acceptable values are 0, 1, and 3.
 // If the value is 0, or the field is omitted, policy format version 1
 // will be
 // returned.
@@ -8765,7 +8757,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -12898,7 +12890,7 @@ func (r *ProjectsLocationsDatasetsFhirStoresService) GetIamPolicy(resource strin
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
 // returned.
-// Acceptable values are 0 and 1.
+// Acceptable values are 0, 1, and 3.
 // If the value is 0, or the field is omitted, policy format version 1
 // will be
 // returned.
@@ -13015,7 +13007,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -14111,9 +14103,9 @@ type ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall struct {
 	header_      http.Header
 }
 
-// PatientEverything: Retrieves all the resources in the patient
-// compartment for a `Patient`
-// resource.
+// PatientEverything: Retrieves all the resources directly referenced by
+// a patient, as well as
+// all of the resources in the patient compartment.
 //
 // Implements the FHIR extended
 // operation
@@ -14138,11 +14130,34 @@ func (r *ProjectsLocationsDatasetsFhirStoresFhirService) PatientEverything(name 
 	return c
 }
 
+// Count sets the optional parameter "_count": Maximum number of
+// resources in a page. Defaults to 100.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Count(Count int64) *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall {
+	c.urlParams_.Set("_count", fmt.Sprint(Count))
+	return c
+}
+
 // End sets the optional parameter "end": The response includes records
 // prior to the end date. If no end date is
 // provided, all records subsequent to the start date are in scope.
 func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) End(end string) *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall {
 	c.urlParams_.Set("end", end)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Used to retrieve
+// the next or previous page of results
+// when using pagination. Value should be set to the value of page_token
+// set
+// in next or previous page links' url. Next and previous page are
+// returned
+// in the response bundle's links field, where `link.relation` is
+// "previous"
+// or "next".
+//
+// Omit `page_token` if no previous request has been made.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) PageToken(pageToken string) *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall {
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -14220,7 +14235,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Do(opts .
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Retrieves all the resources in the patient compartment for a `Patient`\nresource.\n\nImplements the FHIR extended operation\n[Patient-everything](http://hl7.org/implement/standards/fhir/STU3/patient-operations.html#everything).\n\nOn success, the response body will contain a JSON-encoded representation\nof a `Bundle` resource of type `searchset`, containing the results of the\noperation.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
+	//   "description": "Retrieves all the resources directly referenced by a patient, as well as\nall of the resources in the patient compartment.\n\nImplements the FHIR extended operation\n[Patient-everything](http://hl7.org/implement/standards/fhir/STU3/patient-operations.html#everything).\n\nOn success, the response body will contain a JSON-encoded representation\nof a `Bundle` resource of type `searchset`, containing the results of the\noperation.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
 	//   "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/Patient/{PatientId}/$everything",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.Patient-everything",
@@ -14228,6 +14243,12 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Do(opts .
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "_count": {
+	//       "description": "Maximum number of resources in a page. Defaults to 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
 	//     "end": {
 	//       "description": "The response includes records prior to the end date. If no end date is\nprovided, all records subsequent to the start date are in scope.",
 	//       "location": "query",
@@ -14238,6 +14259,11 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Do(opts .
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/Patient/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Used to retrieve the next or previous page of results\nwhen using pagination. Value should be set to the value of page_token set\nin next or previous page links' url. Next and previous page are returned\nin the response bundle's links field, where `link.relation` is \"previous\"\nor \"next\".\n\nOmit `page_token` if no previous request has been made.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "start": {
@@ -16739,7 +16765,7 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresService) GetIamPolicy(resource stri
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
 // returned.
-// Acceptable values are 0 and 1.
+// Acceptable values are 0, 1, and 3.
 // If the value is 0, or the field is omitted, policy format version 1
 // will be
 // returned.
@@ -16856,7 +16882,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

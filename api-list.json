@@ -3332,6 +3332,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "speech:v2beta",
+      "name": "speech",
+      "version": "v2beta",
+      "title": "Cloud Speech-to-Text API",
+      "description": "Converts audio to text by applying powerful neural network models.",
+      "discoveryRestUrl": "https://speech.googleapis.com/$discovery/rest?version=v2beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/speech-to-text/docs/quickstart-protocol",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "speech:v1",
       "name": "speech",
       "version": "v1",

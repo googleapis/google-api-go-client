@@ -400,7 +400,7 @@
       }
     }
   },
-  "revision": "20190709",
+  "revision": "20190816",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -454,10 +454,6 @@
             "type": "string"
           },
           "type": "array"
-        },
-        "ignoreChildExemptions": {
-          "description": "Specifies whether principals can be exempted for the same LogType in\nlower-level resource policies. If true, any lower-level exemptions will\nbe ignored.",
-          "type": "boolean"
         },
         "logType": {
           "description": "The log type that this config enables.",

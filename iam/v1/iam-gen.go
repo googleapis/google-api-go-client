@@ -2289,6 +2289,40 @@ func (s *UndeleteServiceAccountResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UploadServiceAccountKeyRequest: The service account key upload
+// request.
+type UploadServiceAccountKeyRequest struct {
+	// PublicKeyData: A field that allows clients to upload their own public
+	// key. If set,
+	// use this public key data to create a service account key for
+	// given
+	// service account.
+	// Please note, the expected format for this field is X509_PEM.
+	PublicKeyData string `json:"publicKeyData,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PublicKeyData") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PublicKeyData") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UploadServiceAccountKeyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadServiceAccountKeyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "iam.iamPolicies.lintPolicy":
 
 type IamPoliciesLintPolicyCall struct {
@@ -7388,6 +7422,149 @@ func (c *ProjectsServiceAccountsKeysListCall) Do(opts ...googleapi.CallOption) (
 	//   "path": "v1/{+name}/keys",
 	//   "response": {
 	//     "$ref": "ListServiceAccountKeysResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "iam.projects.serviceAccounts.keys.upload":
+
+type ProjectsServiceAccountsKeysUploadCall struct {
+	s                              *Service
+	name                           string
+	uploadserviceaccountkeyrequest *UploadServiceAccountKeyRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Upload: Upload public key for a given service account.
+// This rpc will create a
+// ServiceAccountKey that has the
+// provided public key and returns it.
+func (r *ProjectsServiceAccountsKeysService) Upload(name string, uploadserviceaccountkeyrequest *UploadServiceAccountKeyRequest) *ProjectsServiceAccountsKeysUploadCall {
+	c := &ProjectsServiceAccountsKeysUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.uploadserviceaccountkeyrequest = uploadserviceaccountkeyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsServiceAccountsKeysUploadCall) Fields(s ...googleapi.Field) *ProjectsServiceAccountsKeysUploadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsServiceAccountsKeysUploadCall) Context(ctx context.Context) *ProjectsServiceAccountsKeysUploadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsServiceAccountsKeysUploadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsServiceAccountsKeysUploadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.uploadserviceaccountkeyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/keys:upload")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "iam.projects.serviceAccounts.keys.upload" call.
+// Exactly one of *ServiceAccountKey or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ServiceAccountKey.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsServiceAccountsKeysUploadCall) Do(opts ...googleapi.CallOption) (*ServiceAccountKey, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ServiceAccountKey{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Upload public key for a given service account.\nThis rpc will create a\nServiceAccountKey that has the\nprovided public key and returns it.",
+	//   "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}/keys:upload",
+	//   "httpMethod": "POST",
+	//   "id": "iam.projects.serviceAccounts.keys.upload",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the service account in the following format:\n`projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`.\nUsing `-` as a wildcard for the `PROJECT_ID` will infer the project from\nthe account. The `ACCOUNT` value can be the `email` address or the\n`unique_id` of the service account.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/serviceAccounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}/keys:upload",
+	//   "request": {
+	//     "$ref": "UploadServiceAccountKeyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ServiceAccountKey"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

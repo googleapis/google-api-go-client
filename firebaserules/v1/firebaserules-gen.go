@@ -788,6 +788,18 @@ type TestCase struct {
 	// not influence the test outcome.
 	FunctionMocks []*FunctionMock `json:"functionMocks,omitempty"`
 
+	// PathEncoding: Specifies whether paths (such as request.path) are
+	// encoded and how.
+	//
+	// Possible values:
+	//   "ENCODING_UNSPECIFIED" - No encoding has been specified. Defaults
+	// to "URL_ENCODED" behavior.
+	//   "URL_ENCODED" - Treats path segments as URL encoded but with
+	// non-encoded separators
+	// ("/"). This is the default behavior.
+	//   "PLAIN" - Treats total path as non-URL encoded e.g. raw.
+	PathEncoding string `json:"pathEncoding,omitempty"`
+
 	// Request: Request context.
 	//
 	// The exact format of the request context is service-dependent. See

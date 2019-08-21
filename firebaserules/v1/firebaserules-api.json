@@ -471,7 +471,7 @@
       }
     }
   },
-  "revision": "20190417",
+  "revision": "20190807",
   "rootUrl": "https://firebaserules.googleapis.com/",
   "schemas": {
     "Arg": {
@@ -795,6 +795,20 @@
             "$ref": "FunctionMock"
           },
           "type": "array"
+        },
+        "pathEncoding": {
+          "description": "Specifies whether paths (such as request.path) are encoded and how.",
+          "enum": [
+            "ENCODING_UNSPECIFIED",
+            "URL_ENCODED",
+            "PLAIN"
+          ],
+          "enumDescriptions": [
+            "No encoding has been specified. Defaults to \"URL_ENCODED\" behavior.",
+            "Treats path segments as URL encoded but with non-encoded separators\n(\"/\"). This is the default behavior.",
+            "Treats total path as non-URL encoded e.g. raw."
+          ],
+          "type": "string"
         },
         "request": {
           "description": "Request context.\n\nThe exact format of the request context is service-dependent. See the\nappropriate service documentation for information about the supported\nfields and types on the request. Minimally, all services support the\nfollowing fields and types:\n\nRequest field  | Type\n---------------|-----------------\nauth.uid       | `string`\nauth.token     | `map\u003cstring, string\u003e`\nheaders        | `map\u003cstring, string\u003e`\nmethod         | `string`\nparams         | `map\u003cstring, string\u003e`\npath           | `string`\ntime           | `google.protobuf.Timestamp`\n\nIf the request value is not well-formed for the service, the request will\nbe rejected as an invalid argument.",

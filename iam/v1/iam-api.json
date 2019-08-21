@@ -1098,6 +1098,34 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
+                },
+                "upload": {
+                  "description": "Upload public key for a given service account.\nThis rpc will create a\nServiceAccountKey that has the\nprovided public key and returns it.",
+                  "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}/keys:upload",
+                  "httpMethod": "POST",
+                  "id": "iam.projects.serviceAccounts.keys.upload",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "The resource name of the service account in the following format:\n`projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`.\nUsing `-` as a wildcard for the `PROJECT_ID` will infer the project from\nthe account. The `ACCOUNT` value can be the `email` address or the\n`unique_id` of the service account.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/serviceAccounts/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}/keys:upload",
+                  "request": {
+                    "$ref": "UploadServiceAccountKeyRequest"
+                  },
+                  "response": {
+                    "$ref": "ServiceAccountKey"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
                 }
               }
             }
@@ -1199,7 +1227,7 @@
       }
     }
   },
-  "revision": "20190809",
+  "revision": "20190816",
   "rootUrl": "https://iam.googleapis.com/",
   "schemas": {
     "AdminAuditData": {
@@ -2151,6 +2179,18 @@
         "restoredAccount": {
           "$ref": "ServiceAccount",
           "description": "Metadata for the restored service account."
+        }
+      },
+      "type": "object"
+    },
+    "UploadServiceAccountKeyRequest": {
+      "description": "The service account key upload request.",
+      "id": "UploadServiceAccountKeyRequest",
+      "properties": {
+        "publicKeyData": {
+          "description": "A field that allows clients to upload their own public key. If set,\nuse this public key data to create a service account key for given\nservice account.\nPlease note, the expected format for this field is X509_PEM.",
+          "format": "byte",
+          "type": "string"
         }
       },
       "type": "object"

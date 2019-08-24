@@ -188,7 +188,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required.\n\nThe location name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID`.",
+                      "description": "Required. The location name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -216,7 +216,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required.\n\nThe job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
+                      "description": "Required. The job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
                       "required": true,
@@ -241,7 +241,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required.\n\nThe job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
+                      "description": "Required. The job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
                       "required": true,
@@ -277,7 +277,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required.\n\nThe location name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID`.",
+                      "description": "Required. The location name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -336,7 +336,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required.\n\nThe job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
+                      "description": "Required. The job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
                       "required": true,
@@ -364,7 +364,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required.\n\nThe job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
+                      "description": "Required. The job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
                       "required": true,
@@ -392,7 +392,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required.\n\nThe job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
+                      "description": "Required. The job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
                       "required": true,
@@ -417,7 +417,7 @@
       }
     }
   },
-  "revision": "20190604",
+  "revision": "20190815",
   "rootUrl": "https://cloudscheduler.googleapis.com/",
   "schemas": {
     "AppEngineHttpTarget": {
@@ -549,7 +549,7 @@
           "description": "If specified, an\n[OIDC](https://developers.google.com/identity/protocols/OpenIDConnect)\ntoken will be generated and attached as an `Authorization` header in the\nHTTP request.\n\nThis type of authorization can be used for many scenarios, including\ncalling Cloud Run, or endpoints where you intend to validate the token\nyourself."
         },
         "uri": {
-          "description": "Required.\n\nThe full URI path that the request will be sent to. This string\nmust begin with either \"http://\" or \"https://\". Some examples of\nvalid values for uri are:\n`http://acme.com` and `https://acme.com/sales:8080`. Cloud Scheduler will\nencode some characters for safety and compatibility. The maximum allowed\nURL length is 2083 characters after encoding.",
+          "description": "Required. The full URI path that the request will be sent to. This string\nmust begin with either \"http://\" or \"https://\". Some examples of\nvalid values for uri are:\n`http://acme.com` and `https://acme.com/sales:8080`. Cloud Scheduler will\nencode some characters for safety and compatibility. The maximum allowed\nURL length is 2083 characters after encoding.",
           "type": "string"
         }
       },
@@ -787,7 +787,7 @@
           "type": "string"
         },
         "topicName": {
-          "description": "Required.\n\nThe name of the Cloud Pub/Sub topic to which messages will\nbe published when a job is delivered. The topic name must be in the\nsame format as required by PubSub's\n[PublishRequest.name](https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#publishrequest),\nfor example `projects/PROJECT_ID/topics/TOPIC_ID`.\n\nThe topic must be in the same project as the Cloud Scheduler job.",
+          "description": "Required. The name of the Cloud Pub/Sub topic to which messages will\nbe published when a job is delivered. The topic name must be in the\nsame format as required by PubSub's\n[PublishRequest.name](https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#publishrequest),\nfor example `projects/PROJECT_ID/topics/TOPIC_ID`.\n\nThe topic must be in the same project as the Cloud Scheduler job.",
           "type": "string"
         }
       },

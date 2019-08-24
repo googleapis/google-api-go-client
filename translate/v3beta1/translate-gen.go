@@ -1591,7 +1591,7 @@ func (c *ProjectsDetectLanguageCall) Do(opts ...googleapi.CallOption) (*DetectLa
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Target project or location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}` or\n`projects/{project-id}`.\n\nFor global calls, use `projects/{project-id}/locations/global` or\n`projects/{project-id}`.\n\nOnly models within the same region (has same location-id) can be used.\nOtherwise an INVALID_ARGUMENT (400) error is returned.",
+	//       "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-id}/locations/{location-id}` or\n`projects/{project-id}`.\n\nFor global calls, use `projects/{project-id}/locations/global` or\n`projects/{project-id}`.\n\nOnly models within the same region (has same location-id) can be used.\nOtherwise an INVALID_ARGUMENT (400) error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1786,7 +1786,7 @@ func (c *ProjectsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOption) (*S
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Target project or location to make a call.\n\nFormat: `projects/{project-id}` or\n`projects/{project-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-id}/locations/global` or\n`projects/{project-id}`.\n\nNon-global location is required for AutoML models.\n\nOnly models within the same region (have same location-id) can be used,\notherwise an INVALID_ARGUMENT (400) error is returned.",
+	//       "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-id}` or\n`projects/{project-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-id}/locations/global` or\n`projects/{project-id}`.\n\nNon-global location is required for AutoML models.\n\nOnly models within the same region (have same location-id) can be used,\notherwise an INVALID_ARGUMENT (400) error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1924,7 +1924,7 @@ func (c *ProjectsTranslateTextCall) Do(opts ...googleapi.CallOption) (*Translate
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Target project or location to make a call.\n\nFormat: `projects/{project-id}` or\n`projects/{project-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-id}/locations/global` or\n`projects/{project-id}`.\n\nNon-global location is required for requests using AutoML models or\ncustom glossaries.\n\nModels and glossaries must be within the same region (have same\nlocation-id), otherwise an INVALID_ARGUMENT (400) error is returned.",
+	//       "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-id}` or\n`projects/{project-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-id}/locations/global` or\n`projects/{project-id}`.\n\nNon-global location is required for requests using AutoML models or\ncustom glossaries.\n\nModels and glossaries must be within the same region (have same\nlocation-id), otherwise an INVALID_ARGUMENT (400) error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2075,7 +2075,7 @@ func (c *ProjectsLocationsBatchTranslateTextCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Location to make a regional call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nThe `global` location is not supported for batch translation.\n\nOnly AutoML Translation models or glossaries within the same region (have\nthe same location-id) can be used, otherwise an INVALID_ARGUMENT (400)\nerror is returned.",
+	//       "description": "Required. Location to make a call. Must refer to a caller's project.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nThe `global` location is not supported for batch translation.\n\nOnly AutoML Translation models or glossaries within the same region (have\nthe same location-id) can be used, otherwise an INVALID_ARGUMENT (400)\nerror is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2215,7 +2215,7 @@ func (c *ProjectsLocationsDetectLanguageCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Target project or location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}` or\n`projects/{project-id}`.\n\nFor global calls, use `projects/{project-id}/locations/global` or\n`projects/{project-id}`.\n\nOnly models within the same region (has same location-id) can be used.\nOtherwise an INVALID_ARGUMENT (400) error is returned.",
+	//       "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-id}/locations/{location-id}` or\n`projects/{project-id}`.\n\nFor global calls, use `projects/{project-id}/locations/global` or\n`projects/{project-id}`.\n\nOnly models within the same region (has same location-id) can be used.\nOtherwise an INVALID_ARGUMENT (400) error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2555,7 +2555,7 @@ func (c *ProjectsLocationsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Target project or location to make a call.\n\nFormat: `projects/{project-id}` or\n`projects/{project-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-id}/locations/global` or\n`projects/{project-id}`.\n\nNon-global location is required for AutoML models.\n\nOnly models within the same region (have same location-id) can be used,\notherwise an INVALID_ARGUMENT (400) error is returned.",
+	//       "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-id}` or\n`projects/{project-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-id}/locations/global` or\n`projects/{project-id}`.\n\nNon-global location is required for AutoML models.\n\nOnly models within the same region (have same location-id) can be used,\notherwise an INVALID_ARGUMENT (400) error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2897,7 +2897,7 @@ func (c *ProjectsLocationsTranslateTextCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Target project or location to make a call.\n\nFormat: `projects/{project-id}` or\n`projects/{project-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-id}/locations/global` or\n`projects/{project-id}`.\n\nNon-global location is required for requests using AutoML models or\ncustom glossaries.\n\nModels and glossaries must be within the same region (have same\nlocation-id), otherwise an INVALID_ARGUMENT (400) error is returned.",
+	//       "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-id}` or\n`projects/{project-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-id}/locations/global` or\n`projects/{project-id}`.\n\nNon-global location is required for requests using AutoML models or\ncustom glossaries.\n\nModels and glossaries must be within the same region (have same\nlocation-id), otherwise an INVALID_ARGUMENT (400) error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

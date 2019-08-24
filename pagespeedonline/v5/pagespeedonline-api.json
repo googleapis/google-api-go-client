@@ -5,7 +5,7 @@
   "description": "Analyzes the performance of a web page and provides tailored suggestions to make that page faster.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/speed/docs/insights/v5/get-started",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/FH8hr1vcSrDlKiGXDM8sQApgVtA\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/CM5ddfI3h29HSne4uDeqx2Y7B4Q\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/pagespeed-16.png",
     "x32": "https://www.google.com/images/icons/product/pagespeed-32.png"
@@ -137,9 +137,16 @@
       }
     }
   },
-  "revision": "20190725",
+  "revision": "20190821",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
+    "GoogleprotobufListValue": {
+      "id": "GoogleprotobufListValue",
+      "items": {
+        "$ref": "GoogleprotobufValue"
+      },
+      "type": "array"
+    },
     "GoogleprotobufValue": {
       "id": "GoogleprotobufValue",
       "type": "any"
@@ -422,11 +429,8 @@
           "type": "string"
         },
         "runWarnings": {
-          "description": "List of all run warnings in the LHR. Will always output to at least `[]`.",
-          "items": {
-            "type": "any"
-          },
-          "type": "array"
+          "$ref": "GoogleprotobufListValue",
+          "description": "List of all run warnings in the LHR. Will always output to at least `[]`."
         },
         "runtimeError": {
           "description": "A top-level error message that, if present, indicates a serious enough problem that this Lighthouse result may need to be discarded.",

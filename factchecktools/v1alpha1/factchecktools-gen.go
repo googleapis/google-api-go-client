@@ -244,6 +244,10 @@ type GoogleFactcheckingFactchecktoolsV1alpha1ClaimRating struct {
 	// ImageUrl: Corresponds to `ClaimReview.reviewRating.image`.
 	ImageUrl string `json:"imageUrl,omitempty"`
 
+	// RatingExplanation: Corresponds to
+	// `ClaimReview.reviewRating.ratingExplanation`.
+	RatingExplanation string `json:"ratingExplanation,omitempty"`
+
 	// RatingValue: A numeric rating of this claim, in the range worstRating
 	// — bestRating
 	// inclusive.<br>

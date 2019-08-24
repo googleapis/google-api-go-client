@@ -523,9 +523,8 @@ type HttpTarget struct {
 	// yourself.
 	OidcToken *OidcToken `json:"oidcToken,omitempty"`
 
-	// Uri: Required.
-	//
-	// The full URI path that the request will be sent to. This string
+	// Uri: Required. The full URI path that the request will be sent to.
+	// This string
 	// must begin with either "http://" or "https://". Some examples
 	// of
 	// valid values for uri are:
@@ -1041,9 +1040,8 @@ type PubsubTarget struct {
 	// attribute.
 	Data string `json:"data,omitempty"`
 
-	// TopicName: Required.
-	//
-	// The name of the Cloud Pub/Sub topic to which messages will
+	// TopicName: Required. The name of the Cloud Pub/Sub topic to which
+	// messages will
 	// be published when a job is delivered. The topic name must be in
 	// the
 	// same format as required by
@@ -1708,7 +1706,7 @@ func (c *ProjectsLocationsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required.\n\nThe location name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID`.",
+	//       "description": "Required. The location name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -1841,7 +1839,7 @@ func (c *ProjectsLocationsJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required.\n\nThe job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
+	//       "description": "Required. The job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -1985,7 +1983,7 @@ func (c *ProjectsLocationsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required.\n\nThe job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
+	//       "description": "Required. The job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -2167,7 +2165,7 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJ
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required.\n\nThe location name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID`.",
+	//       "description": "Required. The location name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2494,7 +2492,7 @@ func (c *ProjectsLocationsJobsPauseCall) Do(opts ...googleapi.CallOption) (*Job,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required.\n\nThe job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
+	//       "description": "Required. The job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -2641,7 +2639,7 @@ func (c *ProjectsLocationsJobsResumeCall) Do(opts ...googleapi.CallOption) (*Job
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required.\n\nThe job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
+	//       "description": "Required. The job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -2785,7 +2783,7 @@ func (c *ProjectsLocationsJobsRunCall) Do(opts ...googleapi.CallOption) (*Job, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required.\n\nThe job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
+	//       "description": "Required. The job name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,

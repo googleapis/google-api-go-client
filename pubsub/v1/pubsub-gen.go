@@ -1062,9 +1062,11 @@ func (s *PubsubMessage) MarshalJSON() ([]byte, error) {
 
 // PullRequest: Request for the `Pull` method.
 type PullRequest struct {
-	// MaxMessages: The maximum number of messages returned for this
-	// request. The Pub/Sub
-	// system may return fewer than the number specified.
+	// MaxMessages: The maximum number of messages to return for this
+	// request. Must be a
+	// positive integer. The Pub/Sub system may return fewer than the
+	// number
+	// specified.
 	MaxMessages int64 `json:"maxMessages,omitempty"`
 
 	// ReturnImmediately: If this field set to true, the system will respond

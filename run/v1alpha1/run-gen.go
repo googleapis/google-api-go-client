@@ -1985,6 +1985,58 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleRpcStatus: The `Status` type defines a logical error model that
+// is suitable for
+// different programming environments, including REST APIs and RPC APIs.
+// It is
+// used by [gRPC](https://github.com/grpc). Each `Status` message
+// contains
+// three pieces of data: error code, error message, and error
+// details.
+//
+// You can find out more about this error model and how to work with it
+// in the
+// [API Design Guide](https://cloud.google.com/apis/design/errors).
+type GoogleRpcStatus struct {
+	// Code: The status code, which should be an enum value of
+	// google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+
+	// Details: A list of messages that carry the error details.  There is a
+	// common set of
+	// message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+
+	// Message: A developer-facing error message, which should be in
+	// English. Any
+	// user-facing error message should be localized and sent in
+	// the
+	// google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleRpcStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // HTTPGetAction: HTTPGetAction describes an action based on HTTP Get
 // requests.
 type HTTPGetAction struct {
@@ -2369,6 +2421,11 @@ type ListConfigurationsResponse struct {
 	// Metadata: Metadata associated with this Configuration list.
 	Metadata *ListMeta `json:"metadata,omitempty"`
 
+	// RegionDetails: Details for the regions used during a global call
+	// including any failures.
+	// This is not populated when targeting a specific region.
+	RegionDetails map[string]RegionDetails `json:"regionDetails,omitempty"`
+
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
@@ -2415,6 +2472,11 @@ type ListDomainMappingsResponse struct {
 	// Metadata: Metadata associated with this DomainMapping list.
 	Metadata *ListMeta `json:"metadata,omitempty"`
 
+	// RegionDetails: Details for the regions used during a global call
+	// including any failures.
+	// This is not populated when targeting a specific region.
+	RegionDetails map[string]RegionDetails `json:"regionDetails,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -2457,6 +2519,11 @@ type ListEventTypesResponse struct {
 
 	// Metadata: Metadata associated with this EventType list.
 	Metadata *ListMeta `json:"metadata,omitempty"`
+
+	// RegionDetails: Details for the regions used during a global call
+	// including any failures.
+	// This is not populated when targeting a specific region.
+	RegionDetails map[string]RegionDetails `json:"regionDetails,omitempty"`
 
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
@@ -2608,6 +2675,11 @@ type ListRevisionsResponse struct {
 	// Metadata: Metadata associated with this revision list.
 	Metadata *ListMeta `json:"metadata,omitempty"`
 
+	// RegionDetails: Details for the regions used during a global call
+	// including any failures.
+	// This is not populated when targeting a specific region.
+	RegionDetails map[string]RegionDetails `json:"regionDetails,omitempty"`
+
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
@@ -2652,6 +2724,11 @@ type ListRoutesResponse struct {
 
 	// Metadata: Metadata associated with this Route list.
 	Metadata *ListMeta `json:"metadata,omitempty"`
+
+	// RegionDetails: Details for the regions used during a global call
+	// including any failures.
+	// This is not populated when targeting a specific region.
+	RegionDetails map[string]RegionDetails `json:"regionDetails,omitempty"`
 
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
@@ -2698,6 +2775,11 @@ type ListServicesResponse struct {
 	// Metadata: Metadata associated with this Service list.
 	Metadata *ListMeta `json:"metadata,omitempty"`
 
+	// RegionDetails: Details for the regions used during a global call
+	// including any failures.
+	// This is not populated when targeting a specific region.
+	RegionDetails map[string]RegionDetails `json:"regionDetails,omitempty"`
+
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
@@ -2743,6 +2825,11 @@ type ListTriggersResponse struct {
 
 	// Metadata: Metadata associated with this Trigger list.
 	Metadata *ListMeta `json:"metadata,omitempty"`
+
+	// RegionDetails: Details for the regions used during a global call
+	// including any failures.
+	// This is not populated when targeting a specific region.
+	RegionDetails map[string]RegionDetails `json:"regionDetails,omitempty"`
 
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
@@ -3487,6 +3574,34 @@ type Quantity struct {
 
 func (s *Quantity) MarshalJSON() ([]byte, error) {
 	type NoMethod Quantity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RegionDetails: Information for a regional call used for a global API.
+type RegionDetails struct {
+	// Error: The status indicating why the regional call failed
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Error") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RegionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod RegionDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

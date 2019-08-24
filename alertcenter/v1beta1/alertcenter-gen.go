@@ -301,6 +301,29 @@ type Alert struct {
 	// If not provided, it indicates an ongoing alert.
 	EndTime string `json:"endTime,omitempty"`
 
+	// Etag: Optional. `etag` is used for optimistic concurrency control as
+	// a way to help
+	// prevent simultaneous updates of an alert from overwriting each
+	// other.
+	// It is strongly suggested that systems make use of the `etag` in
+	// the
+	// read-modify-write cycle to perform alert updates in order to avoid
+	// race
+	// conditions: An `etag` is returned in the response which contains
+	// alerts,
+	// and systems are expected to put that etag in the request to update
+	// alert to
+	// ensure that their change will be applied to the same version of the
+	// alert.
+	//
+	// If no `etag` is provided in the call to update alert, then the
+	// existing
+	// alert is overwritten blindly.
+	Etag string `json:"etag,omitempty"`
+
+	// Metadata: Output only. The metadata associated with this alert.
+	Metadata *AlertMetadata `json:"metadata,omitempty"`
+
 	// SecurityInvestigationToolLink: Output only. An optional
 	// [Security Investigation
 	// Tool](https://support.google.com/a/answer/7575955)
@@ -417,6 +440,90 @@ func (s *AlertFeedback) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AlertMetadata: An alert metadata.
+type AlertMetadata struct {
+	// AlertId: Output only. The alert identifier.
+	AlertId string `json:"alertId,omitempty"`
+
+	// Assignee: The email address of the user assigned to the alert.
+	Assignee string `json:"assignee,omitempty"`
+
+	// CustomerId: Output only. The unique identifier of the Google account
+	// of the customer.
+	CustomerId string `json:"customerId,omitempty"`
+
+	// Etag: Optional. `etag` is used for optimistic concurrency control as
+	// a way to
+	// help prevent simultaneous updates of an alert metadata from
+	// overwriting
+	// each other. It is strongly suggested that systems make use of the
+	// `etag` in
+	// the read-modify-write cycle to perform metatdata updates in order to
+	// avoid
+	// race conditions: An `etag` is returned in the response which contains
+	// alert
+	// metadata, and systems are expected to put that etag in the request
+	// to
+	// update alert metadata to ensure that their change will be applied to
+	// the
+	// same version of the alert metadata.
+	//
+	// If no `etag` is provided in the call to update alert metadata, then
+	// the
+	// existing alert metadata is overwritten blindly.
+	Etag string `json:"etag,omitempty"`
+
+	// Severity: The severity value of the alert. Alert Center will set this
+	// field at alert
+	// creation time, default's to an empty string when it could not
+	// be
+	// determined.
+	// The supported values for update actions on this field are the
+	// following:
+	//
+	// * HIGH
+	// * MEDIUM
+	// * LOW
+	Severity string `json:"severity,omitempty"`
+
+	// Status: The current status of the alert.
+	// The supported values are the following:
+	//
+	// * NOT_STARTED
+	// * IN_PROGRESS
+	// * CLOSED
+	Status string `json:"status,omitempty"`
+
+	// UpdateTime: Output only. The time this metadata was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AlertId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AlertId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AlertMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod AlertMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Attachment: Attachment with application-specific information about an
 // alert.
 type Attachment struct {
@@ -484,6 +591,148 @@ type BadWhitelist struct {
 
 func (s *BadWhitelist) MarshalJSON() ([]byte, error) {
 	type NoMethod BadWhitelist
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchDeleteAlertsRequest: A request to perform batch delete on
+// alerts.
+type BatchDeleteAlertsRequest struct {
+	// AlertId: Required. list of alert ids.
+	AlertId []string `json:"alertId,omitempty"`
+
+	// CustomerId: Optional. The unique identifier of the G Suite
+	// organization account of the
+	// customer the alerts are associated with.
+	CustomerId string `json:"customerId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AlertId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AlertId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchDeleteAlertsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDeleteAlertsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchDeleteAlertsResponse: Response to batch delete operation on
+// alerts.
+type BatchDeleteAlertsResponse struct {
+	// FailedAlertStatus: The status details for each failed alert_id.
+	FailedAlertStatus map[string]Status `json:"failedAlertStatus,omitempty"`
+
+	// SuccessAlertIds: The successful list of alert ids.
+	SuccessAlertIds []string `json:"successAlertIds,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "FailedAlertStatus")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FailedAlertStatus") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchDeleteAlertsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDeleteAlertsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchUndeleteAlertsRequest: A request to perform batch undelete on
+// alerts.
+type BatchUndeleteAlertsRequest struct {
+	// AlertId: Required. list of alert ids.
+	AlertId []string `json:"alertId,omitempty"`
+
+	// CustomerId: Optional. The unique identifier of the G Suite
+	// organization account of the
+	// customer the alerts are associated with.
+	CustomerId string `json:"customerId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AlertId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AlertId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchUndeleteAlertsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUndeleteAlertsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchUndeleteAlertsResponse: Response to batch undelete operation on
+// alerts.
+type BatchUndeleteAlertsResponse struct {
+	// FailedAlertStatus: The status details for each failed alert_id.
+	FailedAlertStatus map[string]Status `json:"failedAlertStatus,omitempty"`
+
+	// SuccessAlertIds: The successful list of alert ids.
+	SuccessAlertIds []string `json:"successAlertIds,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "FailedAlertStatus")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FailedAlertStatus") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchUndeleteAlertsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUndeleteAlertsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1190,6 +1439,58 @@ func (s *StateSponsoredAttack) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Status: The `Status` type defines a logical error model that is
+// suitable for
+// different programming environments, including REST APIs and RPC APIs.
+// It is
+// used by [gRPC](https://github.com/grpc). Each `Status` message
+// contains
+// three pieces of data: error code, error message, and error
+// details.
+//
+// You can find out more about this error model and how to work with it
+// in the
+// [API Design Guide](https://cloud.google.com/apis/design/errors).
+type Status struct {
+	// Code: The status code, which should be an enum value of
+	// google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+
+	// Details: A list of messages that carry the error details.  There is a
+	// common set of
+	// message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+
+	// Message: A developer-facing error message, which should be in
+	// English. Any
+	// user-facing error message should be localized and sent in
+	// the
+	// google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SuspiciousActivity: A mobile suspicious activity alert. Derived from
 // audit logs.
 type SuspiciousActivity struct {
@@ -1305,6 +1606,256 @@ func (s *UndeleteAlertRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UndeleteAlertRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "alertcenter.alerts.batchDelete":
+
+type AlertsBatchDeleteCall struct {
+	s                        *Service
+	batchdeletealertsrequest *BatchDeleteAlertsRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// BatchDelete: Performs batch delete operation on alerts.
+func (r *AlertsService) BatchDelete(batchdeletealertsrequest *BatchDeleteAlertsRequest) *AlertsBatchDeleteCall {
+	c := &AlertsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.batchdeletealertsrequest = batchdeletealertsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AlertsBatchDeleteCall) Fields(s ...googleapi.Field) *AlertsBatchDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AlertsBatchDeleteCall) Context(ctx context.Context) *AlertsBatchDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AlertsBatchDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AlertsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchdeletealertsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/alerts:batchDelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "alertcenter.alerts.batchDelete" call.
+// Exactly one of *BatchDeleteAlertsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchDeleteAlertsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AlertsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*BatchDeleteAlertsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchDeleteAlertsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Performs batch delete operation on alerts.",
+	//   "flatPath": "v1beta1/alerts:batchDelete",
+	//   "httpMethod": "POST",
+	//   "id": "alertcenter.alerts.batchDelete",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1beta1/alerts:batchDelete",
+	//   "request": {
+	//     "$ref": "BatchDeleteAlertsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchDeleteAlertsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.alerts"
+	//   ]
+	// }
+
+}
+
+// method id "alertcenter.alerts.batchUndelete":
+
+type AlertsBatchUndeleteCall struct {
+	s                          *Service
+	batchundeletealertsrequest *BatchUndeleteAlertsRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// BatchUndelete: Performs batch undelete operation on alerts.
+func (r *AlertsService) BatchUndelete(batchundeletealertsrequest *BatchUndeleteAlertsRequest) *AlertsBatchUndeleteCall {
+	c := &AlertsBatchUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.batchundeletealertsrequest = batchundeletealertsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AlertsBatchUndeleteCall) Fields(s ...googleapi.Field) *AlertsBatchUndeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AlertsBatchUndeleteCall) Context(ctx context.Context) *AlertsBatchUndeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AlertsBatchUndeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AlertsBatchUndeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchundeletealertsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/alerts:batchUndelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "alertcenter.alerts.batchUndelete" call.
+// Exactly one of *BatchUndeleteAlertsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchUndeleteAlertsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AlertsBatchUndeleteCall) Do(opts ...googleapi.CallOption) (*BatchUndeleteAlertsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchUndeleteAlertsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Performs batch undelete operation on alerts.",
+	//   "flatPath": "v1beta1/alerts:batchUndelete",
+	//   "httpMethod": "POST",
+	//   "id": "alertcenter.alerts.batchUndelete",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1beta1/alerts:batchUndelete",
+	//   "request": {
+	//     "$ref": "BatchUndeleteAlertsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchUndeleteAlertsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.alerts"
+	//   ]
+	// }
+
 }
 
 // method id "alertcenter.alerts.delete":
@@ -1608,6 +2159,165 @@ func (c *AlertsGetCall) Do(opts ...googleapi.CallOption) (*Alert, error) {
 	//   "path": "v1beta1/alerts/{alertId}",
 	//   "response": {
 	//     "$ref": "Alert"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.alerts"
+	//   ]
+	// }
+
+}
+
+// method id "alertcenter.alerts.getMetadata":
+
+type AlertsGetMetadataCall struct {
+	s            *Service
+	alertId      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetMetadata: Returns the metadata of an alert. Attempting to get
+// metadata for
+// a non-existent alert returns `NOT_FOUND` error.
+func (r *AlertsService) GetMetadata(alertId string) *AlertsGetMetadataCall {
+	c := &AlertsGetMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.alertId = alertId
+	return c
+}
+
+// CustomerId sets the optional parameter "customerId": The unique
+// identifier of the G Suite organization account of the
+// customer the alert metadata is associated with.
+// Inferred from the caller identity if not provided.
+func (c *AlertsGetMetadataCall) CustomerId(customerId string) *AlertsGetMetadataCall {
+	c.urlParams_.Set("customerId", customerId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AlertsGetMetadataCall) Fields(s ...googleapi.Field) *AlertsGetMetadataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AlertsGetMetadataCall) IfNoneMatch(entityTag string) *AlertsGetMetadataCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AlertsGetMetadataCall) Context(ctx context.Context) *AlertsGetMetadataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AlertsGetMetadataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AlertsGetMetadataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/alerts/{alertId}/metadata")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"alertId": c.alertId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "alertcenter.alerts.getMetadata" call.
+// Exactly one of *AlertMetadata or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *AlertMetadata.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AlertsGetMetadataCall) Do(opts ...googleapi.CallOption) (*AlertMetadata, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AlertMetadata{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the metadata of an alert. Attempting to get metadata for\na non-existent alert returns `NOT_FOUND` error.",
+	//   "flatPath": "v1beta1/alerts/{alertId}/metadata",
+	//   "httpMethod": "GET",
+	//   "id": "alertcenter.alerts.getMetadata",
+	//   "parameterOrder": [
+	//     "alertId"
+	//   ],
+	//   "parameters": {
+	//     "alertId": {
+	//       "description": "Required. The identifier of the alert this metadata belongs to.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customerId": {
+	//       "description": "Optional. The unique identifier of the G Suite organization account of the\ncustomer the alert metadata is associated with.\nInferred from the caller identity if not provided.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/alerts/{alertId}/metadata",
+	//   "response": {
+	//     "$ref": "AlertMetadata"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/apps.alerts"
@@ -2011,7 +2721,11 @@ type AlertsFeedbackCreateCall struct {
 
 // Create: Creates new feedback for an alert. Attempting to create a
 // feedback for
-// a non-existent alert returns `NOT_FOUND` error.
+// a non-existent alert returns `NOT_FOUND` error. Attempting to create
+// a
+// feedback for an alert that is marked for deletion
+// returns
+// `FAILED_PRECONDITION' error.
 func (r *AlertsFeedbackService) Create(alertId string, alertfeedback *AlertFeedback) *AlertsFeedbackCreateCall {
 	c := &AlertsFeedbackCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.alertId = alertId
@@ -2119,7 +2833,7 @@ func (c *AlertsFeedbackCreateCall) Do(opts ...googleapi.CallOption) (*AlertFeedb
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates new feedback for an alert. Attempting to create a feedback for\na non-existent alert returns `NOT_FOUND` error.",
+	//   "description": "Creates new feedback for an alert. Attempting to create a feedback for\na non-existent alert returns `NOT_FOUND` error. Attempting to create a\nfeedback for an alert that is marked for deletion returns\n`FAILED_PRECONDITION' error.",
 	//   "flatPath": "v1beta1/alerts/{alertId}/feedback",
 	//   "httpMethod": "POST",
 	//   "id": "alertcenter.alerts.feedback.create",

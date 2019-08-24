@@ -1173,7 +1173,7 @@
                 "entityTypes": {
                   "methods": {
                     "create": {
-                      "description": "Creates a session entity type.\n\nIf the specified session entity type already exists, overrides the session\nentity type.",
+                      "description": "Creates a session entity type.\n\nIf the specified session entity type already exists, overrides the session\nentity type.\n\nThis method doesn't work with Google Assistant integration.\nContact Dialogflow support if you need to use session entities\nwith Google Assistant integration.",
                       "flatPath": "v2/projects/{projectsId}/agent/sessions/{sessionsId}/entityTypes",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.agent.sessions.entityTypes.create",
@@ -1202,7 +1202,7 @@
                       ]
                     },
                     "delete": {
-                      "description": "Deletes the specified session entity type.",
+                      "description": "Deletes the specified session entity type.\n\nThis method doesn't work with Google Assistant integration.\nContact Dialogflow support if you need to use session entities\nwith Google Assistant integration.",
                       "flatPath": "v2/projects/{projectsId}/agent/sessions/{sessionsId}/entityTypes/{entityTypesId}",
                       "httpMethod": "DELETE",
                       "id": "dialogflow.projects.agent.sessions.entityTypes.delete",
@@ -1228,7 +1228,7 @@
                       ]
                     },
                     "get": {
-                      "description": "Retrieves the specified session entity type.",
+                      "description": "Retrieves the specified session entity type.\n\nThis method doesn't work with Google Assistant integration.\nContact Dialogflow support if you need to use session entities\nwith Google Assistant integration.",
                       "flatPath": "v2/projects/{projectsId}/agent/sessions/{sessionsId}/entityTypes/{entityTypesId}",
                       "httpMethod": "GET",
                       "id": "dialogflow.projects.agent.sessions.entityTypes.get",
@@ -1254,7 +1254,7 @@
                       ]
                     },
                     "list": {
-                      "description": "Returns the list of all session entity types in the specified session.",
+                      "description": "Returns the list of all session entity types in the specified session.\n\nThis method doesn't work with Google Assistant integration.\nContact Dialogflow support if you need to use session entities\nwith Google Assistant integration.",
                       "flatPath": "v2/projects/{projectsId}/agent/sessions/{sessionsId}/entityTypes",
                       "httpMethod": "GET",
                       "id": "dialogflow.projects.agent.sessions.entityTypes.list",
@@ -1291,7 +1291,7 @@
                       ]
                     },
                     "patch": {
-                      "description": "Updates the specified session entity type.",
+                      "description": "Updates the specified session entity type.\n\nThis method doesn't work with Google Assistant integration.\nContact Dialogflow support if you need to use session entities\nwith Google Assistant integration.",
                       "flatPath": "v2/projects/{projectsId}/agent/sessions/{sessionsId}/entityTypes/{entityTypesId}",
                       "httpMethod": "PATCH",
                       "id": "dialogflow.projects.agent.sessions.entityTypes.patch",
@@ -1326,6 +1326,82 @@
                       ]
                     }
                   }
+                }
+              }
+            }
+          }
+        },
+        "locations": {
+          "resources": {
+            "operations": {
+              "methods": {
+                "get": {
+                  "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
+                  "httpMethod": "GET",
+                  "id": "dialogflow.projects.locations.operations.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "The name of the operation resource.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "response": {
+                    "$ref": "GoogleLongrunningOperation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
+                  ]
+                },
+                "list": {
+                  "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/operations",
+                  "httpMethod": "GET",
+                  "id": "dialogflow.projects.locations.operations.list",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "filter": {
+                      "description": "The standard list filter.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "The name of the operation's parent resource.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "pageSize": {
+                      "description": "The standard list page size.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "The standard list page token.",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}/operations",
+                  "response": {
+                    "$ref": "GoogleLongrunningListOperationsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
+                  ]
                 }
               }
             }
@@ -1406,7 +1482,7 @@
       }
     }
   },
-  "revision": "20190730",
+  "revision": "20190822",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {

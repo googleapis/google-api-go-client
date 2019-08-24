@@ -2545,7 +2545,9 @@ type Job struct {
 	// The maximum number of allowed characters is 500.
 	Title string `json:"title,omitempty"`
 
-	// Visibility: Optional. The visibility of the job.
+	// Visibility: Deprecated. The job is only visible to the owner.
+	//
+	// The visibility of the job.
 	//
 	// Defaults to Visibility.ACCOUNT_ONLY if not specified.
 	//

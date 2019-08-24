@@ -1092,7 +1092,7 @@
       }
     }
   },
-  "revision": "20190808",
+  "revision": "20190812",
   "rootUrl": "https://pubsub.googleapis.com/",
   "schemas": {
     "AcknowledgeRequest": {
@@ -1423,7 +1423,7 @@
       "id": "PullRequest",
       "properties": {
         "maxMessages": {
-          "description": "The maximum number of messages returned for this request. The Pub/Sub\nsystem may return fewer than the number specified.",
+          "description": "The maximum number of messages to return for this request. Must be a\npositive integer. The Pub/Sub system may return fewer than the number\nspecified.",
           "format": "int32",
           "type": "integer"
         },

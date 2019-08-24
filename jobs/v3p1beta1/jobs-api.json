@@ -662,7 +662,7 @@
       }
     }
   },
-  "revision": "20190727",
+  "revision": "20190820",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {
@@ -1809,7 +1809,7 @@
           "type": "string"
         },
         "visibility": {
-          "description": "Optional. The visibility of the job.\n\nDefaults to Visibility.ACCOUNT_ONLY if not specified.",
+          "description": "Deprecated. The job is only visible to the owner.\n\nThe visibility of the job.\n\nDefaults to Visibility.ACCOUNT_ONLY if not specified.",
           "enum": [
             "VISIBILITY_UNSPECIFIED",
             "ACCOUNT_ONLY",

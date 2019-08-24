@@ -106,6 +106,42 @@
   "resources": {
     "alerts": {
       "methods": {
+        "batchDelete": {
+          "description": "Performs batch delete operation on alerts.",
+          "flatPath": "v1beta1/alerts:batchDelete",
+          "httpMethod": "POST",
+          "id": "alertcenter.alerts.batchDelete",
+          "parameterOrder": [],
+          "parameters": {},
+          "path": "v1beta1/alerts:batchDelete",
+          "request": {
+            "$ref": "BatchDeleteAlertsRequest"
+          },
+          "response": {
+            "$ref": "BatchDeleteAlertsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/apps.alerts"
+          ]
+        },
+        "batchUndelete": {
+          "description": "Performs batch undelete operation on alerts.",
+          "flatPath": "v1beta1/alerts:batchUndelete",
+          "httpMethod": "POST",
+          "id": "alertcenter.alerts.batchUndelete",
+          "parameterOrder": [],
+          "parameters": {},
+          "path": "v1beta1/alerts:batchUndelete",
+          "request": {
+            "$ref": "BatchUndeleteAlertsRequest"
+          },
+          "response": {
+            "$ref": "BatchUndeleteAlertsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/apps.alerts"
+          ]
+        },
         "delete": {
           "description": "Marks the specified alert for deletion. An alert that has been marked for\ndeletion is removed from Alert Center after 30 days.\nMarking an alert for deletion has no effect on an alert which has\nalready been marked for deletion. Attempting to mark a nonexistent alert\nfor deletion results in a `NOT_FOUND` error.",
           "flatPath": "v1beta1/alerts/{alertId}",
@@ -159,6 +195,35 @@
           "path": "v1beta1/alerts/{alertId}",
           "response": {
             "$ref": "Alert"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/apps.alerts"
+          ]
+        },
+        "getMetadata": {
+          "description": "Returns the metadata of an alert. Attempting to get metadata for\na non-existent alert returns `NOT_FOUND` error.",
+          "flatPath": "v1beta1/alerts/{alertId}/metadata",
+          "httpMethod": "GET",
+          "id": "alertcenter.alerts.getMetadata",
+          "parameterOrder": [
+            "alertId"
+          ],
+          "parameters": {
+            "alertId": {
+              "description": "Required. The identifier of the alert this metadata belongs to.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "customerId": {
+              "description": "Optional. The unique identifier of the G Suite organization account of the\ncustomer the alert metadata is associated with.\nInferred from the caller identity if not provided.",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "v1beta1/alerts/{alertId}/metadata",
+          "response": {
+            "$ref": "AlertMetadata"
           },
           "scopes": [
             "https://www.googleapis.com/auth/apps.alerts"
@@ -238,7 +303,7 @@
         "feedback": {
           "methods": {
             "create": {
-              "description": "Creates new feedback for an alert. Attempting to create a feedback for\na non-existent alert returns `NOT_FOUND` error.",
+              "description": "Creates new feedback for an alert. Attempting to create a feedback for\na non-existent alert returns `NOT_FOUND` error. Attempting to create a\nfeedback for an alert that is marked for deletion returns\n`FAILED_PRECONDITION' error.",
               "flatPath": "v1beta1/alerts/{alertId}/feedback",
               "httpMethod": "POST",
               "id": "alertcenter.alerts.feedback.create",
@@ -357,7 +422,7 @@
       }
     }
   },
-  "revision": "20190725",
+  "revision": "20190821",
   "rootUrl": "https://alertcenter.googleapis.com/",
   "schemas": {
     "AccountWarning": {
@@ -473,6 +538,14 @@
           "format": "google-datetime",
           "type": "string"
         },
+        "etag": {
+          "description": "Optional. `etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of an alert from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform alert updates in order to avoid race\nconditions: An `etag` is returned in the response which contains alerts,\nand systems are expected to put that etag in the request to update alert to\nensure that their change will be applied to the same version of the alert.\n\nIf no `etag` is provided in the call to update alert, then the existing\nalert is overwritten blindly.",
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "AlertMetadata",
+          "description": "Output only. The metadata associated with this alert."
+        },
         "securityInvestigationToolLink": {
           "description": "Output only. An optional\n[Security Investigation Tool](https://support.google.com/a/answer/7575955)\nquery for this alert.",
           "type": "string"
@@ -542,6 +615,42 @@
       },
       "type": "object"
     },
+    "AlertMetadata": {
+      "description": "An alert metadata.",
+      "id": "AlertMetadata",
+      "properties": {
+        "alertId": {
+          "description": "Output only. The alert identifier.",
+          "type": "string"
+        },
+        "assignee": {
+          "description": "The email address of the user assigned to the alert.",
+          "type": "string"
+        },
+        "customerId": {
+          "description": "Output only. The unique identifier of the Google account of the customer.",
+          "type": "string"
+        },
+        "etag": {
+          "description": "Optional. `etag` is used for optimistic concurrency control as a way to\nhelp prevent simultaneous updates of an alert metadata from overwriting\neach other. It is strongly suggested that systems make use of the `etag` in\nthe read-modify-write cycle to perform metatdata updates in order to avoid\nrace conditions: An `etag` is returned in the response which contains alert\nmetadata, and systems are expected to put that etag in the request to\nupdate alert metadata to ensure that their change will be applied to the\nsame version of the alert metadata.\n\nIf no `etag` is provided in the call to update alert metadata, then the\nexisting alert metadata is overwritten blindly.",
+          "type": "string"
+        },
+        "severity": {
+          "description": "The severity value of the alert. Alert Center will set this field at alert\ncreation time, default's to an empty string when it could not be\ndetermined.\nThe supported values for update actions on this field are the following:\n\n* HIGH\n* MEDIUM\n* LOW",
+          "type": "string"
+        },
+        "status": {
+          "description": "The current status of the alert.\nThe supported values are the following:\n\n* NOT_STARTED\n* IN_PROGRESS\n* CLOSED",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Output only. The time this metadata was last updated.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Attachment": {
       "description": "Attachment with application-specific information about an alert.",
       "id": "Attachment",
@@ -575,6 +684,84 @@
         "sourceIp": {
           "description": "The source IP address of the malicious email, for example,\n`127.0.0.1`.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BatchDeleteAlertsRequest": {
+      "description": "A request to perform batch delete on alerts.",
+      "id": "BatchDeleteAlertsRequest",
+      "properties": {
+        "alertId": {
+          "description": "Required. list of alert ids.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "customerId": {
+          "description": "Optional. The unique identifier of the G Suite organization account of the\ncustomer the alerts are associated with.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BatchDeleteAlertsResponse": {
+      "description": "Response to batch delete operation on alerts.",
+      "id": "BatchDeleteAlertsResponse",
+      "properties": {
+        "failedAlertStatus": {
+          "additionalProperties": {
+            "$ref": "Status"
+          },
+          "description": "The status details for each failed alert_id.",
+          "type": "object"
+        },
+        "successAlertIds": {
+          "description": "The successful list of alert ids.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "BatchUndeleteAlertsRequest": {
+      "description": "A request to perform batch undelete on alerts.",
+      "id": "BatchUndeleteAlertsRequest",
+      "properties": {
+        "alertId": {
+          "description": "Required. list of alert ids.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "customerId": {
+          "description": "Optional. The unique identifier of the G Suite organization account of the\ncustomer the alerts are associated with.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BatchUndeleteAlertsResponse": {
+      "description": "Response to batch undelete operation on alerts.",
+      "id": "BatchUndeleteAlertsResponse",
+      "properties": {
+        "failedAlertStatus": {
+          "additionalProperties": {
+            "$ref": "Status"
+          },
+          "description": "The status details for each failed alert_id.",
+          "type": "object"
+        },
+        "successAlertIds": {
+          "description": "The successful list of alert ids.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -937,6 +1124,33 @@
       "properties": {
         "email": {
           "description": "The email of the user this incident was created for.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Status": {
+      "description": "The `Status` type defines a logical error model that is suitable for\ndifferent programming environments, including REST APIs and RPC APIs. It is\nused by [gRPC](https://github.com/grpc). Each `Status` message contains\nthree pieces of data: error code, error message, and error details.\n\nYou can find out more about this error model and how to work with it in the\n[API Design Guide](https://cloud.google.com/apis/design/errors).",
+      "id": "Status",
+      "properties": {
+        "code": {
+          "description": "The status code, which should be an enum value of google.rpc.Code.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "details": {
+          "description": "A list of messages that carry the error details.  There is a common set of\nmessage types for APIs to use.",
+          "items": {
+            "additionalProperties": {
+              "description": "Properties of the object. Contains field @type with type URL.",
+              "type": "any"
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "message": {
+          "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
           "type": "string"
         }
       },

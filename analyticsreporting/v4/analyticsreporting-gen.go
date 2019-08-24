@@ -174,7 +174,10 @@ type UserActivityService struct {
 // hits.
 // These hits will be merged into one ECOMMERCE Activity.
 type Activity struct {
-	// ActivityTime: Timestamp of the activity.
+	// ActivityTime: Timestamp of the activity. If activities for a visit
+	// cross midnight and
+	// occur in two separate dates, then two sessions (one per date)
+	// share the session identifier.
 	ActivityTime string `json:"activityTime,omitempty"`
 
 	// ActivityType: Type of this activity.

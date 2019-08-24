@@ -4676,13 +4676,15 @@ type PeopleUpdateContactCall struct {
 // not
 // specified for the contact to be updated.
 // <br>
-// The request throws a 412 error if `person.metadata.sources.etag`
-// is
-// different than the contact's etag, which indicates the contact has
-// changed
-// since its data was read. Clients should get the latest person and
-// re-apply
-// their updates to the latest person.
+// The request throws a 400 error with an error with
+// reason
+// "failedPrecondition" if `person.metadata.sources.etag` is different
+// than
+// the contact's etag, which indicates the contact has changed since its
+// data
+// was read. Clients should get the latest person and re-apply their
+// updates
+// to the latest person.
 func (r *PeopleService) UpdateContact(resourceName string, person *Person) *PeopleUpdateContactCall {
 	c := &PeopleUpdateContactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -4813,7 +4815,7 @@ func (c *PeopleUpdateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Update contact data for an existing contact person. Any non-contact data\nwill not be modified.\n\nThe request throws a 400 error if `updatePersonFields` is not specified.\n\u003cbr\u003e\nThe request throws a 400 error if `person.metadata.sources` is not\nspecified for the contact to be updated.\n\u003cbr\u003e\nThe request throws a 412 error if `person.metadata.sources.etag` is\ndifferent than the contact's etag, which indicates the contact has changed\nsince its data was read. Clients should get the latest person and re-apply\ntheir updates to the latest person.",
+	//   "description": "Update contact data for an existing contact person. Any non-contact data\nwill not be modified.\n\nThe request throws a 400 error if `updatePersonFields` is not specified.\n\u003cbr\u003e\nThe request throws a 400 error if `person.metadata.sources` is not\nspecified for the contact to be updated.\n\u003cbr\u003e\nThe request throws a 400 error with an error with reason\n`\"failedPrecondition\"` if `person.metadata.sources.etag` is different than\nthe contact's etag, which indicates the contact has changed since its data\nwas read. Clients should get the latest person and re-apply their updates\nto the latest person.",
 	//   "flatPath": "v1/people/{peopleId}:updateContact",
 	//   "httpMethod": "PATCH",
 	//   "id": "people.people.updateContact",

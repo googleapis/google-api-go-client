@@ -15,7 +15,7 @@
   "description": "Reads and publishes results from Firebase Test Lab.",
   "discoveryVersion": "v1",
   "documentationLink": "https://firebase.google.com/docs/test-lab/",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/3Gf6wDyq-InE6OFE6RoFKRzHx1Y\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/BXvf1UotF2LiymSOKSxDnp5W19c\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1271,7 +1271,7 @@
       }
     }
   },
-  "revision": "20190801",
+  "revision": "20190822",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AndroidAppInfo": {
@@ -2592,6 +2592,7 @@
           "enum": [
             "anr",
             "availableDeepLinks",
+            "blankScreen",
             "compatibleWithOrchestrator",
             "completeRoboScriptExecution",
             "crashDialogError",
@@ -2608,15 +2609,20 @@
             "nativeCrash",
             "nonSdkApiUsageReport",
             "nonSdkApiUsageViolation",
+            "overlappingUiElements",
             "performedGoogleLogin",
             "performedMonkeyActions",
             "startActivityNotFound",
+            "uiElementsTooDeep",
             "unspecifiedType",
             "unusedRoboDirective",
             "usedRoboDirective",
             "usedRoboIgnoreDirective"
           ],
           "enumDescriptions": [
+            "",
+            "",
+            "",
             "",
             "",
             "",

@@ -311,7 +311,7 @@ type LighthouseResultV5 struct {
 
 	// RunWarnings: List of all run warnings in the LHR. Will always output
 	// to at least `[]`.
-	RunWarnings []interface{} `json:"runWarnings,omitempty"`
+	RunWarnings []GoogleprotobufValue `json:"runWarnings,omitempty"`
 
 	// RuntimeError: A top-level error message that, if present, indicates a
 	// serious enough problem that this Lighthouse result may need to be

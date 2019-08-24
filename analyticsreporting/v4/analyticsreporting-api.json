@@ -154,7 +154,7 @@
       }
     }
   },
-  "revision": "20190719",
+  "revision": "20190821",
   "rootUrl": "https://analyticsreporting.googleapis.com/",
   "schemas": {
     "Activity": {
@@ -162,7 +162,7 @@
       "id": "Activity",
       "properties": {
         "activityTime": {
-          "description": "Timestamp of the activity.",
+          "description": "Timestamp of the activity. If activities for a visit cross midnight and\noccur in two separate dates, then two sessions (one per date)\nshare the session identifier.",
           "format": "google-datetime",
           "type": "string"
         },

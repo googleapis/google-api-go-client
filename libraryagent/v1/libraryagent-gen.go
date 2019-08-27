@@ -440,7 +440,7 @@ func (c *ShelvesGetCall) Do(opts ...googleapi.CallOption) (*GoogleExampleLibrary
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the shelf to retrieve.",
+	//       "description": "Required. The name of the shelf to retrieve.",
 	//       "location": "path",
 	//       "pattern": "^shelves/[^/]+$",
 	//       "required": true,
@@ -761,7 +761,7 @@ func (c *ShelvesBooksBorrowCall) Do(opts ...googleapi.CallOption) (*GoogleExampl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the book to borrow.",
+	//       "description": "Required. The name of the book to borrow.",
 	//       "location": "path",
 	//       "pattern": "^shelves/[^/]+/books/[^/]+$",
 	//       "required": true,
@@ -905,7 +905,7 @@ func (c *ShelvesBooksGetCall) Do(opts ...googleapi.CallOption) (*GoogleExampleLi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the book to retrieve.",
+	//       "description": "Required. The name of the book to retrieve.",
 	//       "location": "path",
 	//       "pattern": "^shelves/[^/]+/books/[^/]+$",
 	//       "required": true,
@@ -1085,7 +1085,7 @@ func (c *ShelvesBooksListCall) Do(opts ...googleapi.CallOption) (*GoogleExampleL
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the shelf whose books we'd like to list.",
+	//       "description": "Required. The name of the shelf whose books we'd like to list.",
 	//       "location": "path",
 	//       "pattern": "^shelves/[^/]+$",
 	//       "required": true,
@@ -1240,7 +1240,7 @@ func (c *ShelvesBooksReturnCall) Do(opts ...googleapi.CallOption) (*GoogleExampl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the book to return.",
+	//       "description": "Required. The name of the book to return.",
 	//       "location": "path",
 	//       "pattern": "^shelves/[^/]+/books/[^/]+$",
 	//       "required": true,

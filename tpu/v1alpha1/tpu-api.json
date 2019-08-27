@@ -658,7 +658,7 @@
       }
     }
   },
-  "revision": "20190619",
+  "revision": "20190821",
   "rootUrl": "https://tpu.googleapis.com/",
   "schemas": {
     "AcceleratorType": {
@@ -696,6 +696,13 @@
         "nextPageToken": {
           "description": "The next page token or empty if none.",
           "type": "string"
+        },
+        "unreachable": {
+          "description": "Locations that could not be reached.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -773,6 +780,13 @@
           "description": "The listed nodes.",
           "items": {
             "$ref": "TensorFlowVersion"
+          },
+          "type": "array"
+        },
+        "unreachable": {
+          "description": "Locations that could not be reached.",
+          "items": {
+            "type": "string"
           },
           "type": "array"
         }

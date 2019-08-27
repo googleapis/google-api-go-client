@@ -261,6 +261,9 @@ type ListAcceleratorTypesResponse struct {
 	// NextPageToken: The next page token or empty if none.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -408,6 +411,9 @@ type ListTensorFlowVersionsResponse struct {
 
 	// TensorflowVersions: The listed nodes.
 	TensorflowVersions []*TensorFlowVersion `json:"tensorflowVersions,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

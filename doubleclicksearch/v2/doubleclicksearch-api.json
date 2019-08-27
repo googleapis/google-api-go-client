@@ -14,7 +14,7 @@
   "description": "Reports and modifies your advertising data in DoubleClick Search (for example, campaigns, ad groups, keywords, and conversions).",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/doubleclick-search/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/xqxEgtWWvH_ULTnGeL-VBWfFKDU\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/V7jM5EsXc58zTkN0gQqOa8rHpsw\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -431,7 +431,7 @@
       }
     }
   },
-  "revision": "20181030",
+  "revision": "20190821",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Availability": {
@@ -720,7 +720,7 @@
       "id": "Report",
       "properties": {
         "files": {
-          "description": "Asynchronous report only. Contains a list of generated report files once the report has succesfully completed.",
+          "description": "Asynchronous report only. Contains a list of generated report files once the report has successfully completed.",
           "items": {
             "properties": {
               "byteCount": {
@@ -1105,6 +1105,6 @@
     }
   },
   "servicePath": "doubleclicksearch/v2/",
-  "title": "DoubleClick Search API",
+  "title": "Search Ads 360 API",
   "version": "v2"
 }

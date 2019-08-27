@@ -116,7 +116,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "The name of the shelf to retrieve.",
+              "description": "Required. The name of the shelf to retrieve.",
               "location": "path",
               "pattern": "^shelves/[^/]+$",
               "required": true,
@@ -172,7 +172,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The name of the book to borrow.",
+                  "description": "Required. The name of the book to borrow.",
                   "location": "path",
                   "pattern": "^shelves/[^/]+/books/[^/]+$",
                   "required": true,
@@ -197,7 +197,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The name of the book to retrieve.",
+                  "description": "Required. The name of the book to retrieve.",
                   "location": "path",
                   "pattern": "^shelves/[^/]+/books/[^/]+$",
                   "required": true,
@@ -233,7 +233,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "The name of the shelf whose books we'd like to list.",
+                  "description": "Required. The name of the shelf whose books we'd like to list.",
                   "location": "path",
                   "pattern": "^shelves/[^/]+$",
                   "required": true,
@@ -258,7 +258,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The name of the book to return.",
+                  "description": "Required. The name of the book to return.",
                   "location": "path",
                   "pattern": "^shelves/[^/]+/books/[^/]+$",
                   "required": true,
@@ -278,7 +278,7 @@
       }
     }
   },
-  "revision": "20190107",
+  "revision": "20190824",
   "rootUrl": "https://libraryagent.googleapis.com/",
   "schemas": {
     "GoogleExampleLibraryagentV1Book": {

@@ -999,7 +999,11 @@ func (s *Network) MarshalJSON() ([]byte, error) {
 // RepoSource: Location of the source in a Google Cloud Source
 // Repository.
 type RepoSource struct {
-	// BranchName: Name of the branch to build.
+	// BranchName: Regex matching branches to build.
+	//
+	// The syntax of the regular expressions accepted is the syntax accepted
+	// by
+	// RE2 and described at https://github.com/google/re2/wiki/Syntax
 	BranchName string `json:"branchName,omitempty"`
 
 	// CommitSha: Explicit commit SHA to build.
@@ -1023,7 +1027,11 @@ type RepoSource struct {
 	// assumed.
 	RepoName string `json:"repoName,omitempty"`
 
-	// TagName: Name of the tag to build.
+	// TagName: Regex matching tags to build.
+	//
+	// The syntax of the regular expressions accepted is the syntax accepted
+	// by
+	// RE2 and described at https://github.com/google/re2/wiki/Syntax
 	TagName string `json:"tagName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BranchName") to

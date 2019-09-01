@@ -164,7 +164,7 @@ type PlatformSummary struct {
 	//   "FAILING" - Failing.
 	BetterAdsStatus string `json:"betterAdsStatus,omitempty"`
 
-	// EnforcementTime: The date on which ad filtering begins.
+	// EnforcementTime: The time at which ad filtering begins.
 	EnforcementTime string `json:"enforcementTime,omitempty"`
 
 	// FilterStatus: The ad filtering status of the site.
@@ -420,7 +420,7 @@ func (c *SitesGetCall) Do(opts ...googleapi.CallOption) (*SiteSummaryResponse, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The required site name. It should be the site property whose ad experiences\nmay have been reviewed, and it should be URL-encoded. For example,\nsites/https%3A%2F%2Fwww.google.com. The server will return an error of\nBAD_REQUEST if this field is not filled in. Note that if the site property\nis not yet verified in Search Console, the reportUrl field returned by the\nAPI will lead to the verification page, prompting the user to go through\nthat process before they can gain access to the Ad Experience Report.",
+	//       "description": "Required. The site property whose ad experiences\nmay have been reviewed, and it should be URL-encoded. For example,\nsites/https%3A%2F%2Fwww.google.com. The server will return an error of\nBAD_REQUEST if this field is not filled in. Note that if the site property\nis not yet verified in Search Console, the reportUrl field returned by the\nAPI will lead to the verification page, prompting the user to go through\nthat process before they can gain access to the Ad Experience Report.",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+$",
 	//       "required": true,
@@ -448,8 +448,7 @@ type ViolatingSitesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists sites with Ad Experience Report statuses of "Failing" or
-// "Warning".
+// List: Lists sites with failing Ad Experience Report statuses.
 func (r *ViolatingSitesService) List() *ViolatingSitesListCall {
 	c := &ViolatingSitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -551,7 +550,7 @@ func (c *ViolatingSitesListCall) Do(opts ...googleapi.CallOption) (*ViolatingSit
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists sites with Ad Experience Report statuses of \"Failing\" or \"Warning\".",
+	//   "description": "Lists sites with failing Ad Experience Report statuses.",
 	//   "flatPath": "v1/violatingSites",
 	//   "httpMethod": "GET",
 	//   "id": "adexperiencereport.violatingSites.list",

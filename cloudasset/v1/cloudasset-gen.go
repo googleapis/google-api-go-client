@@ -399,6 +399,56 @@ func (s *BatchGetAssetsHistoryResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BigQueryDestination: A BigQuery destination.
+type BigQueryDestination struct {
+	// Dataset: Required. The BigQuery dataset in
+	// format
+	// "projects/projectId/datasets/datasetId", to which the snapshot
+	// result
+	// should be exported. If this dataset does not exist, the export call
+	// returns
+	// an error.
+	Dataset string `json:"dataset,omitempty"`
+
+	// Force: If the destination table already exists and this flag is
+	// `TRUE`, the
+	// table will be overwritten by the contents of assets snapshot. If the
+	// flag
+	// is not set and the destination table already exists, the export
+	// call
+	// returns an error.
+	Force bool `json:"force,omitempty"`
+
+	// Table: Required. The BigQuery table to which the snapshot result
+	// should be
+	// written. If this table does not exist, a new table with the given
+	// name
+	// will be created.
+	Table string `json:"table,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dataset") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dataset") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BigQueryDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod BigQueryDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding.
@@ -1652,18 +1702,27 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 
 // OutputConfig: Output configuration for export assets destination.
 type OutputConfig struct {
+	// BigqueryDestination: Destination on BigQuery. The output table stores
+	// the fields in asset
+	// proto as columns in BigQuery. The resource/iam_policy field is
+	// converted
+	// to a record with each field to a column, except metadata to a single
+	// JSON
+	// string.
+	BigqueryDestination *BigQueryDestination `json:"bigqueryDestination,omitempty"`
+
 	// GcsDestination: Destination on Cloud Storage.
 	GcsDestination *GcsDestination `json:"gcsDestination,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "BigqueryDestination")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "GcsDestination") to
+	// NullFields is a list of field names (e.g. "BigqueryDestination") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

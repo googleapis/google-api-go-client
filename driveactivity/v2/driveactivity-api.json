@@ -131,7 +131,7 @@
       }
     }
   },
-  "revision": "20190425",
+  "revision": "20190828",
   "rootUrl": "https://driveactivity.googleapis.com/",
   "schemas": {
     "Action": {
@@ -543,7 +543,7 @@
         },
         "driveFolder": {
           "$ref": "DriveFolder",
-          "description": "The Drive item is a folder."
+          "description": "The Drive item is a folder. Includes information about the type of\nfolder."
         },
         "file": {
           "$ref": "File",

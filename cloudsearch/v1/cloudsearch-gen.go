@@ -4168,6 +4168,10 @@ type PropertyDefinition struct {
 	// properties.
 	IsSortable bool `json:"isSortable,omitempty"`
 
+	// IsSuggestable: Indicates that the property can be used for generating
+	// query suggestions.
+	IsSuggestable bool `json:"isSuggestable,omitempty"`
+
 	// IsWildcardSearchable: Indicates that users can perform wildcard
 	// search for this
 	// property. Only supported for Text properties. IsReturnable must be
@@ -4420,12 +4424,19 @@ type QueryInterpretation struct {
 	// is not used to fetch the search results.
 	//   "BLEND" - The natural language results is mixed with results from
 	// original query.
-	//   "REPLACE" - The results only contain natural language results.
+	//   "REPLACE" - The results from original query are replaced. The
+	// reason for replacing
+	// the results from original query is populated in the 'Reason' field
+	// below.
 	InterpretationType string `json:"interpretationType,omitempty"`
 
 	// InterpretedQuery: The interpretation of the query used in search. For
-	// example, query "email
-	// from john" will be interpreted as "from:john source:mail"
+	// example, queries with
+	// natural language intent like "email from john" will be interpreted
+	// as
+	// "from:john source:mail". This field will not be filled when the
+	// reason is
+	// NO_RESULTS_FOUND_FOR_USER_QUERY.
 	InterpretedQuery string `json:"interpretedQuery,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InterpretationType")

@@ -2886,7 +2886,7 @@ func (s *CommentThreadSnippet) MarshalJSON() ([]byte, error) {
 }
 
 // ContentRating: Ratings schemes. The country-specific ratings are
-// mostly for movies and shows. NEXT_ID: 71
+// mostly for movies and shows. NEXT_ID: 72
 type ContentRating struct {
 	// AcbRating: The video's Australian Classification Board (ACB) or
 	// Australian Communications and Media Authority (ACMA) rating. ACMA
@@ -3656,6 +3656,17 @@ type ContentRating struct {
 	//   "nkclvU"
 	//   "nkclvUnrated"
 	NkclvRating string `json:"nkclvRating,omitempty"`
+
+	// Possible values:
+	//   "nmc15plus"
+	//   "nmc18plus"
+	//   "nmc18tc"
+	//   "nmcG"
+	//   "nmcPg"
+	//   "nmcPg13"
+	//   "nmcPg15"
+	//   "nmcUnrated"
+	NmcRating string `json:"nmcRating,omitempty"`
 
 	// OflcRating: The video's Office of Film and Literature Classification
 	// (OFLC - New Zealand) rating.

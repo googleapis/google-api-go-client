@@ -448,13 +448,17 @@
       }
     }
   },
-  "revision": "20190809",
+  "revision": "20190823",
   "rootUrl": "https://vision.googleapis.com/",
   "schemas": {
     "AnnotateFileResponse": {
       "description": "Response to a single file annotation request. A file may contain one or more\nimages, which individually have their own responses.",
       "id": "AnnotateFileResponse",
       "properties": {
+        "error": {
+          "$ref": "Status",
+          "description": "If set, represents the error message for the failed request. The\n`responses` field will not be set in this case."
+        },
         "inputConfig": {
           "$ref": "InputConfig",
           "description": "Information about the file for which this response is generated."
@@ -1117,6 +1121,10 @@
       "description": "Response to a single file annotation request. A file may contain one or more\nimages, which individually have their own responses.",
       "id": "GoogleCloudVisionV1p1beta1AnnotateFileResponse",
       "properties": {
+        "error": {
+          "$ref": "Status",
+          "description": "If set, represents the error message for the failed request. The\n`responses` field will not be set in this case."
+        },
         "inputConfig": {
           "$ref": "GoogleCloudVisionV1p1beta1InputConfig",
           "description": "Information about the file for which this response is generated."
@@ -2045,12 +2053,43 @@
           "$ref": "GoogleCloudVisionV1p1beta1BoundingPoly",
           "description": "The bounding polygon around the product detected in the query image."
         },
+        "objectAnnotations": {
+          "description": "List of generic predictions for the object in the bounding box.",
+          "items": {
+            "$ref": "GoogleCloudVisionV1p1beta1ProductSearchResultsObjectAnnotation"
+          },
+          "type": "array"
+        },
         "results": {
           "description": "List of results, one for each product match.",
           "items": {
             "$ref": "GoogleCloudVisionV1p1beta1ProductSearchResultsResult"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVisionV1p1beta1ProductSearchResultsObjectAnnotation": {
+      "description": "Prediction for what the object in the bounding box is.",
+      "id": "GoogleCloudVisionV1p1beta1ProductSearchResultsObjectAnnotation",
+      "properties": {
+        "languageCode": {
+          "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.",
+          "type": "string"
+        },
+        "mid": {
+          "description": "Object ID that should align with EntityAnnotation mid.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Object name, expressed in its `language_code` language.",
+          "type": "string"
+        },
+        "score": {
+          "description": "Score of the result. Range [0, 1].",
+          "format": "float",
+          "type": "number"
         }
       },
       "type": "object"
@@ -2521,6 +2560,10 @@
       "description": "Response to a single file annotation request. A file may contain one or more\nimages, which individually have their own responses.",
       "id": "GoogleCloudVisionV1p2beta1AnnotateFileResponse",
       "properties": {
+        "error": {
+          "$ref": "Status",
+          "description": "If set, represents the error message for the failed request. The\n`responses` field will not be set in this case."
+        },
         "inputConfig": {
           "$ref": "GoogleCloudVisionV1p2beta1InputConfig",
           "description": "Information about the file for which this response is generated."
@@ -3768,12 +3811,43 @@
           "$ref": "GoogleCloudVisionV1p2beta1BoundingPoly",
           "description": "The bounding polygon around the product detected in the query image."
         },
+        "objectAnnotations": {
+          "description": "List of generic predictions for the object in the bounding box.",
+          "items": {
+            "$ref": "GoogleCloudVisionV1p2beta1ProductSearchResultsObjectAnnotation"
+          },
+          "type": "array"
+        },
         "results": {
           "description": "List of results, one for each product match.",
           "items": {
             "$ref": "GoogleCloudVisionV1p2beta1ProductSearchResultsResult"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVisionV1p2beta1ProductSearchResultsObjectAnnotation": {
+      "description": "Prediction for what the object in the bounding box is.",
+      "id": "GoogleCloudVisionV1p2beta1ProductSearchResultsObjectAnnotation",
+      "properties": {
+        "languageCode": {
+          "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.",
+          "type": "string"
+        },
+        "mid": {
+          "description": "Object ID that should align with EntityAnnotation mid.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Object name, expressed in its `language_code` language.",
+          "type": "string"
+        },
+        "score": {
+          "description": "Score of the result. Range [0, 1].",
+          "format": "float",
+          "type": "number"
         }
       },
       "type": "object"
@@ -4225,6 +4299,10 @@
       "description": "Response to a single file annotation request. A file may contain one or more\nimages, which individually have their own responses.",
       "id": "GoogleCloudVisionV1p3beta1AnnotateFileResponse",
       "properties": {
+        "error": {
+          "$ref": "Status",
+          "description": "If set, represents the error message for the failed request. The\n`responses` field will not be set in this case."
+        },
         "inputConfig": {
           "$ref": "GoogleCloudVisionV1p3beta1InputConfig",
           "description": "Information about the file for which this response is generated."
@@ -5209,12 +5287,43 @@
           "$ref": "GoogleCloudVisionV1p3beta1BoundingPoly",
           "description": "The bounding polygon around the product detected in the query image."
         },
+        "objectAnnotations": {
+          "description": "List of generic predictions for the object in the bounding box.",
+          "items": {
+            "$ref": "GoogleCloudVisionV1p3beta1ProductSearchResultsObjectAnnotation"
+          },
+          "type": "array"
+        },
         "results": {
           "description": "List of results, one for each product match.",
           "items": {
             "$ref": "GoogleCloudVisionV1p3beta1ProductSearchResultsResult"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVisionV1p3beta1ProductSearchResultsObjectAnnotation": {
+      "description": "Prediction for what the object in the bounding box is.",
+      "id": "GoogleCloudVisionV1p3beta1ProductSearchResultsObjectAnnotation",
+      "properties": {
+        "languageCode": {
+          "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.",
+          "type": "string"
+        },
+        "mid": {
+          "description": "Object ID that should align with EntityAnnotation mid.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Object name, expressed in its `language_code` language.",
+          "type": "string"
+        },
+        "score": {
+          "description": "Score of the result. Range [0, 1].",
+          "format": "float",
+          "type": "number"
         }
       },
       "type": "object"
@@ -5677,6 +5786,10 @@
       "description": "Response to a single file annotation request. A file may contain one or more\nimages, which individually have their own responses.",
       "id": "GoogleCloudVisionV1p4beta1AnnotateFileResponse",
       "properties": {
+        "error": {
+          "$ref": "Status",
+          "description": "If set, represents the error message for the failed request. The\n`responses` field will not be set in this case."
+        },
         "inputConfig": {
           "$ref": "GoogleCloudVisionV1p4beta1InputConfig",
           "description": "Information about the file for which this response is generated."
@@ -6706,12 +6819,43 @@
           "$ref": "GoogleCloudVisionV1p4beta1BoundingPoly",
           "description": "The bounding polygon around the product detected in the query image."
         },
+        "objectAnnotations": {
+          "description": "List of generic predictions for the object in the bounding box.",
+          "items": {
+            "$ref": "GoogleCloudVisionV1p4beta1ProductSearchResultsObjectAnnotation"
+          },
+          "type": "array"
+        },
         "results": {
           "description": "List of results, one for each product match.",
           "items": {
             "$ref": "GoogleCloudVisionV1p4beta1ProductSearchResultsResult"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVisionV1p4beta1ProductSearchResultsObjectAnnotation": {
+      "description": "Prediction for what the object in the bounding box is.",
+      "id": "GoogleCloudVisionV1p4beta1ProductSearchResultsObjectAnnotation",
+      "properties": {
+        "languageCode": {
+          "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.",
+          "type": "string"
+        },
+        "mid": {
+          "description": "Object ID that should align with EntityAnnotation mid.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Object name, expressed in its `language_code` language.",
+          "type": "string"
+        },
+        "score": {
+          "description": "Score of the result. Range [0, 1].",
+          "format": "float",
+          "type": "number"
         }
       },
       "type": "object"
@@ -7236,6 +7380,10 @@
       "description": "Response to a single file annotation request. A file may contain one or more\nimages, which individually have their own responses.",
       "id": "GoogleCloudVisionV1p5beta1AnnotateFileResponse",
       "properties": {
+        "error": {
+          "$ref": "Status",
+          "description": "If set, represents the error message for the failed request. The\n`responses` field will not be set in this case."
+        },
         "inputConfig": {
           "$ref": "GoogleCloudVisionV1p5beta1InputConfig",
           "description": "Information about the file for which this response is generated."
@@ -8294,12 +8442,43 @@
           "$ref": "GoogleCloudVisionV1p5beta1BoundingPoly",
           "description": "The bounding polygon around the product detected in the query image."
         },
+        "objectAnnotations": {
+          "description": "List of generic predictions for the object in the bounding box.",
+          "items": {
+            "$ref": "GoogleCloudVisionV1p5beta1ProductSearchResultsObjectAnnotation"
+          },
+          "type": "array"
+        },
         "results": {
           "description": "List of results, one for each product match.",
           "items": {
             "$ref": "GoogleCloudVisionV1p5beta1ProductSearchResultsResult"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVisionV1p5beta1ProductSearchResultsObjectAnnotation": {
+      "description": "Prediction for what the object in the bounding box is.",
+      "id": "GoogleCloudVisionV1p5beta1ProductSearchResultsObjectAnnotation",
+      "properties": {
+        "languageCode": {
+          "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.",
+          "type": "string"
+        },
+        "mid": {
+          "description": "Object ID that should align with EntityAnnotation mid.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Object name, expressed in its `language_code` language.",
+          "type": "string"
+        },
+        "score": {
+          "description": "Score of the result. Range [0, 1].",
+          "format": "float",
+          "type": "number"
         }
       },
       "type": "object"
@@ -8860,6 +9039,13 @@
           "$ref": "BoundingPoly",
           "description": "The bounding polygon around the product detected in the query image."
         },
+        "objectAnnotations": {
+          "description": "List of generic predictions for the object in the bounding box.",
+          "items": {
+            "$ref": "ObjectAnnotation"
+          },
+          "type": "array"
+        },
         "results": {
           "description": "List of results, one for each product match.",
           "items": {
@@ -9109,6 +9295,30 @@
         },
         "y": {
           "description": "Y coordinate.",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "ObjectAnnotation": {
+      "description": "Prediction for what the object in the bounding box is.",
+      "id": "ObjectAnnotation",
+      "properties": {
+        "languageCode": {
+          "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.",
+          "type": "string"
+        },
+        "mid": {
+          "description": "Object ID that should align with EntityAnnotation mid.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Object name, expressed in its `language_code` language.",
+          "type": "string"
+        },
+        "score": {
+          "description": "Score of the result. Range [0, 1].",
           "format": "float",
           "type": "number"
         }

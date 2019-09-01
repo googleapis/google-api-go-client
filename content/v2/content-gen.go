@@ -4486,7 +4486,7 @@ type Order struct {
 	// Customer: The details of the customer who placed the order.
 	Customer *OrderCustomer `json:"customer,omitempty"`
 
-	// DeliveryDetails: Delivery details for shipments.
+	// DeliveryDetails: Delivery details for shipments of type delivery.
 	DeliveryDetails *OrderDeliveryDetails `json:"deliveryDetails,omitempty"`
 
 	// Id: The REST ID of the order. Globally unique.
@@ -4681,6 +4681,10 @@ type OrderCustomer struct {
 
 	// FullName: Full name of the customer.
 	FullName string `json:"fullName,omitempty"`
+
+	// InvoiceReceivingEmail: Email address for receiving merchant issued
+	// value-added tax or invoice documentation of this order.
+	InvoiceReceivingEmail string `json:"invoiceReceivingEmail,omitempty"`
 
 	// MarketingRightsInfo: Customer's marketing preferences. Contains the
 	// marketing opt-in information that is current at the time that the
@@ -5491,7 +5495,7 @@ type OrderShipment struct {
 	// - "gls"
 	// - "dpd"
 	// - "bpost"
-	// - "colis priv�"
+	// - "colis prive"
 	// - "boxtal"
 	// - "geodis"
 	Carrier string `json:"carrier,omitempty"`

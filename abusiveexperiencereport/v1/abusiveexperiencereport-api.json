@@ -116,7 +116,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "The required site name. This is the site property whose abusive\nexperiences have been reviewed, and it must be URL-encoded. For example,\nsites/https%3A%2F%2Fwww.google.com. The server will return an error of\nBAD_REQUEST if this field is not filled in. Note that if the site property\nis not yet verified in Search Console, the reportUrl field\nreturned by the API will lead to the verification page, prompting the user\nto go through that process before they can gain access to the Abusive\nExperience Report.",
+              "description": "Required. The site property whose abusive\nexperiences have been reviewed, and it must be URL-encoded. For example,\nsites/https%3A%2F%2Fwww.google.com. The server will return an error of\nBAD_REQUEST if this field is not filled in. Note that if the site property\nis not yet verified in Search Console, the reportUrl field\nreturned by the API will lead to the verification page, prompting the user\nto go through that process before they can gain access to the Abusive\nExperience Report.",
               "location": "path",
               "pattern": "^sites/[^/]+$",
               "required": true,
@@ -136,7 +136,7 @@
     "violatingSites": {
       "methods": {
         "list": {
-          "description": "Lists sites with Abusive Experience Report statuses of \"Failing\".",
+          "description": "Lists sites with failing Abusive Experience Report statuses.",
           "flatPath": "v1/violatingSites",
           "httpMethod": "GET",
           "id": "abusiveexperiencereport.violatingSites.list",
@@ -153,7 +153,7 @@
       }
     }
   },
-  "revision": "20181017",
+  "revision": "20190830",
   "rootUrl": "https://abusiveexperiencereport.googleapis.com/",
   "schemas": {
     "SiteSummaryResponse": {
@@ -175,7 +175,7 @@
           "type": "string"
         },
         "enforcementTime": {
-          "description": "The date on which enforcement begins.",
+          "description": "The time at which enforcement begins.",
           "format": "google-datetime",
           "type": "string"
         },

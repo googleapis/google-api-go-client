@@ -114,6 +114,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.InfoTypes = NewInfoTypesService(s)
+	s.Locations = NewLocationsService(s)
 	s.Organizations = NewOrganizationsService(s)
 	s.Projects = NewProjectsService(s)
 	return s, nil
@@ -125,6 +126,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	InfoTypes *InfoTypesService
+
+	Locations *LocationsService
 
 	Organizations *OrganizationsService
 
@@ -144,6 +147,15 @@ func NewInfoTypesService(s *Service) *InfoTypesService {
 }
 
 type InfoTypesService struct {
+	s *Service
+}
+
+func NewLocationsService(s *Service) *LocationsService {
+	rs := &LocationsService{s: s}
+	return rs
+}
+
+type LocationsService struct {
 	s *Service
 }
 
@@ -3948,6 +3960,11 @@ type GooglePrivacyDlpV2InspectContentRequest struct {
 	// Item: The item to inspect.
 	Item *GooglePrivacyDlpV2ContentItem `json:"item,omitempty"`
 
+	// Location: The geographic location to process content inspection.
+	// Reserved for future
+	// extensions.
+	Location string `json:"location,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "InspectConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -5185,6 +5202,43 @@ type GooglePrivacyDlpV2ListDlpJobsResponse struct {
 
 func (s *GooglePrivacyDlpV2ListDlpJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ListDlpJobsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2ListInfoTypesRequest: Request for the list of
+// infoTypes.
+type GooglePrivacyDlpV2ListInfoTypesRequest struct {
+	// Filter: Optional filter to only return infoTypes supported by certain
+	// parts of the
+	// API. Defaults to supported_by=INSPECT.
+	Filter string `json:"filter,omitempty"`
+
+	// LanguageCode: Optional BCP-47 language code for localized infoType
+	// friendly
+	// names. If omitted, or if localized strings are not available,
+	// en-US strings will be returned.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2ListInfoTypesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ListInfoTypesRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7918,6 +7972,14 @@ func (c *InfoTypesListCall) LanguageCode(languageCode string) *InfoTypesListCall
 	return c
 }
 
+// Location sets the optional parameter "location": The geographic
+// location to list info types. Reserved for future
+// extensions.
+func (c *InfoTypesListCall) Location(location string) *InfoTypesListCall {
+	c.urlParams_.Set("location", location)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8030,9 +8092,158 @@ func (c *InfoTypesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV
 	//       "description": "Optional BCP-47 language code for localized infoType friendly\nnames. If omitted, or if localized strings are not available,\nen-US strings will be returned.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "location": {
+	//       "description": "The geographic location to list info types. Reserved for future\nextensions.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v2/infoTypes",
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2ListInfoTypesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.locations.infoTypes":
+
+type LocationsInfoTypesCall struct {
+	s                                      *Service
+	location                               string
+	googleprivacydlpv2listinfotypesrequest *GooglePrivacyDlpV2ListInfoTypesRequest
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// InfoTypes: Returns a list of the sensitive information types that the
+// DLP API
+// supports. See https://cloud.google.com/dlp/docs/infotypes-reference
+// to
+// learn more.
+func (r *LocationsService) InfoTypes(location string, googleprivacydlpv2listinfotypesrequest *GooglePrivacyDlpV2ListInfoTypesRequest) *LocationsInfoTypesCall {
+	c := &LocationsInfoTypesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.location = location
+	c.googleprivacydlpv2listinfotypesrequest = googleprivacydlpv2listinfotypesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LocationsInfoTypesCall) Fields(s ...googleapi.Field) *LocationsInfoTypesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LocationsInfoTypesCall) Context(ctx context.Context) *LocationsInfoTypesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LocationsInfoTypesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsInfoTypesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2listinfotypesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/locations/{location}/infoTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"location": c.location,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.locations.infoTypes" call.
+// Exactly one of *GooglePrivacyDlpV2ListInfoTypesResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GooglePrivacyDlpV2ListInfoTypesResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LocationsInfoTypesCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListInfoTypesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2ListInfoTypesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of the sensitive information types that the DLP API\nsupports. See https://cloud.google.com/dlp/docs/infotypes-reference to\nlearn more.",
+	//   "flatPath": "v2/locations/{location}/infoTypes",
+	//   "httpMethod": "POST",
+	//   "id": "dlp.locations.infoTypes",
+	//   "parameterOrder": [
+	//     "location"
+	//   ],
+	//   "parameters": {
+	//     "location": {
+	//       "description": "The geographic location to list info types. Reserved for future\nextensions.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/locations/{location}/infoTypes",
+	//   "request": {
+	//     "$ref": "GooglePrivacyDlpV2ListInfoTypesRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2ListInfoTypesResponse"
 	//   },
@@ -14605,6 +14816,170 @@ func (c *ProjectsLocationsContentDeidentifyCall) Do(opts ...googleapi.CallOption
 	//   },
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2DeidentifyContentResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.projects.locations.content.inspect":
+
+type ProjectsLocationsContentInspectCall struct {
+	s                                       *Service
+	parent                                  string
+	location                                string
+	googleprivacydlpv2inspectcontentrequest *GooglePrivacyDlpV2InspectContentRequest
+	urlParams_                              gensupport.URLParams
+	ctx_                                    context.Context
+	header_                                 http.Header
+}
+
+// Inspect: Finds potentially sensitive info in content.
+// This method has limits on input size, processing time, and output
+// size.
+//
+// When no InfoTypes or CustomInfoTypes are specified in this request,
+// the
+// system will automatically choose what detectors to run. By default
+// this may
+// be all types, but may change over time as detectors are updated.
+//
+// For how to guides, see
+// https://cloud.google.com/dlp/docs/inspecting-images
+// and https://cloud.google.com/dlp/docs/inspecting-text,
+func (r *ProjectsLocationsContentService) Inspect(parent string, location string, googleprivacydlpv2inspectcontentrequest *GooglePrivacyDlpV2InspectContentRequest) *ProjectsLocationsContentInspectCall {
+	c := &ProjectsLocationsContentInspectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.location = location
+	c.googleprivacydlpv2inspectcontentrequest = googleprivacydlpv2inspectcontentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsContentInspectCall) Fields(s ...googleapi.Field) *ProjectsLocationsContentInspectCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsContentInspectCall) Context(ctx context.Context) *ProjectsLocationsContentInspectCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsContentInspectCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsContentInspectCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2inspectcontentrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{location}/content:inspect")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent":   c.parent,
+		"location": c.location,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.content.inspect" call.
+// Exactly one of *GooglePrivacyDlpV2InspectContentResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GooglePrivacyDlpV2InspectContentResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsContentInspectCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2InspectContentResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2InspectContentResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Finds potentially sensitive info in content.\nThis method has limits on input size, processing time, and output size.\n\nWhen no InfoTypes or CustomInfoTypes are specified in this request, the\nsystem will automatically choose what detectors to run. By default this may\nbe all types, but may change over time as detectors are updated.\n\nFor how to guides, see https://cloud.google.com/dlp/docs/inspecting-images\nand https://cloud.google.com/dlp/docs/inspecting-text,",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{location}/content:inspect",
+	//   "httpMethod": "POST",
+	//   "id": "dlp.projects.locations.content.inspect",
+	//   "parameterOrder": [
+	//     "parent",
+	//     "location"
+	//   ],
+	//   "parameters": {
+	//     "location": {
+	//       "description": "The geographic location to process content inspection. Reserved for future\nextensions.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "The parent resource name, for example projects/my-project-id.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/locations/{location}/content:inspect",
+	//   "request": {
+	//     "$ref": "GooglePrivacyDlpV2InspectContentRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2InspectContentResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

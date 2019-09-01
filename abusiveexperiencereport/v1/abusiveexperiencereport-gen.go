@@ -162,7 +162,7 @@ type SiteSummaryResponse struct {
 	//   "FAILING" - Failing.
 	AbusiveStatus string `json:"abusiveStatus,omitempty"`
 
-	// EnforcementTime: The date on which enforcement begins.
+	// EnforcementTime: The time at which enforcement begins.
 	EnforcementTime string `json:"enforcementTime,omitempty"`
 
 	// FilterStatus: The abusive experience enforcement status of the site.
@@ -373,7 +373,7 @@ func (c *SitesGetCall) Do(opts ...googleapi.CallOption) (*SiteSummaryResponse, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The required site name. This is the site property whose abusive\nexperiences have been reviewed, and it must be URL-encoded. For example,\nsites/https%3A%2F%2Fwww.google.com. The server will return an error of\nBAD_REQUEST if this field is not filled in. Note that if the site property\nis not yet verified in Search Console, the reportUrl field\nreturned by the API will lead to the verification page, prompting the user\nto go through that process before they can gain access to the Abusive\nExperience Report.",
+	//       "description": "Required. The site property whose abusive\nexperiences have been reviewed, and it must be URL-encoded. For example,\nsites/https%3A%2F%2Fwww.google.com. The server will return an error of\nBAD_REQUEST if this field is not filled in. Note that if the site property\nis not yet verified in Search Console, the reportUrl field\nreturned by the API will lead to the verification page, prompting the user\nto go through that process before they can gain access to the Abusive\nExperience Report.",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+$",
 	//       "required": true,
@@ -401,8 +401,7 @@ type ViolatingSitesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists sites with Abusive Experience Report statuses of
-// "Failing".
+// List: Lists sites with failing Abusive Experience Report statuses.
 func (r *ViolatingSitesService) List() *ViolatingSitesListCall {
 	c := &ViolatingSitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -504,7 +503,7 @@ func (c *ViolatingSitesListCall) Do(opts ...googleapi.CallOption) (*ViolatingSit
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists sites with Abusive Experience Report statuses of \"Failing\".",
+	//   "description": "Lists sites with failing Abusive Experience Report statuses.",
 	//   "flatPath": "v1/violatingSites",
 	//   "httpMethod": "GET",
 	//   "id": "abusiveexperiencereport.violatingSites.list",

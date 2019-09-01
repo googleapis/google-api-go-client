@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/1vqhowU-lPFxnMRzP8MX_Qe9SxE\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/7Owqj7e57KZdHPc6ikcucasCmxY\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3164,7 +3164,7 @@
       }
     }
   },
-  "revision": "20190809",
+  "revision": "20190822",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5370,7 +5370,7 @@
         },
         "deliveryDetails": {
           "$ref": "OrderDeliveryDetails",
-          "description": "Delivery details for shipments."
+          "description": "Delivery details for shipments of type delivery."
         },
         "id": {
           "description": "The REST ID of the order. Globally unique.",
@@ -6149,7 +6149,7 @@
       "id": "OrderShipment",
       "properties": {
         "carrier": {
-          "description": "The carrier handling the shipment.\n\nAcceptable values for US are:  \n- \"gsx\" \n- \"ups\" \n- \"usps\" \n- \"fedex\" \n- \"dhl\" \n- \"ecourier\" \n- \"cxt\" \n- \"google\" \n- \"ontrac\" \n- \"emsy\" \n- \"ont\" \n- \"deliv\" \n- \"dynamex\" \n- \"lasership\" \n- \"mpx\" \n- \"uds\" \n- \"efw\"  \n\nAcceptable values for FR are:  \n- \"colissimo\" \n- \"chronopost\" \n- \"gls\" \n- \"dpd\" \n- \"bpost\" \n- \"colis priv�\" \n- \"boxtal\" \n- \"geodis\"",
+          "description": "The carrier handling the shipment.\n\nAcceptable values for US are:  \n- \"gsx\" \n- \"ups\" \n- \"usps\" \n- \"fedex\" \n- \"dhl\" \n- \"ecourier\" \n- \"cxt\" \n- \"google\" \n- \"ontrac\" \n- \"emsy\" \n- \"ont\" \n- \"deliv\" \n- \"dynamex\" \n- \"lasership\" \n- \"mpx\" \n- \"uds\" \n- \"efw\"  \n\nAcceptable values for FR are:  \n- \"colissimo\" \n- \"chronopost\" \n- \"gls\" \n- \"dpd\" \n- \"bpost\" \n- \"colis prive\" \n- \"boxtal\" \n- \"geodis\"",
           "type": "string"
         },
         "creationDate": {

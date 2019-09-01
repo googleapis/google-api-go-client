@@ -2217,7 +2217,7 @@
       }
     }
   },
-  "revision": "20190816",
+  "revision": "20190823",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -3871,7 +3871,7 @@
           "description": "Container defines the unit of execution for this Revision.\nIn the context of a Revision, we disallow a number of the fields of\nthis Container, including: name, ports, and volumeMounts.\nThe runtime contract is documented here:\nhttps://github.com/knative/serving/blob/master/docs/runtime-contract.md"
         },
         "containerConcurrency": {
-          "description": "ContainerConcurrency specifies the maximum allowed in-flight (concurrent)\nrequests per container of the Revision. Values are:\n- `0` thread-safe, the system should manage the max concurrency. This is\n   the default value.\n- `1` not-thread-safe. Single concurrency\n- `2-N` thread-safe, max concurrency of N",
+          "description": "(Optional)\n\nContainerConcurrency specifies the maximum allowed in-flight (concurrent)\nrequests per container instance of the Revision.\n\nCloud Run fully managed: supported, defaults to 80\n\nCloud Run on GKE: supported, defaults to 0, which means concurrency\nto the application is not limited, and the system decides the\ntarget concurrency for the autoscaler.",
           "format": "int32",
           "type": "integer"
         },

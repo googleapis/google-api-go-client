@@ -30,7 +30,7 @@
   "description": "Supports core YouTube features, such as uploading videos, creating and managing playlists, searching for content, and much more.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/youtube/v3",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/R6_0oBIEWTmojEnqQDp30MBdQ4o\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/yXw94x0FfH9hsuVdo84XOMLmCno\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/youtube-16.png",
     "x32": "https://www.google.com/images/icons/product/youtube-32.png"
@@ -3586,7 +3586,7 @@
       }
     }
   },
-  "revision": "20190813",
+  "revision": "20190827",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AccessPolicy": {
@@ -5270,7 +5270,7 @@
       "type": "object"
     },
     "ContentRating": {
-      "description": "Ratings schemes. The country-specific ratings are mostly for movies and shows. NEXT_ID: 71",
+      "description": "Ratings schemes. The country-specific ratings are mostly for movies and shows. NEXT_ID: 72",
       "id": "ContentRating",
       "properties": {
         "acbRating": {
@@ -6584,6 +6584,29 @@
             "nkclvUnrated"
           ],
           "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "nmcRating": {
+          "enum": [
+            "nmc15plus",
+            "nmc18plus",
+            "nmc18tc",
+            "nmcG",
+            "nmcPg",
+            "nmcPg13",
+            "nmcPg15",
+            "nmcUnrated"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
             "",
             "",
             "",

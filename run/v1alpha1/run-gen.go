@@ -3871,14 +3871,18 @@ type RevisionSpec struct {
 	// ract.md
 	Container *Container `json:"container,omitempty"`
 
-	// ContainerConcurrency: ContainerConcurrency specifies the maximum
-	// allowed in-flight (concurrent)
-	// requests per container of the Revision. Values are:
-	// - `0` thread-safe, the system should manage the max concurrency. This
-	// is
-	//    the default value.
-	// - `1` not-thread-safe. Single concurrency
-	// - `2-N` thread-safe, max concurrency of N
+	// ContainerConcurrency: (Optional)
+	//
+	// ContainerConcurrency specifies the maximum allowed in-flight
+	// (concurrent)
+	// requests per container instance of the Revision.
+	//
+	// Cloud Run fully managed: supported, defaults to 80
+	//
+	// Cloud Run on GKE: supported, defaults to 0, which means
+	// concurrency
+	// to the application is not limited, and the system decides the
+	// target concurrency for the autoscaler.
 	ContainerConcurrency int64 `json:"containerConcurrency,omitempty"`
 
 	// Containers: Containers holds the single container that defines the

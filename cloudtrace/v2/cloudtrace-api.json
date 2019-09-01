@@ -180,7 +180,7 @@
       }
     }
   },
-  "revision": "20190605",
+  "revision": "20190820",
   "rootUrl": "https://cloudtrace.googleapis.com/",
   "schemas": {
     "Annotation": {
@@ -400,6 +400,26 @@
         },
         "spanId": {
           "description": "The [SPAN_ID] portion of the span's resource name.",
+          "type": "string"
+        },
+        "spanKind": {
+          "description": "Distinguishes between spans generated in a particular context. For example,\ntwo spans with the same name may be distinguished using `CLIENT` (caller)\nand `SERVER` (callee) to identify an RPC call.",
+          "enum": [
+            "SPAN_KIND_UNSPECIFIED",
+            "INTERNAL",
+            "SERVER",
+            "CLIENT",
+            "PRODUCER",
+            "CONSUMER"
+          ],
+          "enumDescriptions": [
+            "Unspecified. Do NOT use as default.\nImplementations MAY assume SpanKind.INTERNAL to be default.",
+            "Indicates that the span is used internally. Default value.",
+            "Indicates that the span covers server-side handling of an RPC or other\nremote network request.",
+            "Indicates that the span covers the client-side wrapper around an RPC or\nother remote request.",
+            "Indicates that the span describes producer sending a message to a broker.\nUnlike client and  server, there is no direct critical path latency\nrelationship between producer and consumer spans (e.g. publishing a\nmessage to a pubsub service).",
+            "Indicates that the span describes consumer recieving a message from a\nbroker. Unlike client and  server, there is no direct critical path\nlatency relationship between producer and consumer spans (e.g. receiving\na message from a pubsub service subscription)."
+          ],
           "type": "string"
         },
         "stackTrace": {

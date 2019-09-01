@@ -1970,10 +1970,6 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// You must set this value when `scaleTier` is set to `CUSTOM`.
 	MasterType string `json:"masterType,omitempty"`
 
-	// MaxRunningTime: Optional. The maximum job running time. The default
-	// is 7 days.
-	MaxRunningTime string `json:"maxRunningTime,omitempty"`
-
 	// PackageUris: Required. The Google Cloud Storage location of the
 	// packages with
 	// the training program and any additional dependencies.

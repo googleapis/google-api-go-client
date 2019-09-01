@@ -3991,6 +3991,91 @@ func (s *UptimeCheckIp) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UptimeCheckResult: The result of a single uptime check execution. For
+// group checks, this corresponds to one member of the group.
+type UptimeCheckResult struct {
+	// CheckPassed: True if the resource passed the check.
+	CheckPassed bool `json:"checkPassed,omitempty"`
+
+	// ContentMismatch: True if the response had content that did not match
+	// the check.
+	ContentMismatch bool `json:"contentMismatch,omitempty"`
+
+	// ErrorCode: For HTTP checks, error, if any, that prevented contact
+	// with the resource (ex: DNS_NAME_UNKNOWN, INVALID_URL).
+	ErrorCode string `json:"errorCode,omitempty"`
+
+	// HttpStatus: For HTTP checks, HTTP response code returned by the
+	// resource.
+	HttpStatus int64 `json:"httpStatus,omitempty"`
+
+	// MonitoredResource: The monitored resource
+	// (https://cloud.google.com/monitoring/api/resources) for the Uptime
+	// check result.
+	MonitoredResource *MonitoredResource `json:"monitoredResource,omitempty"`
+
+	// RequestLatency: The request latency when executing the uptime check.
+	RequestLatency string `json:"requestLatency,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CheckPassed") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CheckPassed") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UptimeCheckResult) MarshalJSON() ([]byte, error) {
+	type NoMethod UptimeCheckResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ValidateUptimeCheckConfigResponse: The protocol for the
+// ValidateUptimeCheckConfigResponse response.
+type ValidateUptimeCheckConfigResponse struct {
+	// UptimeCheckResults: The results of the uptime check execution
+	// (includes one result per group member, up to a maximum of 3 randomly
+	// selected group members).
+	UptimeCheckResults []*UptimeCheckResult `json:"uptimeCheckResults,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "UptimeCheckResults")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UptimeCheckResults") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ValidateUptimeCheckConfigResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ValidateUptimeCheckConfigResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // VerifyNotificationChannelRequest: The VerifyNotificationChannel
 // request.
 type VerifyNotificationChannelRequest struct {
@@ -4024,6 +4109,151 @@ func (s *VerifyNotificationChannelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod VerifyNotificationChannelRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "monitoring.projects.validateUptimeCheckConfig":
+
+type ProjectsValidateUptimeCheckConfigCall struct {
+	s                 *Service
+	parent            string
+	uptimecheckconfig *UptimeCheckConfig
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// ValidateUptimeCheckConfig: Validates a new uptime check
+// configuration, and also executes the Uptime check. The results of the
+// Uptime check are returned, but not stored.
+func (r *ProjectsService) ValidateUptimeCheckConfig(parent string, uptimecheckconfig *UptimeCheckConfig) *ProjectsValidateUptimeCheckConfigCall {
+	c := &ProjectsValidateUptimeCheckConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.uptimecheckconfig = uptimecheckconfig
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsValidateUptimeCheckConfigCall) Fields(s ...googleapi.Field) *ProjectsValidateUptimeCheckConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsValidateUptimeCheckConfigCall) Context(ctx context.Context) *ProjectsValidateUptimeCheckConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsValidateUptimeCheckConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsValidateUptimeCheckConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.uptimecheckconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}:validateUptimeCheckConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.projects.validateUptimeCheckConfig" call.
+// Exactly one of *ValidateUptimeCheckConfigResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ValidateUptimeCheckConfigResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsValidateUptimeCheckConfigCall) Do(opts ...googleapi.CallOption) (*ValidateUptimeCheckConfigResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ValidateUptimeCheckConfigResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Validates a new uptime check configuration, and also executes the Uptime check. The results of the Uptime check are returned, but not stored.",
+	//   "flatPath": "v3/projects/{projectsId}:validateUptimeCheckConfig",
+	//   "httpMethod": "POST",
+	//   "id": "monitoring.projects.validateUptimeCheckConfig",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The project for the uptime check. The format is projects/[PROJECT_ID].",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}:validateUptimeCheckConfig",
+	//   "request": {
+	//     "$ref": "UptimeCheckConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "ValidateUptimeCheckConfigResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
 }
 
 // method id "monitoring.projects.alertPolicies.create":

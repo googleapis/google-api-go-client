@@ -1799,7 +1799,7 @@
       "id": "doubleclicksearch:v2",
       "name": "doubleclicksearch",
       "version": "v2",
-      "title": "DoubleClick Search API",
+      "title": "Search Ads 360 API",
       "description": "Reports and modifies your advertising data in DoubleClick Search (for example, campaigns, ad groups, keywords, and conversions).",
       "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/doubleclicksearch/v2/rest",
       "discoveryLink": "./apis/doubleclicksearch/v2/rest",
@@ -2240,6 +2240,21 @@
       },
       "documentationLink": "https://cloud.google.com/healthcare",
       "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "homegraph:v1",
+      "name": "homegraph",
+      "version": "v1",
+      "title": "HomeGraph API",
+      "description": "",
+      "discoveryRestUrl": "https://homegraph.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/actions/smarthome/create-app#request-sync",
+      "preferred": true
     },
     {
       "kind": "discovery#directoryItem",

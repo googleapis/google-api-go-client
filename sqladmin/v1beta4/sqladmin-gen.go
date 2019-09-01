@@ -353,6 +353,14 @@ type BackupRun struct {
 	// on-demand backups.
 	Description string `json:"description,omitempty"`
 
+	// DiskEncryptionConfiguration: Disk encryption configuration specific
+	// to a backup. Applies only to Second Generation instances.
+	DiskEncryptionConfiguration *DiskEncryptionConfiguration `json:"diskEncryptionConfiguration,omitempty"`
+
+	// DiskEncryptionStatus: Disk encryption status specific to a backup.
+	// Applies only to Second Generation instances.
+	DiskEncryptionStatus *DiskEncryptionStatus `json:"diskEncryptionStatus,omitempty"`
+
 	// EndTime: The time the backup operation completed in UTC timezone in
 	// RFC 3339 format, for example 2012-11-15T16:19:00.094Z.
 	EndTime string `json:"endTime,omitempty"`
@@ -9524,7 +9532,8 @@ func (r *UsersService) Update(project string, instance string, name string, user
 }
 
 // Host sets the optional parameter "host": Host of the user in the
-// instance.
+// instance. For a MySQL instance, it's required; For a PostgreSQL
+// instance, it's optional.
 func (c *UsersUpdateCall) Host(host string) *UsersUpdateCall {
 	c.urlParams_.Set("host", host)
 	return c
@@ -9632,7 +9641,7 @@ func (c *UsersUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "host": {
-	//       "description": "Host of the user in the instance.",
+	//       "description": "Host of the user in the instance. For a MySQL instance, it's required; For a PostgreSQL instance, it's optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

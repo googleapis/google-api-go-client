@@ -289,7 +289,7 @@
       }
     }
   },
-  "revision": "20190809",
+  "revision": "20190823",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "ListOperationsResponse": {
@@ -397,7 +397,7 @@
       "type": "object"
     },
     "RecognitionAudio": {
-      "description": "Contains audio data in the encoding specified in the `RecognitionConfig`.\nEither `content` or `uri` must be supplied. Supplying both or neither\nreturns google.rpc.Code.INVALID_ARGUMENT. See\n[content limits](/speech-to-text/quotas#content).",
+      "description": "Contains audio data in the encoding specified in the `RecognitionConfig`.\nEither `content` or `uri` must be supplied. Supplying both or neither\nreturns google.rpc.Code.INVALID_ARGUMENT. See\n[content limits](https://cloud.google.com/speech-to-text/quotas#content).",
       "id": "RecognitionAudio",
       "properties": {
         "content": {
@@ -417,7 +417,7 @@
       "id": "RecognitionConfig",
       "properties": {
         "alternativeLanguageCodes": {
-          "description": "*Optional* A list of up to 3 additional\n[BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tags,\nlisting possible alternative languages of the supplied audio.\nSee [Language Support](/speech-to-text/docs/languages)\nfor a list of the currently supported language codes.\nIf alternative languages are listed, recognition result will contain\nrecognition in the most likely language detected including the main\nlanguage_code. The recognition result will include the language tag\nof the language detected in the audio.\nNote: This feature is only supported for Voice Command and Voice Search\nuse cases and performance may vary for other use cases (e.g., phone call\ntranscription).",
+          "description": "*Optional* A list of up to 3 additional\n[BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tags,\nlisting possible alternative languages of the supplied audio.\nSee [Language\nSupport](https://cloud.google.com/speech-to-text/docs/languages) for a list\nof the currently supported language codes. If alternative languages are\nlisted, recognition result will contain recognition in the most likely\nlanguage detected including the main language_code. The recognition result\nwill include the language tag of the language detected in the audio. Note:\nThis feature is only supported for Voice Command and Voice Search use cases\nand performance may vary for other use cases (e.g., phone call\ntranscription).",
           "items": {
             "type": "string"
           },
@@ -484,7 +484,7 @@
           "type": "string"
         },
         "languageCode": {
-          "description": "*Required* The language of the supplied audio as a\n[BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.\nExample: \"en-US\".\nSee [Language Support](/speech-to-text/docs/languages)\nfor a list of the currently supported language codes.",
+          "description": "*Required* The language of the supplied audio as a\n[BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.\nExample: \"en-US\".\nSee [Language\nSupport](https://cloud.google.com/speech-to-text/docs/languages) for a list\nof the currently supported language codes.",
           "type": "string"
         },
         "maxAlternatives": {
@@ -510,7 +510,7 @@
           "type": "integer"
         },
         "speechContexts": {
-          "description": "*Optional* array of SpeechContext.\nA means to provide context to assist the speech recognition. For more\ninformation, see\n[speech adaptation](/speech-to-text/docs/context-strength).",
+          "description": "*Optional* array of SpeechContext.\nA means to provide context to assist the speech recognition. For more\ninformation, see\n[speech\nadaptation](https://cloud.google.com/speech-to-text/docs/context-strength).",
           "items": {
             "$ref": "SpeechContext"
           },
@@ -694,7 +694,7 @@
           "type": "number"
         },
         "phrases": {
-          "description": "*Optional* A list of strings containing words and phrases \"hints\" so that\nthe speech recognition is more likely to recognize them. This can be used\nto improve the accuracy for specific words and phrases, for example, if\nspecific commands are typically spoken by the user. This can also be used\nto add additional words to the vocabulary of the recognizer. See\n[usage limits](/speech-to-text/quotas#content).\n\nList items can also be set to classes for groups of words that represent\ncommon concepts that occur in natural language. For example, rather than\nproviding phrase hints for every month of the year, using the $MONTH class\nimproves the likelihood of correctly transcribing audio that includes\nmonths.",
+          "description": "*Optional* A list of strings containing words and phrases \"hints\" so that\nthe speech recognition is more likely to recognize them. This can be used\nto improve the accuracy for specific words and phrases, for example, if\nspecific commands are typically spoken by the user. This can also be used\nto add additional words to the vocabulary of the recognizer. See\n[usage limits](https://cloud.google.com/speech-to-text/quotas#content).\n\nList items can also be set to classes for groups of words that represent\ncommon concepts that occur in natural language. For example, rather than\nproviding phrase hints for every month of the year, using the $MONTH class\nimproves the likelihood of correctly transcribing audio that includes\nmonths.",
           "items": {
             "type": "string"
           },

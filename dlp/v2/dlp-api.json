@@ -122,9 +122,45 @@
               "description": "Optional BCP-47 language code for localized infoType friendly\nnames. If omitted, or if localized strings are not available,\nen-US strings will be returned.",
               "location": "query",
               "type": "string"
+            },
+            "location": {
+              "description": "The geographic location to list info types. Reserved for future\nextensions.",
+              "location": "query",
+              "type": "string"
             }
           },
           "path": "v2/infoTypes",
+          "response": {
+            "$ref": "GooglePrivacyDlpV2ListInfoTypesResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        }
+      }
+    },
+    "locations": {
+      "methods": {
+        "infoTypes": {
+          "description": "Returns a list of the sensitive information types that the DLP API\nsupports. See https://cloud.google.com/dlp/docs/infotypes-reference to\nlearn more.",
+          "flatPath": "v2/locations/{location}/infoTypes",
+          "httpMethod": "POST",
+          "id": "dlp.locations.infoTypes",
+          "parameterOrder": [
+            "location"
+          ],
+          "parameters": {
+            "location": {
+              "description": "The geographic location to list info types. Reserved for future\nextensions.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v2/locations/{location}/infoTypes",
+          "request": {
+            "$ref": "GooglePrivacyDlpV2ListInfoTypesRequest"
+          },
           "response": {
             "$ref": "GooglePrivacyDlpV2ListInfoTypesResponse"
           },
@@ -1403,6 +1439,41 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
+                },
+                "inspect": {
+                  "description": "Finds potentially sensitive info in content.\nThis method has limits on input size, processing time, and output size.\n\nWhen no InfoTypes or CustomInfoTypes are specified in this request, the\nsystem will automatically choose what detectors to run. By default this may\nbe all types, but may change over time as detectors are updated.\n\nFor how to guides, see https://cloud.google.com/dlp/docs/inspecting-images\nand https://cloud.google.com/dlp/docs/inspecting-text,",
+                  "flatPath": "v2/projects/{projectsId}/locations/{location}/content:inspect",
+                  "httpMethod": "POST",
+                  "id": "dlp.projects.locations.content.inspect",
+                  "parameterOrder": [
+                    "parent",
+                    "location"
+                  ],
+                  "parameters": {
+                    "location": {
+                      "description": "The geographic location to process content inspection. Reserved for future\nextensions.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "The parent resource name, for example projects/my-project-id.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+parent}/locations/{location}/content:inspect",
+                  "request": {
+                    "$ref": "GooglePrivacyDlpV2InspectContentRequest"
+                  },
+                  "response": {
+                    "$ref": "GooglePrivacyDlpV2InspectContentResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
                 }
               }
             }
@@ -1562,7 +1633,7 @@
       }
     }
   },
-  "revision": "20190804",
+  "revision": "20190824",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -3324,6 +3395,10 @@
         "item": {
           "$ref": "GooglePrivacyDlpV2ContentItem",
           "description": "The item to inspect."
+        },
+        "location": {
+          "description": "The geographic location to process content inspection. Reserved for future\nextensions.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3950,6 +4025,21 @@
         },
         "nextPageToken": {
           "description": "The standard List next-page token.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2ListInfoTypesRequest": {
+      "description": "Request for the list of infoTypes.",
+      "id": "GooglePrivacyDlpV2ListInfoTypesRequest",
+      "properties": {
+        "filter": {
+          "description": "Optional filter to only return infoTypes supported by certain parts of the\nAPI. Defaults to supported_by=INSPECT.",
+          "type": "string"
+        },
+        "languageCode": {
+          "description": "Optional BCP-47 language code for localized infoType friendly\nnames. If omitted, or if localized strings are not available,\nen-US strings will be returned.",
           "type": "string"
         }
       },

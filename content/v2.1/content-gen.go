@@ -3963,7 +3963,7 @@ type Order struct {
 	// Customer: The details of the customer who placed the order.
 	Customer *OrderCustomer `json:"customer,omitempty"`
 
-	// DeliveryDetails: Delivery details for shipments.
+	// DeliveryDetails: Delivery details for shipments of type delivery.
 	DeliveryDetails *OrderDeliveryDetails `json:"deliveryDetails,omitempty"`
 
 	// Id: The REST ID of the order. Globally unique.
@@ -4969,7 +4969,7 @@ type OrderShipment struct {
 	// - "gls"
 	// - "dpd"
 	// - "bpost"
-	// - "colis priv�"
+	// - "colis prive"
 	// - "boxtal"
 	// - "geodis"
 	Carrier string `json:"carrier,omitempty"`

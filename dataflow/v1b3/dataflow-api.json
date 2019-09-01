@@ -113,43 +113,6 @@
   "resources": {
     "projects": {
       "methods": {
-        "deleteSnapshots": {
-          "description": "Deletes a snapshot.",
-          "flatPath": "v1b3/projects/{projectId}/snapshots",
-          "httpMethod": "DELETE",
-          "id": "dataflow.projects.deleteSnapshots",
-          "parameterOrder": [
-            "projectId"
-          ],
-          "parameters": {
-            "location": {
-              "description": "The location that contains this snapshot.",
-              "location": "query",
-              "type": "string"
-            },
-            "projectId": {
-              "description": "The ID of the Cloud Platform project that the snapshot belongs to.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "snapshotId": {
-              "description": "The ID of the snapshot.",
-              "location": "query",
-              "type": "string"
-            }
-          },
-          "path": "v1b3/projects/{projectId}/snapshots",
-          "response": {
-            "$ref": "DeleteSnapshotResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/compute",
-            "https://www.googleapis.com/auth/compute.readonly",
-            "https://www.googleapis.com/auth/userinfo.email"
-          ]
-        },
         "workerMessages": {
           "description": "Send a worker_message to the service.",
           "flatPath": "v1b3/projects/{projectId}/WorkerMessages",
@@ -452,43 +415,6 @@
               "path": "v1b3/projects/{projectId}/jobs",
               "response": {
                 "$ref": "ListJobsResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute",
-                "https://www.googleapis.com/auth/compute.readonly",
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
-            },
-            "snapshot": {
-              "description": "Snapshot the state of a streaming job.",
-              "flatPath": "v1b3/projects/{projectId}/jobs/{jobId}:snapshot",
-              "httpMethod": "POST",
-              "id": "dataflow.projects.jobs.snapshot",
-              "parameterOrder": [
-                "projectId",
-                "jobId"
-              ],
-              "parameters": {
-                "jobId": {
-                  "description": "The job to be snapshotted.",
-                  "location": "path",
-                  "required": true,
-                  "type": "string"
-                },
-                "projectId": {
-                  "description": "The project which owns the job to be snapshotted.",
-                  "location": "path",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v1b3/projects/{projectId}/jobs/{jobId}:snapshot",
-              "request": {
-                "$ref": "SnapshotJobRequest"
-              },
-              "response": {
-                "$ref": "Snapshot"
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
@@ -1040,50 +966,6 @@
                     "https://www.googleapis.com/auth/userinfo.email"
                   ]
                 },
-                "snapshot": {
-                  "description": "Snapshot the state of a streaming job.",
-                  "flatPath": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}:snapshot",
-                  "httpMethod": "POST",
-                  "id": "dataflow.projects.locations.jobs.snapshot",
-                  "parameterOrder": [
-                    "projectId",
-                    "location",
-                    "jobId"
-                  ],
-                  "parameters": {
-                    "jobId": {
-                      "description": "The job to be snapshotted.",
-                      "location": "path",
-                      "required": true,
-                      "type": "string"
-                    },
-                    "location": {
-                      "description": "The location that contains this job.",
-                      "location": "path",
-                      "required": true,
-                      "type": "string"
-                    },
-                    "projectId": {
-                      "description": "The project which owns the job to be snapshotted.",
-                      "location": "path",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}:snapshot",
-                  "request": {
-                    "$ref": "SnapshotJobRequest"
-                  },
-                  "response": {
-                    "$ref": "Snapshot"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
-                },
                 "update": {
                   "description": "Updates the state of an existing Cloud Dataflow job.\n\nTo update the state of an existing job, we recommend using\n`projects.locations.jobs.update` with a [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using\n`projects.jobs.update` is not recommended, as you can only update the state\nof jobs that are running in `us-central1`.",
                   "flatPath": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}",
@@ -1303,51 +1185,6 @@
                     }
                   }
                 },
-                "snapshots": {
-                  "methods": {
-                    "list": {
-                      "description": "Lists snapshots.",
-                      "flatPath": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/snapshots",
-                      "httpMethod": "GET",
-                      "id": "dataflow.projects.locations.jobs.snapshots.list",
-                      "parameterOrder": [
-                        "projectId",
-                        "location",
-                        "jobId"
-                      ],
-                      "parameters": {
-                        "jobId": {
-                          "description": "If specified, list snapshots created from this job.",
-                          "location": "path",
-                          "required": true,
-                          "type": "string"
-                        },
-                        "location": {
-                          "description": "The location to list snapshots in.",
-                          "location": "path",
-                          "required": true,
-                          "type": "string"
-                        },
-                        "projectId": {
-                          "description": "The project ID to list snapshots for.",
-                          "location": "path",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/snapshots",
-                      "response": {
-                        "$ref": "ListSnapshotsResponse"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/compute",
-                        "https://www.googleapis.com/auth/compute.readonly",
-                        "https://www.googleapis.com/auth/userinfo.email"
-                      ]
-                    }
-                  }
-                },
                 "workItems": {
                   "methods": {
                     "lease": {
@@ -1439,131 +1276,6 @@
                       ]
                     }
                   }
-                }
-              }
-            },
-            "snapshots": {
-              "methods": {
-                "delete": {
-                  "description": "Deletes a snapshot.",
-                  "flatPath": "v1b3/projects/{projectId}/locations/{location}/snapshots/{snapshotId}",
-                  "httpMethod": "DELETE",
-                  "id": "dataflow.projects.locations.snapshots.delete",
-                  "parameterOrder": [
-                    "projectId",
-                    "location",
-                    "snapshotId"
-                  ],
-                  "parameters": {
-                    "location": {
-                      "description": "The location that contains this snapshot.",
-                      "location": "path",
-                      "required": true,
-                      "type": "string"
-                    },
-                    "projectId": {
-                      "description": "The ID of the Cloud Platform project that the snapshot belongs to.",
-                      "location": "path",
-                      "required": true,
-                      "type": "string"
-                    },
-                    "snapshotId": {
-                      "description": "The ID of the snapshot.",
-                      "location": "path",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1b3/projects/{projectId}/locations/{location}/snapshots/{snapshotId}",
-                  "response": {
-                    "$ref": "DeleteSnapshotResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
-                },
-                "get": {
-                  "description": "Gets information about a snapshot.",
-                  "flatPath": "v1b3/projects/{projectId}/locations/{location}/snapshots/{snapshotId}",
-                  "httpMethod": "GET",
-                  "id": "dataflow.projects.locations.snapshots.get",
-                  "parameterOrder": [
-                    "projectId",
-                    "location",
-                    "snapshotId"
-                  ],
-                  "parameters": {
-                    "location": {
-                      "description": "The location that contains this snapshot.",
-                      "location": "path",
-                      "required": true,
-                      "type": "string"
-                    },
-                    "projectId": {
-                      "description": "The ID of the Cloud Platform project that the snapshot belongs to.",
-                      "location": "path",
-                      "required": true,
-                      "type": "string"
-                    },
-                    "snapshotId": {
-                      "description": "The ID of the snapshot.",
-                      "location": "path",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1b3/projects/{projectId}/locations/{location}/snapshots/{snapshotId}",
-                  "response": {
-                    "$ref": "Snapshot"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
-                },
-                "list": {
-                  "description": "Lists snapshots.",
-                  "flatPath": "v1b3/projects/{projectId}/locations/{location}/snapshots",
-                  "httpMethod": "GET",
-                  "id": "dataflow.projects.locations.snapshots.list",
-                  "parameterOrder": [
-                    "projectId",
-                    "location"
-                  ],
-                  "parameters": {
-                    "jobId": {
-                      "description": "If specified, list snapshots created from this job.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "location": {
-                      "description": "The location to list snapshots in.",
-                      "location": "path",
-                      "required": true,
-                      "type": "string"
-                    },
-                    "projectId": {
-                      "description": "The project ID to list snapshots for.",
-                      "location": "path",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1b3/projects/{projectId}/locations/{location}/snapshots",
-                  "response": {
-                    "$ref": "ListSnapshotsResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute",
-                    "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
                 }
               }
             },
@@ -1755,86 +1467,6 @@
             }
           }
         },
-        "snapshots": {
-          "methods": {
-            "get": {
-              "description": "Gets information about a snapshot.",
-              "flatPath": "v1b3/projects/{projectId}/snapshots/{snapshotId}",
-              "httpMethod": "GET",
-              "id": "dataflow.projects.snapshots.get",
-              "parameterOrder": [
-                "projectId",
-                "snapshotId"
-              ],
-              "parameters": {
-                "location": {
-                  "description": "The location that contains this snapshot.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "projectId": {
-                  "description": "The ID of the Cloud Platform project that the snapshot belongs to.",
-                  "location": "path",
-                  "required": true,
-                  "type": "string"
-                },
-                "snapshotId": {
-                  "description": "The ID of the snapshot.",
-                  "location": "path",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v1b3/projects/{projectId}/snapshots/{snapshotId}",
-              "response": {
-                "$ref": "Snapshot"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute",
-                "https://www.googleapis.com/auth/compute.readonly",
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
-            },
-            "list": {
-              "description": "Lists snapshots.",
-              "flatPath": "v1b3/projects/{projectId}/snapshots",
-              "httpMethod": "GET",
-              "id": "dataflow.projects.snapshots.list",
-              "parameterOrder": [
-                "projectId"
-              ],
-              "parameters": {
-                "jobId": {
-                  "description": "If specified, list snapshots created from this job.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "location": {
-                  "description": "The location to list snapshots in.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "projectId": {
-                  "description": "The project ID to list snapshots for.",
-                  "location": "path",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v1b3/projects/{projectId}/snapshots",
-              "response": {
-                "$ref": "ListSnapshotsResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute",
-                "https://www.googleapis.com/auth/compute.readonly",
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
-            }
-          }
-        },
         "templates": {
           "methods": {
             "create": {
@@ -1972,7 +1604,7 @@
       }
     }
   },
-  "revision": "20190628",
+  "revision": "20190813",
   "rootUrl": "https://dataflow.googleapis.com/",
   "schemas": {
     "ApproximateProgress": {
@@ -2565,12 +2197,6 @@
           "type": "string"
         }
       },
-      "type": "object"
-    },
-    "DeleteSnapshotResponse": {
-      "description": "Response from deleting a snapshot.",
-      "id": "DeleteSnapshotResponse",
-      "properties": {},
       "type": "object"
     },
     "DerivedSource": {
@@ -3715,20 +3341,6 @@
       },
       "type": "object"
     },
-    "ListSnapshotsResponse": {
-      "description": "List of snapshots.",
-      "id": "ListSnapshotsResponse",
-      "properties": {
-        "snapshots": {
-          "description": "Returned snapshots.",
-          "items": {
-            "$ref": "Snapshot"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "MapTask": {
       "description": "MapTask consists of an ordered set of instructions, each of which\ndescribes one particular low-level operation for the worker to\nperform in order to accomplish the MapTask's WorkItem.\n\nEach instruction must appear in the list before any instructions which\ndepends on its output.",
       "id": "MapTask",
@@ -4582,71 +4194,6 @@
           },
           "description": "The sink to write to, plus its parameters.",
           "type": "object"
-        }
-      },
-      "type": "object"
-    },
-    "Snapshot": {
-      "description": "Represents a snapshot of a job.",
-      "id": "Snapshot",
-      "properties": {
-        "creationTime": {
-          "description": "The time this snapshot was created.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "id": {
-          "description": "The unique ID of this snapshot.",
-          "type": "string"
-        },
-        "projectId": {
-          "description": "The project this snapshot belongs to.",
-          "type": "string"
-        },
-        "sourceJobId": {
-          "description": "The job this snapshot was created from.",
-          "type": "string"
-        },
-        "state": {
-          "description": "State of the snapshot.",
-          "enum": [
-            "UNKNOWN_SNAPSHOT_STATE",
-            "PENDING",
-            "RUNNING",
-            "READY",
-            "FAILED",
-            "DELETED"
-          ],
-          "enumDescriptions": [
-            "Unknown state.",
-            "Snapshot intent to create has been persisted, snapshotting of state has not\nyet started.",
-            "Snapshotting is being performed.",
-            "Snapshot has been created and is ready to be used.",
-            "Snapshot failed to be created.",
-            "Snapshot has been deleted."
-          ],
-          "type": "string"
-        },
-        "ttl": {
-          "description": "The time after which this snapshot will be automatically deleted.",
-          "format": "google-duration",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "SnapshotJobRequest": {
-      "description": "Request to create a snapshot of a job.",
-      "id": "SnapshotJobRequest",
-      "properties": {
-        "location": {
-          "description": "The location that contains this job.",
-          "type": "string"
-        },
-        "ttl": {
-          "description": "TTL for the snapshot.",
-          "format": "google-duration",
-          "type": "string"
         }
       },
       "type": "object"

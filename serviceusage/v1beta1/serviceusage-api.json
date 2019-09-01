@@ -338,7 +338,7 @@
       }
     }
   },
-  "revision": "20190708",
+  "revision": "20190829",
   "rootUrl": "https://serviceusage.googleapis.com/",
   "schemas": {
     "Api": {
@@ -2072,6 +2072,21 @@
         "usage": {
           "$ref": "Usage",
           "description": "Configuration controlling usage of this service."
+        }
+      },
+      "type": "object"
+    },
+    "ServiceIdentity": {
+      "description": "Service identity for a service. This is the identity that service producer\nshould use to access consumer resources.",
+      "id": "ServiceIdentity",
+      "properties": {
+        "email": {
+          "description": "The email address of the service account that a service producer would use\nto access consumer resources.",
+          "type": "string"
+        },
+        "uniqueId": {
+          "description": "The unique and stable id of the service account.\nhttps://cloud.google.com/iam/reference/rest/v1/projects.serviceAccounts#ServiceAccount",
+          "type": "string"
         }
       },
       "type": "object"

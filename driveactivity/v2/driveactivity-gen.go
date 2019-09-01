@@ -770,7 +770,9 @@ type DriveItem struct {
 	// DriveFile: The Drive item is a file.
 	DriveFile *DriveFile `json:"driveFile,omitempty"`
 
-	// DriveFolder: The Drive item is a folder.
+	// DriveFolder: The Drive item is a folder. Includes information about
+	// the type of
+	// folder.
 	DriveFolder *DriveFolder `json:"driveFolder,omitempty"`
 
 	// File: This field is deprecated; please use the `driveFile` field

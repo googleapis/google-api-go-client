@@ -1429,7 +1429,7 @@
       }
     }
   },
-  "revision": "20190802",
+  "revision": "20190821",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -3309,6 +3309,10 @@
           "description": "Indicates that the property can be used for sorting. Cannot be true for\nproperties that are repeatable. Cannot be true for properties whose type\nis object or user identifier. IsReturnable must be true to set this option.\nOnly supported for Boolean, Date, Double, Integer, and Timestamp\nproperties.",
           "type": "boolean"
         },
+        "isSuggestable": {
+          "description": "Indicates that the property can be used for generating query suggestions.",
+          "type": "boolean"
+        },
         "isWildcardSearchable": {
           "description": "Indicates that users can perform wildcard search for this\nproperty. Only supported for Text properties. IsReturnable must be true to\nset this option. In a given datasource maximum of 5 properties can be\nmarked as is_wildcard_searchable.\n\nNote: This is an alpha feature and is enabled for whitelisted users only.",
           "type": "boolean"
@@ -3420,12 +3424,12 @@
           "enumDescriptions": [
             "No natural language interpretation or the natural language interpretation\nis not used to fetch the search results.",
             "The natural language results is mixed with results from original query.",
-            "The results only contain natural language results."
+            "The results from original query are replaced. The reason for replacing\nthe results from original query is populated in the 'Reason' field below."
           ],
           "type": "string"
         },
         "interpretedQuery": {
-          "description": "The interpretation of the query used in search. For example, query \"email\nfrom john\" will be interpreted as \"from:john source:mail\"",
+          "description": "The interpretation of the query used in search. For example, queries with\nnatural language intent like \"email from john\" will be interpreted as\n\"from:john source:mail\". This field will not be filled when the reason is\nNO_RESULTS_FOUND_FOR_USER_QUERY.",
           "type": "string"
         }
       },

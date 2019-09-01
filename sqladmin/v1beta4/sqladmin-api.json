@@ -18,7 +18,7 @@
   "description": "Creates and manages Cloud SQL instances, which provide fully managed MySQL or PostgreSQL databases.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/sql/docs/reference/latest",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/LRkkAS7hoxkBOrIOmm_GjUTQ6v8\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/N55ZXwjx5gVcFVd9x7svcXqGxFA\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1579,7 +1579,7 @@
           ],
           "parameters": {
             "host": {
-              "description": "Host of the user in the instance.",
+              "description": "Host of the user in the instance. For a MySQL instance, it's required; For a PostgreSQL instance, it's optional.",
               "location": "query",
               "type": "string"
             },
@@ -1617,7 +1617,7 @@
       }
     }
   },
-  "revision": "20190607",
+  "revision": "20190815",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AclEntry": {
@@ -1699,6 +1699,14 @@
         "description": {
           "description": "The description of this run, only applicable to on-demand backups.",
           "type": "string"
+        },
+        "diskEncryptionConfiguration": {
+          "$ref": "DiskEncryptionConfiguration",
+          "description": "Disk encryption configuration specific to a backup. Applies only to Second Generation instances."
+        },
+        "diskEncryptionStatus": {
+          "$ref": "DiskEncryptionStatus",
+          "description": "Disk encryption status specific to a backup. Applies only to Second Generation instances."
         },
         "endTime": {
           "description": "The time the backup operation completed in UTC timezone in RFC 3339 format, for example 2012-11-15T16:19:00.094Z.",

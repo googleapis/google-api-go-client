@@ -1446,12 +1446,18 @@ type FileCapabilities struct {
 	// CanDownload: Whether the current user can download this file.
 	CanDownload bool `json:"canDownload,omitempty"`
 
-	// CanEdit: Whether the current user can edit this file.
+	// CanEdit: Whether the current user can edit this file. Other factors
+	// may limit the type of changes a user can make to a file. For example,
+	// see canChangeCopyRequiresWriterPermission or canModifyContent.
 	CanEdit bool `json:"canEdit,omitempty"`
 
 	// CanListChildren: Whether the current user can list the children of
 	// this folder. This is always false when the item is not a folder.
 	CanListChildren bool `json:"canListChildren,omitempty"`
+
+	// CanModifyContent: Whether the current user can modify the content of
+	// this file.
+	CanModifyContent bool `json:"canModifyContent,omitempty"`
 
 	// CanMoveChildrenOutOfDrive: Whether the current user can move children
 	// of this folder outside of the shared drive. This is false when the

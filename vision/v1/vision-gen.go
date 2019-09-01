@@ -434,6 +434,11 @@ func (s *AnnotateFileRequest) MarshalJSON() ([]byte, error) {
 // file may contain one or more
 // images, which individually have their own responses.
 type AnnotateFileResponse struct {
+	// Error: If set, represents the error message for the failed request.
+	// The
+	// `responses` field will not be set in this case.
+	Error *Status `json:"error,omitempty"`
+
 	// InputConfig: Information about the file for which this response is
 	// generated.
 	InputConfig *InputConfig `json:"inputConfig,omitempty"`
@@ -446,7 +451,7 @@ type AnnotateFileResponse struct {
 	// TotalPages: This field gives the total number of pages in the file.
 	TotalPages int64 `json:"totalPages,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InputConfig") to
+	// ForceSendFields is a list of field names (e.g. "Error") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -454,10 +459,10 @@ type AnnotateFileResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InputConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2121,6 +2126,11 @@ func (s *GcsSource) MarshalJSON() ([]byte, error) {
 // file annotation request. A file may contain one or more
 // images, which individually have their own responses.
 type GoogleCloudVisionV1p1beta1AnnotateFileResponse struct {
+	// Error: If set, represents the error message for the failed request.
+	// The
+	// `responses` field will not be set in this case.
+	Error *Status `json:"error,omitempty"`
+
 	// InputConfig: Information about the file for which this response is
 	// generated.
 	InputConfig *GoogleCloudVisionV1p1beta1InputConfig `json:"inputConfig,omitempty"`
@@ -2133,7 +2143,7 @@ type GoogleCloudVisionV1p1beta1AnnotateFileResponse struct {
 	// TotalPages: This field gives the total number of pages in the file.
 	TotalPages int64 `json:"totalPages,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InputConfig") to
+	// ForceSendFields is a list of field names (e.g. "Error") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2141,10 +2151,10 @@ type GoogleCloudVisionV1p1beta1AnnotateFileResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InputConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -3726,6 +3736,10 @@ type GoogleCloudVisionV1p1beta1ProductSearchResultsGroupedResult struct {
 	// query image.
 	BoundingPoly *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
+	// ObjectAnnotations: List of generic predictions for the object in the
+	// bounding box.
+	ObjectAnnotations []*GoogleCloudVisionV1p1beta1ProductSearchResultsObjectAnnotation `json:"objectAnnotations,omitempty"`
+
 	// Results: List of results, one for each product match.
 	Results []*GoogleCloudVisionV1p1beta1ProductSearchResultsResult `json:"results,omitempty"`
 
@@ -3750,6 +3764,62 @@ func (s *GoogleCloudVisionV1p1beta1ProductSearchResultsGroupedResult) MarshalJSO
 	type NoMethod GoogleCloudVisionV1p1beta1ProductSearchResultsGroupedResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p1beta1ProductSearchResultsObjectAnnotation:
+// Prediction for what the object in the bounding box is.
+type GoogleCloudVisionV1p1beta1ProductSearchResultsObjectAnnotation struct {
+	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
+	// For more
+	// information,
+	// see
+	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// Mid: Object ID that should align with EntityAnnotation mid.
+	Mid string `json:"mid,omitempty"`
+
+	// Name: Object name, expressed in its `language_code` language.
+	Name string `json:"name,omitempty"`
+
+	// Score: Score of the result. Range [0, 1].
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LanguageCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p1beta1ProductSearchResultsObjectAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p1beta1ProductSearchResultsObjectAnnotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVisionV1p1beta1ProductSearchResultsObjectAnnotation) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p1beta1ProductSearchResultsObjectAnnotation
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
 }
 
 // GoogleCloudVisionV1p1beta1ProductSearchResultsResult: Information
@@ -4529,6 +4599,11 @@ func (s *GoogleCloudVisionV1p1beta1Word) UnmarshalJSON(data []byte) error {
 // file annotation request. A file may contain one or more
 // images, which individually have their own responses.
 type GoogleCloudVisionV1p2beta1AnnotateFileResponse struct {
+	// Error: If set, represents the error message for the failed request.
+	// The
+	// `responses` field will not be set in this case.
+	Error *Status `json:"error,omitempty"`
+
 	// InputConfig: Information about the file for which this response is
 	// generated.
 	InputConfig *GoogleCloudVisionV1p2beta1InputConfig `json:"inputConfig,omitempty"`
@@ -4541,7 +4616,7 @@ type GoogleCloudVisionV1p2beta1AnnotateFileResponse struct {
 	// TotalPages: This field gives the total number of pages in the file.
 	TotalPages int64 `json:"totalPages,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InputConfig") to
+	// ForceSendFields is a list of field names (e.g. "Error") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -4549,10 +4624,10 @@ type GoogleCloudVisionV1p2beta1AnnotateFileResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InputConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -6134,6 +6209,10 @@ type GoogleCloudVisionV1p2beta1ProductSearchResultsGroupedResult struct {
 	// query image.
 	BoundingPoly *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
+	// ObjectAnnotations: List of generic predictions for the object in the
+	// bounding box.
+	ObjectAnnotations []*GoogleCloudVisionV1p2beta1ProductSearchResultsObjectAnnotation `json:"objectAnnotations,omitempty"`
+
 	// Results: List of results, one for each product match.
 	Results []*GoogleCloudVisionV1p2beta1ProductSearchResultsResult `json:"results,omitempty"`
 
@@ -6158,6 +6237,62 @@ func (s *GoogleCloudVisionV1p2beta1ProductSearchResultsGroupedResult) MarshalJSO
 	type NoMethod GoogleCloudVisionV1p2beta1ProductSearchResultsGroupedResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p2beta1ProductSearchResultsObjectAnnotation:
+// Prediction for what the object in the bounding box is.
+type GoogleCloudVisionV1p2beta1ProductSearchResultsObjectAnnotation struct {
+	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
+	// For more
+	// information,
+	// see
+	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// Mid: Object ID that should align with EntityAnnotation mid.
+	Mid string `json:"mid,omitempty"`
+
+	// Name: Object name, expressed in its `language_code` language.
+	Name string `json:"name,omitempty"`
+
+	// Score: Score of the result. Range [0, 1].
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LanguageCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p2beta1ProductSearchResultsObjectAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1ProductSearchResultsObjectAnnotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVisionV1p2beta1ProductSearchResultsObjectAnnotation) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p2beta1ProductSearchResultsObjectAnnotation
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
 }
 
 // GoogleCloudVisionV1p2beta1ProductSearchResultsResult: Information
@@ -6937,6 +7072,11 @@ func (s *GoogleCloudVisionV1p2beta1Word) UnmarshalJSON(data []byte) error {
 // file annotation request. A file may contain one or more
 // images, which individually have their own responses.
 type GoogleCloudVisionV1p3beta1AnnotateFileResponse struct {
+	// Error: If set, represents the error message for the failed request.
+	// The
+	// `responses` field will not be set in this case.
+	Error *Status `json:"error,omitempty"`
+
 	// InputConfig: Information about the file for which this response is
 	// generated.
 	InputConfig *GoogleCloudVisionV1p3beta1InputConfig `json:"inputConfig,omitempty"`
@@ -6949,7 +7089,7 @@ type GoogleCloudVisionV1p3beta1AnnotateFileResponse struct {
 	// TotalPages: This field gives the total number of pages in the file.
 	TotalPages int64 `json:"totalPages,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InputConfig") to
+	// ForceSendFields is a list of field names (e.g. "Error") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -6957,10 +7097,10 @@ type GoogleCloudVisionV1p3beta1AnnotateFileResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InputConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -8646,6 +8786,10 @@ type GoogleCloudVisionV1p3beta1ProductSearchResultsGroupedResult struct {
 	// query image.
 	BoundingPoly *GoogleCloudVisionV1p3beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
+	// ObjectAnnotations: List of generic predictions for the object in the
+	// bounding box.
+	ObjectAnnotations []*GoogleCloudVisionV1p3beta1ProductSearchResultsObjectAnnotation `json:"objectAnnotations,omitempty"`
+
 	// Results: List of results, one for each product match.
 	Results []*GoogleCloudVisionV1p3beta1ProductSearchResultsResult `json:"results,omitempty"`
 
@@ -8670,6 +8814,62 @@ func (s *GoogleCloudVisionV1p3beta1ProductSearchResultsGroupedResult) MarshalJSO
 	type NoMethod GoogleCloudVisionV1p3beta1ProductSearchResultsGroupedResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p3beta1ProductSearchResultsObjectAnnotation:
+// Prediction for what the object in the bounding box is.
+type GoogleCloudVisionV1p3beta1ProductSearchResultsObjectAnnotation struct {
+	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
+	// For more
+	// information,
+	// see
+	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// Mid: Object ID that should align with EntityAnnotation mid.
+	Mid string `json:"mid,omitempty"`
+
+	// Name: Object name, expressed in its `language_code` language.
+	Name string `json:"name,omitempty"`
+
+	// Score: Score of the result. Range [0, 1].
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LanguageCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p3beta1ProductSearchResultsObjectAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p3beta1ProductSearchResultsObjectAnnotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVisionV1p3beta1ProductSearchResultsObjectAnnotation) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p3beta1ProductSearchResultsObjectAnnotation
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
 }
 
 // GoogleCloudVisionV1p3beta1ProductSearchResultsResult: Information
@@ -9509,6 +9709,11 @@ func (s *GoogleCloudVisionV1p3beta1Word) UnmarshalJSON(data []byte) error {
 // file annotation request. A file may contain one or more
 // images, which individually have their own responses.
 type GoogleCloudVisionV1p4beta1AnnotateFileResponse struct {
+	// Error: If set, represents the error message for the failed request.
+	// The
+	// `responses` field will not be set in this case.
+	Error *Status `json:"error,omitempty"`
+
 	// InputConfig: Information about the file for which this response is
 	// generated.
 	InputConfig *GoogleCloudVisionV1p4beta1InputConfig `json:"inputConfig,omitempty"`
@@ -9521,7 +9726,7 @@ type GoogleCloudVisionV1p4beta1AnnotateFileResponse struct {
 	// TotalPages: This field gives the total number of pages in the file.
 	TotalPages int64 `json:"totalPages,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InputConfig") to
+	// ForceSendFields is a list of field names (e.g. "Error") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -9529,10 +9734,10 @@ type GoogleCloudVisionV1p4beta1AnnotateFileResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InputConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -11336,6 +11541,10 @@ type GoogleCloudVisionV1p4beta1ProductSearchResultsGroupedResult struct {
 	// query image.
 	BoundingPoly *GoogleCloudVisionV1p4beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
+	// ObjectAnnotations: List of generic predictions for the object in the
+	// bounding box.
+	ObjectAnnotations []*GoogleCloudVisionV1p4beta1ProductSearchResultsObjectAnnotation `json:"objectAnnotations,omitempty"`
+
 	// Results: List of results, one for each product match.
 	Results []*GoogleCloudVisionV1p4beta1ProductSearchResultsResult `json:"results,omitempty"`
 
@@ -11360,6 +11569,62 @@ func (s *GoogleCloudVisionV1p4beta1ProductSearchResultsGroupedResult) MarshalJSO
 	type NoMethod GoogleCloudVisionV1p4beta1ProductSearchResultsGroupedResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p4beta1ProductSearchResultsObjectAnnotation:
+// Prediction for what the object in the bounding box is.
+type GoogleCloudVisionV1p4beta1ProductSearchResultsObjectAnnotation struct {
+	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
+	// For more
+	// information,
+	// see
+	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// Mid: Object ID that should align with EntityAnnotation mid.
+	Mid string `json:"mid,omitempty"`
+
+	// Name: Object name, expressed in its `language_code` language.
+	Name string `json:"name,omitempty"`
+
+	// Score: Score of the result. Range [0, 1].
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LanguageCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p4beta1ProductSearchResultsObjectAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p4beta1ProductSearchResultsObjectAnnotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVisionV1p4beta1ProductSearchResultsObjectAnnotation) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p4beta1ProductSearchResultsObjectAnnotation
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
 }
 
 // GoogleCloudVisionV1p4beta1ProductSearchResultsResult: Information
@@ -12313,6 +12578,11 @@ func (s *GoogleCloudVisionV1p4beta1Word) UnmarshalJSON(data []byte) error {
 // file annotation request. A file may contain one or more
 // images, which individually have their own responses.
 type GoogleCloudVisionV1p5beta1AnnotateFileResponse struct {
+	// Error: If set, represents the error message for the failed request.
+	// The
+	// `responses` field will not be set in this case.
+	Error *Status `json:"error,omitempty"`
+
 	// InputConfig: Information about the file for which this response is
 	// generated.
 	InputConfig *GoogleCloudVisionV1p5beta1InputConfig `json:"inputConfig,omitempty"`
@@ -12325,7 +12595,7 @@ type GoogleCloudVisionV1p5beta1AnnotateFileResponse struct {
 	// TotalPages: This field gives the total number of pages in the file.
 	TotalPages int64 `json:"totalPages,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InputConfig") to
+	// ForceSendFields is a list of field names (e.g. "Error") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -12333,10 +12603,10 @@ type GoogleCloudVisionV1p5beta1AnnotateFileResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InputConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -14169,6 +14439,10 @@ type GoogleCloudVisionV1p5beta1ProductSearchResultsGroupedResult struct {
 	// query image.
 	BoundingPoly *GoogleCloudVisionV1p5beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
+	// ObjectAnnotations: List of generic predictions for the object in the
+	// bounding box.
+	ObjectAnnotations []*GoogleCloudVisionV1p5beta1ProductSearchResultsObjectAnnotation `json:"objectAnnotations,omitempty"`
+
 	// Results: List of results, one for each product match.
 	Results []*GoogleCloudVisionV1p5beta1ProductSearchResultsResult `json:"results,omitempty"`
 
@@ -14193,6 +14467,62 @@ func (s *GoogleCloudVisionV1p5beta1ProductSearchResultsGroupedResult) MarshalJSO
 	type NoMethod GoogleCloudVisionV1p5beta1ProductSearchResultsGroupedResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p5beta1ProductSearchResultsObjectAnnotation:
+// Prediction for what the object in the bounding box is.
+type GoogleCloudVisionV1p5beta1ProductSearchResultsObjectAnnotation struct {
+	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
+	// For more
+	// information,
+	// see
+	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// Mid: Object ID that should align with EntityAnnotation mid.
+	Mid string `json:"mid,omitempty"`
+
+	// Name: Object name, expressed in its `language_code` language.
+	Name string `json:"name,omitempty"`
+
+	// Score: Score of the result. Range [0, 1].
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LanguageCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p5beta1ProductSearchResultsObjectAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p5beta1ProductSearchResultsObjectAnnotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVisionV1p5beta1ProductSearchResultsObjectAnnotation) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p5beta1ProductSearchResultsObjectAnnotation
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
 }
 
 // GoogleCloudVisionV1p5beta1ProductSearchResultsResult: Information
@@ -15196,6 +15526,10 @@ type GroupedResult struct {
 	// BoundingPoly: The bounding polygon around the product detected in the
 	// query image.
 	BoundingPoly *BoundingPoly `json:"boundingPoly,omitempty"`
+
+	// ObjectAnnotations: List of generic predictions for the object in the
+	// bounding box.
+	ObjectAnnotations []*ObjectAnnotation `json:"objectAnnotations,omitempty"`
 
 	// Results: List of results, one for each product match.
 	Results []*Result `json:"results,omitempty"`
@@ -16226,6 +16560,62 @@ func (s *NormalizedVertex) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// ObjectAnnotation: Prediction for what the object in the bounding box
+// is.
+type ObjectAnnotation struct {
+	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
+	// For more
+	// information,
+	// see
+	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// Mid: Object ID that should align with EntityAnnotation mid.
+	Mid string `json:"mid,omitempty"`
+
+	// Name: Object name, expressed in its `language_code` language.
+	Name string `json:"name,omitempty"`
+
+	// Score: Score of the result. Range [0, 1].
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LanguageCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ObjectAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod ObjectAnnotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *ObjectAnnotation) UnmarshalJSON(data []byte) error {
+	type NoMethod ObjectAnnotation
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
+}
+
 // Operation: This resource represents a long-running operation that is
 // the result of a
 // network API call.
@@ -16834,6 +17224,39 @@ func (s *ProductSet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ProductSetPurgeConfig: Config to control which ProductSet contains
+// the Products to be deleted.
+type ProductSetPurgeConfig struct {
+	// ProductSetId: The ProductSet that contains the Products to delete. If
+	// a Product is a
+	// member of product_set_id in addition to other ProductSets, the
+	// Product will
+	// still be deleted.
+	ProductSetId string `json:"productSetId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProductSetId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProductSetId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductSetPurgeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductSetPurgeConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Property: A `Property` consists of a user-supplied name/value pair.
 type Property struct {
 	// Name: Name of the property.
@@ -16864,6 +17287,47 @@ type Property struct {
 
 func (s *Property) MarshalJSON() ([]byte, error) {
 	type NoMethod Property
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PurgeProductsRequest: Request message for the `PurgeProducts` method.
+type PurgeProductsRequest struct {
+	// DeleteOrphanProducts: If delete_orphan_products is true, all Products
+	// that are not in any
+	// ProductSet will be deleted.
+	DeleteOrphanProducts bool `json:"deleteOrphanProducts,omitempty"`
+
+	// Force: The default value is false. Override this value to true to
+	// actually perform
+	// the purge.
+	Force bool `json:"force,omitempty"`
+
+	// ProductSetPurgeConfig: Specify which ProductSet contains the Products
+	// to be deleted.
+	ProductSetPurgeConfig *ProductSetPurgeConfig `json:"productSetPurgeConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DeleteOrphanProducts") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeleteOrphanProducts") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PurgeProductsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod PurgeProductsRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -22716,6 +23180,183 @@ func (c *ProjectsLocationsProductsPatchCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "response": {
 	//     "$ref": "Product"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-vision"
+	//   ]
+	// }
+
+}
+
+// method id "vision.projects.locations.products.purge":
+
+type ProjectsLocationsProductsPurgeCall struct {
+	s                    *Service
+	parent               string
+	purgeproductsrequest *PurgeProductsRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Purge: Asynchronous API to delete all Products in a ProductSet or all
+// Products
+// that are in no ProductSet.
+//
+// If a Product is a member of the specified ProductSet in addition to
+// other
+// ProductSets, the Product will still be deleted.
+//
+// It is recommended to not delete the specified ProductSet until after
+// this
+// operation has completed. It is also recommended to not add any of
+// the
+// Products involved in the batch delete to a new ProductSet while
+// this
+// operation is running because those Products may still end up
+// deleted.
+//
+// It's not possible to undo the PurgeProducts operation. Therefore, it
+// is
+// recommended to keep the csv files used in ImportProductSets (if that
+// was
+// how you originally built the Product Set) before starting
+// PurgeProducts, in
+// case you need to re-import the data after deletion.
+//
+// If the plan is to purge all of the Products from a ProductSet and
+// then
+// re-use the empty ProductSet to re-import new Products into the
+// empty
+// ProductSet, you must wait until the PurgeProducts operation has
+// finished
+// for that ProductSet.
+//
+// The google.longrunning.Operation API can be used to keep track of
+// the
+// progress and results of the request.
+// `Operation.metadata` contains `BatchOperationMetadata`. (progress)
+func (r *ProjectsLocationsProductsService) Purge(parent string, purgeproductsrequest *PurgeProductsRequest) *ProjectsLocationsProductsPurgeCall {
+	c := &ProjectsLocationsProductsPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.purgeproductsrequest = purgeproductsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProductsPurgeCall) Fields(s ...googleapi.Field) *ProjectsLocationsProductsPurgeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProductsPurgeCall) Context(ctx context.Context) *ProjectsLocationsProductsPurgeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProductsPurgeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProductsPurgeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.purgeproductsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/products:purge")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vision.projects.locations.products.purge" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsProductsPurgeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Asynchronous API to delete all Products in a ProductSet or all Products\nthat are in no ProductSet.\n\nIf a Product is a member of the specified ProductSet in addition to other\nProductSets, the Product will still be deleted.\n\nIt is recommended to not delete the specified ProductSet until after this\noperation has completed. It is also recommended to not add any of the\nProducts involved in the batch delete to a new ProductSet while this\noperation is running because those Products may still end up deleted.\n\nIt's not possible to undo the PurgeProducts operation. Therefore, it is\nrecommended to keep the csv files used in ImportProductSets (if that was\nhow you originally built the Product Set) before starting PurgeProducts, in\ncase you need to re-import the data after deletion.\n\nIf the plan is to purge all of the Products from a ProductSet and then\nre-use the empty ProductSet to re-import new Products into the empty\nProductSet, you must wait until the PurgeProducts operation has finished\nfor that ProductSet.\n\nThe google.longrunning.Operation API can be used to keep track of the\nprogress and results of the request.\n`Operation.metadata` contains `BatchOperationMetadata`. (progress)",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/products:purge",
+	//   "httpMethod": "POST",
+	//   "id": "vision.projects.locations.products.purge",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The project and location in which the Products should be deleted.\n\nFormat is `projects/PROJECT_ID/locations/LOC_ID`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/products:purge",
+	//   "request": {
+	//     "$ref": "PurgeProductsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

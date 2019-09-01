@@ -221,7 +221,7 @@
       }
     }
   },
-  "revision": "20190816",
+  "revision": "20190824",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -321,6 +321,25 @@
             "$ref": "TemporalAsset"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "BigQueryDestination": {
+      "description": "A BigQuery destination.",
+      "id": "BigQueryDestination",
+      "properties": {
+        "dataset": {
+          "description": "Required. The BigQuery dataset in format\n\"projects/projectId/datasets/datasetId\", to which the snapshot result\nshould be exported. If this dataset does not exist, the export call returns\nan error.",
+          "type": "string"
+        },
+        "force": {
+          "description": "If the destination table already exists and this flag is `TRUE`, the\ntable will be overwritten by the contents of assets snapshot. If the flag\nis not set and the destination table already exists, the export call\nreturns an error.",
+          "type": "boolean"
+        },
+        "table": {
+          "description": "Required. The BigQuery table to which the snapshot result should be\nwritten. If this table does not exist, a new table with the given name\nwill be created.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -864,6 +883,10 @@
       "description": "Output configuration for export assets destination.",
       "id": "OutputConfig",
       "properties": {
+        "bigqueryDestination": {
+          "$ref": "BigQueryDestination",
+          "description": "Destination on BigQuery. The output table stores the fields in asset\nproto as columns in BigQuery. The resource/iam_policy field is converted\nto a record with each field to a column, except metadata to a single JSON\nstring."
+        },
         "gcsDestination": {
           "$ref": "GcsDestination",
           "description": "Destination on Cloud Storage."

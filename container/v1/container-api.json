@@ -2458,7 +2458,7 @@
       }
     }
   },
-  "revision": "20190628",
+  "revision": "20190813",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2802,6 +2802,10 @@
           "description": "The desired image type for the node pool.\nNOTE: Set the \"desired_node_pool\" field as well.",
           "type": "string"
         },
+        "desiredIntraNodeVisibilityConfig": {
+          "$ref": "IntraNodeVisibilityConfig",
+          "description": "The desired config of Intra-node visibility."
+        },
         "desiredLocations": {
           "description": "The desired list of Google Compute Engine\n[zones](/compute/docs/zones#available) in which the cluster's nodes\nshould be located. Changing the locations a cluster is in will result\nin nodes being either created or removed from the cluster, depending on\nwhether locations are being added or removed.\n\nThis list must always include the cluster's primary zone.",
           "items": {
@@ -3118,6 +3122,17 @@
       },
       "type": "object"
     },
+    "IntraNodeVisibilityConfig": {
+      "description": "IntraNodeVisibilityConfig contains the desired config of the intra-node\nvisibility on this cluster.",
+      "id": "IntraNodeVisibilityConfig",
+      "properties": {
+        "enabled": {
+          "description": "Enables intra node visibility for this cluster.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "Jwk": {
       "description": "Jwk is a JSON Web Key as specified in RFC 7517",
       "id": "Jwk",
@@ -3344,6 +3359,10 @@
       "description": "NetworkConfig reports the relative names of network \u0026 subnetwork.",
       "id": "NetworkConfig",
       "properties": {
+        "enableIntraNodeVisibility": {
+          "description": "Whether Intra-node visibility is enabled for this cluster.\nThis makes same node pod to pod traffic visible for VPC network.",
+          "type": "boolean"
+        },
         "network": {
           "description": "Output only. The relative name of the Google Compute Engine\nnetwork(/compute/docs/networks-and-firewalls#networks) to which\nthe cluster is connected.\nExample: projects/my-project/global/networks/my-network",
           "type": "string"

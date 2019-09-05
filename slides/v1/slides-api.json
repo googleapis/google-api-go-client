@@ -303,7 +303,7 @@
       }
     }
   },
-  "revision": "20190718",
+  "revision": "20190826",
   "rootUrl": "https://slides.googleapis.com/",
   "schemas": {
     "AffineTransform": {
@@ -2626,7 +2626,7 @@
           "type": "string"
         },
         "url": {
-          "description": "The URL of the new image.\n\nThe image is fetched once at insertion time and a copy is stored for\ndisplay inside the presentation. Images must be less than 50MB in size,\ncannot exceed 25 megapixels, and must be in one of PNG, JPEG, or GIF\nformat.\n\nThe provided URL can be at most 2 kB in length. The URL itself is saved\nwith the image, and exposed via the Image.source_url field.",
+          "description": "The image URL.\n\nThe image is fetched once at insertion time and a copy is stored for\ndisplay inside the presentation. Images must be less than 50MB in size,\ncannot exceed 25 megapixels, and must be in one of PNG, JPEG, or GIF\nformat.\n\nThe provided URL can be at most 2 kB in length. The URL itself is saved\nwith the image, and exposed via the Image.source_url field.",
           "type": "string"
         }
       },

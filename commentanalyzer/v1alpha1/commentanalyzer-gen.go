@@ -139,7 +139,9 @@ type CommentsService struct {
 	s *Service
 }
 
-// AnalyzeCommentRequest: The comment analysis request message.
+// AnalyzeCommentRequest: The comment analysis request
+// message.
+// LINT.IfChange
 type AnalyzeCommentRequest struct {
 	// ClientToken: Opaque token that is echoed from the request to the
 	// response.

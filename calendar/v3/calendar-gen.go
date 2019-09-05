@@ -838,7 +838,8 @@ type ConferenceData struct {
 	// - "eventHangout": unset.
 	// - "eventNamedHangout": the name of the Hangout.
 	// - "hangoutsMeet": the 10-letter meeting code, for example
-	// "aaa-bbbb-ccc".  Optional.
+	// "aaa-bbbb-ccc".
+	// - "addOn": defined by 3P conference provider.  Optional.
 	ConferenceId string `json:"conferenceId,omitempty"`
 
 	// ConferenceSolution: The conference solution, such as Hangouts or

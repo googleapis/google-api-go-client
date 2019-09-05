@@ -30,7 +30,7 @@
     }
   },
   "basePath": "/bigquery/v2/",
-  "baseUrl": "https://www.googleapis.com/bigquery/v2/",
+  "baseUrl": "https://bigquery.googleapis.com/bigquery/v2/",
   "batchPath": "batch/bigquery/v2",
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
@@ -1417,8 +1417,8 @@
       }
     }
   },
-  "revision": "20190807",
-  "rootUrl": "https://www.googleapis.com/",
+  "revision": "20190825",
+  "rootUrl": "https://bigquery.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
       "description": "Aggregate metrics for classification/classifier models. For multi-class\nmodels, the metrics are either macro-averaged or micro-averaged. When\nmacro-averaged, the metrics are calculated for each label and then an\nunweighted average is taken of those values. When micro-averaged, the\nmetric is calculated globally by counting the total number of correctly\npredicted rows.",
@@ -2548,7 +2548,7 @@
       "id": "GoogleSheetsOptions",
       "properties": {
         "range": {
-          "description": "[Beta] [Optional] Range of a sheet to query from. Only used when non-empty. Typical format: sheet_name!top_left_cell_id:bottom_right_cell_id For example: sheet1!A1:B20",
+          "description": "[Optional] Range of a sheet to query from. Only used when non-empty. Typical format: sheet_name!top_left_cell_id:bottom_right_cell_id For example: sheet1!A1:B20",
           "type": "string"
         },
         "skipLeadingRows": {
@@ -2743,9 +2743,17 @@
           "description": "[Optional] Whether to print out a header row in the results. Default is true.",
           "type": "boolean"
         },
+        "sourceModel": {
+          "$ref": "ModelReference",
+          "description": "A reference to the model being exported."
+        },
         "sourceTable": {
           "$ref": "TableReference",
-          "description": "[Required] A reference to the table being exported."
+          "description": "A reference to the table being exported."
+        },
+        "useAvroLogicalTypes": {
+          "description": "[Optional] If destinationFormat is set to \"AVRO\", this flag indicates whether to enable extracting applicable column types (such as TIMESTAMP) to their corresponding AVRO logical types (timestamp-micros), instead of only using their raw types (avro-long).",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -3497,6 +3505,10 @@
           "description": "[Optional] A user-friendly description of this model.",
           "type": "string"
         },
+        "encryptionConfiguration": {
+          "$ref": "EncryptionConfiguration",
+          "description": "Custom encryption configuration (e.g., Cloud KMS keys). This shows the\nencryption configuration of the model data while stored in BigQuery\nstorage."
+        },
         "etag": {
           "description": "Output only. A hash of this resource.",
           "type": "string"
@@ -3604,7 +3616,6 @@
       "type": "object"
     },
     "ModelReference": {
-      "description": "Id path of a model.",
       "id": "ModelReference",
       "properties": {
         "datasetId": {
@@ -3612,7 +3623,7 @@
           "type": "string"
         },
         "modelId": {
-          "description": "[Required] The ID of the model. The ID must contain only\nletters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum\nlength is 1,024 characters.",
+          "description": "[Required] The ID of the model. The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum length is 1,024 characters.",
           "type": "string"
         },
         "projectId": {

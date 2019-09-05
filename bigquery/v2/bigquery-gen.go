@@ -78,7 +78,7 @@ var _ = context.Canceled
 const apiId = "bigquery:v2"
 const apiName = "bigquery"
 const apiVersion = "v2"
-const basePath = "https://www.googleapis.com/bigquery/v2/"
+const basePath = "https://bigquery.googleapis.com/bigquery/v2/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -2217,8 +2217,8 @@ func (s *GetServiceAccountResponse) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleSheetsOptions struct {
-	// Range: [Beta] [Optional] Range of a sheet to query from. Only used
-	// when non-empty. Typical format:
+	// Range: [Optional] Range of a sheet to query from. Only used when
+	// non-empty. Typical format:
 	// sheet_name!top_left_cell_id:bottom_right_cell_id For example:
 	// sheet1!A1:B20
 	Range string `json:"range,omitempty"`
@@ -2554,8 +2554,18 @@ type JobConfigurationExtract struct {
 	// Default: true
 	PrintHeader *bool `json:"printHeader,omitempty"`
 
-	// SourceTable: [Required] A reference to the table being exported.
+	// SourceModel: A reference to the model being exported.
+	SourceModel *ModelReference `json:"sourceModel,omitempty"`
+
+	// SourceTable: A reference to the table being exported.
 	SourceTable *TableReference `json:"sourceTable,omitempty"`
+
+	// UseAvroLogicalTypes: [Optional] If destinationFormat is set to
+	// "AVRO", this flag indicates whether to enable extracting applicable
+	// column types (such as TIMESTAMP) to their corresponding AVRO logical
+	// types (timestamp-micros), instead of only using their raw types
+	// (avro-long).
+	UseAvroLogicalTypes bool `json:"useAvroLogicalTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Compression") to
 	// unconditionally include in API requests. By default, fields with
@@ -3716,6 +3726,13 @@ type Model struct {
 	// Description: [Optional] A user-friendly description of this model.
 	Description string `json:"description,omitempty"`
 
+	// EncryptionConfiguration: Custom encryption configuration (e.g., Cloud
+	// KMS keys). This shows the
+	// encryption configuration of the model data while stored in
+	// BigQuery
+	// storage.
+	EncryptionConfiguration *EncryptionConfiguration `json:"encryptionConfiguration,omitempty"`
+
 	// Etag: Output only. A hash of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -3882,15 +3899,12 @@ func (s *ModelDefinitionModelOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ModelReference: Id path of a model.
 type ModelReference struct {
 	// DatasetId: [Required] The ID of the dataset containing this model.
 	DatasetId string `json:"datasetId,omitempty"`
 
-	// ModelId: [Required] The ID of the model. The ID must contain
-	// only
-	// letters (a-z, A-Z), numbers (0-9), or underscores (_). The
-	// maximum
+	// ModelId: [Required] The ID of the model. The ID must contain only
+	// letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum
 	// length is 1,024 characters.
 	ModelId string `json:"modelId,omitempty"`
 

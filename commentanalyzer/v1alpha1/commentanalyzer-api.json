@@ -144,11 +144,11 @@
       }
     }
   },
-  "revision": "20190616",
+  "revision": "20190901",
   "rootUrl": "https://commentanalyzer.googleapis.com/",
   "schemas": {
     "AnalyzeCommentRequest": {
-      "description": "The comment analysis request message.",
+      "description": "The comment analysis request message.\nLINT.IfChange",
       "id": "AnalyzeCommentRequest",
       "properties": {
         "clientToken": {

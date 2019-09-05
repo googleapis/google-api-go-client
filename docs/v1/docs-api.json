@@ -209,7 +209,7 @@
       }
     }
   },
-  "revision": "20190729",
+  "revision": "20190827",
   "rootUrl": "https://docs.googleapis.com/",
   "schemas": {
     "AutoText": {
@@ -1642,6 +1642,17 @@
       },
       "type": "object"
     },
+    "MergeTableCellsRequest": {
+      "description": "Merges cells in a Table.",
+      "id": "MergeTableCellsRequest",
+      "properties": {
+        "tableRange": {
+          "$ref": "TableRange",
+          "description": "The table range specifying which cells of the table to merge.\n\nAny text in the cells being merged will be concatenated and stored in the\n\"head\" cell of the range. This is the upper-left cell of the range when\nthe content direction is left to right, and the upper-right cell of the\nrange otherwise.\n\nIf the range is non-rectangular (which can occur in some cases where the\nrange covers cells that are already merged or where the table is\nnon-rectangular), a 400 bad request error is returned."
+        }
+      },
+      "type": "object"
+    },
     "NamedRange": {
       "description": "A collection of Ranges with the same named range\nID.\n\nNamed ranges allow developers to associate parts of a document with an\narbitrary user-defined label so their contents can be programmatically read\nor edited at a later time. A document can contain multiple named ranges with\nthe same name, but every named range has a unique ID.\n\nA named range is created with a single Range,\nand content inserted inside a named range generally expands that range.\nHowever, certain document changes can cause the range to be split into\nmultiple ranges.\n\nNamed ranges are not private. All applications and collaborators that have\naccess to the document can see its named ranges.",
       "id": "NamedRange",
@@ -2503,6 +2514,33 @@
       },
       "type": "object"
     },
+    "ReplaceImageRequest": {
+      "description": "Replaces an existing image with a new image.\n\nReplacing an image removes some image effects from the existing image in order to\nmirror the behavior of the Docs editor.",
+      "id": "ReplaceImageRequest",
+      "properties": {
+        "imageObjectId": {
+          "description": "The ID of the existing image that will be replaced.",
+          "type": "string"
+        },
+        "imageReplaceMethod": {
+          "description": "The replacement method.",
+          "enum": [
+            "IMAGE_REPLACE_METHOD_UNSPECIFIED",
+            "CENTER_CROP"
+          ],
+          "enumDescriptions": [
+            "Unspecified image replace method. This value must not be used.",
+            "Scales and centers the image to fill the bounds of the original image.\nThe image may be cropped in order to fill the original image's bounds. The\nrendered size of the image will be the same as that of the original image."
+          ],
+          "type": "string"
+        },
+        "uri": {
+          "description": "The URI of the new image.\n\nThe image is fetched once at insertion time and a copy is stored for\ndisplay inside the document. Images must be less than 50MB in size, cannot\nexceed 25 megapixels, and must be in one of PNG, JPEG, or GIF format.\n\nThe provided URI can be at most 2 kB in length. The URI itself is saved\nwith the image, and exposed via the ImageProperties.source_uri field.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Request": {
       "description": "A single update to apply to a document.",
       "id": "Request",
@@ -2563,9 +2601,21 @@
           "$ref": "InsertTextRequest",
           "description": "Inserts text at the specified location."
         },
+        "mergeTableCells": {
+          "$ref": "MergeTableCellsRequest",
+          "description": "Merges cells in a table."
+        },
         "replaceAllText": {
           "$ref": "ReplaceAllTextRequest",
           "description": "Replaces all instances of the specified text."
+        },
+        "replaceImage": {
+          "$ref": "ReplaceImageRequest",
+          "description": "Replaces an image in the document."
+        },
+        "unmergeTableCells": {
+          "$ref": "UnmergeTableCellsRequest",
+          "description": "Unmerges cells in a table."
         },
         "updateDocumentStyle": {
           "$ref": "UpdateDocumentStyleRequest",
@@ -3121,12 +3171,12 @@
       "type": "object"
     },
     "TableCellBorder": {
-      "description": "A border around a table cell.",
+      "description": "A border around a table cell.\n\nTable cell borders cannot be transparent. To hide a table cell border, make\nits width 0.",
       "id": "TableCellBorder",
       "properties": {
         "color": {
           "$ref": "OptionalColor",
-          "description": "The color of the border."
+          "description": "The color of the border.\n\nThis color cannot be transparent."
         },
         "dashStyle": {
           "description": "The dash style of the border.",
@@ -3603,6 +3653,17 @@
         "weightedFontFamilySuggested": {
           "description": "Indicates if there was a suggested change to weighted_font_family.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "UnmergeTableCellsRequest": {
+      "description": "Unmerges cells in a Table.",
+      "id": "UnmergeTableCellsRequest",
+      "properties": {
+        "tableRange": {
+          "$ref": "TableRange",
+          "description": "The table range specifying which cells of the table to unmerge.\n\nAll merged cells in this range will be unmerged, and cells that are already\nunmerged will not be affected. If the range has no merged cells, the\nrequest will do nothing.\n\nIf there is text in any of the merged cells, the text will remain in the\n\"head\" cell of the resulting block of unmerged cells. The \"head\" cell is\nthe upper-left cell when the content direction is from left to right, and\nthe upper-right otherwise."
         }
       },
       "type": "object"

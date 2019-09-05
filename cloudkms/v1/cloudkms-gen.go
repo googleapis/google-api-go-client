@@ -311,11 +311,6 @@ func (s *AsymmetricSignRequest) MarshalJSON() ([]byte, error) {
 // AsymmetricSignResponse: Response message for
 // KeyManagementService.AsymmetricSign.
 type AsymmetricSignResponse struct {
-	// Name: The resource name of the CryptoKeyVersion used for signing.
-	// Check
-	// this field to verify that the intended resource was used for signing.
-	Name string `json:"name,omitempty"`
-
 	// Signature: The created signature.
 	Signature string `json:"signature,omitempty"`
 
@@ -323,7 +318,7 @@ type AsymmetricSignResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "Signature") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -331,8 +326,8 @@ type AsymmetricSignResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Signature") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1986,10 +1981,6 @@ type PublicKey struct {
 	// digest.
 	Algorithm string `json:"algorithm,omitempty"`
 
-	// Name: The name of the CryptoKeyVersion public key.
-	// Provided here for verification.
-	Name string `json:"name,omitempty"`
-
 	// Pem: The public key, encoded in PEM format. For more information, see
 	// the
 	// [RFC 7468](https://tools.ietf.org/html/rfc7468) sections for
@@ -2886,7 +2877,7 @@ func (r *ProjectsLocationsKeyRingsService) GetIamPolicy(resource string) *Projec
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
 // returned.
-// Acceptable values are 0 and 1.
+// Acceptable values are 0, 1, and 3.
 // If the value is 0, or the field is omitted, policy format version 1
 // will be
 // returned.
@@ -3003,7 +2994,7 @@ func (c *ProjectsLocationsKeyRingsGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4187,7 +4178,7 @@ func (r *ProjectsLocationsKeyRingsCryptoKeysService) GetIamPolicy(resource strin
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
 // returned.
-// Acceptable values are 0 and 1.
+// Acceptable values are 0, 1, and 3.
 // If the value is 0, or the field is omitted, policy format version 1
 // will be
 // returned.
@@ -4304,7 +4295,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7093,7 +7084,7 @@ func (r *ProjectsLocationsKeyRingsImportJobsService) GetIamPolicy(resource strin
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
 // returned.
-// Acceptable values are 0 and 1.
+// Acceptable values are 0, 1, and 3.
 // If the value is 0, or the field is omitted, policy format version 1
 // will be
 // returned.
@@ -7210,7 +7201,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

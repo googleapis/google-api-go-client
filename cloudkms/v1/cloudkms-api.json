@@ -253,7 +253,7 @@
                   ],
                   "parameters": {
                     "options.requestedPolicyVersion": {
-                      "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+                      "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
@@ -517,7 +517,7 @@
                       ],
                       "parameters": {
                         "options.requestedPolicyVersion": {
-                          "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+                          "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
                           "format": "int32",
                           "location": "query",
                           "type": "integer"
@@ -1114,7 +1114,7 @@
                       ],
                       "parameters": {
                         "options.requestedPolicyVersion": {
-                          "description": "Optional. The policy format version to be returned.\nAcceptable values are 0 and 1.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+                          "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
                           "format": "int32",
                           "location": "query",
                           "type": "integer"
@@ -1250,7 +1250,7 @@
       }
     }
   },
-  "revision": "20190727",
+  "revision": "20190824",
   "rootUrl": "https://cloudkms.googleapis.com/",
   "schemas": {
     "AsymmetricDecryptRequest": {
@@ -1292,10 +1292,6 @@
       "description": "Response message for KeyManagementService.AsymmetricSign.",
       "id": "AsymmetricSignResponse",
       "properties": {
-        "name": {
-          "description": "The resource name of the CryptoKeyVersion used for signing. Check\nthis field to verify that the intended resource was used for signing.",
-          "type": "string"
-        },
         "signature": {
           "description": "The created signature.",
           "format": "byte",
@@ -2140,10 +2136,6 @@
             "ECDSA on the NIST P-256 curve with a SHA256 digest.",
             "ECDSA on the NIST P-384 curve with a SHA384 digest."
           ],
-          "type": "string"
-        },
-        "name": {
-          "description": "The name of the CryptoKeyVersion public key.\nProvided here for verification.",
           "type": "string"
         },
         "pem": {

@@ -18,7 +18,7 @@
   "description": "Creates and manages Cloud SQL instances, which provide fully managed MySQL or PostgreSQL databases.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/sql/docs/reference/latest",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/N55ZXwjx5gVcFVd9x7svcXqGxFA\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/LQk4tkY-l69ZrPa5OlN2M--rZ0o\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1617,7 +1617,7 @@
       }
     }
   },
-  "revision": "20190815",
+  "revision": "20190827",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AclEntry": {
@@ -2336,6 +2336,29 @@
       "description": "Database instance import context.",
       "id": "ImportContext",
       "properties": {
+        "bakImportOptions": {
+          "description": "Import parameters specific to SQL Server .BAK files",
+          "properties": {
+            "encryptionOptions": {
+              "properties": {
+                "certPath": {
+                  "description": "Path to the Certificate (.cer) in Cloud Storage, in the form gs://bucketName/fileName. The instance must have write permissions to the bucket and read access to the file.",
+                  "type": "string"
+                },
+                "pvkPassword": {
+                  "description": "Password that encrypts the private key",
+                  "type": "string"
+                },
+                "pvkPath": {
+                  "description": "Path to the Certificate Private Key (.pvk) in Cloud Storage, in the form gs://bucketName/fileName. The instance must have write permissions to the bucket and read access to the file.",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
         "csvImportOptions": {
           "description": "Options for importing data as CSV.",
           "properties": {

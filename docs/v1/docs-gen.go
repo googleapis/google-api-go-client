@@ -3008,6 +3008,49 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MergeTableCellsRequest: Merges cells in a Table.
+type MergeTableCellsRequest struct {
+	// TableRange: The table range specifying which cells of the table to
+	// merge.
+	//
+	// Any text in the cells being merged will be concatenated and stored in
+	// the
+	// "head" cell of the range. This is the upper-left cell of the range
+	// when
+	// the content direction is left to right, and the upper-right cell of
+	// the
+	// range otherwise.
+	//
+	// If the range is non-rectangular (which can occur in some cases where
+	// the
+	// range covers cells that are already merged or where the table
+	// is
+	// non-rectangular), a 400 bad request error is returned.
+	TableRange *TableRange `json:"tableRange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TableRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TableRange") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MergeTableCellsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod MergeTableCellsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NamedRange: A collection of Ranges with the same named
 // range
 // ID.
@@ -4489,6 +4532,66 @@ func (s *ReplaceAllTextResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ReplaceImageRequest: Replaces an existing image with a new
+// image.
+//
+// Replacing an image removes some image effects from the existing image
+// in order to
+// mirror the behavior of the Docs editor.
+type ReplaceImageRequest struct {
+	// ImageObjectId: The ID of the existing image that will be replaced.
+	ImageObjectId string `json:"imageObjectId,omitempty"`
+
+	// ImageReplaceMethod: The replacement method.
+	//
+	// Possible values:
+	//   "IMAGE_REPLACE_METHOD_UNSPECIFIED" - Unspecified image replace
+	// method. This value must not be used.
+	//   "CENTER_CROP" - Scales and centers the image to fill the bounds of
+	// the original image.
+	// The image may be cropped in order to fill the original image's
+	// bounds. The
+	// rendered size of the image will be the same as that of the original
+	// image.
+	ImageReplaceMethod string `json:"imageReplaceMethod,omitempty"`
+
+	// Uri: The URI of the new image.
+	//
+	// The image is fetched once at insertion time and a copy is stored
+	// for
+	// display inside the document. Images must be less than 50MB in size,
+	// cannot
+	// exceed 25 megapixels, and must be in one of PNG, JPEG, or GIF
+	// format.
+	//
+	// The provided URI can be at most 2 kB in length. The URI itself is
+	// saved
+	// with the image, and exposed via the ImageProperties.source_uri field.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ImageObjectId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ImageObjectId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplaceImageRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplaceImageRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Request: A single update to apply to a document.
 type Request struct {
 	// CreateNamedRange: Creates a named range.
@@ -4534,8 +4637,17 @@ type Request struct {
 	// InsertText: Inserts text at the specified location.
 	InsertText *InsertTextRequest `json:"insertText,omitempty"`
 
+	// MergeTableCells: Merges cells in a table.
+	MergeTableCells *MergeTableCellsRequest `json:"mergeTableCells,omitempty"`
+
 	// ReplaceAllText: Replaces all instances of the specified text.
 	ReplaceAllText *ReplaceAllTextRequest `json:"replaceAllText,omitempty"`
+
+	// ReplaceImage: Replaces an image in the document.
+	ReplaceImage *ReplaceImageRequest `json:"replaceImage,omitempty"`
+
+	// UnmergeTableCells: Unmerges cells in a table.
+	UnmergeTableCells *UnmergeTableCellsRequest `json:"unmergeTableCells,omitempty"`
 
 	// UpdateDocumentStyle: Updates the style of the document.
 	UpdateDocumentStyle *UpdateDocumentStyleRequest `json:"updateDocumentStyle,omitempty"`
@@ -5624,8 +5736,14 @@ func (s *TableCell) MarshalJSON() ([]byte, error) {
 }
 
 // TableCellBorder: A border around a table cell.
+//
+// Table cell borders cannot be transparent. To hide a table cell
+// border, make
+// its width 0.
 type TableCellBorder struct {
 	// Color: The color of the border.
+	//
+	// This color cannot be transparent.
 	Color *OptionalColor `json:"color,omitempty"`
 
 	// DashStyle: The dash style of the border.
@@ -6436,6 +6554,49 @@ type TextStyleSuggestionState struct {
 
 func (s *TextStyleSuggestionState) MarshalJSON() ([]byte, error) {
 	type NoMethod TextStyleSuggestionState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UnmergeTableCellsRequest: Unmerges cells in a Table.
+type UnmergeTableCellsRequest struct {
+	// TableRange: The table range specifying which cells of the table to
+	// unmerge.
+	//
+	// All merged cells in this range will be unmerged, and cells that are
+	// already
+	// unmerged will not be affected. If the range has no merged cells,
+	// the
+	// request will do nothing.
+	//
+	// If there is text in any of the merged cells, the text will remain in
+	// the
+	// "head" cell of the resulting block of unmerged cells. The "head" cell
+	// is
+	// the upper-left cell when the content direction is from left to right,
+	// and
+	// the upper-right otherwise.
+	TableRange *TableRange `json:"tableRange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TableRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TableRange") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UnmergeTableCellsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UnmergeTableCellsRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

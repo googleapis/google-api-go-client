@@ -247,7 +247,7 @@ func (s *LongRunningRecognizeMetadata) MarshalJSON() ([]byte, error) {
 // LongRunningRecognizeResponse: The only message returned to the client
 // by the `LongRunningRecognize` method.
 // It contains the result as zero or more sequential
-// `SpeechRecognitionResult`
+// SpeechRecognitionResult
 // messages. It is included in the `result.response` field of the
 // `Operation`
 // returned by the `GetOperation` call of the
@@ -437,8 +437,8 @@ type SpeechRecognitionResult struct {
 	// ChannelTag: Output only. For multi-channel audio, this is the channel
 	// number corresponding to the
 	// recognized result for the audio from that channel.
-	// For audio_channel_count = N, its output values can range from '1' to
-	// 'N'.
+	// For `audio_channel_count` = N, its output values can range from `1`
+	// to `N`.
 	ChannelTag int64 `json:"channelTag,omitempty"`
 
 	// LanguageCode: Output only.
@@ -555,7 +555,7 @@ type WordInfo struct {
 	// every speaker within
 	// the audio. This field specifies which one of those speakers was
 	// detected to
-	// have spoken this word. Value ranges from '1'
+	// have spoken this word. Value ranges from `1`
 	// to
 	// `diarization_speaker_count`. speaker_tag is set
 	// if

@@ -4602,7 +4602,7 @@ type ReplaceImageRequest struct {
 	// the image will be the same as that of the original shape.
 	ImageReplaceMethod string `json:"imageReplaceMethod,omitempty"`
 
-	// Url: The URL of the new image.
+	// Url: The image URL.
 	//
 	// The image is fetched once at insertion time and a copy is stored
 	// for

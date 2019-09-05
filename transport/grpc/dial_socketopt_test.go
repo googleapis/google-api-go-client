@@ -35,19 +35,22 @@ import (
 func TestDialTCPUserTimeout(t *testing.T) {
 	l, err := net.Listen("tcp", ":3000")
 	if err != nil {
-		t.Error(err)
-		return
+		t.Fatal(err)
 	}
 	defer l.Close()
+
+	acceptErrCh := make(chan error, 1)
 
 	go func() {
 		conn, err := l.Accept()
 		if err != nil {
-			t.Error(err)
+			acceptErrCh <- err
 			return
 		}
+		defer conn.Close()
+
 		if err := conn.Close(); err != nil {
-			t.Error(err)
+			acceptErrCh <- err
 		}
 	}()
 
@@ -63,6 +66,12 @@ func TestDialTCPUserTimeout(t *testing.T) {
 	}
 	if timeout != tcpUserTimeoutMilliseconds {
 		t.Fatalf("expected %v, got %v", tcpUserTimeoutMilliseconds, timeout)
+	}
+
+	select {
+	case err := <-acceptErrCh:
+		t.Fatalf("Accept failed with: %v", err)
+	default:
 	}
 }
 

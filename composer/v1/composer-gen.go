@@ -210,8 +210,8 @@ type Environment struct {
 	// Config: Configuration parameters for this environment.
 	Config *EnvironmentConfig `json:"config,omitempty"`
 
-	// CreateTime: Output only.
-	// The time at which this environment was created.
+	// CreateTime: Output only. The time at which this environment was
+	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Labels: Optional. User-defined labels for this environment.
@@ -248,13 +248,12 @@ type Environment struct {
 	// used.
 	State string `json:"state,omitempty"`
 
-	// UpdateTime: Output only.
-	// The time at which this environment was last modified.
+	// UpdateTime: Output only. The time at which this environment was last
+	// modified.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// Uuid: Output only.
-	// The UUID (Universally Unique IDentifier) associated with this
-	// environment.
+	// Uuid: Output only. The UUID (Universally Unique IDentifier)
+	// associated with this environment.
 	// This value is generated when the environment is created.
 	Uuid string `json:"uuid,omitempty"`
 
@@ -287,18 +286,16 @@ func (s *Environment) MarshalJSON() ([]byte, error) {
 
 // EnvironmentConfig: Configuration information for an environment.
 type EnvironmentConfig struct {
-	// AirflowUri: Output only.
-	// The URI of the Apache Airflow Web UI hosted within this environment
-	// (see
+	// AirflowUri: Output only. The URI of the Apache Airflow Web UI hosted
+	// within this environment (see
 	// [Airflow
 	// web
 	// interface](/composer/docs/how-to/accessing/airflow-web-interface))
 	// .
 	AirflowUri string `json:"airflowUri,omitempty"`
 
-	// DagGcsPrefix: Output only.
-	// The Cloud Storage prefix of the DAGs for this environment. Although
-	// Cloud
+	// DagGcsPrefix: Output only. The Cloud Storage prefix of the DAGs for
+	// this environment. Although Cloud
 	// Storage objects reside in a flat namespace, a hierarchical file
 	// tree
 	// can be simulated using "/"-delimited object name prefixes. DAG
@@ -307,8 +304,8 @@ type EnvironmentConfig struct {
 	// prefix.
 	DagGcsPrefix string `json:"dagGcsPrefix,omitempty"`
 
-	// GkeCluster: Output only.
-	// The Kubernetes Engine cluster used to run this environment.
+	// GkeCluster: Output only. The Kubernetes Engine cluster used to run
+	// this environment.
 	GkeCluster string `json:"gkeCluster,omitempty"`
 
 	// NodeConfig: The configuration used for the Kubernetes Engine cluster.
@@ -559,6 +556,10 @@ type NodeConfig struct {
 	// be
 	// propagated to the unspecified field.
 	//
+	// The `machineTypeId` must not be a [shared-core
+	// machine
+	// type](/compute/docs/machine-types#sharedcore).
+	//
 	// If this field is unspecified, the `machineTypeId` defaults
 	// to "n1-standard-1".
 	MachineType string `json:"machineType,omitempty"`
@@ -724,18 +725,16 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 
 // OperationMetadata: Metadata describing an operation.
 type OperationMetadata struct {
-	// CreateTime: Output only.
-	// The time the operation was submitted to the server.
+	// CreateTime: Output only. The time the operation was submitted to the
+	// server.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// EndTime: Output only.
-	// The time when the operation terminated, regardless of its
-	// success.
+	// EndTime: Output only. The time when the operation terminated,
+	// regardless of its success.
 	// This field is unset if the operation is still ongoing.
 	EndTime string `json:"endTime,omitempty"`
 
-	// OperationType: Output only.
-	// The type of operation being performed.
+	// OperationType: Output only. The type of operation being performed.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unused.
@@ -744,18 +743,16 @@ type OperationMetadata struct {
 	//   "UPDATE" - A resource update operation.
 	OperationType string `json:"operationType,omitempty"`
 
-	// Resource: Output only.
-	// The resource being operated on, as a [relative resource
-	// name](
+	// Resource: Output only. The resource being operated on, as a [relative
+	// resource name](
 	// /apis/design/resource_names#relative_resource_name).
 	Resource string `json:"resource,omitempty"`
 
-	// ResourceUuid: Output only.
-	// The UUID of the resource being operated on.
+	// ResourceUuid: Output only. The UUID of the resource being operated
+	// on.
 	ResourceUuid string `json:"resourceUuid,omitempty"`
 
-	// State: Output only.
-	// The current operation state.
+	// State: Output only. The current operation state.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unused.
@@ -1028,7 +1025,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1166,7 +1163,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1307,7 +1304,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1465,7 +1462,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1803,7 +1800,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1972,7 +1969,7 @@ func (c *ProjectsLocationsImageVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2143,7 +2140,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2288,7 +2285,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2469,7 +2466,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

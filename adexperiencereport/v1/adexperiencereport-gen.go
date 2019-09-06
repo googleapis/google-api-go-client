@@ -151,11 +151,11 @@ type ViolatingSitesService struct {
 	s *Service
 }
 
-// PlatformSummary: Summary of the ad experience rating of a site for a
-// specific platform.
+// PlatformSummary: A site's Ad Experience Report summary on a single
+// platform.
 type PlatformSummary struct {
-	// BetterAdsStatus: The status of the site reviewed for the Better Ads
-	// Standards.
+	// BetterAdsStatus: The site's Ad Experience Report status on this
+	// platform.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Not reviewed.
@@ -164,10 +164,22 @@ type PlatformSummary struct {
 	//   "FAILING" - Failing.
 	BetterAdsStatus string `json:"betterAdsStatus,omitempty"`
 
-	// EnforcementTime: The time at which ad filtering begins.
+	// EnforcementTime: The time at
+	// which
+	// [enforcement](https://support.google.com/webtools/answer/7308033
+	// ) against
+	// the site began or will begin on this platform.
+	//
+	// Not set when the
+	// filter_status
+	// is OFF.
 	EnforcementTime string `json:"enforcementTime,omitempty"`
 
-	// FilterStatus: The ad filtering status of the site.
+	// FilterStatus: The site's
+	// [enforcement
+	// status](https://support.google.com/webtools/answer/730803
+	// 3) on this
+	// platform.
 	//
 	// Possible values:
 	//   "UNKNOWN" - N/A.
@@ -177,10 +189,12 @@ type PlatformSummary struct {
 	//   "PENDING" - Ad filtering is pending.
 	FilterStatus string `json:"filterStatus,omitempty"`
 
-	// LastChangeTime: The last time that the site changed status.
+	// LastChangeTime: The time at which the site's status last changed on
+	// this platform.
 	LastChangeTime string `json:"lastChangeTime,omitempty"`
 
-	// Region: The assigned regions for the site and platform.
+	// Region: The site's regions on this platform.
+	//
 	// No longer populated, because there is no longer any semantic
 	// difference
 	// between sites in different regions.
@@ -192,10 +206,21 @@ type PlatformSummary struct {
 	//   "REGION_C" - Region C.
 	Region []string `json:"region,omitempty"`
 
-	// ReportUrl: A link that leads to a full ad experience report.
+	// ReportUrl: A link to the full Ad Experience Report for the site on
+	// this platform..
+	//
+	// Not set in
+	// ViolatingSitesResponse.
+	//
+	// Note that you must complete the [Search Console
+	// verification
+	// process](https://support.google.com/webmasters/answer/900
+	// 8080) for the site
+	// before you can access the full report.
 	ReportUrl string `json:"reportUrl,omitempty"`
 
-	// UnderReview: Whether the site is currently under review.
+	// UnderReview: Whether the site is currently under review on this
+	// platform.
 	UnderReview bool `json:"underReview,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BetterAdsStatus") to
@@ -224,13 +249,13 @@ func (s *PlatformSummary) MarshalJSON() ([]byte, error) {
 
 // SiteSummaryResponse: Response message for GetSiteSummary.
 type SiteSummaryResponse struct {
-	// DesktopSummary: Summary for the desktop review of the site.
+	// DesktopSummary: The site's Ad Experience Report summary on desktop.
 	DesktopSummary *PlatformSummary `json:"desktopSummary,omitempty"`
 
-	// MobileSummary: Summary for the mobile review of the site.
+	// MobileSummary: The site's Ad Experience Report summary on mobile.
 	MobileSummary *PlatformSummary `json:"mobileSummary,omitempty"`
 
-	// ReviewedSite: The name of the site reviewed.
+	// ReviewedSite: The name of the reviewed site, e.g. `google.com`.
 	ReviewedSite string `json:"reviewedSite,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -263,7 +288,7 @@ func (s *SiteSummaryResponse) MarshalJSON() ([]byte, error) {
 
 // ViolatingSitesResponse: Response message for ListViolatingSites.
 type ViolatingSitesResponse struct {
-	// ViolatingSites: A list of summaries of violating sites.
+	// ViolatingSites: The list of violating sites.
 	ViolatingSites []*SiteSummaryResponse `json:"violatingSites,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -305,7 +330,7 @@ type SitesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a summary of the ad experience rating of a site.
+// Get: Gets a site's Ad Experience Report summary.
 func (r *SitesService) Get(name string) *SitesGetCall {
 	c := &SitesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -349,7 +374,7 @@ func (c *SitesGetCall) Header() http.Header {
 
 func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -411,7 +436,7 @@ func (c *SitesGetCall) Do(opts ...googleapi.CallOption) (*SiteSummaryResponse, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a summary of the ad experience rating of a site.",
+	//   "description": "Gets a site's Ad Experience Report summary.",
 	//   "flatPath": "v1/sites/{sitesId}",
 	//   "httpMethod": "GET",
 	//   "id": "adexperiencereport.sites.get",
@@ -420,7 +445,7 @@ func (c *SitesGetCall) Do(opts ...googleapi.CallOption) (*SiteSummaryResponse, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The site property whose ad experiences\nmay have been reviewed, and it should be URL-encoded. For example,\nsites/https%3A%2F%2Fwww.google.com. The server will return an error of\nBAD_REQUEST if this field is not filled in. Note that if the site property\nis not yet verified in Search Console, the reportUrl field returned by the\nAPI will lead to the verification page, prompting the user to go through\nthat process before they can gain access to the Ad Experience Report.",
+	//       "description": "Required. The name of the site whose summary to get, e.g.\n`sites/http%3A%2F%2Fwww.google.com%2F`.\n\nFormat: `sites/{site}`",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+$",
 	//       "required": true,
@@ -448,7 +473,9 @@ type ViolatingSitesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists sites with failing Ad Experience Report statuses.
+// List: Lists sites that are failing in the Ad Experience Report on at
+// least one
+// platform.
 func (r *ViolatingSitesService) List() *ViolatingSitesListCall {
 	c := &ViolatingSitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -491,7 +518,7 @@ func (c *ViolatingSitesListCall) Header() http.Header {
 
 func (c *ViolatingSitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -550,7 +577,7 @@ func (c *ViolatingSitesListCall) Do(opts ...googleapi.CallOption) (*ViolatingSit
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists sites with failing Ad Experience Report statuses.",
+	//   "description": "Lists sites that are failing in the Ad Experience Report on at least one\nplatform.",
 	//   "flatPath": "v1/violatingSites",
 	//   "httpMethod": "GET",
 	//   "id": "adexperiencereport.violatingSites.list",

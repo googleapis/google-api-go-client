@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/I9gALdjAeVcloo6V-Q4JFwg7bFg\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/HZSqvT0GHTZ7xrpToB8aYnQd7zw\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -2162,6 +2162,12 @@
             "resource"
           ],
           "parameters": {
+            "optionsRequestedPolicyVersion": {
+              "description": "Requested IAM Policy version.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
             "project": {
               "description": "Project ID for this request.",
               "location": "path",
@@ -5222,6 +5228,12 @@
             "resource"
           ],
           "parameters": {
+            "optionsRequestedPolicyVersion": {
+              "description": "Requested IAM Policy version.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
             "project": {
               "description": "Project ID for this request.",
               "location": "path",
@@ -6874,6 +6886,12 @@
             "resource"
           ],
           "parameters": {
+            "optionsRequestedPolicyVersion": {
+              "description": "Requested IAM Policy version.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
             "project": {
               "description": "Project ID for this request.",
               "location": "path",
@@ -7480,6 +7498,12 @@
             "resource"
           ],
           "parameters": {
+            "optionsRequestedPolicyVersion": {
+              "description": "Requested IAM Policy version.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
             "project": {
               "description": "Project ID for this request.",
               "location": "path",
@@ -9998,6 +10022,12 @@
             "resource"
           ],
           "parameters": {
+            "optionsRequestedPolicyVersion": {
+              "description": "Requested IAM Policy version.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
             "project": {
               "description": "Project ID for this request.",
               "location": "path",
@@ -11370,7 +11400,7 @@
           ],
           "parameters": {
             "nodeGroup": {
-              "description": "Name of the NodeGroup resource to delete.",
+              "description": "Name of the NodeGroup resource whose nodes will be deleted.",
               "location": "path",
               "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
@@ -11460,6 +11490,12 @@
             "resource"
           ],
           "parameters": {
+            "optionsRequestedPolicyVersion": {
+              "description": "Requested IAM Policy version.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
             "project": {
               "description": "Project ID for this request.",
               "location": "path",
@@ -11952,6 +11988,12 @@
             "resource"
           ],
           "parameters": {
+            "optionsRequestedPolicyVersion": {
+              "description": "Requested IAM Policy version.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
             "project": {
               "description": "Project ID for this request.",
               "location": "path",
@@ -13681,7 +13723,7 @@
           ],
           "parameters": {
             "commitment": {
-              "description": "Name of the commitment of which the reservation's capacities are being updated.",
+              "description": "Name of the commitment for which the reservation is being updated.",
               "location": "path",
               "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
@@ -14021,6 +14063,12 @@
             "resource"
           ],
           "parameters": {
+            "optionsRequestedPolicyVersion": {
+              "description": "Requested IAM Policy version.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
             "project": {
               "description": "Project ID for this request.",
               "location": "path",
@@ -17127,7 +17175,7 @@
           ]
         },
         "get": {
-          "description": "Retrieves all information of the specified reservation.",
+          "description": "Retrieves information about the specified reservation.",
           "httpMethod": "GET",
           "id": "compute.reservations.get",
           "parameterOrder": [
@@ -17178,6 +17226,12 @@
             "resource"
           ],
           "parameters": {
+            "optionsRequestedPolicyVersion": {
+              "description": "Requested IAM Policy version.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
             "project": {
               "description": "Project ID for this request.",
               "location": "path",
@@ -17252,7 +17306,7 @@
           ]
         },
         "list": {
-          "description": "A list all the reservations that have been configured for the specified project in specified zone.",
+          "description": "A list of all the reservations that have been configured for the specified project in specified zone.",
           "httpMethod": "GET",
           "id": "compute.reservations.list",
           "parameterOrder": [
@@ -17309,7 +17363,7 @@
           ]
         },
         "resize": {
-          "description": "Resizes the reservation (applicable to standalone reservations only)",
+          "description": "Resizes the reservation (applicable to standalone reservations only). For more information, read Modifying reservations.",
           "httpMethod": "POST",
           "id": "compute.reservations.resize",
           "parameterOrder": [
@@ -17597,6 +17651,12 @@
             "resource"
           ],
           "parameters": {
+            "optionsRequestedPolicyVersion": {
+              "description": "Requested IAM Policy version.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
             "project": {
               "description": "Project ID for this request.",
               "location": "path",
@@ -17979,6 +18039,11 @@
               "location": "query",
               "minimum": "0",
               "type": "integer"
+            },
+            "natName": {
+              "description": "Name of the nat service to filter the Nat Mapping information. If it is omitted, all nats for this router will be returned. Name should conform to RFC1035.",
+              "location": "query",
+              "type": "string"
             },
             "orderBy": {
               "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
@@ -19122,6 +19187,12 @@
             "resource"
           ],
           "parameters": {
+            "optionsRequestedPolicyVersion": {
+              "description": "Requested IAM Policy version.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
             "project": {
               "description": "Project ID for this request.",
               "location": "path",
@@ -20031,6 +20102,12 @@
             "resource"
           ],
           "parameters": {
+            "optionsRequestedPolicyVersion": {
+              "description": "Requested IAM Policy version.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
             "project": {
               "description": "Project ID for this request.",
               "location": "path",
@@ -20162,7 +20239,7 @@
           ]
         },
         "listUsable": {
-          "description": "Retrieves an aggregated list of usable subnetworks.",
+          "description": "Retrieves an aggregated list of all usable subnetworks in the project. The list contains all of the subnetworks in the project and the subnetworks that were shared by a Shared VPC host project.",
           "httpMethod": "GET",
           "id": "compute.subnetworks.listUsable",
           "parameterOrder": [
@@ -24186,7 +24263,7 @@
       }
     }
   },
-  "revision": "20190624",
+  "revision": "20190815",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -25160,18 +25237,18 @@
       "id": "AllocationSpecificSKUReservation",
       "properties": {
         "count": {
-          "description": "Specifies number of resources that are allocated.",
+          "description": "Specifies the number of resources that are allocated.",
           "format": "int64",
           "type": "string"
         },
         "inUseCount": {
-          "description": "[OutputOnly] Indicates how many resource are in use.",
+          "description": "[OutputOnly] Indicates how many instances are in use.",
           "format": "int64",
           "type": "string"
         },
         "instanceProperties": {
           "$ref": "AllocationSpecificSKUAllocationReservedInstanceProperties",
-          "description": "The instance properties for this specific sku reservation."
+          "description": "The instance properties for the reservation."
         }
       },
       "type": "object"
@@ -25280,7 +25357,7 @@
           "type": "string"
         },
         "diskSizeGb": {
-          "description": "Specifies the size of the disk in base-2 GB.",
+          "description": "Specifies the size of the disk in base-2 GB. If not specified, the disk will be the same size as the image (usually 10GB). If specified, the size must be equal to or larger than 10GB.",
           "format": "int64",
           "type": "string"
         },
@@ -25329,7 +25406,7 @@
       "type": "object"
     },
     "AuditConfig": {
-      "description": "Specifies the audit configuration for a service. The configuration determines which permission types are logged, and what identities, if any, are exempted from logging. An AuditConfig must have one or more AuditLogConfigs.\n\nIf there are AuditConfigs for both `allServices` and a specific service, the union of the two AuditConfigs is used for that service: the log_types specified in each AuditConfig are enabled, and the exempted_members in each AuditLogConfig are exempted.\n\nExample Policy with multiple AuditConfigs:\n\n{ \"audit_configs\": [ { \"service\": \"allServices\" \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\", \"exempted_members\": [ \"user:foo@gmail.com\" ] }, { \"log_type\": \"DATA_WRITE\", }, { \"log_type\": \"ADMIN_READ\", } ] }, { \"service\": \"fooservice.googleapis.com\" \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\", }, { \"log_type\": \"DATA_WRITE\", \"exempted_members\": [ \"user:bar@gmail.com\" ] } ] } ] }\n\nFor fooservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts foo@gmail.com from DATA_READ logging, and bar@gmail.com from DATA_WRITE logging.",
+      "description": "Specifies the audit configuration for a service. The configuration determines which permission types are logged, and what identities, if any, are exempted from logging. An AuditConfig must have one or more AuditLogConfigs.\n\nIf there are AuditConfigs for both `allServices` and a specific service, the union of the two AuditConfigs is used for that service: the log_types specified in each AuditConfig are enabled, and the exempted_members in each AuditLogConfig are exempted.\n\nExample Policy with multiple AuditConfigs:\n\n{ \"audit_configs\": [ { \"service\": \"allServices\" \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\", \"exempted_members\": [ \"user:jose@example.com\" ] }, { \"log_type\": \"DATA_WRITE\", }, { \"log_type\": \"ADMIN_READ\", } ] }, { \"service\": \"sampleservice.googleapis.com\" \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\", }, { \"log_type\": \"DATA_WRITE\", \"exempted_members\": [ \"user:aliya@example.com\" ] } ] } ] }\n\nFor sampleservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts jose@example.com from DATA_READ logging, and aliya@example.com from DATA_WRITE logging.",
       "id": "AuditConfig",
       "properties": {
         "auditLogConfigs": {
@@ -25354,7 +25431,7 @@
       "type": "object"
     },
     "AuditLogConfig": {
-      "description": "Provides the configuration for logging a type of permissions. Example:\n\n{ \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\", \"exempted_members\": [ \"user:foo@gmail.com\" ] }, { \"log_type\": \"DATA_WRITE\", } ] }\n\nThis enables 'DATA_READ' and 'DATA_WRITE' logging, while exempting foo@gmail.com from DATA_READ logging.",
+      "description": "Provides the configuration for logging a type of permissions. Example:\n\n{ \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\", \"exempted_members\": [ \"user:jose@example.com\" ] }, { \"log_type\": \"DATA_WRITE\", } ] }\n\nThis enables 'DATA_READ' and 'DATA_WRITE' logging, while exempting jose@example.com from DATA_READ logging.",
       "id": "AuditLogConfig",
       "properties": {
         "exemptedMembers": {
@@ -25363,6 +25440,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "ignoreChildExemptions": {
+          "description": "Specifies whether principals can be exempted for the same LogType in lower-level resource policies. If true, any lower-level exemptions will be ignored.",
+          "type": "boolean"
         },
         "logType": {
           "description": "The log type that this config enables.",
@@ -25728,6 +25809,8 @@
             "MIN_EQUALS_MAX",
             "MISSING_CUSTOM_METRIC_DATA_POINTS",
             "MISSING_LOAD_BALANCING_DATA_POINTS",
+            "MODE_OFF",
+            "MODE_ONLY_UP",
             "MORE_THAN_ONE_BACKEND_SERVICE",
             "NOT_ENOUGH_QUOTA_AVAILABLE",
             "REGION_RESOURCE_STOCKOUT",
@@ -25737,6 +25820,8 @@
             "ZONE_RESOURCE_STOCKOUT"
           ],
           "enumDescriptions": [
+            "",
+            "",
             "",
             "",
             "",
@@ -25957,7 +26042,7 @@
       "id": "Backend",
       "properties": {
         "balancingMode": {
-          "description": "Specifies the balancing mode for the backend.\n\nWhen choosing a balancing mode, you need to consider the loadBalancingScheme, and protocol for the backend service, as well as the type of backend (instance group or NEG).\n\n \n- If the load balancing mode is CONNECTION, then the load is spread based on how many concurrent connections the backend can handle.\nThe CONNECTION balancing mode is only available if the protocol for the backend service is SSL, TCP, or UDP.\n\nIf the loadBalancingScheme for the backend service is EXTERNAL (SSL Proxy and TCP Proxy load balancers), you must also specify exactly one of the following parameters: maxConnections, maxConnectionsPerInstance, or maxConnectionsPerEndpoint.\n\nIf the loadBalancingScheme for the backend service is INTERNAL (internal TCP/UDP load balancers), you cannot specify any additional parameters.\n \n- If the load balancing mode is RATE, then the load is spread based on the rate of HTTP requests per second (RPS).\nThe RATE balancing mode is only available if the protocol for the backend service is HTTP or HTTPS. You must specify exactly one of the following parameters: maxRate, maxRatePerInstance, or maxRatePerEndpoint.\n \n- If the load balancing mode is UTILIZATION, then the load is spread based on the CPU utilization of instances in an instance group.\nThe UTILIZATION balancing mode is only available if the loadBalancingScheme of the backend service is EXTERNAL, INTERNAL_SELF_MANAGED, or INTERNAL_MANAGED and the backend is made up of instance groups. There are no restrictions on the backend service protocol.",
+          "description": "Specifies the balancing mode for the backend.\n\nWhen choosing a balancing mode, you need to consider the loadBalancingScheme, and protocol for the backend service, as well as the type of backend (instance group or NEG).\n\n \n- If the load balancing mode is CONNECTION, then the load is spread based on how many concurrent connections the backend can handle.\nYou can use the CONNECTION balancing mode if the protocol for the backend service is SSL, TCP, or UDP.\n\nIf the loadBalancingScheme for the backend service is EXTERNAL (SSL Proxy and TCP Proxy load balancers), you must also specify exactly one of the following parameters: maxConnections, maxConnectionsPerInstance, or maxConnectionsPerEndpoint.\n\nIf the loadBalancingScheme for the backend service is INTERNAL (internal TCP/UDP load balancers), you cannot specify any additional parameters.\n \n- If the load balancing mode is RATE, the load is spread based on the rate of HTTP requests per second (RPS).\nYou can use the RATE balancing mode if the protocol for the backend service is HTTP or HTTPS. You must specify exactly one of the following parameters: maxRate, maxRatePerInstance, or maxRatePerEndpoint.\n \n- If the load balancing mode is UTILIZATION, the load is spread based on the CPU utilization of instances in an instance group.\nYou can use the UTILIZATION balancing mode if the loadBalancingScheme of the backend service is EXTERNAL, INTERNAL_SELF_MANAGED, or INTERNAL_MANAGED and the backends are instance groups. There are no restrictions on the backend service protocol.",
           "enum": [
             "CONNECTION",
             "RATE",
@@ -26330,6 +26415,10 @@
           "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
           "type": "string"
         },
+        "network": {
+          "description": "The URL of the network to which this backend service belongs. This field can only be spcified when the load balancing scheme is set to INTERNAL.",
+          "type": "string"
+        },
         "outlierDetection": {
           "$ref": "OutlierDetection",
           "description": "Settings controlling eviction of unhealthy hosts from the load balancing pool. This field is applicable to either:  \n- A regional backend service with the service_protocol set to HTTP, HTTPS, or HTTP2, and load_balancing_scheme set to INTERNAL_MANAGED. \n- A global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED."
@@ -26376,7 +26465,7 @@
           "type": "string"
         },
         "sessionAffinity": {
-          "description": "Type of session affinity to use. The default is NONE. Session affinity is not applicable if the --protocol is UDP.\n\nWhen the loadBalancingScheme is EXTERNAL, possible values are NONE, CLIENT_IP, or GENERATED_COOKIE. GENERATED_COOKIE is only available if the protocol is HTTP or HTTPS.\n\nWhen the loadBalancingScheme is INTERNAL, possible values are NONE, CLIENT_IP, CLIENT_IP_PROTO, or CLIENT_IP_PORT_PROTO.\n\nWhen the loadBalancingScheme is INTERNAL_SELF_MANAGED, possible values are NONE, CLIENT_IP, GENERATED_COOKIE, HEADER_FIELD, or HTTP_COOKIE.",
+          "description": "Type of session affinity to use. The default is NONE. Session affinity is not applicable if the --protocol is UDP.\n\nWhen the loadBalancingScheme is EXTERNAL, possible values are NONE, CLIENT_IP, or GENERATED_COOKIE. You can use GENERATED_COOKIE if the protocol is HTTP or HTTPS.\n\nWhen the loadBalancingScheme is INTERNAL, possible values are NONE, CLIENT_IP, CLIENT_IP_PROTO, or CLIENT_IP_PORT_PROTO.\n\nWhen the loadBalancingScheme is INTERNAL_SELF_MANAGED, possible values are NONE, CLIENT_IP, GENERATED_COOKIE, HEADER_FIELD, or HTTP_COOKIE.",
           "enum": [
             "CLIENT_IP",
             "CLIENT_IP_PORT_PROTO",
@@ -26829,6 +26918,250 @@
       },
       "type": "object"
     },
+    "BfdPacket": {
+      "description": "",
+      "id": "BfdPacket",
+      "properties": {
+        "authenticationPresent": {
+          "description": "The Authentication Present bit of the BFD packet. This is specified in section 4.1 of RFC5880",
+          "type": "boolean"
+        },
+        "controlPlaneIndependent": {
+          "description": "The Control Plane Independent bit of the BFD packet. This is specified in section 4.1 of RFC5880",
+          "type": "boolean"
+        },
+        "demand": {
+          "description": "The demand bit of the BFD packet. This is specified in section 4.1 of RFC5880",
+          "type": "boolean"
+        },
+        "diagnostic": {
+          "description": "The diagnostic code specifies the local system's reason for the last change in session state. This allows remote systems to determine the reason that the previous session failed, for example. These diagnostic codes are specified in section 4.1 of RFC5880",
+          "enum": [
+            "ADMINISTRATIVELY_DOWN",
+            "CONCATENATED_PATH_DOWN",
+            "CONTROL_DETECTION_TIME_EXPIRED",
+            "DIAGNOSTIC_UNSPECIFIED",
+            "ECHO_FUNCTION_FAILED",
+            "FORWARDING_PLANE_RESET",
+            "NEIGHBOR_SIGNALED_SESSION_DOWN",
+            "NO_DIAGNOSTIC",
+            "PATH_DOWN",
+            "REVERSE_CONCATENATED_PATH_DOWN"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "final": {
+          "description": "The Final bit of the BFD packet. This is specified in section 4.1 of RFC5880",
+          "type": "boolean"
+        },
+        "length": {
+          "description": "The length of the BFD Control packet in bytes. This is specified in section 4.1 of RFC5880",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "minEchoRxIntervalMs": {
+          "description": "The Required Min Echo RX Interval value in the BFD packet. This is specified in section 4.1 of RFC5880",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "minRxIntervalMs": {
+          "description": "The Required Min RX Interval value in the BFD packet. This is specified in section 4.1 of RFC5880",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "minTxIntervalMs": {
+          "description": "The Desired Min TX Interval value in the BFD packet. This is specified in section 4.1 of RFC5880",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "multiplier": {
+          "description": "The detection time multiplier of the BFD packet. This is specified in section 4.1 of RFC5880",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "multipoint": {
+          "description": "The multipoint bit of the BFD packet. This is specified in section 4.1 of RFC5880",
+          "type": "boolean"
+        },
+        "myDiscriminator": {
+          "description": "The My Discriminator value in the BFD packet. This is specified in section 4.1 of RFC5880",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "poll": {
+          "description": "The Poll bit of the BFD packet. This is specified in section 4.1 of RFC5880",
+          "type": "boolean"
+        },
+        "state": {
+          "description": "The current BFD session state as seen by the transmitting system. These states are specified in section 4.1 of RFC5880",
+          "enum": [
+            "ADMIN_DOWN",
+            "DOWN",
+            "INIT",
+            "STATE_UNSPECIFIED",
+            "UP"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "version": {
+          "description": "The version number of the BFD protocol, as specified in section 4.1 of RFC5880.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "yourDiscriminator": {
+          "description": "The Your Discriminator value in the BFD packet. This is specified in section 4.1 of RFC5880",
+          "format": "uint32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "BfdStatus": {
+      "description": "Next free: 15",
+      "id": "BfdStatus",
+      "properties": {
+        "bfdSessionInitializationMode": {
+          "description": "The BFD session initialization mode for this BGP peer. If set to ACTIVE, the Cloud Router will initiate the BFD session for this BGP peer. If set to PASSIVE, the Cloud Router will wait for the peer router to initiate the BFD session for this BGP peer. If set to DISABLED, BFD is disabled for this BGP peer.",
+          "enum": [
+            "ACTIVE",
+            "DISABLED",
+            "PASSIVE"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "configUpdateTimestampMicros": {
+          "description": "Unix timestamp of the most recent config update.",
+          "format": "int64",
+          "type": "string"
+        },
+        "controlPacketCounts": {
+          "$ref": "BfdStatusPacketCounts",
+          "description": "Control packet counts for the current BFD session."
+        },
+        "controlPacketIntervals": {
+          "description": "Inter-packet time interval statistics for control packets.",
+          "items": {
+            "$ref": "PacketIntervals"
+          },
+          "type": "array"
+        },
+        "localDiagnostic": {
+          "description": "The diagnostic code specifies the local system's reason for the last change in session state. This allows remote systems to determine the reason that the previous session failed, for example. These diagnostic codes are specified in section 4.1 of RFC5880",
+          "enum": [
+            "ADMINISTRATIVELY_DOWN",
+            "CONCATENATED_PATH_DOWN",
+            "CONTROL_DETECTION_TIME_EXPIRED",
+            "DIAGNOSTIC_UNSPECIFIED",
+            "ECHO_FUNCTION_FAILED",
+            "FORWARDING_PLANE_RESET",
+            "NEIGHBOR_SIGNALED_SESSION_DOWN",
+            "NO_DIAGNOSTIC",
+            "PATH_DOWN",
+            "REVERSE_CONCATENATED_PATH_DOWN"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "localState": {
+          "description": "The current BFD session state as seen by the transmitting system. These states are specified in section 4.1 of RFC5880",
+          "enum": [
+            "ADMIN_DOWN",
+            "DOWN",
+            "INIT",
+            "STATE_UNSPECIFIED",
+            "UP"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "negotiatedLocalControlTxIntervalMs": {
+          "description": "Negotiated transmit interval for control packets.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "rxPacket": {
+          "$ref": "BfdPacket",
+          "description": "The most recent Rx control packet for this BFD session."
+        },
+        "txPacket": {
+          "$ref": "BfdPacket",
+          "description": "The most recent Tx control packet for this BFD session."
+        },
+        "uptimeMs": {
+          "description": "Session uptime in milliseconds. Value will be 0 if session is not up.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BfdStatusPacketCounts": {
+      "id": "BfdStatusPacketCounts",
+      "properties": {
+        "numRx": {
+          "description": "Number of packets received since the beginning of the current BFD session.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "numRxRejected": {
+          "description": "Number of packets received that were rejected because of errors since the beginning of the current BFD session.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "numRxSuccessful": {
+          "description": "Number of packets received that were successfully processed since the beginning of the current BFD session.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "numTx": {
+          "description": "Number of packets transmitted since the beginning of the current BFD session.",
+          "format": "uint32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "Binding": {
       "description": "Associates `members` with a `role`.",
       "id": "Binding",
@@ -26838,7 +27171,7 @@
           "description": "The condition that is associated with this binding. NOTE: An unsatisfied condition will not allow user access via current binding. Different bindings, including their conditions, are examined independently."
         },
         "members": {
-          "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` .\n\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.\n\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`.",
+          "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` .\n\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.\n\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`.",
           "items": {
             "type": "string"
           },
@@ -26983,7 +27316,7 @@
           "type": "string"
         },
         "reservations": {
-          "description": "List of reservations for this commitment.",
+          "description": "List of reservations in this commitment.",
           "items": {
             "$ref": "Reservation"
           },
@@ -27029,11 +27362,13 @@
           "enum": [
             "COMPUTE_OPTIMIZED",
             "GENERAL_PURPOSE",
+            "GENERAL_PURPOSE_E2",
             "GENERAL_PURPOSE_N2",
             "MEMORY_OPTIMIZED",
             "TYPE_UNSPECIFIED"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -27762,7 +28097,7 @@
           "type": "string"
         },
         "status": {
-          "description": "[Output Only] The status of disk creation.",
+          "description": "[Output Only] The status of disk creation. CREATING: Disk is provisioning. RESTORING: Source data is being copied into the disk. FAILED: Disk creation failed. READY: Disk is ready for use. DELETING: Disk is deleting.",
           "enum": [
             "CREATING",
             "DELETING",
@@ -29328,7 +29663,7 @@
       "id": "ForwardingRule",
       "properties": {
         "IPAddress": {
-          "description": "The IP address that this forwarding rule is serving on behalf of.\n\nAddresses are restricted based on the forwarding rule's load balancing scheme (EXTERNAL or INTERNAL) and scope (global or regional).\n\nWhen the load balancing scheme is EXTERNAL, for global forwarding rules, the address must be a global IP, and for regional forwarding rules, the address must live in the same region as the forwarding rule. If this field is empty, an ephemeral IPv4 address from the same scope (global or regional) will be assigned. A regional forwarding rule supports IPv4 only. A global forwarding rule supports either IPv4 or IPv6.\n\nWhen the load balancing scheme is INTERNAL_SELF_MANAGED, this must be a URL reference to an existing Address resource ( internal regional static IP address), with a purpose of GCE_END_POINT and address_type of INTERNAL.\n\nWhen the load balancing scheme is INTERNAL, this can only be an RFC 1918 IP address belonging to the network/subnet configured for the forwarding rule. By default, if this field is empty, an ephemeral internal IP address will be automatically allocated from the IP range of the subnet or network configured for this forwarding rule.\n\nAn address can be specified either by a literal IP address or a URL reference to an existing Address resource. The following examples are all valid:  \n- 100.1.2.3 \n- https://www.googleapis.com/compute/v1/projects/project/regions/region/addresses/address \n- projects/project/regions/region/addresses/address \n- regions/region/addresses/address \n- global/addresses/address \n- address",
+          "description": "IP address that this forwarding rule serves. When a client sends traffic to this IP address, the forwarding rule directs the traffic to the target that you specify in the forwarding rule.\n\nIf you don't specify a reserved IP address, an ephemeral IP address is assigned. Methods for specifying an IP address:\n\n* IPv4 dotted decimal, as in `100.1.2.3` * Full URL, as in https://www.googleapis.com/compute/v1/projects/project_id/regions/region/addresses/address-name * Partial URL or by name, as in: * projects/project_id/regions/region/addresses/address-name * regions/region/addresses/address-name * global/addresses/address-name * address-name \n\nThe loadBalancingScheme and the forwarding rule's target determine the type of IP address that you can use. For detailed information, refer to [IP address specifications](/load-balancing/docs/forwarding-rule-concepts#ip_address_specifications).",
           "type": "string"
         },
         "IPProtocol": {
@@ -29459,11 +29794,11 @@
           "type": "string"
         },
         "portRange": {
-          "description": "This field is used along with the target field for TargetHttpProxy, TargetHttpsProxy, TargetSslProxy, TargetTcpProxy, TargetVpnGateway, TargetPool, TargetInstance.\n\nApplicable only when IPProtocol is TCP, UDP, or SCTP, only packets addressed to ports in the specified range will be forwarded to target. Forwarding rules with the same [IPAddress, IPProtocol] pair must have disjoint port ranges.\n\nSome types of forwarding target have constraints on the acceptable ports:  \n- TargetHttpProxy: 80, 8080 \n- TargetHttpsProxy: 443 \n- TargetTcpProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993, 995, 1688, 1883, 5222 \n- TargetSslProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993, 995, 1688, 1883, 5222 \n- TargetVpnGateway: 500, 4500",
+          "description": "This field is deprecated. See the port\nfield.",
           "type": "string"
         },
         "ports": {
-          "description": "This field is used along with the backend_service field for internal load balancing.\n\nWhen the load balancing scheme is INTERNAL, a list of ports can be configured, for example, ['80'], ['8000','9000'] etc. Only packets addressed to these ports will be forwarded to the backends configured with this forwarding rule.\n\nYou may specify a maximum of up to 5 ports.",
+          "description": "List of comma-separated ports. The forwarding rule forwards packets with matching destination ports. If the forwarding rule's loadBalancingScheme is EXTERNAL, and the forwarding rule references a target pool, specifying ports is optional. You can specify an unlimited number of ports, but they must be contiguous. If you omit ports, GCP forwards traffic on any port of the forwarding rule's protocol.\n\nIf the forwarding rule's loadBalancingScheme is EXTERNAL, and the forwarding rule references a target HTTP proxy, target HTTPS proxy, target TCP proxy, target SSL proxy, or target VPN gateway, you must specify ports using the following constraints:\n\n \n- TargetHttpProxy: 80, 8080 \n- TargetHttpsProxy: 443 \n- TargetTcpProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993, 995, 1688, 1883, 5222 \n- TargetSslProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993, 995, 1688, 1883, 5222 \n- TargetVpnGateway: 500, 4500  \n\nIf the forwarding rule's loadBalancingScheme is INTERNAL, you must specify ports in one of the following ways:\n\n* A list of up to five ports, which can be non-contiguous * Keyword ALL, which causes the forwarding rule to forward traffic on any port of the forwarding rule's protocol.\n\nThe ports field is used along with the target field for TargetHttpProxy, TargetHttpsProxy, TargetSslProxy, TargetTcpProxy, TargetVpnGateway, TargetPool, TargetInstance.\n\nApplicable only when IPProtocol is TCP, UDP, or SCTP. Forwarding rules with the same [IPAddress, IPProtocol] pair must have disjoint port ranges.",
           "items": {
             "type": "string"
           },
@@ -29478,7 +29813,7 @@
           "type": "string"
         },
         "serviceLabel": {
-          "description": "An optional prefix to the service name for this Forwarding Rule. If specified, will be the first label of the fully qualified service name.\n\nThe label must be 1-63 characters long, and comply with RFC1035. Specifically, the label must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.\n\nThis field is only used for internal load balancing.",
+          "description": "An optional prefix to the service name for this Forwarding Rule. If specified, the prefix is the first label of the fully qualified service name.\n\nThe label must be 1-63 characters long, and comply with RFC1035. Specifically, the label must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.\n\nThis field is only used for internal load balancing.",
           "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
           "type": "string"
         },
@@ -31510,7 +31845,7 @@
           "type": "string"
         },
         "storageLocations": {
-          "description": "GCS bucket storage location of the image (regional or multi-regional).",
+          "description": "Cloud Storage bucket storage location of the image (regional or multi-regional).",
           "items": {
             "type": "string"
           },
@@ -31674,6 +32009,7 @@
           "type": "array"
         },
         "hostname": {
+          "description": "Specifies the hostname of the instance. The specified hostname must be RFC1035 compliant. If hostname is not specified, the default hostname is [INSTANCE_NAME].c.[PROJECT_ID].internal when using the global DNS, and [INSTANCE_NAME].[ZONE].c.[PROJECT_ID].internal when using zonal DNS.",
           "type": "string"
         },
         "id": {
@@ -32707,6 +33043,7 @@
       "id": "InstanceGroupManagerUpdatePolicy",
       "properties": {
         "instanceRedistributionType": {
+          "description": "The  instance redistribution policy for regional managed instance groups. Valid values are:  \n- PROACTIVE (default): The group attempts to maintain an even distribution of VM instances across zones in the region. \n- NONE: For non-autoscaled groups, proactive redistribution is disabled.",
           "enum": [
             "NONE",
             "PROACTIVE"
@@ -34218,20 +34555,24 @@
           "type": "boolean"
         },
         "bandwidth": {
-          "description": "Provisioned bandwidth capacity for the interconnect attachment. For attachments of type DEDICATED, the user can set the bandwidth. For attachments of type PARTNER, the Google Partner that is operating the interconnect must set the bandwidth. Output only for PARTNER type, mutable for PARTNER_PROVIDER and DEDICATED, and can take one of the following values: \n- BPS_50M: 50 Mbit/s \n- BPS_100M: 100 Mbit/s \n- BPS_200M: 200 Mbit/s \n- BPS_300M: 300 Mbit/s \n- BPS_400M: 400 Mbit/s \n- BPS_500M: 500 Mbit/s \n- BPS_1G: 1 Gbit/s \n- BPS_2G: 2 Gbit/s \n- BPS_5G: 5 Gbit/s \n- BPS_10G: 10 Gbit/s",
+          "description": "Provisioned bandwidth capacity for the interconnect attachment. For attachments of type DEDICATED, the user can set the bandwidth. For attachments of type PARTNER, the Google Partner that is operating the interconnect must set the bandwidth. Output only for PARTNER type, mutable for PARTNER_PROVIDER and DEDICATED, and can take one of the following values: \n- BPS_50M: 50 Mbit/s \n- BPS_100M: 100 Mbit/s \n- BPS_200M: 200 Mbit/s \n- BPS_300M: 300 Mbit/s \n- BPS_400M: 400 Mbit/s \n- BPS_500M: 500 Mbit/s \n- BPS_1G: 1 Gbit/s \n- BPS_2G: 2 Gbit/s \n- BPS_5G: 5 Gbit/s \n- BPS_10G: 10 Gbit/s \n- BPS_20G: 20 Gbit/s \n- BPS_50G: 50 Gbit/s",
           "enum": [
             "BPS_100M",
             "BPS_10G",
             "BPS_1G",
             "BPS_200M",
+            "BPS_20G",
             "BPS_2G",
             "BPS_300M",
             "BPS_400M",
             "BPS_500M",
+            "BPS_50G",
             "BPS_50M",
             "BPS_5G"
           ],
           "enumDescriptions": [
+            "",
+            "",
             "",
             "",
             "",
@@ -36374,7 +36715,7 @@
           "type": "string"
         },
         "ipAddress": {
-          "description": "Optional IPv4 address of network endpoint. The IP address must belong to a VM in GCE (either the primary IP or as part of an aliased IP range). If the IP address is not specified, then the primary IP address for the VM instance in the network that the network endpoint group belongs to will be used.",
+          "description": "Optional IPv4 address of network endpoint. The IP address must belong to a VM in Compute Engine (either the primary IP or as part of an aliased IP range). If the IP address is not specified, then the primary IP address for the VM instance in the network that the network endpoint group belongs to will be used.",
           "type": "string"
         },
         "port": {
@@ -37576,6 +37917,7 @@
       "id": "NodeGroupsDeleteNodesRequest",
       "properties": {
         "nodes": {
+          "description": "Names of the nodes to delete.",
           "items": {
             "type": "string"
           },
@@ -38644,7 +38986,7 @@
           "type": "integer"
         },
         "id": {
-          "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+          "description": "[Output Only] The unique identifier for the operation. This identifier is defined by the server.",
           "format": "uint64",
           "type": "string"
         },
@@ -38658,7 +39000,7 @@
           "type": "string"
         },
         "name": {
-          "description": "[Output Only] Name of the resource.",
+          "description": "[Output Only] Name of the operation.",
           "type": "string"
         },
         "operationType": {
@@ -39182,6 +39524,65 @@
       },
       "type": "object"
     },
+    "PacketIntervals": {
+      "description": "Next free: 7",
+      "id": "PacketIntervals",
+      "properties": {
+        "avgMs": {
+          "description": "Average observed inter-packet interval in milliseconds.",
+          "format": "int64",
+          "type": "string"
+        },
+        "duration": {
+          "description": "From how long ago in the past these intervals were observed.",
+          "enum": [
+            "DURATION_UNSPECIFIED",
+            "HOUR",
+            "MAX",
+            "MINUTE"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "maxMs": {
+          "description": "Maximum observed inter-packet interval in milliseconds.",
+          "format": "int64",
+          "type": "string"
+        },
+        "minMs": {
+          "description": "Minimum observed inter-packet interval in milliseconds.",
+          "format": "int64",
+          "type": "string"
+        },
+        "numIntervals": {
+          "description": "Number of inter-packet intervals from which these statistics were derived.",
+          "format": "int64",
+          "type": "string"
+        },
+        "type": {
+          "description": "The type of packets for which inter-packet intervals were computed.",
+          "enum": [
+            "LOOPBACK",
+            "RECEIVE",
+            "TRANSMIT",
+            "TYPE_UNSPECIFIED"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "PathMatcher": {
       "description": "A matcher for the path portion of the URL. The BackendService from the longest-matched rule will serve the URL. If no rule was matched, the default service will be used.",
       "id": "PathMatcher",
@@ -39272,7 +39673,7 @@
           "type": "array"
         },
         "etag": {
-          "description": "`etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of a policy from overwriting each other. It is strongly suggested that systems make use of the `etag` in the read-modify-write cycle to perform policy updates in order to avoid race conditions: An `etag` is returned in the response to `getIamPolicy`, and systems are expected to put that etag in the request to `setIamPolicy` to ensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing policy is overwritten blindly.",
+          "description": "`etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of a policy from overwriting each other. It is strongly suggested that systems make use of the `etag` in the read-modify-write cycle to perform policy updates in order to avoid race conditions: An `etag` is returned in the response to `getIamPolicy`, and systems are expected to put that etag in the request to `setIamPolicy` to ensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing policy is overwritten.",
           "format": "byte",
           "type": "string"
         },
@@ -39478,8 +39879,10 @@
             "BACKEND_SERVICES",
             "C2_CPUS",
             "COMMITMENTS",
+            "COMMITTED_C2_CPUS",
             "COMMITTED_CPUS",
             "COMMITTED_LOCAL_SSD_TOTAL_GB",
+            "COMMITTED_N2_CPUS",
             "COMMITTED_NVIDIA_K80_GPUS",
             "COMMITTED_NVIDIA_P100_GPUS",
             "COMMITTED_NVIDIA_P4_GPUS",
@@ -39553,6 +39956,8 @@
             "VPN_TUNNELS"
           ],
           "enumDescriptions": [
+            "",
+            "",
             "",
             "",
             "",
@@ -39849,7 +40254,7 @@
       "id": "RegionCommitmentsUpdateReservationsRequest",
       "properties": {
         "reservations": {
-          "description": "List of reservations for the capacity move of VMs with accelerators and local ssds.",
+          "description": "List of two reservations to transfer GPUs and local SSD between.",
           "items": {
             "$ref": "Reservation"
           },
@@ -40711,11 +41116,11 @@
       "type": "object"
     },
     "Reservation": {
-      "description": "Represents a reservation resource. A reservation ensures that capacity is held in a specific zone even if the reserved VMs are not running. For more information, read  Reserving zonal resources. (== resource_for beta.reservations ==) (== resource_for v1.reservations ==) (== NextID: 13 ==)",
+      "description": "Represents a reservation resource. A reservation ensures that capacity is held in a specific zone even if the reserved VMs are not running. For more information, read  Reserving zonal resources. (== resource_for beta.reservations ==) (== resource_for v1.reservations ==)",
       "id": "Reservation",
       "properties": {
         "commitment": {
-          "description": "[OutputOnly] Full or partial url for parent commitment for reservations which are tied to a commitment.",
+          "description": "[OutputOnly] Full or partial URL to a parent commitment. This field displays for reservations that are tied to a commitment.",
           "type": "string"
         },
         "creationTimestamp": {
@@ -40777,7 +41182,7 @@
           "type": "string"
         },
         "zone": {
-          "description": "Zone in which the reservation resides, must be provided if reservation is created with commitment creation.",
+          "description": "Zone in which the reservation resides. A zone must be provided if the reservation is created within a commitment.",
           "type": "string"
         }
       },
@@ -41691,7 +42096,7 @@
           "type": "object"
         },
         "storageLocations": {
-          "description": "GCS bucket storage location of the auto snapshot (regional or multi-regional).",
+          "description": "Cloud Storage bucket storage location of the auto snapshot (regional or multi-regional).",
           "items": {
             "type": "string"
           },
@@ -42303,6 +42708,11 @@
           "description": "Local BGP Autonomous System Number (ASN). Must be an RFC6996 private ASN, either 16-bit or 32-bit. The value will be fixed for this router resource. All VPN tunnels that link to this router will have the same local ASN.",
           "format": "uint32",
           "type": "integer"
+        },
+        "keepaliveInterval": {
+          "description": "The interval in seconds between BGP keepalive messages that are sent to the peer. Hold time is three times the interval at which keepalive messages are sent, and the hold time is the maximum number of seconds allowed to elapse between successive keepalive messages that BGP receives from a peer. BGP will use the smaller of either the local hold time value or the peer?s hold time value as the hold time for the BGP connection between the two peers. If set, this value must be between 1 and 120. The default is 20.",
+          "format": "uint32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -42347,6 +42757,22 @@
           "format": "uint32",
           "type": "integer"
         },
+        "bfd": {
+          "$ref": "RouterBgpPeerBfd",
+          "description": "BFD configuration for the BGP peering."
+        },
+        "enable": {
+          "description": "The status of the BGP peer connection. If set to FALSE, any active session with the peer is terminated and all associated routing information is removed. If set to TRUE, the peer connection can be established with routing information. The default is TRUE.",
+          "enum": [
+            "FALSE",
+            "TRUE"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        },
         "interfaceName": {
           "description": "Name of the interface the BGP peer is associated with.",
           "type": "string"
@@ -42368,17 +42794,62 @@
           "type": "string"
         },
         "name": {
-          "description": "Name of this BGP peer. The name must be 1-63 characters long and comply with RFC1035.",
+          "annotations": {
+            "required": [
+              "compute.routers.insert"
+            ]
+          },
+          "description": "Name of this BGP peer. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
           "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
           "type": "string"
         },
         "peerAsn": {
+          "annotations": {
+            "required": [
+              "compute.routers.insert"
+            ]
+          },
           "description": "Peer BGP Autonomous System Number (ASN). Each BGP interface may use a different value.",
           "format": "uint32",
           "type": "integer"
         },
         "peerIpAddress": {
           "description": "IP address of the BGP interface outside Google Cloud Platform. Only IPv4 is supported.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RouterBgpPeerBfd": {
+      "id": "RouterBgpPeerBfd",
+      "properties": {
+        "minReceiveInterval": {
+          "description": "The minimum interval, in milliseconds, between BFD control packets received from the peer router. The actual value is negotiated between the two routers and is equal to the greater of this value and the transmit interval of the other router. If set, this value must be between 100 and 30000. The default is 300.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "minTransmitInterval": {
+          "description": "The minimum interval, in milliseconds, between BFD control packets transmitted to the peer router. The actual value is negotiated between the two routers and is equal to the greater of this value and the corresponding receive interval of the other router. If set, this value must be between 100 and 30000. The default is 300.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "multiplier": {
+          "description": "The number of consecutive BFD packets that must be missed before BFD declares that a peer is unavailable. If set, the value must be a value between 2 and 16. The default is 3.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "sessionInitializationMode": {
+          "description": "The BFD session initialization mode for this BGP peer. If set to ACTIVE, the Cloud Router will initiate the BFD session for this BGP peer. If set to PASSIVE, the Cloud Router will wait for the peer router to initiate the BFD session for this BGP peer. If set to DISABLED, BFD is disabled for this BGP peer. The default is PASSIVE.",
+          "enum": [
+            "ACTIVE",
+            "DISABLED",
+            "PASSIVE"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
           "type": "string"
         }
       },
@@ -42412,7 +42883,12 @@
           "type": "string"
         },
         "name": {
-          "description": "Name of this interface entry. The name must be 1-63 characters long and comply with RFC1035.",
+          "annotations": {
+            "required": [
+              "compute.routers.insert"
+            ]
+          },
+          "description": "Name of this interface entry. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
           "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
           "type": "string"
         }
@@ -42535,6 +43011,13 @@
       "description": "Represents a Nat resource. It enables the VMs within the specified subnetworks to access Internet without external IP addresses. It specifies a list of subnetworks (and the ranges within) that want to use NAT. Customers can also provide the external IPs that would be used for NAT. GCP would auto-allocate ephemeral IPs if no external IPs are provided.",
       "id": "RouterNat",
       "properties": {
+        "drainNatIps": {
+          "description": "A list of URLs of the IP resources to be drained. These IPs must be valid static external IPs that have been assigned to the NAT. These IPs should be used for updating/patching a NAT only.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "icmpIdleTimeoutSec": {
           "description": "Timeout (in seconds) for ICMP connections. Defaults to 30s if not set.",
           "format": "int32",
@@ -42718,6 +43201,9 @@
           },
           "type": "array"
         },
+        "bfdStatus": {
+          "$ref": "BfdStatus"
+        },
         "ipAddress": {
           "description": "IP address of the local BGP interface.",
           "type": "string"
@@ -42774,6 +43260,20 @@
       "properties": {
         "autoAllocatedNatIps": {
           "description": "A list of IPs auto-allocated for NAT. Example: [\"1.1.1.1\", \"129.2.16.89\"]",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "drainAutoAllocatedNatIps": {
+          "description": "A list of IPs auto-allocated for NAT that are in drain mode. Example: [\"1.1.1.1\", ?179.12.26.133?].",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "drainUserAllocatedNatIps": {
+          "description": "A list of IPs user-allocated for NAT that are in drain mode. Example: [\"1.1.1.1\", ?179.12.26.133?].",
           "items": {
             "type": "string"
           },
@@ -43704,7 +44204,7 @@
           "type": "string"
         },
         "storageLocations": {
-          "description": "GCS bucket storage location of the snapshot (regional or multi-regional).",
+          "description": "Cloud Storage bucket storage location of the snapshot (regional or multi-regional).",
           "items": {
             "type": "string"
           },
@@ -48360,12 +48860,24 @@
       "description": "Contain information of Nat mapping for an interface of this endpoint.",
       "id": "VmEndpointNatMappingsInterfaceNatMappings",
       "properties": {
+        "drainNatIpPortRanges": {
+          "description": "List of all drain IP:port-range mappings assigned to this interface. These ranges are inclusive, that is, both the first and the last ports can be used for NAT. Example: [\"2.2.2.2:12345-12355\", \"1.1.1.1:2234-2234\"].",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "natIpPortRanges": {
           "description": "A list of all IP:port-range mappings assigned to this interface. These ranges are inclusive, that is, both the first and the last ports can be used for NAT. Example: [\"2.2.2.2:12345-12355\", \"1.1.1.1:2234-2234\"].",
           "items": {
             "type": "string"
           },
           "type": "array"
+        },
+        "numTotalDrainNatPorts": {
+          "description": "Total number of drain ports across all NAT IPs allocated to this interface. It equals to the aggregated port number in the field drain_nat_ip_port_ranges.",
+          "format": "int32",
+          "type": "integer"
         },
         "numTotalNatPorts": {
           "description": "Total number of ports across all NAT IPs allocated to this interface. It equals to the aggregated port number in the field nat_ip_port_ranges.",

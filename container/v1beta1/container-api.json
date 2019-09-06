@@ -2483,7 +2483,7 @@
       }
     }
   },
-  "revision": "20190628",
+  "revision": "20190813",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2846,6 +2846,10 @@
           "$ref": "PrivateClusterConfig",
           "description": "Configuration for private cluster."
         },
+        "releaseChannel": {
+          "$ref": "ReleaseChannel",
+          "description": "Release channel configuration."
+        },
         "resourceLabels": {
           "additionalProperties": {
             "type": "string"
@@ -3169,6 +3173,49 @@
       "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
       "id": "Empty",
       "properties": {},
+      "type": "object"
+    },
+    "FeatureConfig": {
+      "description": "FeatureConfig is the configuration for a specific feature including the\ndefinition of the feature as well as the tier in which it resides.",
+      "id": "FeatureConfig",
+      "properties": {
+        "feature": {
+          "description": "The feature that is being configured with this value.",
+          "enum": [
+            "DEFAULT_FEATURE",
+            "VERTICAL_POD_AUTOSCALER",
+            "NODE_AUTO_PROVISIONING",
+            "BINARY_AUTHORIZATION",
+            "RESOURCE_LABELS",
+            "USAGE_METERING",
+            "CLOUD_RUN_ON_GKE"
+          ],
+          "enumDescriptions": [
+            "DEFAULT_FEATURE is the default zero value of the Feature.  This value is\nvalid.",
+            "The vertical pod autoscaling feature.",
+            "The node auto provisioning feature.",
+            "The binary authorization feature.",
+            "The resource labels feature.",
+            "The GKE usage metering feature.",
+            "The Cloud Run on GKE feature."
+          ],
+          "type": "string"
+        },
+        "tier": {
+          "description": "The tier in which the configured feature resides.",
+          "enum": [
+            "TIER_UNSPECIFIED",
+            "STANDARD",
+            "ADVANCED"
+          ],
+          "enumDescriptions": [
+            "TIER_UNSPECIFIED is the default value. If this value is set during create\nor update, it defaults to the project level tier setting.",
+            "Represents the standard tier or base Google Kubernetes Engine offering.",
+            "Represents the advanced tier."
+          ],
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "GetJSONWebKeysResponse": {
@@ -4161,6 +4208,27 @@
       },
       "type": "object"
     },
+    "PremiumConfig": {
+      "description": "PremiumConfig is the configuration for all premium features and tiers.",
+      "id": "PremiumConfig",
+      "properties": {
+        "features": {
+          "description": "The features that GKE provides.",
+          "items": {
+            "$ref": "FeatureConfig"
+          },
+          "type": "array"
+        },
+        "tiers": {
+          "description": "The tiers that are part of the premium offering.",
+          "items": {
+            "$ref": "TierConfig"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "PrivateClusterConfig": {
       "description": "Configuration options for private clusters.",
       "id": "PrivateClusterConfig",
@@ -4187,6 +4255,56 @@
         },
         "publicEndpoint": {
           "description": "Output only. The external IP address of this cluster's master endpoint.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ReleaseChannel": {
+      "description": "ReleaseChannel indicates which release channel a cluster is\nsubscribed to. Release channels are arranged in order of risk and\nfrequency of updates.\n\nWhen a cluster is subscribed to a release channel, Google maintains\nboth the master version and the node version. Node auto-upgrade\ndefaults to true and cannot be disabled. Updates to version related\nfields (e.g. current_master_version) return an error.",
+      "id": "ReleaseChannel",
+      "properties": {
+        "channel": {
+          "description": "channel specifies which release channel the cluster is subscribed to.",
+          "enum": [
+            "UNSPECIFIED",
+            "RAPID",
+            "REGULAR",
+            "STABLE"
+          ],
+          "enumDescriptions": [
+            "No channel specified.",
+            "Clusters subscribed to RAPID receive the latest qualified\ncomponents, before any other channel. RAPID is intended for early testers\nand developers who require new features. New upgrades will occur roughly\nweekly.",
+            "Clusters subscribed to REGULAR receive versions that are considered GA\nquality. REGULAR is intended for production users who want to take\nadvantage of new features. New upgrades will occur roughly every few\nweeks.",
+            "Clusters subscribed to STABLE receive versions that are known to be\nstable and reliable in production. STABLE is intended for production\nusers who need stability above all else, or for whom frequent upgrades\nare too risky. New upgrades will occur roughly every few months."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ReleaseChannelConfig": {
+      "description": "ReleaseChannelConfig exposes configuration for a release channel.",
+      "id": "ReleaseChannelConfig",
+      "properties": {
+        "channel": {
+          "description": "The release channel this configuration applies to.",
+          "enum": [
+            "UNSPECIFIED",
+            "RAPID",
+            "REGULAR",
+            "STABLE"
+          ],
+          "enumDescriptions": [
+            "No channel specified.",
+            "Clusters subscribed to RAPID receive the latest qualified\ncomponents, before any other channel. RAPID is intended for early testers\nand developers who require new features. New upgrades will occur roughly\nweekly.",
+            "Clusters subscribed to REGULAR receive versions that are considered GA\nquality. REGULAR is intended for production users who want to take\nadvantage of new features. New upgrades will occur roughly every few\nweeks.",
+            "Clusters subscribed to STABLE receive versions that are known to be\nstable and reliable in production. STABLE is intended for production\nusers who need stability above all else, or for whom frequent upgrades\nare too risky. New upgrades will occur roughly every few months."
+          ],
+          "type": "string"
+        },
+        "defaultVersion": {
+          "description": "The default version for newly created clusters on the channel.",
           "type": "string"
         }
       },
@@ -4274,6 +4392,13 @@
       "description": "Kubernetes Engine service configuration.",
       "id": "ServerConfig",
       "properties": {
+        "channels": {
+          "description": "List of release channel configurations.",
+          "items": {
+            "$ref": "ReleaseChannelConfig"
+          },
+          "type": "array"
+        },
         "defaultClusterVersion": {
           "description": "Version of Kubernetes the service deploys by default.",
           "type": "string"
@@ -4281,6 +4406,10 @@
         "defaultImageType": {
           "description": "Default image type.",
           "type": "string"
+        },
+        "premiumConfig": {
+          "$ref": "PremiumConfig",
+          "description": "Premium configuration for service."
         },
         "validImageTypes": {
           "description": "List of valid image types.",
@@ -4751,6 +4880,41 @@
       },
       "type": "object"
     },
+    "TierConfig": {
+      "description": "TierConfig is the configuration for a tier offering.  For example the GKE\nstandard or advanced offerings which contain different levels of\nfunctionality and possibly cost.",
+      "id": "TierConfig",
+      "properties": {
+        "parent": {
+          "description": "The tier from which the tier being configured inherits.  The configured\ntier will inherit all the features from its parent tier.",
+          "enum": [
+            "TIER_UNSPECIFIED",
+            "STANDARD",
+            "ADVANCED"
+          ],
+          "enumDescriptions": [
+            "TIER_UNSPECIFIED is the default value. If this value is set during create\nor update, it defaults to the project level tier setting.",
+            "Represents the standard tier or base Google Kubernetes Engine offering.",
+            "Represents the advanced tier."
+          ],
+          "type": "string"
+        },
+        "tier": {
+          "description": "The tier that is being configured with this value.",
+          "enum": [
+            "TIER_UNSPECIFIED",
+            "STANDARD",
+            "ADVANCED"
+          ],
+          "enumDescriptions": [
+            "TIER_UNSPECIFIED is the default value. If this value is set during create\nor update, it defaults to the project level tier setting.",
+            "Represents the standard tier or base Google Kubernetes Engine offering.",
+            "Represents the advanced tier."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "TierSettings": {
       "description": "Cluster tier settings.",
       "id": "TierSettings",
@@ -4758,12 +4922,12 @@
         "tier": {
           "description": "Cluster tier.",
           "enum": [
-            "UNSPECIFIED",
+            "TIER_UNSPECIFIED",
             "STANDARD",
             "ADVANCED"
           ],
           "enumDescriptions": [
-            "UNSPECIFIED is the default value. If this value is set during create or\nupdate, it defaults to the project level tier setting.",
+            "TIER_UNSPECIFIED is the default value. If this value is set during create\nor update, it defaults to the project level tier setting.",
             "Represents the standard tier or base Google Kubernetes Engine offering.",
             "Represents the advanced tier."
           ],

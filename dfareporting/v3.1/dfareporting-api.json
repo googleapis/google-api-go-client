@@ -20,7 +20,7 @@
   "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/doubleclick-advertisers/",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/VH4PGjfB6GO21wO-Z1pan3itmoM\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/lSDUytSNxGcl1tfeDGlF_ujuIQg\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
     "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
@@ -1281,6 +1281,13 @@
               "description": "Select only archived landing pages. Don't set this field to select both archived and non-archived landing pages.",
               "location": "query",
               "type": "boolean"
+            },
+            "campaignIds": {
+              "description": "Select only landing pages that are associated with these campaigns.",
+              "format": "int64",
+              "location": "query",
+              "repeated": true,
+              "type": "string"
             },
             "ids": {
               "description": "Select only landing pages with these IDs.",
@@ -3904,127 +3911,6 @@
         }
       }
     },
-    "directorySiteContacts": {
-      "methods": {
-        "get": {
-          "description": "Gets one directory site contact by ID.",
-          "httpMethod": "GET",
-          "id": "dfareporting.directorySiteContacts.get",
-          "parameterOrder": [
-            "profileId",
-            "id"
-          ],
-          "parameters": {
-            "id": {
-              "description": "Directory site contact ID.",
-              "format": "int64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "profileId": {
-              "description": "User profile ID associated with this request.",
-              "format": "int64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "userprofiles/{profileId}/directorySiteContacts/{id}",
-          "response": {
-            "$ref": "DirectorySiteContact"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/dfatrafficking"
-          ]
-        },
-        "list": {
-          "description": "Retrieves a list of directory site contacts, possibly filtered. This method supports paging.",
-          "httpMethod": "GET",
-          "id": "dfareporting.directorySiteContacts.list",
-          "parameterOrder": [
-            "profileId"
-          ],
-          "parameters": {
-            "directorySiteIds": {
-              "description": "Select only directory site contacts with these directory site IDs. This is a required field.",
-              "format": "int64",
-              "location": "query",
-              "repeated": true,
-              "type": "string"
-            },
-            "ids": {
-              "description": "Select only directory site contacts with these IDs.",
-              "format": "int64",
-              "location": "query",
-              "repeated": true,
-              "type": "string"
-            },
-            "maxResults": {
-              "default": "1000",
-              "description": "Maximum number of results to return.",
-              "format": "int32",
-              "location": "query",
-              "maximum": "1000",
-              "minimum": "0",
-              "type": "integer"
-            },
-            "pageToken": {
-              "description": "Value of the nextPageToken from the previous result page.",
-              "location": "query",
-              "type": "string"
-            },
-            "profileId": {
-              "description": "User profile ID associated with this request.",
-              "format": "int64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "searchString": {
-              "description": "Allows searching for objects by name, ID or email. Wildcards (*) are allowed. For example, \"directory site contact*2015\" will return objects with names like \"directory site contact June 2015\", \"directory site contact April 2015\", or simply \"directory site contact 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"directory site contact\" will match objects with name \"my directory site contact\", \"directory site contact 2015\", or simply \"directory site contact\".",
-              "location": "query",
-              "type": "string"
-            },
-            "sortField": {
-              "default": "ID",
-              "description": "Field by which to sort the list.",
-              "enum": [
-                "ID",
-                "NAME"
-              ],
-              "enumDescriptions": [
-                "",
-                ""
-              ],
-              "location": "query",
-              "type": "string"
-            },
-            "sortOrder": {
-              "default": "ASCENDING",
-              "description": "Order of sorted results.",
-              "enum": [
-                "ASCENDING",
-                "DESCENDING"
-              ],
-              "enumDescriptions": [
-                "",
-                ""
-              ],
-              "location": "query",
-              "type": "string"
-            }
-          },
-          "path": "userprofiles/{profileId}/directorySiteContacts",
-          "response": {
-            "$ref": "DirectorySiteContactsListResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/dfatrafficking"
-          ]
-        }
-      }
-    },
     "directorySites": {
       "methods": {
         "get": {
@@ -4114,12 +4000,6 @@
               "location": "query",
               "type": "boolean"
             },
-            "countryId": {
-              "description": "Select only directory sites with this country ID.",
-              "format": "int64",
-              "location": "query",
-              "type": "string"
-            },
             "dfpNetworkCode": {
               "description": "Select only directory sites with this Ad Manager network code.",
               "location": "query",
@@ -4143,12 +4023,6 @@
             },
             "pageToken": {
               "description": "Value of the nextPageToken from the previous result page.",
-              "location": "query",
-              "type": "string"
-            },
-            "parentId": {
-              "description": "Select only directory sites with this parent ID.",
-              "format": "int64",
               "location": "query",
               "type": "string"
             },
@@ -9525,7 +9399,7 @@
       }
     }
   },
-  "revision": "20190531",
+  "revision": "20190904",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -10701,10 +10575,6 @@
           "$ref": "LastModifiedInfo",
           "description": "Information about the most recent modification of this campaign. This is a read-only field."
         },
-        "lookbackConfiguration": {
-          "$ref": "LookbackConfiguration",
-          "description": "Lookback window settings for the campaign."
-        },
         "name": {
           "description": "Name of this campaign. This is a required field and must be less than 256 characters long and unique among campaigns of the same advertiser.",
           "type": "string"
@@ -11184,7 +11054,7 @@
       "id": "Conversion",
       "properties": {
         "childDirectedTreatment": {
-          "description": "Whether the conversion was directed toward children.",
+          "description": "Whether this particular request may come from a user under the age of 13, under COPPA compliance.",
           "type": "boolean"
         },
         "customVariables": {
@@ -11232,6 +11102,10 @@
           "description": "The mobile device ID. This field is mutually exclusive with encryptedUserId, encryptedUserIdCandidates[] and gclid. This or encryptedUserId or encryptedUserIdCandidates[] or gclid is a required field.",
           "type": "string"
         },
+        "nonPersonalizedAd": {
+          "description": "Whether the conversion was for a non personalized ad.",
+          "type": "boolean"
+        },
         "ordinal": {
           "description": "The ordinal of the conversion. Use this field to control how conversions of the same user and day are de-duplicated. This is a required field.",
           "type": "string"
@@ -11245,6 +11119,10 @@
           "description": "The timestamp of conversion, in Unix epoch micros. This is a required field.",
           "format": "int64",
           "type": "string"
+        },
+        "treatmentForUnderage": {
+          "description": "Whether this particular request may come from a user under the age of 16 (may differ by country), under compliance with the European Union's General Data Protection Regulation (GDPR).",
+          "type": "boolean"
         },
         "value": {
           "description": "The value of the conversion.",
@@ -11470,6 +11348,13 @@
           "description": "Keywords for a Rich Media creative. Keywords let you customize the creative settings of a Rich Media ad running on your site without having to contact the advertiser. You can use keywords to dynamically change the look or functionality of a creative. Applicable to the following creative types: all RICH_MEDIA, and all VPAID.",
           "items": {
             "type": "string"
+          },
+          "type": "array"
+        },
+        "additionalSizes": {
+          "description": "Additional sizes associated with a responsive creative. When inserting or updating a creative either the size ID field or size width and height fields can be used. Applicable to DISPLAY creatives when the primary asset type is HTML_IMAGE.",
+          "items": {
+            "$ref": "Size"
           },
           "type": "array"
         },
@@ -11832,11 +11717,6 @@
           "description": "Override CSS value for rich media creatives. Applicable to the following creative types: all RICH_MEDIA.",
           "type": "string"
         },
-        "politeLoadAssetId": {
-          "description": "The asset ID of the polite load image asset. Applicable to the creative type: DISPLAY.",
-          "format": "int64",
-          "type": "string"
-        },
         "progressOffset": {
           "$ref": "VideoOffset",
           "description": "Amount of time to play the video before counting a view. Applicable to the following creative types: all INSTREAM_VIDEO."
@@ -12011,6 +11891,13 @@
         "active": {
           "description": "Whether the video or audio asset is active. This is a read-only field for VPAID_NON_LINEAR_VIDEO assets. Applicable to the following creative types: INSTREAM_AUDIO, INSTREAM_VIDEO and all VPAID.",
           "type": "boolean"
+        },
+        "additionalSizes": {
+          "description": "Additional sizes associated with this creative asset. HTML5 asset generated by compatible software such as GWD will be able to support more sizes this creative asset can render.",
+          "items": {
+            "$ref": "Size"
+          },
+          "type": "array"
         },
         "alignment": {
           "description": "Possible alignments for an asset. This is a read-only field. Applicable to the following creative types: RICH_MEDIA_DISPLAY_MULTI_FLOATING_INTERSTITIAL.",
@@ -13247,21 +13134,6 @@
       },
       "type": "object"
     },
-    "CreativeSettings": {
-      "description": "Creative Settings",
-      "id": "CreativeSettings",
-      "properties": {
-        "iFrameFooter": {
-          "description": "Header text for iFrames for this site. Must be less than or equal to 2000 characters long.",
-          "type": "string"
-        },
-        "iFrameHeader": {
-          "description": "Header text for iFrames for this site. Must be less than or equal to 2000 characters long.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "CreativesListResponse": {
       "description": "Creative List Response",
       "id": "CreativesListResponse",
@@ -13974,27 +13846,6 @@
           "description": "Whether this directory site is active.",
           "type": "boolean"
         },
-        "contactAssignments": {
-          "description": "Directory site contacts.",
-          "items": {
-            "$ref": "DirectorySiteContactAssignment"
-          },
-          "type": "array"
-        },
-        "countryId": {
-          "description": "Country ID of this directory site. This is a read-only field.",
-          "format": "int64",
-          "type": "string"
-        },
-        "currencyId": {
-          "description": "Currency ID of this directory site. This is a read-only field.\nPossible values are: \n- \"1\" for USD \n- \"2\" for GBP \n- \"3\" for ESP \n- \"4\" for SEK \n- \"5\" for CAD \n- \"6\" for JPY \n- \"7\" for DEM \n- \"8\" for AUD \n- \"9\" for FRF \n- \"10\" for ITL \n- \"11\" for DKK \n- \"12\" for NOK \n- \"13\" for FIM \n- \"14\" for ZAR \n- \"15\" for IEP \n- \"16\" for NLG \n- \"17\" for EUR \n- \"18\" for KRW \n- \"19\" for TWD \n- \"20\" for SGD \n- \"21\" for CNY \n- \"22\" for HKD \n- \"23\" for NZD \n- \"24\" for MYR \n- \"25\" for BRL \n- \"26\" for PTE \n- \"27\" for MXP \n- \"28\" for CLP \n- \"29\" for TRY \n- \"30\" for ARS \n- \"31\" for PEN \n- \"32\" for ILS \n- \"33\" for CHF \n- \"34\" for VEF \n- \"35\" for COP \n- \"36\" for GTQ \n- \"37\" for PLN \n- \"39\" for INR \n- \"40\" for THB \n- \"41\" for IDR \n- \"42\" for CZK \n- \"43\" for RON \n- \"44\" for HUF \n- \"45\" for RUB \n- \"46\" for AED \n- \"47\" for BGN \n- \"48\" for HRK \n- \"49\" for MXN \n- \"50\" for NGN",
-          "format": "int64",
-          "type": "string"
-        },
-        "description": {
-          "description": "Description of this directory site. This is a read-only field.",
-          "type": "string"
-        },
         "id": {
           "description": "ID of this directory site. This is a read-only, auto-generated field.",
           "format": "int64",
@@ -14049,135 +13900,12 @@
           "description": "Name of this directory site.",
           "type": "string"
         },
-        "parentId": {
-          "description": "Parent directory site ID.",
-          "format": "int64",
-          "type": "string"
-        },
         "settings": {
           "$ref": "DirectorySiteSettings",
           "description": "Directory site settings."
         },
         "url": {
           "description": "URL of this directory site.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "DirectorySiteContact": {
-      "description": "Contains properties of a Site Directory contact.",
-      "id": "DirectorySiteContact",
-      "properties": {
-        "address": {
-          "description": "Address of this directory site contact.",
-          "type": "string"
-        },
-        "email": {
-          "description": "Email address of this directory site contact.",
-          "type": "string"
-        },
-        "firstName": {
-          "description": "First name of this directory site contact.",
-          "type": "string"
-        },
-        "id": {
-          "description": "ID of this directory site contact. This is a read-only, auto-generated field.",
-          "format": "int64",
-          "type": "string"
-        },
-        "kind": {
-          "default": "dfareporting#directorySiteContact",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#directorySiteContact\".",
-          "type": "string"
-        },
-        "lastName": {
-          "description": "Last name of this directory site contact.",
-          "type": "string"
-        },
-        "phone": {
-          "description": "Phone number of this directory site contact.",
-          "type": "string"
-        },
-        "role": {
-          "description": "Directory site contact role.",
-          "enum": [
-            "ADMIN",
-            "EDIT",
-            "VIEW"
-          ],
-          "enumDescriptions": [
-            "",
-            "",
-            ""
-          ],
-          "type": "string"
-        },
-        "title": {
-          "description": "Title or designation of this directory site contact.",
-          "type": "string"
-        },
-        "type": {
-          "description": "Directory site contact type.",
-          "enum": [
-            "BILLING",
-            "OTHER",
-            "SALES",
-            "TECHNICAL"
-          ],
-          "enumDescriptions": [
-            "",
-            "",
-            "",
-            ""
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "DirectorySiteContactAssignment": {
-      "description": "Directory Site Contact Assignment",
-      "id": "DirectorySiteContactAssignment",
-      "properties": {
-        "contactId": {
-          "description": "ID of this directory site contact. This is a read-only, auto-generated field.",
-          "format": "int64",
-          "type": "string"
-        },
-        "visibility": {
-          "description": "Visibility of this directory site contact assignment. When set to PUBLIC this contact assignment is visible to all account and agency users; when set to PRIVATE it is visible only to the site.",
-          "enum": [
-            "PRIVATE",
-            "PUBLIC"
-          ],
-          "enumDescriptions": [
-            "",
-            ""
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "DirectorySiteContactsListResponse": {
-      "description": "Directory Site Contact List Response",
-      "id": "DirectorySiteContactsListResponse",
-      "properties": {
-        "directorySiteContacts": {
-          "description": "Directory site contact collection",
-          "items": {
-            "$ref": "DirectorySiteContact"
-          },
-          "type": "array"
-        },
-        "kind": {
-          "default": "dfareporting#directorySiteContactsListResponse",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#directorySiteContactsListResponse\".",
-          "type": "string"
-        },
-        "nextPageToken": {
-          "description": "Pagination token to be used for the next list operation.",
           "type": "string"
         }
       },
@@ -14201,18 +13929,6 @@
         },
         "interstitialPlacementAccepted": {
           "description": "Whether this site accepts interstitial ads.",
-          "type": "boolean"
-        },
-        "nielsenOcrOptOut": {
-          "description": "Whether this directory site has disabled Nielsen OCR reach ratings.",
-          "type": "boolean"
-        },
-        "verificationTagOptOut": {
-          "description": "Whether this directory site has disabled generation of Verification ins tags.",
-          "type": "boolean"
-        },
-        "videoActiveViewOptOut": {
-          "description": "Whether this directory site has disabled active view for in-stream video creatives. This is a read-only field.",
           "type": "boolean"
         }
       },
@@ -14791,10 +14507,6 @@
             ""
           ],
           "type": "string"
-        },
-        "hidden": {
-          "description": "Whether this activity is archived.",
-          "type": "boolean"
         },
         "id": {
           "description": "ID of this floodlight activity. This is a read-only, auto-generated field.",
@@ -16581,6 +16293,13 @@
           "description": "Whether this placement opts out of ad blocking. When true, ad blocking is disabled for this placement. When false, the campaign and site settings take effect.",
           "type": "boolean"
         },
+        "additionalSizes": {
+          "description": "Additional sizes associated with this placement. When inserting or updating a placement, only the size ID field is used.",
+          "items": {
+            "$ref": "Size"
+          },
+          "type": "array"
+        },
         "advertiserId": {
           "description": "Advertiser ID of this placement. This field can be left blank.",
           "format": "int64",
@@ -17364,10 +17083,6 @@
             ""
           ],
           "type": "string"
-        },
-        "disregardOverdelivery": {
-          "description": "Whether cap costs are ignored by ad serving.",
-          "type": "boolean"
         },
         "endDate": {
           "description": "Placement end date. This date must be later than, or the same day as, the placement start date, but not later than the campaign end date. If, for example, you set 6/25/2015 as both the start and end dates, the effective placement date is just that day only, 6/25/2015. The hours, minutes, and seconds of the end date should not be set, as doing so will result in an error. This field is required on insertion.",
@@ -18696,17 +18411,9 @@
           "description": "Whether this site opts out of ad blocking. When true, ad blocking is disabled for all placements under the site, regardless of the individual placement settings. When false, the campaign and placement settings take effect.",
           "type": "boolean"
         },
-        "creativeSettings": {
-          "$ref": "CreativeSettings",
-          "description": "Site-wide creative settings."
-        },
         "disableNewCookie": {
           "description": "Whether new cookies are disabled for this site.",
           "type": "boolean"
-        },
-        "lookbackConfiguration": {
-          "$ref": "LookbackConfiguration",
-          "description": "Lookback window settings for this site."
         },
         "tagSetting": {
           "$ref": "TagSetting",

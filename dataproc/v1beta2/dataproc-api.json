@@ -2125,7 +2125,7 @@
       }
     }
   },
-  "revision": "20190809",
+  "revision": "20190823",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -3154,6 +3154,10 @@
         },
         "kmsKeyUri": {
           "description": "Required. The uri of the KMS key used to encrypt various sensitive files.",
+          "type": "string"
+        },
+        "realm": {
+          "description": "Optional. The name of the on-cluster Kerberos realm. If not specified, the uppercased domain of hostnames will be the realm.",
           "type": "string"
         },
         "rootPrincipalPasswordUri": {

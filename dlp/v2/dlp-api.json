@@ -1474,6 +1474,41 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
+                },
+                "reidentify": {
+                  "description": "Re-identifies content that has been de-identified.\nSee\nhttps://cloud.google.com/dlp/docs/pseudonymization#re-identification_in_free_text_code_example\nto learn more.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{location}/content:reidentify",
+                  "httpMethod": "POST",
+                  "id": "dlp.projects.locations.content.reidentify",
+                  "parameterOrder": [
+                    "parent",
+                    "location"
+                  ],
+                  "parameters": {
+                    "location": {
+                      "description": "The geographic location to process content reidentification.  Reserved for\nfuture extensions.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "The parent resource name.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+parent}/locations/{location}/content:reidentify",
+                  "request": {
+                    "$ref": "GooglePrivacyDlpV2ReidentifyContentRequest"
+                  },
+                  "response": {
+                    "$ref": "GooglePrivacyDlpV2ReidentifyContentResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
                 }
               }
             }
@@ -1633,7 +1668,7 @@
       }
     }
   },
-  "revision": "20190824",
+  "revision": "20190902",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -2361,7 +2396,7 @@
         },
         "surrogateInfoType": {
           "$ref": "GooglePrivacyDlpV2InfoType",
-          "description": "The custom info type to annotate the surrogate with.\nThis annotation will be applied to the surrogate by prefixing it with\nthe name of the custom info type followed by the number of\ncharacters comprising the surrogate. The following scheme defines the\nformat: \u003cinfo type name\u003e(\u003csurrogate character count\u003e):\u003csurrogate\u003e\n\nFor example, if the name of custom info type is 'MY_TOKEN_INFO_TYPE' and\nthe surrogate is 'abc', the full replacement value\nwill be: 'MY_TOKEN_INFO_TYPE(3):abc'\n\nThis annotation identifies the surrogate when inspecting content using the\ncustom info type 'Surrogate'. This facilitates reversal of the\nsurrogate when it occurs in free text.\n\nIn order for inspection to work properly, the name of this info type must\nnot occur naturally anywhere in your data; otherwise, inspection may either\n\n- reverse a surrogate that does not correspond to an actual identifier\n- be unable to parse the surrogate and result in an error\n\nTherefore, choose your custom info type name carefully after considering\nwhat your data looks like. One way to select a name that has a high chance\nof yielding reliable detection is to include one or more unicode characters\nthat are highly improbable to exist in your data.\nFor example, assuming your data is entered from a regular ASCII keyboard,\nthe symbol with the hex code point 29DD might be used like so:\n⧝MY_TOKEN_TYPE"
+          "description": "The custom info type to annotate the surrogate with.\nThis annotation will be applied to the surrogate by prefixing it with\nthe name of the custom info type followed by the number of\ncharacters comprising the surrogate. The following scheme defines the\nformat: \u003cinfo type name\u003e(\u003csurrogate character count\u003e):\u003csurrogate\u003e\n\nFor example, if the name of custom info type is 'MY_TOKEN_INFO_TYPE' and\nthe surrogate is 'abc', the full replacement value\nwill be: 'MY_TOKEN_INFO_TYPE(3):abc'\n\nThis annotation identifies the surrogate when inspecting content using the\ncustom info type 'Surrogate'. This facilitates reversal of the\nsurrogate when it occurs in free text.\n\nNote: For record transformations where the entire cell in a table is being\ntransformed, surrogates are optional to use. Surrogates are used to denote\nthe location of the token and are necessary for re-identification in free\nform text.\n\nIn order for inspection to work properly, the name of this info type must\nnot occur naturally anywhere in your data; otherwise, inspection may either\n\n- reverse a surrogate that does not correspond to an actual identifier\n- be unable to parse the surrogate and result in an error\n\nTherefore, choose your custom info type name carefully after considering\nwhat your data looks like. One way to select a name that has a high chance\nof yielding reliable detection is to include one or more unicode characters\nthat are highly improbable to exist in your data.\nFor example, assuming your data is entered from a regular ASCII keyboard,\nthe symbol with the hex code point 29DD might be used like so:\n⧝MY_TOKEN_TYPE."
         }
       },
       "type": "object"
@@ -4584,6 +4619,10 @@
         "item": {
           "$ref": "GooglePrivacyDlpV2ContentItem",
           "description": "The item to re-identify. Will be treated as text."
+        },
+        "location": {
+          "description": "The geographic location to process content reidentification.  Reserved for\nfuture extensions.",
+          "type": "string"
         },
         "reidentifyConfig": {
           "$ref": "GooglePrivacyDlpV2DeidentifyConfig",

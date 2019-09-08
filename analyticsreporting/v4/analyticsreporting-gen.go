@@ -178,6 +178,11 @@ type Activity struct {
 	// cross midnight and
 	// occur in two separate dates, then two sessions (one per date)
 	// share the session identifier.
+	// For example, say session ID 113472 has activity within 2019-08-20,
+	// and
+	// session ID 243742 has activity within 2019-08-25 and 2019-08-26.
+	// Session ID
+	// 113472 is one session, and session ID 243742 is two sessions.
 	ActivityTime string `json:"activityTime,omitempty"`
 
 	// ActivityType: Type of this activity.

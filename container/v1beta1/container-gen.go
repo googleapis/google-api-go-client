@@ -978,9 +978,6 @@ type Cluster struct {
 	// PrivateClusterConfig: Configuration for private cluster.
 	PrivateClusterConfig *PrivateClusterConfig `json:"privateClusterConfig,omitempty"`
 
-	// ReleaseChannel: Release channel configuration.
-	ReleaseChannel *ReleaseChannel `json:"releaseChannel,omitempty"`
-
 	// ResourceLabels: The resource labels for the cluster to use to
 	// annotate any related
 	// Google Compute Engine resources.
@@ -1595,58 +1592,6 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
-}
-
-// FeatureConfig: FeatureConfig is the configuration for a specific
-// feature including the
-// definition of the feature as well as the tier in which it resides.
-type FeatureConfig struct {
-	// Feature: The feature that is being configured with this value.
-	//
-	// Possible values:
-	//   "DEFAULT_FEATURE" - DEFAULT_FEATURE is the default zero value of
-	// the Feature.  This value is
-	// valid.
-	//   "VERTICAL_POD_AUTOSCALER" - The vertical pod autoscaling feature.
-	//   "NODE_AUTO_PROVISIONING" - The node auto provisioning feature.
-	//   "BINARY_AUTHORIZATION" - The binary authorization feature.
-	//   "RESOURCE_LABELS" - The resource labels feature.
-	//   "USAGE_METERING" - The GKE usage metering feature.
-	//   "CLOUD_RUN_ON_GKE" - The Cloud Run on GKE feature.
-	Feature string `json:"feature,omitempty"`
-
-	// Tier: The tier in which the configured feature resides.
-	//
-	// Possible values:
-	//   "TIER_UNSPECIFIED" - TIER_UNSPECIFIED is the default value. If this
-	// value is set during create
-	// or update, it defaults to the project level tier setting.
-	//   "STANDARD" - Represents the standard tier or base Google Kubernetes
-	// Engine offering.
-	//   "ADVANCED" - Represents the advanced tier.
-	Tier string `json:"tier,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Feature") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Feature") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *FeatureConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod FeatureConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GetJSONWebKeysResponse: GetJSONWebKeysResponse is a valid JSON Web
@@ -3487,38 +3432,6 @@ func (s *PodSecurityPolicyConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PremiumConfig: PremiumConfig is the configuration for all premium
-// features and tiers.
-type PremiumConfig struct {
-	// Features: The features that GKE provides.
-	Features []*FeatureConfig `json:"features,omitempty"`
-
-	// Tiers: The tiers that are part of the premium offering.
-	Tiers []*TierConfig `json:"tiers,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Features") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Features") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PremiumConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod PremiumConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // PrivateClusterConfig: Configuration options for private clusters.
 type PrivateClusterConfig struct {
 	// EnablePeeringRouteSharing: Whether to enable route sharing over the
@@ -3574,128 +3487,6 @@ type PrivateClusterConfig struct {
 
 func (s *PrivateClusterConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PrivateClusterConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ReleaseChannel: ReleaseChannel indicates which release channel a
-// cluster is
-// subscribed to. Release channels are arranged in order of risk
-// and
-// frequency of updates.
-//
-// When a cluster is subscribed to a release channel, Google
-// maintains
-// both the master version and the node version. Node
-// auto-upgrade
-// defaults to true and cannot be disabled. Updates to version
-// related
-// fields (e.g. current_master_version) return an error.
-type ReleaseChannel struct {
-	// Channel: channel specifies which release channel the cluster is
-	// subscribed to.
-	//
-	// Possible values:
-	//   "UNSPECIFIED" - No channel specified.
-	//   "RAPID" - Clusters subscribed to RAPID receive the latest
-	// qualified
-	// components, before any other channel. RAPID is intended for early
-	// testers
-	// and developers who require new features. New upgrades will occur
-	// roughly
-	// weekly.
-	//   "REGULAR" - Clusters subscribed to REGULAR receive versions that
-	// are considered GA
-	// quality. REGULAR is intended for production users who want to
-	// take
-	// advantage of new features. New upgrades will occur roughly every
-	// few
-	// weeks.
-	//   "STABLE" - Clusters subscribed to STABLE receive versions that are
-	// known to be
-	// stable and reliable in production. STABLE is intended for
-	// production
-	// users who need stability above all else, or for whom frequent
-	// upgrades
-	// are too risky. New upgrades will occur roughly every few months.
-	Channel string `json:"channel,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Channel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Channel") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ReleaseChannel) MarshalJSON() ([]byte, error) {
-	type NoMethod ReleaseChannel
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ReleaseChannelConfig: ReleaseChannelConfig exposes configuration for
-// a release channel.
-type ReleaseChannelConfig struct {
-	// Channel: The release channel this configuration applies to.
-	//
-	// Possible values:
-	//   "UNSPECIFIED" - No channel specified.
-	//   "RAPID" - Clusters subscribed to RAPID receive the latest
-	// qualified
-	// components, before any other channel. RAPID is intended for early
-	// testers
-	// and developers who require new features. New upgrades will occur
-	// roughly
-	// weekly.
-	//   "REGULAR" - Clusters subscribed to REGULAR receive versions that
-	// are considered GA
-	// quality. REGULAR is intended for production users who want to
-	// take
-	// advantage of new features. New upgrades will occur roughly every
-	// few
-	// weeks.
-	//   "STABLE" - Clusters subscribed to STABLE receive versions that are
-	// known to be
-	// stable and reliable in production. STABLE is intended for
-	// production
-	// users who need stability above all else, or for whom frequent
-	// upgrades
-	// are too risky. New upgrades will occur roughly every few months.
-	Channel string `json:"channel,omitempty"`
-
-	// DefaultVersion: The default version for newly created clusters on the
-	// channel.
-	DefaultVersion string `json:"defaultVersion,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Channel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Channel") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ReleaseChannelConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod ReleaseChannelConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3867,18 +3658,12 @@ func (s *SandboxConfig) MarshalJSON() ([]byte, error) {
 
 // ServerConfig: Kubernetes Engine service configuration.
 type ServerConfig struct {
-	// Channels: List of release channel configurations.
-	Channels []*ReleaseChannelConfig `json:"channels,omitempty"`
-
 	// DefaultClusterVersion: Version of Kubernetes the service deploys by
 	// default.
 	DefaultClusterVersion string `json:"defaultClusterVersion,omitempty"`
 
 	// DefaultImageType: Default image type.
 	DefaultImageType string `json:"defaultImageType,omitempty"`
-
-	// PremiumConfig: Premium configuration for service.
-	PremiumConfig *PremiumConfig `json:"premiumConfig,omitempty"`
 
 	// ValidImageTypes: List of valid image types.
 	ValidImageTypes []string `json:"validImageTypes,omitempty"`
@@ -3893,20 +3678,22 @@ type ServerConfig struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Channels") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultClusterVersion") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Channels") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DefaultClusterVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4802,67 +4589,14 @@ func (s *StatusCondition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TierConfig: TierConfig is the configuration for a tier offering.  For
-// example the GKE
-// standard or advanced offerings which contain different levels
-// of
-// functionality and possibly cost.
-type TierConfig struct {
-	// Parent: The tier from which the tier being configured inherits.  The
-	// configured
-	// tier will inherit all the features from its parent tier.
-	//
-	// Possible values:
-	//   "TIER_UNSPECIFIED" - TIER_UNSPECIFIED is the default value. If this
-	// value is set during create
-	// or update, it defaults to the project level tier setting.
-	//   "STANDARD" - Represents the standard tier or base Google Kubernetes
-	// Engine offering.
-	//   "ADVANCED" - Represents the advanced tier.
-	Parent string `json:"parent,omitempty"`
-
-	// Tier: The tier that is being configured with this value.
-	//
-	// Possible values:
-	//   "TIER_UNSPECIFIED" - TIER_UNSPECIFIED is the default value. If this
-	// value is set during create
-	// or update, it defaults to the project level tier setting.
-	//   "STANDARD" - Represents the standard tier or base Google Kubernetes
-	// Engine offering.
-	//   "ADVANCED" - Represents the advanced tier.
-	Tier string `json:"tier,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Parent") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Parent") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *TierConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod TierConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // TierSettings: Cluster tier settings.
 type TierSettings struct {
 	// Tier: Cluster tier.
 	//
 	// Possible values:
-	//   "TIER_UNSPECIFIED" - TIER_UNSPECIFIED is the default value. If this
-	// value is set during create
-	// or update, it defaults to the project level tier setting.
+	//   "UNSPECIFIED" - UNSPECIFIED is the default value. If this value is
+	// set during create or
+	// update, it defaults to the project level tier setting.
 	//   "STANDARD" - Represents the standard tier or base Google Kubernetes
 	// Engine offering.
 	//   "ADVANCED" - Represents the advanced tier.

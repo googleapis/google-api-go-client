@@ -1591,6 +1591,7 @@ func (s *IosDeviceList) MarshalJSON() ([]byte, error) {
 }
 
 // IosModel: A description of an iOS device tests may be run on.
+// Next tag: 10
 type IosModel struct {
 	// DeviceCapabilities: Device capabilities.
 	// Copied
@@ -1618,6 +1619,17 @@ type IosModel struct {
 	// Name: The human-readable name for this device model.
 	// Examples: "iPhone 4s", "iPad Mini 2".
 	Name string `json:"name,omitempty"`
+
+	// ScreenDensity: Screen density in DPI.
+	ScreenDensity int64 `json:"screenDensity,omitempty"`
+
+	// ScreenX: Screen size in the horizontal (X) dimension measured in
+	// pixels.
+	ScreenX int64 `json:"screenX,omitempty"`
+
+	// ScreenY: Screen size in the vertical (Y) dimension measured in
+	// pixels.
+	ScreenY int64 `json:"screenY,omitempty"`
 
 	// SupportedVersionIds: The set of iOS major software versions this
 	// device supports.

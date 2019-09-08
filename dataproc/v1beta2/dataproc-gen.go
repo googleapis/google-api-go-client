@@ -1999,6 +1999,10 @@ type KerberosConfig struct {
 	// sensitive files.
 	KmsKeyUri string `json:"kmsKeyUri,omitempty"`
 
+	// Realm: Optional. The name of the on-cluster Kerberos realm. If not
+	// specified, the uppercased domain of hostnames will be the realm.
+	Realm string `json:"realm,omitempty"`
+
 	// RootPrincipalPasswordUri: Required. The Cloud Storage URI of a KMS
 	// encrypted file containing the root principal password.
 	RootPrincipalPasswordUri string `json:"rootPrincipalPasswordUri,omitempty"`

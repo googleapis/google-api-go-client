@@ -1313,11 +1313,12 @@ func (s *LogEntrySourceLocation) MarshalJSON() ([]byte, error) {
 }
 
 // LogExclusion: Specifies a set of log entries that are not to be
-// stored in Logging. If your project receives a large volume of logs,
-// you might be able to use exclusions to reduce your chargeable logs.
+// stored in Logging. If your GCP resource receives a large volume of
+// logs, you can use exclusions to reduce your chargeable logs.
 // Exclusions are processed after log sinks, so you can export log
-// entries before they are excluded. Audit log entries and log entries
-// from Amazon Web Services are never excluded.
+// entries before they are excluded. Note that organization-level and
+// folder-level exclusions don't apply to child resources, and that you
+// can't exclude audit log entries.
 type LogExclusion struct {
 	// CreateTime: Output only. The creation timestamp of the exclusion.This
 	// field may not be present for older exclusions.
@@ -1334,8 +1335,8 @@ type LogExclusion struct {
 	// Filter: Required. An advanced logs filter that matches the log
 	// entries to be excluded. By using the sample function, you can exclude
 	// less than 100% of the matching log entries. For example, the
-	// following filter matches 99% of low-severity log entries from load
-	// balancers:"resource.type=http_load_balancer severity<ERROR
+	// following query matches 99% of low-severity log entries from Google
+	// Cloud Storage buckets:"resource.type=gcs_bucket severity<ERROR
 	// sample(insertId, 0.99)"
 	Filter string `json:"filter,omitempty"`
 
@@ -3086,7 +3087,7 @@ func (r *BillingAccountsExclusionsService) Patch(name string, logexclusion *LogE
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// nonempty list of fields to change in the existing exclusion. New
+// non-empty list of fields to change in the existing exclusion. New
 // values for the fields are taken from the corresponding fields in the
 // LogExclusion included in this request. Fields not mentioned in
 // update_mask are not changed and are ignored in the request.For
@@ -3204,7 +3205,7 @@ func (c *BillingAccountsExclusionsPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. A nonempty list of fields to change in the existing exclusion. New values for the fields are taken from the corresponding fields in the LogExclusion included in this request. Fields not mentioned in update_mask are not changed and are ignored in the request.For example, to change the filter and description of an exclusion, specify an update_mask of \"filter,description\".",
+	//       "description": "Required. A non-empty list of fields to change in the existing exclusion. New values for the fields are taken from the corresponding fields in the LogExclusion included in this request. Fields not mentioned in update_mask are not changed and are ignored in the request.For example, to change the filter and description of an exclusion, specify an update_mask of \"filter,description\".",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -3396,6 +3397,15 @@ func (c *BillingAccountsLogsListCall) PageToken(pageToken string) *BillingAccoun
 	return c
 }
 
+// ResourceNames sets the optional parameter "resourceNames": Required
+// for Logging Data Model V2. The resource name that owns the logs:
+// "projects/PROJECT_ID"  "organizations/ORGANIZATION_ID"
+// "billingAccounts/BILLING_ACCOUNT_ID"  "folders/FOLDER_ID"
+func (c *BillingAccountsLogsListCall) ResourceNames(resourceNames ...string) *BillingAccountsLogsListCall {
+	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3515,10 +3525,16 @@ func (c *BillingAccountsLogsListCall) Do(opts ...googleapi.CallOption) (*ListLog
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name that owns the logs:\n\"projects/[PROJECT_ID]\"\n\"organizations/[ORGANIZATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]\"\n\"folders/[FOLDER_ID]\"\n",
+	//       "description": "Required. To be deprecated in Logging Data Model V2.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resourceNames": {
+	//       "description": "Required for Logging Data Model V2. The resource name that owns the logs:  \"projects/PROJECT_ID\"  \"organizations/ORGANIZATION_ID\"  \"billingAccounts/BILLING_ACCOUNT_ID\"  \"folders/FOLDER_ID\"",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -5494,7 +5510,7 @@ func (r *ExclusionsService) Patch(name string, logexclusion *LogExclusion) *Excl
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// nonempty list of fields to change in the existing exclusion. New
+// non-empty list of fields to change in the existing exclusion. New
 // values for the fields are taken from the corresponding fields in the
 // LogExclusion included in this request. Fields not mentioned in
 // update_mask are not changed and are ignored in the request.For
@@ -5612,7 +5628,7 @@ func (c *ExclusionsPatchCall) Do(opts ...googleapi.CallOption) (*LogExclusion, e
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. A nonempty list of fields to change in the existing exclusion. New values for the fields are taken from the corresponding fields in the LogExclusion included in this request. Fields not mentioned in update_mask are not changed and are ignored in the request.For example, to change the filter and description of an exclusion, specify an update_mask of \"filter,description\".",
+	//       "description": "Required. A non-empty list of fields to change in the existing exclusion. New values for the fields are taken from the corresponding fields in the LogExclusion included in this request. Fields not mentioned in update_mask are not changed and are ignored in the request.For example, to change the filter and description of an exclusion, specify an update_mask of \"filter,description\".",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6272,7 +6288,7 @@ func (r *FoldersExclusionsService) Patch(name string, logexclusion *LogExclusion
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// nonempty list of fields to change in the existing exclusion. New
+// non-empty list of fields to change in the existing exclusion. New
 // values for the fields are taken from the corresponding fields in the
 // LogExclusion included in this request. Fields not mentioned in
 // update_mask are not changed and are ignored in the request.For
@@ -6390,7 +6406,7 @@ func (c *FoldersExclusionsPatchCall) Do(opts ...googleapi.CallOption) (*LogExclu
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. A nonempty list of fields to change in the existing exclusion. New values for the fields are taken from the corresponding fields in the LogExclusion included in this request. Fields not mentioned in update_mask are not changed and are ignored in the request.For example, to change the filter and description of an exclusion, specify an update_mask of \"filter,description\".",
+	//       "description": "Required. A non-empty list of fields to change in the existing exclusion. New values for the fields are taken from the corresponding fields in the LogExclusion included in this request. Fields not mentioned in update_mask are not changed and are ignored in the request.For example, to change the filter and description of an exclusion, specify an update_mask of \"filter,description\".",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6582,6 +6598,15 @@ func (c *FoldersLogsListCall) PageToken(pageToken string) *FoldersLogsListCall {
 	return c
 }
 
+// ResourceNames sets the optional parameter "resourceNames": Required
+// for Logging Data Model V2. The resource name that owns the logs:
+// "projects/PROJECT_ID"  "organizations/ORGANIZATION_ID"
+// "billingAccounts/BILLING_ACCOUNT_ID"  "folders/FOLDER_ID"
+func (c *FoldersLogsListCall) ResourceNames(resourceNames ...string) *FoldersLogsListCall {
+	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6701,10 +6726,16 @@ func (c *FoldersLogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsRespons
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name that owns the logs:\n\"projects/[PROJECT_ID]\"\n\"organizations/[ORGANIZATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]\"\n\"folders/[FOLDER_ID]\"\n",
+	//       "description": "Required. To be deprecated in Logging Data Model V2.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resourceNames": {
+	//       "description": "Required for Logging Data Model V2. The resource name that owns the logs:  \"projects/PROJECT_ID\"  \"organizations/ORGANIZATION_ID\"  \"billingAccounts/BILLING_ACCOUNT_ID\"  \"folders/FOLDER_ID\"",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -7929,6 +7960,15 @@ func (c *LogsListCall) PageToken(pageToken string) *LogsListCall {
 	return c
 }
 
+// ResourceNames sets the optional parameter "resourceNames": Required
+// for Logging Data Model V2. The resource name that owns the logs:
+// "projects/PROJECT_ID"  "organizations/ORGANIZATION_ID"
+// "billingAccounts/BILLING_ACCOUNT_ID"  "folders/FOLDER_ID"
+func (c *LogsListCall) ResourceNames(resourceNames ...string) *LogsListCall {
+	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8048,10 +8088,16 @@ func (c *LogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsResponse, erro
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name that owns the logs:\n\"projects/[PROJECT_ID]\"\n\"organizations/[ORGANIZATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]\"\n\"folders/[FOLDER_ID]\"\n",
+	//       "description": "Required. To be deprecated in Logging Data Model V2.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resourceNames": {
+	//       "description": "Required for Logging Data Model V2. The resource name that owns the logs:  \"projects/PROJECT_ID\"  \"organizations/ORGANIZATION_ID\"  \"billingAccounts/BILLING_ACCOUNT_ID\"  \"folders/FOLDER_ID\"",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -8916,7 +8962,7 @@ func (r *OrganizationsExclusionsService) Patch(name string, logexclusion *LogExc
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// nonempty list of fields to change in the existing exclusion. New
+// non-empty list of fields to change in the existing exclusion. New
 // values for the fields are taken from the corresponding fields in the
 // LogExclusion included in this request. Fields not mentioned in
 // update_mask are not changed and are ignored in the request.For
@@ -9034,7 +9080,7 @@ func (c *OrganizationsExclusionsPatchCall) Do(opts ...googleapi.CallOption) (*Lo
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. A nonempty list of fields to change in the existing exclusion. New values for the fields are taken from the corresponding fields in the LogExclusion included in this request. Fields not mentioned in update_mask are not changed and are ignored in the request.For example, to change the filter and description of an exclusion, specify an update_mask of \"filter,description\".",
+	//       "description": "Required. A non-empty list of fields to change in the existing exclusion. New values for the fields are taken from the corresponding fields in the LogExclusion included in this request. Fields not mentioned in update_mask are not changed and are ignored in the request.For example, to change the filter and description of an exclusion, specify an update_mask of \"filter,description\".",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -9226,6 +9272,15 @@ func (c *OrganizationsLogsListCall) PageToken(pageToken string) *OrganizationsLo
 	return c
 }
 
+// ResourceNames sets the optional parameter "resourceNames": Required
+// for Logging Data Model V2. The resource name that owns the logs:
+// "projects/PROJECT_ID"  "organizations/ORGANIZATION_ID"
+// "billingAccounts/BILLING_ACCOUNT_ID"  "folders/FOLDER_ID"
+func (c *OrganizationsLogsListCall) ResourceNames(resourceNames ...string) *OrganizationsLogsListCall {
+	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -9345,10 +9400,16 @@ func (c *OrganizationsLogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsR
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name that owns the logs:\n\"projects/[PROJECT_ID]\"\n\"organizations/[ORGANIZATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]\"\n\"folders/[FOLDER_ID]\"\n",
+	//       "description": "Required. To be deprecated in Logging Data Model V2.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resourceNames": {
+	//       "description": "Required for Logging Data Model V2. The resource name that owns the logs:  \"projects/PROJECT_ID\"  \"organizations/ORGANIZATION_ID\"  \"billingAccounts/BILLING_ACCOUNT_ID\"  \"folders/FOLDER_ID\"",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -11041,7 +11102,7 @@ func (r *ProjectsExclusionsService) Patch(name string, logexclusion *LogExclusio
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// nonempty list of fields to change in the existing exclusion. New
+// non-empty list of fields to change in the existing exclusion. New
 // values for the fields are taken from the corresponding fields in the
 // LogExclusion included in this request. Fields not mentioned in
 // update_mask are not changed and are ignored in the request.For
@@ -11159,7 +11220,7 @@ func (c *ProjectsExclusionsPatchCall) Do(opts ...googleapi.CallOption) (*LogExcl
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. A nonempty list of fields to change in the existing exclusion. New values for the fields are taken from the corresponding fields in the LogExclusion included in this request. Fields not mentioned in update_mask are not changed and are ignored in the request.For example, to change the filter and description of an exclusion, specify an update_mask of \"filter,description\".",
+	//       "description": "Required. A non-empty list of fields to change in the existing exclusion. New values for the fields are taken from the corresponding fields in the LogExclusion included in this request. Fields not mentioned in update_mask are not changed and are ignored in the request.For example, to change the filter and description of an exclusion, specify an update_mask of \"filter,description\".",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -11351,6 +11412,15 @@ func (c *ProjectsLogsListCall) PageToken(pageToken string) *ProjectsLogsListCall
 	return c
 }
 
+// ResourceNames sets the optional parameter "resourceNames": Required
+// for Logging Data Model V2. The resource name that owns the logs:
+// "projects/PROJECT_ID"  "organizations/ORGANIZATION_ID"
+// "billingAccounts/BILLING_ACCOUNT_ID"  "folders/FOLDER_ID"
+func (c *ProjectsLogsListCall) ResourceNames(resourceNames ...string) *ProjectsLogsListCall {
+	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -11470,10 +11540,16 @@ func (c *ProjectsLogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsRespon
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name that owns the logs:\n\"projects/[PROJECT_ID]\"\n\"organizations/[ORGANIZATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]\"\n\"folders/[FOLDER_ID]\"\n",
+	//       "description": "Required. To be deprecated in Logging Data Model V2.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resourceNames": {
+	//       "description": "Required for Logging Data Model V2. The resource name that owns the logs:  \"projects/PROJECT_ID\"  \"organizations/ORGANIZATION_ID\"  \"billingAccounts/BILLING_ACCOUNT_ID\"  \"folders/FOLDER_ID\"",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },

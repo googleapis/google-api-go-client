@@ -272,7 +272,7 @@
       }
     }
   },
-  "revision": "20190529",
+  "revision": "20190905",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -1056,7 +1056,7 @@
       "type": "object"
     },
     "IosModel": {
-      "description": "A description of an iOS device tests may be run on.",
+      "description": "A description of an iOS device tests may be run on.\nNext tag: 10",
       "id": "IosModel",
       "properties": {
         "deviceCapabilities": {
@@ -1089,6 +1089,21 @@
         "name": {
           "description": "The human-readable name for this device model.\nExamples: \"iPhone 4s\", \"iPad Mini 2\".",
           "type": "string"
+        },
+        "screenDensity": {
+          "description": "Screen density in DPI.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "screenX": {
+          "description": "Screen size in the horizontal (X) dimension measured in pixels.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "screenY": {
+          "description": "Screen size in the vertical (Y) dimension measured in pixels.",
+          "format": "int32",
+          "type": "integer"
         },
         "supportedVersionIds": {
           "description": "The set of iOS major software versions this device supports.",

@@ -1,3 +1,7 @@
+# ignore sed backup files
+*-r
+*-e
+
 _obj/
 *_testmain.go
 clientid.dat

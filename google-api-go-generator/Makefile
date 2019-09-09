@@ -7,10 +7,9 @@ GENERATOR=./google-api-go-generator
 
 # Download all API specifications and rebuild Go bindings.
 # All downloaded files are cached in $TMPDIR for reuse with 'cached' below.
+all: SHELL:=/bin/bash
 all: $(GENERATOR)
-	cd ../internal/version
-	go generate
-	cd -
+	cd ../internal/version; go generate
 	$(GENERATOR) -cache=false -install -api=* -gendir=..
 	go test . -v
 

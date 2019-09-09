@@ -53,7 +53,7 @@ import (
 	"strconv"
 	"strings"
 
-	gensupport "google.golang.org/api/gensupport"
+	gensupport "google.golang.org/api/internal/gensupport"
 	googleapi "google.golang.org/api/googleapi"
 	option "google.golang.org/api/option"
 	htransport "google.golang.org/api/transport/http"

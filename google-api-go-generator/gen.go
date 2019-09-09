@@ -51,7 +51,7 @@ var (
 	baseURL        = flag.String("base_url", "", "(optional) Override the default service API URL. If empty, the service's root URL will be used.")
 	headerPath     = flag.String("header_path", "", "If non-empty, prepend the contents of this file to generated services.")
 
-	gensupportPkg = flag.String("gensupport_pkg", "google.golang.org/api/gensupport", "Go package path of the 'api/gensupport' support package.")
+	gensupportPkg = flag.String("gensupport_pkg", "google.golang.org/api/internal/gensupport", "Go package path of the 'api/internal/gensupport' support package.")
 	googleapiPkg  = flag.String("googleapi_pkg", "google.golang.org/api/googleapi", "Go package path of the 'api/googleapi' support package.")
 	optionPkg     = flag.String("option_pkg", "google.golang.org/api/option", "Go package path of the 'api/option' support package.")
 	htransportPkg = flag.String("htransport_pkg", "google.golang.org/api/transport/http", "Go package path of the 'api/transport/http' support package.")

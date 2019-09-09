@@ -2217,7 +2217,7 @@
       }
     }
   },
-  "revision": "20190828",
+  "revision": "20190903",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -4581,8 +4581,16 @@
     "TriggerFilter": {
       "id": "TriggerFilter",
       "properties": {
+        "attributes": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nAttributes filters events by exact match on event context attributes.\nEach key in the map is compared with the equivalent key in the event\ncontext. An event passes the filter if all values are equal to the\nspecified values.\n\nNested context attributes are not supported as keys.\nOnly string values are supported.\n\n+optional",
+          "type": "object"
+        },
         "sourceAndType": {
-          "$ref": "TriggerFilterSourceAndType"
+          "$ref": "TriggerFilterSourceAndType",
+          "description": "SourceAndType filters events based on exact matches on the\nCloudEvents type and source attributes. This field has been replaced by the\nAttributes field.\n\n+optional"
         }
       },
       "type": "object"

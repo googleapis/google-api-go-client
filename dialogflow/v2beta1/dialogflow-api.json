@@ -2283,6 +2283,64 @@
                     "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
+                "export": {
+                  "description": "Exports a smart messaging candidate document into the specified\ndestination.\n\nOperation \u003cresponse: Document,\n           metadata: KnowledgeOperationMetadata\u003e",
+                  "flatPath": "v2beta1/projects/{projectsId}/knowledgeBases/{knowledgeBasesId}/documents/{documentsId}:export",
+                  "httpMethod": "POST",
+                  "id": "dialogflow.projects.knowledgeBases.documents.export",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the document to export.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base\nID\u003e/documents/\u003cDocument ID\u003e`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/knowledgeBases/[^/]+/documents/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2beta1/{+name}:export",
+                  "request": {
+                    "$ref": "GoogleCloudDialogflowV2beta1ExportDocumentRequest"
+                  },
+                  "response": {
+                    "$ref": "GoogleLongrunningOperation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
+                  ]
+                },
+                "generate": {
+                  "description": "Creates a knowledge service document for specified knowledge type\nusing provided training data.\n\nOperation \u003cresponse: response: Document,\n           metadata: SmartMessagingWhitelistOperationMetadata\u003e",
+                  "flatPath": "v2beta1/projects/{projectsId}/knowledgeBases/{knowledgeBasesId}/documents:generate",
+                  "httpMethod": "POST",
+                  "id": "dialogflow.projects.knowledgeBases.documents.generate",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. The knowledge base to create a document for.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base ID\u003e`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/knowledgeBases/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2beta1/{+parent}/documents:generate",
+                  "request": {
+                    "$ref": "GoogleCloudDialogflowV2beta1GenerateDocumentRequest"
+                  },
+                  "response": {
+                    "$ref": "GoogleLongrunningOperation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
+                  ]
+                },
                 "get": {
                   "description": "Retrieves the specified document.\n\nNote: The `projects.agent.knowledgeBases.documents` resource is deprecated;\nonly use `projects.knowledgeBases.documents`.",
                   "flatPath": "v2beta1/projects/{projectsId}/knowledgeBases/{knowledgeBasesId}/documents/{documentsId}",
@@ -4133,7 +4191,7 @@
       }
     }
   },
-  "revision": "20190822",
+  "revision": "20190902",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse": {
@@ -5622,13 +5680,15 @@
           "enumDescriptions": [
             "The type is unspecified or arbitrary.",
             "The document content contains question and answer pairs as either HTML or\nCSV. Typical FAQ HTML formats are parsed accurately, but unusual formats\nmay fail to be parsed.\n\nCSV must have questions in the first column and answers in the second,\nwith no header. Because of this explicit format, they are always parsed\naccurately.",
-            "Documents for which unstructured text is extracted and used for\nquestion answering."
+            "Documents for which unstructured text is extracted and used for\nquestion answering.",
+            "The document contains Smart Reply entries."
           ],
           "items": {
             "enum": [
               "KNOWLEDGE_TYPE_UNSPECIFIED",
               "FAQ",
-              "EXTRACTIVE_QA"
+              "EXTRACTIVE_QA",
+              "SMART_REPLY"
             ],
             "type": "string"
           },
@@ -5780,6 +5840,66 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2beta1ExportDocumentRequest": {
+      "description": "Request message for Document.ExportDocument.",
+      "id": "GoogleCloudDialogflowV2beta1ExportDocumentRequest",
+      "properties": {
+        "gcsDestination": {
+          "$ref": "GoogleCloudDialogflowV2beta1GcsDestination",
+          "description": "Cloud Storage file path to export the document."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1GcsDestination": {
+      "description": "Google Cloud Storage location for the output.",
+      "id": "GoogleCloudDialogflowV2beta1GcsDestination",
+      "properties": {
+        "uri": {
+          "description": "Required. The Google Cloud Storage URIs for the output. A URI is of the\nform:\n  gs://bucket/object-prefix-or-name\nWhether a prefix or name is used depends on the use case. The requesting\nuser must have \"write-permission\" to the bucket.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1GcsSource": {
+      "description": "Google Cloud Storage location for single input.",
+      "id": "GoogleCloudDialogflowV2beta1GcsSource",
+      "properties": {
+        "uri": {
+          "description": "Required. The Google Cloud Storage URIs for the inputs. A URI is of the\nform:\n  gs://bucket/object-prefix-or-name\nWhether a prefix or name is used depends on the use case.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1GenerateDocumentRequest": {
+      "description": "Request for generating knowledge service document for specified knowledge\ntype with provided training dataset.",
+      "id": "GoogleCloudDialogflowV2beta1GenerateDocumentRequest",
+      "properties": {
+        "knowledgeType": {
+          "description": "The knowledge type of the smart messaging document. Currently this field\nshould only be SMART_REPLY, in the future we will also add knowledge_type\nSMART_COMPOSE.",
+          "enum": [
+            "KNOWLEDGE_TYPE_UNSPECIFIED",
+            "FAQ",
+            "EXTRACTIVE_QA",
+            "SMART_REPLY"
+          ],
+          "enumDescriptions": [
+            "The type is unspecified or arbitrary.",
+            "The document content contains question and answer pairs as either HTML or\nCSV. Typical FAQ HTML formats are parsed accurately, but unusual formats\nmay fail to be parsed.\n\nCSV must have questions in the first column and answers in the second,\nwith no header. Because of this explicit format, they are always parsed\naccurately.",
+            "Documents for which unstructured text is extracted and used for\nquestion answering.",
+            "The document contains Smart Reply entries."
+          ],
+          "type": "string"
+        },
+        "trainingDatasets": {
+          "$ref": "GoogleCloudDialogflowV2beta1InputDatasets",
+          "description": "The conversation datasets to be used for generating document."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2beta1ImportAgentRequest": {
       "description": "The request message for Agents.ImportAgent.",
       "id": "GoogleCloudDialogflowV2beta1ImportAgentRequest",
@@ -5885,6 +6005,20 @@
         "dataset": {
           "description": "Required. ConversationDataset resource name. Format:\n`projects/\u003cProject ID\u003e/conversationDatasets/\u003cConversation Dataset ID\u003e`\nor\n`projects/\u003cProject ID\u003e/conversationDatasets/\u003cConversation Dataset\nID\u003e/annotatedConversationDatasets/\u003cAnnotated Conversation Dataset ID\u003e`",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1InputDatasets": {
+      "description": "InputDataset used to create smart messaging candidate document.",
+      "id": "GoogleCloudDialogflowV2beta1InputDatasets",
+      "properties": {
+        "dataset": {
+          "description": "Required. ConversationDataset resource name. Format:\n`projects/\u003cProject ID\u003e/conversationDatasets/\u003cConversation Dataset ID\u003e`",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -7285,7 +7419,12 @@
     "GoogleCloudDialogflowV2beta1ReloadDocumentRequest": {
       "description": "Request message for Documents.ReloadDocument.",
       "id": "GoogleCloudDialogflowV2beta1ReloadDocumentRequest",
-      "properties": {},
+      "properties": {
+        "gcsSource": {
+          "$ref": "GoogleCloudDialogflowV2beta1GcsSource",
+          "description": "The path of gcs source file for reloading document content."
+        }
+      },
       "type": "object"
     },
     "GoogleCloudDialogflowV2beta1RestoreAgentRequest": {

@@ -1604,7 +1604,7 @@
       }
     }
   },
-  "revision": "20190813",
+  "revision": "20190827",
   "rootUrl": "https://dataflow.googleapis.com/",
   "schemas": {
     "ApproximateProgress": {
@@ -3976,6 +3976,10 @@
           "description": "The Cloud Storage path to use for temporary files.\nMust be a valid Cloud Storage URL, beginning with `gs://`.",
           "type": "string"
         },
+        "usePrivateIps": {
+          "description": "Optional. Specifies whether worker pools should be started with private IP addresses.\nFalse by default.",
+          "type": "boolean"
+        },
         "zone": {
           "description": "The Compute Engine [availability\nzone](https://cloud.google.com/compute/docs/regions-zones/regions-zones)\nfor launching worker instances to run your pipeline.",
           "type": "string"
@@ -4698,6 +4702,16 @@
       "description": "A task that carries configuration information for streaming computations.",
       "id": "StreamingConfigTask",
       "properties": {
+        "commitStreamChunkSizeBytes": {
+          "description": "Chunk size for commit streams from the harness to windmill.",
+          "format": "int64",
+          "type": "string"
+        },
+        "getDataStreamChunkSizeBytes": {
+          "description": "Chunk size for get data streams from the harness to windmill.",
+          "format": "int64",
+          "type": "string"
+        },
         "maxWorkItemCommitBytes": {
           "description": "Maximum size for work item commit supported windmill storage layer.",
           "format": "int64",

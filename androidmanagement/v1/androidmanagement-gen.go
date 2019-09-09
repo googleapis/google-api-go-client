@@ -49,8 +49,8 @@ import (
 	"strconv"
 	"strings"
 
-	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
+	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	htransport "google.golang.org/api/transport/http"
 )
@@ -300,8 +300,45 @@ func (s *ApiLevelCondition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AppTrackInfo: Id to name association of a app track.
+type AppTrackInfo struct {
+	// TrackAlias: The track name associated with the trackId, set in the
+	// Play Console. The name is modifiable from Play Console.
+	TrackAlias string `json:"trackAlias,omitempty"`
+
+	// TrackId: The unmodifiable unique track identifier, taken from the
+	// releaseTrackId in the URL of the Play Console page that displays the
+	// app’s track information.
+	TrackId string `json:"trackId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TrackAlias") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TrackAlias") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppTrackInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AppTrackInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Application: Information about an app.
 type Application struct {
+	// AppTracks: Application tracks visible to the enterprise.
+	AppTracks []*AppTrackInfo `json:"appTracks,omitempty"`
+
 	// ManagedProperties: The set of managed properties available to be
 	// pre-configured for the app.
 	ManagedProperties []*ManagedProperty `json:"managedProperties,omitempty"`
@@ -320,21 +357,20 @@ type Application struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "ManagedProperties")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AppTracks") to
+	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ManagedProperties") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AppTracks") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -426,6 +462,14 @@ func (s *ApplicationPermission) MarshalJSON() ([]byte, error) {
 
 // ApplicationPolicy: Policy for an individual app.
 type ApplicationPolicy struct {
+	// AccessibleTrackIds: List of the app’s track IDs that a device
+	// belonging to the enterprise can access. If the list contains multiple
+	// track IDs, devices receive the latest version among all accessible
+	// tracks. If the list contains no track IDs, devices only have access
+	// to the app’s production track. More details about each track are
+	// available in AppTrackInfo.
+	AccessibleTrackIds []string `json:"accessibleTrackIds,omitempty"`
+
 	// DefaultPermissionPolicy: The default policy for all permissions
 	// requested by the app. If specified, this overrides the policy-level
 	// default_permission_policy which applies to all apps. It does not
@@ -525,19 +569,18 @@ type ApplicationPolicy struct {
 	// permission_grants which apply to all apps.
 	PermissionGrants []*PermissionGrant `json:"permissionGrants,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "DefaultPermissionPolicy") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AccessibleTrackIds")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DefaultPermissionPolicy")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "AccessibleTrackIds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
@@ -1030,7 +1073,8 @@ type Device struct {
 	State string `json:"state,omitempty"`
 
 	// SystemProperties: Map of selected system properties name and value
-	// related to the device.
+	// related to the device. This information is only available if
+	// systemPropertiesEnabled is true in the device's policy.
 	SystemProperties map[string]string `json:"systemProperties,omitempty"`
 
 	// User: The user who owns the device.
@@ -2354,9 +2398,10 @@ type PasswordRequirements struct {
 	// characters.
 	//   "ALPHANUMERIC" - The password must contain both numeric and
 	// alphabetic (or symbol) characters.
-	//   "COMPLEX" - The password must contain at least a letter, a
-	// numerical digit and a special symbol. Other password constraints, for
-	// example, password_minimum_letters are enforced.
+	//   "COMPLEX" - The password must meet the minimum requirements
+	// specified in passwordMinimumLength, passwordMinimumLetters,
+	// passwordMinimumSymbols, etc. For example, if passwordMinimumSymbols
+	// is 2, the password must contain at least two symbols.
 	PasswordQuality string `json:"passwordQuality,omitempty"`
 
 	// PasswordScope: The scope that the password requirement applies to.
@@ -2657,10 +2702,14 @@ type Policy struct {
 	// secure keyguard screens.
 	//   "TRUST_AGENTS" - Ignore trust agent state on secure keyguard
 	// screens.
-	//   "DISABLE_FINGERPRINT" - Disable fingerprint sensor on keyguard
-	// secure screens.
+	//   "DISABLE_FINGERPRINT" - Disable fingerprint sensor on secure
+	// keyguard screens.
 	//   "DISABLE_REMOTE_INPUT" - Disable text entry into notifications on
 	// secure keyguard screens.
+	//   "FACE" - Disable face authentication on secure keyguard screens.
+	//   "IRIS" - Disable iris authentication on secure keyguard screens.
+	//   "BIOMETRICS" - Disable all biometric authentication on secure
+	// keyguard screens.
 	//   "ALL_FEATURES" - Disable all current and future keyguard
 	// customizations.
 	KeyguardDisabledFeatures []string `json:"keyguardDisabledFeatures,omitempty"`
@@ -2750,6 +2799,14 @@ type Policy struct {
 	// PermissionGrants: Explicit permission or group grants or denials for
 	// all apps. These values override the default_permission_policy.
 	PermissionGrants []*PermissionGrant `json:"permissionGrants,omitempty"`
+
+	// PermittedAccessibilityServices: Specifies permitted accessibility
+	// services. If the field is not set, any accessibility service can be
+	// used. If the field is set, only the accessibility services in this
+	// list and the system's built-in accessibility services can be used. In
+	// particular, if the field is set to empty, only the system's built-in
+	// accessibility services can be used.
+	PermittedAccessibilityServices *PackageNameList `json:"permittedAccessibilityServices,omitempty"`
 
 	// PermittedInputMethods: If present, only the input methods provided by
 	// packages in this list are permitted. If this field is present, but
@@ -2957,21 +3014,21 @@ func (s *PolicyEnforcementRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PostureDetail: Detail that provides further information if the device
-// is not in the most secure state.
+// PostureDetail: Additional details regarding the security posture of
+// the device.
 type PostureDetail struct {
-	// Advice: Corresponding pieces of advice to mitigate the security risk.
+	// Advice: Corresponding admin-facing advice to mitigate this security
+	// risk and improve the security posture of the device.
 	Advice []*UserFacingMessage `json:"advice,omitempty"`
 
-	// SecurityRisk: The risk that makes the device not in the most secure
-	// state.
+	// SecurityRisk: A specific security risk that negatively affects the
+	// security posture of the device.
 	//
 	// Possible values:
-	//   "SECURITY_RISK_UNSPECIFIED" - Unspecified. Cannot determine the
-	// risk detail.
-	//   "UNKNOWN_OS" - SafetyNet detects that the device uses an unknown OS
-	// (basicIntegrity check passes while ctsProfileMatch fails).
-	//   "COMPROMISED_OS" - SafetyNet detects that the device uses a
+	//   "SECURITY_RISK_UNSPECIFIED" - Unspecified.
+	//   "UNKNOWN_OS" - SafetyNet detects that the device is running an
+	// unknown OS (basicIntegrity check succeeds but ctsProfileMatch fails).
+	//   "COMPROMISED_OS" - SafetyNet detects that the device is running a
 	// compromised OS (basicIntegrity check fails).
 	SecurityRisk string `json:"securityRisk,omitempty"`
 
@@ -3098,27 +3155,23 @@ func (s *ProxyInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SecurityPosture: . Device's security posture value that reflects how
-// secure the device is.
+// SecurityPosture: The security posture of the device, as determined by
+// the current device state and the policies applied.
 type SecurityPosture struct {
 	// DevicePosture: Device's security posture value.
 	//
 	// Possible values:
-	//   "POSTURE_UNSPECIFIED" - Unspecified. It is unable to determine the
-	// correct device posture because of insufficient data (for example, in
-	// the case of SafetyNet outage, there is no SafetyNet result). There is
-	// no posture detail for this posture value.
-	//   "SECURE" - The device is in the most secure state (both SafetyNet's
-	// ctsProfileMatch check and basicIntegrity check pass).
-	//   "AT_RISK" - The device is at risk (both SafetyNet's ctsProfileMatch
-	// check and basicIntegrity check pass).
-	//   "POTENTIALLY_COMPROMISED" - The device is potentially compromised
-	// (either SafetyNet's ctsProfileMatch check or basicIntegrity check
-	// fails).
+	//   "POSTURE_UNSPECIFIED" - Unspecified. There is no posture detail for
+	// this posture value.
+	//   "SECURE" - This device is secure.
+	//   "AT_RISK" - This device may be more vulnerable to malicious actors
+	// than is recommended for use with corporate data.
+	//   "POTENTIALLY_COMPROMISED" - This device may be compromised and
+	// corporate data may be accessible to unauthorized actors.
 	DevicePosture string `json:"devicePosture,omitempty"`
 
-	// PostureDetails: Details that provide further information if the
-	// device is not in the most secure state.
+	// PostureDetails: Additional details regarding the security posture of
+	// the device.
 	PostureDetails []*PostureDetail `json:"postureDetails,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DevicePosture") to
@@ -3846,7 +3899,7 @@ func (c *EnterprisesCreateCall) Header() http.Header {
 
 func (c *EnterprisesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3998,7 +4051,7 @@ func (c *EnterprisesGetCall) Header() http.Header {
 
 func (c *EnterprisesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4141,7 +4194,7 @@ func (c *EnterprisesPatchCall) Header() http.Header {
 
 func (c *EnterprisesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4305,7 +4358,7 @@ func (c *EnterprisesApplicationsGetCall) Header() http.Header {
 
 func (c *EnterprisesApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4455,7 +4508,7 @@ func (c *EnterprisesDevicesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4607,7 +4660,7 @@ func (c *EnterprisesDevicesGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4744,7 +4797,7 @@ func (c *EnterprisesDevicesIssueCommandCall) Header() http.Header {
 
 func (c *EnterprisesDevicesIssueCommandCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4907,7 +4960,7 @@ func (c *EnterprisesDevicesListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5082,7 +5135,7 @@ func (c *EnterprisesDevicesPatchCall) Header() http.Header {
 
 func (c *EnterprisesDevicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5235,7 +5288,7 @@ func (c *EnterprisesDevicesOperationsCancelCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5368,7 +5421,7 @@ func (c *EnterprisesDevicesOperationsDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5511,7 +5564,7 @@ func (c *EnterprisesDevicesOperationsGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5685,7 +5738,7 @@ func (c *EnterprisesDevicesOperationsListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5857,7 +5910,7 @@ func (c *EnterprisesEnrollmentTokensCreateCall) Header() http.Header {
 
 func (c *EnterprisesEnrollmentTokensCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5996,7 +6049,7 @@ func (c *EnterprisesEnrollmentTokensDeleteCall) Header() http.Header {
 
 func (c *EnterprisesEnrollmentTokensDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6127,7 +6180,7 @@ func (c *EnterprisesPoliciesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6268,7 +6321,7 @@ func (c *EnterprisesPoliciesGetCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6426,7 +6479,7 @@ func (c *EnterprisesPoliciesListCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6601,7 +6654,7 @@ func (c *EnterprisesPoliciesPatchCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6747,7 +6800,7 @@ func (c *EnterprisesWebAppsCreateCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6885,7 +6938,7 @@ func (c *EnterprisesWebAppsDeleteCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7026,7 +7079,7 @@ func (c *EnterprisesWebAppsGetCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7184,7 +7237,7 @@ func (c *EnterprisesWebAppsListCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7359,7 +7412,7 @@ func (c *EnterprisesWebAppsPatchCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7506,7 +7559,7 @@ func (c *EnterprisesWebTokensCreateCall) Header() http.Header {
 
 func (c *EnterprisesWebTokensCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7661,7 +7714,7 @@ func (c *SignupUrlsCreateCall) Header() http.Header {
 
 func (c *SignupUrlsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

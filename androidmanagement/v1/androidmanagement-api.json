@@ -918,7 +918,7 @@
       }
     }
   },
-  "revision": "20190805",
+  "revision": "20190906",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -948,10 +948,32 @@
       },
       "type": "object"
     },
+    "AppTrackInfo": {
+      "description": "Id to name association of a app track.",
+      "id": "AppTrackInfo",
+      "properties": {
+        "trackAlias": {
+          "description": "The track name associated with the trackId, set in the Play Console. The name is modifiable from Play Console.",
+          "type": "string"
+        },
+        "trackId": {
+          "description": "The unmodifiable unique track identifier, taken from the releaseTrackId in the URL of the Play Console page that displays the app’s track information.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Application": {
       "description": "Information about an app.",
       "id": "Application",
       "properties": {
+        "appTracks": {
+          "description": "Application tracks visible to the enterprise.",
+          "items": {
+            "$ref": "AppTrackInfo"
+          },
+          "type": "array"
+        },
         "managedProperties": {
           "description": "The set of managed properties available to be pre-configured for the app.",
           "items": {
@@ -1038,6 +1060,13 @@
       "description": "Policy for an individual app.",
       "id": "ApplicationPolicy",
       "properties": {
+        "accessibleTrackIds": {
+          "description": "List of the app’s track IDs that a device belonging to the enterprise can access. If the list contains multiple track IDs, devices receive the latest version among all accessible tracks. If the list contains no track IDs, devices only have access to the app’s production track. More details about each track are available in AppTrackInfo.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "defaultPermissionPolicy": {
           "description": "The default policy for all permissions requested by the app. If specified, this overrides the policy-level default_permission_policy which applies to all apps. It does not override the permission_grants which applies to all apps.",
           "enum": [
@@ -1561,7 +1590,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Map of selected system properties name and value related to the device.",
+          "description": "Map of selected system properties name and value related to the device. This information is only available if systemPropertiesEnabled is true in the device's policy.",
           "type": "object"
         },
         "user": {
@@ -2518,7 +2547,7 @@
             "The password must contain numeric characters with no repeating (4444) or ordered (1234, 4321, 2468) sequences.",
             "The password must contain alphabetic (or symbol) characters.",
             "The password must contain both numeric and alphabetic (or symbol) characters.",
-            "The password must contain at least a letter, a numerical digit and a special symbol. Other password constraints, for example, password_minimum_letters are enforced."
+            "The password must meet the minimum requirements specified in passwordMinimumLength, passwordMinimumLetters, passwordMinimumSymbols, etc. For example, if passwordMinimumSymbols is 2, the password must contain at least two symbols."
           ],
           "type": "string"
         },
@@ -2787,8 +2816,11 @@
             "Disable showing all notifications on secure keyguard screens.",
             "Disable unredacted notifications on secure keyguard screens.",
             "Ignore trust agent state on secure keyguard screens.",
-            "Disable fingerprint sensor on keyguard secure screens.",
+            "Disable fingerprint sensor on secure keyguard screens.",
             "Disable text entry into notifications on secure keyguard screens.",
+            "Disable face authentication on secure keyguard screens.",
+            "Disable iris authentication on secure keyguard screens.",
+            "Disable all biometric authentication on secure keyguard screens.",
             "Disable all current and future keyguard customizations."
           ],
           "items": {
@@ -2800,6 +2832,9 @@
               "TRUST_AGENTS",
               "DISABLE_FINGERPRINT",
               "DISABLE_REMOTE_INPUT",
+              "FACE",
+              "IRIS",
+              "BIOMETRICS",
               "ALL_FEATURES"
             ],
             "type": "string"
@@ -2899,6 +2934,10 @@
             "$ref": "PermissionGrant"
           },
           "type": "array"
+        },
+        "permittedAccessibilityServices": {
+          "$ref": "PackageNameList",
+          "description": "Specifies permitted accessibility services. If the field is not set, any accessibility service can be used. If the field is set, only the accessibility services in this list and the system's built-in accessibility services can be used. In particular, if the field is set to empty, only the system's built-in accessibility services can be used."
         },
         "permittedInputMethods": {
           "$ref": "PackageNameList",
@@ -3074,27 +3113,27 @@
       "type": "object"
     },
     "PostureDetail": {
-      "description": "Detail that provides further information if the device is not in the most secure state.",
+      "description": "Additional details regarding the security posture of the device.",
       "id": "PostureDetail",
       "properties": {
         "advice": {
-          "description": "Corresponding pieces of advice to mitigate the security risk.",
+          "description": "Corresponding admin-facing advice to mitigate this security risk and improve the security posture of the device.",
           "items": {
             "$ref": "UserFacingMessage"
           },
           "type": "array"
         },
         "securityRisk": {
-          "description": "The risk that makes the device not in the most secure state.",
+          "description": "A specific security risk that negatively affects the security posture of the device.",
           "enum": [
             "SECURITY_RISK_UNSPECIFIED",
             "UNKNOWN_OS",
             "COMPROMISED_OS"
           ],
           "enumDescriptions": [
-            "Unspecified. Cannot determine the risk detail.",
-            "SafetyNet detects that the device uses an unknown OS (basicIntegrity check passes while ctsProfileMatch fails).",
-            "SafetyNet detects that the device uses a compromised OS (basicIntegrity check fails)."
+            "Unspecified.",
+            "SafetyNet detects that the device is running an unknown OS (basicIntegrity check succeeds but ctsProfileMatch fails).",
+            "SafetyNet detects that the device is running a compromised OS (basicIntegrity check fails)."
           ],
           "type": "string"
         }
@@ -3170,7 +3209,7 @@
       "type": "object"
     },
     "SecurityPosture": {
-      "description": ". Device's security posture value that reflects how secure the device is.",
+      "description": "The security posture of the device, as determined by the current device state and the policies applied.",
       "id": "SecurityPosture",
       "properties": {
         "devicePosture": {
@@ -3182,15 +3221,15 @@
             "POTENTIALLY_COMPROMISED"
           ],
           "enumDescriptions": [
-            "Unspecified. It is unable to determine the correct device posture because of insufficient data (for example, in the case of SafetyNet outage, there is no SafetyNet result). There is no posture detail for this posture value.",
-            "The device is in the most secure state (both SafetyNet's ctsProfileMatch check and basicIntegrity check pass).",
-            "The device is at risk (both SafetyNet's ctsProfileMatch check and basicIntegrity check pass).",
-            "The device is potentially compromised (either SafetyNet's ctsProfileMatch check or basicIntegrity check fails)."
+            "Unspecified. There is no posture detail for this posture value.",
+            "This device is secure.",
+            "This device may be more vulnerable to malicious actors than is recommended for use with corporate data.",
+            "This device may be compromised and corporate data may be accessible to unauthorized actors."
           ],
           "type": "string"
         },
         "postureDetails": {
-          "description": "Details that provide further information if the device is not in the most secure state.",
+          "description": "Additional details regarding the security posture of the device.",
           "items": {
             "$ref": "PostureDetail"
           },

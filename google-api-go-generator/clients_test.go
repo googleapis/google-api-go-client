@@ -29,7 +29,6 @@ import (
 	"testing/iotest"
 
 	// If you add a client, add a matching go:generate line below.
-	dfa "google.golang.org/api/dfareporting/v2.8"
 	mon "google.golang.org/api/monitoring/v3"
 	storage "google.golang.org/api/storage/v1"
 )
@@ -380,32 +379,6 @@ func TestParams(t *testing.T) {
 	want := []string{
 		"/b/mybucket/o?alt=json&ifGenerationMatch=42&name=filename&prettyPrint=false&projection=full&uploadType=resumable",
 		"/uploadURL",
-	}
-	if !reflect.DeepEqual(handler.reqURIs, want) {
-		t.Errorf("reqURIs = %#v, want = %#v", handler.reqURIs, want)
-	}
-}
-
-func TestRepeatedParams(t *testing.T) {
-	handler := &myHandler{}
-	server := httptest.NewServer(handler)
-	defer server.Close()
-
-	client := &http.Client{}
-	s, err := dfa.New(client)
-	if err != nil {
-		t.Fatalf("unable to create service: %v", err)
-	}
-	s.BasePath = server.URL
-	s.UserAgent = "myagent/1.0"
-	cs := dfa.NewCreativesService(s)
-
-	_, err = cs.List(10).Active(true).MaxResults(1).Ids(2, 3).PageToken("abc").SizeIds(4, 5).Types("def", "ghi").IfNoneMatch("not-a-param").Do()
-	if err != nil {
-		t.Fatalf("dfa.List: %v", err)
-	}
-	want := []string{
-		"/userprofiles/10/creatives?active=true&alt=json&ids=2&ids=3&maxResults=1&pageToken=abc&prettyPrint=false&sizeIds=4&sizeIds=5&types=def&types=ghi",
 	}
 	if !reflect.DeepEqual(handler.reqURIs, want) {
 		t.Errorf("reqURIs = %#v, want = %#v", handler.reqURIs, want)

@@ -541,7 +541,7 @@
       }
     }
   },
-  "revision": "20190807",
+  "revision": "20190911",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "AddTenantProjectRequest": {
@@ -1890,7 +1890,7 @@
           "type": "string"
         },
         "duration": {
-          "description": "Duration of this limit in textual notation. Example: \"100s\", \"24h\", \"1d\".\nFor duration longer than a day, only multiple of days is supported. We\nsupport only \"100s\" and \"1d\" for now. Additional support will be added in\nthe future. \"0\" indicates indefinite duration.\n\nUsed by group-based quotas only.",
+          "description": "Duration of this limit in textual notation. Must be \"100s\" or \"1d\".\n\nUsed by group-based quotas only.",
           "type": "string"
         },
         "freeTier": {

@@ -718,7 +718,7 @@
               ],
               "parameters": {
                 "options.requestedPolicyVersion": {
-                  "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+                  "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
@@ -1227,7 +1227,7 @@
       }
     }
   },
-  "revision": "20190816",
+  "revision": "20190906",
   "rootUrl": "https://iam.googleapis.com/",
   "schemas": {
     "AdminAuditData": {
@@ -1752,7 +1752,7 @@
           "type": "string"
         },
         "version": {
-          "description": "Deprecated.",
+          "description": "Specifies the format of the policy.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nPolicies with any conditional bindings must specify version 3. Policies\nwithout any conditional bindings may specify any valid value or leave the\nfield unset.",
           "format": "int32",
           "type": "integer"
         }
@@ -2050,7 +2050,7 @@
           "type": "string"
         },
         "validBeforeTime": {
-          "description": "The key can be used before this timestamp.",
+          "description": "The key can be used before this timestamp.\nFor system-managed key pairs, this timestamp is the end time for the\nprivate key signing operation. The public key could still be used\nfor verification for a few hours after this time.",
           "format": "google-datetime",
           "type": "string"
         }

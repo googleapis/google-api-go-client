@@ -420,7 +420,7 @@
       }
     }
   },
-  "revision": "20190826",
+  "revision": "20190907",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AwsAccessKey": {
@@ -713,15 +713,15 @@
       "properties": {
         "scheduleEndDate": {
           "$ref": "Date",
-          "description": "The last day the recurring transfer will be run. If `scheduleEndDate`\nis the same as `scheduleStartDate`, the transfer will be executed only\nonce."
+          "description": "The last day a transfer runs. Date boundaries are determined relative to\nUTC time. A job will run once per 24 hours within the following guidelines:\n\n*   If `scheduleEndDate` and `scheduleStartDate` are the same and in the\n    future relative to UTC, the transfer is executed only one time.\n*   If `scheduleEndDate` is later than `scheduleStartDate` and\n    `scheduleEndDate` is in the future relative to UTC, the job will\n    run each day at `startTimeOfDay` through `scheduleEndDate`."
         },
         "scheduleStartDate": {
           "$ref": "Date",
-          "description": "Required. The first day the recurring transfer is scheduled to run. If\n`scheduleStartDate` is in the past, the transfer will run for the first\ntime on the following day."
+          "description": "Required. The start date of a transfer. Date boundaries are determined\nrelative to UTC time. If `scheduleStartDate` and `startTimeOfDay` are in\nthe past relative to the job's creation time, the transfer starts the day\nafter you schedule the transfer request.\n\nNote: When starting jobs at or near midnight UTC it is possible that\na job will start later than expected. For example, if you send an outbound\nrequest on June 1 one millisecond prior to midnight UTC and the Storage\nTransfer Service server receives the request on June 2, then it will create\na TransferJob with `scheduleStartDate` set to June 2 and a `startTimeOfDay`\nset to midnight UTC. The first scheduled TransferOperation will take place\non June 3 at midnight UTC."
         },
         "startTimeOfDay": {
           "$ref": "TimeOfDay",
-          "description": "The time in UTC at which the transfer will be scheduled to start in a day.\nTransfers may start later than this time. If not specified, recurring and\none-time transfers that are scheduled to run today will run immediately;\nrecurring transfers that are scheduled to run on a future date will start\nat approximately midnight UTC on that date. Note that when configuring a\ntransfer with the Cloud Platform Console, the transfer's start time in a\nday is specified in your local timezone."
+          "description": "The time in UTC that a transfer job is scheduled to run. Transfers may\nstart later than this time.\n\nIf `startTimeOfDay` is not specified:\n\n*   One-time transfers run immediately.\n*   Recurring transfers run immediately, and each day at midnight UTC,\n    through `scheduleEndDate`.\n\nIf `startTimeOfDay` is specified:\n\n*   One-time transfers run at the specified time.\n*   Recurring transfers run at the specified time each day, through\n    `scheduleEndDate`."
         }
       },
       "type": "object"

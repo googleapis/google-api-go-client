@@ -826,7 +826,9 @@ type DriveItemReference struct {
 	// DriveFile: The Drive item is a file.
 	DriveFile *DriveFile `json:"driveFile,omitempty"`
 
-	// DriveFolder: The Drive item is a folder.
+	// DriveFolder: The Drive item is a folder. Includes information about
+	// the type of
+	// folder.
 	DriveFolder *DriveFolder `json:"driveFolder,omitempty"`
 
 	// File: This field is deprecated; please use the `driveFile` field
@@ -1921,7 +1923,7 @@ func (c *ActivityQueryCall) Header() http.Header {
 
 func (c *ActivityQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

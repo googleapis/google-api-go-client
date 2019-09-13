@@ -719,19 +719,21 @@ func (s *CreateContactGroupRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Date: Represents a whole calendar date, for example a date of birth.
-// The time
-// of day and time zone are either specified elsewhere or are
-// not
-// significant. The date is relative to the
-// [Proleptic Gregorian
-// Calendar](https://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar).
+// Date: Represents a whole or partial calendar date, e.g. a birthday.
+// The time of day
+// and time zone are either specified elsewhere or are not significant.
+// The date
+// is relative to the Proleptic Gregorian Calendar. This can
+// represent:
 //
-// The day may be 0 to represent a year and month where the day is
-// not
-// significant. The year may be 0 to represent a month and day
-// independent
-// of year; for example, anniversary date.
+// * A full date, with non-zero year, month and day values
+// * A month and day value, with a zero year, e.g. an anniversary
+// * A year on its own, with zero month and day values
+// * A year and month value, with a zero day, e.g. a credit card
+// expiration date
+//
+// Related types are google.type.TimeOfDay and
+// `google.protobuf.Timestamp`.
 type Date struct {
 	// Day: Day of month. Must be from 1 to 31 and valid for the year and
 	// month, or 0
@@ -2750,7 +2752,7 @@ func (c *ContactGroupsBatchGetCall) Header() http.Header {
 
 func (c *ContactGroupsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2884,7 +2886,7 @@ func (c *ContactGroupsCreateCall) Header() http.Header {
 
 func (c *ContactGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3018,7 +3020,7 @@ func (c *ContactGroupsDeleteCall) Header() http.Header {
 
 func (c *ContactGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3173,7 +3175,7 @@ func (c *ContactGroupsGetCall) Header() http.Header {
 
 func (c *ContactGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3351,7 +3353,7 @@ func (c *ContactGroupsListCall) Header() http.Header {
 
 func (c *ContactGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3514,7 +3516,7 @@ func (c *ContactGroupsUpdateCall) Header() http.Header {
 
 func (c *ContactGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3661,7 +3663,7 @@ func (c *ContactGroupsMembersModifyCall) Header() http.Header {
 
 func (c *ContactGroupsMembersModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3808,7 +3810,7 @@ func (c *PeopleCreateContactCall) Header() http.Header {
 
 func (c *PeopleCreateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3940,7 +3942,7 @@ func (c *PeopleDeleteContactCall) Header() http.Header {
 
 func (c *PeopleDeleteContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4111,7 +4113,7 @@ func (c *PeopleDeleteContactPhotoCall) Header() http.Header {
 
 func (c *PeopleDeleteContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4314,7 +4316,7 @@ func (c *PeopleGetCall) Header() http.Header {
 
 func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4552,7 +4554,7 @@ func (c *PeopleGetBatchGetCall) Header() http.Header {
 
 func (c *PeopleGetBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4751,7 +4753,7 @@ func (c *PeopleUpdateContactCall) Header() http.Header {
 
 func (c *PeopleUpdateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4897,7 +4899,7 @@ func (c *PeopleUpdateContactPhotoCall) Header() http.Header {
 
 func (c *PeopleUpdateContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5156,7 +5158,7 @@ func (c *PeopleConnectionsListCall) Header() http.Header {
 
 func (c *PeopleConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

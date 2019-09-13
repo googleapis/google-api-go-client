@@ -2000,7 +2000,7 @@ func (c *ProcessesListCall) Header() http.Header {
 
 func (c *ProcessesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2361,7 +2361,7 @@ func (c *ProcessesListScriptProcessesCall) Header() http.Header {
 
 func (c *ProcessesListScriptProcessesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2591,7 +2591,7 @@ func (c *ProjectsCreateCall) Header() http.Header {
 
 func (c *ProjectsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2727,7 +2727,7 @@ func (c *ProjectsGetCall) Header() http.Header {
 
 func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2882,7 +2882,7 @@ func (c *ProjectsGetContentCall) Header() http.Header {
 
 func (c *ProjectsGetContentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3054,7 +3054,7 @@ func (c *ProjectsGetMetricsCall) Header() http.Header {
 
 func (c *ProjectsGetMetricsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3211,7 +3211,7 @@ func (c *ProjectsUpdateContentCall) Header() http.Header {
 
 func (c *ProjectsUpdateContentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3350,7 +3350,7 @@ func (c *ProjectsDeploymentsCreateCall) Header() http.Header {
 
 func (c *ProjectsDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3489,7 +3489,7 @@ func (c *ProjectsDeploymentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3639,7 +3639,7 @@ func (c *ProjectsDeploymentsGetCall) Header() http.Header {
 
 func (c *ProjectsDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3807,7 +3807,7 @@ func (c *ProjectsDeploymentsListCall) Header() http.Header {
 
 func (c *ProjectsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3976,7 +3976,7 @@ func (c *ProjectsDeploymentsUpdateCall) Header() http.Header {
 
 func (c *ProjectsDeploymentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4125,7 +4125,7 @@ func (c *ProjectsVersionsCreateCall) Header() http.Header {
 
 func (c *ProjectsVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4275,7 +4275,7 @@ func (c *ProjectsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4444,7 +4444,7 @@ func (c *ProjectsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4584,15 +4584,17 @@ type ScriptsRunCall struct {
 //
 // This method requires authorization with an OAuth 2.0 token that
 // includes at
-// least one of the scopes listed in the
-// [Authorization](#authorization)
-// section; script projects that do not require authorization cannot
-// be
-// executed through this API. To find the correct scopes to include in
+// least one of the scopes listed in
 // the
-// authentication token, open the project in the script editor, then
-// select
-// **File > Project properties** and click the **Scopes** tab.
+// [Authorization](#authorization-scopes) section; script projects that
+// do not
+// require authorization cannot be executed through this API. To find
+// the
+// correct scopes to include in the authentication token, open the
+// project in
+// the script editor, then select **File > Project properties** and
+// click the
+// **Scopes** tab.
 //
 // The error `403, PERMISSION_DENIED: The caller does not have
 // permission`
@@ -4633,7 +4635,7 @@ func (c *ScriptsRunCall) Header() http.Header {
 
 func (c *ScriptsRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4697,7 +4699,7 @@ func (c *ScriptsRunCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Runs a function in an Apps Script project. The script project must be\ndeployed for use with the Apps Script API and the calling application must\nshare the same Cloud Platform project.\n\nThis method requires authorization with an OAuth 2.0 token that includes at\nleast one of the scopes listed in the [Authorization](#authorization)\nsection; script projects that do not require authorization cannot be\nexecuted through this API. To find the correct scopes to include in the\nauthentication token, open the project in the script editor, then select\n**File \u003e Project properties** and click the **Scopes** tab.\n\nThe error `403, PERMISSION_DENIED: The caller does not have permission`\nindicates that the Cloud Platform project used to authorize the request is\nnot the same as the one used by the script.",
+	//   "description": "Runs a function in an Apps Script project. The script project must be\ndeployed for use with the Apps Script API and the calling application must\nshare the same Cloud Platform project.\n\nThis method requires authorization with an OAuth 2.0 token that includes at\nleast one of the scopes listed in the\n[Authorization](#authorization-scopes) section; script projects that do not\nrequire authorization cannot be executed through this API. To find the\ncorrect scopes to include in the authentication token, open the project in\nthe script editor, then select **File \u003e Project properties** and click the\n**Scopes** tab.\n\nThe error `403, PERMISSION_DENIED: The caller does not have permission`\nindicates that the Cloud Platform project used to authorize the request is\nnot the same as the one used by the script.",
 	//   "flatPath": "v1/scripts/{scriptId}:run",
 	//   "httpMethod": "POST",
 	//   "id": "script.scripts.run",

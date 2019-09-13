@@ -272,7 +272,7 @@
       }
     }
   },
-  "revision": "20190905",
+  "revision": "20190902",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -1593,7 +1593,6 @@
             "TEST_NOT_APP_HOSTED",
             "PLIST_CANNOT_BE_PARSED",
             "TEST_ONLY_APK",
-            "MALFORMED_IPA",
             "NO_CODE_APK",
             "INVALID_INPUT_APK",
             "INVALID_APK_PREVIEW_SDK"
@@ -1628,7 +1627,6 @@
             "XC tests which run on physical devices must have\n\"IsAppHostedTestBundle\" == \"true\" in the xctestrun file.",
             "An Info.plist file in the XCTest zip could not be parsed.",
             "The APK is marked as \"testOnly\".\nDeprecated and not currently used.",
-            "The input IPA could not be parsed.\nDeprecated and not currently used.",
             "APK contains no code.\nSee also\nhttps://developer.android.com/guide/topics/manifest/application-element.html#code",
             "Either the provided input APK path was malformed,\nthe APK file does not exist, or the user does not have permission to\naccess the APK file.",
             "APK is built for a preview SDK which is unsupported"

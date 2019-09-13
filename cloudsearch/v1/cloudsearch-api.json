@@ -941,7 +941,7 @@
                   "type": "string"
                 },
                 "requestOptions.timeZone": {
-                  "description": "Current user's time zone id, such as \"America/Los_Angeles\" or\n\"Australia/Sydney\". These IDs are defined by\n[Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nproject, and currently available in the file\n[timezone.xml](http://unicode.org/repos/cldr/trunk/common/bcp47/timezone.xml)",
+                  "description": "Current user's time zone id, such as \"America/Los_Angeles\" or\n\"Australia/Sydney\". These IDs are defined by\n[Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nproject, and currently available in the file\n[timezone.xml](http://unicode.org/repos/cldr/trunk/common/bcp47/timezone.xml).\nThis field is used to correctly interpret date and time queries.\nIf this field is not specified, the default time zone (UTC) is used.",
                   "location": "query",
                   "type": "string"
                 }
@@ -1429,7 +1429,7 @@
       }
     }
   },
-  "revision": "20190821",
+  "revision": "20190905",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -3626,7 +3626,7 @@
           "type": "string"
         },
         "timeZone": {
-          "description": "Current user's time zone id, such as \"America/Los_Angeles\" or\n\"Australia/Sydney\". These IDs are defined by\n[Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nproject, and currently available in the file\n[timezone.xml](http://unicode.org/repos/cldr/trunk/common/bcp47/timezone.xml)",
+          "description": "Current user's time zone id, such as \"America/Los_Angeles\" or\n\"Australia/Sydney\". These IDs are defined by\n[Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/)\nproject, and currently available in the file\n[timezone.xml](http://unicode.org/repos/cldr/trunk/common/bcp47/timezone.xml).\nThis field is used to correctly interpret date and time queries.\nIf this field is not specified, the default time zone (UTC) is used.",
           "type": "string"
         }
       },

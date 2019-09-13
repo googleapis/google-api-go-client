@@ -1730,27 +1730,58 @@ func (s *GoogleCloudMlV1__ReplicaConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudMlV1__RequestLoggingConfig: Configurations for logging
-// request-response pairs. Currently only BigQuery
-// logging is supported. The request and response will be converted to
-// raw
-// string and stored within the specified BigQuery table. The schema
-// is:
-//   model: STRING
-//   version: STRING
-//   time: Timestamp
-//   raw_data: STRING
-//   raw_prediction: STRING
-//   ground_truth: STRING
+// GoogleCloudMlV1__RequestLoggingConfig: Configuration for logging
+// request-response pairs to a BigQuery table.
+// Online prediction requests to a model version and the responses to
+// these
+// requests are converted to raw strings and saved to the specified
+// BigQuery
+// table. Logging is constrained by [BigQuery quotas
+// and
+// limits](/bigquery/quotas). If your project exceeds BigQuery quotas or
+// limits,
+// AI Platform Prediction does not log request-response pairs, but it
+// continues
+// to serve predictions.
+//
+// If you are using
+// [continuous
+// evaluation](/ml-engine/docs/continuous-evaluation/), you do not need
+// to
+// specify this configuration manually. Setting up continuous
+// evaluation
+// automatically enables logging of request-response pairs.
 type GoogleCloudMlV1__RequestLoggingConfig struct {
-	// BigqueryTableName: Fully qualified BigQuery table name in the format
-	// of
-	// "[project_id].[dataset_name].[table_name]".
+	// BigqueryTableName: Required. Fully qualified BigQuery table name in
+	// the following
+	// format:
+	// "<var>project_id</var>.<var>dataset_name</var>.<var>table_name
+	// </var>"
+	//
+	// The specifcied table must already exist, and the "Cloud ML Service
+	// Agent"
+	// for your project must have permission to write to it. The table must
+	// have
+	// the following [schema](/bigquery/docs/schemas):
+	//
+	// <table>
+	//   <tr><th>Field name</th><th style="display: table-cell">Type</th>
+	//     <th style="display: table-cell">Mode</th></tr>
+	//   <tr><td>model</td><td>STRING</td><td>REQUIRED</td></tr>
+	//   <tr><td>model_version</td><td>STRING</td><td>REQUIRED</td></tr>
+	//   <tr><td>time</td><td>TIMESTAMP</td><td>REQUIRED</td></tr>
+	//   <tr><td>raw_data</td><td>STRING</td><td>REQUIRED</td></tr>
+	//   <tr><td>raw_prediction</td><td>STRING</td><td>NULLABLE</td></tr>
+	//
+	// <tr><td>groundtruth</td><td>STRING</td><td>NULLABLE</td></tr>
+	// </table>
 	BigqueryTableName string `json:"bigqueryTableName,omitempty"`
 
-	// SamplingPercentage: Percentage of the request being logged. The
-	// sampling window is the lifetime
-	// of the Version. Defaults to 0.
+	// SamplingPercentage: Percentage of requests to be logged, expressed as
+	// a fraction from 0 to 1.
+	// For example, if you want to log 10% of requests, enter `0.1`. The
+	// sampling
+	// window is the lifetime of the model version. Defaults to 0.
 	SamplingPercentage float64 `json:"samplingPercentage,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BigqueryTableName")
@@ -2897,7 +2928,17 @@ type GoogleIamV1__Policy struct {
 	// policy is overwritten.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Deprecated.
+	// Version: Specifies the format of the policy.
+	//
+	// Valid values are 0, 1, and 3. Requests specifying an invalid value
+	// will be
+	// rejected.
+	//
+	// Policies with any conditional bindings must specify version 3.
+	// Policies
+	// without any conditional bindings may specify any valid value or leave
+	// the
+	// field unset.
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3338,7 +3379,7 @@ func (c *ProjectsGetConfigCall) Header() http.Header {
 
 func (c *ProjectsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3480,7 +3521,7 @@ func (c *ProjectsPredictCall) Header() http.Header {
 
 func (c *ProjectsPredictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3625,7 +3666,7 @@ func (c *ProjectsJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3765,7 +3806,7 @@ func (c *ProjectsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3914,7 +3955,7 @@ func (c *ProjectsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4027,10 +4068,16 @@ func (r *ProjectsJobsService) GetIamPolicy(resource string) *ProjectsJobsGetIamP
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
 // returned.
-// Acceptable values are 0, 1, and 3.
-// If the value is 0, or the field is omitted, policy format version 1
+//
+// Valid values are 0, 1, and 3. Requests specifying an invalid value
 // will be
-// returned.
+// rejected.
+//
+// Requests for policies with any conditional bindings must specify
+// version 3.
+// Policies without any conditional bindings may specify any valid value
+// or
+// leave the field unset.
 func (c *ProjectsJobsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsJobsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -4073,7 +4120,7 @@ func (c *ProjectsJobsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4144,7 +4191,7 @@ func (c *ProjectsJobsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Google
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4270,7 +4317,7 @@ func (c *ProjectsJobsListCall) Header() http.Header {
 
 func (c *ProjectsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4474,7 +4521,7 @@ func (c *ProjectsJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4622,7 +4669,7 @@ func (c *ProjectsJobsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4772,7 +4819,7 @@ func (c *ProjectsJobsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsJobsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4924,7 +4971,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5092,7 +5139,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5268,7 +5315,7 @@ func (c *ProjectsModelsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5413,7 +5460,7 @@ func (c *ProjectsModelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5558,7 +5605,7 @@ func (c *ProjectsModelsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5671,10 +5718,16 @@ func (r *ProjectsModelsService) GetIamPolicy(resource string) *ProjectsModelsGet
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
 // returned.
-// Acceptable values are 0, 1, and 3.
-// If the value is 0, or the field is omitted, policy format version 1
+//
+// Valid values are 0, 1, and 3. Requests specifying an invalid value
 // will be
-// returned.
+// rejected.
+//
+// Requests for policies with any conditional bindings must specify
+// version 3.
+// Policies without any conditional bindings may specify any valid value
+// or
+// leave the field unset.
 func (c *ProjectsModelsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsModelsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -5717,7 +5770,7 @@ func (c *ProjectsModelsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5788,7 +5841,7 @@ func (c *ProjectsModelsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5905,7 +5958,7 @@ func (c *ProjectsModelsListCall) Header() http.Header {
 
 func (c *ProjectsModelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6107,7 +6160,7 @@ func (c *ProjectsModelsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6255,7 +6308,7 @@ func (c *ProjectsModelsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6405,7 +6458,7 @@ func (c *ProjectsModelsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsModelsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6560,7 +6613,7 @@ func (c *ProjectsModelsVersionsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6706,7 +6759,7 @@ func (c *ProjectsModelsVersionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6855,7 +6908,7 @@ func (c *ProjectsModelsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7039,7 +7092,7 @@ func (c *ProjectsModelsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7237,7 +7290,7 @@ func (c *ProjectsModelsVersionsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7394,7 +7447,7 @@ func (c *ProjectsModelsVersionsSetDefaultCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsSetDefaultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7549,7 +7602,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7694,7 +7747,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7875,7 +7928,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

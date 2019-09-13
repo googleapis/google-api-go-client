@@ -197,6 +197,20 @@ type BatchTranslateTextRequest struct {
 	// The files must use UTF-8 encoding.
 	InputConfigs []*InputConfig `json:"inputConfigs,omitempty"`
 
+	// Labels: Optional. The labels with user-defined metadata for the
+	// request.
+	//
+	// Label keys and values can be no longer than 63 characters
+	// (Unicode codepoints), can only contain lowercase letters,
+	// numeric
+	// characters, underscores and dashes. International characters are
+	// allowed.
+	// Label values are optional. Label keys must start with a letter.
+	//
+	// See https://goo.gl/xmQnxf for more information on and examples of
+	// labels.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Models: Optional. The models to use for translation. Map's key is
 	// target language
 	// code. Map's value is model name. Value can be a built-in general
@@ -266,6 +280,20 @@ type CancelOperationRequest struct {
 type DetectLanguageRequest struct {
 	// Content: The content of the input stored as a string.
 	Content string `json:"content,omitempty"`
+
+	// Labels: Optional. The labels with user-defined metadata for the
+	// request.
+	//
+	// Label keys and values can be no longer than 63 characters
+	// (Unicode codepoints), can only contain lowercase letters,
+	// numeric
+	// characters, underscores and dashes. International characters are
+	// allowed.
+	// Label values are optional. Label keys must start with a letter.
+	//
+	// See https://goo.gl/xmQnxf for more information on and examples of
+	// labels.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// MimeType: Optional. The format of the source text, for example,
 	// "text/html",
@@ -1277,6 +1305,20 @@ type TranslateTextRequest struct {
 	// an INVALID_ARGUMENT (400) error is returned.
 	GlossaryConfig *TranslateTextGlossaryConfig `json:"glossaryConfig,omitempty"`
 
+	// Labels: Optional. The labels with user-defined metadata for the
+	// request.
+	//
+	// Label keys and values can be no longer than 63 characters
+	// (Unicode codepoints), can only contain lowercase letters,
+	// numeric
+	// characters, underscores and dashes. International characters are
+	// allowed.
+	// Label values are optional. Label keys must start with a letter.
+	//
+	// See https://goo.gl/xmQnxf for more information on and examples of
+	// labels.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// MimeType: Optional. The format of the source text, for example,
 	// "text/html",
 	//  "text/plain". If left blank, the MIME type defaults to "text/html".
@@ -1518,7 +1560,7 @@ func (c *ProjectsDetectLanguageCall) Header() http.Header {
 
 func (c *ProjectsDetectLanguageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1705,7 +1747,7 @@ func (c *ProjectsGetSupportedLanguagesCall) Header() http.Header {
 
 func (c *ProjectsGetSupportedLanguagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1851,7 +1893,7 @@ func (c *ProjectsTranslateTextCall) Header() http.Header {
 
 func (c *ProjectsTranslateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2002,7 +2044,7 @@ func (c *ProjectsLocationsBatchTranslateTextCall) Header() http.Header {
 
 func (c *ProjectsLocationsBatchTranslateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2142,7 +2184,7 @@ func (c *ProjectsLocationsDetectLanguageCall) Header() http.Header {
 
 func (c *ProjectsLocationsDetectLanguageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2292,7 +2334,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2474,7 +2516,7 @@ func (c *ProjectsLocationsGetSupportedLanguagesCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetSupportedLanguagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2651,7 +2693,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2824,7 +2866,7 @@ func (c *ProjectsLocationsTranslateTextCall) Header() http.Header {
 
 func (c *ProjectsLocationsTranslateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2967,7 +3009,7 @@ func (c *ProjectsLocationsGlossariesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3107,7 +3149,7 @@ func (c *ProjectsLocationsGlossariesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3251,7 +3293,7 @@ func (c *ProjectsLocationsGlossariesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3427,7 +3469,7 @@ func (c *ProjectsLocationsGlossariesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3617,7 +3659,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3762,7 +3804,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3908,7 +3950,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4090,7 +4132,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4278,7 +4320,7 @@ func (c *ProjectsLocationsOperationsWaitCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsWaitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

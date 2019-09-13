@@ -338,7 +338,7 @@
       }
     }
   },
-  "revision": "20190829",
+  "revision": "20190911",
   "rootUrl": "https://serviceusage.googleapis.com/",
   "schemas": {
     "Api": {
@@ -1062,6 +1062,29 @@
         },
         "typeUrl": {
           "description": "The field type URL, without the scheme, for message or enumeration\ntypes. Example: `\"type.googleapis.com/google.protobuf.Timestamp\"`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GetServiceIdentityResponse": {
+      "description": "Response message for getting service identity.",
+      "id": "GetServiceIdentityResponse",
+      "properties": {
+        "identity": {
+          "$ref": "ServiceIdentity",
+          "description": "Service identity that service producer can use to access consumer\nresources. If exists is true, it contains email and unique_id. If exists is\nfalse, it contains pre-constructed email and empty unique_id."
+        },
+        "state": {
+          "description": "Service identity state.",
+          "enum": [
+            "IDENTITY_STATE_UNSPECIFIED",
+            "ACTIVE"
+          ],
+          "enumDescriptions": [
+            "Default service identity state. This value is used if the state is\nomitted.",
+            "Service identity has been created and can be used."
+          ],
           "type": "string"
         }
       },
@@ -1939,7 +1962,7 @@
           "type": "string"
         },
         "duration": {
-          "description": "Duration of this limit in textual notation. Example: \"100s\", \"24h\", \"1d\".\nFor duration longer than a day, only multiple of days is supported. We\nsupport only \"100s\" and \"1d\" for now. Additional support will be added in\nthe future. \"0\" indicates indefinite duration.\n\nUsed by group-based quotas only.",
+          "description": "Duration of this limit in textual notation. Must be \"100s\" or \"1d\".\n\nUsed by group-based quotas only.",
           "type": "string"
         },
         "freeTier": {

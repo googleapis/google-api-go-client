@@ -651,14 +651,17 @@ func (s *AlertPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BasicAuthentication: A type of authentication to perform against the
-// specified resource or URL that uses username and password. Currently,
-// only Basic authentication is supported in Uptime Monitoring.
+// BasicAuthentication: The authentication parameters to provide to the
+// specified resource or URL that requires a username and password.
+// Currently, only Basic HTTP authentication
+// (https://tools.ietf.org/html/rfc7617) is supported in Uptime checks.
 type BasicAuthentication struct {
-	// Password: The password to authenticate.
+	// Password: The password to use when authenticating with the HTTP
+	// server.
 	Password string `json:"password,omitempty"`
 
-	// Username: The username to authenticate.
+	// Username: The username to use when authenticating with the HTTP
+	// server.
 	Username string `json:"username,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Password") to
@@ -973,21 +976,25 @@ type ContentMatcher struct {
 	// Content: String or regex content to match (max 1024 bytes)
 	Content string `json:"content,omitempty"`
 
-	// Matcher: The matcher representing content match options which the
-	// check will run with. If the field is not specified (in previous
-	// versions), the option is set to be CONTAINS_STRING which performs
-	// content substring matching.
+	// Matcher: The type of content matcher that will be applied to the
+	// server output, compared to the content string when the check is run.
 	//
 	// Possible values:
-	//   "CONTENT_MATCHER_OPTION_UNSPECIFIED" - No content macher option
-	// specified. Treated as CONTAINS_STRING.
-	//   "CONTAINS_STRING" - Allows checking substring matching. Default
-	// value for previous versions without option.
-	//   "NOT_CONTAINS_STRING" - Allows checking negation of substring
-	// matching (doesn't contain the substring).
-	//   "MATCHES_REGEX" - Allows checking regular expression matching.
-	//   "NOT_MATCHES_REGEX" - Allows checking negation of regular
-	// expression matching.
+	//   "CONTENT_MATCHER_OPTION_UNSPECIFIED" - No content matcher type
+	// specified (maintained for backward compatibility, but deprecated for
+	// future use). Treated as CONTAINS_STRING.
+	//   "CONTAINS_STRING" - Selects substring matching (there is a match if
+	// the output contains the content string). This is the default value
+	// for checks without a matcher option, or where the value of matcher is
+	// CONTENT_MATCHER_OPTION_UNSPECIFIED.
+	//   "NOT_CONTAINS_STRING" - Selects negation of substring matching
+	// (there is a match if the output does NOT contain the content string).
+	//   "MATCHES_REGEX" - Selects regular expression matching (there is a
+	// match of the output matches the regular expression specified in the
+	// content string).
+	//   "NOT_MATCHES_REGEX" - Selects negation of regular expression
+	// matching (there is a match if the output does NOT match the regular
+	// expression specified in the content string).
 	Matcher string `json:"matcher,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -1703,14 +1710,14 @@ func (s *Group) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HttpCheck: Information involved in an HTTP/HTTPS uptime check
+// HttpCheck: Information involved in an HTTP/HTTPS Uptime check
 // request.
 type HttpCheck struct {
 	// AuthInfo: The authentication information. Optional when creating an
 	// HTTP check; defaults to empty.
 	AuthInfo *BasicAuthentication `json:"authInfo,omitempty"`
 
-	// Headers: The list of headers to send as part of the uptime check
+	// Headers: The list of headers to send as part of the Uptime check
 	// request. If two headers have the same key and different values, they
 	// should be entered as a single header, with the value being a
 	// comma-separated list of all the desired values as described at
@@ -1724,28 +1731,30 @@ type HttpCheck struct {
 	// information. Encryption should be specified for any headers related
 	// to authentication that you do not wish to be seen when retrieving the
 	// configuration. The server will be responsible for encrypting the
-	// headers. On Get/List calls, if mask_headers is set to True then the
+	// headers. On Get/List calls, if mask_headers is set to true then the
 	// headers will be obscured with ******.
 	MaskHeaders bool `json:"maskHeaders,omitempty"`
 
-	// Path: The path to the page to run the check against. Will be combined
-	// with the host (specified within the MonitoredResource) and port to
-	// construct the full URL. Optional (defaults to "/"). If the provided
-	// path does not begin with "/", it will be prepended automatically.
+	// Path: Optional (defaults to "/"). The path to the page against which
+	// to run the check. Will be combined with the host (specified within
+	// the monitored_resource) and port to construct the full URL. If the
+	// provided path does not begin with "/", a "/" will be prepended
+	// automatically.
 	Path string `json:"path,omitempty"`
 
-	// Port: The port to the page to run the check against. Will be combined
-	// with host (specified within the MonitoredResource) and path to
-	// construct the full URL. Optional (defaults to 80 without SSL, or 443
-	// with SSL).
+	// Port: Optional (defaults to 80 when use_ssl is false, and 443 when
+	// use_ssl is true). The TCP port on the HTTP server against which to
+	// run the check. Will be combined with host (specified within the
+	// monitored_resource) and path to construct the full URL.
 	Port int64 `json:"port,omitempty"`
 
 	// UseSsl: If true, use HTTPS instead of HTTP to run the check.
 	UseSsl bool `json:"useSsl,omitempty"`
 
-	// ValidateSsl: Boolean specifying whether to validate SSL certificates.
-	// Only applies to uptime_url checks. If use_ssl is false, setting this
-	// to true has no effect.
+	// ValidateSsl: Boolean specifying whether to include SSL certificate
+	// validation as a part of the Uptime check. Only applies to checks
+	// where monitored_resource is set to uptime_url. If use_ssl is false,
+	// setting validate_ssl to true has no effect.
 	ValidateSsl bool `json:"validateSsl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AuthInfo") to
@@ -1771,7 +1780,7 @@ func (s *HttpCheck) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// InternalChecker: An internal checker allows uptime checks to run on
+// InternalChecker: An internal checker allows Uptime checks to run on
 // private/internal GCP resources.
 type InternalChecker struct {
 	// DisplayName: The checker's human-readable name. The display name
@@ -1779,23 +1788,23 @@ type InternalChecker struct {
 	// easier to identify; however, uniqueness is not enforced.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// GcpZone: The GCP zone the uptime check should egress from. Only
-	// respected for internal uptime checks, where internal_network is
+	// GcpZone: The GCP zone the Uptime check should egress from. Only
+	// respected for internal Uptime checks, where internal_network is
 	// specified.
 	GcpZone string `json:"gcpZone,omitempty"`
 
 	// Name: A unique resource name for this InternalChecker. The format
-	// is:projects/[PROJECT_ID]/internalCheckers/[INTERNAL_CHECKER_ID].PROJEC
-	// T_ID is the stackdriver workspace project for the uptime check config
-	// associated with the internal checker.
+	// is:projects/[PROJECT_ID]/internalCheckers/[INTERNAL_CHECKER_ID].[PROJE
+	// CT_ID] is the Stackdriver Workspace project for the Uptime check
+	// config associated with the internal checker.
 	Name string `json:"name,omitempty"`
 
 	// Network: The GCP VPC network (https://cloud.google.com/vpc/docs/vpc)
 	// where the internal resource lives (ex: "default").
 	Network string `json:"network,omitempty"`
 
-	// PeerProjectId: The GCP project_id where the internal checker lives.
-	// Not necessary the same as the workspace project.
+	// PeerProjectId: The GCP project ID where the internal checker lives.
+	// Not necessary the same as the Workspace project.
 	PeerProjectId string `json:"peerProjectId,omitempty"`
 
 	// State: The current operational state of the internal checker.
@@ -1806,12 +1815,16 @@ type InternalChecker struct {
 	//   "CREATING" - The checker is being created, provisioned, and
 	// configured. A checker in this state can be returned by
 	// ListInternalCheckers or GetInternalChecker, as well as by examining
-	// the longrunning.Operation that created it.
+	// the long running Operation
+	// (https://cloud.google.com/apis/design/design_patterns#long_running_ope
+	// rations) that created it.
 	//   "RUNNING" - The checker is running and available for use. A checker
 	// in this state can be returned by ListInternalCheckers or
-	// GetInternalChecker as well as by examining the longrunning.Operation
-	// that created it. If a checker is being torn down, it is neither
-	// visible nor usable, so there is no "deleting" or "down" state.
+	// GetInternalChecker as well as by examining the long running Operation
+	// (https://cloud.google.com/apis/design/design_patterns#long_running_ope
+	// rations) that created it. If a checker is being torn down, it is
+	// neither visible nor usable, so there is no "deleting" or "down"
+	// state.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -2259,11 +2272,11 @@ type ListUptimeCheckConfigsResponse struct {
 	// call (in the request message's page_token field).
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// TotalSize: The total number of uptime check configurations for the
+	// TotalSize: The total number of Uptime check configurations for the
 	// project, irrespective of any pagination.
 	TotalSize int64 `json:"totalSize,omitempty"`
 
-	// UptimeCheckConfigs: The returned uptime check configurations.
+	// UptimeCheckConfigs: The returned Uptime check configurations.
 	UptimeCheckConfigs []*UptimeCheckConfig `json:"uptimeCheckConfigs,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3355,7 +3368,8 @@ func (s *Range) UnmarshalJSON(data []byte) error {
 // being monitored.
 type ResourceGroup struct {
 	// GroupId: The group of resources being monitored. Should be only the
-	// group_id, not projects/<project_id>/groups/<group_id>.
+	// [GROUP_ID], and not the full-path
+	// projects/[PROJECT_ID]/groups/[GROUP_ID].
 	GroupId string `json:"groupId,omitempty"`
 
 	// ResourceType: The resource type of the group members.
@@ -3508,11 +3522,11 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TcpCheck: Information required for a TCP uptime check request.
+// TcpCheck: Information required for a TCP Uptime check request.
 type TcpCheck struct {
-	// Port: The port to the page to run the check against. Will be combined
-	// with host (specified within the MonitoredResource) to construct the
-	// full URL. Required.
+	// Port: The TCP port on the server against which to run the check. Will
+	// be combined with host (specified within the monitored_resource) to
+	// construct the full URL. Required.
 	Port int64 `json:"port,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Port") to
@@ -3835,14 +3849,15 @@ func (s *TypedValue) UnmarshalJSON(data []byte) error {
 // UptimeCheckConfig: This message configures which resources and
 // services to monitor for availability.
 type UptimeCheckConfig struct {
-	// ContentMatchers: The expected content on the page the check is run
-	// against. Currently, only the first entry in the list is supported,
-	// and other entries will be ignored. The server will look for an exact
-	// match of the string in the page response's content. This field is
-	// optional and should only be specified if a content match is required.
+	// ContentMatchers: The content that is expected to appear in the data
+	// returned by the target server against which the check is run.
+	// Currently, only the first entry in the content_matchers list is
+	// supported, and additional entries will be ignored. This field is
+	// optional and should only be specified if a content match is required
+	// as part of the/ Uptime check.
 	ContentMatchers []*ContentMatcher `json:"contentMatchers,omitempty"`
 
-	// DisplayName: A human-friendly name for the uptime check
+	// DisplayName: A human-friendly name for the Uptime check
 	// configuration. The display name should be unique within a Stackdriver
 	// Workspace in order to make it easier to identify; however, uniqueness
 	// is not enforced. Required.
@@ -3855,24 +3870,25 @@ type UptimeCheckConfig struct {
 	// InternalCheckers: The internal checkers that this check will egress
 	// from. If is_internal is true and this list is empty, the check will
 	// egress from all the InternalCheckers configured for the project that
-	// owns this CheckConfig.
+	// owns this UptimeCheckConfig.
 	InternalCheckers []*InternalChecker `json:"internalCheckers,omitempty"`
 
 	// MonitoredResource: The monitored resource
 	// (https://cloud.google.com/monitoring/api/resources) associated with
 	// the configuration. The following monitored resource types are
-	// supported for uptime checks:  uptime_url  gce_instance  gae_app
-	// aws_ec2_instance  aws_elb_load_balancer
+	// supported for Uptime checks:  uptime_url,  gce_instance,  gae_app,
+	// aws_ec2_instance,  aws_elb_load_balancer
 	MonitoredResource *MonitoredResource `json:"monitoredResource,omitempty"`
 
-	// Name: A unique resource name for this UptimeCheckConfig. The format
+	// Name: A unique resource name for this Uptime check configuration. The
+	// format
 	// is:projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].This
-	// field should be omitted when creating the uptime check configuration;
+	// field should be omitted when creating the Uptime check configuration;
 	// on create, the resource name is assigned by the server and included
 	// in the response.
 	Name string `json:"name,omitempty"`
 
-	// Period: How often, in seconds, the uptime check is performed.
+	// Period: How often, in seconds, the Uptime check is performed.
 	// Currently, the only supported values are 60s (1 minute), 300s (5
 	// minutes), 600s (10 minutes), and 900s (15 minutes). Optional,
 	// defaults to 60s.
@@ -3883,14 +3899,13 @@ type UptimeCheckConfig struct {
 
 	// SelectedRegions: The list of regions from which the check will be
 	// run. Some regions contain one location, and others contain more than
-	// one. If this field is specified, enough regions to include a minimum
-	// of 3 locations must be provided, or an error message is returned. Not
-	// specifying this field will result in uptime checks running from all
-	// regions.
+	// one. If this field is specified, enough regions must be provided to
+	// include a minimum of 3 locations. Not specifying this field will
+	// result in Uptime checks running from all available regions.
 	//
 	// Possible values:
 	//   "REGION_UNSPECIFIED" - Default value if no region is specified.
-	// Will result in uptime checks running from all regions.
+	// Will result in Uptime checks running from all regions.
 	//   "USA" - Allows checks to run from locations within the United
 	// States of America.
 	//   "EUROPE" - Allows checks to run from locations within the continent
@@ -3939,12 +3954,12 @@ func (s *UptimeCheckConfig) MarshalJSON() ([]byte, error) {
 // UptimeCheckIp: Contains the region, location, and list of IP
 // addresses where checkers in the location run from.
 type UptimeCheckIp struct {
-	// IpAddress: The IP address from which the uptime check originates.
-	// This is a full IP address (not an IP address range). Most IP
-	// addresses, as of this publication, are in IPv4 format; however, one
-	// should not rely on the IP addresses being in IPv4 format indefinitely
-	// and should support interpreting this field in either IPv4 or IPv6
-	// format.
+	// IpAddress: The IP address from which the Uptime check originates.
+	// This is a fully specified IP address (not an IP address range). Most
+	// IP addresses, as of this publication, are in IPv4 format; however,
+	// one should not rely on the IP addresses being in IPv4 format
+	// indefinitely, and should support interpreting this field in either
+	// IPv4 or IPv6 format.
 	IpAddress string `json:"ipAddress,omitempty"`
 
 	// Location: A more specific location within the region that typically
@@ -3957,7 +3972,7 @@ type UptimeCheckIp struct {
 	//
 	// Possible values:
 	//   "REGION_UNSPECIFIED" - Default value if no region is specified.
-	// Will result in uptime checks running from all regions.
+	// Will result in Uptime checks running from all regions.
 	//   "USA" - Allows checks to run from locations within the United
 	// States of America.
 	//   "EUROPE" - Allows checks to run from locations within the continent
@@ -4072,7 +4087,7 @@ func (c *ProjectsAlertPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4211,7 +4226,7 @@ func (c *ProjectsAlertPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4353,7 +4368,7 @@ func (c *ProjectsAlertPoliciesGetCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4533,7 +4548,7 @@ func (c *ProjectsAlertPoliciesListCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4739,7 +4754,7 @@ func (c *ProjectsAlertPoliciesPatchCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4889,7 +4904,7 @@ func (c *ProjectsCollectdTimeSeriesCreateCall) Header() http.Header {
 
 func (c *ProjectsCollectdTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5038,7 +5053,7 @@ func (c *ProjectsGroupsCreateCall) Header() http.Header {
 
 func (c *ProjectsGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5191,7 +5206,7 @@ func (c *ProjectsGroupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5338,7 +5353,7 @@ func (c *ProjectsGroupsGetCall) Header() http.Header {
 
 func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5530,7 +5545,7 @@ func (c *ProjectsGroupsListCall) Header() http.Header {
 
 func (c *ProjectsGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5722,7 +5737,7 @@ func (c *ProjectsGroupsUpdateCall) Header() http.Header {
 
 func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5920,7 +5935,7 @@ func (c *ProjectsGroupsMembersListCall) Header() http.Header {
 
 func (c *ProjectsGroupsMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6107,7 +6122,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6248,7 +6263,7 @@ func (c *ProjectsMetricDescriptorsDeleteCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6391,7 +6406,7 @@ func (c *ProjectsMetricDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6566,7 +6581,7 @@ func (c *ProjectsMetricDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6751,7 +6766,7 @@ func (c *ProjectsMonitoredResourceDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsMonitoredResourceDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6926,7 +6941,7 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsMonitoredResourceDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7114,7 +7129,7 @@ func (c *ProjectsNotificationChannelDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7278,7 +7293,7 @@ func (c *ProjectsNotificationChannelDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7451,7 +7466,7 @@ func (c *ProjectsNotificationChannelsCreateCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7600,7 +7615,7 @@ func (c *ProjectsNotificationChannelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7752,7 +7767,7 @@ func (c *ProjectsNotificationChannelsGetCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7909,7 +7924,7 @@ func (c *ProjectsNotificationChannelsGetVerificationCodeCall) Header() http.Head
 
 func (c *ProjectsNotificationChannelsGetVerificationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8097,7 +8112,7 @@ func (c *ProjectsNotificationChannelsListCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8284,7 +8299,7 @@ func (c *ProjectsNotificationChannelsPatchCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8433,7 +8448,7 @@ func (c *ProjectsNotificationChannelsSendVerificationCodeCall) Header() http.Hea
 
 func (c *ProjectsNotificationChannelsSendVerificationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8576,7 +8591,7 @@ func (c *ProjectsNotificationChannelsVerifyCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsVerifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8720,7 +8735,7 @@ func (c *ProjectsTimeSeriesCreateCall) Header() http.Header {
 
 func (c *ProjectsTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9038,7 +9053,7 @@ func (c *ProjectsTimeSeriesListCall) Header() http.Header {
 
 func (c *ProjectsTimeSeriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9262,7 +9277,7 @@ type ProjectsUptimeCheckConfigsCreateCall struct {
 	header_           http.Header
 }
 
-// Create: Creates a new uptime check configuration.
+// Create: Creates a new Uptime check configuration.
 func (r *ProjectsUptimeCheckConfigsService) Create(parent string, uptimecheckconfig *UptimeCheckConfig) *ProjectsUptimeCheckConfigsCreateCall {
 	c := &ProjectsUptimeCheckConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9297,7 +9312,7 @@ func (c *ProjectsUptimeCheckConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9361,7 +9376,7 @@ func (c *ProjectsUptimeCheckConfigsCreateCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new uptime check configuration.",
+	//   "description": "Creates a new Uptime check configuration.",
 	//   "flatPath": "v3/projects/{projectsId}/uptimeCheckConfigs",
 	//   "httpMethod": "POST",
 	//   "id": "monitoring.projects.uptimeCheckConfigs.create",
@@ -9370,7 +9385,7 @@ func (c *ProjectsUptimeCheckConfigsCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The project in which to create the uptime check. The format  is projects/[PROJECT_ID].",
+	//       "description": "The project in which to create the Uptime check. The format  is projects/[PROJECT_ID].",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -9402,8 +9417,8 @@ type ProjectsUptimeCheckConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an uptime check configuration. Note that this method
-// will fail if the uptime check configuration is referenced by an alert
+// Delete: Deletes an Uptime check configuration. Note that this method
+// will fail if the Uptime check configuration is referenced by an alert
 // policy or other dependent configs that would be rendered invalid by
 // the deletion.
 func (r *ProjectsUptimeCheckConfigsService) Delete(name string) *ProjectsUptimeCheckConfigsDeleteCall {
@@ -9439,7 +9454,7 @@ func (c *ProjectsUptimeCheckConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9498,7 +9513,7 @@ func (c *ProjectsUptimeCheckConfigsDeleteCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an uptime check configuration. Note that this method will fail if the uptime check configuration is referenced by an alert policy or other dependent configs that would be rendered invalid by the deletion.",
+	//   "description": "Deletes an Uptime check configuration. Note that this method will fail if the Uptime check configuration is referenced by an alert policy or other dependent configs that would be rendered invalid by the deletion.",
 	//   "flatPath": "v3/projects/{projectsId}/uptimeCheckConfigs/{uptimeCheckConfigsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "monitoring.projects.uptimeCheckConfigs.delete",
@@ -9507,7 +9522,7 @@ func (c *ProjectsUptimeCheckConfigsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The uptime check configuration to delete. The format  is projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].",
+	//       "description": "The Uptime check configuration to delete. The format  is projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/uptimeCheckConfigs/[^/]+$",
 	//       "required": true,
@@ -9537,7 +9552,7 @@ type ProjectsUptimeCheckConfigsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a single uptime check configuration.
+// Get: Gets a single Uptime check configuration.
 func (r *ProjectsUptimeCheckConfigsService) Get(name string) *ProjectsUptimeCheckConfigsGetCall {
 	c := &ProjectsUptimeCheckConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9581,7 +9596,7 @@ func (c *ProjectsUptimeCheckConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9643,7 +9658,7 @@ func (c *ProjectsUptimeCheckConfigsGetCall) Do(opts ...googleapi.CallOption) (*U
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a single uptime check configuration.",
+	//   "description": "Gets a single Uptime check configuration.",
 	//   "flatPath": "v3/projects/{projectsId}/uptimeCheckConfigs/{uptimeCheckConfigsId}",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.projects.uptimeCheckConfigs.get",
@@ -9652,7 +9667,7 @@ func (c *ProjectsUptimeCheckConfigsGetCall) Do(opts ...googleapi.CallOption) (*U
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The uptime check configuration to retrieve. The format  is projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].",
+	//       "description": "The Uptime check configuration to retrieve. The format  is projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/uptimeCheckConfigs/[^/]+$",
 	//       "required": true,
@@ -9683,8 +9698,8 @@ type ProjectsUptimeCheckConfigsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the existing valid uptime check configurations for the
-// project, leaving out any invalid configurations.
+// List: Lists the existing valid Uptime check configurations for the
+// project (leaving out any invalid configurations).
 func (r *ProjectsUptimeCheckConfigsService) List(parent string) *ProjectsUptimeCheckConfigsListCall {
 	c := &ProjectsUptimeCheckConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9747,7 +9762,7 @@ func (c *ProjectsUptimeCheckConfigsListCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9809,7 +9824,7 @@ func (c *ProjectsUptimeCheckConfigsListCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the existing valid uptime check configurations for the project, leaving out any invalid configurations.",
+	//   "description": "Lists the existing valid Uptime check configurations for the project (leaving out any invalid configurations).",
 	//   "flatPath": "v3/projects/{projectsId}/uptimeCheckConfigs",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.projects.uptimeCheckConfigs.list",
@@ -9829,7 +9844,7 @@ func (c *ProjectsUptimeCheckConfigsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The project whose uptime check configurations are listed. The format  is projects/[PROJECT_ID].",
+	//       "description": "The project whose Uptime check configurations are listed. The format  is projects/[PROJECT_ID].",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -9881,10 +9896,10 @@ type ProjectsUptimeCheckConfigsPatchCall struct {
 	header_           http.Header
 }
 
-// Patch: Updates an uptime check configuration. You can either replace
+// Patch: Updates an Uptime check configuration. You can either replace
 // the entire configuration with a new one or replace only certain
 // fields in the current configuration by specifying the fields to be
-// updated via "updateMask". Returns the updated configuration.
+// updated via updateMask. Returns the updated configuration.
 func (r *ProjectsUptimeCheckConfigsService) Patch(name string, uptimecheckconfig *UptimeCheckConfig) *ProjectsUptimeCheckConfigsPatchCall {
 	c := &ProjectsUptimeCheckConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9893,7 +9908,7 @@ func (r *ProjectsUptimeCheckConfigsService) Patch(name string, uptimecheckconfig
 }
 
 // UpdateMask sets the optional parameter "updateMask": If present, only
-// the listed fields in the current uptime check configuration are
+// the listed fields in the current Uptime check configuration are
 // updated with values from the new configuration. If this field is
 // empty, then the current configuration is completely replaced with the
 // new configuration.
@@ -9929,7 +9944,7 @@ func (c *ProjectsUptimeCheckConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9993,7 +10008,7 @@ func (c *ProjectsUptimeCheckConfigsPatchCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an uptime check configuration. You can either replace the entire configuration with a new one or replace only certain fields in the current configuration by specifying the fields to be updated via \"updateMask\". Returns the updated configuration.",
+	//   "description": "Updates an Uptime check configuration. You can either replace the entire configuration with a new one or replace only certain fields in the current configuration by specifying the fields to be updated via updateMask. Returns the updated configuration.",
 	//   "flatPath": "v3/projects/{projectsId}/uptimeCheckConfigs/{uptimeCheckConfigsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "monitoring.projects.uptimeCheckConfigs.patch",
@@ -10002,14 +10017,14 @@ func (c *ProjectsUptimeCheckConfigsPatchCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "A unique resource name for this UptimeCheckConfig. The format is:projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].This field should be omitted when creating the uptime check configuration; on create, the resource name is assigned by the server and included in the response.",
+	//       "description": "A unique resource name for this Uptime check configuration. The format is:projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].This field should be omitted when creating the Uptime check configuration; on create, the resource name is assigned by the server and included in the response.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/uptimeCheckConfigs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Optional. If present, only the listed fields in the current uptime check configuration are updated with values from the new configuration. If this field is empty, then the current configuration is completely replaced with the new configuration.",
+	//       "description": "Optional. If present, only the listed fields in the current Uptime check configuration are updated with values from the new configuration. If this field is empty, then the current configuration is completely replaced with the new configuration.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -10040,7 +10055,7 @@ type UptimeCheckIpsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns the list of IPs that checkers run from
+// List: Returns the list of IP addresses that checkers run from
 func (r *UptimeCheckIpsService) List() *UptimeCheckIpsListCall {
 	c := &UptimeCheckIpsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -10103,7 +10118,7 @@ func (c *UptimeCheckIpsListCall) Header() http.Header {
 
 func (c *UptimeCheckIpsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10162,7 +10177,7 @@ func (c *UptimeCheckIpsListCall) Do(opts ...googleapi.CallOption) (*ListUptimeCh
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the list of IPs that checkers run from",
+	//   "description": "Returns the list of IP addresses that checkers run from",
 	//   "flatPath": "v3/uptimeCheckIps",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.uptimeCheckIps.list",

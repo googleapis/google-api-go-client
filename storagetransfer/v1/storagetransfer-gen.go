@@ -983,33 +983,58 @@ type ResumeTransferOperationRequest struct {
 
 // Schedule: Transfers can be scheduled to recur or to run just once.
 type Schedule struct {
-	// ScheduleEndDate: The last day the recurring transfer will be run. If
-	// `scheduleEndDate`
-	// is the same as `scheduleStartDate`, the transfer will be executed
-	// only
-	// once.
+	// ScheduleEndDate: The last day a transfer runs. Date boundaries are
+	// determined relative to
+	// UTC time. A job will run once per 24 hours within the following
+	// guidelines:
+	//
+	// *   If `scheduleEndDate` and `scheduleStartDate` are the same and in
+	// the
+	//     future relative to UTC, the transfer is executed only one time.
+	// *   If `scheduleEndDate` is later than `scheduleStartDate` and
+	//     `scheduleEndDate` is in the future relative to UTC, the job will
+	//     run each day at `startTimeOfDay` through `scheduleEndDate`.
 	ScheduleEndDate *Date `json:"scheduleEndDate,omitempty"`
 
-	// ScheduleStartDate: Required. The first day the recurring transfer is
-	// scheduled to run. If
-	// `scheduleStartDate` is in the past, the transfer will run for the
-	// first
-	// time on the following day.
+	// ScheduleStartDate: Required. The start date of a transfer. Date
+	// boundaries are determined
+	// relative to UTC time. If `scheduleStartDate` and `startTimeOfDay` are
+	// in
+	// the past relative to the job's creation time, the transfer starts the
+	// day
+	// after you schedule the transfer request.
+	//
+	// Note: When starting jobs at or near midnight UTC it is possible
+	// that
+	// a job will start later than expected. For example, if you send an
+	// outbound
+	// request on June 1 one millisecond prior to midnight UTC and the
+	// Storage
+	// Transfer Service server receives the request on June 2, then it will
+	// create
+	// a TransferJob with `scheduleStartDate` set to June 2 and a
+	// `startTimeOfDay`
+	// set to midnight UTC. The first scheduled TransferOperation will take
+	// place
+	// on June 3 at midnight UTC.
 	ScheduleStartDate *Date `json:"scheduleStartDate,omitempty"`
 
-	// StartTimeOfDay: The time in UTC at which the transfer will be
-	// scheduled to start in a day.
-	// Transfers may start later than this time. If not specified, recurring
-	// and
-	// one-time transfers that are scheduled to run today will run
-	// immediately;
-	// recurring transfers that are scheduled to run on a future date will
-	// start
-	// at approximately midnight UTC on that date. Note that when
-	// configuring a
-	// transfer with the Cloud Platform Console, the transfer's start time
-	// in a
-	// day is specified in your local timezone.
+	// StartTimeOfDay: The time in UTC that a transfer job is scheduled to
+	// run. Transfers may
+	// start later than this time.
+	//
+	// If `startTimeOfDay` is not specified:
+	//
+	// *   One-time transfers run immediately.
+	// *   Recurring transfers run immediately, and each day at midnight
+	// UTC,
+	//     through `scheduleEndDate`.
+	//
+	// If `startTimeOfDay` is specified:
+	//
+	// *   One-time transfers run at the specified time.
+	// *   Recurring transfers run at the specified time each day, through
+	//     `scheduleEndDate`.
 	StartTimeOfDay *TimeOfDay `json:"startTimeOfDay,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ScheduleEndDate") to
@@ -1603,7 +1628,7 @@ func (c *GoogleServiceAccountsGetCall) Header() http.Header {
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1735,7 +1760,7 @@ func (c *TransferJobsCreateCall) Header() http.Header {
 
 func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1879,7 +1904,7 @@ func (c *TransferJobsGetCall) Header() http.Header {
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2059,7 +2084,7 @@ func (c *TransferJobsListCall) Header() http.Header {
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2223,7 +2248,7 @@ func (c *TransferJobsPatchCall) Header() http.Header {
 
 func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2363,7 +2388,7 @@ func (c *TransferOperationsCancelCall) Header() http.Header {
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2494,7 +2519,7 @@ func (c *TransferOperationsDeleteCall) Header() http.Header {
 
 func (c *TransferOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2639,7 +2664,7 @@ func (c *TransferOperationsGetCall) Header() http.Header {
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2814,7 +2839,7 @@ func (c *TransferOperationsListCall) Header() http.Header {
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2986,7 +3011,7 @@ func (c *TransferOperationsPauseCall) Header() http.Header {
 
 func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3126,7 +3151,7 @@ func (c *TransferOperationsResumeCall) Header() http.Header {
 
 func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-beta1 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

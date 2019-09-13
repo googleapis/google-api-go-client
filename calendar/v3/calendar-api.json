@@ -26,7 +26,7 @@
   "description": "Manipulates events and other calendar data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/google-apps/calendar/firstapp",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/2OMYwfrgYoo_mlwX0OWUGwIO9sM\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/pBLlVFuRXUL8z1AKbwcQNPAN0vA\"",
   "icons": {
     "x16": "http://www.google.com/images/icons/product/calendar-16.png",
     "x32": "http://www.google.com/images/icons/product/calendar-32.png"
@@ -1724,7 +1724,7 @@
       }
     }
   },
-  "revision": "20190903",
+  "revision": "20190910",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Acl": {
@@ -2522,7 +2522,7 @@
         },
         "privateCopy": {
           "default": "false",
-          "description": "Whether this is a private event copy where changes are not shared with other copies on other calendars. Optional. Immutable. The default is False.",
+          "description": "If set to True, Event propagation is disabled. Note that it is not the same thing as Private event properties. Optional. Immutable. The default is False.",
           "type": "boolean"
         },
         "recurrence": {

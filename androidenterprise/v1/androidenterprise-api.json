@@ -15,7 +15,7 @@
   "description": "Manages the deployment of apps to Android for Work users.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android/work/play/emm-api",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/FM_8jB_Nba90IkIzNz2nu5XOmo8\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/L-AhGJhsmFZsxcYEJTVEcsxDLzA\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -1600,7 +1600,7 @@
     "managedconfigurationssettings": {
       "methods": {
         "list": {
-          "description": "Lists all the managed configurations settings for the specified app. Only the ID and the name is set.",
+          "description": "Lists all the managed configurations settings for the specified app.",
           "httpMethod": "GET",
           "id": "androidenterprise.managedconfigurationssettings.list",
           "parameterOrder": [
@@ -2919,7 +2919,7 @@
       }
     }
   },
-  "revision": "20190731",
+  "revision": "20190908",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Administrator": {
@@ -3821,13 +3821,6 @@
           "description": "The last updated time of the managed configuration settings in milliseconds since 1970-01-01T00:00:00Z.",
           "format": "int64",
           "type": "string"
-        },
-        "managedProperty": {
-          "description": "The set of managed properties for this configuration.",
-          "items": {
-            "$ref": "ManagedProperty"
-          },
-          "type": "array"
         },
         "mcmId": {
           "description": "The ID of the managed configurations settings.",

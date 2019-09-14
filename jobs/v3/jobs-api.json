@@ -632,7 +632,7 @@
       }
     }
   },
-  "revision": "20190820",
+  "revision": "20190912",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {
@@ -2481,7 +2481,7 @@
             "FEATURED_JOB_SEARCH"
           ],
           "enumDescriptions": [
-            "The mode of the search method isn't specified.",
+            "The mode of the search method isn't specified. The default search\nbehavior is identical to JOB_SEARCH search behavior.",
             "The job search matches against all jobs, and featured jobs\n(jobs with promotionValue \u003e 0) are not specially handled.",
             "The job search matches only against featured jobs (jobs with a\npromotionValue \u003e 0). This method doesn't return any jobs having a\npromotionValue \u003c= 0. The search results order is determined by the\npromotionValue (jobs with a higher promotionValue are returned higher up\nin the search results), with relevance being used as a tiebreaker."
           ],

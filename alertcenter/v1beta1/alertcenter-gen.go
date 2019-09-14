@@ -524,6 +524,36 @@ func (s *AlertMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AppMakerSqlSetupNotification: Alerts from App Maker to notify admins
+// to set up default SQL instance.
+type AppMakerSqlSetupNotification struct {
+	// RequestInfo: List of applications with requests for default SQL set
+	// up.
+	RequestInfo []*RequestInfo `json:"requestInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequestInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequestInfo") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppMakerSqlSetupNotification) MarshalJSON() ([]byte, error) {
+	type NoMethod AppMakerSqlSetupNotification
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Attachment: Attachment with application-specific information about an
 // alert.
 type Attachment struct {
@@ -1378,6 +1408,46 @@ func (s *PhishingSpike) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RequestInfo: Requests for one application that needs default SQL
+// setup.
+type RequestInfo struct {
+	// AppDeveloperEmail: List of app developers who triggered notifications
+	// for above
+	// application.
+	AppDeveloperEmail []string `json:"appDeveloperEmail,omitempty"`
+
+	// AppKey: Required. The application that requires the SQL setup.
+	AppKey string `json:"appKey,omitempty"`
+
+	// NumberOfRequests: Required. Number of requests sent for this
+	// application to set up default
+	// SQL instance.
+	NumberOfRequests int64 `json:"numberOfRequests,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AppDeveloperEmail")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppDeveloperEmail") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RequestInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod RequestInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Settings: Customer-level settings.
 type Settings struct {
 	// Notifications: The list of notifications.
@@ -1652,7 +1722,7 @@ func (c *AlertsBatchDeleteCall) Header() http.Header {
 
 func (c *AlertsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1777,7 +1847,7 @@ func (c *AlertsBatchUndeleteCall) Header() http.Header {
 
 func (c *AlertsBatchUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1918,7 +1988,7 @@ func (c *AlertsDeleteCall) Header() http.Header {
 
 func (c *AlertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2074,7 +2144,7 @@ func (c *AlertsGetCall) Header() http.Header {
 
 func (c *AlertsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2233,7 +2303,7 @@ func (c *AlertsGetMetadataCall) Header() http.Header {
 
 func (c *AlertsGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2436,7 +2506,7 @@ func (c *AlertsListCall) Header() http.Header {
 
 func (c *AlertsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2615,7 +2685,7 @@ func (c *AlertsUndeleteCall) Header() http.Header {
 
 func (c *AlertsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2769,7 +2839,7 @@ func (c *AlertsFeedbackCreateCall) Header() http.Header {
 
 func (c *AlertsFeedbackCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2948,7 +3018,7 @@ func (c *AlertsFeedbackListCall) Header() http.Header {
 
 func (c *AlertsFeedbackListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3108,7 +3178,7 @@ func (c *V1beta1GetSettingsCall) Header() http.Header {
 
 func (c *V1beta1GetSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3243,7 +3313,7 @@ func (c *V1beta1UpdateSettingsCall) Header() http.Header {
 
 func (c *V1beta1UpdateSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190905")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/ugPuSsId9fnD9t-s6oo3nxhsqvg\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/AlOKP3-G9jebD1yWTiFZQR2LeHI\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -28988,7 +28988,7 @@
       }
     }
   },
-  "revision": "20190815",
+  "revision": "20190825",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -30100,7 +30100,7 @@
           "description": "[Output Only] shielded vm initial state stored on disk"
         },
         "source": {
-          "description": "Specifies a valid partial or full URL to an existing Persistent Disk resource. When creating a new instance, one of initializeParams.sourceImage or disks.source is required except for local SSD.\n\nIf desired, you can also attach existing non-root persistent disks using this property. This field is only applicable for persistent disks.\n\nNote that for InstanceTemplate, specify the disk name, not the URL for the disk.",
+          "description": "Specifies a valid partial or full URL to an existing Persistent Disk resource. When creating a new instance, one of initializeParams.sourceImage or initializeParams.sourceSnapshot or disks.source is required except for local SSD.\n\nIf desired, you can also attach existing non-root persistent disks using this property. This field is only applicable for persistent disks.\n\nNote that for InstanceTemplate, specify the disk name, not the URL for the disk.",
           "type": "string"
         },
         "type": {
@@ -30168,7 +30168,7 @@
           "type": "array"
         },
         "sourceImage": {
-          "description": "The source image to create this disk. When creating a new instance, one of initializeParams.sourceImage or disks.source is required except for local SSD.\n\nTo create a disk with one of the public operating system images, specify the image by its family name. For example, specify family/debian-9 to use the latest Debian 9 image:\nprojects/debian-cloud/global/images/family/debian-9\n\n\nAlternatively, use a specific version of a public operating system image:\nprojects/debian-cloud/global/images/debian-9-stretch-vYYYYMMDD\n\n\nTo create a disk with a custom image that you created, specify the image name in the following format:\nglobal/images/my-custom-image\n\n\nYou can also specify a custom image by its image family, which returns the latest version of the image in that family. Replace the image name with family/family-name:\nglobal/images/family/my-image-family\n\n\nIf the source image is deleted later, this field will not be set.",
+          "description": "The source image to create this disk. When creating a new instance, one of initializeParams.sourceImage or initializeParams.sourceSnapshot or disks.source is required except for local SSD.\n\nTo create a disk with one of the public operating system images, specify the image by its family name. For example, specify family/debian-9 to use the latest Debian 9 image:\nprojects/debian-cloud/global/images/family/debian-9\n\n\nAlternatively, use a specific version of a public operating system image:\nprojects/debian-cloud/global/images/debian-9-stretch-vYYYYMMDD\n\n\nTo create a disk with a custom image that you created, specify the image name in the following format:\nglobal/images/my-custom-image\n\n\nYou can also specify a custom image by its image family, which returns the latest version of the image in that family. Replace the image name with family/family-name:\nglobal/images/family/my-image-family\n\n\nIf the source image is deleted later, this field will not be set.",
           "type": "string"
         },
         "sourceImageEncryptionKey": {
@@ -30176,7 +30176,7 @@
           "description": "The customer-supplied encryption key of the source image. Required if the source image is protected by a customer-supplied encryption key.\n\nInstance templates do not store customer-supplied encryption keys, so you cannot create disks for instances in a managed instance group if the source images are encrypted with your own keys."
         },
         "sourceSnapshot": {
-          "description": "The source snapshot to create this disk. When creating a new instance, one of initializeParams.sourceSnapshot or disks.source is required except for local SSD.\n\nTo create a disk with a snapshot that you created, specify the snapshot name in the following format:\nglobal/snapshots/my-backup\n\n\nIf the source snapshot is deleted later, this field will not be set.",
+          "description": "The source snapshot to create this disk. When creating a new instance, one of initializeParams.sourceSnapshot or initializeParams.sourceImage or disks.source is required except for local SSD.\n\nTo create a disk with a snapshot that you created, specify the snapshot name in the following format:\nglobal/snapshots/my-backup\n\n\nIf the source snapshot is deleted later, this field will not be set.",
           "type": "string"
         },
         "sourceSnapshotEncryptionKey": {
@@ -32435,10 +32435,12 @@
             "GENERAL_PURPOSE",
             "GENERAL_PURPOSE_E2",
             "GENERAL_PURPOSE_N2",
+            "GENERAL_PURPOSE_N2D",
             "MEMORY_OPTIMIZED",
             "TYPE_UNSPECIFIED"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -35901,6 +35903,18 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "healthStatusAggregationPolicy": {
+          "description": "Optional. Policy for how the results from multiple health checks for the same endpoint are aggregated. Defaults to NO_AGGREGATION if unspecified.  \n- NO_AGGREGATION. An EndpointHealth message is returned for each backend in the health check service. \n- AND. If any backend's health check reports UNHEALTHY, then UNHEALTHY is the HealthState of the entire health check service. If all backend's are healthy, the HealthState of the health check service is HEALTHY. .",
+          "enum": [
+            "AND",
+            "NO_AGGREGATION"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
         },
         "healthStatusAggregationStrategy": {
           "description": "Policy for how the results from multiple health checks for the same endpoint are aggregated.  \n- NO_AGGREGATION. An EndpointHealth message is returned for each backend in the health check service. \n- AND. If any backend's health check reports UNHEALTHY, then UNHEALTHY is the HealthState of the entire health check service. If all backend's are healthy, the HealthState of the health check service is HEALTHY. .",
@@ -44548,9 +44562,11 @@
         "mode": {
           "enum": [
             "MODE_UNSPECIFIED",
+            "OFF",
             "ON"
           ],
           "enumDescriptions": [
+            "",
             "",
             ""
           ],
@@ -57142,7 +57158,7 @@
       "type": "object"
     },
     "TargetTcpProxy": {
-      "description": "Represents a Target TCP Proxy resource.\n\nA target TCP proxy is a component of a TCP Proxy load balancer. Global forwarding rules reference ta target TCP proxy, and the target proxy then references an external backend service. For more information, read TCP Proxy Load Balancing Concepts. (== resource_for beta.targetTcpProxies ==) (== resource_for v1.targetTcpProxies ==)",
+      "description": "Represents a Target TCP Proxy resource.\n\nA target TCP proxy is a component of a TCP Proxy load balancer. Global forwarding rules reference target TCP proxy, and the target proxy then references an external backend service. For more information, read TCP Proxy Load Balancing Concepts. (== resource_for beta.targetTcpProxies ==) (== resource_for v1.targetTcpProxies ==)",
       "id": "TargetTcpProxy",
       "properties": {
         "creationTimestamp": {

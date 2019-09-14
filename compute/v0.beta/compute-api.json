@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/HZSqvT0GHTZ7xrpToB8aYnQd7zw\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/wZyT8MIfp351OutnEAl-Lg268qU\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -5591,6 +5591,53 @@
           "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/applyUpdatesToInstances",
           "request": {
             "$ref": "InstanceGroupManagersApplyUpdatesRequest"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "createInstances": {
+          "description": "Creates instances with per-instance configs in this managed instance group. Instances are created using the current instance template. The create instances operation is marked DONE if the createInstances request is successful. The underlying actions take additional time. You must separately verify the status of the creating or actions with the listmanagedinstances method.",
+          "httpMethod": "POST",
+          "id": "compute.instanceGroupManagers.createInstances",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "instanceGroupManager"
+          ],
+          "parameters": {
+            "instanceGroupManager": {
+              "description": "The name of the managed instance group. It should conform to RFC1035.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            },
+            "zone": {
+              "description": "The name of the zone where the managed instance group is located. It should conform to RFC1035.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/createInstances",
+          "request": {
+            "$ref": "InstanceGroupManagersCreateInstancesRequest"
           },
           "response": {
             "$ref": "Operation"
@@ -14812,6 +14859,53 @@
           "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/applyUpdatesToInstances",
           "request": {
             "$ref": "RegionInstanceGroupManagersApplyUpdatesRequest"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "createInstances": {
+          "description": "Creates instances with per-instance configs in this regional managed instance group. Instances are created using the current instance template. The create instances operation is marked DONE if the createInstances request is successful. The underlying actions take additional time. You must separately verify the status of the creating or actions with the listmanagedinstances method.",
+          "httpMethod": "POST",
+          "id": "compute.regionInstanceGroupManagers.createInstances",
+          "parameterOrder": [
+            "project",
+            "region",
+            "instanceGroupManager"
+          ],
+          "parameters": {
+            "instanceGroupManager": {
+              "description": "The name of the managed instance group. It should conform to RFC1035.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "The name of the region where the managed instance group is located. It should conform to RFC1035.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/createInstances",
+          "request": {
+            "$ref": "RegionInstanceGroupManagersCreateInstancesRequest"
           },
           "response": {
             "$ref": "Operation"
@@ -24263,7 +24357,7 @@
       }
     }
   },
-  "revision": "20190815",
+  "revision": "20190825",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -24801,9 +24895,11 @@
             "DNS_RESOLVER",
             "GCE_ENDPOINT",
             "NAT_AUTO",
+            "SHARED_LOADBALANCER_VIP",
             "VPC_PEERING"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -25326,7 +25422,7 @@
           "type": "string"
         },
         "source": {
-          "description": "Specifies a valid partial or full URL to an existing Persistent Disk resource. When creating a new instance, one of initializeParams.sourceImage or disks.source is required except for local SSD.\n\nIf desired, you can also attach existing non-root persistent disks using this property. This field is only applicable for persistent disks.\n\nNote that for InstanceTemplate, specify the disk name, not the URL for the disk.",
+          "description": "Specifies a valid partial or full URL to an existing Persistent Disk resource. When creating a new instance, one of initializeParams.sourceImage or initializeParams.sourceSnapshot or disks.source is required except for local SSD.\n\nIf desired, you can also attach existing non-root persistent disks using this property. This field is only applicable for persistent disks.\n\nNote that for InstanceTemplate, specify the disk name, not the URL for the disk.",
           "type": "string"
         },
         "type": {
@@ -25387,7 +25483,7 @@
           "type": "array"
         },
         "sourceImage": {
-          "description": "The source image to create this disk. When creating a new instance, one of initializeParams.sourceImage or disks.source is required except for local SSD.\n\nTo create a disk with one of the public operating system images, specify the image by its family name. For example, specify family/debian-9 to use the latest Debian 9 image:\nprojects/debian-cloud/global/images/family/debian-9\n\n\nAlternatively, use a specific version of a public operating system image:\nprojects/debian-cloud/global/images/debian-9-stretch-vYYYYMMDD\n\n\nTo create a disk with a custom image that you created, specify the image name in the following format:\nglobal/images/my-custom-image\n\n\nYou can also specify a custom image by its image family, which returns the latest version of the image in that family. Replace the image name with family/family-name:\nglobal/images/family/my-image-family\n\n\nIf the source image is deleted later, this field will not be set.",
+          "description": "The source image to create this disk. When creating a new instance, one of initializeParams.sourceImage or initializeParams.sourceSnapshot or disks.source is required except for local SSD.\n\nTo create a disk with one of the public operating system images, specify the image by its family name. For example, specify family/debian-9 to use the latest Debian 9 image:\nprojects/debian-cloud/global/images/family/debian-9\n\n\nAlternatively, use a specific version of a public operating system image:\nprojects/debian-cloud/global/images/debian-9-stretch-vYYYYMMDD\n\n\nTo create a disk with a custom image that you created, specify the image name in the following format:\nglobal/images/my-custom-image\n\n\nYou can also specify a custom image by its image family, which returns the latest version of the image in that family. Replace the image name with family/family-name:\nglobal/images/family/my-image-family\n\n\nIf the source image is deleted later, this field will not be set.",
           "type": "string"
         },
         "sourceImageEncryptionKey": {
@@ -25395,7 +25491,7 @@
           "description": "The customer-supplied encryption key of the source image. Required if the source image is protected by a customer-supplied encryption key.\n\nInstance templates do not store customer-supplied encryption keys, so you cannot create disks for instances in a managed instance group if the source images are encrypted with your own keys."
         },
         "sourceSnapshot": {
-          "description": "The source snapshot to create this disk. When creating a new instance, one of initializeParams.sourceSnapshot or disks.source is required except for local SSD.\n\nTo create a disk with a snapshot that you created, specify the snapshot name in the following format:\nglobal/snapshots/my-backup\n\n\nIf the source snapshot is deleted later, this field will not be set.",
+          "description": "The source snapshot to create this disk. When creating a new instance, one of initializeParams.sourceSnapshot or initializeParams.sourceImage or disks.source is required except for local SSD.\n\nTo create a disk with a snapshot that you created, specify the snapshot name in the following format:\nglobal/snapshots/my-backup\n\n\nIf the source snapshot is deleted later, this field will not be set.",
           "type": "string"
         },
         "sourceSnapshotEncryptionKey": {
@@ -27364,10 +27460,12 @@
             "GENERAL_PURPOSE",
             "GENERAL_PURPOSE_E2",
             "GENERAL_PURPOSE_N2",
+            "GENERAL_PURPOSE_N2D",
             "MEMORY_OPTIMIZED",
             "TYPE_UNSPECIFIED"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -33175,6 +33273,20 @@
       },
       "type": "object"
     },
+    "InstanceGroupManagersCreateInstancesRequest": {
+      "description": "InstanceGroupManagers.createInstances",
+      "id": "InstanceGroupManagersCreateInstancesRequest",
+      "properties": {
+        "instances": {
+          "description": "[Required] List of specifications of per-instance configs.",
+          "items": {
+            "$ref": "PerInstanceConfig"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "InstanceGroupManagersDeleteInstancesRequest": {
       "id": "InstanceGroupManagersDeleteInstancesRequest",
       "properties": {
@@ -36445,6 +36557,13 @@
           "description": "[Output Only] The URL of the instance. The URL can exist even if the instance has not yet been created.",
           "type": "string"
         },
+        "instanceHealth": {
+          "description": "[Output Only] Health state of the instance per health-check.",
+          "items": {
+            "$ref": "ManagedInstanceInstanceHealth"
+          },
+          "type": "array"
+        },
         "instanceStatus": {
           "description": "[Output Only] The status of the instance. This field is empty when the instance does not exist.",
           "enum": [
@@ -36478,6 +36597,34 @@
         "version": {
           "$ref": "ManagedInstanceVersion",
           "description": "[Output Only] Intended version of this instance."
+        }
+      },
+      "type": "object"
+    },
+    "ManagedInstanceInstanceHealth": {
+      "id": "ManagedInstanceInstanceHealth",
+      "properties": {
+        "detailedHealthState": {
+          "description": "[Output Only] The current detailed instance health state.",
+          "enum": [
+            "DRAINING",
+            "HEALTHY",
+            "TIMEOUT",
+            "UNHEALTHY",
+            "UNKNOWN"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "healthCheck": {
+          "description": "[Output Only] The URL for the health check that verifies whether the instance is healthy.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -39654,6 +39801,21 @@
       },
       "type": "object"
     },
+    "PerInstanceConfig": {
+      "id": "PerInstanceConfig",
+      "properties": {
+        "fingerprint": {
+          "description": "Fingerprint of this per-instance config. This field may be used in optimistic locking. It will be ignored when inserting a per-instance config. An up-to-date fingerprint must be provided in order to update an existing per-instance config or the field needs to be unset.",
+          "format": "byte",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the per-instance config and the corresponding instance. Serves as a merge key during UpdatePerInstanceConfigs operation, i.e. if per-instance config with the same name exists then it will be updated, otherwise a new one will be created for the VM instance with the same name. An attempt to create a per-instance config for a VM instance that either doesn't exist or is not part of the group will result in a failure.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Policy": {
       "description": "Defines an Identity and Access Management (IAM) policy. It is used to specify access control policies for Cloud Platform resources.\n\n\n\nA `Policy` consists of a list of `bindings`. A `binding` binds a list of `members` to a `role`, where the members can be user accounts, Google groups, Google domains, and service accounts. A `role` is a named list of permissions defined by IAM.\n\n**JSON Example**\n\n{ \"bindings\": [ { \"role\": \"roles/owner\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-other-app@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/viewer\", \"members\": [\"user:sean@example.com\"] } ] }\n\n**YAML Example**\n\nbindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-other-app@appspot.gserviceaccount.com role: roles/owner - members: - user:sean@example.com role: roles/viewer\n\n\n\nFor a description of IAM and its features, see the [IAM developer's guide](https://cloud.google.com/iam/docs).",
       "id": "Policy",
@@ -40690,6 +40852,20 @@
             ""
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RegionInstanceGroupManagersCreateInstancesRequest": {
+      "description": "RegionInstanceGroupManagers.createInstances",
+      "id": "RegionInstanceGroupManagersCreateInstancesRequest",
+      "properties": {
+        "instances": {
+          "description": "[Required] List of specifications of per-instance configs.",
+          "items": {
+            "$ref": "PerInstanceConfig"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -47564,7 +47740,7 @@
       "type": "object"
     },
     "TargetTcpProxy": {
-      "description": "Represents a Target TCP Proxy resource.\n\nA target TCP proxy is a component of a TCP Proxy load balancer. Global forwarding rules reference ta target TCP proxy, and the target proxy then references an external backend service. For more information, read TCP Proxy Load Balancing Concepts. (== resource_for beta.targetTcpProxies ==) (== resource_for v1.targetTcpProxies ==)",
+      "description": "Represents a Target TCP Proxy resource.\n\nA target TCP proxy is a component of a TCP Proxy load balancer. Global forwarding rules reference target TCP proxy, and the target proxy then references an external backend service. For more information, read TCP Proxy Load Balancing Concepts. (== resource_for beta.targetTcpProxies ==) (== resource_for v1.targetTcpProxies ==)",
       "id": "TargetTcpProxy",
       "properties": {
         "creationTimestamp": {

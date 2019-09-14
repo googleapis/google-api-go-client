@@ -2227,21 +2227,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "healthcare:v1alpha2",
-      "name": "healthcare",
-      "version": "v1alpha2",
-      "title": "Cloud Healthcare API",
-      "description": "Manage, store, and access healthcare data in Google Cloud Platform.",
-      "discoveryRestUrl": "https://healthcare.googleapis.com/$discovery/rest?version=v1alpha2",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/healthcare",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "healthcare:v1beta1",
       "name": "healthcare",
       "version": "v1beta1",
@@ -2253,7 +2238,7 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/healthcare",
-      "preferred": false
+      "preferred": true
     },
     {
       "kind": "discovery#directoryItem",

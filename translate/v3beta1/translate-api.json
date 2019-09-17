@@ -18,6 +18,7 @@
   "description": "Integrates text translation into your website or application.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/translate/docs/quickstarts",
+  "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -685,7 +686,7 @@
       }
     }
   },
-  "revision": "20190831",
+  "revision": "20190906",
   "rootUrl": "https://translation.googleapis.com/",
   "schemas": {
     "BatchTranslateTextRequest": {

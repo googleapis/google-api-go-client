@@ -413,6 +413,42 @@ type SinksService struct {
 	s *Service
 }
 
+// BigQueryOptions: Options that change functionality of a sink
+// exporting data to BigQuery.
+type BigQueryOptions struct {
+	// UsePartitionedTables: Optional. Whether to use BigQuery's partition
+	// tables. By default, Logging creates dated tables based on the log
+	// entries' timestamps, e.g. syslog_20170523. With partitioned tables
+	// the date suffix is no longer present and special query syntax has to
+	// be used instead. In both cases, tables are sharded based on UTC
+	// timezone.
+	UsePartitionedTables bool `json:"usePartitionedTables,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "UsePartitionedTables") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UsePartitionedTables") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BigQueryOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod BigQueryOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BucketOptions: BucketOptions describes the bucket boundaries used to
 // create a histogram for the distribution. The buckets can be in a
 // linear sequence, an exponential sequence, or each bucket can be
@@ -1565,6 +1601,10 @@ func (s *LogMetric) MarshalJSON() ([]byte, error) {
 // which log entries are exported. The sink must be created within a
 // project, organization, billing account, or folder.
 type LogSink struct {
+	// BigqueryOptions: Optional. Options that affect sinks exporting data
+	// to BigQuery.
+	BigqueryOptions *BigQueryOptions `json:"bigqueryOptions,omitempty"`
+
 	// CreateTime: Output only. The creation timestamp of the sink.This
 	// field may not be present for older sinks.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1644,7 +1684,7 @@ type LogSink struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "BigqueryOptions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1652,12 +1692,13 @@ type LogSink struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BigqueryOptions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2496,7 +2537,7 @@ func (c *BillingAccountsExclusionsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2635,7 +2676,7 @@ func (c *BillingAccountsExclusionsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2777,7 +2818,7 @@ func (c *BillingAccountsExclusionsGetCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2943,7 +2984,7 @@ func (c *BillingAccountsExclusionsListCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3125,7 +3166,7 @@ func (c *BillingAccountsExclusionsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3272,7 +3313,7 @@ func (c *BillingAccountsLogsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3397,15 +3438,6 @@ func (c *BillingAccountsLogsListCall) PageToken(pageToken string) *BillingAccoun
 	return c
 }
 
-// ResourceNames sets the optional parameter "resourceNames": Required
-// for Logging Data Model V2. The resource name that owns the logs:
-// "projects/PROJECT_ID"  "organizations/ORGANIZATION_ID"
-// "billingAccounts/BILLING_ACCOUNT_ID"  "folders/FOLDER_ID"
-func (c *BillingAccountsLogsListCall) ResourceNames(resourceNames ...string) *BillingAccountsLogsListCall {
-	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3443,7 +3475,7 @@ func (c *BillingAccountsLogsListCall) Header() http.Header {
 
 func (c *BillingAccountsLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3525,16 +3557,10 @@ func (c *BillingAccountsLogsListCall) Do(opts ...googleapi.CallOption) (*ListLog
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. To be deprecated in Logging Data Model V2.",
+	//       "description": "Required. The resource name that owns the logs:\n\"projects/[PROJECT_ID]\"\n\"organizations/[ORGANIZATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]\"\n\"folders/[FOLDER_ID]\"\n",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "resourceNames": {
-	//       "description": "Required for Logging Data Model V2. The resource name that owns the logs:  \"projects/PROJECT_ID\"  \"organizations/ORGANIZATION_ID\"  \"billingAccounts/BILLING_ACCOUNT_ID\"  \"folders/FOLDER_ID\"",
-	//       "location": "query",
-	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -3639,7 +3665,7 @@ func (c *BillingAccountsSinksCreateCall) Header() http.Header {
 
 func (c *BillingAccountsSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3784,7 +3810,7 @@ func (c *BillingAccountsSinksDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3926,7 +3952,7 @@ func (c *BillingAccountsSinksGetCall) Header() http.Header {
 
 func (c *BillingAccountsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4092,7 +4118,7 @@ func (c *BillingAccountsSinksListCall) Header() http.Header {
 
 func (c *BillingAccountsSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4296,7 +4322,7 @@ func (c *BillingAccountsSinksPatchCall) Header() http.Header {
 
 func (c *BillingAccountsSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4482,7 +4508,7 @@ func (c *BillingAccountsSinksUpdateCall) Header() http.Header {
 
 func (c *BillingAccountsSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4634,7 +4660,7 @@ func (c *EntriesListCall) Header() http.Header {
 
 func (c *EntriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4788,7 +4814,7 @@ func (c *EntriesWriteCall) Header() http.Header {
 
 func (c *EntriesWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4919,7 +4945,7 @@ func (c *ExclusionsCreateCall) Header() http.Header {
 
 func (c *ExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5058,7 +5084,7 @@ func (c *ExclusionsDeleteCall) Header() http.Header {
 
 func (c *ExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5200,7 +5226,7 @@ func (c *ExclusionsGetCall) Header() http.Header {
 
 func (c *ExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5366,7 +5392,7 @@ func (c *ExclusionsListCall) Header() http.Header {
 
 func (c *ExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5548,7 +5574,7 @@ func (c *ExclusionsPatchCall) Header() http.Header {
 
 func (c *ExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5697,7 +5723,7 @@ func (c *FoldersExclusionsCreateCall) Header() http.Header {
 
 func (c *FoldersExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5836,7 +5862,7 @@ func (c *FoldersExclusionsDeleteCall) Header() http.Header {
 
 func (c *FoldersExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5978,7 +6004,7 @@ func (c *FoldersExclusionsGetCall) Header() http.Header {
 
 func (c *FoldersExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6144,7 +6170,7 @@ func (c *FoldersExclusionsListCall) Header() http.Header {
 
 func (c *FoldersExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6326,7 +6352,7 @@ func (c *FoldersExclusionsPatchCall) Header() http.Header {
 
 func (c *FoldersExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6473,7 +6499,7 @@ func (c *FoldersLogsDeleteCall) Header() http.Header {
 
 func (c *FoldersLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6598,15 +6624,6 @@ func (c *FoldersLogsListCall) PageToken(pageToken string) *FoldersLogsListCall {
 	return c
 }
 
-// ResourceNames sets the optional parameter "resourceNames": Required
-// for Logging Data Model V2. The resource name that owns the logs:
-// "projects/PROJECT_ID"  "organizations/ORGANIZATION_ID"
-// "billingAccounts/BILLING_ACCOUNT_ID"  "folders/FOLDER_ID"
-func (c *FoldersLogsListCall) ResourceNames(resourceNames ...string) *FoldersLogsListCall {
-	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6644,7 +6661,7 @@ func (c *FoldersLogsListCall) Header() http.Header {
 
 func (c *FoldersLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6726,16 +6743,10 @@ func (c *FoldersLogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsRespons
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. To be deprecated in Logging Data Model V2.",
+	//       "description": "Required. The resource name that owns the logs:\n\"projects/[PROJECT_ID]\"\n\"organizations/[ORGANIZATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]\"\n\"folders/[FOLDER_ID]\"\n",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "resourceNames": {
-	//       "description": "Required for Logging Data Model V2. The resource name that owns the logs:  \"projects/PROJECT_ID\"  \"organizations/ORGANIZATION_ID\"  \"billingAccounts/BILLING_ACCOUNT_ID\"  \"folders/FOLDER_ID\"",
-	//       "location": "query",
-	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -6840,7 +6851,7 @@ func (c *FoldersSinksCreateCall) Header() http.Header {
 
 func (c *FoldersSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6985,7 +6996,7 @@ func (c *FoldersSinksDeleteCall) Header() http.Header {
 
 func (c *FoldersSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7127,7 +7138,7 @@ func (c *FoldersSinksGetCall) Header() http.Header {
 
 func (c *FoldersSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7293,7 +7304,7 @@ func (c *FoldersSinksListCall) Header() http.Header {
 
 func (c *FoldersSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7497,7 +7508,7 @@ func (c *FoldersSinksPatchCall) Header() http.Header {
 
 func (c *FoldersSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7683,7 +7694,7 @@ func (c *FoldersSinksUpdateCall) Header() http.Header {
 
 func (c *FoldersSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7835,7 +7846,7 @@ func (c *LogsDeleteCall) Header() http.Header {
 
 func (c *LogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7960,15 +7971,6 @@ func (c *LogsListCall) PageToken(pageToken string) *LogsListCall {
 	return c
 }
 
-// ResourceNames sets the optional parameter "resourceNames": Required
-// for Logging Data Model V2. The resource name that owns the logs:
-// "projects/PROJECT_ID"  "organizations/ORGANIZATION_ID"
-// "billingAccounts/BILLING_ACCOUNT_ID"  "folders/FOLDER_ID"
-func (c *LogsListCall) ResourceNames(resourceNames ...string) *LogsListCall {
-	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8006,7 +8008,7 @@ func (c *LogsListCall) Header() http.Header {
 
 func (c *LogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8088,16 +8090,10 @@ func (c *LogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsResponse, erro
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. To be deprecated in Logging Data Model V2.",
+	//       "description": "Required. The resource name that owns the logs:\n\"projects/[PROJECT_ID]\"\n\"organizations/[ORGANIZATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]\"\n\"folders/[FOLDER_ID]\"\n",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "resourceNames": {
-	//       "description": "Required for Logging Data Model V2. The resource name that owns the logs:  \"projects/PROJECT_ID\"  \"organizations/ORGANIZATION_ID\"  \"billingAccounts/BILLING_ACCOUNT_ID\"  \"folders/FOLDER_ID\"",
-	//       "location": "query",
-	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -8209,7 +8205,7 @@ func (c *MonitoredResourceDescriptorsListCall) Header() http.Header {
 
 func (c *MonitoredResourceDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8371,7 +8367,7 @@ func (c *OrganizationsExclusionsCreateCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8510,7 +8506,7 @@ func (c *OrganizationsExclusionsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8652,7 +8648,7 @@ func (c *OrganizationsExclusionsGetCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8818,7 +8814,7 @@ func (c *OrganizationsExclusionsListCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9000,7 +8996,7 @@ func (c *OrganizationsExclusionsPatchCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9147,7 +9143,7 @@ func (c *OrganizationsLogsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9272,15 +9268,6 @@ func (c *OrganizationsLogsListCall) PageToken(pageToken string) *OrganizationsLo
 	return c
 }
 
-// ResourceNames sets the optional parameter "resourceNames": Required
-// for Logging Data Model V2. The resource name that owns the logs:
-// "projects/PROJECT_ID"  "organizations/ORGANIZATION_ID"
-// "billingAccounts/BILLING_ACCOUNT_ID"  "folders/FOLDER_ID"
-func (c *OrganizationsLogsListCall) ResourceNames(resourceNames ...string) *OrganizationsLogsListCall {
-	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -9318,7 +9305,7 @@ func (c *OrganizationsLogsListCall) Header() http.Header {
 
 func (c *OrganizationsLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9400,16 +9387,10 @@ func (c *OrganizationsLogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsR
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. To be deprecated in Logging Data Model V2.",
+	//       "description": "Required. The resource name that owns the logs:\n\"projects/[PROJECT_ID]\"\n\"organizations/[ORGANIZATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]\"\n\"folders/[FOLDER_ID]\"\n",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "resourceNames": {
-	//       "description": "Required for Logging Data Model V2. The resource name that owns the logs:  \"projects/PROJECT_ID\"  \"organizations/ORGANIZATION_ID\"  \"billingAccounts/BILLING_ACCOUNT_ID\"  \"folders/FOLDER_ID\"",
-	//       "location": "query",
-	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -9514,7 +9495,7 @@ func (c *OrganizationsSinksCreateCall) Header() http.Header {
 
 func (c *OrganizationsSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9659,7 +9640,7 @@ func (c *OrganizationsSinksDeleteCall) Header() http.Header {
 
 func (c *OrganizationsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9801,7 +9782,7 @@ func (c *OrganizationsSinksGetCall) Header() http.Header {
 
 func (c *OrganizationsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9967,7 +9948,7 @@ func (c *OrganizationsSinksListCall) Header() http.Header {
 
 func (c *OrganizationsSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10171,7 +10152,7 @@ func (c *OrganizationsSinksPatchCall) Header() http.Header {
 
 func (c *OrganizationsSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10357,7 +10338,7 @@ func (c *OrganizationsSinksUpdateCall) Header() http.Header {
 
 func (c *OrganizationsSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10511,7 +10492,7 @@ func (c *ProjectsExclusionsCreateCall) Header() http.Header {
 
 func (c *ProjectsExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10650,7 +10631,7 @@ func (c *ProjectsExclusionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10792,7 +10773,7 @@ func (c *ProjectsExclusionsGetCall) Header() http.Header {
 
 func (c *ProjectsExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10958,7 +10939,7 @@ func (c *ProjectsExclusionsListCall) Header() http.Header {
 
 func (c *ProjectsExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11140,7 +11121,7 @@ func (c *ProjectsExclusionsPatchCall) Header() http.Header {
 
 func (c *ProjectsExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11287,7 +11268,7 @@ func (c *ProjectsLogsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11412,15 +11393,6 @@ func (c *ProjectsLogsListCall) PageToken(pageToken string) *ProjectsLogsListCall
 	return c
 }
 
-// ResourceNames sets the optional parameter "resourceNames": Required
-// for Logging Data Model V2. The resource name that owns the logs:
-// "projects/PROJECT_ID"  "organizations/ORGANIZATION_ID"
-// "billingAccounts/BILLING_ACCOUNT_ID"  "folders/FOLDER_ID"
-func (c *ProjectsLogsListCall) ResourceNames(resourceNames ...string) *ProjectsLogsListCall {
-	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -11458,7 +11430,7 @@ func (c *ProjectsLogsListCall) Header() http.Header {
 
 func (c *ProjectsLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11540,16 +11512,10 @@ func (c *ProjectsLogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsRespon
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. To be deprecated in Logging Data Model V2.",
+	//       "description": "Required. The resource name that owns the logs:\n\"projects/[PROJECT_ID]\"\n\"organizations/[ORGANIZATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]\"\n\"folders/[FOLDER_ID]\"\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "resourceNames": {
-	//       "description": "Required for Logging Data Model V2. The resource name that owns the logs:  \"projects/PROJECT_ID\"  \"organizations/ORGANIZATION_ID\"  \"billingAccounts/BILLING_ACCOUNT_ID\"  \"folders/FOLDER_ID\"",
-	//       "location": "query",
-	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -11634,7 +11600,7 @@ func (c *ProjectsMetricsCreateCall) Header() http.Header {
 
 func (c *ProjectsMetricsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11774,7 +11740,7 @@ func (c *ProjectsMetricsDeleteCall) Header() http.Header {
 
 func (c *ProjectsMetricsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11917,7 +11883,7 @@ func (c *ProjectsMetricsGetCall) Header() http.Header {
 
 func (c *ProjectsMetricsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12083,7 +12049,7 @@ func (c *ProjectsMetricsListCall) Header() http.Header {
 
 func (c *ProjectsMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12253,7 +12219,7 @@ func (c *ProjectsMetricsUpdateCall) Header() http.Header {
 
 func (c *ProjectsMetricsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12415,7 +12381,7 @@ func (c *ProjectsSinksCreateCall) Header() http.Header {
 
 func (c *ProjectsSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12560,7 +12526,7 @@ func (c *ProjectsSinksDeleteCall) Header() http.Header {
 
 func (c *ProjectsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12702,7 +12668,7 @@ func (c *ProjectsSinksGetCall) Header() http.Header {
 
 func (c *ProjectsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12868,7 +12834,7 @@ func (c *ProjectsSinksListCall) Header() http.Header {
 
 func (c *ProjectsSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13072,7 +13038,7 @@ func (c *ProjectsSinksPatchCall) Header() http.Header {
 
 func (c *ProjectsSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13258,7 +13224,7 @@ func (c *ProjectsSinksUpdateCall) Header() http.Header {
 
 func (c *ProjectsSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13430,7 +13396,7 @@ func (c *SinksCreateCall) Header() http.Header {
 
 func (c *SinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13575,7 +13541,7 @@ func (c *SinksDeleteCall) Header() http.Header {
 
 func (c *SinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13717,7 +13683,7 @@ func (c *SinksGetCall) Header() http.Header {
 
 func (c *SinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13883,7 +13849,7 @@ func (c *SinksListCall) Header() http.Header {
 
 func (c *SinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14087,7 +14053,7 @@ func (c *SinksUpdateCall) Header() http.Header {
 
 func (c *SinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190914")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

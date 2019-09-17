@@ -66,7 +66,7 @@ func (tc *trackingCloser) Open() {
 
 func (t *interruptibleTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	if len(t.events) == 0 {
-		panic("Ran out of events, but got a request")
+		panic("ran out of events, but got a request")
 	}
 	ev := t.events[0]
 	t.events = t.events[1:]
@@ -244,7 +244,7 @@ func TestCancelUploadFast(t *testing.T) {
 	}
 }
 
-func TestCancelUpload(t *testing.T) {
+func TestCancelUploadBasic(t *testing.T) {
 	const (
 		chunkSize = 90
 		mediaSize = 300
@@ -280,7 +280,7 @@ func TestCancelUpload(t *testing.T) {
 	}
 
 	oldBackoff := backoff
-	backoff = func() Backoff { return new(NoPauseBackoff) }
+	backoff = func() Backoff { return new(PauseOneSecond) }
 	defer func() { backoff = oldBackoff }()
 
 	res, err := rx.Upload(ctx)

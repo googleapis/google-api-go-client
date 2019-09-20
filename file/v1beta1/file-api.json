@@ -324,7 +324,7 @@
                       "type": "string"
                     },
                     "updateMask": {
-                      "description": "Mask of fields to update.  At least one path must be supplied in this\nfield.  The elements of the repeated paths field may only include these\nfields:\n\"description\"\n\"file_shares\"\n\"labels\"",
+                      "description": "Mask of fields to update.  At least one path must be supplied in this\nfield.  The elements of the repeated paths field may only include these\nfields:\n\"description\"",
                       "format": "google-fieldmask",
                       "location": "query",
                       "type": "string"
@@ -471,7 +471,7 @@
       }
     }
   },
-  "revision": "20190917",
+  "revision": "20190812",
   "rootUrl": "https://file.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {
@@ -615,10 +615,6 @@
         "endTime": {
           "description": "The scheduled end time for the maintenance.",
           "format": "google-datetime",
-          "type": "string"
-        },
-        "rolloutManagementPolicy": {
-          "description": "The rollout management policy this maintenance schedule is associated\nwith. When doing reschedule update request, the reschedule should be\nagainst this given policy.",
           "type": "string"
         },
         "startTime": {

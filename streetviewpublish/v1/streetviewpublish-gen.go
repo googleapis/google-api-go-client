@@ -967,8 +967,8 @@ type UpdatePhotoRequest struct {
 	// new metadata.
 	Photo *Photo `json:"photo,omitempty"`
 
-	// UpdateMask: Mask that identifies fields on the photo metadata to
-	// update.
+	// UpdateMask: Required. Mask that identifies fields on the photo
+	// metadata to update.
 	// If not present, the old Photo
 	// metadata is entirely replaced with the
 	// new Photo metadata in this request.
@@ -1128,7 +1128,7 @@ func (c *PhotoCreateCall) Header() http.Header {
 
 func (c *PhotoCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1260,7 +1260,7 @@ func (c *PhotoDeleteCall) Header() http.Header {
 
 func (c *PhotoDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1388,8 +1388,8 @@ func (c *PhotoGetCall) LanguageCode(languageCode string) *PhotoGetCall {
 	return c
 }
 
-// View sets the optional parameter "view": Specifies if a download URL
-// for the photo bytes should be returned in the
+// View sets the optional parameter "view": Required. Specifies if a
+// download URL for the photo bytes should be returned in the
 // Photo response.
 //
 // Possible values:
@@ -1437,7 +1437,7 @@ func (c *PhotoGetCall) Header() http.Header {
 
 func (c *PhotoGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1519,7 +1519,7 @@ func (c *PhotoGetCall) Do(opts ...googleapi.CallOption) (*Photo, error) {
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Specifies if a download URL for the photo bytes should be returned in the\nPhoto response.",
+	//       "description": "Required. Specifies if a download URL for the photo bytes should be returned in the\nPhoto response.",
 	//       "enum": [
 	//         "BASIC",
 	//         "INCLUDE_DOWNLOAD_URL"
@@ -1609,7 +1609,7 @@ func (c *PhotoStartUploadCall) Header() http.Header {
 
 func (c *PhotoStartUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1728,8 +1728,8 @@ func (r *PhotoService) Update(id string, photo *Photo) *PhotoUpdateCall {
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Mask that
-// identifies fields on the photo metadata to update.
+// UpdateMask sets the optional parameter "updateMask": Required. Mask
+// that identifies fields on the photo metadata to update.
 // If not present, the old Photo
 // metadata is entirely replaced with the
 // new Photo metadata in this request.
@@ -1790,7 +1790,7 @@ func (c *PhotoUpdateCall) Header() http.Header {
 
 func (c *PhotoUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1869,7 +1869,7 @@ func (c *PhotoUpdateCall) Do(opts ...googleapi.CallOption) (*Photo, error) {
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Mask that identifies fields on the photo metadata to update.\nIf not present, the old Photo\nmetadata is entirely replaced with the\nnew Photo metadata in this request.\nThe update fails if invalid fields are specified. Multiple fields can be\nspecified in a comma-delimited list.\n\nThe following fields are valid:\n\n* `pose.heading`\n* `pose.latLngPair`\n* `pose.pitch`\n* `pose.roll`\n* `pose.level`\n* `pose.altitude`\n* `connections`\n* `places`\n\n\n\u003caside class=\"note\"\u003e\u003cb\u003eNote:\u003c/b\u003e When\nupdateMask\ncontains repeated fields, the entire set of repeated values get replaced\nwith the new contents. For example, if\nupdateMask\ncontains `connections` and `UpdatePhotoRequest.photo.connections` is empty,\nall connections are removed.\u003c/aside\u003e",
+	//       "description": "Required. Mask that identifies fields on the photo metadata to update.\nIf not present, the old Photo\nmetadata is entirely replaced with the\nnew Photo metadata in this request.\nThe update fails if invalid fields are specified. Multiple fields can be\nspecified in a comma-delimited list.\n\nThe following fields are valid:\n\n* `pose.heading`\n* `pose.latLngPair`\n* `pose.pitch`\n* `pose.roll`\n* `pose.level`\n* `pose.altitude`\n* `connections`\n* `places`\n\n\n\u003caside class=\"note\"\u003e\u003cb\u003eNote:\u003c/b\u003e When\nupdateMask\ncontains repeated fields, the entire set of repeated values get replaced\nwith the new contents. For example, if\nupdateMask\ncontains `connections` and `UpdatePhotoRequest.photo.connections` is empty,\nall connections are removed.\u003c/aside\u003e",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -1951,7 +1951,7 @@ func (c *PhotosBatchDeleteCall) Header() http.Header {
 
 func (c *PhotosBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2090,8 +2090,8 @@ func (c *PhotosBatchGetCall) PhotoIds(photoIds ...string) *PhotosBatchGetCall {
 	return c
 }
 
-// View sets the optional parameter "view": Specifies if a download URL
-// for the photo bytes should be returned in the
+// View sets the optional parameter "view": Required. Specifies if a
+// download URL for the photo bytes should be returned in the
 // Photo response.
 //
 // Possible values:
@@ -2139,7 +2139,7 @@ func (c *PhotosBatchGetCall) Header() http.Header {
 
 func (c *PhotosBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2216,7 +2216,7 @@ func (c *PhotosBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetPhotosRe
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Specifies if a download URL for the photo bytes should be returned in the\nPhoto response.",
+	//       "description": "Required. Specifies if a download URL for the photo bytes should be returned in the\nPhoto response.",
 	//       "enum": [
 	//         "BASIC",
 	//         "INCLUDE_DOWNLOAD_URL"
@@ -2318,7 +2318,7 @@ func (c *PhotosBatchUpdateCall) Header() http.Header {
 
 func (c *PhotosBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2420,8 +2420,8 @@ func (r *PhotosService) List() *PhotosListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filter expression.
-// For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`.
+// Filter sets the optional parameter "filter": Required. The filter
+// expression. For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`.
 //
 // The only filter supported at the moment is `placeId`.
 func (c *PhotosListCall) Filter(filter string) *PhotosListCall {
@@ -2468,8 +2468,8 @@ func (c *PhotosListCall) PageToken(pageToken string) *PhotosListCall {
 	return c
 }
 
-// View sets the optional parameter "view": Specifies if a download URL
-// for the photos bytes should be returned in the
+// View sets the optional parameter "view": Required. Specifies if a
+// download URL for the photos bytes should be returned in the
 // Photos response.
 //
 // Possible values:
@@ -2517,7 +2517,7 @@ func (c *PhotosListCall) Header() http.Header {
 
 func (c *PhotosListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2583,7 +2583,7 @@ func (c *PhotosListCall) Do(opts ...googleapi.CallOption) (*ListPhotosResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The filter expression. For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`.\n\nThe only filter supported at the moment is `placeId`.",
+	//       "description": "Required. The filter expression. For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`.\n\nThe only filter supported at the moment is `placeId`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2604,7 +2604,7 @@ func (c *PhotosListCall) Do(opts ...googleapi.CallOption) (*ListPhotosResponse, 
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Specifies if a download URL for the photos bytes should be returned in the\nPhotos response.",
+	//       "description": "Required. Specifies if a download URL for the photos bytes should be returned in the\nPhotos response.",
 	//       "enum": [
 	//         "BASIC",
 	//         "INCLUDE_DOWNLOAD_URL"

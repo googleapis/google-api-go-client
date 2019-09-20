@@ -2217,7 +2217,7 @@
       }
     }
   },
-  "revision": "20190903",
+  "revision": "20190911",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -3205,6 +3205,13 @@
           },
           "description": "Details for the regions used during a global call including any failures.\nThis is not populated when targeting a specific region.",
           "type": "object"
+        },
+        "unreachable": {
+          "description": "Locations that could not be reached.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"

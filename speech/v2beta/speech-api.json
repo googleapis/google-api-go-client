@@ -183,7 +183,7 @@
       }
     }
   },
-  "revision": "20190830",
+  "revision": "20190918",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "ListOperationsResponse": {
@@ -357,9 +357,9 @@
           "format": "float",
           "type": "number"
         },
-        "endTime": {
+        "endOffset": {
           "description": "Output only. Time offset relative to the beginning of the audio,\nand corresponding to the end of the spoken word.\nThis field is only set if `enable_word_time_offsets=true` and only\nin the top hypothesis.\nThis is an experimental feature and the accuracy of the time offset can\nvary.",
-          "format": "google-datetime",
+          "format": "google-duration",
           "type": "string"
         },
         "speakerTag": {
@@ -367,9 +367,9 @@
           "format": "int32",
           "type": "integer"
         },
-        "startTime": {
+        "startOffset": {
           "description": "Output only. Time offset relative to the beginning of the audio,\nand corresponding to the start of the spoken word.\nThis field is only set if `enable_word_time_offsets=true` and only\nin the top hypothesis.\nThis is an experimental feature and the accuracy of the time offset can\nvary.",
-          "format": "google-datetime",
+          "format": "google-duration",
           "type": "string"
         },
         "word": {

@@ -674,7 +674,7 @@
       }
     }
   },
-  "revision": "20190813",
+  "revision": "20190906",
   "rootUrl": "https://cloudtasks.googleapis.com/",
   "schemas": {
     "AppEngineHttpQueue": {
@@ -880,7 +880,7 @@
       "id": "GetPolicyOptions",
       "properties": {
         "requestedPolicyVersion": {
-          "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+          "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.",
           "format": "int32",
           "type": "integer"
         }
@@ -888,7 +888,7 @@
       "type": "object"
     },
     "HttpRequest": {
-      "description": "HTTP request.\n\nThe task will be pushed to the worker as an HTTP request. If the worker\nor the redirected worker acknowledges the task by returning a successful HTTP\nresponse code ([`200` - `299`]), the task will removed from the queue. If\nany other HTTP response code is returned or no response is received, the\ntask will be retried according to the following:\n\n* User-specified throttling: retry configuration,\n  rate limits, and the queue's state.\n\n* System throttling: To prevent the worker from overloading, Cloud Tasks may\n  temporarily reduce the queue's effective rate. User-specified settings\n  will not be changed.\n\n System throttling happens because:\n\n  * Cloud Tasks backoffs on all errors. Normally the backoff specified in\n    rate limits will be used. But if the worker returns\n    `429` (Too Many Requests), `503` (Service Unavailable), or the rate of\n    errors is high, Cloud Tasks will use a higher backoff rate. The retry\n    specified in the `Retry-After` HTTP response header is considered.\n\n  * To prevent traffic spikes and to smooth sudden large traffic spikes,\n    dispatches ramp up slowly when the queue is newly created or idle and\n    if large numbers of tasks suddenly become available to dispatch (due to\n    spikes in create task rates, the queue being unpaused, or many tasks\n    that are scheduled at the same time).",
+      "description": "HTTP request.\n\nThe task will be pushed to the worker as an HTTP request. If the worker\nor the redirected worker acknowledges the task by returning a successful HTTP\nresponse code ([`200` - `299`]), the task will removed from the queue. If\nany other HTTP response code is returned or no response is received, the\ntask will be retried according to the following:\n\n* User-specified throttling: retry configuration,\n  rate limits, and the queue's state.\n\n* System throttling: To prevent the worker from overloading, Cloud Tasks may\n  temporarily reduce the queue's effective rate. User-specified settings\n  will not be changed.\n\n System throttling happens because:\n\n  * Cloud Tasks backs off on all errors. Normally the backoff specified in\n    rate limits will be used. But if the worker returns\n    `429` (Too Many Requests), `503` (Service Unavailable), or the rate of\n    errors is high, Cloud Tasks will use a higher backoff rate. The retry\n    specified in the `Retry-After` HTTP response header is considered.\n\n  * To prevent traffic spikes and to smooth sudden large traffic spikes,\n    dispatches ramp up slowly when the queue is newly created or idle and\n    if large numbers of tasks suddenly become available to dispatch (due to\n    spikes in create task rates, the queue being unpaused, or many tasks\n    that are scheduled at the same time).",
       "id": "HttpRequest",
       "properties": {
         "body": {
@@ -1083,7 +1083,7 @@
           "type": "string"
         },
         "version": {
-          "description": "Deprecated.",
+          "description": "Specifies the format of the policy.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nPolicies with any conditional bindings must specify version 3. Policies\nwithout any conditional bindings may specify any valid value or leave the\nfield unset.",
           "format": "int32",
           "type": "integer"
         }

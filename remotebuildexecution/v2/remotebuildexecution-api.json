@@ -446,7 +446,7 @@
       }
     }
   },
-  "revision": "20190731",
+  "revision": "20190917",
   "rootUrl": "https://remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -1480,12 +1480,12 @@
       "id": "GoogleDevtoolsRemotebuildexecutionAdminV1alphaAcceleratorConfig",
       "properties": {
         "acceleratorCount": {
-          "description": "The number of the guest accelerator cards exposed to this VM.",
+          "description": "The number of guest accelerator cards exposed to each VM.",
           "format": "int64",
           "type": "string"
         },
         "acceleratorType": {
-          "description": "The type of accelerator to attach to this VM, e.g. \"nvidia-tesla-k80\" for\nnVidia Tesla K80.",
+          "description": "The type of accelerator to attach to each VM, e.g. \"nvidia-tesla-k80\" for\nnVidia Tesla K80.",
           "type": "string"
         }
       },
@@ -1704,6 +1704,10 @@
         },
         "minCpuPlatform": {
           "description": "Minimum CPU platform to use when creating the worker.\nSee [CPU Platforms](https://cloud.google.com/compute/docs/cpu-platforms).",
+          "type": "string"
+        },
+        "networkAccess": {
+          "description": "Determines the type of network access granted to workers. Possible values:\n\n- \"public\": Workers can connect to the public internet.\n- \"private\": Workers can only connect to Google APIs and services.\n- \"restricted-private\": Workers can only connect to Google APIs that are\n  reachable through `restricted.googleapis.com` (`199.36.153.4/30`).",
           "type": "string"
         },
         "reserved": {

@@ -541,7 +541,7 @@ type WordInfo struct {
 	// not set.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// EndTime: Output only. Time offset relative to the beginning of the
+	// EndOffset: Output only. Time offset relative to the beginning of the
 	// audio,
 	// and corresponding to the end of the spoken word.
 	// This field is only set if `enable_word_time_offsets=true` and only
@@ -549,7 +549,7 @@ type WordInfo struct {
 	// This is an experimental feature and the accuracy of the time offset
 	// can
 	// vary.
-	EndTime string `json:"endTime,omitempty"`
+	EndOffset string `json:"endOffset,omitempty"`
 
 	// SpeakerTag: Output only. A distinct integer value is assigned for
 	// every speaker within
@@ -563,15 +563,15 @@ type WordInfo struct {
 	// alternative.
 	SpeakerTag int64 `json:"speakerTag,omitempty"`
 
-	// StartTime: Output only. Time offset relative to the beginning of the
-	// audio,
+	// StartOffset: Output only. Time offset relative to the beginning of
+	// the audio,
 	// and corresponding to the start of the spoken word.
 	// This field is only set if `enable_word_time_offsets=true` and only
 	// in the top hypothesis.
 	// This is an experimental feature and the accuracy of the time offset
 	// can
 	// vary.
-	StartTime string `json:"startTime,omitempty"`
+	StartOffset string `json:"startOffset,omitempty"`
 
 	// Word: Output only. The word corresponding to this set of information.
 	Word string `json:"word,omitempty"`
@@ -672,7 +672,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -853,7 +853,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

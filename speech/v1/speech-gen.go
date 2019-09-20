@@ -271,10 +271,10 @@ func (s *LongRunningRecognizeMetadata) MarshalJSON() ([]byte, error) {
 // for the `LongRunningRecognize`
 // method.
 type LongRunningRecognizeRequest struct {
-	// Audio: *Required* The audio data to be recognized.
+	// Audio: Required. The audio data to be recognized.
 	Audio *RecognitionAudio `json:"audio,omitempty"`
 
-	// Config: *Required* Provides information to the recognizer that
+	// Config: Required. Provides information to the recognizer that
 	// specifies how to
 	// process the request.
 	Config *RecognitionConfig `json:"config,omitempty"`
@@ -312,8 +312,8 @@ func (s *LongRunningRecognizeRequest) MarshalJSON() ([]byte, error) {
 // `google::longrunning::Operations`
 // service.
 type LongRunningRecognizeResponse struct {
-	// Results: Output only. Sequential list of transcription results
-	// corresponding to
+	// Results: Sequential list of transcription results corresponding
+	// to
 	// sequential portions of audio.
 	Results []*SpeechRecognitionResult `json:"results,omitempty"`
 
@@ -471,8 +471,8 @@ func (s *RecognitionAudio) MarshalJSON() ([]byte, error) {
 // specifies how to process the
 // request.
 type RecognitionConfig struct {
-	// AudioChannelCount: *Optional* The number of channels in the input
-	// audio data.
+	// AudioChannelCount: The number of channels in the input audio
+	// data.
 	// ONLY set this for MULTI-CHANNEL recognition.
 	// Valid values for LINEAR16 and FLAC are `1`-`8`.
 	// Valid values for OGG_OPUS are '1'-'254'.
@@ -485,7 +485,23 @@ type RecognitionConfig struct {
 	// `enable_separate_recognition_per_channel` to 'true'.
 	AudioChannelCount int64 `json:"audioChannelCount,omitempty"`
 
-	// EnableAutomaticPunctuation: *Optional* If 'true', adds punctuation to
+	// DiarizationConfig: Config to enable speaker diarization and set
+	// additional
+	// parameters to make diarization better suited for your
+	// application.
+	// Note: When this is enabled, we send all the words from the beginning
+	// of the
+	// audio for the top alternative in every consecutive STREAMING
+	// responses.
+	// This is done in order to improve our speaker tags as our models learn
+	// to
+	// identify the speakers in the conversation over time.
+	// For non-streaming requests, the diarization results will be provided
+	// only
+	// in the top alternative of the FINAL SpeechRecognitionResult.
+	DiarizationConfig *SpeakerDiarizationConfig `json:"diarizationConfig,omitempty"`
+
+	// EnableAutomaticPunctuation: If 'true', adds punctuation to
 	// recognition result hypotheses.
 	// This feature is only available in select languages. Setting this
 	// for
@@ -512,8 +528,8 @@ type RecognitionConfig struct {
 	// `audio_channel_count` multiplied by the length of the audio.
 	EnableSeparateRecognitionPerChannel bool `json:"enableSeparateRecognitionPerChannel,omitempty"`
 
-	// EnableWordTimeOffsets: *Optional* If `true`, the top result includes
-	// a list of words and
+	// EnableWordTimeOffsets: If `true`, the top result includes a list of
+	// words and
 	// the start and end time offsets (timestamps) for those words.
 	// If
 	// `false`, no word-level time offset information is returned. The
@@ -574,7 +590,7 @@ type RecognitionConfig struct {
 	// wideband is supported. `sample_rate_hertz` must be 16000.
 	Encoding string `json:"encoding,omitempty"`
 
-	// LanguageCode: *Required* The language of the supplied audio as
+	// LanguageCode: Required. The language of the supplied audio as
 	// a
 	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language
 	// tag.
@@ -586,8 +602,8 @@ type RecognitionConfig struct {
 	// of the currently supported language codes.
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// MaxAlternatives: *Optional* Maximum number of recognition hypotheses
-	// to be returned.
+	// MaxAlternatives: Maximum number of recognition hypotheses to be
+	// returned.
 	// Specifically, the maximum number of `SpeechRecognitionAlternative`
 	// messages
 	// within each `SpeechRecognitionResult`.
@@ -597,11 +613,11 @@ type RecognitionConfig struct {
 	// one. If omitted, will return a maximum of one.
 	MaxAlternatives int64 `json:"maxAlternatives,omitempty"`
 
-	// Metadata: *Optional* Metadata regarding this request.
+	// Metadata: Metadata regarding this request.
 	Metadata *RecognitionMetadata `json:"metadata,omitempty"`
 
-	// Model: *Optional* Which model to select for the given request. Select
-	// the model
+	// Model: Which model to select for the given request. Select the
+	// model
 	// best suited to your domain to get best results. If a model is
 	// not
 	// explicitly specified, then we auto-select a model based on the
@@ -642,8 +658,8 @@ type RecognitionConfig struct {
 	// </table>
 	Model string `json:"model,omitempty"`
 
-	// ProfanityFilter: *Optional* If set to `true`, the server will attempt
-	// to filter out
+	// ProfanityFilter: If set to `true`, the server will attempt to filter
+	// out
 	// profanities, replacing all but the initial character in each filtered
 	// word
 	// with asterisks, e.g. "f***". If set to `false` or omitted,
@@ -663,7 +679,7 @@ type RecognitionConfig struct {
 	// required for all other audio formats. For details, see AudioEncoding.
 	SampleRateHertz int64 `json:"sampleRateHertz,omitempty"`
 
-	// SpeechContexts: *Optional* array of SpeechContext.
+	// SpeechContexts: Array of SpeechContext.
 	// A means to provide context to assist the speech recognition. For
 	// more
 	// information,
@@ -673,8 +689,8 @@ type RecognitionConfig struct {
 	// ontext-strength).
 	SpeechContexts []*SpeechContext `json:"speechContexts,omitempty"`
 
-	// UseEnhanced: *Optional* Set to true to use an enhanced model for
-	// speech recognition.
+	// UseEnhanced: Set to true to use an enhanced model for speech
+	// recognition.
 	// If `use_enhanced` is set to true and the `model` field is not set,
 	// then
 	// an appropriate enhanced model is chosen if an enhanced model exists
@@ -839,10 +855,10 @@ func (s *RecognitionMetadata) MarshalJSON() ([]byte, error) {
 // RecognizeRequest: The top-level message sent by the client for the
 // `Recognize` method.
 type RecognizeRequest struct {
-	// Audio: *Required* The audio data to be recognized.
+	// Audio: Required. The audio data to be recognized.
 	Audio *RecognitionAudio `json:"audio,omitempty"`
 
-	// Config: *Required* Provides information to the recognizer that
+	// Config: Required. Provides information to the recognizer that
 	// specifies how to
 	// process the request.
 	Config *RecognitionConfig `json:"config,omitempty"`
@@ -876,8 +892,8 @@ func (s *RecognizeRequest) MarshalJSON() ([]byte, error) {
 // `SpeechRecognitionResult`
 // messages.
 type RecognizeResponse struct {
-	// Results: Output only. Sequential list of transcription results
-	// corresponding to
+	// Results: Sequential list of transcription results corresponding
+	// to
 	// sequential portions of audio.
 	Results []*SpeechRecognitionResult `json:"results,omitempty"`
 
@@ -908,12 +924,60 @@ func (s *RecognizeResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SpeakerDiarizationConfig: Config to enable speaker diarization.
+type SpeakerDiarizationConfig struct {
+	// EnableSpeakerDiarization: If 'true', enables speaker detection for
+	// each recognized word in
+	// the top alternative of the recognition result using a speaker_tag
+	// provided
+	// in the WordInfo.
+	EnableSpeakerDiarization bool `json:"enableSpeakerDiarization,omitempty"`
+
+	// MaxSpeakerCount: Maximum number of speakers in the conversation. This
+	// range gives you more
+	// flexibility by allowing the system to automatically determine the
+	// correct
+	// number of speakers. If not set, the default value is 6.
+	MaxSpeakerCount int64 `json:"maxSpeakerCount,omitempty"`
+
+	// MinSpeakerCount: Minimum number of speakers in the conversation. This
+	// range gives you more
+	// flexibility by allowing the system to automatically determine the
+	// correct
+	// number of speakers. If not set, the default value is 2.
+	MinSpeakerCount int64 `json:"minSpeakerCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableSpeakerDiarization") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnableSpeakerDiarization")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpeakerDiarizationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SpeakerDiarizationConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SpeechContext: Provides "hints" to the speech recognizer to favor
 // specific words and phrases
 // in the results.
 type SpeechContext struct {
-	// Phrases: *Optional* A list of strings containing words and phrases
-	// "hints" so that
+	// Phrases: A list of strings containing words and phrases "hints" so
+	// that
 	// the speech recognition is more likely to recognize them. This can be
 	// used
 	// to improve the accuracy for specific words and phrases, for example,
@@ -963,8 +1027,8 @@ func (s *SpeechContext) MarshalJSON() ([]byte, error) {
 // SpeechRecognitionAlternative: Alternative hypotheses (a.k.a. n-best
 // list).
 type SpeechRecognitionAlternative struct {
-	// Confidence: Output only. The confidence estimate between 0.0 and 1.0.
-	// A higher number
+	// Confidence: The confidence estimate between 0.0 and 1.0. A higher
+	// number
 	// indicates an estimated greater likelihood that the recognized words
 	// are
 	// correct. This field is set only for the top alternative of a
@@ -977,12 +1041,12 @@ type SpeechRecognitionAlternative struct {
 	// not set.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Transcript: Output only. Transcript text representing the words that
-	// the user spoke.
+	// Transcript: Transcript text representing the words that the user
+	// spoke.
 	Transcript string `json:"transcript,omitempty"`
 
-	// Words: Output only. A list of word-specific information for each
-	// recognized word.
+	// Words: A list of word-specific information for each recognized
+	// word.
 	// Note: When `enable_speaker_diarization` is true, you will see all the
 	// words
 	// from the beginning of the audio.
@@ -1028,8 +1092,8 @@ func (s *SpeechRecognitionAlternative) UnmarshalJSON(data []byte) error {
 // SpeechRecognitionResult: A speech recognition result corresponding to
 // a portion of the audio.
 type SpeechRecognitionResult struct {
-	// Alternatives: Output only. May contain one or more recognition
-	// hypotheses (up to the
+	// Alternatives: May contain one or more recognition hypotheses (up to
+	// the
 	// maximum specified in `max_alternatives`).
 	// These alternatives are ordered in terms of accuracy, with the top
 	// (first)
@@ -1120,8 +1184,7 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 // WordInfo: Word-specific information for recognized words.
 type WordInfo struct {
-	// EndTime: Output only. Time offset relative to the beginning of the
-	// audio,
+	// EndTime: Time offset relative to the beginning of the audio,
 	// and corresponding to the end of the spoken word.
 	// This field is only set if `enable_word_time_offsets=true` and only
 	// in the top hypothesis.
@@ -1130,8 +1193,18 @@ type WordInfo struct {
 	// vary.
 	EndTime string `json:"endTime,omitempty"`
 
-	// StartTime: Output only. Time offset relative to the beginning of the
-	// audio,
+	// SpeakerTag: A distinct integer value is assigned for every speaker
+	// within
+	// the audio. This field specifies which one of those speakers was
+	// detected to
+	// have spoken this word. Value ranges from '1' to
+	// diarization_speaker_count.
+	// speaker_tag is set if enable_speaker_diarization = 'true' and only in
+	// the
+	// top alternative.
+	SpeakerTag int64 `json:"speakerTag,omitempty"`
+
+	// StartTime: Time offset relative to the beginning of the audio,
 	// and corresponding to the start of the spoken word.
 	// This field is only set if `enable_word_time_offsets=true` and only
 	// in the top hypothesis.
@@ -1140,7 +1213,7 @@ type WordInfo struct {
 	// vary.
 	StartTime string `json:"startTime,omitempty"`
 
-	// Word: Output only. The word corresponding to this set of information.
+	// Word: The word corresponding to this set of information.
 	Word string `json:"word,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
@@ -1225,7 +1298,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1411,7 +1484,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1589,7 +1662,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1770,7 +1843,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1949,7 +2022,7 @@ func (c *SpeechLongrunningrecognizeCall) Header() http.Header {
 
 func (c *SpeechLongrunningrecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2076,7 +2149,7 @@ func (c *SpeechRecognizeCall) Header() http.Header {
 
 func (c *SpeechRecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

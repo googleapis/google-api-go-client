@@ -14637,7 +14637,7 @@ func (c *FilesAnnotateCall) Header() http.Header {
 
 func (c *FilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14775,7 +14775,7 @@ func (c *FilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *FilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14901,7 +14901,7 @@ func (c *ImagesAnnotateCall) Header() http.Header {
 
 func (c *ImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15043,7 +15043,7 @@ func (c *ImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15182,7 +15182,7 @@ func (c *ProjectsFilesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsFilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15335,7 +15335,7 @@ func (c *ProjectsFilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15476,7 +15476,7 @@ func (c *ProjectsImagesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15633,7 +15633,7 @@ func (c *ProjectsImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15785,7 +15785,7 @@ func (c *ProjectsLocationsFilesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15938,7 +15938,7 @@ func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16079,7 +16079,7 @@ func (c *ProjectsLocationsImagesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16236,7 +16236,7 @@ func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

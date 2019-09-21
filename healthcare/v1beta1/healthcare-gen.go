@@ -622,7 +622,7 @@ type Dataset struct {
 	// a valid IANA
 	// time zone name such as "America/New_York" or empty, which defaults to
 	// UTC.
-	// This is used for parsing times in resources (e.g., HL7 messages)
+	// This is used for parsing times in resources, such as HL7 messages,
 	// where no
 	// explicit timezone is specified.
 	TimeZone string `json:"timeZone,omitempty"`
@@ -743,8 +743,7 @@ type DeidentifyDatasetRequest struct {
 	Config *DeidentifyConfig `json:"config,omitempty"`
 
 	// DestinationDataset: The name of the dataset resource to create and
-	// write the redacted data to
-	// (e.g.,
+	// write the redacted data to.
 	//
 	//  * The destination dataset must not exist.
 	//  * The destination dataset must be in the same project as the source
@@ -778,10 +777,10 @@ func (s *DeidentifyDatasetRequest) MarshalJSON() ([]byte, error) {
 // DeidentifyErrorDetails: Contains the status of the Deidentify
 // operation.
 type DeidentifyErrorDetails struct {
-	// FailureResourceCount: Number of resources failed to process.
+	// FailureResourceCount: Number of resources that failed to process.
 	FailureResourceCount int64 `json:"failureResourceCount,omitempty,string"`
 
-	// FailureStoreCount: Number of stores failed to process.
+	// FailureStoreCount: Number of stores that failed to process.
 	FailureStoreCount int64 `json:"failureStoreCount,omitempty,string"`
 
 	// SuccessResourceCount: Number of resources successfully processed.
@@ -818,6 +817,12 @@ func (s *DeidentifyErrorDetails) MarshalJSON() ([]byte, error) {
 // DeidentifySummary: Contains a detailed summary of the Deidentify
 // operation.
 type DeidentifySummary struct {
+	// FailureResourceCount: Number of resources that failed to process.
+	// The failures might be caused by:
+	//   * Invalid user input data
+	//   * Transient errors that could be skipped
+	FailureResourceCount int64 `json:"failureResourceCount,omitempty,string"`
+
 	// SuccessResourceCount: Number of resources successfully processed.
 	SuccessResourceCount int64 `json:"successResourceCount,omitempty,string"`
 
@@ -825,7 +830,7 @@ type DeidentifySummary struct {
 	SuccessStoreCount int64 `json:"successStoreCount,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "SuccessResourceCount") to unconditionally include in API requests.
+	// "FailureResourceCount") to unconditionally include in API requests.
 	// By default, fields with empty values are omitted from API requests.
 	// However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
@@ -833,7 +838,7 @@ type DeidentifySummary struct {
 	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "SuccessResourceCount") to
+	// NullFields is a list of field names (e.g. "FailureResourceCount") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1035,11 +1040,11 @@ func (s *ErrorDetail) MarshalJSON() ([]byte, error) {
 
 // ExportDicomDataRequest: Exports data from the specified DICOM
 // store.
-// If a given resource (e.g., a DICOM object with the same SOPInstance
-// UID)
+// If a given resource, such as a DICOM object with the same SOPInstance
+// UID,
 // already exists in the output, it is overwritten with the version
 // in the source dataset.
-// Exported DICOM data will persist when the DICOM store from which it
+// Exported DICOM data persists when the DICOM store from which it
 // was
 // exported is deleted.
 type ExportDicomDataRequest struct {
@@ -1188,12 +1193,12 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// FhirConfig: Specifies how de-identification of a FHIR store should be
-// handled.
+// FhirConfig: Specifies how to handle de-identification of a FHIR
+// store.
 type FhirConfig struct {
 	// FieldMetadataList: Specifies FHIR paths to match and how to transform
 	// them. Any field that
-	// is not matched by a FieldMetadata will be passed through to the
+	// is not matched by a FieldMetadata is passed through to the
 	// output
 	// dataset unmodified. All extensions are removed in the output.
 	FieldMetadataList []*FieldMetadata `json:"fieldMetadataList,omitempty"`
@@ -1227,16 +1232,16 @@ type FhirStore struct {
 	// DisableReferentialIntegrity: Whether to disable referential integrity
 	// in this FHIR store. This field is
 	// immutable after FHIR store creation.
-	// The default value is false, meaning that the API will enforce
+	// The default value is false, meaning that the API enforces
 	// referential
-	// integrity and fail the requests that will result in inconsistent
-	// state in
+	// integrity and fails the requests that result in inconsistent state
+	// in
 	// the FHIR store.
-	// When this field is set to true, the API will skip referential
+	// When this field is set to true, the API skips referential
 	// integrity
-	// check. Consequently, operations that rely on references, such
+	// checks. Consequently, operations that rely on references, such
 	// as
-	// GetPatientEverything, will not return all the results if broken
+	// GetPatientEverything, do not return all the results if broken
 	// references
 	// exist.
 	DisableReferentialIntegrity bool `json:"disableReferentialIntegrity,omitempty"`
@@ -1244,27 +1249,16 @@ type FhirStore struct {
 	// DisableResourceVersioning: Whether to disable resource versioning for
 	// this FHIR store. This field can
 	// not be changed after the creation of FHIR store.
-	// If set to false, which is the default behavior, all write operations
-	// will
+	// If set to false, which is the default behavior, all write
+	// operations
 	// cause historical versions to be recorded automatically. The
 	// historical
 	// versions can be fetched through the history APIs, but cannot be
 	// updated.
-	// If set to true, no historical versions will be kept. The server will
-	// send
-	// back errors for attempts to read the historical versions.
+	// If set to true, no historical versions are kept. The server
+	// sends
+	// errors for attempts to read the historical versions.
 	DisableResourceVersioning bool `json:"disableResourceVersioning,omitempty"`
-
-	// EnableHistoryImport: Whether to allow the bulk import API to accept
-	// history bundles and directly
-	// insert historical resource versions into the FHIR store. Importing
-	// resource
-	// histories creates resource interactions that appear to have occurred
-	// in the
-	// past, which clients may not want to allow. If set to false, history
-	// bundles
-	// within an import will fail with an error.
-	EnableHistoryImport bool `json:"enableHistoryImport,omitempty"`
 
 	// EnableUpdateCreate: Whether this FHIR store has the
 	// [updateCreate
@@ -1275,13 +1269,13 @@ type FhirStore struct {
 	// new
 	// resource with a client-specified ID. If false, all IDs are
 	// server-assigned
-	// through the Create operation and attempts to Update a non-existent
+	// through the Create operation and attempts to update a non-existent
 	// resource
-	// will return errors. Please treat the audit logs with appropriate
-	// levels of
+	// return errors. Please treat the audit logs with appropriate levels
+	// of
 	// care if client-specified resource IDs contain sensitive data such
 	// as
-	// patient identifiers, those IDs will be part of the FHIR resource
+	// patient identifiers, those IDs are part of the FHIR resource
 	// path
 	// recorded in Cloud audit logs and Cloud Pub/Sub notifications.
 	EnableUpdateCreate bool `json:"enableUpdateCreate,omitempty"`
@@ -1312,11 +1306,11 @@ type FhirStore struct {
 
 	// NotificationConfig: If non-empty, publish all resource modifications
 	// of this FHIR store to
-	// this destination. The Cloud Pub/Sub message attributes will contain a
+	// this destination. The Cloud Pub/Sub message attributes contain a
 	// map
 	// with a string describing the action that has triggered the
-	// notification,
-	// e.g. "action":"CreateResource".
+	// notification.
+	// For example, "action":"CreateResource".
 	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1368,9 +1362,9 @@ type FieldMetadata struct {
 	// FHIR type name, for example: Patient, HumanName.
 	// For "choice" types (those defined in the FHIR spec with the
 	// form:
-	// field[x]) we use two separate components. e.g. "deceasedAge.unit"
-	// is
-	// matched by "Deceased.Age.unit".
+	// field[x]) we use two separate components. For
+	// example,
+	// "deceasedAge.unit" is matched by "Deceased.Age.unit".
 	// Supported types are: AdministrativeGenderCode, Code, Date,
 	// DateTime,
 	// Decimal, HumanName, Id, LanguageCode, Markdown, MimeTypeCode,
@@ -1402,12 +1396,12 @@ func (s *FieldMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudHealthcareV1beta1DicomBigQueryDestination: The BigQuery
-// table where the output should be written.
+// table where the server writes the output.
 type GoogleCloudHealthcareV1beta1DicomBigQueryDestination struct {
 	// Force: If the destination table already exists and this flag is
 	// `TRUE`, the table
-	// will be overwritten by the contents of the DICOM store. If the flag
-	// is not
+	// is overwritten by the contents of the DICOM store. If the flag is
+	// not
 	// set and the destination table already exists, the export call returns
 	// an
 	// error.
@@ -1442,39 +1436,38 @@ func (s *GoogleCloudHealthcareV1beta1DicomBigQueryDestination) MarshalJSON() ([]
 }
 
 // GoogleCloudHealthcareV1beta1DicomGcsDestination: The Cloud Storage
-// location where the output should be written, and the
+// location where the server writes the output and the
 // export
 // configuration.
 type GoogleCloudHealthcareV1beta1DicomGcsDestination struct {
 	// MimeType: MIME types supported by DICOM spec.
-	// Each file will be written in the following
+	// Each file is written in the following
 	// format:
 	// `.../{study_id}/{series_id}/{instance_id}[/{frame_number}].{ex
 	// tension}`
-	// The frame_number component will exist only for multi-frame
+	// The frame_number component exists only for multi-frame
 	// instances.
 	//
 	// Refer to the DICOM conformance statement for permissible MIME
 	// types:
 	// https://cloud.google.com/healthcare/docs/dicom#wado-rs
 	//
-	// The following extensions will be used for output files:
+	// The following extensions are used for output files:
 	//   application/dicom -> .dcm
 	//   image/jpeg -> .jpg
 	//   image/png -> .png
 	//
-	// If unspecified, the instances will be exported in their
-	// original
+	// If unspecified, the instances are exported in their original
 	// DICOM format.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// UriPrefix: The Cloud Storage destination to export to.
 	//
-	// URI for a Cloud Storage directory where result files should be
-	// written (in
-	// the format `gs://{bucket-id}/{path/to/destination/dir}`). If there is
-	// no
-	// trailing slash, the service will append one when composing the object
+	// URI for a Cloud Storage directory where the server writes the result
+	// files,
+	// in the format `gs://{bucket-id}/{path/to/destination/dir}`). If there
+	// is no
+	// trailing slash, the service appends one when composing the object
 	// path.
 	// The user is responsible for creating the Cloud Storage bucket
 	// referenced in
@@ -1901,7 +1894,7 @@ type Hl7V2Store struct {
 	// Ingest & Create) are
 	// published on. Only the message name is sent as part of the
 	// notification. If
-	// this is unset, no notifications will be sent. Supplied by the client.
+	// this is unset, no notifications are sent. Supplied by the client.
 	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
 
 	// ParserConfig: The configuration for the parser. It determines how the
@@ -2022,8 +2015,8 @@ func (s *HttpBody) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ImageConfig: Specifies how de-identification of image pixel should be
-// handled.
+// ImageConfig: Specifies how to handle de-identification of image
+// pixels.
 type ImageConfig struct {
 	// TextRedactionMode: Determines how to redact text from image.
 	//
@@ -2065,8 +2058,8 @@ type ImportDicomDataErrorDetails struct {
 	// SampleErrors: Deprecated. Use only for debugging purposes.
 	//
 	// Contains sample errors encountered in imports of individual
-	// resources
-	// (for example, a Cloud Storage object).
+	// resources.
+	// For example, a Cloud Storage object.
 	SampleErrors []*ErrorDetail `json:"sampleErrors,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SampleErrors") to
@@ -2096,9 +2089,9 @@ func (s *ImportDicomDataErrorDetails) MarshalJSON() ([]byte, error) {
 // store.
 // Returns an error if any of the files to import are not DICOM files.
 // This
-// API will accept duplicate DICOM instances, by simply ignoring the
-// newly
-// pushed instance (it will not overwrite).
+// API accepts duplicate DICOM instances by ignoring the newly-pushed
+// instance.
+// It does not overwrite.
 type ImportDicomDataRequest struct {
 	// GcsSource: Cloud Storage source data location and import
 	// configuration.
@@ -2709,7 +2702,7 @@ func (s *Message) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// NotificationConfig: Specifies where notifications should be sent upon
+// NotificationConfig: Specifies where to send notifications upon
 // changes to a data store.
 type NotificationConfig struct {
 	// PubsubTopic: The [Cloud
@@ -2717,7 +2710,7 @@ type NotificationConfig struct {
 	// that
 	// notifications of changes are published on. Supplied by the
 	// client.
-	// PubsubMessage.Data will contain the resource
+	// PubsubMessage.Data contains the resource
 	// name.
 	// PubsubMessage.MessageId is the ID of this message. It is guaranteed
 	// to be
@@ -2733,7 +2726,7 @@ type NotificationConfig struct {
 	// have
 	// publisher permissions on the given Cloud Pub/Sub topic. Not having
 	// adequate
-	// permissions will cause the calls that send notifications to fail.
+	// permissions causes the calls that send notifications to fail.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PubsubTopic") to
@@ -2909,9 +2902,9 @@ type ParserConfig struct {
 	// allowed.
 	AllowNullHeader bool `json:"allowNullHeader,omitempty"`
 
-	// SegmentTerminator: Byte(s) to be used as the segment terminator. If
-	// this is unset, '\r' will
-	// be used as segment terminator.
+	// SegmentTerminator: Byte(s) to use as the segment terminator. If this
+	// is unset, '\r' is
+	// used as segment terminator.
 	SegmentTerminator string `json:"segmentTerminator,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowNullHeader") to
@@ -2940,7 +2933,7 @@ func (s *ParserConfig) MarshalJSON() ([]byte, error) {
 
 // PatientId: A patient identifier and associated type.
 type PatientId struct {
-	// Type: ID type, e.g. MRN or NHS.
+	// Type: ID type. For example, MRN or NHS.
 	Type string `json:"type,omitempty"`
 
 	// Value: The patient's unique identifier.
@@ -3048,7 +3041,17 @@ type Policy struct {
 	// policy is overwritten.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Deprecated.
+	// Version: Specifies the format of the policy.
+	//
+	// Valid values are 0, 1, and 3. Requests specifying an invalid value
+	// will be
+	// rejected.
+	//
+	// Policies with any conditional bindings must specify version 3.
+	// Policies
+	// without any conditional bindings may specify any valid value or leave
+	// the
+	// field unset.
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3114,8 +3117,8 @@ func (s *ProgressCounter) MarshalJSON() ([]byte, error) {
 }
 
 // RedactConfig: Define how to redact sensitive values. Default
-// behaviour is erase,
-// e.g. "My name is Jake." becomes "My name is ."
+// behaviour is erase.
+// For example, "My name is Jake." becomes "My name is ."
 type RedactConfig struct {
 }
 
@@ -3226,22 +3229,26 @@ type Segment struct {
 	// Regex for key: (\d+)(\[\d+\])?(.\d+)?(.\d+)?
 	//
 	// Examples of (key, value) pairs:
-	// - (0.1, "foo"): Component 1 of Field 0 has the value "foo".
-	// - (1.1.2, "bar"): Sub-component 2 of Component 1 of field 1 has the
-	// value
-	// "bar".
-	// - (1[2].1, "baz"): Component 1 of Instance 2 of Field 1, which is
-	// repeated,
-	// has the value "baz".
+	//
+	// * (0.1, "hemoglobin") denotes that the first component of Field 0 has
+	// the
+	//   value "hemoglobin".
+	//
+	// * (1.1.2, "CBC") denotes that the second sub-component of the first
+	//   component of Field 1 has the value "CBC".
+	//
+	// * (1[0].1, "HbA1c") denotes that the first component of the
+	//   first Instance of Field 1, which is repeated, has the value
+	// "HbA1c".
 	Fields map[string]string `json:"fields,omitempty"`
 
-	// SegmentId: A string that indicates the type of segment, e.g., EVN,
-	// PID.
+	// SegmentId: A string that indicates the type of segment. For example,
+	// EVN or PID.
 	SegmentId string `json:"segmentId,omitempty"`
 
 	// SetId: Set ID for segments that can be in a set. This can be empty if
-	// it is
-	// missing or it is not applicable.
+	// it's
+	// missing or isn't applicable.
 	SetId string `json:"setId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Fields") to
@@ -3550,7 +3557,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3716,7 +3723,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3905,7 +3912,7 @@ func (c *ProjectsLocationsDatasetsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3983,7 +3990,7 @@ func (c *ProjectsLocationsDatasetsCreateCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the project in which the dataset should be created (e.g.,\n`projects/{project_id}/locations/{location_id}`).",
+	//       "description": "The name of the project where the server creates the dataset. For\nexample, `projects/{project_id}/locations/{location_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -4025,8 +4032,9 @@ type ProjectsLocationsDatasetsDeidentifyCall struct {
 // If errors occur,
 // details field type is
 // DeidentifyErrorDetails.
-// Errors are also logged to Stackdriver
-// (see [Viewing logs](/healthcare/docs/how-tos/stackdriver-logging)).
+// Errors are also logged to Stackdriver Logging. For more
+// information,
+// see [Viewing logs](/healthcare/docs/how-tos/stackdriver-logging).
 func (r *ProjectsLocationsDatasetsService) Deidentify(sourceDataset string, deidentifydatasetrequest *DeidentifyDatasetRequest) *ProjectsLocationsDatasetsDeidentifyCall {
 	c := &ProjectsLocationsDatasetsDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sourceDataset = sourceDataset
@@ -4061,7 +4069,7 @@ func (c *ProjectsLocationsDatasetsDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4125,7 +4133,7 @@ func (c *ProjectsLocationsDatasetsDeidentifyCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new dataset containing de-identified data from the source\ndataset. The metadata field type\nis OperationMetadata.\nIf the request is successful, the\nresponse field type is\nDeidentifySummary.\nIf errors occur,\ndetails field type is\nDeidentifyErrorDetails.\nErrors are also logged to Stackdriver\n(see [Viewing logs](/healthcare/docs/how-tos/stackdriver-logging)).",
+	//   "description": "Creates a new dataset containing de-identified data from the source\ndataset. The metadata field type\nis OperationMetadata.\nIf the request is successful, the\nresponse field type is\nDeidentifySummary.\nIf errors occur,\ndetails field type is\nDeidentifyErrorDetails.\nErrors are also logged to Stackdriver Logging. For more information,\nsee [Viewing logs](/healthcare/docs/how-tos/stackdriver-logging).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}:deidentify",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.deidentify",
@@ -4134,7 +4142,7 @@ func (c *ProjectsLocationsDatasetsDeidentifyCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "sourceDataset": {
-	//       "description": "Source dataset resource name. (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`).",
+	//       "description": "Source dataset resource name. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
 	//       "required": true,
@@ -4203,7 +4211,7 @@ func (c *ProjectsLocationsDatasetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4271,7 +4279,7 @@ func (c *ProjectsLocationsDatasetsDeleteCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the dataset to delete (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`).",
+	//       "description": "The name of the dataset to delete. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
 	//       "required": true,
@@ -4344,7 +4352,7 @@ func (c *ProjectsLocationsDatasetsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4415,7 +4423,7 @@ func (c *ProjectsLocationsDatasetsGetCall) Do(opts ...googleapi.CallOption) (*Da
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the dataset to read (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`).",
+	//       "description": "The name of the dataset to read. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
 	//       "required": true,
@@ -4457,10 +4465,16 @@ func (r *ProjectsLocationsDatasetsService) GetIamPolicy(resource string) *Projec
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
 // returned.
-// Acceptable values are 0, 1, and 3.
-// If the value is 0, or the field is omitted, policy format version 1
+//
+// Valid values are 0, 1, and 3. Requests specifying an invalid value
 // will be
-// returned.
+// rejected.
+//
+// Requests for policies with any conditional bindings must specify
+// version 3.
+// Policies without any conditional bindings may specify any valid value
+// or
+// leave the field unset.
 func (c *ProjectsLocationsDatasetsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsDatasetsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -4503,7 +4517,7 @@ func (c *ProjectsLocationsDatasetsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4574,7 +4588,7 @@ func (c *ProjectsLocationsDatasetsGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4668,7 +4682,7 @@ func (c *ProjectsLocationsDatasetsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4750,7 +4764,7 @@ func (c *ProjectsLocationsDatasetsListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the project whose datasets should be listed (e.g.,\n`projects/{project_id}/locations/{location_id}`).",
+	//       "description": "The name of the project whose datasets should be listed.\nFor example, `projects/{project_id}/locations/{location_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -4846,7 +4860,7 @@ func (c *ProjectsLocationsDatasetsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4994,7 +5008,7 @@ func (c *ProjectsLocationsDatasetsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5144,7 +5158,7 @@ func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5292,7 +5306,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5437,7 +5451,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5573,7 +5587,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5646,7 +5660,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresExportCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The DICOM store resource name from which the data should be exported (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The DICOM store resource name from which to export the data. For\nexample,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -5722,7 +5736,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5835,10 +5849,16 @@ func (r *ProjectsLocationsDatasetsDicomStoresService) GetIamPolicy(resource stri
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
 // returned.
-// Acceptable values are 0, 1, and 3.
-// If the value is 0, or the field is omitted, policy format version 1
+//
+// Valid values are 0, 1, and 3. Requests specifying an invalid value
 // will be
-// returned.
+// rejected.
+//
+// Requests for policies with any conditional bindings must specify
+// version 3.
+// Policies without any conditional bindings may specify any valid value
+// or
+// leave the field unset.
 func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -5881,7 +5901,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5952,7 +5972,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5989,14 +6009,14 @@ type ProjectsLocationsDatasetsDicomStoresImportCall struct {
 
 // Import: Imports data into the DICOM store by copying it from the
 // specified source.
-// For errors, the Operation will be populated with error details (in
-// the form
-// of ImportDicomDataErrorDetails in error.details), which will
+// For errors, the Operation is populated with error details (in the
+// form
+// of ImportDicomDataErrorDetails in error.details), which
 // hold
 // finer-grained error information. Errors are also logged to
 // Stackdriver
-// (see [Viewing
-// logs](/healthcare/docs/how-tos/stackdriver-logging)).
+// Logging. For more information,
+// see [Viewing logs](/healthcare/docs/how-tos/stackdriver-logging).
 // The metadata field type is
 // OperationMetadata.
 func (r *ProjectsLocationsDatasetsDicomStoresService) Import(name string, importdicomdatarequest *ImportDicomDataRequest) *ProjectsLocationsDatasetsDicomStoresImportCall {
@@ -6033,7 +6053,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6097,7 +6117,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresImportCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Imports data into the DICOM store by copying it from the specified source.\nFor errors, the Operation will be populated with error details (in the form\nof ImportDicomDataErrorDetails in error.details), which will hold\nfiner-grained error information. Errors are also logged to Stackdriver\n(see [Viewing logs](/healthcare/docs/how-tos/stackdriver-logging)).\nThe metadata field type is\nOperationMetadata.",
+	//   "description": "Imports data into the DICOM store by copying it from the specified source.\nFor errors, the Operation is populated with error details (in the form\nof ImportDicomDataErrorDetails in error.details), which hold\nfiner-grained error information. Errors are also logged to Stackdriver\nLogging. For more information,\nsee [Viewing logs](/healthcare/docs/how-tos/stackdriver-logging).\nThe metadata field type is\nOperationMetadata.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}:import",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.import",
@@ -6106,7 +6126,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresImportCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the DICOM store resource into which the data is imported (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store resource into which the data is imported.\nFor example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -6150,7 +6170,7 @@ func (r *ProjectsLocationsDatasetsDicomStoresService) List(parent string) *Proje
 // Syntax:
 // https://cloud.google.com/appengine/docs/standard/python/search
 // /query_strings
-// Only filtering on labels is supported, for example
+// Only filtering on labels is supported. For example,
 // `labels.key=value`.
 func (c *ProjectsLocationsDatasetsDicomStoresListCall) Filter(filter string) *ProjectsLocationsDatasetsDicomStoresListCall {
 	c.urlParams_.Set("filter", filter)
@@ -6210,7 +6230,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6281,7 +6301,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Restricts stores returned to those matching a filter. Syntax:\nhttps://cloud.google.com/appengine/docs/standard/python/search/query_strings\nOnly filtering on labels is supported, for example `labels.key=value`.",
+	//       "description": "Restricts stores returned to those matching a filter. Syntax:\nhttps://cloud.google.com/appengine/docs/standard/python/search/query_strings\nOnly filtering on labels is supported. For example, `labels.key=value`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6393,7 +6413,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6554,7 +6574,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6594,14 +6614,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the SearchForInstancesRequest DICOMweb request (e.g.,\n`instances` or `series/{series_uid}/instances` or\n`studies/{study_uid}/instances`).",
+	//       "description": "The path of the SearchForInstancesRequest DICOMweb request (for example,\n`instances` or `series/{series_uid}/instances` or\n`studies/{study_uid}/instances`).",
 	//       "location": "path",
 	//       "pattern": "^instances$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -6679,7 +6699,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall) Header() http.
 
 func (c *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6719,14 +6739,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the SearchForSeries DICOMweb request(e.g., `series` or\n`studies/{study_uid}/series`).",
+	//       "description": "The path of the SearchForSeries DICOMweb request(for example, `series` or\n`studies/{study_uid}/series`).",
 	//       "location": "path",
 	//       "pattern": "^series$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -6805,7 +6825,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) Header() http
 
 func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6845,14 +6865,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the SearchForStudies DICOMweb request (e.g., `studies`).",
+	//       "description": "The path of the SearchForStudies DICOMweb request (for example, `studies`).",
 	//       "location": "path",
 	//       "pattern": "^studies$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -6918,7 +6938,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7065,7 +7085,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7101,14 +7121,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the StoreInstances DICOMweb request (e.g.,\n`studies/[{study_id}]`). Note that the `study_uid` is optional.",
+	//       "description": "The path of the StoreInstances DICOMweb request (for example,\n`studies/[{study_uid}]`). Note that the `study_uid` is optional.",
 	//       "location": "path",
 	//       "pattern": "^studies$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -7185,7 +7205,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7327,7 +7347,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7397,14 +7417,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DeleteStudy request (e.g., `studies/{study_id}`).",
+	//       "description": "The path of the DeleteStudy request (for example, `studies/{study_uid}`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -7484,7 +7504,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall) Header
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7524,14 +7544,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall) Do(opt
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the RetrieveStudyMetadata DICOMweb request (e.g.,\n`studies/{study_id}/metadata`).",
+	//       "description": "The path of the RetrieveStudyMetadata DICOMweb request (for example,\n`studies/{study_uid}/metadata`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/metadata$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -7610,7 +7630,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall) Header() 
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7650,14 +7670,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the RetrieveStudy DICOMweb request (e.g.,\n`studies/{study_id}`).",
+	//       "description": "The path of the RetrieveStudy DICOMweb request (for example,\n`studies/{study_uid}`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -7736,7 +7756,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall) Head
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7776,14 +7796,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall) Do(o
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the SearchForInstancesRequest DICOMweb request (e.g.,\n`instances` or `series/{series_uid}/instances` or\n`studies/{study_uid}/instances`).",
+	//       "description": "The path of the SearchForInstancesRequest DICOMweb request (for example,\n`instances` or `series/{series_uid}/instances` or\n`studies/{study_uid}/instances`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/instances$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -7861,7 +7881,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall) Header(
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7901,14 +7921,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall) Do(opts
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the SearchForSeries DICOMweb request(e.g., `series` or\n`studies/{study_uid}/series`).",
+	//       "description": "The path of the SearchForSeries DICOMweb request(for example, `series` or\n`studies/{study_uid}/series`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -7979,7 +7999,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) Header()
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8015,14 +8035,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the StoreInstances DICOMweb request (e.g.,\n`studies/[{study_id}]`). Note that the `study_uid` is optional.",
+	//       "description": "The path of the StoreInstances DICOMweb request (for example,\n`studies/[{study_uid}]`). Note that the `study_uid` is optional.",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -8093,7 +8113,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) Header() h
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8163,14 +8183,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DeleteSeries request (e.g.,\n`studies/{study_id}/series/{series_id}`).",
+	//       "description": "The path of the DeleteSeries request (for example,\n`studies/{study_uid}/series/{series_uid}`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -8250,7 +8270,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall) 
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8290,14 +8310,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall) 
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the RetrieveSeriesMetadata DICOMweb request (e.g.,\n`studies/{study_id}/series/{series_id}/metadata`).",
+	//       "description": "The path of the RetrieveSeriesMetadata DICOMweb request (for example,\n`studies/{study_uid}/series/{series_uid}/metadata`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/metadata$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -8376,7 +8396,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall) He
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8416,14 +8436,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall) Do
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the RetrieveSeries DICOMweb request (e.g.,\n`studies/{study_id}/series/{series_id}`).",
+	//       "description": "The path of the RetrieveSeries DICOMweb request (for example,\n`studies/{study_uid}/series/{series_uid}`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -8502,7 +8522,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8542,14 +8562,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the SearchForInstancesRequest DICOMweb request (e.g.,\n`instances` or `series/{series_uid}/instances` or\n`studies/{study_uid}/instances`).",
+	//       "description": "The path of the SearchForInstancesRequest DICOMweb request (for example,\n`instances` or `series/{series_uid}/instances` or\n`studies/{study_uid}/instances`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -8617,7 +8637,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) H
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8687,14 +8707,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) D
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DeleteInstance request (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}`).",
+	//       "description": "The path of the DeleteInstance request (for example,\n`studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -8774,7 +8794,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInsta
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8814,14 +8834,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInsta
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the RetrieveInstance DICOMweb request (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}`).",
+	//       "description": "The path of the RetrieveInstance DICOMweb request (for example,\n`studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -8903,7 +8923,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetad
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8943,14 +8963,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetad
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the RetrieveInstanceMetadata DICOMweb request (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}/metadata`).",
+	//       "description": "The path of the RetrieveInstanceMetadata DICOMweb request (for example,\n`studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/metadata`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/metadata$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -9030,7 +9050,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRende
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9070,14 +9090,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRende
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the RetrieveRenderedInstance DICOMweb request (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}/rendered`).",
+	//       "description": "The path of the RetrieveRenderedInstance DICOMweb request (for example,\n`studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/rendered`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/rendered$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -9157,7 +9177,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFramesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9197,14 +9217,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the RetrieveFrames DICOMweb request (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}/frames/{frame_list}`).",
+	//       "description": "The path of the RetrieveFrames DICOMweb request (for example,\n`studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/frames/{frame_list}`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/frames/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -9286,7 +9306,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRenderedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9326,14 +9346,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the RetrieveRenderedFrames DICOMweb request (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}/frames/{frame_list}/rendered`).",
+	//       "description": "The path of the RetrieveRenderedFrames DICOMweb request (for example,\n`studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/frames/{frame_list}/rendered`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/frames/[^/]+/rendered$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+	//       "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -9406,7 +9426,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9550,7 +9570,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9701,7 +9721,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9850,7 +9870,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9963,10 +9983,16 @@ func (r *ProjectsLocationsDatasetsFhirStoresService) GetIamPolicy(resource strin
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
 // returned.
-// Acceptable values are 0, 1, and 3.
-// If the value is 0, or the field is omitted, policy format version 1
+//
+// Valid values are 0, 1, and 3. Requests specifying an invalid value
 // will be
-// returned.
+// rejected.
+//
+// Requests for policies with any conditional bindings must specify
+// version 3.
+// Policies without any conditional bindings may specify any valid value
+// or
+// leave the field unset.
 func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -10009,7 +10035,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10080,7 +10106,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -10192,7 +10218,7 @@ type ProjectsLocationsDatasetsFhirStoresImportCall struct {
 // the
 // `BUNDLE` format. When using the `BUNDLE` format this method ignores
 // the
-// `Bundle.type` field, except for the special case of `history`, and
+// `Bundle.type` field, except that `history` bundles are rejected, and
 // does
 // not apply any of the bundle processing semantics for batch or
 // transaction
@@ -10208,23 +10234,6 @@ type ProjectsLocationsDatasetsFhirStoresImportCall struct {
 // a
 // FHIR search or
 // Patient-everything operation.
-//
-// If history imports are enabled by setting
-// enable_history_import in the FHIR
-// store's configuration, this method can import historical versions
-// of a resource by supplying a bundle of type `history` and using
-// the
-// `BUNDLE` format. The historical versions in the bundle must
-// have
-// `lastUpdated` timestamps, and the resulting resource history on the
-// server
-// will appear as if the versions had been created at those timestamps.
-// If a
-// current or historical version with the supplied resource ID
-// already
-// exists, the bundle is rejected to avoid creating an inconsistent
-// sequence
-// of resource versions.
 //
 // This method returns an Operation that can
 // be used to track the status of the import by
@@ -10276,7 +10285,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10340,7 +10349,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresImportCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Import resources to the FHIR store by loading data from the specified\nsources. This method is optimized to load large quantities of data using\nimport semantics that ignore some FHIR store configuration options and are\nnot suitable for all use cases. It is primarily intended to load data into\nan empty FHIR store that is not being used by other clients. In cases\nwhere this method is not appropriate, consider using ExecuteBundle to\nload data.\n\nEvery resource in the input must contain a client-supplied ID, and will be\nstored using that ID regardless of the\nenable_update_create setting on the FHIR\nstore.\n\nThe import process does not enforce referential integrity, regardless of\nthe\ndisable_referential_integrity\nsetting on the FHIR store. This allows the import of resources with\narbitrary interdependencies without considering grouping or ordering, but\nif the input data contains invalid references or if some resources fail to\nbe imported, the FHIR store might be left in a state that violates\nreferential integrity.\n\nIf a resource with the specified ID already exists, the most recent\nversion of the resource is overwritten without creating a new historical\nversion, regardless of the\ndisable_resource_versioning\nsetting on the FHIR store. If transient failures occur during the import,\nit is possible that successfully imported resources will be overwritten\nmore than once.\n\nThe import operation is idempotent unless the input data contains multiple\nvalid resources with the same ID but different contents. In that case,\nafter the import completes, the store will contain exactly one resource\nwith that ID but there is no ordering guarantee on which version of the\ncontents it will have. The operation result counters do not count\nduplicate IDs as an error and will count one success for each resource in\nthe input, which might result in a success count larger than the number\nof resources in the FHIR store. This often occurs when importing data\norganized in bundles produced by Patient-everything\nwhere each bundle contains its own copy of a resource such as Practitioner\nthat might be referred to by many patients.\n\nIf some resources fail to import, for example due to parsing errors,\nsuccessfully imported resources are not rolled back.\n\nThe location and format of the input data is specified by the parameters\nbelow. Note that if no format is specified, this method assumes the\n`BUNDLE` format. When using the `BUNDLE` format this method ignores the\n`Bundle.type` field, except for the special case of `history`, and does\nnot apply any of the bundle processing semantics for batch or transaction\nbundles. Unlike in ExecuteBundle, transaction bundles are not executed\nas a single transaction and bundle-internal references are not rewritten.\nThe bundle is treated as a collection of resources to be written as\nprovided in `Bundle.entry.resource`, ignoring `Bundle.entry.request`. As\nan example, this allows the import of `searchset` bundles produced by a\nFHIR search or\nPatient-everything operation.\n\nIf history imports are enabled by setting\nenable_history_import in the FHIR\nstore's configuration, this method can import historical versions\nof a resource by supplying a bundle of type `history` and using the\n`BUNDLE` format. The historical versions in the bundle must have\n`lastUpdated` timestamps, and the resulting resource history on the server\nwill appear as if the versions had been created at those timestamps. If a\ncurrent or historical version with the supplied resource ID already\nexists, the bundle is rejected to avoid creating an inconsistent sequence\nof resource versions.\n\nThis method returns an Operation that can\nbe used to track the status of the import by calling\nGetOperation.\n\nImmediate fatal errors appear in the\nerror field, errors are also logged\nto Stackdriver (see [Viewing\nlogs](/healthcare/docs/how-tos/stackdriver-logging)). Otherwise, when the\noperation finishes, a detailed response of type ImportResourcesResponse\nis returned in the response field.\nThe metadata field type for this\noperation is OperationMetadata.",
+	//   "description": "Import resources to the FHIR store by loading data from the specified\nsources. This method is optimized to load large quantities of data using\nimport semantics that ignore some FHIR store configuration options and are\nnot suitable for all use cases. It is primarily intended to load data into\nan empty FHIR store that is not being used by other clients. In cases\nwhere this method is not appropriate, consider using ExecuteBundle to\nload data.\n\nEvery resource in the input must contain a client-supplied ID, and will be\nstored using that ID regardless of the\nenable_update_create setting on the FHIR\nstore.\n\nThe import process does not enforce referential integrity, regardless of\nthe\ndisable_referential_integrity\nsetting on the FHIR store. This allows the import of resources with\narbitrary interdependencies without considering grouping or ordering, but\nif the input data contains invalid references or if some resources fail to\nbe imported, the FHIR store might be left in a state that violates\nreferential integrity.\n\nIf a resource with the specified ID already exists, the most recent\nversion of the resource is overwritten without creating a new historical\nversion, regardless of the\ndisable_resource_versioning\nsetting on the FHIR store. If transient failures occur during the import,\nit is possible that successfully imported resources will be overwritten\nmore than once.\n\nThe import operation is idempotent unless the input data contains multiple\nvalid resources with the same ID but different contents. In that case,\nafter the import completes, the store will contain exactly one resource\nwith that ID but there is no ordering guarantee on which version of the\ncontents it will have. The operation result counters do not count\nduplicate IDs as an error and will count one success for each resource in\nthe input, which might result in a success count larger than the number\nof resources in the FHIR store. This often occurs when importing data\norganized in bundles produced by Patient-everything\nwhere each bundle contains its own copy of a resource such as Practitioner\nthat might be referred to by many patients.\n\nIf some resources fail to import, for example due to parsing errors,\nsuccessfully imported resources are not rolled back.\n\nThe location and format of the input data is specified by the parameters\nbelow. Note that if no format is specified, this method assumes the\n`BUNDLE` format. When using the `BUNDLE` format this method ignores the\n`Bundle.type` field, except that `history` bundles are rejected, and does\nnot apply any of the bundle processing semantics for batch or transaction\nbundles. Unlike in ExecuteBundle, transaction bundles are not executed\nas a single transaction and bundle-internal references are not rewritten.\nThe bundle is treated as a collection of resources to be written as\nprovided in `Bundle.entry.resource`, ignoring `Bundle.entry.request`. As\nan example, this allows the import of `searchset` bundles produced by a\nFHIR search or\nPatient-everything operation.\n\nThis method returns an Operation that can\nbe used to track the status of the import by calling\nGetOperation.\n\nImmediate fatal errors appear in the\nerror field, errors are also logged\nto Stackdriver (see [Viewing\nlogs](/healthcare/docs/how-tos/stackdriver-logging)). Otherwise, when the\noperation finishes, a detailed response of type ImportResourcesResponse\nis returned in the response field.\nThe metadata field type for this\noperation is OperationMetadata.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:import",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.import",
@@ -10453,7 +10462,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10636,7 +10645,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10784,7 +10793,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10934,7 +10943,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall) Header() htt
 
 func (c *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11112,7 +11121,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirObservationLastnCall) Header() h
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirObservationLastnCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11282,7 +11291,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Header() 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11409,7 +11418,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall) Header() http
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11565,7 +11574,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall) Header() http.
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11687,7 +11696,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall) Header() 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11864,7 +11873,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall) Header() h
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12017,7 +12026,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall) Header() 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12163,7 +12172,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12285,7 +12294,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirDeleteCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12424,7 +12433,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall) Header() http
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12606,7 +12615,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirHistoryCall) Header() http.Heade
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12752,7 +12761,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatchCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12886,7 +12895,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13066,7 +13075,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13203,7 +13212,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13331,7 +13340,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirVreadCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirVreadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13442,7 +13451,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13587,7 +13596,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13728,7 +13737,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13841,10 +13850,16 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresService) GetIamPolicy(resource stri
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
 // returned.
-// Acceptable values are 0, 1, and 3.
-// If the value is 0, or the field is omitted, policy format version 1
+//
+// Valid values are 0, 1, and 3. Requests specifying an invalid value
 // will be
-// returned.
+// rejected.
+//
+// Requests for policies with any conditional bindings must specify
+// version 3.
+// Policies without any conditional bindings may specify any valid value
+// or
+// leave the field unset.
 func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -13887,7 +13902,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13958,7 +13973,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\nAcceptable values are 0, 1, and 3.\nIf the value is 0, or the field is omitted, policy format version 1 will be\nreturned.",
+	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -14005,7 +14020,7 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresService) List(parent string) *Proje
 // Syntax:
 // https://cloud.google.com/appengine/docs/standard/python/search
 // /query_strings
-// Only filtering on labels is supported, for example
+// Only filtering on labels is supported. For example,
 // `labels.key=value`.
 func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Filter(filter string) *ProjectsLocationsDatasetsHl7V2StoresListCall {
 	c.urlParams_.Set("filter", filter)
@@ -14065,7 +14080,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14136,7 +14151,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Restricts stores returned to those matching a filter. Syntax:\nhttps://cloud.google.com/appengine/docs/standard/python/search/query_strings\nOnly filtering on labels is supported, for example `labels.key=value`.",
+	//       "description": "Restricts stores returned to those matching a filter. Syntax:\nhttps://cloud.google.com/appengine/docs/standard/python/search/query_strings\nOnly filtering on labels is supported. For example, `labels.key=value`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14248,7 +14263,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14396,7 +14411,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14546,7 +14561,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14696,7 +14711,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14834,7 +14849,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14939,8 +14954,7 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Get(name string) *
 }
 
 // View sets the optional parameter "view": Specifies which parts of the
-// Message resource should be returned
-// in the response.
+// Message resource to return in the response.
 //
 // Possible values:
 //   "MESSAGE_VIEW_UNSPECIFIED"
@@ -14989,7 +15003,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15067,7 +15081,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) Do(opts ...googlea
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Specifies which parts of the Message resource should be returned\nin the response.",
+	//       "description": "Specifies which parts of the Message resource to return in the response.",
 	//       "enum": [
 	//         "MESSAGE_VIEW_UNSPECIFIED",
 	//         "RAW_ONLY",
@@ -15143,7 +15157,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15270,44 +15284,46 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) List(parent string
 //
 // Fields/functions available for filtering are:
 //
-// *  `message_type`, from the MSH-9 segment; for example
-// `NOT message_type = "ADT"
+// *  `message_type`, from the MSH-9 segment. For example,
+// `NOT message_type = "ADT".
 // *  `send_date` or `sendDate`, the YYYY-MM-DD date the message was
 // sent in
-// the dataset's time_zone, from the MSH-7 segment; for
-// example
-// `send_date < "2017-01-02"
+// the dataset's time_zone, from the MSH-7 segment. For
+// example,
+// `send_date < "2017-01-02".
 // *  `send_time`, the timestamp when the message was sent, using
 // the
-// RFC3339 time format for comparisons, from the MSH-7 segment; for
-// example
-// `send_time < "2017-01-02T00:00:00-05:00"
+// RFC3339 time format for comparisons, from the MSH-7 segment. For
+// example,
+// `send_time < "2017-01-02T00:00:00-05:00".
 // *  `send_facility`, the care center that the message came from, from
 // the
-// MSH-4 segment; for example `send_facility = "ABC"
+// MSH-4 segment. For example, `send_facility = "ABC".
 // *  `HL7RegExp(expr)`, which does regular expression matching of
 // `expr`
-// against the message payload using re2
-// (http://code.google.com/p/re2/)
-// syntax; for example `HL7RegExp("^.*\|.*\|EMERG")`
+// against the message payload using RE2
+// syntax
+// (https://github.com/google/re2/wiki/Syntax). For
+// example,
+// `HL7RegExp("^.*\|.*\|EMERG")`.
 // *  `PatientId(value, type)`, which matches if the message lists a
 // patient
 // having an ID of the given value and type in the PID-2, PID-3, or
 // PID-4
-// segments; for example `PatientId("123456", "MRN")`
+// segments. For example, `PatientId("123456", "MRN")`.
 // *  `labels.x`, a string value of the label with key `x` as set using
 // the
 // Message.labels
-// map, for example `labels."priority"="high". The operator `:*` can be
-// used
-// to assert the existence of a label, for example
+// map. For example, `labels."priority"="high". The operator `:*` can
+// be used
+// to assert the existence of a label. For example,
 // `labels."priority":*`.
 //
 // Limitations on conjunctions:
 //
 // *  Negation on the patient ID function or the labels field is
 // not
-// supported, for example these queries are invalid:
+// supported. For example, these queries are invalid:
 // `NOT PatientId("123456", "MRN")`, `NOT labels."tag1":*`,
 // `NOT labels."tag2"="val2".
 // *  Conjunction of multiple patient ID functions is not supported,
@@ -15320,7 +15336,7 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) List(parent string
 // labels."tag2"="val2".
 // *  Conjunction of one patient ID function, one labels field and
 // conditions
-// on other fields is supported, for example this query is
+// on other fields is supported. For example, this query is
 // valid:
 // `PatientId("123456", "MRN") AND labels."tag1":* AND message_type =
 // "ADT".
@@ -15396,7 +15412,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15467,7 +15483,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Restricts messages returned to those matching a filter. Syntax:\nhttps://cloud.google.com/appengine/docs/standard/python/search/query_strings\n\nFields/functions available for filtering are:\n\n*  `message_type`, from the MSH-9 segment; for example\n`NOT message_type = \"ADT\"`\n*  `send_date` or `sendDate`, the YYYY-MM-DD date the message was sent in\nthe dataset's time_zone, from the MSH-7 segment; for example\n`send_date \u003c \"2017-01-02\"`\n*  `send_time`, the timestamp when the message was sent, using the\nRFC3339 time format for comparisons, from the MSH-7 segment; for example\n`send_time \u003c \"2017-01-02T00:00:00-05:00\"`\n*  `send_facility`, the care center that the message came from, from the\nMSH-4 segment; for example `send_facility = \"ABC\"`\n*  `HL7RegExp(expr)`, which does regular expression matching of `expr`\nagainst the message payload using re2 (http://code.google.com/p/re2/)\nsyntax; for example `HL7RegExp(\"^.*\\|.*\\|EMERG\")`\n*  `PatientId(value, type)`, which matches if the message lists a patient\nhaving an ID of the given value and type in the PID-2, PID-3, or PID-4\nsegments; for example `PatientId(\"123456\", \"MRN\")`\n*  `labels.x`, a string value of the label with key `x` as set using the\nMessage.labels\nmap, for example `labels.\"priority\"=\"high\"`. The operator `:*` can be used\nto assert the existence of a label, for example `labels.\"priority\":*`.\n\nLimitations on conjunctions:\n\n*  Negation on the patient ID function or the labels field is not\nsupported, for example these queries are invalid:\n`NOT PatientId(\"123456\", \"MRN\")`, `NOT labels.\"tag1\":*`,\n`NOT labels.\"tag2\"=\"val2\"`.\n*  Conjunction of multiple patient ID functions is not supported, for\nexample this query is invalid:\n`PatientId(\"123456\", \"MRN\") AND PatientId(\"456789\", \"MRN\")`.\n*  Conjunction of multiple labels fields is also not supported, for\nexample this query is invalid: `labels.\"tag1\":* AND labels.\"tag2\"=\"val2\"`.\n*  Conjunction of one patient ID function, one labels field and conditions\non other fields is supported, for example this query is valid:\n`PatientId(\"123456\", \"MRN\") AND labels.\"tag1\":* AND message_type = \"ADT\"`.",
+	//       "description": "Restricts messages returned to those matching a filter. Syntax:\nhttps://cloud.google.com/appengine/docs/standard/python/search/query_strings\n\nFields/functions available for filtering are:\n\n*  `message_type`, from the MSH-9 segment. For example,\n`NOT message_type = \"ADT\"`.\n*  `send_date` or `sendDate`, the YYYY-MM-DD date the message was sent in\nthe dataset's time_zone, from the MSH-7 segment. For example,\n`send_date \u003c \"2017-01-02\"`.\n*  `send_time`, the timestamp when the message was sent, using the\nRFC3339 time format for comparisons, from the MSH-7 segment. For example,\n`send_time \u003c \"2017-01-02T00:00:00-05:00\"`.\n*  `send_facility`, the care center that the message came from, from the\nMSH-4 segment. For example, `send_facility = \"ABC\"`.\n*  `HL7RegExp(expr)`, which does regular expression matching of `expr`\nagainst the message payload using RE2 syntax\n(https://github.com/google/re2/wiki/Syntax). For example,\n`HL7RegExp(\"^.*\\|.*\\|EMERG\")`.\n*  `PatientId(value, type)`, which matches if the message lists a patient\nhaving an ID of the given value and type in the PID-2, PID-3, or PID-4\nsegments. For example, `PatientId(\"123456\", \"MRN\")`.\n*  `labels.x`, a string value of the label with key `x` as set using the\nMessage.labels\nmap. For example, `labels.\"priority\"=\"high\"`. The operator `:*` can be used\nto assert the existence of a label. For example, `labels.\"priority\":*`.\n\nLimitations on conjunctions:\n\n*  Negation on the patient ID function or the labels field is not\nsupported. For example, these queries are invalid:\n`NOT PatientId(\"123456\", \"MRN\")`, `NOT labels.\"tag1\":*`,\n`NOT labels.\"tag2\"=\"val2\"`.\n*  Conjunction of multiple patient ID functions is not supported, for\nexample this query is invalid:\n`PatientId(\"123456\", \"MRN\") AND PatientId(\"456789\", \"MRN\")`.\n*  Conjunction of multiple labels fields is also not supported, for\nexample this query is invalid: `labels.\"tag1\":* AND labels.\"tag2\"=\"val2\"`.\n*  Conjunction of one patient ID function, one labels field and conditions\non other fields is supported. For example, this query is valid:\n`PatientId(\"123456\", \"MRN\") AND labels.\"tag1\":* AND message_type = \"ADT\"`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15553,9 +15569,9 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Patch(name string,
 // https://developers.google.com/protocol-buffers/docs/re
 // ference/google.protobuf#fieldmask
 // Only the `labels` field is allowed to be updated.
-// The labels in the request will be merged with the existing set of
+// The labels in the request are merged with the existing set of
 // labels.
-// Existing labels with the same keys will be updated.
+// Existing labels with the same keys are updated.
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -15588,7 +15604,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15668,7 +15684,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Do(opts ...googl
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The update mask applies to the resource. For the `FieldMask` definition,\nsee\nhttps://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask\nOnly the `labels` field is allowed to be updated.\nThe labels in the request will be merged with the existing set of labels.\nExisting labels with the same keys will be updated.",
+	//       "description": "The update mask applies to the resource. For the `FieldMask` definition,\nsee\nhttps://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask\nOnly the `labels` field is allowed to be updated.\nThe labels in the request are merged with the existing set of labels.\nExisting labels with the same keys are updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -15747,7 +15763,7 @@ func (c *ProjectsLocationsDatasetsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15928,7 +15944,7 @@ func (c *ProjectsLocationsDatasetsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190920")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

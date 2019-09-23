@@ -1053,7 +1053,15 @@ type GoogleCloudVideointelligenceV1VideoAnnotationResults struct {
 
 	// SegmentPresenceLabelAnnotations: Presence label annotations on video
 	// level or user specified segment level.
-	// There is exactly one element for each unique label.
+	// There is exactly one element for each unique label. Compared to
+	// the
+	// existing topical `segment_label_annotations`, this field presents
+	// more
+	// fine-grained, segment-level labels detected in video content and is
+	// made
+	// available only when the client sets `LabelDetectionConfig.model`
+	// to
+	// "builtin/latest" in the request.
 	SegmentPresenceLabelAnnotations []*GoogleCloudVideointelligenceV1LabelAnnotation `json:"segmentPresenceLabelAnnotations,omitempty"`
 
 	// ShotAnnotations: Shot annotations. Each shot is represented as a
@@ -1066,7 +1074,13 @@ type GoogleCloudVideointelligenceV1VideoAnnotationResults struct {
 
 	// ShotPresenceLabelAnnotations: Presence label annotations on shot
 	// level. There is exactly one element for
-	// each unique label.
+	// each unique label. Compared to the existing
+	// topical
+	// `shot_label_annotations`, this field presents more fine-grained,
+	// shot-level
+	// labels detected in video content and is made available only when the
+	// client
+	// sets `LabelDetectionConfig.model` to "builtin/latest" in the request.
 	ShotPresenceLabelAnnotations []*GoogleCloudVideointelligenceV1LabelAnnotation `json:"shotPresenceLabelAnnotations,omitempty"`
 
 	// SpeechTranscriptions: Speech transcription.
@@ -2136,7 +2150,15 @@ type GoogleCloudVideointelligenceV1beta2VideoAnnotationResults struct {
 
 	// SegmentPresenceLabelAnnotations: Presence label annotations on video
 	// level or user specified segment level.
-	// There is exactly one element for each unique label.
+	// There is exactly one element for each unique label. Compared to
+	// the
+	// existing topical `segment_label_annotations`, this field presents
+	// more
+	// fine-grained, segment-level labels detected in video content and is
+	// made
+	// available only when the client sets `LabelDetectionConfig.model`
+	// to
+	// "builtin/latest" in the request.
 	SegmentPresenceLabelAnnotations []*GoogleCloudVideointelligenceV1beta2LabelAnnotation `json:"segmentPresenceLabelAnnotations,omitempty"`
 
 	// ShotAnnotations: Shot annotations. Each shot is represented as a
@@ -2149,7 +2171,13 @@ type GoogleCloudVideointelligenceV1beta2VideoAnnotationResults struct {
 
 	// ShotPresenceLabelAnnotations: Presence label annotations on shot
 	// level. There is exactly one element for
-	// each unique label.
+	// each unique label. Compared to the existing
+	// topical
+	// `shot_label_annotations`, this field presents more fine-grained,
+	// shot-level
+	// labels detected in video content and is made available only when the
+	// client
+	// sets `LabelDetectionConfig.model` to "builtin/latest" in the request.
 	ShotPresenceLabelAnnotations []*GoogleCloudVideointelligenceV1beta2LabelAnnotation `json:"shotPresenceLabelAnnotations,omitempty"`
 
 	// SpeechTranscriptions: Speech transcription.
@@ -3683,7 +3711,15 @@ type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationResults struct {
 
 	// SegmentPresenceLabelAnnotations: Presence label annotations on video
 	// level or user specified segment level.
-	// There is exactly one element for each unique label.
+	// There is exactly one element for each unique label. Compared to
+	// the
+	// existing topical `segment_label_annotations`, this field presents
+	// more
+	// fine-grained, segment-level labels detected in video content and is
+	// made
+	// available only when the client sets `LabelDetectionConfig.model`
+	// to
+	// "builtin/latest" in the request.
 	SegmentPresenceLabelAnnotations []*GoogleCloudVideointelligenceV1p1beta1LabelAnnotation `json:"segmentPresenceLabelAnnotations,omitempty"`
 
 	// ShotAnnotations: Shot annotations. Each shot is represented as a
@@ -3696,7 +3732,13 @@ type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationResults struct {
 
 	// ShotPresenceLabelAnnotations: Presence label annotations on shot
 	// level. There is exactly one element for
-	// each unique label.
+	// each unique label. Compared to the existing
+	// topical
+	// `shot_label_annotations`, this field presents more fine-grained,
+	// shot-level
+	// labels detected in video content and is made available only when the
+	// client
+	// sets `LabelDetectionConfig.model` to "builtin/latest" in the request.
 	ShotPresenceLabelAnnotations []*GoogleCloudVideointelligenceV1p1beta1LabelAnnotation `json:"shotPresenceLabelAnnotations,omitempty"`
 
 	// SpeechTranscriptions: Speech transcription.
@@ -4821,7 +4863,15 @@ type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationResults struct {
 
 	// SegmentPresenceLabelAnnotations: Presence label annotations on video
 	// level or user specified segment level.
-	// There is exactly one element for each unique label.
+	// There is exactly one element for each unique label. Compared to
+	// the
+	// existing topical `segment_label_annotations`, this field presents
+	// more
+	// fine-grained, segment-level labels detected in video content and is
+	// made
+	// available only when the client sets `LabelDetectionConfig.model`
+	// to
+	// "builtin/latest" in the request.
 	SegmentPresenceLabelAnnotations []*GoogleCloudVideointelligenceV1p2beta1LabelAnnotation `json:"segmentPresenceLabelAnnotations,omitempty"`
 
 	// ShotAnnotations: Shot annotations. Each shot is represented as a
@@ -4834,7 +4884,13 @@ type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationResults struct {
 
 	// ShotPresenceLabelAnnotations: Presence label annotations on shot
 	// level. There is exactly one element for
-	// each unique label.
+	// each unique label. Compared to the existing
+	// topical
+	// `shot_label_annotations`, this field presents more fine-grained,
+	// shot-level
+	// labels detected in video content and is made available only when the
+	// client
+	// sets `LabelDetectionConfig.model` to "builtin/latest" in the request.
 	ShotPresenceLabelAnnotations []*GoogleCloudVideointelligenceV1p2beta1LabelAnnotation `json:"shotPresenceLabelAnnotations,omitempty"`
 
 	// SpeechTranscriptions: Speech transcription.
@@ -6193,7 +6249,15 @@ type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationResults struct {
 
 	// SegmentPresenceLabelAnnotations: Presence label annotations on video
 	// level or user specified segment level.
-	// There is exactly one element for each unique label.
+	// There is exactly one element for each unique label. Compared to
+	// the
+	// existing topical `segment_label_annotations`, this field presents
+	// more
+	// fine-grained, segment-level labels detected in video content and is
+	// made
+	// available only when the client sets `LabelDetectionConfig.model`
+	// to
+	// "builtin/latest" in the request.
 	SegmentPresenceLabelAnnotations []*GoogleCloudVideointelligenceV1p3beta1LabelAnnotation `json:"segmentPresenceLabelAnnotations,omitempty"`
 
 	// ShotAnnotations: Shot annotations. Each shot is represented as a
@@ -6206,7 +6270,13 @@ type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationResults struct {
 
 	// ShotPresenceLabelAnnotations: Presence label annotations on shot
 	// level. There is exactly one element for
-	// each unique label.
+	// each unique label. Compared to the existing
+	// topical
+	// `shot_label_annotations`, this field presents more fine-grained,
+	// shot-level
+	// labels detected in video content and is made available only when the
+	// client
+	// sets `LabelDetectionConfig.model` to "builtin/latest" in the request.
 	ShotPresenceLabelAnnotations []*GoogleCloudVideointelligenceV1p3beta1LabelAnnotation `json:"shotPresenceLabelAnnotations,omitempty"`
 
 	// SpeechTranscriptions: Speech transcription.
@@ -6539,7 +6609,7 @@ func (c *VideosAnnotateCall) Header() http.Header {
 
 func (c *VideosAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190921")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

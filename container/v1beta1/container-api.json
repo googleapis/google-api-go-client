@@ -2483,7 +2483,7 @@
       }
     }
   },
-  "revision": "20190830",
+  "revision": "20190813",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2496,7 +2496,7 @@
           "type": "string"
         },
         "acceleratorType": {
-          "description": "The accelerator type resource name. List of supported accelerators\n[here](/compute/docs/gpus)",
+          "description": "The accelerator type resource name. List of supported accelerators\n[here](/compute/docs/gpus/#Introduction)",
           "type": "string"
         }
       },
@@ -3615,10 +3615,6 @@
       "description": "MaintenancePolicy defines the maintenance policy to be used for the cluster.",
       "id": "MaintenancePolicy",
       "properties": {
-        "resourceVersion": {
-          "description": "A hash identifying the version of this policy, so that updates to fields of\nthe policy won't accidentally undo intermediate changes (and so that users\nof the API unaware of some fields won't accidentally remove other fields).\nMake a \u003ccode\u003eget()\u003c/code\u003e request to the cluster to get the current\nresource version and include it with requests to set the policy.",
-          "type": "string"
-        },
         "window": {
           "$ref": "MaintenanceWindow",
           "description": "Specifies the maintenance window in which maintenance may be performed."
@@ -3633,17 +3629,6 @@
         "dailyMaintenanceWindow": {
           "$ref": "DailyMaintenanceWindow",
           "description": "DailyMaintenanceWindow specifies a daily maintenance operation window."
-        },
-        "maintenanceExclusions": {
-          "additionalProperties": {
-            "$ref": "TimeWindow"
-          },
-          "description": "Exceptions to maintenance window. Non-emergency maintenance should not\noccur in these windows.",
-          "type": "object"
-        },
-        "recurringWindow": {
-          "$ref": "RecurringTimeWindow",
-          "description": "RecurringWindow specifies some number of recurring time periods for\nmaintenance to occur. The time windows may be overlapping. If no\nmaintenance windows are set, maintenance can occur at any time."
         }
       },
       "type": "object"
@@ -3818,7 +3803,7 @@
           "type": "object"
         },
         "localSsdCount": {
-          "description": "The number of local SSD disks to be attached to the node.\n\nThe limit for this value is dependent upon the maximum number of\ndisks available on a machine per zone. See:\nhttps://cloud.google.com/compute/docs/disks/local-ssd\nfor more information.",
+          "description": "The number of local SSD disks to be attached to the node.\n\nThe limit for this value is dependant upon the maximum number of\ndisks available on a machine per zone. See:\nhttps://cloud.google.com/compute/docs/disks/local-ssd#local_ssd_limits\nfor more information.",
           "format": "int32",
           "type": "integer"
         },
@@ -4264,10 +4249,6 @@
           "description": "The IP range in CIDR notation to use for the hosted master network. This\nrange will be used for assigning internal IP addresses to the master or\nset of masters, as well as the ILB VIP. This range must not overlap with\nany other ranges in use within the cluster's network.",
           "type": "string"
         },
-        "peeringName": {
-          "description": "Output only. The peering name in the customer VPC used by this cluster.",
-          "type": "string"
-        },
         "privateEndpoint": {
           "description": "Output only. The internal IP address of this cluster's master endpoint.",
           "type": "string"
@@ -4275,21 +4256,6 @@
         "publicEndpoint": {
           "description": "Output only. The external IP address of this cluster's master endpoint.",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "RecurringTimeWindow": {
-      "description": "Represents an arbitrary window of time that recurs.",
-      "id": "RecurringTimeWindow",
-      "properties": {
-        "recurrence": {
-          "description": "An RRULE (https://tools.ietf.org/html/rfc5545#section-3.8.5.3) for how\nthis window reccurs. They go on for the span of time between the start and\nend time.\n\nFor example, to have something repeat every weekday, you'd use:\n  \u003ccode\u003eFREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR\u003c/code\u003e\nTo repeat some window daily (equivalent to the DailyMaintenanceWindow):\n  \u003ccode\u003eFREQ=DAILY\u003c/code\u003e\nFor the first weekend of every month:\n  \u003ccode\u003eFREQ=MONTHLY;BYSETPOS=1;BYDAY=SA,SU\u003c/code\u003e\nThis specifies how frequently the window starts. Eg, if you wanted to have\na 9-5 UTC-4 window every weekday, you'd use something like:\n\u003ccode\u003e\n  start time = 2019-01-01T09:00:00-0400\n  end time = 2019-01-01T17:00:00-0400\n  recurrence = FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR\n\u003c/code\u003e\nWindows can span multiple days. Eg, to make the window encompass every\nweekend from midnight Saturday till the last minute of Sunday UTC:\n\u003ccode\u003e\n  start time = 2019-01-05T00:00:00Z\n  end time = 2019-01-07T23:59:00Z\n  recurrence = FREQ=WEEKLY;BYDAY=SA\n\u003c/code\u003e\nNote the start and end time's specific dates are largely arbitrary except\nto specify duration of the window and when it first starts.\nThe FREQ values of HOURLY, MINUTELY, and SECONDLY are not supported.",
-          "type": "string"
-        },
-        "window": {
-          "$ref": "TimeWindow",
-          "description": "The window of the first recurrence."
         }
       },
       "type": "object"
@@ -4308,7 +4274,7 @@
           ],
           "enumDescriptions": [
             "No channel specified.",
-            "RAPID channel is offered on an early access basis for customers who want\nto test new releases before they are qualified for production use or\ngeneral availability. New upgrades will occur roughly weekly.\n\nWARNING: Versions available in the RAPID Channel may be subject to\nunresolved issues with no known workaround and are not for use with\nproduction workloads or subject to any SLAs.",
+            "Clusters subscribed to RAPID receive the latest qualified\ncomponents, before any other channel. RAPID is intended for early testers\nand developers who require new features. New upgrades will occur roughly\nweekly.",
             "Clusters subscribed to REGULAR receive versions that are considered GA\nquality. REGULAR is intended for production users who want to take\nadvantage of new features. New upgrades will occur roughly every few\nweeks.",
             "Clusters subscribed to STABLE receive versions that are known to be\nstable and reliable in production. STABLE is intended for production\nusers who need stability above all else, or for whom frequent upgrades\nare too risky. New upgrades will occur roughly every few months."
           ],
@@ -4331,7 +4297,7 @@
           ],
           "enumDescriptions": [
             "No channel specified.",
-            "RAPID channel is offered on an early access basis for customers who want\nto test new releases before they are qualified for production use or\ngeneral availability. New upgrades will occur roughly weekly.\n\nWARNING: Versions available in the RAPID Channel may be subject to\nunresolved issues with no known workaround and are not for use with\nproduction workloads or subject to any SLAs.",
+            "Clusters subscribed to RAPID receive the latest qualified\ncomponents, before any other channel. RAPID is intended for early testers\nand developers who require new features. New upgrades will occur roughly\nweekly.",
             "Clusters subscribed to REGULAR receive versions that are considered GA\nquality. REGULAR is intended for production users who want to take\nadvantage of new features. New upgrades will occur roughly every few\nweeks.",
             "Clusters subscribed to STABLE receive versions that are known to be\nstable and reliable in production. STABLE is intended for production\nusers who need stability above all else, or for whom frequent upgrades\nare too risky. New upgrades will occur roughly every few months."
           ],
@@ -4896,16 +4862,14 @@
             "GCE_STOCKOUT",
             "GKE_SERVICE_ACCOUNT_DELETED",
             "GCE_QUOTA_EXCEEDED",
-            "SET_BY_OPERATOR",
-            "CLOUD_KMS_KEY_ERROR"
+            "SET_BY_OPERATOR"
           ],
           "enumDescriptions": [
             "UNKNOWN indicates a generic condition.",
             "GCE_STOCKOUT indicates a Google Compute Engine stockout.",
             "GKE_SERVICE_ACCOUNT_DELETED indicates that the user deleted their robot\nservice account.",
             "Google Compute Engine quota was exceeded.",
-            "Cluster state was manually changed by an SRE due to a system logic error.",
-            "Unable to perform an encrypt operation against the CloudKMS key used for\netcd level encryption.\nMore codes TBA"
+            "Cluster state was manually changed by an SRE due to a system logic error.\nMore codes TBA"
           ],
           "type": "string"
         },
@@ -4967,23 +4931,6 @@
             "Represents the standard tier or base Google Kubernetes Engine offering.",
             "Represents the advanced tier."
           ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "TimeWindow": {
-      "description": "Represents an arbitrary window of time.",
-      "id": "TimeWindow",
-      "properties": {
-        "endTime": {
-          "description": "The time that the window ends. The end time should take place after the\nstart time.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "startTime": {
-          "description": "The time that the window first starts.",
-          "format": "google-datetime",
           "type": "string"
         }
       },

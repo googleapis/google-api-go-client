@@ -349,7 +349,7 @@
       }
     }
   },
-  "revision": "20190905",
+  "revision": "20190916",
   "rootUrl": "https://videointelligence.googleapis.com/",
   "schemas": {
     "GoogleCloudVideointelligenceV1_AnnotateVideoProgress": {
@@ -1019,7 +1019,7 @@
           "type": "array"
         },
         "segmentPresenceLabelAnnotations": {
-          "description": "Presence label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label.",
+          "description": "Presence label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label. Compared to the\nexisting topical `segment_label_annotations`, this field presents more\nfine-grained, segment-level labels detected in video content and is made\navailable only when the client sets `LabelDetectionConfig.model` to\n\"builtin/latest\" in the request.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1_LabelAnnotation"
           },
@@ -1040,7 +1040,7 @@
           "type": "array"
         },
         "shotPresenceLabelAnnotations": {
-          "description": "Presence label annotations on shot level. There is exactly one element for\neach unique label.",
+          "description": "Presence label annotations on shot level. There is exactly one element for\neach unique label. Compared to the existing topical\n`shot_label_annotations`, this field presents more fine-grained, shot-level\nlabels detected in video content and is made available only when the client\nsets `LabelDetectionConfig.model` to \"builtin/latest\" in the request.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1_LabelAnnotation"
           },
@@ -1605,7 +1605,7 @@
           "type": "array"
         },
         "segmentPresenceLabelAnnotations": {
-          "description": "Presence label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label.",
+          "description": "Presence label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label. Compared to the\nexisting topical `segment_label_annotations`, this field presents more\nfine-grained, segment-level labels detected in video content and is made\navailable only when the client sets `LabelDetectionConfig.model` to\n\"builtin/latest\" in the request.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1beta2_LabelAnnotation"
           },
@@ -1626,7 +1626,7 @@
           "type": "array"
         },
         "shotPresenceLabelAnnotations": {
-          "description": "Presence label annotations on shot level. There is exactly one element for\neach unique label.",
+          "description": "Presence label annotations on shot level. There is exactly one element for\neach unique label. Compared to the existing topical\n`shot_label_annotations`, this field presents more fine-grained, shot-level\nlabels detected in video content and is made available only when the client\nsets `LabelDetectionConfig.model` to \"builtin/latest\" in the request.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1beta2_LabelAnnotation"
           },
@@ -2153,7 +2153,7 @@
           "type": "array"
         },
         "segmentPresenceLabelAnnotations": {
-          "description": "Presence label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label.",
+          "description": "Presence label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label. Compared to the\nexisting topical `segment_label_annotations`, this field presents more\nfine-grained, segment-level labels detected in video content and is made\navailable only when the client sets `LabelDetectionConfig.model` to\n\"builtin/latest\" in the request.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p1beta1_LabelAnnotation"
           },
@@ -2174,7 +2174,7 @@
           "type": "array"
         },
         "shotPresenceLabelAnnotations": {
-          "description": "Presence label annotations on shot level. There is exactly one element for\neach unique label.",
+          "description": "Presence label annotations on shot level. There is exactly one element for\neach unique label. Compared to the existing topical\n`shot_label_annotations`, this field presents more fine-grained, shot-level\nlabels detected in video content and is made available only when the client\nsets `LabelDetectionConfig.model` to \"builtin/latest\" in the request.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p1beta1_LabelAnnotation"
           },
@@ -2701,7 +2701,7 @@
           "type": "array"
         },
         "segmentPresenceLabelAnnotations": {
-          "description": "Presence label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label.",
+          "description": "Presence label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label. Compared to the\nexisting topical `segment_label_annotations`, this field presents more\nfine-grained, segment-level labels detected in video content and is made\navailable only when the client sets `LabelDetectionConfig.model` to\n\"builtin/latest\" in the request.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p2beta1_LabelAnnotation"
           },
@@ -2722,7 +2722,7 @@
           "type": "array"
         },
         "shotPresenceLabelAnnotations": {
-          "description": "Presence label annotations on shot level. There is exactly one element for\neach unique label.",
+          "description": "Presence label annotations on shot level. There is exactly one element for\neach unique label. Compared to the existing topical\n`shot_label_annotations`, this field presents more fine-grained, shot-level\nlabels detected in video content and is made available only when the client\nsets `LabelDetectionConfig.model` to \"builtin/latest\" in the request.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p2beta1_LabelAnnotation"
           },
@@ -3407,7 +3407,7 @@
           "type": "array"
         },
         "segmentPresenceLabelAnnotations": {
-          "description": "Presence label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label.",
+          "description": "Presence label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label. Compared to the\nexisting topical `segment_label_annotations`, this field presents more\nfine-grained, segment-level labels detected in video content and is made\navailable only when the client sets `LabelDetectionConfig.model` to\n\"builtin/latest\" in the request.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p3beta1_LabelAnnotation"
           },
@@ -3428,7 +3428,7 @@
           "type": "array"
         },
         "shotPresenceLabelAnnotations": {
-          "description": "Presence label annotations on shot level. There is exactly one element for\neach unique label.",
+          "description": "Presence label annotations on shot level. There is exactly one element for\neach unique label. Compared to the existing topical\n`shot_label_annotations`, this field presents more fine-grained, shot-level\nlabels detected in video content and is made available only when the client\nsets `LabelDetectionConfig.model` to \"builtin/latest\" in the request.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p3beta1_LabelAnnotation"
           },

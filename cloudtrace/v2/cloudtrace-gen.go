@@ -288,7 +288,7 @@ func (s *Attributes) MarshalJSON() ([]byte, error) {
 // BatchWriteSpansRequest: The request message for the `BatchWriteSpans`
 // method.
 type BatchWriteSpansRequest struct {
-	// Spans: A list of new spans. The span names must not match
+	// Spans: Required. A list of new spans. The span names must not match
 	// existing
 	// spans, or the results are undefined.
 	Spans []*Span `json:"spans,omitempty"`
@@ -527,8 +527,8 @@ type Span struct {
 	// span.
 	Attributes *Attributes `json:"attributes,omitempty"`
 
-	// ChildSpanCount: An optional number of child spans that were generated
-	// while this span
+	// ChildSpanCount: Optional. The number of child spans that were
+	// generated while this span
 	// was active. If set, allows implementation to detect missing child
 	// spans.
 	ChildSpanCount int64 `json:"childSpanCount,omitempty"`
@@ -573,7 +573,7 @@ type Span struct {
 	// then this field must be empty.
 	ParentSpanId string `json:"parentSpanId,omitempty"`
 
-	// SameProcessAsParentSpan: (Optional) Set this parameter to indicate
+	// SameProcessAsParentSpan: Optional. Set this parameter to indicate
 	// whether this span is in
 	// the same process as its parent. If you do not set this
 	// parameter,
@@ -629,7 +629,7 @@ type Span struct {
 	// is the time when the server's application handler starts running.
 	StartTime string `json:"startTime,omitempty"`
 
-	// Status: An optional final status for this span.
+	// Status: Optional. The final status for this span.
 	Status *Status `json:"status,omitempty"`
 
 	// TimeEvents: A set of time events. You can have up to 32 annotations
@@ -1022,7 +1022,7 @@ func (c *ProjectsTracesBatchWriteCall) Header() http.Header {
 
 func (c *ProjectsTracesBatchWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1163,7 +1163,7 @@ func (c *ProjectsTracesSpansCreateSpanCall) Header() http.Header {
 
 func (c *ProjectsTracesSpansCreateSpanCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -180,7 +180,7 @@
       }
     }
   },
-  "revision": "20190820",
+  "revision": "20190917",
   "rootUrl": "https://cloudtrace.googleapis.com/",
   "schemas": {
     "Annotation": {
@@ -242,7 +242,7 @@
       "id": "BatchWriteSpansRequest",
       "properties": {
         "spans": {
-          "description": "A list of new spans. The span names must not match existing\nspans, or the results are undefined.",
+          "description": "Required. A list of new spans. The span names must not match existing\nspans, or the results are undefined.",
           "items": {
             "$ref": "Span"
           },
@@ -369,7 +369,7 @@
           "description": "A set of attributes on the span. You can have up to 32 attributes per\nspan."
         },
         "childSpanCount": {
-          "description": "An optional number of child spans that were generated while this span\nwas active. If set, allows implementation to detect missing child spans.",
+          "description": "Optional. The number of child spans that were generated while this span\nwas active. If set, allows implementation to detect missing child spans.",
           "format": "int32",
           "type": "integer"
         },
@@ -395,7 +395,7 @@
           "type": "string"
         },
         "sameProcessAsParentSpan": {
-          "description": "(Optional) Set this parameter to indicate whether this span is in\nthe same process as its parent. If you do not set this parameter,\nStackdriver Trace is unable to take advantage of this helpful\ninformation.",
+          "description": "Optional. Set this parameter to indicate whether this span is in\nthe same process as its parent. If you do not set this parameter,\nStackdriver Trace is unable to take advantage of this helpful\ninformation.",
           "type": "boolean"
         },
         "spanId": {
@@ -433,7 +433,7 @@
         },
         "status": {
           "$ref": "Status",
-          "description": "An optional final status for this span."
+          "description": "Optional. The final status for this span."
         },
         "timeEvents": {
           "$ref": "TimeEvents",

@@ -2217,7 +2217,7 @@
       }
     }
   },
-  "revision": "20190911",
+  "revision": "20190916",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -2346,10 +2346,14 @@
       "properties": {
         "localObjectReference": {
           "$ref": "LocalObjectReference",
-          "description": "The ConfigMap to select from."
+          "description": "This field should not be used directly as it is meant to be inlined\ndirectly into the message. Use the \"name\" field instead."
+        },
+        "name": {
+          "description": "Cloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nThe ConfigMap to select from.",
+          "type": "string"
         },
         "optional": {
-          "description": "Specify whether the ConfigMap must be defined\n+optional",
+          "description": "Cloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nSpecify whether the ConfigMap must be defined\n+optional",
           "type": "boolean"
         }
       },
@@ -2365,7 +2369,11 @@
         },
         "localObjectReference": {
           "$ref": "LocalObjectReference",
-          "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nThe ConfigMap to select from."
+          "description": "This field should not be used directly as it is meant to be inlined\ndirectly into the message. Use the \"name\" field instead."
+        },
+        "name": {
+          "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nThe ConfigMap to select from.",
+          "type": "string"
         },
         "optional": {
           "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nSpecify whether the ConfigMap or its key must be defined\n+optional",
@@ -4123,10 +4131,14 @@
       "properties": {
         "localObjectReference": {
           "$ref": "LocalObjectReference",
-          "description": "The Secret to select from."
+          "description": "This field should not be used directly as it is meant to be inlined\ndirectly into the message. Use the \"name\" field instead."
+        },
+        "name": {
+          "description": "Cloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nThe Secret to select from.",
+          "type": "string"
         },
         "optional": {
-          "description": "Specify whether the Secret must be defined\n+optional",
+          "description": "Cloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nSpecify whether the Secret must be defined\n+optional",
           "type": "boolean"
         }
       },
@@ -4142,7 +4154,11 @@
         },
         "localObjectReference": {
           "$ref": "LocalObjectReference",
-          "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nThe name of the secret in the pod's namespace to select from."
+          "description": "This field should not be used directly as it is meant to be inlined\ndirectly into the message. Use the \"name\" field instead."
+        },
+        "name": {
+          "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nThe name of the secret in the pod's namespace to select from.",
+          "type": "string"
         },
         "optional": {
           "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nSpecify whether the Secret or its key must be defined\n+optional",

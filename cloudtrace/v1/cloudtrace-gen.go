@@ -349,7 +349,7 @@ type TraceSpan struct {
 	// cross-trace spans.
 	Name string `json:"name,omitempty"`
 
-	// ParentSpanId: ID of the parent span, if any. Optional.
+	// ParentSpanId: Optional. ID of the parent span, if any.
 	ParentSpanId uint64 `json:"parentSpanId,omitempty,string"`
 
 	// SpanId: Identifier for the span. Must be a 64-bit integer other than
@@ -465,7 +465,7 @@ func (c *ProjectsPatchTracesCall) Header() http.Header {
 
 func (c *ProjectsPatchTracesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -538,7 +538,7 @@ func (c *ProjectsPatchTracesCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "ID of the Cloud project where the trace data is stored.",
+	//       "description": "Required. ID of the Cloud project where the trace data is stored.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -616,7 +616,7 @@ func (c *ProjectsTracesGetCall) Header() http.Header {
 
 func (c *ProjectsTracesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -689,13 +689,13 @@ func (c *ProjectsTracesGetCall) Do(opts ...googleapi.CallOption) (*Trace, error)
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "ID of the Cloud project where the trace data is stored.",
+	//       "description": "Required. ID of the Cloud project where the trace data is stored.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "traceId": {
-	//       "description": "ID of the trace to return.",
+	//       "description": "Required. ID of the trace to return.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -740,8 +740,8 @@ func (c *ProjectsTracesListCall) EndTime(endTime string) *ProjectsTracesListCall
 	return c
 }
 
-// Filter sets the optional parameter "filter": An optional filter
-// against labels for the request.
+// Filter sets the optional parameter "filter": A filter against labels
+// for the request.
 //
 // By default, searches use prefix matching. To specify exact match,
 // prepend
@@ -833,7 +833,7 @@ func (c *ProjectsTracesListCall) StartTime(startTime string) *ProjectsTracesList
 }
 
 // View sets the optional parameter "view": Type of data returned for
-// traces in the list.  Default is
+// traces in the list. Default is
 // `MINIMAL`.
 //
 // Possible values:
@@ -883,7 +883,7 @@ func (c *ProjectsTracesListCall) Header() http.Header {
 
 func (c *ProjectsTracesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -960,28 +960,28 @@ func (c *ProjectsTracesListCall) Do(opts ...googleapi.CallOption) (*ListTracesRe
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "An optional filter against labels for the request.\n\nBy default, searches use prefix matching. To specify exact match, prepend\na plus symbol (`+`) to the search term.\nMultiple terms are ANDed. Syntax:\n\n*   `root:NAME_PREFIX` or `NAME_PREFIX`: Return traces where any root\n    span starts with `NAME_PREFIX`.\n*   `+root:NAME` or `+NAME`: Return traces where any root span's name is\n    exactly `NAME`.\n*   `span:NAME_PREFIX`: Return traces where any span starts with\n    `NAME_PREFIX`.\n*   `+span:NAME`: Return traces where any span's name is exactly\n    `NAME`.\n*   `latency:DURATION`: Return traces whose overall latency is\n    greater or equal to than `DURATION`. Accepted units are nanoseconds\n    (`ns`), milliseconds (`ms`), and seconds (`s`). Default is `ms`. For\n    example, `latency:24ms` returns traces whose overall latency\n    is greater than or equal to 24 milliseconds.\n*   `label:LABEL_KEY`: Return all traces containing the specified\n    label key (exact match, case-sensitive) regardless of the key:value\n    pair's value (including empty values).\n*   `LABEL_KEY:VALUE_PREFIX`: Return all traces containing the specified\n    label key (exact match, case-sensitive) whose value starts with\n    `VALUE_PREFIX`. Both a key and a value must be specified.\n*   `+LABEL_KEY:VALUE`: Return all traces containing a key:value pair\n    exactly matching the specified text. Both a key and a value must be\n    specified.\n*   `method:VALUE`: Equivalent to `/http/method:VALUE`.\n*   `url:VALUE`: Equivalent to `/http/url:VALUE`.",
+	//       "description": "Optional. A filter against labels for the request.\n\nBy default, searches use prefix matching. To specify exact match, prepend\na plus symbol (`+`) to the search term.\nMultiple terms are ANDed. Syntax:\n\n*   `root:NAME_PREFIX` or `NAME_PREFIX`: Return traces where any root\n    span starts with `NAME_PREFIX`.\n*   `+root:NAME` or `+NAME`: Return traces where any root span's name is\n    exactly `NAME`.\n*   `span:NAME_PREFIX`: Return traces where any span starts with\n    `NAME_PREFIX`.\n*   `+span:NAME`: Return traces where any span's name is exactly\n    `NAME`.\n*   `latency:DURATION`: Return traces whose overall latency is\n    greater or equal to than `DURATION`. Accepted units are nanoseconds\n    (`ns`), milliseconds (`ms`), and seconds (`s`). Default is `ms`. For\n    example, `latency:24ms` returns traces whose overall latency\n    is greater than or equal to 24 milliseconds.\n*   `label:LABEL_KEY`: Return all traces containing the specified\n    label key (exact match, case-sensitive) regardless of the key:value\n    pair's value (including empty values).\n*   `LABEL_KEY:VALUE_PREFIX`: Return all traces containing the specified\n    label key (exact match, case-sensitive) whose value starts with\n    `VALUE_PREFIX`. Both a key and a value must be specified.\n*   `+LABEL_KEY:VALUE`: Return all traces containing a key:value pair\n    exactly matching the specified text. Both a key and a value must be\n    specified.\n*   `method:VALUE`: Equivalent to `/http/method:VALUE`.\n*   `url:VALUE`: Equivalent to `/http/url:VALUE`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field used to sort the returned traces. Optional.\nCan be one of the following:\n\n*   `trace_id`\n*   `name` (`name` field of root span in the trace)\n*   `duration` (difference between `end_time` and `start_time` fields of\n     the root span)\n*   `start` (`start_time` field of the root span)\n\nDescending order can be specified by appending `desc` to the sort field\n(for example, `name desc`).\n\nOnly one sort field is permitted.",
+	//       "description": "Optional. Field used to sort the returned traces.\nCan be one of the following:\n\n*   `trace_id`\n*   `name` (`name` field of root span in the trace)\n*   `duration` (difference between `end_time` and `start_time` fields of\n     the root span)\n*   `start` (`start_time` field of the root span)\n\nDescending order can be specified by appending `desc` to the sort field\n(for example, `name desc`).\n\nOnly one sort field is permitted.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Maximum number of traces to return. If not specified or \u003c= 0, the\nimplementation selects a reasonable value.  The implementation may\nreturn fewer traces than the requested page size. Optional.",
+	//       "description": "Optional. Maximum number of traces to return. If not specified or \u003c= 0, the\nimplementation selects a reasonable value.  The implementation may\nreturn fewer traces than the requested page size.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token identifying the page of results to return. If provided, use the\nvalue of the `next_page_token` field from a previous request. Optional.",
+	//       "description": "Token identifying the page of results to return. If provided, use the\nvalue of the `next_page_token` field from a previous request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "ID of the Cloud project where the trace data is stored.",
+	//       "description": "Required. ID of the Cloud project where the trace data is stored.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -993,7 +993,7 @@ func (c *ProjectsTracesListCall) Do(opts ...googleapi.CallOption) (*ListTracesRe
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Type of data returned for traces in the list. Optional. Default is\n`MINIMAL`.",
+	//       "description": "Optional. Type of data returned for traces in the list. Default is\n`MINIMAL`.",
 	//       "enum": [
 	//         "VIEW_TYPE_UNSPECIFIED",
 	//         "MINIMAL",

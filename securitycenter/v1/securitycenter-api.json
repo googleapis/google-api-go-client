@@ -116,7 +116,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "Name of the organization to get organization settings for. Its format is\n\"organizations/[organization_id]/organizationSettings\".",
+              "description": "Required. Name of the organization to get organization settings for. Its format is\n\"organizations/[organization_id]/organizationSettings\".",
               "location": "path",
               "pattern": "^organizations/[^/]+/organizationSettings$",
               "required": true,
@@ -179,7 +179,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Name of the organization to groupBy. Its format is\n\"organizations/[organization_id]\".",
+                  "description": "Required. Name of the organization to groupBy. Its format is\n\"organizations/[organization_id]\".",
                   "location": "path",
                   "pattern": "^organizations/[^/]+$",
                   "required": true,
@@ -240,7 +240,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Name of the organization assets should belong to. Its format is\n\"organizations/[organization_id]\".",
+                  "description": "Required. Name of the organization assets should belong to. Its format is\n\"organizations/[organization_id]\".",
                   "location": "path",
                   "pattern": "^organizations/[^/]+$",
                   "required": true,
@@ -271,7 +271,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Name of the organization to run asset discovery for. Its format is\n\"organizations/[organization_id]\".",
+                  "description": "Required. Name of the organization to run asset discovery for. Its format is\n\"organizations/[organization_id]\".",
                   "location": "path",
                   "pattern": "^organizations/[^/]+$",
                   "required": true,
@@ -463,7 +463,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Resource name of the new source's parent. Its format should be\n\"organizations/[organization_id]\".",
+                  "description": "Required. Resource name of the new source's parent. Its format should be\n\"organizations/[organization_id]\".",
                   "location": "path",
                   "pattern": "^organizations/[^/]+$",
                   "required": true,
@@ -491,7 +491,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Relative resource name of the source. Its format is\n\"organizations/[organization_id]/source/[source_id]\".",
+                  "description": "Required. Relative resource name of the source. Its format is\n\"organizations/[organization_id]/source/[source_id]\".",
                   "location": "path",
                   "pattern": "^organizations/[^/]+/sources/[^/]+$",
                   "required": true,
@@ -555,7 +555,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Resource name of the parent of sources to list. Its format should be\n\"organizations/[organization_id]\".",
+                  "description": "Required. Resource name of the parent of sources to list. Its format should be\n\"organizations/[organization_id]\".",
                   "location": "path",
                   "pattern": "^organizations/[^/]+$",
                   "required": true,
@@ -674,12 +674,12 @@
                   ],
                   "parameters": {
                     "findingId": {
-                      "description": "Unique identifier provided by the client within the parent scope.\nIt must be alphanumeric and less than or equal to 32 characters and\ngreater than 0 characters in length.",
+                      "description": "Required. Unique identifier provided by the client within the parent scope.\nIt must be alphanumeric and less than or equal to 32 characters and\ngreater than 0 characters in length.",
                       "location": "query",
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Resource name of the new finding's parent. Its format should be\n\"organizations/[organization_id]/sources/[source_id]\".",
+                      "description": "Required. Resource name of the new finding's parent. Its format should be\n\"organizations/[organization_id]/sources/[source_id]\".",
                       "location": "path",
                       "pattern": "^organizations/[^/]+/sources/[^/]+$",
                       "required": true,
@@ -707,7 +707,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Name of the source to groupBy. Its format is\n\"organizations/[organization_id]/sources/[source_id]\". To groupBy across\nall sources provide a source_id of `-`. For example:\norganizations/123/sources/-",
+                      "description": "Required. Name of the source to groupBy. Its format is\n\"organizations/[organization_id]/sources/[source_id]\". To groupBy across\nall sources provide a source_id of `-`. For example:\norganizations/123/sources/-",
                       "location": "path",
                       "pattern": "^organizations/[^/]+/sources/[^/]+$",
                       "required": true,
@@ -768,7 +768,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Name of the source the findings belong to. Its format is\n\"organizations/[organization_id]/sources/[source_id]\". To list across all\nsources provide a source_id of `-`. For example:\norganizations/123/sources/-",
+                      "description": "Required. Name of the source the findings belong to. Its format is\n\"organizations/[organization_id]/sources/[source_id]\". To list across all\nsources provide a source_id of `-`. For example:\norganizations/123/sources/-",
                       "location": "path",
                       "pattern": "^organizations/[^/]+/sources/[^/]+$",
                       "required": true,
@@ -833,7 +833,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The relative resource name of the finding. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/123/sources/456/finding/789\".",
+                      "description": "Required. The relative resource name of the finding. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/123/sources/456/finding/789\".",
                       "location": "path",
                       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+$",
                       "required": true,
@@ -898,7 +898,7 @@
       }
     }
   },
-  "revision": "20190913",
+  "revision": "20190920",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -1223,7 +1223,7 @@
           "type": "string"
         },
         "groupBy": {
-          "description": "Expression that defines what assets fields to use for grouping. The string\nvalue should follow SQL syntax: comma separated list of fields. For\nexample:\n\"security_center_properties.resource_project,security_center_properties.project\".\n\nThe following fields are supported when compare_duration is not set:\n\n* security_center_properties.resource_project\n* security_center_properties.resource_type\n* security_center_properties.resource_parent\n\nThe following fields are supported when compare_duration is set:\n\n* security_center_properties.resource_type",
+          "description": "Required. Expression that defines what assets fields to use for grouping. The string\nvalue should follow SQL syntax: comma separated list of fields. For\nexample:\n\"security_center_properties.resource_project,security_center_properties.project\".\n\nThe following fields are supported when compare_duration is not set:\n\n* security_center_properties.resource_project\n* security_center_properties.resource_type\n* security_center_properties.resource_parent\n\nThe following fields are supported when compare_duration is set:\n\n* security_center_properties.resource_type",
           "type": "string"
         },
         "pageSize": {
@@ -1285,7 +1285,7 @@
           "type": "string"
         },
         "groupBy": {
-          "description": "Expression that defines what assets fields to use for grouping (including\n`state_change`). The string value should follow SQL syntax: comma separated\nlist of fields. For example: \"parent,resource_name\".\n\nThe following fields are supported:\n\n* resource_name\n* category\n* state\n* parent\n\nThe following fields are supported when compare_duration is set:\n\n* state_change",
+          "description": "Required. Expression that defines what assets fields to use for grouping (including\n`state_change`). The string value should follow SQL syntax: comma separated\nlist of fields. For example: \"parent,resource_name\".\n\nThe following fields are supported:\n\n* resource_name\n* category\n* state\n* parent\n\nThe following fields are supported when compare_duration is set:\n\n* state_change",
           "type": "string"
         },
         "pageSize": {
@@ -1566,7 +1566,7 @@
       "type": "object"
     },
     "Policy": {
-      "description": "Defines an Identity and Access Management (IAM) policy. It is used to\nspecify access control policies for Cloud Platform resources.\n\n\nA `Policy` consists of a list of `bindings`. A `binding` binds a list of\n`members` to a `role`, where the members can be user accounts, Google groups,\nGoogle domains, and service accounts. A `role` is a named list of permissions\ndefined by IAM.\n\n**JSON Example**\n\n    {\n      \"bindings\": [\n        {\n          \"role\": \"roles/owner\",\n          \"members\": [\n            \"user:mike@example.com\",\n            \"group:admins@example.com\",\n            \"domain:google.com\",\n            \"serviceAccount:my-other-app@appspot.gserviceaccount.com\"\n          ]\n        },\n        {\n          \"role\": \"roles/viewer\",\n          \"members\": [\"user:sean@example.com\"]\n        }\n      ]\n    }\n\n**YAML Example**\n\n    bindings:\n    - members:\n      - user:mike@example.com\n      - group:admins@example.com\n      - domain:google.com\n      - serviceAccount:my-other-app@appspot.gserviceaccount.com\n      role: roles/owner\n    - members:\n      - user:sean@example.com\n      role: roles/viewer\n\n\nFor a description of IAM and its features, see the\n[IAM developer's guide](https://cloud.google.com/iam/docs).",
+      "description": "Defines an Identity and Access Management (IAM) policy. It is used to\nspecify access control policies for Cloud Platform resources.\n\n\nA `Policy` is a collection of `bindings`. A `binding` binds one or more\n`members` to a single `role`. Members can be user accounts, service accounts,\nGoogle groups, and domains (such as G Suite). A `role` is a named list of\npermissions (defined by IAM or configured by users). A `binding` can\noptionally specify a `condition`, which is a logic expression that further\nconstrains the role binding based on attributes about the request and/or\ntarget resource.\n\n**JSON Example**\n\n    {\n      \"bindings\": [\n        {\n          \"role\": \"role/resourcemanager.organizationAdmin\",\n          \"members\": [\n            \"user:mike@example.com\",\n            \"group:admins@example.com\",\n            \"domain:google.com\",\n            \"serviceAccount:my-project-id@appspot.gserviceaccount.com\"\n          ]\n        },\n        {\n          \"role\": \"roles/resourcemanager.organizationViewer\",\n          \"members\": [\"user:eve@example.com\"],\n          \"condition\": {\n            \"title\": \"expirable access\",\n            \"description\": \"Does not grant access after Sep 2020\",\n            \"expression\": \"request.time \u003c\n            timestamp('2020-10-01T00:00:00.000Z')\",\n          }\n        }\n      ]\n    }\n\n**YAML Example**\n\n    bindings:\n    - members:\n      - user:mike@example.com\n      - group:admins@example.com\n      - domain:google.com\n      - serviceAccount:my-project-id@appspot.gserviceaccount.com\n      role: roles/resourcemanager.organizationAdmin\n    - members:\n      - user:eve@example.com\n      role: roles/resourcemanager.organizationViewer\n      condition:\n        title: expirable access\n        description: Does not grant access after Sep 2020\n        expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\n\nFor a description of IAM and its features, see the\n[IAM developer's guide](https://cloud.google.com/iam/docs).",
       "id": "Policy",
       "properties": {
         "auditConfigs": {
@@ -1577,19 +1577,19 @@
           "type": "array"
         },
         "bindings": {
-          "description": "Associates a list of `members` to a `role`.\n`bindings` with no members will result in an error.",
+          "description": "Associates a list of `members` to a `role`. Optionally may specify a\n`condition` that determines when binding is in effect.\n`bindings` with no members will result in an error.",
           "items": {
             "$ref": "Binding"
           },
           "type": "array"
         },
         "etag": {
-          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a policy from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform policy updates in order to avoid race\nconditions: An `etag` is returned in the response to `getIamPolicy`, and\nsystems are expected to put that etag in the request to `setIamPolicy` to\nensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing\npolicy is overwritten.",
+          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a policy from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform policy updates in order to avoid race\nconditions: An `etag` is returned in the response to `getIamPolicy`, and\nsystems are expected to put that etag in the request to `setIamPolicy` to\nensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing\npolicy is overwritten. Due to blind-set semantics of an etag-less policy,\n'setIamPolicy' will not fail even if either of incoming or stored policy\ndoes not meet the version requirements.",
           "format": "byte",
           "type": "string"
         },
         "version": {
-          "description": "Specifies the format of the policy.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nPolicies with any conditional bindings must specify version 3. Policies\nwithout any conditional bindings may specify any valid value or leave the\nfield unset.",
+          "description": "Specifies the format of the policy.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nOperations affecting conditional bindings must specify version 3. This can\nbe either setting a conditional policy, modifying a conditional binding,\nor removing a conditional binding from the stored conditional policy.\nOperations on non-conditional policies may specify any valid value or\nleave the field unset.\n\nIf no etag is provided in the call to `setIamPolicy`, any version\ncompliance checks on the incoming and/or stored policy is skipped.",
           "format": "int32",
           "type": "integer"
         }
@@ -1655,12 +1655,12 @@
       "id": "SetFindingStateRequest",
       "properties": {
         "startTime": {
-          "description": "The time at which the updated state takes effect.",
+          "description": "Required. The time at which the updated state takes effect.",
           "format": "google-datetime",
           "type": "string"
         },
         "state": {
-          "description": "The desired State of the finding.",
+          "description": "Required. The desired State of the finding.",
           "enum": [
             "STATE_UNSPECIFIED",
             "ACTIVE",

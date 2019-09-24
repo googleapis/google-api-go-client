@@ -525,7 +525,7 @@
       }
     }
   },
-  "revision": "20190805",
+  "revision": "20190919",
   "rootUrl": "https://websecurityscanner.googleapis.com/",
   "schemas": {
     "Authentication": {
@@ -944,6 +944,7 @@
             "FAILED_TO_AUTHENTICATE_TO_TARGET",
             "FINDING_TYPE_UNSPECIFIED",
             "FORBIDDEN_TO_SCAN_COMPUTE",
+            "FORBIDDEN_UPDATE_TO_MANAGED_SCAN",
             "MALFORMED_FILTER",
             "MALFORMED_RESOURCE_NAME",
             "PROJECT_INACTIVE",
@@ -987,6 +988,7 @@
             "There was an error trying to authenticate to the scan target.",
             "Finding type value is not specified in the list findings request.",
             "Scan targets Compute Engine, yet current project was not whitelisted for\nGoogle Compute Engine Scanning Alpha access.",
+            "User tries to update managed scan",
             "The supplied filter is malformed. For example, it can not be parsed, does\nnot have a filter type in expression, or the same filter type appears\nmore than once.",
             "The supplied resource name is malformed (can not be parsed).",
             "The current project is not in an active state.",

@@ -918,7 +918,7 @@
       }
     }
   },
-  "revision": "20190906",
+  "revision": "20190912",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -2937,7 +2937,7 @@
         },
         "permittedAccessibilityServices": {
           "$ref": "PackageNameList",
-          "description": "Specifies permitted accessibility services. If the field is not set, any accessibility service can be used. If the field is set, only the accessibility services in this list and the system's built-in accessibility services can be used. In particular, if the field is set to empty, only the system's built-in accessibility services can be used."
+          "description": "Specifies permitted accessibility services. If the field is not set, any accessibility service can be used. If the field is set, only the accessibility services in this list and the system's built-in accessibility service can be used. In particular, if the field is set to empty, only the system's built-in accessibility servicess can be used."
         },
         "permittedInputMethods": {
           "$ref": "PackageNameList",

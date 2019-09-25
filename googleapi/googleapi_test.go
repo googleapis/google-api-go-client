@@ -165,6 +165,16 @@ func TestResolveRelative(t *testing.T) {
 			relstr:    ":8080foo",
 			wantPanic: true,
 		},
+		{
+			basestr: "https://www.googleapis.com/exampleapi/v2/somemethod",
+			relstr:  "/upload/exampleapi/v2/somemethod",
+			want:    "https://www.googleapis.com/upload/exampleapi/v2/somemethod",
+		},
+		{
+			basestr: "https://otherhost.googleapis.com/exampleapi/v2/somemethod",
+			relstr:  "/upload/exampleapi/v2/alternatemethod",
+			want:    "https://otherhost.googleapis.com/upload/exampleapi/v2/alternatemethod",
+		},
 	}
 
 	for _, test := range resolveRelativeTests {

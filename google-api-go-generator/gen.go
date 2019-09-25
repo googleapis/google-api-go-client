@@ -1949,10 +1949,7 @@ func (meth *Method) generateCode() {
 	pn("urls := googleapi.ResolveRelative(c.s.BasePath, %q)", meth.m.Path)
 	if meth.supportsMediaUpload() {
 		pn("if c.mediaInfo_ != nil {")
-		// Hack guess, since we get a 404 otherwise:
-		//pn("urls = googleapi.ResolveRelative(%q, %q)", a.apiBaseURL(), meth.mediaUploadPath())
-		// Further hack.  Discovery doc is wrong?
-		pn("  urls = strings.Replace(urls, %q, %q, 1)", "https://www.googleapis.com/", "https://www.googleapis.com/upload/")
+		pn("  urls = googleapi.ResolveRelative(c.s.BasePath, %q)", meth.mediaUploadPath())
 		pn(`  c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())`)
 		pn("}")
 

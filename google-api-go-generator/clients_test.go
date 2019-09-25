@@ -61,7 +61,7 @@ func TestMedia(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unable to create service: %v", err)
 	}
-	s.BasePath = server.URL
+	s.BasePath = fmt.Sprintf("%s%s", server.URL, "/storage/v1/")
 
 	const body = "fake media data"
 	f := strings.NewReader(body)
@@ -104,7 +104,7 @@ func TestMedia(t *testing.T) {
 	if w := "chunked"; len(g.TransferEncoding) != 1 || g.TransferEncoding[0] != w {
 		t.Errorf("TransferEncoding = %#v; want %q", g.TransferEncoding, w)
 	}
-	if w := strings.TrimPrefix(s.BasePath, "http://"); g.Host != w {
+	if w := server.Listener.Addr().String(); g.Host != w {
 		t.Errorf("Host = %q; want %q", g.Host, w)
 	}
 	if g.Form != nil {
@@ -116,7 +116,7 @@ func TestMedia(t *testing.T) {
 	if g.MultipartForm != nil {
 		t.Errorf("MultipartForm = %#v; want nil", g.MultipartForm)
 	}
-	if w := "/b/mybucket/o?alt=json&prettyPrint=false&uploadType=multipart"; g.RequestURI != w {
+	if w := "/upload/storage/v1/b/mybucket/o?alt=json&prettyPrint=false&uploadType=multipart"; g.RequestURI != w {
 		t.Errorf("RequestURI = %q; want %q", g.RequestURI, w)
 	}
 	if w := "\r\n\r\n" + body + "\r\n"; !strings.Contains(string(handler.body), w) {
@@ -206,7 +206,7 @@ func TestNoMedia(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unable to create service: %v", err)
 	}
-	s.BasePath = server.URL
+	s.BasePath = fmt.Sprintf("%s%s", server.URL, "/storage/v1/")
 
 	o := &storage.Object{
 		Bucket:          "mybucket",
@@ -247,7 +247,7 @@ func TestNoMedia(t *testing.T) {
 	if len(g.TransferEncoding) != 0 {
 		t.Errorf("TransferEncoding = %#v; want []string{}", g.TransferEncoding)
 	}
-	if w := strings.TrimPrefix(s.BasePath, "http://"); g.Host != w {
+	if w := server.Listener.Addr().String(); g.Host != w {
 		t.Errorf("Host = %q; want %q", g.Host, w)
 	}
 	if g.Form != nil {
@@ -259,7 +259,7 @@ func TestNoMedia(t *testing.T) {
 	if g.MultipartForm != nil {
 		t.Errorf("MultipartForm = %#v; want nil", g.MultipartForm)
 	}
-	if w := "/b/mybucket/o?alt=json&prettyPrint=false"; g.RequestURI != w {
+	if w := "/storage/v1/b/mybucket/o?alt=json&prettyPrint=false"; g.RequestURI != w {
 		t.Errorf("RequestURI = %q; want %q", g.RequestURI, w)
 	}
 	if w := `{"bucket":"mybucket","contentEncoding":"utf-8","contentLanguage":"en","contentType":"plain/text","name":"filename"}` + "\n"; string(handler.body) != w {
@@ -280,7 +280,7 @@ func TestMediaErrHandling(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unable to create service: %v", err)
 	}
-	s.BasePath = server.URL
+	s.BasePath = fmt.Sprintf("%s%s", server.URL, "/storage/v1/")
 
 	const body = "fake media data"
 	f := strings.NewReader(body)
@@ -367,7 +367,7 @@ func TestParams(t *testing.T) {
 		t.Fatalf("len(reqURIs) = %v, want %v", g, w)
 	}
 	want := []string{
-		"/b/mybucket/o?alt=json&ifGenerationMatch=42&name=filename&prettyPrint=false&projection=full&uploadType=resumable",
+		"/upload/storage/v1/b/mybucket/o?alt=json&ifGenerationMatch=42&name=filename&prettyPrint=false&projection=full&uploadType=resumable",
 		"/uploadURL",
 	}
 	if !reflect.DeepEqual(handler.reqURIs, want) {

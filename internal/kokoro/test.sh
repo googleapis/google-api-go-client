@@ -34,5 +34,8 @@ try3() { eval "$*" || eval "$*" || eval "$*"; }
 try3 go mod download
 ./internal/kokoro/vet.sh
 
+# Testing the generator itself depends on a generation step
+cd google-api-go-generator; go generate; cd ..
+
 # Run tests and tee output to log file, to be pushed to GCS as artifact.
 go test -race -v -short ./... 2>&1 | tee $KOKORO_ARTIFACTS_DIR/$KOKORO_GERRIT_CHANGE_NUMBER.txt

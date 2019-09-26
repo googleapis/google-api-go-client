@@ -136,7 +136,7 @@
           "parameterOrder": [],
           "parameters": {
             "languageCode": {
-              "description": "Optional (but recommended)\n[BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag. If\nspecified, the ListVoices call will only return voices that can be used to\nsynthesize this language_code. E.g. when specifying \"en-NZ\", you will get\nsupported \"en-*\" voices; when specifying \"no\", you will get supported\n\"no-*\" (Norwegian) and \"nb-*\" (Norwegian Bokmal) voices; specifying \"zh\"\nwill also get supported \"cmn-*\" voices; specifying \"zh-hk\" will also get\nsupported \"yue-*\" voices.",
+              "description": "Optional. Recommended.\n[BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag. If\nspecified, the ListVoices call will only return voices that can be used to\nsynthesize this language_code. E.g. when specifying \"en-NZ\", you will get\nsupported \"en-*\" voices; when specifying \"no\", you will get supported\n\"no-*\" (Norwegian) and \"nb-*\" (Norwegian Bokmal) voices; specifying \"zh\"\nwill also get supported \"cmn-*\" voices; specifying \"zh-hk\" will also get\nsupported \"yue-*\" voices.",
               "location": "query",
               "type": "string"
             }
@@ -152,7 +152,7 @@
       }
     }
   },
-  "revision": "20190628",
+  "revision": "20190920",
   "rootUrl": "https://texttospeech.googleapis.com/",
   "schemas": {
     "AudioConfig": {
@@ -188,7 +188,7 @@
           "type": "number"
         },
         "sampleRateHertz": {
-          "description": "The synthesis sample rate (in hertz) for this audio. Optional. When this is\nspecified in SynthesizeSpeechRequest, if this is different from the voice's\nnatural sample rate, then the synthesizer will honor this request by\nconverting to the desired sample rate (which might result in worse audio\nquality), unless the specified sample rate is not supported for the\nencoding chosen, in which case it will fail the request and return\ngoogle.rpc.Code.INVALID_ARGUMENT.",
+          "description": "Optional. The synthesis sample rate (in hertz) for this audio. When this is\nspecified in SynthesizeSpeechRequest, if this is different from the voice's\nnatural sample rate, then the synthesizer will honor this request by\nconverting to the desired sample rate (which might result in worse audio\nquality), unless the specified sample rate is not supported for the\nencoding chosen, in which case it will fail the request and return\ngoogle.rpc.Code.INVALID_ARGUMENT.",
           "format": "int32",
           "type": "integer"
         },
@@ -309,15 +309,15 @@
       "id": "VoiceSelectionParams",
       "properties": {
         "languageCode": {
-          "description": "The language (and optionally also the region) of the voice expressed as a\n[BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag, e.g.\n\"en-US\". Required. This should not include a script tag (e.g. use\n\"cmn-cn\" rather than \"cmn-Hant-cn\"), because the script will be inferred\nfrom the input provided in the SynthesisInput.  The TTS service\nwill use this parameter to help choose an appropriate voice.  Note that\nthe TTS service may choose a voice with a slightly different language code\nthan the one selected; it may substitute a different region\n(e.g. using en-US rather than en-CA if there isn't a Canadian voice\navailable), or even a different language, e.g. using \"nb\" (Norwegian\nBokmal) instead of \"no\" (Norwegian)\".",
+          "description": "Required. The language (and potentially also the region) of the voice expressed as a\n[BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag, e.g.\n\"en-US\". This should not include a script tag (e.g. use\n\"cmn-cn\" rather than \"cmn-Hant-cn\"), because the script will be inferred\nfrom the input provided in the SynthesisInput.  The TTS service\nwill use this parameter to help choose an appropriate voice.  Note that\nthe TTS service may choose a voice with a slightly different language code\nthan the one selected; it may substitute a different region\n(e.g. using en-US rather than en-CA if there isn't a Canadian voice\navailable), or even a different language, e.g. using \"nb\" (Norwegian\nBokmal) instead of \"no\" (Norwegian)\".",
           "type": "string"
         },
         "name": {
-          "description": "The name of the voice. Optional; if not set, the service will choose a\nvoice based on the other parameters such as language_code and gender.",
+          "description": "The name of the voice. If not set, the service will choose a\nvoice based on the other parameters such as language_code and gender.",
           "type": "string"
         },
         "ssmlGender": {
-          "description": "The preferred gender of the voice. Optional; if not set, the service will\nchoose a voice based on the other parameters such as language_code and\nname. Note that this is only a preference, not requirement; if a\nvoice of the appropriate gender is not available, the synthesizer should\nsubstitute a voice with a different gender rather than failing the request.",
+          "description": "The preferred gender of the voice. If not set, the service will\nchoose a voice based on the other parameters such as language_code and\nname. Note that this is only a preference, not requirement; if a\nvoice of the appropriate gender is not available, the synthesizer should\nsubstitute a voice with a different gender rather than failing the request.",
           "enum": [
             "SSML_VOICE_GENDER_UNSPECIFIED",
             "MALE",

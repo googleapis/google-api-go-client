@@ -272,7 +272,7 @@
       }
     }
   },
-  "revision": "20190902",
+  "revision": "20190924",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -1143,6 +1143,29 @@
       },
       "type": "object"
     },
+    "IosTestLoop": {
+      "description": "A test of an iOS application that implements one or more game loop scenarios.\nThis test type accepts an archived application (.ipa file) and a list of\ninteger scenarios that will be executed on the app sequentially.",
+      "id": "IosTestLoop",
+      "properties": {
+        "appBundleId": {
+          "description": "Output only. The bundle id for the application under test.",
+          "type": "string"
+        },
+        "appIpa": {
+          "$ref": "FileReference",
+          "description": "Required. The .ipa of the application to test."
+        },
+        "scenarios": {
+          "description": "The list of scenarios that should be run during the test. Defaults to the\nsingle scenario 0 if unspecified.",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "IosTestSetup": {
       "description": "A description of how to set up an iOS device prior to running the test.",
       "id": "IosTestSetup",
@@ -1593,6 +1616,9 @@
             "TEST_NOT_APP_HOSTED",
             "PLIST_CANNOT_BE_PARSED",
             "TEST_ONLY_APK",
+            "MALFORMED_IPA",
+            "MISSING_URL_SCHEME",
+            "MALFORMED_APP_BUNDLE",
             "NO_CODE_APK",
             "INVALID_INPUT_APK",
             "INVALID_APK_PREVIEW_SDK"
@@ -1627,6 +1653,9 @@
             "XC tests which run on physical devices must have\n\"IsAppHostedTestBundle\" == \"true\" in the xctestrun file.",
             "An Info.plist file in the XCTest zip could not be parsed.",
             "The APK is marked as \"testOnly\".\nDeprecated and not currently used.",
+            "The input IPA could not be parsed.",
+            "The application doesn't register the game loop URL scheme.",
+            "The iOS application bundle (.app) couldn't be processed.",
             "APK contains no code.\nSee also\nhttps://developer.android.com/guide/topics/manifest/application-element.html#code",
             "Either the provided input APK path was malformed,\nthe APK file does not exist, or the user does not have permission to\naccess the APK file.",
             "APK is built for a preview SDK which is unsupported"
@@ -1778,6 +1807,10 @@
         "disableVideoRecording": {
           "description": "Disables video recording. May reduce test latency.",
           "type": "boolean"
+        },
+        "iosTestLoop": {
+          "$ref": "IosTestLoop",
+          "description": "An iOS application with a test loop."
         },
         "iosTestSetup": {
           "$ref": "IosTestSetup",

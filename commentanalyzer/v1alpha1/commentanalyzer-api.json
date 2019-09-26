@@ -144,7 +144,7 @@
       }
     }
   },
-  "revision": "20190901",
+  "revision": "20190922",
   "rootUrl": "https://commentanalyzer.googleapis.com/",
   "schemas": {
     "AnalyzeCommentRequest": {
@@ -182,7 +182,7 @@
           "additionalProperties": {
             "$ref": "AttributeParameters"
           },
-          "description": "Specification of requested attributes. The AttributeParameters serve as\nconfiguration for each associated attribute. The map keys are attribute\nnames. The following attributes are available:\n\"ATTACK_ON_AUTHOR\" - Attack on author of original article or post.\n\"ATTACK_ON_COMMENTER\" - Attack on fellow commenter.\n\"ATTACK_ON_PUBLISHER\" - Attack on publisher of article/post.\n\"INCOHERENT\" - Difficult to understand, nonsensical.\n\"INFLAMMATORY\" - Intending to provoke or inflame.\n\"OBSCENE\" - Obscene, such as cursing.\n\"OFF_TOPIC\" - Not related to the original topic.\n\"SPAM\" - Commercial/advertising spam content.\n\"UNSUBSTANTIAL\" - Trivial.",
+          "description": "Specification of requested attributes. The AttributeParameters serve as\nconfiguration for each associated attribute. The map keys are attribute\nnames. The available attributes may be different on each RFE installation,\nand can be seen by calling ListAttributes (see above).\nFor the prod installation, known as Perspective API, at\nblade:commentanalyzer-esf and commentanalyzer.googleapis.com, see\ngo/checker-models (internal) and\nhttps://github.com/conversationai/perspectiveapi/blob/master/api_reference.md#models.",
           "type": "object"
         },
         "sessionId": {

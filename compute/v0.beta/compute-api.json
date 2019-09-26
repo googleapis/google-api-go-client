@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/wZyT8MIfp351OutnEAl-Lg268qU\"",
+  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/cKnvK07e0h15BUj13hSCqlcXG5g\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -24357,7 +24357,7 @@
       }
     }
   },
-  "revision": "20190825",
+  "revision": "20190905",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -25538,7 +25538,7 @@
           "type": "array"
         },
         "ignoreChildExemptions": {
-          "description": "Specifies whether principals can be exempted for the same LogType in lower-level resource policies. If true, any lower-level exemptions will be ignored.",
+          "description": "",
           "type": "boolean"
         },
         "logType": {
@@ -39759,14 +39759,14 @@
           "type": "string"
         },
         "pathRules": {
-          "description": "The list of path rules. Use this list instead of routeRules when routing based on simple path matching is all that's required. The order by which path rules are specified does not matter. Matches are always done on the longest-path-first basis.\nFor example: a pathRule with a path /a/b/c/* will match before /a/b/* irrespective of the order in which those paths appear in this list.\nOnly one of pathRules or routeRules must be set.",
+          "description": "The list of path rules. Use this list instead of routeRules when routing based on simple path matching is all that's required. The order by which path rules are specified does not matter. Matches are always done on the longest-path-first basis.\nFor example: a pathRule with a path /a/b/c/* will match before /a/b/* irrespective of the order in which those paths appear in this list.\nWithin a given pathMatcher, only one of pathRules or routeRules must be set.",
           "items": {
             "$ref": "PathRule"
           },
           "type": "array"
         },
         "routeRules": {
-          "description": "The list of ordered HTTP route rules. Use this list instead of pathRules when advanced route matching and routing actions are desired. The order of specifying routeRules matters: the first rule that matches will cause its specified routing action to take effect.\nOnly one of pathRules or routeRules must be set.",
+          "description": "The list of ordered HTTP route rules. Use this list instead of pathRules when advanced route matching and routing actions are desired. The order of specifying routeRules matters: the first rule that matches will cause its specified routing action to take effect.\nWithin a given pathMatcher, only one of pathRules or routeRules must be set.\nrouteRules are not supported in UrlMaps intended for External Load balancers.",
           "items": {
             "$ref": "HttpRouteRule"
           },
@@ -39851,7 +39851,7 @@
           "type": "array"
         },
         "version": {
-          "description": "Deprecated.",
+          "description": "Specifies the format of the policy.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be rejected.\n\nPolicies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset.",
           "format": "int32",
           "type": "integer"
         }

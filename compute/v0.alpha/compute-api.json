@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/AlOKP3-G9jebD1yWTiFZQR2LeHI\"",
+  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/izEdOcuZpHaO3ZMBrrGiJt5j1Pk\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -28988,7 +28988,7 @@
       }
     }
   },
-  "revision": "20190825",
+  "revision": "20190905",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -30223,7 +30223,7 @@
           "type": "array"
         },
         "ignoreChildExemptions": {
-          "description": "Specifies whether principals can be exempted for the same LogType in lower-level resource policies. If true, any lower-level exemptions will be ignored.",
+          "description": "",
           "type": "boolean"
         },
         "logType": {
@@ -37562,6 +37562,20 @@
           },
           "type": "array"
         },
+        "postKeyRevocationActionType": {
+          "description": "Specifies whether this instance will be shut down on key revocation.",
+          "enum": [
+            "NOOP",
+            "SHUTDOWN",
+            "UNSPECIFIED"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
         "preservedStateSizeGb": {
           "description": "Total amount of preserved state for SUSPENDED instances. Read-only in the api.",
           "format": "int64",
@@ -39762,6 +39776,20 @@
             "$ref": "NetworkInterface"
           },
           "type": "array"
+        },
+        "postKeyRevocationActionType": {
+          "description": "Specifies whether this instance will be shut down on key revocation.",
+          "enum": [
+            "NOOP",
+            "SHUTDOWN",
+            "UNSPECIFIED"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
         },
         "reservationAffinity": {
           "$ref": "ReservationAffinity",
@@ -45844,6 +45872,10 @@
           "description": "Optional. If specified, this field is used to populate the ?name? field in gRPC requests.",
           "type": "string"
         },
+        "resendInterval": {
+          "$ref": "Duration",
+          "description": "Optional. This field is used to configure how often to send a full update of all non-healthy backends. If unspecified, full updates are not sent. If specified, must be in the range between 600 seconds to 3600 seconds. Nanos are disallowed."
+        },
         "retryDurationSec": {
           "description": "How much time (in seconds) is spent attempting notification retries until a successful response is received. Default is 30s. Limit is 20m (1200s). Must be a positive number.",
           "format": "uint32",
@@ -47231,14 +47263,14 @@
           "type": "string"
         },
         "pathRules": {
-          "description": "The list of path rules. Use this list instead of routeRules when routing based on simple path matching is all that's required. The order by which path rules are specified does not matter. Matches are always done on the longest-path-first basis.\nFor example: a pathRule with a path /a/b/c/* will match before /a/b/* irrespective of the order in which those paths appear in this list.\nOnly one of pathRules or routeRules must be set.",
+          "description": "The list of path rules. Use this list instead of routeRules when routing based on simple path matching is all that's required. The order by which path rules are specified does not matter. Matches are always done on the longest-path-first basis.\nFor example: a pathRule with a path /a/b/c/* will match before /a/b/* irrespective of the order in which those paths appear in this list.\nWithin a given pathMatcher, only one of pathRules or routeRules must be set.",
           "items": {
             "$ref": "PathRule"
           },
           "type": "array"
         },
         "routeRules": {
-          "description": "The list of ordered HTTP route rules. Use this list instead of pathRules when advanced route matching and routing actions are desired. The order of specifying routeRules matters: the first rule that matches will cause its specified routing action to take effect.\nOnly one of pathRules or routeRules must be set.",
+          "description": "The list of ordered HTTP route rules. Use this list instead of pathRules when advanced route matching and routing actions are desired. The order of specifying routeRules matters: the first rule that matches will cause its specified routing action to take effect.\nWithin a given pathMatcher, only one of pathRules or routeRules must be set.\nrouteRules are not supported in UrlMaps intended for External Load balancers.",
           "items": {
             "$ref": "HttpRouteRule"
           },
@@ -47426,7 +47458,7 @@
           "type": "array"
         },
         "version": {
-          "description": "Deprecated.",
+          "description": "Specifies the format of the policy.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be rejected.\n\nPolicies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset.",
           "format": "int32",
           "type": "integer"
         }
@@ -47978,13 +48010,6 @@
           "format": "byte",
           "type": "string"
         },
-        "googleAnnouncements": {
-          "description": "The list of Google announcements that exist for this delegated prefix.",
-          "items": {
-            "$ref": "PublicDelegatedPrefixGoogleAnnouncement"
-          },
-          "type": "array"
-        },
         "id": {
           "description": "[Output Only] The unique identifier for the resource type. The server generates this identifier.",
           "format": "uint64",
@@ -48147,32 +48172,6 @@
             }
           },
           "type": "object"
-        }
-      },
-      "type": "object"
-    },
-    "PublicDelegatedPrefixGoogleAnnouncement": {
-      "description": "A Google announcement advertises the prefix internally within Google's network backbone from the specified scope.",
-      "id": "PublicDelegatedPrefixGoogleAnnouncement",
-      "properties": {
-        "name": {
-          "description": "The name of a Google announcement. The name must be 1-63 characters long, and comply with  RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first // character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
-          "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-          "type": "string"
-        },
-        "status": {
-          "description": "The status of this Google announcement.",
-          "enum": [
-            "CANARY_CONFIGURED",
-            "CONFIGURED",
-            "INITIAL"
-          ],
-          "enumDescriptions": [
-            "",
-            "",
-            ""
-          ],
-          "type": "string"
         }
       },
       "type": "object"
@@ -52617,6 +52616,10 @@
         "latencyTolerant": {
           "description": "Defines whether the instance is tolerant of higher cpu latency. This can only be set during instance creation, or when the instance is not currently running. It must not be set if the preemptible option is also set.",
           "type": "boolean"
+        },
+        "locationHint": {
+          "description": "An opaque location hint used to place the instance close to other resources. This field is for use by internal tools that use the public API.",
+          "type": "string"
         },
         "minNodeCpus": {
           "description": "The minimum number of virtual CPUs this instance will consume when running on a sole-tenant node.",

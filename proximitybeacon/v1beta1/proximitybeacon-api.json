@@ -105,7 +105,7 @@
     "beaconinfo": {
       "methods": {
         "getforobserved": {
-          "description": "Given one or more beacon observations, returns any beacon information\nand attachments accessible to your application. Authorize by using the\n[API key](https://developers.google.com/beacons/proximity/get-started#request_a_browser_api_key)\nfor the application.",
+          "description": "Given one or more beacon observations, returns any beacon information\nand attachments accessible to your application. Authorize by using the\n[API\nkey](https://developers.google.com/beacons/proximity/get-started#request_a_browser_api_key)\nfor the application.",
           "flatPath": "v1beta1/beaconinfo:getforobserved",
           "httpMethod": "POST",
           "id": "proximitybeacon.beaconinfo.getforobserved",
@@ -124,7 +124,7 @@
     "beacons": {
       "methods": {
         "activate": {
-          "description": "Activates a beacon. A beacon that is active will return information\nand attachment data when queried via `beaconinfo.getforobserved`.\nCalling this method on an already active beacon will do nothing (but\nwill return a successful response code).\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **Is owner** or **Can edit** permissions in the\nGoogle Developers Console project.",
+          "description": "Activates a beacon. A beacon that is active will return information\nand attachment data when queried via `beaconinfo.getforobserved`.\nCalling this method on an already active beacon will do nothing (but\nwill return a successful response code).\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **Is owner** or **Can edit** permissions in the Google\nDevelopers Console project.",
           "flatPath": "v1beta1/beacons/{beaconsId}:activate",
           "httpMethod": "POST",
           "id": "proximitybeacon.beacons.activate",
@@ -154,7 +154,7 @@
           ]
         },
         "deactivate": {
-          "description": "Deactivates a beacon. Once deactivated, the API will not return\ninformation nor attachment data for the beacon when queried via\n`beaconinfo.getforobserved`. Calling this method on an already inactive\nbeacon will do nothing (but will return a successful response code).\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **Is owner** or **Can edit** permissions in the\nGoogle Developers Console project.",
+          "description": "Deactivates a beacon. Once deactivated, the API will not return\ninformation nor attachment data for the beacon when queried via\n`beaconinfo.getforobserved`. Calling this method on an already inactive\nbeacon will do nothing (but will return a successful response code).\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **Is owner** or **Can edit** permissions in the Google\nDevelopers Console project.",
           "flatPath": "v1beta1/beacons/{beaconsId}:deactivate",
           "httpMethod": "POST",
           "id": "proximitybeacon.beacons.deactivate",
@@ -184,7 +184,7 @@
           ]
         },
         "decommission": {
-          "description": "Decommissions the specified beacon in the service. This beacon will no\nlonger be returned from `beaconinfo.getforobserved`. This operation is\npermanent -- you will not be able to re-register a beacon with this ID\nagain.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **Is owner** or **Can edit** permissions in the\nGoogle Developers Console project.",
+          "description": "Decommissions the specified beacon in the service. This beacon will no\nlonger be returned from `beaconinfo.getforobserved`. This operation is\npermanent -- you will not be able to re-register a beacon with this ID\nagain.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **Is owner** or **Can edit** permissions in the Google\nDevelopers Console project.",
           "flatPath": "v1beta1/beacons/{beaconsId}:decommission",
           "httpMethod": "POST",
           "id": "proximitybeacon.beacons.decommission",
@@ -214,7 +214,7 @@
           ]
         },
         "delete": {
-          "description": "Deletes the specified beacon including all diagnostics data for the beacon\nas well as any attachments on the beacon (including those belonging to\nother projects). This operation cannot be undone.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **Is owner** or **Can edit** permissions in the\nGoogle Developers Console project.",
+          "description": "Deletes the specified beacon including all diagnostics data for the beacon\nas well as any attachments on the beacon (including those belonging to\nother projects). This operation cannot be undone.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **Is owner** or **Can edit** permissions in the Google\nDevelopers Console project.",
           "flatPath": "v1beta1/beacons/{beaconsId}",
           "httpMethod": "DELETE",
           "id": "proximitybeacon.beacons.delete",
@@ -244,7 +244,7 @@
           ]
         },
         "get": {
-          "description": "Returns detailed information about the specified beacon.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **viewer**, **Is owner** or **Can edit**\npermissions in the Google Developers Console project.\n\nRequests may supply an Eddystone-EID beacon name in the form:\n`beacons/4!beaconId` where the `beaconId` is the base16 ephemeral ID\nbroadcast by the beacon. The returned `Beacon` object will contain the\nbeacon's stable Eddystone-UID. Clients not authorized to resolve the\nbeacon's ephemeral Eddystone-EID broadcast will receive an error.",
+          "description": "Returns detailed information about the specified beacon.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **viewer**, **Is owner** or **Can edit** permissions in\nthe Google Developers Console project.\n\nRequests may supply an Eddystone-EID beacon name in the form:\n`beacons/4!beaconId` where the `beaconId` is the base16 ephemeral ID\nbroadcast by the beacon. The returned `Beacon` object will contain the\nbeacon's stable Eddystone-UID. Clients not authorized to resolve the\nbeacon's ephemeral Eddystone-EID broadcast will receive an error.",
           "flatPath": "v1beta1/beacons/{beaconsId}",
           "httpMethod": "GET",
           "id": "proximitybeacon.beacons.get",
@@ -274,7 +274,7 @@
           ]
         },
         "list": {
-          "description": "Searches the beacon registry for beacons that match the given search\ncriteria. Only those beacons that the client has permission to list\nwill be returned.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **viewer**, **Is owner** or **Can edit**\npermissions in the Google Developers Console project.",
+          "description": "Searches the beacon registry for beacons that match the given search\ncriteria. Only those beacons that the client has permission to list\nwill be returned.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **viewer**, **Is owner** or **Can edit** permissions in\nthe Google Developers Console project.",
           "flatPath": "v1beta1/beacons",
           "httpMethod": "GET",
           "id": "proximitybeacon.beacons.list",
@@ -297,7 +297,7 @@
               "type": "string"
             },
             "q": {
-              "description": "Filter query string that supports the following field filters:\n\n* **description:`\"\u003cstring\u003e\"`**\n  For example: **description:\"Room 3\"**\n  Returns beacons whose description matches tokens in the string \"Room 3\"\n  (not necessarily that exact string).\n  The string must be double-quoted.\n* **status:`\u003cenum\u003e`**\n  For example: **status:active**\n  Returns beacons whose status matches the given value. Values must be\n  one of the Beacon.Status enum values (case insensitive). Accepts\n  multiple filters which will be combined with OR logic.\n* **stability:`\u003cenum\u003e`**\n  For example: **stability:mobile**\n  Returns beacons whose expected stability matches the given value.\n  Values must be one of the Beacon.Stability enum values (case\n  insensitive). Accepts multiple filters which will be combined with\n  OR logic.\n* **place\\_id:`\"\u003cstring\u003e\"`**\n  For example: **place\\_id:\"ChIJVSZzVR8FdkgRXGmmm6SslKw=\"**\n  Returns beacons explicitly registered at the given place, expressed as\n  a Place ID obtained from [Google Places API](/places/place-id). Does not\n  match places inside the given place. Does not consider the beacon's\n  actual location (which may be different from its registered place).\n  Accepts multiple filters that will be combined with OR logic. The place\n  ID must be double-quoted.\n* **registration\\_time`[\u003c|\u003e|\u003c=|\u003e=]\u003cinteger\u003e`**\n  For example: **registration\\_time\u003e=1433116800**\n  Returns beacons whose registration time matches the given filter.\n  Supports the operators: \u003c, \u003e, \u003c=, and \u003e=. Timestamp must be expressed as\n  an integer number of seconds since midnight January 1, 1970 UTC. Accepts\n  at most two filters that will be combined with AND logic, to support\n  \"between\" semantics. If more than two are supplied, the latter ones are\n  ignored.\n* **lat:`\u003cdouble\u003e lng:\u003cdouble\u003e radius:\u003cinteger\u003e`**\n  For example: **lat:51.1232343 lng:-1.093852 radius:1000**\n  Returns beacons whose registered location is within the given circle.\n  When any of these fields are given, all are required. Latitude and\n  longitude must be decimal degrees between -90.0 and 90.0 and between\n  -180.0 and 180.0 respectively. Radius must be an integer number of\n  meters between 10 and 1,000,000 (1000 km).\n* **property:`\"\u003cstring\u003e=\u003cstring\u003e\"`**\n  For example: **property:\"battery-type=CR2032\"**\n  Returns beacons which have a property of the given name and value.\n  Supports multiple filters which will be combined with OR logic.\n  The entire name=value string must be double-quoted as one string.\n* **attachment\\_type:`\"\u003cstring\u003e\"`**\n  For example: **attachment_type:\"my-namespace/my-type\"**\n  Returns beacons having at least one attachment of the given namespaced\n  type. Supports \"any within this namespace\" via the partial wildcard\n  syntax: \"my-namespace/*\". Supports multiple filters which will be\n  combined with OR logic. The string must be double-quoted.\n* **indoor\\_level:`\"\u003cstring\u003e\"`**\n  For example: **indoor\\_level:\"1\"**\n  Returns beacons which are located on the given indoor level. Accepts\n  multiple filters that will be combined with OR logic.\n\nMultiple filters on the same field are combined with OR logic (except\nregistration_time which is combined with AND logic).\nMultiple filters on different fields are combined with AND logic.\nFilters should be separated by spaces.\n\nAs with any HTTP query string parameter, the whole filter expression must\nbe URL-encoded.\n\nExample REST request:\n`GET /v1beta1/beacons?q=status:active%20lat:51.123%20lng:-1.095%20radius:1000`",
+              "description": "Filter query string that supports the following field filters:\n\n* **description:`\"\u003cstring\u003e\"`**\n  For example: **description:\"Room 3\"**\n  Returns beacons whose description matches tokens in the string \"Room 3\"\n  (not necessarily that exact string).\n  The string must be double-quoted.\n* **status:`\u003cenum\u003e`**\n  For example: **status:active**\n  Returns beacons whose status matches the given value. Values must be\n  one of the Beacon.Status enum values (case insensitive). Accepts\n  multiple filters which will be combined with OR logic.\n* **stability:`\u003cenum\u003e`**\n  For example: **stability:mobile**\n  Returns beacons whose expected stability matches the given value.\n  Values must be one of the Beacon.Stability enum values (case\n  insensitive). Accepts multiple filters which will be combined with\n  OR logic.\n* **place\\_id:`\"\u003cstring\u003e\"`**\n  For example: **place\\_id:\"ChIJVSZzVR8FdkgRXGmmm6SslKw=\"**\n  Returns beacons explicitly registered at the given place, expressed as\n  a Place ID obtained from [Google Places API](/places/place-id). Does not\n  match places inside the given place. Does not consider the beacon's\n  actual location (which may be different from its registered place).\n  Accepts multiple filters that will be combined with OR logic. The place\n  ID must be double-quoted.\n* **registration\\_time`[\u003c|\u003e|\u003c=|\u003e=]\u003cinteger\u003e`**\n  For example: **registration\\_time\u003e=1433116800**\n  Returns beacons whose registration time matches the given filter.\n  Supports the operators: \u003c, \u003e, \u003c=, and \u003e=. Timestamp must be expressed as\n  an integer number of seconds since midnight January 1, 1970 UTC. Accepts\n  at most two filters that will be combined with AND logic, to support\n  \"between\" semantics. If more than two are supplied, the latter ones are\n  ignored.\n* **lat:`\u003cdouble\u003e lng:\u003cdouble\u003e radius:\u003cinteger\u003e`**\n  For example: **lat:51.1232343 lng:-1.093852 radius:1000**\n  Returns beacons whose registered location is within the given circle.\n  When any of these fields are given, all are required. Latitude and\n  longitude must be decimal degrees between -90.0 and 90.0 and between\n  -180.0 and 180.0 respectively. Radius must be an integer number of\n  meters between 10 and 1,000,000 (1000 km).\n* **property:`\"\u003cstring\u003e=\u003cstring\u003e\"`**\n  For example: **property:\"battery-type=CR2032\"**\n  Returns beacons which have a property of the given name and value.\n  Supports multiple filters which will be combined with OR logic.\n  The entire name=value string must be double-quoted as one string.\n* **attachment\\_type:`\"\u003cstring\u003e\"`**\n  For example: **attachment_type:\"my-namespace/my-type\"**\n  Returns beacons having at least one attachment of the given namespaced\n  type. Supports \"any within this namespace\" via the partial wildcard\n  syntax: \"my-namespace/*\". Supports multiple filters which will be\n  combined with OR logic. The string must be double-quoted.\n* **indoor\\_level:`\"\u003cstring\u003e\"`**\n  For example: **indoor\\_level:\"1\"**\n  Returns beacons which are located on the given indoor level. Accepts\n  multiple filters that will be combined with OR logic.\n\nMultiple filters on the same field are combined with OR logic (except\nregistration_time which is combined with AND logic).\nMultiple filters on different fields are combined with AND logic.\nFilters should be separated by spaces.\n\nAs with any HTTP query string parameter, the whole filter expression must\nbe URL-encoded.\n\nExample REST request:\n`GET\n/v1beta1/beacons?q=status:active%20lat:51.123%20lng:-1.095%20radius:1000`",
               "location": "query",
               "type": "string"
             }
@@ -311,7 +311,7 @@
           ]
         },
         "register": {
-          "description": "Registers a previously unregistered beacon given its `advertisedId`.\nThese IDs are unique within the system. An ID can be registered only once.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **Is owner** or **Can edit** permissions in the\nGoogle Developers Console project.",
+          "description": "Registers a previously unregistered beacon given its `advertisedId`.\nThese IDs are unique within the system. An ID can be registered only once.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **Is owner** or **Can edit** permissions in the Google\nDevelopers Console project.",
           "flatPath": "v1beta1/beacons:register",
           "httpMethod": "POST",
           "id": "proximitybeacon.beacons.register",
@@ -335,7 +335,7 @@
           ]
         },
         "update": {
-          "description": "Updates the information about the specified beacon. **Any field that you do\nnot populate in the submitted beacon will be permanently erased**, so you\nshould follow the \"read, modify, write\" pattern to avoid inadvertently\ndestroying data.\n\nChanges to the beacon status via this method will be  silently ignored.\nTo update beacon status, use the separate methods on this API for\nactivation, deactivation, and decommissioning.\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **Is owner** or **Can edit** permissions in the\nGoogle Developers Console project.",
+          "description": "Updates the information about the specified beacon. **Any field that you do\nnot populate in the submitted beacon will be permanently erased**, so you\nshould follow the \"read, modify, write\" pattern to avoid inadvertently\ndestroying data.\n\nChanges to the beacon status via this method will be  silently ignored.\nTo update beacon status, use the separate methods on this API for\nactivation, deactivation, and decommissioning.\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **Is owner** or **Can edit** permissions in the Google\nDevelopers Console project.",
           "flatPath": "v1beta1/beacons/{beaconsId}",
           "httpMethod": "PUT",
           "id": "proximitybeacon.beacons.update",
@@ -372,7 +372,7 @@
         "attachments": {
           "methods": {
             "batchDelete": {
-              "description": "Deletes multiple attachments on a given beacon. This operation is\npermanent and cannot be undone.\n\nYou can optionally specify `namespacedType` to choose which attachments\nshould be deleted. If you do not specify `namespacedType`,  all your\nattachments on the given beacon will be deleted. You also may explicitly\nspecify `*/*` to delete all.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **Is owner** or **Can edit** permissions in the\nGoogle Developers Console project.",
+              "description": "Deletes multiple attachments on a given beacon. This operation is\npermanent and cannot be undone.\n\nYou can optionally specify `namespacedType` to choose which attachments\nshould be deleted. If you do not specify `namespacedType`,  all your\nattachments on the given beacon will be deleted. You also may explicitly\nspecify `*/*` to delete all.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **Is owner** or **Can edit** permissions in the Google\nDevelopers Console project.",
               "flatPath": "v1beta1/beacons/{beaconsId}/attachments:batchDelete",
               "httpMethod": "POST",
               "id": "proximitybeacon.beacons.attachments.batchDelete",
@@ -407,7 +407,7 @@
               ]
             },
             "create": {
-              "description": "Associates the given data with the specified beacon. Attachment data must\ncontain two parts:\n\u003cul\u003e\n\u003cli\u003eA namespaced type.\u003c/li\u003e\n\u003cli\u003eThe actual attachment data itself.\u003c/li\u003e\n\u003c/ul\u003e\nThe namespaced type consists of two parts, the namespace and the type.\nThe namespace must be one of the values returned by the `namespaces`\nendpoint, while the type can be a string of any characters except for the\nforward slash (`/`) up to 100 characters in length.\n\nAttachment data can be up to 1024 bytes long.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **Is owner** or **Can edit** permissions in the\nGoogle Developers Console project.",
+              "description": "Associates the given data with the specified beacon. Attachment data must\ncontain two parts:\n\u003cul\u003e\n\u003cli\u003eA namespaced type.\u003c/li\u003e\n\u003cli\u003eThe actual attachment data itself.\u003c/li\u003e\n\u003c/ul\u003e\nThe namespaced type consists of two parts, the namespace and the type.\nThe namespace must be one of the values returned by the `namespaces`\nendpoint, while the type can be a string of any characters except for the\nforward slash (`/`) up to 100 characters in length.\n\nAttachment data can be up to 1024 bytes long.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **Is owner** or **Can edit** permissions in the Google\nDevelopers Console project.",
               "flatPath": "v1beta1/beacons/{beaconsId}/attachments",
               "httpMethod": "POST",
               "id": "proximitybeacon.beacons.attachments.create",
@@ -440,7 +440,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes the specified attachment for the given beacon. Each attachment has\na unique attachment name (`attachmentName`) which is returned when you\nfetch the attachment data via this API. You specify this with the delete\nrequest to control which attachment is removed. This operation cannot be\nundone.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **Is owner** or **Can edit** permissions in the\nGoogle Developers Console project.",
+              "description": "Deletes the specified attachment for the given beacon. Each attachment has\na unique attachment name (`attachmentName`) which is returned when you\nfetch the attachment data via this API. You specify this with the delete\nrequest to control which attachment is removed. This operation cannot be\nundone.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **Is owner** or **Can edit** permissions in the Google\nDevelopers Console project.",
               "flatPath": "v1beta1/beacons/{beaconsId}/attachments/{attachmentsId}",
               "httpMethod": "DELETE",
               "id": "proximitybeacon.beacons.attachments.delete",
@@ -470,7 +470,7 @@
               ]
             },
             "list": {
-              "description": "Returns the attachments for the specified beacon that match the specified\nnamespaced-type pattern.\n\nTo control which namespaced types are returned, you add the\n`namespacedType` query parameter to the request. You must either use\n`*/*`, to return all attachments, or the namespace must be one of\nthe ones returned from the  `namespaces` endpoint.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **viewer**, **Is owner** or **Can edit**\npermissions in the Google Developers Console project.",
+              "description": "Returns the attachments for the specified beacon that match the specified\nnamespaced-type pattern.\n\nTo control which namespaced types are returned, you add the\n`namespacedType` query parameter to the request. You must either use\n`*/*`, to return all attachments, or the namespace must be one of\nthe ones returned from the  `namespaces` endpoint.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **viewer**, **Is owner** or **Can edit** permissions in\nthe Google Developers Console project.",
               "flatPath": "v1beta1/beacons/{beaconsId}/attachments",
               "httpMethod": "GET",
               "id": "proximitybeacon.beacons.attachments.list",
@@ -509,7 +509,7 @@
         "diagnostics": {
           "methods": {
             "list": {
-              "description": "List the diagnostics for a single beacon. You can also list diagnostics for\nall the beacons owned by your Google Developers Console project by using\nthe beacon name `beacons/-`.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **viewer**, **Is owner** or **Can edit**\npermissions in the Google Developers Console project.",
+              "description": "List the diagnostics for a single beacon. You can also list diagnostics for\nall the beacons owned by your Google Developers Console project by using\nthe beacon name `beacons/-`.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **viewer**, **Is owner** or **Can edit** permissions in\nthe Google Developers Console project.",
               "flatPath": "v1beta1/beacons/{beaconsId}/diagnostics",
               "httpMethod": "GET",
               "id": "proximitybeacon.beacons.diagnostics.list",
@@ -567,7 +567,7 @@
     "namespaces": {
       "methods": {
         "list": {
-          "description": "Lists all attachment namespaces owned by your Google Developers Console\nproject. Attachment data associated with a beacon must include a\nnamespaced type, and the namespace must be owned by your project.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **viewer**, **Is owner** or **Can edit**\npermissions in the Google Developers Console project.",
+          "description": "Lists all attachment namespaces owned by your Google Developers Console\nproject. Attachment data associated with a beacon must include a\nnamespaced type, and the namespace must be owned by your project.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **viewer**, **Is owner** or **Can edit** permissions in\nthe Google Developers Console project.",
           "flatPath": "v1beta1/namespaces",
           "httpMethod": "GET",
           "id": "proximitybeacon.namespaces.list",
@@ -642,7 +642,7 @@
       }
     }
   },
-  "revision": "20190304",
+  "revision": "20190913",
   "rootUrl": "https://proximitybeacon.googleapis.com/",
   "schemas": {
     "AdvertisedId": {
@@ -941,16 +941,16 @@
       "type": "object"
     },
     "EphemeralIdRegistrationParams": {
-      "description": "Information a client needs to provision and register beacons that\nbroadcast Eddystone-EID format beacon IDs, using Elliptic curve\nDiffie-Hellman key exchange. See\n[the Eddystone specification](https://github.com/google/eddystone/tree/master/eddystone-eid) at GitHub.",
+      "description": "Information a client needs to provision and register beacons that\nbroadcast Eddystone-EID format beacon IDs, using Elliptic curve\nDiffie-Hellman key exchange. See\n[the Eddystone\nspecification](https://github.com/google/eddystone/tree/master/eddystone-eid)\nat GitHub.",
       "id": "EphemeralIdRegistrationParams",
       "properties": {
         "maxRotationPeriodExponent": {
-          "description": "Indicates the maximum rotation period supported by the service.\nSee EddystoneEidRegistration.rotation_period_exponent",
+          "description": "Indicates the maximum rotation period supported by the service.\nSee\nEddystoneEidRegistration.rotation_period_exponent",
           "format": "uint32",
           "type": "integer"
         },
         "minRotationPeriodExponent": {
-          "description": "Indicates the minimum rotation period supported by the service.\nSee EddystoneEidRegistration.rotation_period_exponent",
+          "description": "Indicates the minimum rotation period supported by the service.\nSee\nEddystoneEidRegistration.rotation_period_exponent",
           "format": "uint32",
           "type": "integer"
         },

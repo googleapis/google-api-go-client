@@ -192,8 +192,8 @@ type AudioConfig struct {
 	// semitones from the original pitch.
 	Pitch float64 `json:"pitch,omitempty"`
 
-	// SampleRateHertz: The synthesis sample rate (in hertz) for this audio.
-	// Optional. When this is
+	// SampleRateHertz: Optional. The synthesis sample rate (in hertz) for
+	// this audio. When this is
 	// specified in SynthesizeSpeechRequest, if this is different from the
 	// voice's
 	// natural sample rate, then the synthesizer will honor this request
@@ -485,13 +485,12 @@ func (s *Voice) MarshalJSON() ([]byte, error) {
 // VoiceSelectionParams: Description of which voice to use for a
 // synthesis request.
 type VoiceSelectionParams struct {
-	// LanguageCode: The language (and optionally also the region) of the
-	// voice expressed as
+	// LanguageCode: Required. The language (and potentially also the
+	// region) of the voice expressed as
 	// a
 	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag,
 	// e.g.
-	// "en-US". Required. This should not include a script tag (e.g.
-	// use
+	// "en-US". This should not include a script tag (e.g. use
 	// "cmn-cn" rather than "cmn-Hant-cn"), because the script will be
 	// inferred
 	// from the input provided in the SynthesisInput.  The TTS service
@@ -507,13 +506,13 @@ type VoiceSelectionParams struct {
 	// Bokmal) instead of "no" (Norwegian)".
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// Name: The name of the voice. Optional; if not set, the service will
-	// choose a
+	// Name: The name of the voice. If not set, the service will choose
+	// a
 	// voice based on the other parameters such as language_code and gender.
 	Name string `json:"name,omitempty"`
 
-	// SsmlGender: The preferred gender of the voice. Optional; if not set,
-	// the service will
+	// SsmlGender: The preferred gender of the voice. If not set, the
+	// service will
 	// choose a voice based on the other parameters such as language_code
 	// and
 	// name. Note that this is only a preference, not requirement; if
@@ -607,7 +606,7 @@ func (c *TextSynthesizeCall) Header() http.Header {
 
 func (c *TextSynthesizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -704,9 +703,8 @@ func (r *VoicesService) List() *VoicesListCall {
 	return c
 }
 
-// LanguageCode sets the optional parameter "languageCode": Optional
-// (but
-// recommended)
+// LanguageCode sets the optional parameter "languageCode":
+// Recommended.
 // [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
 // If
 // specified, the ListVoices call will only return voices that can be
@@ -762,7 +760,7 @@ func (c *VoicesListCall) Header() http.Header {
 
 func (c *VoicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -828,7 +826,7 @@ func (c *VoicesListCall) Do(opts ...googleapi.CallOption) (*ListVoicesResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "Optional (but recommended)\n[BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag. If\nspecified, the ListVoices call will only return voices that can be used to\nsynthesize this language_code. E.g. when specifying \"en-NZ\", you will get\nsupported \"en-*\" voices; when specifying \"no\", you will get supported\n\"no-*\" (Norwegian) and \"nb-*\" (Norwegian Bokmal) voices; specifying \"zh\"\nwill also get supported \"cmn-*\" voices; specifying \"zh-hk\" will also get\nsupported \"yue-*\" voices.",
+	//       "description": "Optional. Recommended.\n[BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag. If\nspecified, the ListVoices call will only return voices that can be used to\nsynthesize this language_code. E.g. when specifying \"en-NZ\", you will get\nsupported \"en-*\" voices; when specifying \"no\", you will get supported\n\"no-*\" (Norwegian) and \"nb-*\" (Norwegian Bokmal) voices; specifying \"zh\"\nwill also get supported \"cmn-*\" voices; specifying \"zh-hk\" will also get\nsupported \"yue-*\" voices.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

@@ -896,12 +896,12 @@ func (s *ScheduleOptions) MarshalJSON() ([]byte, error) {
 // ScheduleTransferRunsRequest: A request to schedule transfer runs for
 // a time range.
 type ScheduleTransferRunsRequest struct {
-	// EndTime: End time of the range of transfer runs. For
+	// EndTime: Required. End time of the range of transfer runs. For
 	// example,
 	// "2017-05-30T00:00:00+00:00".
 	EndTime string `json:"endTime,omitempty"`
 
-	// StartTime: Start time of the range of transfer runs. For
+	// StartTime: Required. Start time of the range of transfer runs. For
 	// example,
 	// "2017-05-25T00:00:00+00:00".
 	StartTime string `json:"startTime,omitempty"`
@@ -1453,7 +1453,7 @@ func (c *ProjectsDataSourcesCheckValidCredsCall) Header() http.Header {
 
 func (c *ProjectsDataSourcesCheckValidCredsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1526,7 +1526,7 @@ func (c *ProjectsDataSourcesCheckValidCredsCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The data source in the form:\n`projects/{project_id}/dataSources/{data_source_id}`",
+	//       "description": "Required. The data source in the form:\n`projects/{project_id}/dataSources/{data_source_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/dataSources/[^/]+$",
 	//       "required": true,
@@ -1607,7 +1607,7 @@ func (c *ProjectsDataSourcesGetCall) Header() http.Header {
 
 func (c *ProjectsDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1678,7 +1678,7 @@ func (c *ProjectsDataSourcesGetCall) Do(opts ...googleapi.CallOption) (*DataSour
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The field will contain name of the resource requested, for example:\n`projects/{project_id}/dataSources/{data_source_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/dataSources/{data_source_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/dataSources/[^/]+$",
 	//       "required": true,
@@ -1773,7 +1773,7 @@ func (c *ProjectsDataSourcesListCall) Header() http.Header {
 
 func (c *ProjectsDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1855,7 +1855,7 @@ func (c *ProjectsDataSourcesListCall) Do(opts ...googleapi.CallOption) (*ListDat
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The BigQuery project id for which data sources should be returned.\nMust be in the form: `projects/{project_id}`",
+	//       "description": "Required. The BigQuery project id for which data sources should be returned.\nMust be in the form: `projects/{project_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1952,7 +1952,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2121,7 +2121,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2305,7 +2305,7 @@ func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) Header() http.Header {
 
 func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2378,7 +2378,7 @@ func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The data source in the form:\n`projects/{project_id}/dataSources/{data_source_id}`",
+	//       "description": "Required. The data source in the form:\n`projects/{project_id}/dataSources/{data_source_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataSources/[^/]+$",
 	//       "required": true,
@@ -2459,7 +2459,7 @@ func (c *ProjectsLocationsDataSourcesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2530,7 +2530,7 @@ func (c *ProjectsLocationsDataSourcesGetCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The field will contain name of the resource requested, for example:\n`projects/{project_id}/dataSources/{data_source_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/dataSources/{data_source_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataSources/[^/]+$",
 	//       "required": true,
@@ -2625,7 +2625,7 @@ func (c *ProjectsLocationsDataSourcesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2707,7 +2707,7 @@ func (c *ProjectsLocationsDataSourcesListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The BigQuery project id for which data sources should be returned.\nMust be in the form: `projects/{project_id}`",
+	//       "description": "Required. The BigQuery project id for which data sources should be returned.\nMust be in the form: `projects/{project_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2842,7 +2842,7 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2920,7 +2920,7 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The BigQuery project id where the transfer configuration should be created.\nMust be in the format projects/{project_id}/locations/{location_id}\nIf specified location and location of the destination bigquery dataset\ndo not match - the request will fail.",
+	//       "description": "Required. The BigQuery project id where the transfer configuration should be created.\nMust be in the format projects/{project_id}/locations/{location_id}\nIf specified location and location of the destination bigquery dataset\ndo not match - the request will fail.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2991,7 +2991,7 @@ func (c *ProjectsLocationsTransferConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3059,7 +3059,7 @@ func (c *ProjectsLocationsTransferConfigsDeleteCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -3133,7 +3133,7 @@ func (c *ProjectsLocationsTransferConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3204,7 +3204,7 @@ func (c *ProjectsLocationsTransferConfigsGetCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -3306,7 +3306,7 @@ func (c *ProjectsLocationsTransferConfigsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3394,7 +3394,7 @@ func (c *ProjectsLocationsTransferConfigsListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The BigQuery project id for which data sources\nshould be returned: `projects/{project_id}`.",
+	//       "description": "Required. The BigQuery project id for which data sources\nshould be returned: `projects/{project_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3487,8 +3487,8 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) AuthorizationCode(authorizat
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required list of
-// fields to be updated in this request.
+// UpdateMask sets the optional parameter "updateMask": Required.
+// Required list of fields to be updated in this request.
 func (c *ProjectsLocationsTransferConfigsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsTransferConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3537,7 +3537,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3622,7 +3622,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required list of fields to be updated in this request.",
+	//       "description": "Required. Required list of fields to be updated in this request.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -3700,7 +3700,7 @@ func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) Header() http.Header 
 
 func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3773,7 +3773,7 @@ func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Transfer configuration name in the form:\n`projects/{project_id}/transferConfigs/{config_id}`.",
+	//       "description": "Required. Transfer configuration name in the form:\n`projects/{project_id}/transferConfigs/{config_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -3847,7 +3847,7 @@ func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) Header() http.Head
 
 func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3986,7 +3986,7 @@ func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4054,7 +4054,7 @@ func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+/runs/[^/]+$",
 	//       "required": true,
@@ -4128,7 +4128,7 @@ func (c *ProjectsLocationsTransferConfigsRunsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4199,7 +4199,7 @@ func (c *ProjectsLocationsTransferConfigsRunsGetCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+/runs/[^/]+$",
 	//       "required": true,
@@ -4319,7 +4319,7 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4401,7 +4401,7 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Name of transfer configuration for which transfer runs should be retrieved.\nFormat of transfer configuration resource name is:\n`projects/{project_id}/transferConfigs/{config_id}`.",
+	//       "description": "Required. Name of transfer configuration for which transfer runs should be retrieved.\nFormat of transfer configuration resource name is:\n`projects/{project_id}/transferConfigs/{config_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -4553,7 +4553,7 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Header() http
 
 func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4647,7 +4647,7 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Do(opts ...go
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Transfer run name in the form:\n`projects/{project_id}/transferConfigs/{config_Id}/runs/{run_id}`.",
+	//       "description": "Required. Transfer run name in the form:\n`projects/{project_id}/transferConfigs/{config_Id}/runs/{run_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+/runs/[^/]+$",
 	//       "required": true,
@@ -4782,7 +4782,7 @@ func (c *ProjectsTransferConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4860,7 +4860,7 @@ func (c *ProjectsTransferConfigsCreateCall) Do(opts ...googleapi.CallOption) (*T
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The BigQuery project id where the transfer configuration should be created.\nMust be in the format projects/{project_id}/locations/{location_id}\nIf specified location and location of the destination bigquery dataset\ndo not match - the request will fail.",
+	//       "description": "Required. The BigQuery project id where the transfer configuration should be created.\nMust be in the format projects/{project_id}/locations/{location_id}\nIf specified location and location of the destination bigquery dataset\ndo not match - the request will fail.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -4931,7 +4931,7 @@ func (c *ProjectsTransferConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4999,7 +4999,7 @@ func (c *ProjectsTransferConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -5073,7 +5073,7 @@ func (c *ProjectsTransferConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5144,7 +5144,7 @@ func (c *ProjectsTransferConfigsGetCall) Do(opts ...googleapi.CallOption) (*Tran
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -5246,7 +5246,7 @@ func (c *ProjectsTransferConfigsListCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5334,7 +5334,7 @@ func (c *ProjectsTransferConfigsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The BigQuery project id for which data sources\nshould be returned: `projects/{project_id}`.",
+	//       "description": "Required. The BigQuery project id for which data sources\nshould be returned: `projects/{project_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -5427,8 +5427,8 @@ func (c *ProjectsTransferConfigsPatchCall) AuthorizationCode(authorizationCode s
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required list of
-// fields to be updated in this request.
+// UpdateMask sets the optional parameter "updateMask": Required.
+// Required list of fields to be updated in this request.
 func (c *ProjectsTransferConfigsPatchCall) UpdateMask(updateMask string) *ProjectsTransferConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5477,7 +5477,7 @@ func (c *ProjectsTransferConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5562,7 +5562,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required list of fields to be updated in this request.",
+	//       "description": "Required. Required list of fields to be updated in this request.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -5640,7 +5640,7 @@ func (c *ProjectsTransferConfigsScheduleRunsCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsScheduleRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5713,7 +5713,7 @@ func (c *ProjectsTransferConfigsScheduleRunsCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Transfer configuration name in the form:\n`projects/{project_id}/transferConfigs/{config_id}`.",
+	//       "description": "Required. Transfer configuration name in the form:\n`projects/{project_id}/transferConfigs/{config_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -5787,7 +5787,7 @@ func (c *ProjectsTransferConfigsStartManualRunsCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsStartManualRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5926,7 +5926,7 @@ func (c *ProjectsTransferConfigsRunsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5994,7 +5994,7 @@ func (c *ProjectsTransferConfigsRunsDeleteCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+/runs/[^/]+$",
 	//       "required": true,
@@ -6068,7 +6068,7 @@ func (c *ProjectsTransferConfigsRunsGetCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6139,7 +6139,7 @@ func (c *ProjectsTransferConfigsRunsGetCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+/runs/[^/]+$",
 	//       "required": true,
@@ -6259,7 +6259,7 @@ func (c *ProjectsTransferConfigsRunsListCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6341,7 +6341,7 @@ func (c *ProjectsTransferConfigsRunsListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Name of transfer configuration for which transfer runs should be retrieved.\nFormat of transfer configuration resource name is:\n`projects/{project_id}/transferConfigs/{config_id}`.",
+	//       "description": "Required. Name of transfer configuration for which transfer runs should be retrieved.\nFormat of transfer configuration resource name is:\n`projects/{project_id}/transferConfigs/{config_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -6493,7 +6493,7 @@ func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsTransferLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6587,7 +6587,7 @@ func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Do(opts ...googleapi.C
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Transfer run name in the form:\n`projects/{project_id}/transferConfigs/{config_Id}/runs/{run_id}`.",
+	//       "description": "Required. Transfer run name in the form:\n`projects/{project_id}/transferConfigs/{config_Id}/runs/{run_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+/runs/[^/]+$",
 	//       "required": true,

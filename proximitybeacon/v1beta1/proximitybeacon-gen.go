@@ -913,18 +913,24 @@ func (s *EphemeralIdRegistration) MarshalJSON() ([]byte, error) {
 // broadcast Eddystone-EID format beacon IDs, using Elliptic
 // curve
 // Diffie-Hellman key exchange. See
-// [the Eddystone
-// specification](https://github.com/google/eddystone/tree/master/eddysto
-// ne-eid) at GitHub.
+// [the
+// Eddystone
+// specification](https://github.com/google/eddystone/tree/mast
+// er/eddystone-eid)
+// at GitHub.
 type EphemeralIdRegistrationParams struct {
 	// MaxRotationPeriodExponent: Indicates the maximum rotation period
-	// supported by the service.
-	// See EddystoneEidRegistration.rotation_period_exponent
+	// supported by the
+	// service.
+	// See
+	// EddystoneEidRegistration.rotation_period_exponent
 	MaxRotationPeriodExponent int64 `json:"maxRotationPeriodExponent,omitempty"`
 
 	// MinRotationPeriodExponent: Indicates the minimum rotation period
-	// supported by the service.
-	// See EddystoneEidRegistration.rotation_period_exponent
+	// supported by the
+	// service.
+	// See
+	// EddystoneEidRegistration.rotation_period_exponent
 	MinRotationPeriodExponent int64 `json:"minRotationPeriodExponent,omitempty"`
 
 	// ServiceEcdhPublicKey: The beacon service's public key for use by a
@@ -1384,8 +1390,8 @@ type BeaconinfoGetforobservedCall struct {
 // and attachments accessible to your application. Authorize by using
 // the
 // [API
-// key](https://developers.google.com/beacons/proximity/get-started#reque
-// st_a_browser_api_key)
+// key](https://developers.google.com/beacons/proximity/get-star
+// ted#request_a_browser_api_key)
 // for the application.
 func (r *BeaconinfoService) Getforobserved(getinfoforobservedbeaconsrequest *GetInfoForObservedBeaconsRequest) *BeaconinfoGetforobservedCall {
 	c := &BeaconinfoGetforobservedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1420,7 +1426,7 @@ func (c *BeaconinfoGetforobservedCall) Header() http.Header {
 
 func (c *BeaconinfoGetforobservedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1482,7 +1488,7 @@ func (c *BeaconinfoGetforobservedCall) Do(opts ...googleapi.CallOption) (*GetInf
 	}
 	return ret, nil
 	// {
-	//   "description": "Given one or more beacon observations, returns any beacon information\nand attachments accessible to your application. Authorize by using the\n[API key](https://developers.google.com/beacons/proximity/get-started#request_a_browser_api_key)\nfor the application.",
+	//   "description": "Given one or more beacon observations, returns any beacon information\nand attachments accessible to your application. Authorize by using the\n[API\nkey](https://developers.google.com/beacons/proximity/get-started#request_a_browser_api_key)\nfor the application.",
 	//   "flatPath": "v1beta1/beaconinfo:getforobserved",
 	//   "httpMethod": "POST",
 	//   "id": "proximitybeacon.beaconinfo.getforobserved",
@@ -1517,11 +1523,13 @@ type BeaconsActivateCall struct {
 // (but
 // will return a successful response code).
 //
-// Authenticate using an [OAuth access
+// Authenticate using an [OAuth
+// access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-// from a signed-in user with **Is owner** or **Can edit** permissions
-// in the
-// Google Developers Console project.
+//  from a
+// signed-in user with **Is owner** or **Can edit** permissions in the
+// Google
+// Developers Console project.
 func (r *BeaconsService) Activate(beaconName string) *BeaconsActivateCall {
 	c := &BeaconsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.beaconName = beaconName
@@ -1565,7 +1573,7 @@ func (c *BeaconsActivateCall) Header() http.Header {
 
 func (c *BeaconsActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1624,7 +1632,7 @@ func (c *BeaconsActivateCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Activates a beacon. A beacon that is active will return information\nand attachment data when queried via `beaconinfo.getforobserved`.\nCalling this method on an already active beacon will do nothing (but\nwill return a successful response code).\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **Is owner** or **Can edit** permissions in the\nGoogle Developers Console project.",
+	//   "description": "Activates a beacon. A beacon that is active will return information\nand attachment data when queried via `beaconinfo.getforobserved`.\nCalling this method on an already active beacon will do nothing (but\nwill return a successful response code).\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **Is owner** or **Can edit** permissions in the Google\nDevelopers Console project.",
 	//   "flatPath": "v1beta1/beacons/{beaconsId}:activate",
 	//   "httpMethod": "POST",
 	//   "id": "proximitybeacon.beacons.activate",
@@ -1675,11 +1683,13 @@ type BeaconsDeactivateCall struct {
 // beacon will do nothing (but will return a successful response
 // code).
 //
-// Authenticate using an [OAuth access
+// Authenticate using an [OAuth
+// access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-// from a signed-in user with **Is owner** or **Can edit** permissions
-// in the
-// Google Developers Console project.
+//  from a
+// signed-in user with **Is owner** or **Can edit** permissions in the
+// Google
+// Developers Console project.
 func (r *BeaconsService) Deactivate(beaconName string) *BeaconsDeactivateCall {
 	c := &BeaconsDeactivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.beaconName = beaconName
@@ -1723,7 +1733,7 @@ func (c *BeaconsDeactivateCall) Header() http.Header {
 
 func (c *BeaconsDeactivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1782,7 +1792,7 @@ func (c *BeaconsDeactivateCall) Do(opts ...googleapi.CallOption) (*Empty, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Deactivates a beacon. Once deactivated, the API will not return\ninformation nor attachment data for the beacon when queried via\n`beaconinfo.getforobserved`. Calling this method on an already inactive\nbeacon will do nothing (but will return a successful response code).\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **Is owner** or **Can edit** permissions in the\nGoogle Developers Console project.",
+	//   "description": "Deactivates a beacon. Once deactivated, the API will not return\ninformation nor attachment data for the beacon when queried via\n`beaconinfo.getforobserved`. Calling this method on an already inactive\nbeacon will do nothing (but will return a successful response code).\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **Is owner** or **Can edit** permissions in the Google\nDevelopers Console project.",
 	//   "flatPath": "v1beta1/beacons/{beaconsId}:deactivate",
 	//   "httpMethod": "POST",
 	//   "id": "proximitybeacon.beacons.deactivate",
@@ -1832,11 +1842,13 @@ type BeaconsDecommissionCall struct {
 // ID
 // again.
 //
-// Authenticate using an [OAuth access
+// Authenticate using an [OAuth
+// access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-// from a signed-in user with **Is owner** or **Can edit** permissions
-// in the
-// Google Developers Console project.
+//  from a
+// signed-in user with **Is owner** or **Can edit** permissions in the
+// Google
+// Developers Console project.
 func (r *BeaconsService) Decommission(beaconName string) *BeaconsDecommissionCall {
 	c := &BeaconsDecommissionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.beaconName = beaconName
@@ -1880,7 +1892,7 @@ func (c *BeaconsDecommissionCall) Header() http.Header {
 
 func (c *BeaconsDecommissionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1939,7 +1951,7 @@ func (c *BeaconsDecommissionCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Decommissions the specified beacon in the service. This beacon will no\nlonger be returned from `beaconinfo.getforobserved`. This operation is\npermanent -- you will not be able to re-register a beacon with this ID\nagain.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **Is owner** or **Can edit** permissions in the\nGoogle Developers Console project.",
+	//   "description": "Decommissions the specified beacon in the service. This beacon will no\nlonger be returned from `beaconinfo.getforobserved`. This operation is\npermanent -- you will not be able to re-register a beacon with this ID\nagain.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **Is owner** or **Can edit** permissions in the Google\nDevelopers Console project.",
 	//   "flatPath": "v1beta1/beacons/{beaconsId}:decommission",
 	//   "httpMethod": "POST",
 	//   "id": "proximitybeacon.beacons.decommission",
@@ -1987,11 +1999,13 @@ type BeaconsDeleteCall struct {
 // to
 // other projects). This operation cannot be undone.
 //
-// Authenticate using an [OAuth access
+// Authenticate using an [OAuth
+// access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-// from a signed-in user with **Is owner** or **Can edit** permissions
-// in the
-// Google Developers Console project.
+//  from a
+// signed-in user with **Is owner** or **Can edit** permissions in the
+// Google
+// Developers Console project.
 func (r *BeaconsService) Delete(beaconName string) *BeaconsDeleteCall {
 	c := &BeaconsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.beaconName = beaconName
@@ -2033,7 +2047,7 @@ func (c *BeaconsDeleteCall) Header() http.Header {
 
 func (c *BeaconsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2092,7 +2106,7 @@ func (c *BeaconsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified beacon including all diagnostics data for the beacon\nas well as any attachments on the beacon (including those belonging to\nother projects). This operation cannot be undone.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **Is owner** or **Can edit** permissions in the\nGoogle Developers Console project.",
+	//   "description": "Deletes the specified beacon including all diagnostics data for the beacon\nas well as any attachments on the beacon (including those belonging to\nother projects). This operation cannot be undone.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **Is owner** or **Can edit** permissions in the Google\nDevelopers Console project.",
 	//   "flatPath": "v1beta1/beacons/{beaconsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "proximitybeacon.beacons.delete",
@@ -2138,11 +2152,13 @@ type BeaconsGetCall struct {
 // Get: Returns detailed information about the specified
 // beacon.
 //
-// Authenticate using an [OAuth access
+// Authenticate using an [OAuth
+// access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-// from a signed-in user with **viewer**, **Is owner** or **Can
-// edit**
-// permissions in the Google Developers Console project.
+//  from a
+// signed-in user with **viewer**, **Is owner** or **Can edit**
+// permissions in
+// the Google Developers Console project.
 //
 // Requests may supply an Eddystone-EID beacon name in the
 // form:
@@ -2206,7 +2222,7 @@ func (c *BeaconsGetCall) Header() http.Header {
 
 func (c *BeaconsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2268,7 +2284,7 @@ func (c *BeaconsGetCall) Do(opts ...googleapi.CallOption) (*Beacon, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns detailed information about the specified beacon.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **viewer**, **Is owner** or **Can edit**\npermissions in the Google Developers Console project.\n\nRequests may supply an Eddystone-EID beacon name in the form:\n`beacons/4!beaconId` where the `beaconId` is the base16 ephemeral ID\nbroadcast by the beacon. The returned `Beacon` object will contain the\nbeacon's stable Eddystone-UID. Clients not authorized to resolve the\nbeacon's ephemeral Eddystone-EID broadcast will receive an error.",
+	//   "description": "Returns detailed information about the specified beacon.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **viewer**, **Is owner** or **Can edit** permissions in\nthe Google Developers Console project.\n\nRequests may supply an Eddystone-EID beacon name in the form:\n`beacons/4!beaconId` where the `beaconId` is the base16 ephemeral ID\nbroadcast by the beacon. The returned `Beacon` object will contain the\nbeacon's stable Eddystone-UID. Clients not authorized to resolve the\nbeacon's ephemeral Eddystone-EID broadcast will receive an error.",
 	//   "flatPath": "v1beta1/beacons/{beaconsId}",
 	//   "httpMethod": "GET",
 	//   "id": "proximitybeacon.beacons.get",
@@ -2316,11 +2332,13 @@ type BeaconsListCall struct {
 // list
 // will be returned.
 //
-// Authenticate using an [OAuth access
+// Authenticate using an [OAuth
+// access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-// from a signed-in user with **viewer**, **Is owner** or **Can
-// edit**
-// permissions in the Google Developers Console project.
+//  from a
+// signed-in user with **viewer**, **Is owner** or **Can edit**
+// permissions in
+// the Google Developers Console project.
 func (r *BeaconsService) List() *BeaconsListCall {
 	c := &BeaconsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -2434,10 +2452,11 @@ func (c *BeaconsListCall) ProjectId(projectId string) *BeaconsListCall {
 // must
 // be URL-encoded.
 //
-// Example REST request:
+// Example REST
+// request:
 // `GET
-// /v1beta1/beacons?q=status:active%20lat:51.123%20lng:-1.095%20radius:10
-// 00`
+// /v1beta1/beacons?q=status:active%20lat:51.123%20lng:-1.0
+// 95%20radius:1000`
 func (c *BeaconsListCall) Q(q string) *BeaconsListCall {
 	c.urlParams_.Set("q", q)
 	return c
@@ -2480,7 +2499,7 @@ func (c *BeaconsListCall) Header() http.Header {
 
 func (c *BeaconsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2539,7 +2558,7 @@ func (c *BeaconsListCall) Do(opts ...googleapi.CallOption) (*ListBeaconsResponse
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches the beacon registry for beacons that match the given search\ncriteria. Only those beacons that the client has permission to list\nwill be returned.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **viewer**, **Is owner** or **Can edit**\npermissions in the Google Developers Console project.",
+	//   "description": "Searches the beacon registry for beacons that match the given search\ncriteria. Only those beacons that the client has permission to list\nwill be returned.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **viewer**, **Is owner** or **Can edit** permissions in\nthe Google Developers Console project.",
 	//   "flatPath": "v1beta1/beacons",
 	//   "httpMethod": "GET",
 	//   "id": "proximitybeacon.beacons.list",
@@ -2562,7 +2581,7 @@ func (c *BeaconsListCall) Do(opts ...googleapi.CallOption) (*ListBeaconsResponse
 	//       "type": "string"
 	//     },
 	//     "q": {
-	//       "description": "Filter query string that supports the following field filters:\n\n* **description:`\"\u003cstring\u003e\"`**\n  For example: **description:\"Room 3\"**\n  Returns beacons whose description matches tokens in the string \"Room 3\"\n  (not necessarily that exact string).\n  The string must be double-quoted.\n* **status:`\u003cenum\u003e`**\n  For example: **status:active**\n  Returns beacons whose status matches the given value. Values must be\n  one of the Beacon.Status enum values (case insensitive). Accepts\n  multiple filters which will be combined with OR logic.\n* **stability:`\u003cenum\u003e`**\n  For example: **stability:mobile**\n  Returns beacons whose expected stability matches the given value.\n  Values must be one of the Beacon.Stability enum values (case\n  insensitive). Accepts multiple filters which will be combined with\n  OR logic.\n* **place\\_id:`\"\u003cstring\u003e\"`**\n  For example: **place\\_id:\"ChIJVSZzVR8FdkgRXGmmm6SslKw=\"**\n  Returns beacons explicitly registered at the given place, expressed as\n  a Place ID obtained from [Google Places API](/places/place-id). Does not\n  match places inside the given place. Does not consider the beacon's\n  actual location (which may be different from its registered place).\n  Accepts multiple filters that will be combined with OR logic. The place\n  ID must be double-quoted.\n* **registration\\_time`[\u003c|\u003e|\u003c=|\u003e=]\u003cinteger\u003e`**\n  For example: **registration\\_time\u003e=1433116800**\n  Returns beacons whose registration time matches the given filter.\n  Supports the operators: \u003c, \u003e, \u003c=, and \u003e=. Timestamp must be expressed as\n  an integer number of seconds since midnight January 1, 1970 UTC. Accepts\n  at most two filters that will be combined with AND logic, to support\n  \"between\" semantics. If more than two are supplied, the latter ones are\n  ignored.\n* **lat:`\u003cdouble\u003e lng:\u003cdouble\u003e radius:\u003cinteger\u003e`**\n  For example: **lat:51.1232343 lng:-1.093852 radius:1000**\n  Returns beacons whose registered location is within the given circle.\n  When any of these fields are given, all are required. Latitude and\n  longitude must be decimal degrees between -90.0 and 90.0 and between\n  -180.0 and 180.0 respectively. Radius must be an integer number of\n  meters between 10 and 1,000,000 (1000 km).\n* **property:`\"\u003cstring\u003e=\u003cstring\u003e\"`**\n  For example: **property:\"battery-type=CR2032\"**\n  Returns beacons which have a property of the given name and value.\n  Supports multiple filters which will be combined with OR logic.\n  The entire name=value string must be double-quoted as one string.\n* **attachment\\_type:`\"\u003cstring\u003e\"`**\n  For example: **attachment_type:\"my-namespace/my-type\"**\n  Returns beacons having at least one attachment of the given namespaced\n  type. Supports \"any within this namespace\" via the partial wildcard\n  syntax: \"my-namespace/*\". Supports multiple filters which will be\n  combined with OR logic. The string must be double-quoted.\n* **indoor\\_level:`\"\u003cstring\u003e\"`**\n  For example: **indoor\\_level:\"1\"**\n  Returns beacons which are located on the given indoor level. Accepts\n  multiple filters that will be combined with OR logic.\n\nMultiple filters on the same field are combined with OR logic (except\nregistration_time which is combined with AND logic).\nMultiple filters on different fields are combined with AND logic.\nFilters should be separated by spaces.\n\nAs with any HTTP query string parameter, the whole filter expression must\nbe URL-encoded.\n\nExample REST request:\n`GET /v1beta1/beacons?q=status:active%20lat:51.123%20lng:-1.095%20radius:1000`",
+	//       "description": "Filter query string that supports the following field filters:\n\n* **description:`\"\u003cstring\u003e\"`**\n  For example: **description:\"Room 3\"**\n  Returns beacons whose description matches tokens in the string \"Room 3\"\n  (not necessarily that exact string).\n  The string must be double-quoted.\n* **status:`\u003cenum\u003e`**\n  For example: **status:active**\n  Returns beacons whose status matches the given value. Values must be\n  one of the Beacon.Status enum values (case insensitive). Accepts\n  multiple filters which will be combined with OR logic.\n* **stability:`\u003cenum\u003e`**\n  For example: **stability:mobile**\n  Returns beacons whose expected stability matches the given value.\n  Values must be one of the Beacon.Stability enum values (case\n  insensitive). Accepts multiple filters which will be combined with\n  OR logic.\n* **place\\_id:`\"\u003cstring\u003e\"`**\n  For example: **place\\_id:\"ChIJVSZzVR8FdkgRXGmmm6SslKw=\"**\n  Returns beacons explicitly registered at the given place, expressed as\n  a Place ID obtained from [Google Places API](/places/place-id). Does not\n  match places inside the given place. Does not consider the beacon's\n  actual location (which may be different from its registered place).\n  Accepts multiple filters that will be combined with OR logic. The place\n  ID must be double-quoted.\n* **registration\\_time`[\u003c|\u003e|\u003c=|\u003e=]\u003cinteger\u003e`**\n  For example: **registration\\_time\u003e=1433116800**\n  Returns beacons whose registration time matches the given filter.\n  Supports the operators: \u003c, \u003e, \u003c=, and \u003e=. Timestamp must be expressed as\n  an integer number of seconds since midnight January 1, 1970 UTC. Accepts\n  at most two filters that will be combined with AND logic, to support\n  \"between\" semantics. If more than two are supplied, the latter ones are\n  ignored.\n* **lat:`\u003cdouble\u003e lng:\u003cdouble\u003e radius:\u003cinteger\u003e`**\n  For example: **lat:51.1232343 lng:-1.093852 radius:1000**\n  Returns beacons whose registered location is within the given circle.\n  When any of these fields are given, all are required. Latitude and\n  longitude must be decimal degrees between -90.0 and 90.0 and between\n  -180.0 and 180.0 respectively. Radius must be an integer number of\n  meters between 10 and 1,000,000 (1000 km).\n* **property:`\"\u003cstring\u003e=\u003cstring\u003e\"`**\n  For example: **property:\"battery-type=CR2032\"**\n  Returns beacons which have a property of the given name and value.\n  Supports multiple filters which will be combined with OR logic.\n  The entire name=value string must be double-quoted as one string.\n* **attachment\\_type:`\"\u003cstring\u003e\"`**\n  For example: **attachment_type:\"my-namespace/my-type\"**\n  Returns beacons having at least one attachment of the given namespaced\n  type. Supports \"any within this namespace\" via the partial wildcard\n  syntax: \"my-namespace/*\". Supports multiple filters which will be\n  combined with OR logic. The string must be double-quoted.\n* **indoor\\_level:`\"\u003cstring\u003e\"`**\n  For example: **indoor\\_level:\"1\"**\n  Returns beacons which are located on the given indoor level. Accepts\n  multiple filters that will be combined with OR logic.\n\nMultiple filters on the same field are combined with OR logic (except\nregistration_time which is combined with AND logic).\nMultiple filters on different fields are combined with AND logic.\nFilters should be separated by spaces.\n\nAs with any HTTP query string parameter, the whole filter expression must\nbe URL-encoded.\n\nExample REST request:\n`GET\n/v1beta1/beacons?q=status:active%20lat:51.123%20lng:-1.095%20radius:1000`",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2614,11 +2633,13 @@ type BeaconsRegisterCall struct {
 // These IDs are unique within the system. An ID can be registered only
 // once.
 //
-// Authenticate using an [OAuth access
+// Authenticate using an [OAuth
+// access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-// from a signed-in user with **Is owner** or **Can edit** permissions
-// in the
-// Google Developers Console project.
+//  from a
+// signed-in user with **Is owner** or **Can edit** permissions in the
+// Google
+// Developers Console project.
 func (r *BeaconsService) Register(beacon *Beacon) *BeaconsRegisterCall {
 	c := &BeaconsRegisterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.beacon = beacon
@@ -2662,7 +2683,7 @@ func (c *BeaconsRegisterCall) Header() http.Header {
 
 func (c *BeaconsRegisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2723,7 +2744,7 @@ func (c *BeaconsRegisterCall) Do(opts ...googleapi.CallOption) (*Beacon, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Registers a previously unregistered beacon given its `advertisedId`.\nThese IDs are unique within the system. An ID can be registered only once.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **Is owner** or **Can edit** permissions in the\nGoogle Developers Console project.",
+	//   "description": "Registers a previously unregistered beacon given its `advertisedId`.\nThese IDs are unique within the system. An ID can be registered only once.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **Is owner** or **Can edit** permissions in the Google\nDevelopers Console project.",
 	//   "flatPath": "v1beta1/beacons:register",
 	//   "httpMethod": "POST",
 	//   "id": "proximitybeacon.beacons.register",
@@ -2773,11 +2794,13 @@ type BeaconsUpdateCall struct {
 // To update beacon status, use the separate methods on this API
 // for
 // activation, deactivation, and decommissioning.
-// Authenticate using an [OAuth access
+// Authenticate using an [OAuth
+// access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-// from a signed-in user with **Is owner** or **Can edit** permissions
-// in the
-// Google Developers Console project.
+//  from a
+// signed-in user with **Is owner** or **Can edit** permissions in the
+// Google
+// Developers Console project.
 func (r *BeaconsService) Update(beaconName string, beacon *Beacon) *BeaconsUpdateCall {
 	c := &BeaconsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.beaconName = beaconName
@@ -2822,7 +2845,7 @@ func (c *BeaconsUpdateCall) Header() http.Header {
 
 func (c *BeaconsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2886,7 +2909,7 @@ func (c *BeaconsUpdateCall) Do(opts ...googleapi.CallOption) (*Beacon, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the information about the specified beacon. **Any field that you do\nnot populate in the submitted beacon will be permanently erased**, so you\nshould follow the \"read, modify, write\" pattern to avoid inadvertently\ndestroying data.\n\nChanges to the beacon status via this method will be  silently ignored.\nTo update beacon status, use the separate methods on this API for\nactivation, deactivation, and decommissioning.\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **Is owner** or **Can edit** permissions in the\nGoogle Developers Console project.",
+	//   "description": "Updates the information about the specified beacon. **Any field that you do\nnot populate in the submitted beacon will be permanently erased**, so you\nshould follow the \"read, modify, write\" pattern to avoid inadvertently\ndestroying data.\n\nChanges to the beacon status via this method will be  silently ignored.\nTo update beacon status, use the separate methods on this API for\nactivation, deactivation, and decommissioning.\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **Is owner** or **Can edit** permissions in the Google\nDevelopers Console project.",
 	//   "flatPath": "v1beta1/beacons/{beaconsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "proximitybeacon.beacons.update",
@@ -2943,11 +2966,13 @@ type BeaconsAttachmentsBatchDeleteCall struct {
 // explicitly
 // specify `*/*` to delete all.
 //
-// Authenticate using an [OAuth access
+// Authenticate using an [OAuth
+// access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-// from a signed-in user with **Is owner** or **Can edit** permissions
-// in the
-// Google Developers Console project.
+//  from a
+// signed-in user with **Is owner** or **Can edit** permissions in the
+// Google
+// Developers Console project.
 func (r *BeaconsAttachmentsService) BatchDelete(beaconName string) *BeaconsAttachmentsBatchDeleteCall {
 	c := &BeaconsAttachmentsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.beaconName = beaconName
@@ -3004,7 +3029,7 @@ func (c *BeaconsAttachmentsBatchDeleteCall) Header() http.Header {
 
 func (c *BeaconsAttachmentsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3063,7 +3088,7 @@ func (c *BeaconsAttachmentsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*D
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes multiple attachments on a given beacon. This operation is\npermanent and cannot be undone.\n\nYou can optionally specify `namespacedType` to choose which attachments\nshould be deleted. If you do not specify `namespacedType`,  all your\nattachments on the given beacon will be deleted. You also may explicitly\nspecify `*/*` to delete all.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **Is owner** or **Can edit** permissions in the\nGoogle Developers Console project.",
+	//   "description": "Deletes multiple attachments on a given beacon. This operation is\npermanent and cannot be undone.\n\nYou can optionally specify `namespacedType` to choose which attachments\nshould be deleted. If you do not specify `namespacedType`,  all your\nattachments on the given beacon will be deleted. You also may explicitly\nspecify `*/*` to delete all.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **Is owner** or **Can edit** permissions in the Google\nDevelopers Console project.",
 	//   "flatPath": "v1beta1/beacons/{beaconsId}/attachments:batchDelete",
 	//   "httpMethod": "POST",
 	//   "id": "proximitybeacon.beacons.attachments.batchDelete",
@@ -3128,11 +3153,13 @@ type BeaconsAttachmentsCreateCall struct {
 //
 // Attachment data can be up to 1024 bytes long.
 //
-// Authenticate using an [OAuth access
+// Authenticate using an [OAuth
+// access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-// from a signed-in user with **Is owner** or **Can edit** permissions
-// in the
-// Google Developers Console project.
+//  from a
+// signed-in user with **Is owner** or **Can edit** permissions in the
+// Google
+// Developers Console project.
 func (r *BeaconsAttachmentsService) Create(beaconName string, beaconattachment *BeaconAttachment) *BeaconsAttachmentsCreateCall {
 	c := &BeaconsAttachmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.beaconName = beaconName
@@ -3177,7 +3204,7 @@ func (c *BeaconsAttachmentsCreateCall) Header() http.Header {
 
 func (c *BeaconsAttachmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3241,7 +3268,7 @@ func (c *BeaconsAttachmentsCreateCall) Do(opts ...googleapi.CallOption) (*Beacon
 	}
 	return ret, nil
 	// {
-	//   "description": "Associates the given data with the specified beacon. Attachment data must\ncontain two parts:\n\u003cul\u003e\n\u003cli\u003eA namespaced type.\u003c/li\u003e\n\u003cli\u003eThe actual attachment data itself.\u003c/li\u003e\n\u003c/ul\u003e\nThe namespaced type consists of two parts, the namespace and the type.\nThe namespace must be one of the values returned by the `namespaces`\nendpoint, while the type can be a string of any characters except for the\nforward slash (`/`) up to 100 characters in length.\n\nAttachment data can be up to 1024 bytes long.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **Is owner** or **Can edit** permissions in the\nGoogle Developers Console project.",
+	//   "description": "Associates the given data with the specified beacon. Attachment data must\ncontain two parts:\n\u003cul\u003e\n\u003cli\u003eA namespaced type.\u003c/li\u003e\n\u003cli\u003eThe actual attachment data itself.\u003c/li\u003e\n\u003c/ul\u003e\nThe namespaced type consists of two parts, the namespace and the type.\nThe namespace must be one of the values returned by the `namespaces`\nendpoint, while the type can be a string of any characters except for the\nforward slash (`/`) up to 100 characters in length.\n\nAttachment data can be up to 1024 bytes long.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **Is owner** or **Can edit** permissions in the Google\nDevelopers Console project.",
 	//   "flatPath": "v1beta1/beacons/{beaconsId}/attachments",
 	//   "httpMethod": "POST",
 	//   "id": "proximitybeacon.beacons.attachments.create",
@@ -3296,11 +3323,13 @@ type BeaconsAttachmentsDeleteCall struct {
 // be
 // undone.
 //
-// Authenticate using an [OAuth access
+// Authenticate using an [OAuth
+// access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-// from a signed-in user with **Is owner** or **Can edit** permissions
-// in the
-// Google Developers Console project.
+//  from a
+// signed-in user with **Is owner** or **Can edit** permissions in the
+// Google
+// Developers Console project.
 func (r *BeaconsAttachmentsService) Delete(attachmentName string) *BeaconsAttachmentsDeleteCall {
 	c := &BeaconsAttachmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.attachmentName = attachmentName
@@ -3342,7 +3371,7 @@ func (c *BeaconsAttachmentsDeleteCall) Header() http.Header {
 
 func (c *BeaconsAttachmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3401,7 +3430,7 @@ func (c *BeaconsAttachmentsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified attachment for the given beacon. Each attachment has\na unique attachment name (`attachmentName`) which is returned when you\nfetch the attachment data via this API. You specify this with the delete\nrequest to control which attachment is removed. This operation cannot be\nundone.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **Is owner** or **Can edit** permissions in the\nGoogle Developers Console project.",
+	//   "description": "Deletes the specified attachment for the given beacon. Each attachment has\na unique attachment name (`attachmentName`) which is returned when you\nfetch the attachment data via this API. You specify this with the delete\nrequest to control which attachment is removed. This operation cannot be\nundone.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **Is owner** or **Can edit** permissions in the Google\nDevelopers Console project.",
 	//   "flatPath": "v1beta1/beacons/{beaconsId}/attachments/{attachmentsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "proximitybeacon.beacons.attachments.delete",
@@ -3455,11 +3484,13 @@ type BeaconsAttachmentsListCall struct {
 // `*/*`, to return all attachments, or the namespace must be one of
 // the ones returned from the  `namespaces` endpoint.
 //
-// Authenticate using an [OAuth access
+// Authenticate using an [OAuth
+// access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-// from a signed-in user with **viewer**, **Is owner** or **Can
-// edit**
-// permissions in the Google Developers Console project.
+//  from a
+// signed-in user with **viewer**, **Is owner** or **Can edit**
+// permissions in
+// the Google Developers Console project.
 func (r *BeaconsAttachmentsService) List(beaconName string) *BeaconsAttachmentsListCall {
 	c := &BeaconsAttachmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.beaconName = beaconName
@@ -3526,7 +3557,7 @@ func (c *BeaconsAttachmentsListCall) Header() http.Header {
 
 func (c *BeaconsAttachmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3588,7 +3619,7 @@ func (c *BeaconsAttachmentsListCall) Do(opts ...googleapi.CallOption) (*ListBeac
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the attachments for the specified beacon that match the specified\nnamespaced-type pattern.\n\nTo control which namespaced types are returned, you add the\n`namespacedType` query parameter to the request. You must either use\n`*/*`, to return all attachments, or the namespace must be one of\nthe ones returned from the  `namespaces` endpoint.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **viewer**, **Is owner** or **Can edit**\npermissions in the Google Developers Console project.",
+	//   "description": "Returns the attachments for the specified beacon that match the specified\nnamespaced-type pattern.\n\nTo control which namespaced types are returned, you add the\n`namespacedType` query parameter to the request. You must either use\n`*/*`, to return all attachments, or the namespace must be one of\nthe ones returned from the  `namespaces` endpoint.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **viewer**, **Is owner** or **Can edit** permissions in\nthe Google Developers Console project.",
 	//   "flatPath": "v1beta1/beacons/{beaconsId}/attachments",
 	//   "httpMethod": "GET",
 	//   "id": "proximitybeacon.beacons.attachments.list",
@@ -3642,11 +3673,13 @@ type BeaconsDiagnosticsListCall struct {
 // using
 // the beacon name `beacons/-`.
 //
-// Authenticate using an [OAuth access
+// Authenticate using an [OAuth
+// access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-// from a signed-in user with **viewer**, **Is owner** or **Can
-// edit**
-// permissions in the Google Developers Console project.
+//  from a
+// signed-in user with **viewer**, **Is owner** or **Can edit**
+// permissions in
+// the Google Developers Console project.
 func (r *BeaconsDiagnosticsService) List(beaconName string) *BeaconsDiagnosticsListCall {
 	c := &BeaconsDiagnosticsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.beaconName = beaconName
@@ -3730,7 +3763,7 @@ func (c *BeaconsDiagnosticsListCall) Header() http.Header {
 
 func (c *BeaconsDiagnosticsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3792,7 +3825,7 @@ func (c *BeaconsDiagnosticsListCall) Do(opts ...googleapi.CallOption) (*ListDiag
 	}
 	return ret, nil
 	// {
-	//   "description": "List the diagnostics for a single beacon. You can also list diagnostics for\nall the beacons owned by your Google Developers Console project by using\nthe beacon name `beacons/-`.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **viewer**, **Is owner** or **Can edit**\npermissions in the Google Developers Console project.",
+	//   "description": "List the diagnostics for a single beacon. You can also list diagnostics for\nall the beacons owned by your Google Developers Console project by using\nthe beacon name `beacons/-`.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **viewer**, **Is owner** or **Can edit** permissions in\nthe Google Developers Console project.",
 	//   "flatPath": "v1beta1/beacons/{beaconsId}/diagnostics",
 	//   "httpMethod": "GET",
 	//   "id": "proximitybeacon.beacons.diagnostics.list",
@@ -3884,11 +3917,13 @@ type NamespacesListCall struct {
 // namespaced type, and the namespace must be owned by your
 // project.
 //
-// Authenticate using an [OAuth access
+// Authenticate using an [OAuth
+// access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-// from a signed-in user with **viewer**, **Is owner** or **Can
-// edit**
-// permissions in the Google Developers Console project.
+//  from a
+// signed-in user with **viewer**, **Is owner** or **Can edit**
+// permissions in
+// the Google Developers Console project.
 func (r *NamespacesService) List() *NamespacesListCall {
 	c := &NamespacesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -3938,7 +3973,7 @@ func (c *NamespacesListCall) Header() http.Header {
 
 func (c *NamespacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3997,7 +4032,7 @@ func (c *NamespacesListCall) Do(opts ...googleapi.CallOption) (*ListNamespacesRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all attachment namespaces owned by your Google Developers Console\nproject. Attachment data associated with a beacon must include a\nnamespaced type, and the namespace must be owned by your project.\n\nAuthenticate using an [OAuth access token](https://developers.google.com/identity/protocols/OAuth2)\nfrom a signed-in user with **viewer**, **Is owner** or **Can edit**\npermissions in the Google Developers Console project.",
+	//   "description": "Lists all attachment namespaces owned by your Google Developers Console\nproject. Attachment data associated with a beacon must include a\nnamespaced type, and the namespace must be owned by your project.\n\nAuthenticate using an [OAuth access\ntoken](https://developers.google.com/identity/protocols/OAuth2) from a\nsigned-in user with **viewer**, **Is owner** or **Can edit** permissions in\nthe Google Developers Console project.",
 	//   "flatPath": "v1beta1/namespaces",
 	//   "httpMethod": "GET",
 	//   "id": "proximitybeacon.namespaces.list",
@@ -4078,7 +4113,7 @@ func (c *NamespacesUpdateCall) Header() http.Header {
 
 func (c *NamespacesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4242,7 +4277,7 @@ func (c *V1beta1GetEidparamsCall) Header() http.Header {
 
 func (c *V1beta1GetEidparamsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

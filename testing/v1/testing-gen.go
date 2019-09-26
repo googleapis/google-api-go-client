@@ -1695,6 +1695,47 @@ func (s *IosRuntimeConfiguration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IosTestLoop: A test of an iOS application that implements one or more
+// game loop scenarios.
+// This test type accepts an archived application (.ipa file) and a list
+// of
+// integer scenarios that will be executed on the app sequentially.
+type IosTestLoop struct {
+	// AppBundleId: Output only. The bundle id for the application under
+	// test.
+	AppBundleId string `json:"appBundleId,omitempty"`
+
+	// AppIpa: Required. The .ipa of the application to test.
+	AppIpa *FileReference `json:"appIpa,omitempty"`
+
+	// Scenarios: The list of scenarios that should be run during the test.
+	// Defaults to the
+	// single scenario 0 if unspecified.
+	Scenarios []int64 `json:"scenarios,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppBundleId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppBundleId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IosTestLoop) MarshalJSON() ([]byte, error) {
+	type NoMethod IosTestLoop
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // IosTestSetup: A description of how to set up an iOS device prior to
 // running the test.
 type IosTestSetup struct {
@@ -2586,6 +2627,11 @@ type TestMatrix struct {
 	// could not be parsed.
 	//   "TEST_ONLY_APK" - The APK is marked as "testOnly".
 	// Deprecated and not currently used.
+	//   "MALFORMED_IPA" - The input IPA could not be parsed.
+	//   "MISSING_URL_SCHEME" - The application doesn't register the game
+	// loop URL scheme.
+	//   "MALFORMED_APP_BUNDLE" - The iOS application bundle (.app) couldn't
+	// be processed.
 	//   "NO_CODE_APK" - APK contains no code.
 	// See
 	// also
@@ -2810,6 +2856,9 @@ type TestSpecification struct {
 	// DisableVideoRecording: Disables video recording. May reduce test
 	// latency.
 	DisableVideoRecording bool `json:"disableVideoRecording,omitempty"`
+
+	// IosTestLoop: An iOS application with a test loop.
+	IosTestLoop *IosTestLoop `json:"iosTestLoop,omitempty"`
 
 	// IosTestSetup: Test setup requirements for iOS.
 	IosTestSetup *IosTestSetup `json:"iosTestSetup,omitempty"`
@@ -3101,7 +3150,7 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Header() http.Header {
 
 func (c *ApplicationDetailServiceGetApkDetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3238,7 +3287,7 @@ func (c *ProjectsTestMatricesCancelCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3401,7 +3450,7 @@ func (c *ProjectsTestMatricesCreateCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3562,7 +3611,7 @@ func (c *ProjectsTestMatricesGetCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3727,7 +3776,7 @@ func (c *TestEnvironmentCatalogGetCall) Header() http.Header {
 
 func (c *TestEnvironmentCatalogGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

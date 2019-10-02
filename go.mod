@@ -1,6 +1,6 @@
 module google.golang.org/api
 
-go 1.9
+go 1.11
 
 require (
 	cloud.google.com/go v0.38.0 // indirect

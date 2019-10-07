@@ -177,7 +177,7 @@ type ProjectsLocationsFunctionsService struct {
 
 // CallFunctionRequest: Request for the `CallFunction` method.
 type CallFunctionRequest struct {
-	// Data: Input to be passed to the function.
+	// Data: Required. Input to be passed to the function.
 	Data string `json:"data,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Data") to
@@ -1209,7 +1209,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1398,7 +1398,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1594,7 +1594,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1772,7 +1772,7 @@ func (c *ProjectsLocationsFunctionsCallCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsCallCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1845,7 +1845,7 @@ func (c *ProjectsLocationsFunctionsCallCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the function to be called.",
+	//       "description": "Required. The name of the function to be called.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
 	//       "required": true,
@@ -1916,7 +1916,7 @@ func (c *ProjectsLocationsFunctionsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1989,7 +1989,7 @@ func (c *ProjectsLocationsFunctionsCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "location": {
-	//       "description": "The project and location in which the function should be created, specified\nin the format `projects/*/locations/*`",
+	//       "description": "Required. The project and location in which the function should be created, specified\nin the format `projects/*/locations/*`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2058,7 +2058,7 @@ func (c *ProjectsLocationsFunctionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2126,7 +2126,7 @@ func (c *ProjectsLocationsFunctionsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the function which should be deleted.",
+	//       "description": "Required. The name of the function which should be deleted.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
 	//       "required": true,
@@ -2197,7 +2197,7 @@ func (c *ProjectsLocationsFunctionsGenerateDownloadUrlCall) Header() http.Header
 
 func (c *ProjectsLocationsFunctionsGenerateDownloadUrlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2369,7 +2369,7 @@ func (c *ProjectsLocationsFunctionsGenerateUploadUrlCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsGenerateUploadUrlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2519,7 +2519,7 @@ func (c *ProjectsLocationsFunctionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2590,7 +2590,7 @@ func (c *ProjectsLocationsFunctionsGetCall) Do(opts ...googleapi.CallOption) (*C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the function which details should be obtained.",
+	//       "description": "Required. The name of the function which details should be obtained.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
 	//       "required": true,
@@ -2682,7 +2682,7 @@ func (c *ProjectsLocationsFunctionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2753,7 +2753,7 @@ func (c *ProjectsLocationsFunctionsListCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "location": {
-	//       "description": "The project and location from which the function should be listed,\nspecified in the format `projects/*/locations/*`\nIf you want to list functions in all locations, use \"-\" in place of a\nlocation.",
+	//       "description": "Required. The project and location from which the function should be listed,\nspecified in the format `projects/*/locations/*`\nIf you want to list functions in all locations, use \"-\" in place of a\nlocation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2849,7 +2849,7 @@ func (c *ProjectsLocationsFunctionsUpdateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFunctionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2922,7 +2922,7 @@ func (c *ProjectsLocationsFunctionsUpdateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the function to be updated.",
+	//       "description": "Required. The name of the function to be updated.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
 	//       "required": true,

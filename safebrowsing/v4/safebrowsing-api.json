@@ -2,7 +2,7 @@
   "basePath": "",
   "baseUrl": "https://safebrowsing.googleapis.com/",
   "batchPath": "batch",
-  "description": "Enables client applications to check web resources (most commonly URLs) against Google-generated lists of unsafe web resources.",
+  "description": "Enables client applications to check web resources (most commonly URLs) against Google-generated lists of unsafe web resources. The Safe Browsing APIs are for non-commercial use only. If you need to use APIs to detect malicious URLs for commercial purposes – meaning “for sale or revenue-generating purposes” – please refer to the Web Risk API.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/safe-browsing/",
   "icons": {
@@ -258,7 +258,7 @@
       }
     }
   },
-  "revision": "20190520",
+  "revision": "20190930",
   "rootUrl": "https://safebrowsing.googleapis.com/",
   "schemas": {
     "Checksum": {

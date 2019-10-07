@@ -333,7 +333,7 @@
       }
     }
   },
-  "revision": "20190429",
+  "revision": "20190921",
   "rootUrl": "https://oslogin.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -399,6 +399,10 @@
           "description": "The path to the home directory for this account.",
           "type": "string"
         },
+        "name": {
+          "description": "Output only. The canonical resource name.",
+          "type": "string"
+        },
         "operatingSystemType": {
           "description": "The operating system type where this account applies.",
           "enum": [
@@ -452,6 +456,10 @@
         },
         "key": {
           "description": "Public key text in SSH format, defined by\n\u003ca href=\"https://www.ietf.org/rfc/rfc4253.txt\" target=\"_blank\"\u003eRFC4253\u003c/a\u003e\nsection 6.6.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. The canonical resource name.",
           "type": "string"
         }
       },

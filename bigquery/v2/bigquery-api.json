@@ -1417,7 +1417,7 @@
       }
     }
   },
-  "revision": "20190917",
+  "revision": "20190923",
   "rootUrl": "https://bigquery.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
@@ -1503,6 +1503,136 @@
         "name": {
           "description": "Optional. The name of this argument. Can be absent for function return argument.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ArimaCoefficients": {
+      "description": "Arima coefficients.",
+      "id": "ArimaCoefficients",
+      "properties": {
+        "autoRegressiveCoefficients": {
+          "description": "Auto-regressive coefficients, an array of double.",
+          "items": {
+            "format": "double",
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "interceptCoefficient": {
+          "description": "Intercept coefficient, just a double not an array.",
+          "format": "double",
+          "type": "number"
+        },
+        "movingAverageCoefficients": {
+          "description": "Moving-average coefficients, an array of double.",
+          "items": {
+            "format": "double",
+            "type": "number"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ArimaFittingMetrics": {
+      "description": "ARIMA model fitting metrics.",
+      "id": "ArimaFittingMetrics",
+      "properties": {
+        "aic": {
+          "description": "AIC",
+          "format": "double",
+          "type": "number"
+        },
+        "logLikelihood": {
+          "description": "log-likelihood",
+          "format": "double",
+          "type": "number"
+        },
+        "variance": {
+          "description": "variance.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "ArimaModelInfo": {
+      "description": "Arima model information.",
+      "id": "ArimaModelInfo",
+      "properties": {
+        "arimaCoefficients": {
+          "$ref": "ArimaCoefficients",
+          "description": "Arima coefficients."
+        },
+        "arimaFittingMetrics": {
+          "$ref": "ArimaFittingMetrics",
+          "description": "Arima fitting metrics."
+        },
+        "nonSeasonalOrder": {
+          "$ref": "ArimaOrder",
+          "description": "Non-seasonal order."
+        }
+      },
+      "type": "object"
+    },
+    "ArimaOrder": {
+      "description": "Arima order, can be used for both non-seasonal and seasonal parts.",
+      "id": "ArimaOrder",
+      "properties": {
+        "d": {
+          "description": "Order of the differencing part.",
+          "format": "int64",
+          "type": "string"
+        },
+        "p": {
+          "description": "Order of the autoregressive part.",
+          "format": "int64",
+          "type": "string"
+        },
+        "q": {
+          "description": "Order of the moving-average part.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ArimaResult": {
+      "description": "(Auto-)arima fitting result. Wrap everything in ArimaResult for easier\nrefactoring if we want to use model-specific iteration results.",
+      "id": "ArimaResult",
+      "properties": {
+        "arimaModelInfo": {
+          "description": "This message is repeated because there are multiple arima models\nfitted in auto-arima. For non-auto-arima model, its size is one.",
+          "items": {
+            "$ref": "ArimaModelInfo"
+          },
+          "type": "array"
+        },
+        "seasonalPeriods": {
+          "description": "Seasonal periods. Repeated because multiple periods are supported for\none time series.",
+          "enumDescriptions": [
+            "",
+            "No seasonality",
+            "Daily period, 24 hours.",
+            "Weekly period, 7 days.",
+            "Monthly period, can be as 30 days or irregular.",
+            "Quarterly period, can be as 90 days or irregular.",
+            "Yearly period, can be as 365 days or irregular."
+          ],
+          "items": {
+            "enum": [
+              "SEASONAL_PERIOD_TYPE_UNSPECIFIED",
+              "NO_SEASONALITY",
+              "DAILY",
+              "WEEKLY",
+              "MONTHLY",
+              "QUARTERLY",
+              "YEARLY"
+            ],
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -2577,6 +2707,9 @@
       "description": "Information about a single iteration of the training run.",
       "id": "IterationResult",
       "properties": {
+        "arimaResult": {
+          "$ref": "ArimaResult"
+        },
         "clusterInfos": {
           "description": "Information about top clusters for clustering models.",
           "items": {

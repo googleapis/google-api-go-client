@@ -584,16 +584,16 @@ type ReportErrorEventResponse struct {
 // ReportedErrorEvent: An error event which is reported to the Error
 // Reporting system.
 type ReportedErrorEvent struct {
-	// Context: [Optional] A description of the context in which the error
+	// Context: Optional. A description of the context in which the error
 	// occurred.
 	Context *ErrorContext `json:"context,omitempty"`
 
-	// EventTime: [Optional] Time when the event occurred.
+	// EventTime: Optional. Time when the event occurred.
 	// If not provided, the time when the event was received by the
 	// Error Reporting system will be used.
 	EventTime string `json:"eventTime,omitempty"`
 
-	// Message: [Required] The error message.
+	// Message: Required. The error message.
 	// If no `context.reportLocation` is provided, the message must contain
 	// a
 	// header (typically consisting of the exception type name and an
@@ -637,8 +637,8 @@ type ReportedErrorEvent struct {
 	// [`runtime.Stack()`](https://golang.org/pkg/runtime/debug/#Stack).
 	Message string `json:"message,omitempty"`
 
-	// ServiceContext: [Required] The service context in which this error
-	// has occurred.
+	// ServiceContext: Required. The service context in which this error has
+	// occurred.
 	ServiceContext *ServiceContext `json:"serviceContext,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Context") to
@@ -917,7 +917,7 @@ func (c *ProjectsDeleteEventsCall) Header() http.Header {
 
 func (c *ProjectsDeleteEventsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -985,7 +985,7 @@ func (c *ProjectsDeleteEventsCall) Do(opts ...googleapi.CallOption) (*DeleteEven
 	//   ],
 	//   "parameters": {
 	//     "projectName": {
-	//       "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
+	//       "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1021,21 +1021,21 @@ func (r *ProjectsEventsService) List(projectName string) *ProjectsEventsListCall
 	return c
 }
 
-// GroupId sets the optional parameter "groupId": [Required] The group
+// GroupId sets the optional parameter "groupId": Required. The group
 // for which events shall be returned.
 func (c *ProjectsEventsListCall) GroupId(groupId string) *ProjectsEventsListCall {
 	c.urlParams_.Set("groupId", groupId)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": [Optional] The
-// maximum number of results to return per response.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return per response.
 func (c *ProjectsEventsListCall) PageSize(pageSize int64) *ProjectsEventsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": [Optional] A
+// PageToken sets the optional parameter "pageToken": A
 // `next_page_token` provided by a previous response.
 func (c *ProjectsEventsListCall) PageToken(pageToken string) *ProjectsEventsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -1043,7 +1043,7 @@ func (c *ProjectsEventsListCall) PageToken(pageToken string) *ProjectsEventsList
 }
 
 // ServiceFilterResourceType sets the optional parameter
-// "serviceFilter.resourceType": [Optional] The exact value to match
+// "serviceFilter.resourceType": The exact value to match
 // against
 // [`ServiceContext.resource_type`](/error-reporting/reference/re
 // st/v1beta1/ServiceContext#FIELDS.resource_type).
@@ -1053,7 +1053,7 @@ func (c *ProjectsEventsListCall) ServiceFilterResourceType(serviceFilterResource
 }
 
 // ServiceFilterService sets the optional parameter
-// "serviceFilter.service": [Optional] The exact value to match
+// "serviceFilter.service": The exact value to match
 // against
 // [`ServiceContext.service`](/error-reporting/reference/rest/v1b
 // eta1/ServiceContext#FIELDS.service).
@@ -1063,7 +1063,7 @@ func (c *ProjectsEventsListCall) ServiceFilterService(serviceFilterService strin
 }
 
 // ServiceFilterVersion sets the optional parameter
-// "serviceFilter.version": [Optional] The exact value to match
+// "serviceFilter.version": The exact value to match
 // against
 // [`ServiceContext.version`](/error-reporting/reference/rest/v1b
 // eta1/ServiceContext#FIELDS.version).
@@ -1124,7 +1124,7 @@ func (c *ProjectsEventsListCall) Header() http.Header {
 
 func (c *ProjectsEventsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1195,40 +1195,40 @@ func (c *ProjectsEventsListCall) Do(opts ...googleapi.CallOption) (*ListEventsRe
 	//   ],
 	//   "parameters": {
 	//     "groupId": {
-	//       "description": "[Required] The group for which events shall be returned.",
+	//       "description": "Required. The group for which events shall be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "[Optional] The maximum number of results to return per response.",
+	//       "description": "Optional. The maximum number of results to return per response.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "[Optional] A `next_page_token` provided by a previous response.",
+	//       "description": "Optional. A `next_page_token` provided by a previous response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectName": {
-	//       "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
+	//       "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "serviceFilter.resourceType": {
-	//       "description": "[Optional] The exact value to match against\n[`ServiceContext.resource_type`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type).",
+	//       "description": "Optional. The exact value to match against\n[`ServiceContext.resource_type`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "serviceFilter.service": {
-	//       "description": "[Optional] The exact value to match against\n[`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service).",
+	//       "description": "Optional. The exact value to match against\n[`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "serviceFilter.version": {
-	//       "description": "[Optional] The exact value to match against\n[`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version).",
+	//       "description": "Optional. The exact value to match against\n[`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1336,7 +1336,7 @@ func (c *ProjectsEventsReportCall) Header() http.Header {
 
 func (c *ProjectsEventsReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1409,7 +1409,7 @@ func (c *ProjectsEventsReportCall) Do(opts ...googleapi.CallOption) (*ReportErro
 	//   ],
 	//   "parameters": {
 	//     "projectName": {
-	//       "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840). Example:\n`projects/my-project-123`.",
+	//       "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840). Example:\n`projects/my-project-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1448,8 +1448,8 @@ func (r *ProjectsGroupStatsService) List(projectName string) *ProjectsGroupStats
 	return c
 }
 
-// Alignment sets the optional parameter "alignment": [Optional] The
-// alignment of the timed counts to be returned.
+// Alignment sets the optional parameter "alignment": The alignment of
+// the timed counts to be returned.
 // Default is `ALIGNMENT_EQUAL_AT_END`.
 //
 // Possible values:
@@ -1461,23 +1461,23 @@ func (c *ProjectsGroupStatsListCall) Alignment(alignment string) *ProjectsGroupS
 	return c
 }
 
-// AlignmentTime sets the optional parameter "alignmentTime": [Optional]
-// Time where the timed counts shall be aligned if rounded
+// AlignmentTime sets the optional parameter "alignmentTime": Time where
+// the timed counts shall be aligned if rounded
 // alignment is chosen. Default is 00:00 UTC.
 func (c *ProjectsGroupStatsListCall) AlignmentTime(alignmentTime string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("alignmentTime", alignmentTime)
 	return c
 }
 
-// GroupId sets the optional parameter "groupId": [Optional] List all
+// GroupId sets the optional parameter "groupId": List all
 // <code>ErrorGroupStats</code> with these IDs.
 func (c *ProjectsGroupStatsListCall) GroupId(groupId ...string) *ProjectsGroupStatsListCall {
 	c.urlParams_.SetMulti("groupId", append([]string{}, groupId...))
 	return c
 }
 
-// Order sets the optional parameter "order": [Optional] The sort order
-// in which the results are returned.
+// Order sets the optional parameter "order": The sort order in which
+// the results are returned.
 // Default is `COUNT_DESC`.
 //
 // Possible values:
@@ -1491,15 +1491,15 @@ func (c *ProjectsGroupStatsListCall) Order(order string) *ProjectsGroupStatsList
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": [Optional] The
-// maximum number of results to return per response.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return per response.
 // Default is 20.
 func (c *ProjectsGroupStatsListCall) PageSize(pageSize int64) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": [Optional] A
+// PageToken sets the optional parameter "pageToken": A
 // `next_page_token` provided by a previous response. To view
 // additional results, pass this token along with the identical
 // query
@@ -1510,7 +1510,7 @@ func (c *ProjectsGroupStatsListCall) PageToken(pageToken string) *ProjectsGroupS
 }
 
 // ServiceFilterResourceType sets the optional parameter
-// "serviceFilter.resourceType": [Optional] The exact value to match
+// "serviceFilter.resourceType": The exact value to match
 // against
 // [`ServiceContext.resource_type`](/error-reporting/reference/re
 // st/v1beta1/ServiceContext#FIELDS.resource_type).
@@ -1520,7 +1520,7 @@ func (c *ProjectsGroupStatsListCall) ServiceFilterResourceType(serviceFilterReso
 }
 
 // ServiceFilterService sets the optional parameter
-// "serviceFilter.service": [Optional] The exact value to match
+// "serviceFilter.service": The exact value to match
 // against
 // [`ServiceContext.service`](/error-reporting/reference/rest/v1b
 // eta1/ServiceContext#FIELDS.service).
@@ -1530,7 +1530,7 @@ func (c *ProjectsGroupStatsListCall) ServiceFilterService(serviceFilterService s
 }
 
 // ServiceFilterVersion sets the optional parameter
-// "serviceFilter.version": [Optional] The exact value to match
+// "serviceFilter.version": The exact value to match
 // against
 // [`ServiceContext.version`](/error-reporting/reference/rest/v1b
 // eta1/ServiceContext#FIELDS.version).
@@ -1555,8 +1555,7 @@ func (c *ProjectsGroupStatsListCall) TimeRangePeriod(timeRangePeriod string) *Pr
 }
 
 // TimedCountDuration sets the optional parameter "timedCountDuration":
-// [Optional] The preferred duration for a single returned
-// `TimedCount`.
+// The preferred duration for a single returned `TimedCount`.
 // If not set, no timed counts are returned.
 func (c *ProjectsGroupStatsListCall) TimedCountDuration(timedCountDuration string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("timedCountDuration", timedCountDuration)
@@ -1600,7 +1599,7 @@ func (c *ProjectsGroupStatsListCall) Header() http.Header {
 
 func (c *ProjectsGroupStatsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1671,7 +1670,7 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//   ],
 	//   "parameters": {
 	//     "alignment": {
-	//       "description": "[Optional] The alignment of the timed counts to be returned.\nDefault is `ALIGNMENT_EQUAL_AT_END`.",
+	//       "description": "Optional. The alignment of the timed counts to be returned.\nDefault is `ALIGNMENT_EQUAL_AT_END`.",
 	//       "enum": [
 	//         "ERROR_COUNT_ALIGNMENT_UNSPECIFIED",
 	//         "ALIGNMENT_EQUAL_ROUNDED",
@@ -1681,19 +1680,19 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//       "type": "string"
 	//     },
 	//     "alignmentTime": {
-	//       "description": "[Optional] Time where the timed counts shall be aligned if rounded\nalignment is chosen. Default is 00:00 UTC.",
+	//       "description": "Optional. Time where the timed counts shall be aligned if rounded\nalignment is chosen. Default is 00:00 UTC.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "groupId": {
-	//       "description": "[Optional] List all \u003ccode\u003eErrorGroupStats\u003c/code\u003e with these IDs.",
+	//       "description": "Optional. List all \u003ccode\u003eErrorGroupStats\u003c/code\u003e with these IDs.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "order": {
-	//       "description": "[Optional] The sort order in which the results are returned.\nDefault is `COUNT_DESC`.",
+	//       "description": "Optional. The sort order in which the results are returned.\nDefault is `COUNT_DESC`.",
 	//       "enum": [
 	//         "GROUP_ORDER_UNSPECIFIED",
 	//         "COUNT_DESC",
@@ -1705,35 +1704,35 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "[Optional] The maximum number of results to return per response.\nDefault is 20.",
+	//       "description": "Optional. The maximum number of results to return per response.\nDefault is 20.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "[Optional] A `next_page_token` provided by a previous response. To view\nadditional results, pass this token along with the identical query\nparameters as the first request.",
+	//       "description": "Optional. A `next_page_token` provided by a previous response. To view\nadditional results, pass this token along with the identical query\nparameters as the first request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectName": {
-	//       "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas \u003ccode\u003eprojects/\u003c/code\u003e plus the\n\u003ca href=\"https://support.google.com/cloud/answer/6158840\"\u003eGoogle Cloud\nPlatform project ID\u003c/a\u003e.\n\nExample: \u003ccode\u003eprojects/my-project-123\u003c/code\u003e.",
+	//       "description": "Required. The resource name of the Google Cloud Platform project. Written\nas \u003ccode\u003eprojects/\u003c/code\u003e plus the\n\u003ca href=\"https://support.google.com/cloud/answer/6158840\"\u003eGoogle Cloud\nPlatform project ID\u003c/a\u003e.\n\nExample: \u003ccode\u003eprojects/my-project-123\u003c/code\u003e.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "serviceFilter.resourceType": {
-	//       "description": "[Optional] The exact value to match against\n[`ServiceContext.resource_type`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type).",
+	//       "description": "Optional. The exact value to match against\n[`ServiceContext.resource_type`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "serviceFilter.service": {
-	//       "description": "[Optional] The exact value to match against\n[`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service).",
+	//       "description": "Optional. The exact value to match against\n[`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "serviceFilter.version": {
-	//       "description": "[Optional] The exact value to match against\n[`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version).",
+	//       "description": "Optional. The exact value to match against\n[`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1751,7 +1750,7 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//       "type": "string"
 	//     },
 	//     "timedCountDuration": {
-	//       "description": "[Optional] The preferred duration for a single returned `TimedCount`.\nIf not set, no timed counts are returned.",
+	//       "description": "Optional. The preferred duration for a single returned `TimedCount`.\nIf not set, no timed counts are returned.",
 	//       "format": "google-duration",
 	//       "location": "query",
 	//       "type": "string"
@@ -1844,7 +1843,7 @@ func (c *ProjectsGroupsGetCall) Header() http.Header {
 
 func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1915,7 +1914,7 @@ func (c *ProjectsGroupsGetCall) Do(opts ...googleapi.CallOption) (*ErrorGroup, e
 	//   ],
 	//   "parameters": {
 	//     "groupName": {
-	//       "description": "[Required] The group resource name. Written as\n\u003ccode\u003eprojects/\u003cvar\u003eprojectID\u003c/var\u003e/groups/\u003cvar\u003egroup_name\u003c/var\u003e\u003c/code\u003e.\nCall\n\u003ca href=\"/error-reporting/reference/rest/v1beta1/projects.groupStats/list\"\u003e\n\u003ccode\u003egroupStats.list\u003c/code\u003e\u003c/a\u003e to return a list of groups belonging to\nthis project.\n\nExample: \u003ccode\u003eprojects/my-project-123/groups/my-group\u003c/code\u003e",
+	//       "description": "Required. The group resource name. Written as\n\u003ccode\u003eprojects/\u003cvar\u003eprojectID\u003c/var\u003e/groups/\u003cvar\u003egroup_name\u003c/var\u003e\u003c/code\u003e.\nCall\n\u003ca href=\"/error-reporting/reference/rest/v1beta1/projects.groupStats/list\"\u003e\n\u003ccode\u003egroupStats.list\u003c/code\u003e\u003c/a\u003e to return a list of groups belonging to\nthis project.\n\nExample: \u003ccode\u003eprojects/my-project-123/groups/my-group\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,
@@ -1980,7 +1979,7 @@ func (c *ProjectsGroupsUpdateCall) Header() http.Header {
 
 func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

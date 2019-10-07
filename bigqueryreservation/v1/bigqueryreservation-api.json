@@ -180,15 +180,15 @@
       }
     }
   },
-  "revision": "20190816",
+  "revision": "20190928",
   "rootUrl": "https://bigqueryreservation.googleapis.com/",
   "schemas": {
-    "CreateSlotPoolMetadata": {
-      "description": "The metadata for operation returned from\nReservationService.CreateSlotPool.",
-      "id": "CreateSlotPoolMetadata",
+    "CreateCapacityCommitmentMetadata": {
+      "description": "The metadata for operation returned from\nReservationService.CreateCapacityCommitment.",
+      "id": "CreateCapacityCommitmentMetadata",
       "properties": {
-        "slotPool": {
-          "description": "Resource name of the slot pool that is being created. E.g.,\nprojects/myproject/locations/us-central1/reservations/foo/slotPools/123",
+        "capacityCommitment": {
+          "description": "Resource name of the capacity commitment that is being created. E.g.,\nprojects/myproject/locations/US/capacityCommitments/123",
           "type": "string"
         }
       },

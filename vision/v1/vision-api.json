@@ -1281,7 +1281,7 @@
       }
     }
   },
-  "revision": "20190913",
+  "revision": "20190927",
   "rootUrl": "https://vision.googleapis.com/",
   "schemas": {
     "AddProductToProductSetRequest": {
@@ -6569,10 +6569,6 @@
           "$ref": "GoogleCloudVisionV1p4beta1ImageProperties",
           "description": "If present, image properties were extracted successfully."
         },
-        "imageQualityAnnotation": {
-          "$ref": "GoogleCloudVisionV1p4beta1ImageQuality",
-          "description": "If present, image quality calculation has completed successfully."
-        },
         "labelAnnotations": {
           "description": "If present, label detection has completed successfully.",
           "items": {
@@ -6604,10 +6600,6 @@
         "productSearchResults": {
           "$ref": "GoogleCloudVisionV1p4beta1ProductSearchResults",
           "description": "If present, product search has completed successfully."
-        },
-        "qualityOptimizationResult": {
-          "$ref": "GoogleCloudVisionV1p4beta1QualityOptimizationResult",
-          "description": "If present, image quality optimization has completed successfully."
         },
         "safeSearchAnnotation": {
           "$ref": "GoogleCloudVisionV1p4beta1SafeSearchAnnotation",
@@ -7227,18 +7219,6 @@
       },
       "type": "object"
     },
-    "GoogleCloudVisionV1p4beta1ImageQuality": {
-      "description": "Stores image quality scores, could be aesthetic quality or technical quality.",
-      "id": "GoogleCloudVisionV1p4beta1ImageQuality",
-      "properties": {
-        "qualityScore": {
-          "description": "A score representing the aesthetic/technical quality of the image. The\nscore is in range [0, 1]. Higher value corresponds to more professional\nlooking photos. 0 means the image looks very bad, 1 means the image with\nvery high quality.",
-          "format": "float",
-          "type": "number"
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudVisionV1p4beta1ImportProductSetsResponse": {
       "description": "Response message for the `ImportProductSets` method.\n\nThis message is returned by the\ngoogle.longrunning.Operations.GetOperation method in the returned\ngoogle.longrunning.Operation.response field.",
       "id": "GoogleCloudVisionV1p4beta1ImportProductSetsResponse",
@@ -7629,38 +7609,6 @@
       },
       "type": "object"
     },
-    "GoogleCloudVisionV1p4beta1QualityOptimizationResult": {
-      "description": "Stores enhanced image bytes.",
-      "id": "GoogleCloudVisionV1p4beta1QualityOptimizationResult",
-      "properties": {
-        "image": {
-          "description": "Optimized image bytes.",
-          "format": "byte",
-          "type": "string"
-        },
-        "mimeType": {
-          "description": "Mime type of the output image.",
-          "type": "string"
-        },
-        "qualityOptimizationType": {
-          "description": "Required optimization type.",
-          "enum": [
-            "TYPE_UNSPECIFIED",
-            "COMPRESSION",
-            "ENHANCEMENT",
-            "QUALITY_SCORE"
-          ],
-          "enumDescriptions": [
-            "Invalid. Customer must select one Type.",
-            "Reduce image file size. Detailed params specified in CompressionConfig.\nIf customer do not specify CompressionConfig, it will reduce image file\nsize while not reducing image quality. If customer specify\nCompressionConfig, we will reduce file size while keeping\nCompressionParams.target_quality.",
-            "Denoise, sharpening, HDR and upscaling. Detailed params specified in\nEnhancementConfig. If customer do not specify EnhancmentConfig, it will\ndo image enhancement using default values. If upscale_ratio not\nspecified, the output image will have the same resolution as input image.",
-            "Query quality score for an image. Detailed params specified in\nQualityScoreConfig. If customer does not specify QualityScoreConfig,\naesthetic score of image will be returned."
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudVisionV1p4beta1ReferenceImage": {
       "description": "A `ReferenceImage` represents a product image and its associated metadata,\nsuch as bounding boxes.",
       "id": "GoogleCloudVisionV1p4beta1ReferenceImage",
@@ -7707,11 +7655,6 @@
           ],
           "type": "string"
         },
-        "adultConfidence": {
-          "description": "Confidence of adult_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
-          "format": "float",
-          "type": "number"
-        },
         "medical": {
           "description": "Likelihood that this is a medical image.",
           "enum": [
@@ -7731,16 +7674,6 @@
             "It is very likely."
           ],
           "type": "string"
-        },
-        "medicalConfidence": {
-          "description": "Confidence of medical_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
-          "format": "float",
-          "type": "number"
-        },
-        "nsfwConfidence": {
-          "description": "Confidence of nsfw_score. Range [0, 1]. 0 means not confident, 1 means very\nconfident.",
-          "format": "float",
-          "type": "number"
         },
         "racy": {
           "description": "Likelihood that the request image contains racy content. Racy content may\ninclude (but is not limited to) skimpy or sheer clothing, strategically\ncovered nudity, lewd or provocative poses, or close-ups of sensitive\nbody areas.",
@@ -7762,11 +7695,6 @@
           ],
           "type": "string"
         },
-        "racyConfidence": {
-          "description": "Confidence of racy_score. Range [0, 1]. 0 means not confident, 1 means very\nconfident.",
-          "format": "float",
-          "type": "number"
-        },
         "spoof": {
           "description": "Spoof likelihood. The likelihood that an modification\nwas made to the image's canonical version to make it appear\nfunny or offensive.",
           "enum": [
@@ -7787,11 +7715,6 @@
           ],
           "type": "string"
         },
-        "spoofConfidence": {
-          "description": "Confidence of spoof_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
-          "format": "float",
-          "type": "number"
-        },
         "violence": {
           "description": "Likelihood that this image contains violent content.",
           "enum": [
@@ -7811,11 +7734,6 @@
             "It is very likely."
           ],
           "type": "string"
-        },
-        "violenceConfidence": {
-          "description": "Confidence of violence_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
-          "format": "float",
-          "type": "number"
         }
       },
       "type": "object"
@@ -9004,11 +8922,6 @@
           ],
           "type": "string"
         },
-        "adultConfidence": {
-          "description": "Confidence of adult_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
-          "format": "float",
-          "type": "number"
-        },
         "medical": {
           "description": "Likelihood that this is a medical image.",
           "enum": [
@@ -9028,16 +8941,6 @@
             "It is very likely."
           ],
           "type": "string"
-        },
-        "medicalConfidence": {
-          "description": "Confidence of medical_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
-          "format": "float",
-          "type": "number"
-        },
-        "nsfwConfidence": {
-          "description": "Confidence of nsfw_score. Range [0, 1]. 0 means not confident, 1 means very\nconfident.",
-          "format": "float",
-          "type": "number"
         },
         "racy": {
           "description": "Likelihood that the request image contains racy content. Racy content may\ninclude (but is not limited to) skimpy or sheer clothing, strategically\ncovered nudity, lewd or provocative poses, or close-ups of sensitive\nbody areas.",
@@ -9059,11 +8962,6 @@
           ],
           "type": "string"
         },
-        "racyConfidence": {
-          "description": "Confidence of racy_score. Range [0, 1]. 0 means not confident, 1 means very\nconfident.",
-          "format": "float",
-          "type": "number"
-        },
         "spoof": {
           "description": "Spoof likelihood. The likelihood that an modification\nwas made to the image's canonical version to make it appear\nfunny or offensive.",
           "enum": [
@@ -9084,11 +8982,6 @@
           ],
           "type": "string"
         },
-        "spoofConfidence": {
-          "description": "Confidence of spoof_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
-          "format": "float",
-          "type": "number"
-        },
         "violence": {
           "description": "Likelihood that this image contains violent content.",
           "enum": [
@@ -9108,11 +9001,6 @@
             "It is very likely."
           ],
           "type": "string"
-        },
-        "violenceConfidence": {
-          "description": "Confidence of violence_score. Range [0, 1]. 0 means not confident, 1 means\nvery confident.",
-          "format": "float",
-          "type": "number"
         }
       },
       "type": "object"

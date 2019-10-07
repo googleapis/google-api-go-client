@@ -147,35 +147,36 @@ type OperationsService struct {
 	s *Service
 }
 
-// CreateSlotPoolMetadata: The metadata for operation returned
+// CreateCapacityCommitmentMetadata: The metadata for operation returned
 // from
-// ReservationService.CreateSlotPool.
-type CreateSlotPoolMetadata struct {
-	// SlotPool: Resource name of the slot pool that is being created.
+// ReservationService.CreateCapacityCommitment.
+type CreateCapacityCommitmentMetadata struct {
+	// CapacityCommitment: Resource name of the capacity commitment that is
+	// being created.
 	// E.g.,
-	// projects/myproject/locations/us-central1/reservations/foo/slotPo
-	// ols/123
-	SlotPool string `json:"slotPool,omitempty"`
+	// projects/myproject/locations/US/capacityCommitments/123
+	CapacityCommitment string `json:"capacityCommitment,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "SlotPool") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "CapacityCommitment")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "SlotPool") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CapacityCommitment") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateSlotPoolMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod CreateSlotPoolMetadata
+func (s *CreateCapacityCommitmentMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateCapacityCommitmentMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -445,7 +446,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -624,7 +625,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

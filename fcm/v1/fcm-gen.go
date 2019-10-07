@@ -594,13 +594,21 @@ type ApnsConfig struct {
 
 	// Headers: HTTP request headers defined in Apple Push Notification
 	// Service. Refer to
-	// [APNs request headers](https://goo.gl/C6Yhia) for
-	// supported headers, e.g. "apns-priority": "10".
+	// [APNs
+	// request
+	// headers](https://developer.apple.com/documentation/usernotific
+	// ations/setting_up_a_remote_notification_server/sending_notification_re
+	// quests_to_apns)
+	// for supported headers, e.g. "apns-priority": "10".
 	Headers map[string]string `json:"headers,omitempty"`
 
 	// Payload: APNs payload as a JSON object, including both `aps`
 	// dictionary and custom
-	// payload. See [Payload Key Reference](https://goo.gl/32Pl5W).
+	// payload. See [Payload
+	// Key
+	// Reference](https://developer.apple.com/documentation/usernotificat
+	// ions/setting_up_a_remote_notification_server/generating_a_remote_notif
+	// ication).
 	// If present, it overrides
 	// google.firebase.fcm.v1.Notification.title
 	// and google.firebase.fcm.v1.Notification.body.
@@ -964,7 +972,10 @@ type Message struct {
 	// e.g. "'foo' in topics && 'bar' in topics".
 	Condition string `json:"condition,omitempty"`
 
-	// Data: Input only. Arbitrary key/value payload.
+	// Data: Input only. Arbitrary key/value payload. The key should not be
+	// a reserved
+	// word ("from", "message_type", or any word starting with "google" or
+	// "gcm").
 	Data map[string]string `json:"data,omitempty"`
 
 	// FcmOptions: Input only. Template for FCM SDK feature options to use
@@ -1229,7 +1240,7 @@ func (c *ProjectsMessagesSendCall) Header() http.Header {
 
 func (c *ProjectsMessagesSendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

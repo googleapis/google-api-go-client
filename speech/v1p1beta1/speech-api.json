@@ -289,7 +289,7 @@
       }
     }
   },
-  "revision": "20190918",
+  "revision": "20190926",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "ListOperationsResponse": {
@@ -643,7 +643,7 @@
           "description": "Required. Provides information to the recognizer that specifies how to\nprocess the request."
         },
         "name": {
-          "description": "The name of the model to use for recognition.",
+          "description": "Use `model` field in RecognitionConfig instead.",
           "type": "string"
         }
       },

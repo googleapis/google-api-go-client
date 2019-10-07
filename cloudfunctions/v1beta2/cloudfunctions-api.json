@@ -229,7 +229,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The name of the function to be called.",
+                      "description": "Required. The name of the function to be called.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
                       "required": true,
@@ -257,7 +257,7 @@
                   ],
                   "parameters": {
                     "location": {
-                      "description": "The project and location in which the function should be created, specified\nin the format `projects/*/locations/*`",
+                      "description": "Required. The project and location in which the function should be created, specified\nin the format `projects/*/locations/*`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -285,7 +285,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The name of the function which should be deleted.",
+                      "description": "Required. The name of the function which should be deleted.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
                       "required": true,
@@ -366,7 +366,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The name of the function which details should be obtained.",
+                      "description": "Required. The name of the function which details should be obtained.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
                       "required": true,
@@ -391,7 +391,7 @@
                   ],
                   "parameters": {
                     "location": {
-                      "description": "The project and location from which the function should be listed,\nspecified in the format `projects/*/locations/*`\nIf you want to list functions in all locations, use \"-\" in place of a\nlocation.",
+                      "description": "Required. The project and location from which the function should be listed,\nspecified in the format `projects/*/locations/*`\nIf you want to list functions in all locations, use \"-\" in place of a\nlocation.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -427,7 +427,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The name of the function to be updated.",
+                      "description": "Required. The name of the function to be updated.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
                       "required": true,
@@ -452,7 +452,7 @@
       }
     }
   },
-  "revision": "20190807",
+  "revision": "20190923",
   "rootUrl": "https://cloudfunctions.googleapis.com/",
   "schemas": {
     "CallFunctionRequest": {
@@ -460,7 +460,7 @@
       "id": "CallFunctionRequest",
       "properties": {
         "data": {
-          "description": "Input to be passed to the function.",
+          "description": "Required. Input to be passed to the function.",
           "type": "string"
         }
       },

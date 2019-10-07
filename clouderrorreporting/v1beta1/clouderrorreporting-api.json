@@ -115,7 +115,7 @@
           ],
           "parameters": {
             "projectName": {
-              "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
+              "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
               "location": "path",
               "pattern": "^projects/[^/]+$",
               "required": true,
@@ -144,40 +144,40 @@
               ],
               "parameters": {
                 "groupId": {
-                  "description": "[Required] The group for which events shall be returned.",
+                  "description": "Required. The group for which events shall be returned.",
                   "location": "query",
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "[Optional] The maximum number of results to return per response.",
+                  "description": "Optional. The maximum number of results to return per response.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "[Optional] A `next_page_token` provided by a previous response.",
+                  "description": "Optional. A `next_page_token` provided by a previous response.",
                   "location": "query",
                   "type": "string"
                 },
                 "projectName": {
-                  "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
+                  "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
                   "type": "string"
                 },
                 "serviceFilter.resourceType": {
-                  "description": "[Optional] The exact value to match against\n[`ServiceContext.resource_type`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type).",
+                  "description": "Optional. The exact value to match against\n[`ServiceContext.resource_type`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type).",
                   "location": "query",
                   "type": "string"
                 },
                 "serviceFilter.service": {
-                  "description": "[Optional] The exact value to match against\n[`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service).",
+                  "description": "Optional. The exact value to match against\n[`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service).",
                   "location": "query",
                   "type": "string"
                 },
                 "serviceFilter.version": {
-                  "description": "[Optional] The exact value to match against\n[`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version).",
+                  "description": "Optional. The exact value to match against\n[`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version).",
                   "location": "query",
                   "type": "string"
                 },
@@ -213,7 +213,7 @@
               ],
               "parameters": {
                 "projectName": {
-                  "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840). Example:\n`projects/my-project-123`.",
+                  "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840). Example:\n`projects/my-project-123`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -245,7 +245,7 @@
               ],
               "parameters": {
                 "alignment": {
-                  "description": "[Optional] The alignment of the timed counts to be returned.\nDefault is `ALIGNMENT_EQUAL_AT_END`.",
+                  "description": "Optional. The alignment of the timed counts to be returned.\nDefault is `ALIGNMENT_EQUAL_AT_END`.",
                   "enum": [
                     "ERROR_COUNT_ALIGNMENT_UNSPECIFIED",
                     "ALIGNMENT_EQUAL_ROUNDED",
@@ -255,19 +255,19 @@
                   "type": "string"
                 },
                 "alignmentTime": {
-                  "description": "[Optional] Time where the timed counts shall be aligned if rounded\nalignment is chosen. Default is 00:00 UTC.",
+                  "description": "Optional. Time where the timed counts shall be aligned if rounded\nalignment is chosen. Default is 00:00 UTC.",
                   "format": "google-datetime",
                   "location": "query",
                   "type": "string"
                 },
                 "groupId": {
-                  "description": "[Optional] List all \u003ccode\u003eErrorGroupStats\u003c/code\u003e with these IDs.",
+                  "description": "Optional. List all \u003ccode\u003eErrorGroupStats\u003c/code\u003e with these IDs.",
                   "location": "query",
                   "repeated": true,
                   "type": "string"
                 },
                 "order": {
-                  "description": "[Optional] The sort order in which the results are returned.\nDefault is `COUNT_DESC`.",
+                  "description": "Optional. The sort order in which the results are returned.\nDefault is `COUNT_DESC`.",
                   "enum": [
                     "GROUP_ORDER_UNSPECIFIED",
                     "COUNT_DESC",
@@ -279,35 +279,35 @@
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "[Optional] The maximum number of results to return per response.\nDefault is 20.",
+                  "description": "Optional. The maximum number of results to return per response.\nDefault is 20.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "[Optional] A `next_page_token` provided by a previous response. To view\nadditional results, pass this token along with the identical query\nparameters as the first request.",
+                  "description": "Optional. A `next_page_token` provided by a previous response. To view\nadditional results, pass this token along with the identical query\nparameters as the first request.",
                   "location": "query",
                   "type": "string"
                 },
                 "projectName": {
-                  "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas \u003ccode\u003eprojects/\u003c/code\u003e plus the\n\u003ca href=\"https://support.google.com/cloud/answer/6158840\"\u003eGoogle Cloud\nPlatform project ID\u003c/a\u003e.\n\nExample: \u003ccode\u003eprojects/my-project-123\u003c/code\u003e.",
+                  "description": "Required. The resource name of the Google Cloud Platform project. Written\nas \u003ccode\u003eprojects/\u003c/code\u003e plus the\n\u003ca href=\"https://support.google.com/cloud/answer/6158840\"\u003eGoogle Cloud\nPlatform project ID\u003c/a\u003e.\n\nExample: \u003ccode\u003eprojects/my-project-123\u003c/code\u003e.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
                   "type": "string"
                 },
                 "serviceFilter.resourceType": {
-                  "description": "[Optional] The exact value to match against\n[`ServiceContext.resource_type`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type).",
+                  "description": "Optional. The exact value to match against\n[`ServiceContext.resource_type`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type).",
                   "location": "query",
                   "type": "string"
                 },
                 "serviceFilter.service": {
-                  "description": "[Optional] The exact value to match against\n[`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service).",
+                  "description": "Optional. The exact value to match against\n[`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service).",
                   "location": "query",
                   "type": "string"
                 },
                 "serviceFilter.version": {
-                  "description": "[Optional] The exact value to match against\n[`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version).",
+                  "description": "Optional. The exact value to match against\n[`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version).",
                   "location": "query",
                   "type": "string"
                 },
@@ -325,7 +325,7 @@
                   "type": "string"
                 },
                 "timedCountDuration": {
-                  "description": "[Optional] The preferred duration for a single returned `TimedCount`.\nIf not set, no timed counts are returned.",
+                  "description": "Optional. The preferred duration for a single returned `TimedCount`.\nIf not set, no timed counts are returned.",
                   "format": "google-duration",
                   "location": "query",
                   "type": "string"
@@ -353,7 +353,7 @@
               ],
               "parameters": {
                 "groupName": {
-                  "description": "[Required] The group resource name. Written as\n\u003ccode\u003eprojects/\u003cvar\u003eprojectID\u003c/var\u003e/groups/\u003cvar\u003egroup_name\u003c/var\u003e\u003c/code\u003e.\nCall\n\u003ca href=\"/error-reporting/reference/rest/v1beta1/projects.groupStats/list\"\u003e\n\u003ccode\u003egroupStats.list\u003c/code\u003e\u003c/a\u003e to return a list of groups belonging to\nthis project.\n\nExample: \u003ccode\u003eprojects/my-project-123/groups/my-group\u003c/code\u003e",
+                  "description": "Required. The group resource name. Written as\n\u003ccode\u003eprojects/\u003cvar\u003eprojectID\u003c/var\u003e/groups/\u003cvar\u003egroup_name\u003c/var\u003e\u003c/code\u003e.\nCall\n\u003ca href=\"/error-reporting/reference/rest/v1beta1/projects.groupStats/list\"\u003e\n\u003ccode\u003egroupStats.list\u003c/code\u003e\u003c/a\u003e to return a list of groups belonging to\nthis project.\n\nExample: \u003ccode\u003eprojects/my-project-123/groups/my-group\u003c/code\u003e",
                   "location": "path",
                   "pattern": "^projects/[^/]+/groups/[^/]+$",
                   "required": true,
@@ -401,7 +401,7 @@
       }
     }
   },
-  "revision": "20190411",
+  "revision": "20190925",
   "rootUrl": "https://clouderrorreporting.googleapis.com/",
   "schemas": {
     "DeleteEventsResponse": {
@@ -626,20 +626,20 @@
       "properties": {
         "context": {
           "$ref": "ErrorContext",
-          "description": "[Optional] A description of the context in which the error occurred."
+          "description": "Optional. A description of the context in which the error occurred."
         },
         "eventTime": {
-          "description": "[Optional] Time when the event occurred.\nIf not provided, the time when the event was received by the\nError Reporting system will be used.",
+          "description": "Optional. Time when the event occurred.\nIf not provided, the time when the event was received by the\nError Reporting system will be used.",
           "format": "google-datetime",
           "type": "string"
         },
         "message": {
-          "description": "[Required] The error message.\nIf no `context.reportLocation` is provided, the message must contain a\nheader (typically consisting of the exception type name and an error\nmessage) and an exception stack trace in one of the supported programming\nlanguages and formats.\nSupported languages are Java, Python, JavaScript, Ruby, C#, PHP, and Go.\nSupported stack trace formats are:\n\n* **Java**: Must be the return value of\n[`Throwable.printStackTrace()`](https://docs.oracle.com/javase/7/docs/api/java/lang/Throwable.html#printStackTrace%28%29).\n* **Python**: Must be the return value of\n[`traceback.format_exc()`](https://docs.python.org/2/library/traceback.html#traceback.format_exc).\n* **JavaScript**: Must be the value of\n[`error.stack`](https://github.com/v8/v8/wiki/Stack-Trace-API) as returned\nby V8.\n* **Ruby**: Must contain frames returned by\n[`Exception.backtrace`](https://ruby-doc.org/core-2.2.0/Exception.html#method-i-backtrace).\n* **C#**: Must be the return value of\n[`Exception.ToString()`](https://msdn.microsoft.com/en-us/library/system.exception.tostring.aspx).\n* **PHP**: Must start with `PHP (Notice|Parse error|Fatal error|Warning)`\nand contain the result of\n[`(string)$exception`](http://php.net/manual/en/exception.tostring.php).\n* **Go**: Must be the return value of\n[`runtime.Stack()`](https://golang.org/pkg/runtime/debug/#Stack).",
+          "description": "Required. The error message.\nIf no `context.reportLocation` is provided, the message must contain a\nheader (typically consisting of the exception type name and an error\nmessage) and an exception stack trace in one of the supported programming\nlanguages and formats.\nSupported languages are Java, Python, JavaScript, Ruby, C#, PHP, and Go.\nSupported stack trace formats are:\n\n* **Java**: Must be the return value of\n[`Throwable.printStackTrace()`](https://docs.oracle.com/javase/7/docs/api/java/lang/Throwable.html#printStackTrace%28%29).\n* **Python**: Must be the return value of\n[`traceback.format_exc()`](https://docs.python.org/2/library/traceback.html#traceback.format_exc).\n* **JavaScript**: Must be the value of\n[`error.stack`](https://github.com/v8/v8/wiki/Stack-Trace-API) as returned\nby V8.\n* **Ruby**: Must contain frames returned by\n[`Exception.backtrace`](https://ruby-doc.org/core-2.2.0/Exception.html#method-i-backtrace).\n* **C#**: Must be the return value of\n[`Exception.ToString()`](https://msdn.microsoft.com/en-us/library/system.exception.tostring.aspx).\n* **PHP**: Must start with `PHP (Notice|Parse error|Fatal error|Warning)`\nand contain the result of\n[`(string)$exception`](http://php.net/manual/en/exception.tostring.php).\n* **Go**: Must be the return value of\n[`runtime.Stack()`](https://golang.org/pkg/runtime/debug/#Stack).",
           "type": "string"
         },
         "serviceContext": {
           "$ref": "ServiceContext",
-          "description": "[Required] The service context in which this error has occurred."
+          "description": "Required. The service context in which this error has occurred."
         }
       },
       "type": "object"

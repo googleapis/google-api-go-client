@@ -9940,10 +9940,6 @@ type GoogleCloudVisionV1p4beta1AnnotateImageResponse struct {
 	// extracted successfully.
 	ImagePropertiesAnnotation *GoogleCloudVisionV1p4beta1ImageProperties `json:"imagePropertiesAnnotation,omitempty"`
 
-	// ImageQualityAnnotation: If present, image quality calculation has
-	// completed successfully.
-	ImageQualityAnnotation *GoogleCloudVisionV1p4beta1ImageQuality `json:"imageQualityAnnotation,omitempty"`
-
 	// LabelAnnotations: If present, label detection has completed
 	// successfully.
 	LabelAnnotations []*GoogleCloudVisionV1p4beta1EntityAnnotation `json:"labelAnnotations,omitempty"`
@@ -9964,10 +9960,6 @@ type GoogleCloudVisionV1p4beta1AnnotateImageResponse struct {
 	// ProductSearchResults: If present, product search has completed
 	// successfully.
 	ProductSearchResults *GoogleCloudVisionV1p4beta1ProductSearchResults `json:"productSearchResults,omitempty"`
-
-	// QualityOptimizationResult: If present, image quality optimization has
-	// completed successfully.
-	QualityOptimizationResult *GoogleCloudVisionV1p4beta1QualityOptimizationResult `json:"qualityOptimizationResult,omitempty"`
 
 	// SafeSearchAnnotation: If present, safe-search annotation has
 	// completed successfully.
@@ -10977,55 +10969,6 @@ func (s *GoogleCloudVisionV1p4beta1ImageProperties) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p4beta1ImageQuality: Stores image quality scores,
-// could be aesthetic quality or technical quality.
-type GoogleCloudVisionV1p4beta1ImageQuality struct {
-	// QualityScore: A score representing the aesthetic/technical quality of
-	// the image. The
-	// score is in range [0, 1]. Higher value corresponds to more
-	// professional
-	// looking photos. 0 means the image looks very bad, 1 means the image
-	// with
-	// very high quality.
-	QualityScore float64 `json:"qualityScore,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "QualityScore") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "QualityScore") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudVisionV1p4beta1ImageQuality) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p4beta1ImageQuality
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudVisionV1p4beta1ImageQuality) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudVisionV1p4beta1ImageQuality
-	var s1 struct {
-		QualityScore gensupport.JSONFloat64 `json:"qualityScore"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.QualityScore = float64(s1.QualityScore)
-	return nil
-}
-
 // GoogleCloudVisionV1p4beta1ImportProductSetsResponse: Response message
 // for the `ImportProductSets` method.
 //
@@ -11871,66 +11814,6 @@ func (s *GoogleCloudVisionV1p4beta1Property) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p4beta1QualityOptimizationResult: Stores enhanced
-// image bytes.
-type GoogleCloudVisionV1p4beta1QualityOptimizationResult struct {
-	// Image: Optimized image bytes.
-	Image string `json:"image,omitempty"`
-
-	// MimeType: Mime type of the output image.
-	MimeType string `json:"mimeType,omitempty"`
-
-	// QualityOptimizationType: Required optimization type.
-	//
-	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Invalid. Customer must select one Type.
-	//   "COMPRESSION" - Reduce image file size. Detailed params specified
-	// in CompressionConfig.
-	// If customer do not specify CompressionConfig, it will reduce image
-	// file
-	// size while not reducing image quality. If customer
-	// specify
-	// CompressionConfig, we will reduce file size while
-	// keeping
-	// CompressionParams.target_quality.
-	//   "ENHANCEMENT" - Denoise, sharpening, HDR and upscaling. Detailed
-	// params specified in
-	// EnhancementConfig. If customer do not specify EnhancmentConfig, it
-	// will
-	// do image enhancement using default values. If upscale_ratio
-	// not
-	// specified, the output image will have the same resolution as input
-	// image.
-	//   "QUALITY_SCORE" - Query quality score for an image. Detailed params
-	// specified in
-	// QualityScoreConfig. If customer does not specify
-	// QualityScoreConfig,
-	// aesthetic score of image will be returned.
-	QualityOptimizationType string `json:"qualityOptimizationType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Image") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Image") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudVisionV1p4beta1QualityOptimizationResult) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p4beta1QualityOptimizationResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudVisionV1p4beta1ReferenceImage: A `ReferenceImage`
 // represents a product image and its associated metadata,
 // such as bounding boxes.
@@ -12011,11 +11894,6 @@ type GoogleCloudVisionV1p4beta1SafeSearchAnnotation struct {
 	//   "VERY_LIKELY" - It is very likely.
 	Adult string `json:"adult,omitempty"`
 
-	// AdultConfidence: Confidence of adult_score. Range [0, 1]. 0 means not
-	// confident, 1 means
-	// very confident.
-	AdultConfidence float64 `json:"adultConfidence,omitempty"`
-
 	// Medical: Likelihood that this is a medical image.
 	//
 	// Possible values:
@@ -12026,16 +11904,6 @@ type GoogleCloudVisionV1p4beta1SafeSearchAnnotation struct {
 	//   "LIKELY" - It is likely.
 	//   "VERY_LIKELY" - It is very likely.
 	Medical string `json:"medical,omitempty"`
-
-	// MedicalConfidence: Confidence of medical_score. Range [0, 1]. 0 means
-	// not confident, 1 means
-	// very confident.
-	MedicalConfidence float64 `json:"medicalConfidence,omitempty"`
-
-	// NsfwConfidence: Confidence of nsfw_score. Range [0, 1]. 0 means not
-	// confident, 1 means very
-	// confident.
-	NsfwConfidence float64 `json:"nsfwConfidence,omitempty"`
 
 	// Racy: Likelihood that the request image contains racy content. Racy
 	// content may
@@ -12054,11 +11922,6 @@ type GoogleCloudVisionV1p4beta1SafeSearchAnnotation struct {
 	//   "VERY_LIKELY" - It is very likely.
 	Racy string `json:"racy,omitempty"`
 
-	// RacyConfidence: Confidence of racy_score. Range [0, 1]. 0 means not
-	// confident, 1 means very
-	// confident.
-	RacyConfidence float64 `json:"racyConfidence,omitempty"`
-
 	// Spoof: Spoof likelihood. The likelihood that an modification
 	// was made to the image's canonical version to make it appear
 	// funny or offensive.
@@ -12072,11 +11935,6 @@ type GoogleCloudVisionV1p4beta1SafeSearchAnnotation struct {
 	//   "VERY_LIKELY" - It is very likely.
 	Spoof string `json:"spoof,omitempty"`
 
-	// SpoofConfidence: Confidence of spoof_score. Range [0, 1]. 0 means not
-	// confident, 1 means
-	// very confident.
-	SpoofConfidence float64 `json:"spoofConfidence,omitempty"`
-
 	// Violence: Likelihood that this image contains violent content.
 	//
 	// Possible values:
@@ -12087,11 +11945,6 @@ type GoogleCloudVisionV1p4beta1SafeSearchAnnotation struct {
 	//   "LIKELY" - It is likely.
 	//   "VERY_LIKELY" - It is very likely.
 	Violence string `json:"violence,omitempty"`
-
-	// ViolenceConfidence: Confidence of violence_score. Range [0, 1]. 0
-	// means not confident, 1 means
-	// very confident.
-	ViolenceConfidence float64 `json:"violenceConfidence,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Adult") to
 	// unconditionally include in API requests. By default, fields with
@@ -12114,30 +11967,6 @@ func (s *GoogleCloudVisionV1p4beta1SafeSearchAnnotation) MarshalJSON() ([]byte, 
 	type NoMethod GoogleCloudVisionV1p4beta1SafeSearchAnnotation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudVisionV1p4beta1SafeSearchAnnotation) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudVisionV1p4beta1SafeSearchAnnotation
-	var s1 struct {
-		AdultConfidence    gensupport.JSONFloat64 `json:"adultConfidence"`
-		MedicalConfidence  gensupport.JSONFloat64 `json:"medicalConfidence"`
-		NsfwConfidence     gensupport.JSONFloat64 `json:"nsfwConfidence"`
-		RacyConfidence     gensupport.JSONFloat64 `json:"racyConfidence"`
-		SpoofConfidence    gensupport.JSONFloat64 `json:"spoofConfidence"`
-		ViolenceConfidence gensupport.JSONFloat64 `json:"violenceConfidence"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.AdultConfidence = float64(s1.AdultConfidence)
-	s.MedicalConfidence = float64(s1.MedicalConfidence)
-	s.NsfwConfidence = float64(s1.NsfwConfidence)
-	s.RacyConfidence = float64(s1.RacyConfidence)
-	s.SpoofConfidence = float64(s1.SpoofConfidence)
-	s.ViolenceConfidence = float64(s1.ViolenceConfidence)
-	return nil
 }
 
 // GoogleCloudVisionV1p4beta1Symbol: A single symbol representation.
@@ -13910,11 +13739,6 @@ type SafeSearchAnnotation struct {
 	//   "VERY_LIKELY" - It is very likely.
 	Adult string `json:"adult,omitempty"`
 
-	// AdultConfidence: Confidence of adult_score. Range [0, 1]. 0 means not
-	// confident, 1 means
-	// very confident.
-	AdultConfidence float64 `json:"adultConfidence,omitempty"`
-
 	// Medical: Likelihood that this is a medical image.
 	//
 	// Possible values:
@@ -13925,16 +13749,6 @@ type SafeSearchAnnotation struct {
 	//   "LIKELY" - It is likely.
 	//   "VERY_LIKELY" - It is very likely.
 	Medical string `json:"medical,omitempty"`
-
-	// MedicalConfidence: Confidence of medical_score. Range [0, 1]. 0 means
-	// not confident, 1 means
-	// very confident.
-	MedicalConfidence float64 `json:"medicalConfidence,omitempty"`
-
-	// NsfwConfidence: Confidence of nsfw_score. Range [0, 1]. 0 means not
-	// confident, 1 means very
-	// confident.
-	NsfwConfidence float64 `json:"nsfwConfidence,omitempty"`
 
 	// Racy: Likelihood that the request image contains racy content. Racy
 	// content may
@@ -13953,11 +13767,6 @@ type SafeSearchAnnotation struct {
 	//   "VERY_LIKELY" - It is very likely.
 	Racy string `json:"racy,omitempty"`
 
-	// RacyConfidence: Confidence of racy_score. Range [0, 1]. 0 means not
-	// confident, 1 means very
-	// confident.
-	RacyConfidence float64 `json:"racyConfidence,omitempty"`
-
 	// Spoof: Spoof likelihood. The likelihood that an modification
 	// was made to the image's canonical version to make it appear
 	// funny or offensive.
@@ -13971,11 +13780,6 @@ type SafeSearchAnnotation struct {
 	//   "VERY_LIKELY" - It is very likely.
 	Spoof string `json:"spoof,omitempty"`
 
-	// SpoofConfidence: Confidence of spoof_score. Range [0, 1]. 0 means not
-	// confident, 1 means
-	// very confident.
-	SpoofConfidence float64 `json:"spoofConfidence,omitempty"`
-
 	// Violence: Likelihood that this image contains violent content.
 	//
 	// Possible values:
@@ -13986,11 +13790,6 @@ type SafeSearchAnnotation struct {
 	//   "LIKELY" - It is likely.
 	//   "VERY_LIKELY" - It is very likely.
 	Violence string `json:"violence,omitempty"`
-
-	// ViolenceConfidence: Confidence of violence_score. Range [0, 1]. 0
-	// means not confident, 1 means
-	// very confident.
-	ViolenceConfidence float64 `json:"violenceConfidence,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Adult") to
 	// unconditionally include in API requests. By default, fields with
@@ -14013,30 +13812,6 @@ func (s *SafeSearchAnnotation) MarshalJSON() ([]byte, error) {
 	type NoMethod SafeSearchAnnotation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *SafeSearchAnnotation) UnmarshalJSON(data []byte) error {
-	type NoMethod SafeSearchAnnotation
-	var s1 struct {
-		AdultConfidence    gensupport.JSONFloat64 `json:"adultConfidence"`
-		MedicalConfidence  gensupport.JSONFloat64 `json:"medicalConfidence"`
-		NsfwConfidence     gensupport.JSONFloat64 `json:"nsfwConfidence"`
-		RacyConfidence     gensupport.JSONFloat64 `json:"racyConfidence"`
-		SpoofConfidence    gensupport.JSONFloat64 `json:"spoofConfidence"`
-		ViolenceConfidence gensupport.JSONFloat64 `json:"violenceConfidence"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.AdultConfidence = float64(s1.AdultConfidence)
-	s.MedicalConfidence = float64(s1.MedicalConfidence)
-	s.NsfwConfidence = float64(s1.NsfwConfidence)
-	s.RacyConfidence = float64(s1.RacyConfidence)
-	s.SpoofConfidence = float64(s1.SpoofConfidence)
-	s.ViolenceConfidence = float64(s1.ViolenceConfidence)
-	return nil
 }
 
 // Status: The `Status` type defines a logical error model that is
@@ -14637,7 +14412,7 @@ func (c *FilesAnnotateCall) Header() http.Header {
 
 func (c *FilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14775,7 +14550,7 @@ func (c *FilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *FilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14901,7 +14676,7 @@ func (c *ImagesAnnotateCall) Header() http.Header {
 
 func (c *ImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15043,7 +14818,7 @@ func (c *ImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15182,7 +14957,7 @@ func (c *ProjectsFilesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsFilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15335,7 +15110,7 @@ func (c *ProjectsFilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15476,7 +15251,7 @@ func (c *ProjectsImagesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15633,7 +15408,7 @@ func (c *ProjectsImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15785,7 +15560,7 @@ func (c *ProjectsLocationsFilesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15938,7 +15713,7 @@ func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16079,7 +15854,7 @@ func (c *ProjectsLocationsImagesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16236,7 +16011,7 @@ func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -1774,7 +1774,7 @@ func (s *OutputConfig) MarshalJSON() ([]byte, error) {
 //     {
 //       "bindings": [
 //         {
-//           "role": "role/resourcemanager.organizationAdmin",
+//           "role": "roles/resourcemanager.organizationAdmin",
 //           "members": [
 //             "user:mike@example.com",
 //             "group:admins@example.com",
@@ -2154,7 +2154,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2295,8 +2295,8 @@ func (c *V1BatchGetAssetsHistoryCall) AssetNames(assetNames ...string) *V1BatchG
 	return c
 }
 
-// ContentType sets the optional parameter "contentType": Required. The
-// content type.
+// ContentType sets the optional parameter "contentType": The content
+// type.
 //
 // Possible values:
 //   "CONTENT_TYPE_UNSPECIFIED"
@@ -2363,7 +2363,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2440,7 +2440,7 @@ func (c *V1BatchGetAssetsHistoryCall) Do(opts ...googleapi.CallOption) (*BatchGe
 	//       "type": "string"
 	//     },
 	//     "contentType": {
-	//       "description": "Required. The content type.",
+	//       "description": "Optional. The content type.",
 	//       "enum": [
 	//         "CONTENT_TYPE_UNSPECIFIED",
 	//         "RESOURCE",
@@ -2533,7 +2533,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -471,7 +471,7 @@
             "items": {
               "methods": {
                 "delete": {
-                  "description": "Deletes Item resource for the\nspecified resource name.",
+                  "description": "Deletes Item resource for the\nspecified resource name. This API requires an admin or service account\nto execute. The service account used is the one whitelisted in the\ncorresponding data source.",
                   "flatPath": "v1/indexing/datasources/{datasourcesId}/items/{itemsId}",
                   "httpMethod": "DELETE",
                   "id": "cloudsearch.indexing.datasources.items.delete",
@@ -523,7 +523,7 @@
                   ]
                 },
                 "deleteQueueItems": {
-                  "description": "Deletes all items in a queue. This method is useful for deleting stale\nitems.",
+                  "description": "Deletes all items in a queue. This method is useful for deleting stale\nitems.\n\nThis API requires an admin or service account to execute. The service\naccount used is the one whitelisted in the corresponding data source.",
                   "flatPath": "v1/indexing/datasources/{datasourcesId}/items:deleteQueueItems",
                   "httpMethod": "POST",
                   "id": "cloudsearch.indexing.datasources.items.deleteQueueItems",
@@ -552,7 +552,7 @@
                   ]
                 },
                 "get": {
-                  "description": "Gets Item resource by item name.",
+                  "description": "Gets Item resource by item name.\n\nThis API requires an admin or service account to execute.  The service\naccount used is the one whitelisted in the corresponding data source.",
                   "flatPath": "v1/indexing/datasources/{datasourcesId}/items/{itemsId}",
                   "httpMethod": "GET",
                   "id": "cloudsearch.indexing.datasources.items.get",
@@ -588,7 +588,7 @@
                   ]
                 },
                 "index": {
-                  "description": "Updates Item ACL, metadata, and\ncontent. It will insert the Item if it\ndoes not exist.\nThis method does not support partial updates.  Fields with no provided\nvalues are cleared out in the Cloud Search index.",
+                  "description": "Updates Item ACL, metadata, and\ncontent. It will insert the Item if it\ndoes not exist.\nThis method does not support partial updates.  Fields with no provided\nvalues are cleared out in the Cloud Search index.\n\nThis API requires an admin or service account to execute. The service\naccount used is the one whitelisted in the corresponding data source.",
                   "flatPath": "v1/indexing/datasources/{datasourcesId}/items/{itemsId}:index",
                   "httpMethod": "POST",
                   "id": "cloudsearch.indexing.datasources.items.index",
@@ -617,7 +617,7 @@
                   ]
                 },
                 "list": {
-                  "description": "Lists all or a subset of Item resources.",
+                  "description": "Lists all or a subset of Item resources.\n\nThis API requires an admin or service account to execute. The service\naccount used is the one whitelisted in the corresponding data source.",
                   "flatPath": "v1/indexing/datasources/{datasourcesId}/items",
                   "httpMethod": "GET",
                   "id": "cloudsearch.indexing.datasources.items.list",
@@ -626,7 +626,7 @@
                   ],
                   "parameters": {
                     "brief": {
-                      "description": "When set to true, the indexing system only populates the following fields:\nname,\nversion,\nmetadata.hash,\nstructured_data.hash,\ncontent.hash.\n\u003cbr /\u003eIf this value is false, then all the fields are populated in Item.",
+                      "description": "When set to true, the indexing system only populates the following fields:\nname,\nversion,\nqueue.\nmetadata.hash,\nmetadata.title,\nmetadata.sourceRepositoryURL,\nmetadata.objectType,\nmetadata.createTime,\nmetadata.updateTime,\nmetadata.contentLanguage,\nmetadata.mimeType,\nstructured_data.hash,\ncontent.hash,\nitemType,\nitemStatus.code,\nitemStatus.processingError.code,\nitemStatus.repositoryError.type,\n\u003cbr /\u003eIf this value is false, then all the fields are populated in Item.",
                       "location": "query",
                       "type": "boolean"
                     },
@@ -669,7 +669,7 @@
                   ]
                 },
                 "poll": {
-                  "description": "Polls for unreserved items from the indexing queue and marks a\nset as reserved, starting with items that have\nthe oldest timestamp from the highest priority\nItemStatus.\nThe priority order is as follows: \u003cbr /\u003e\nERROR\n\u003cbr /\u003e\nMODIFIED\n\u003cbr /\u003e\nNEW_ITEM\n\u003cbr /\u003e\nACCEPTED\n\u003cbr /\u003e\nReserving items ensures that polling from other threads\ncannot create overlapping sets.\n\nAfter handling the reserved items, the client should put items back\ninto the unreserved state, either by calling\nindex,\nor by calling\npush with\nthe type REQUEUE.\n\nItems automatically become available (unreserved) after 4 hours even if no\nupdate or push method is called.",
+                  "description": "Polls for unreserved items from the indexing queue and marks a\nset as reserved, starting with items that have\nthe oldest timestamp from the highest priority\nItemStatus.\nThe priority order is as follows: \u003cbr /\u003e\nERROR\n\u003cbr /\u003e\nMODIFIED\n\u003cbr /\u003e\nNEW_ITEM\n\u003cbr /\u003e\nACCEPTED\n\u003cbr /\u003e\nReserving items ensures that polling from other threads\ncannot create overlapping sets.\n\nAfter handling the reserved items, the client should put items back\ninto the unreserved state, either by calling\nindex,\nor by calling\npush with\nthe type REQUEUE.\n\nItems automatically become available (unreserved) after 4 hours even if no\nupdate or push method is called.\n\nThis API requires an admin or service account to execute. The service\naccount used is the one whitelisted in the corresponding data source.",
                   "flatPath": "v1/indexing/datasources/{datasourcesId}/items:poll",
                   "httpMethod": "POST",
                   "id": "cloudsearch.indexing.datasources.items.poll",
@@ -698,7 +698,7 @@
                   ]
                 },
                 "push": {
-                  "description": "Pushes an item onto a queue for later polling and updating.",
+                  "description": "Pushes an item onto a queue for later polling and updating.\n\nThis API requires an admin or service account to execute. The service\naccount used is the one whitelisted in the corresponding data source.",
                   "flatPath": "v1/indexing/datasources/{datasourcesId}/items/{itemsId}:push",
                   "httpMethod": "POST",
                   "id": "cloudsearch.indexing.datasources.items.push",
@@ -727,7 +727,7 @@
                   ]
                 },
                 "unreserve": {
-                  "description": "Unreserves all items from a queue, making them all eligible to be\npolled.  This method is useful for resetting the indexing queue\nafter a connector has been restarted.",
+                  "description": "Unreserves all items from a queue, making them all eligible to be\npolled.  This method is useful for resetting the indexing queue\nafter a connector has been restarted.\n\nThis API requires an admin or service account to execute. The service\naccount used is the one whitelisted in the corresponding data source.",
                   "flatPath": "v1/indexing/datasources/{datasourcesId}/items:unreserve",
                   "httpMethod": "POST",
                   "id": "cloudsearch.indexing.datasources.items.unreserve",
@@ -756,7 +756,7 @@
                   ]
                 },
                 "upload": {
-                  "description": "Creates an upload session for uploading item content. For items smaller\nthan 100 KB, it's easier to embed the content\ninline within\nan index request.",
+                  "description": "Creates an upload session for uploading item content. For items smaller\nthan 100 KB, it's easier to embed the content\ninline within\nan index request.\n\nThis API requires an admin or service account to execute. The service\naccount used is the one whitelisted in the corresponding data source.",
                   "flatPath": "v1/indexing/datasources/{datasourcesId}/items/{itemsId}:upload",
                   "httpMethod": "POST",
                   "id": "cloudsearch.indexing.datasources.items.upload",
@@ -1352,6 +1352,168 @@
             "https://www.googleapis.com/auth/cloud_search.stats",
             "https://www.googleapis.com/auth/cloud_search.stats.indexing"
           ]
+        },
+        "getQuery": {
+          "description": "Get the query statistics for customer",
+          "flatPath": "v1/stats/query",
+          "httpMethod": "GET",
+          "id": "cloudsearch.stats.getQuery",
+          "parameterOrder": [],
+          "parameters": {
+            "fromDate.day": {
+              "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "fromDate.month": {
+              "description": "Month of date. Must be from 1 to 12.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "fromDate.year": {
+              "description": "Year of date. Must be from 1 to 9999.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "toDate.day": {
+              "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "toDate.month": {
+              "description": "Month of date. Must be from 1 to 12.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "toDate.year": {
+              "description": "Year of date. Must be from 1 to 9999.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            }
+          },
+          "path": "v1/stats/query",
+          "response": {
+            "$ref": "GetCustomerQueryStatsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud_search",
+            "https://www.googleapis.com/auth/cloud_search.stats",
+            "https://www.googleapis.com/auth/cloud_search.stats.indexing"
+          ]
+        },
+        "getSession": {
+          "description": "Get the # of search sessions for the customer",
+          "flatPath": "v1/stats/session",
+          "httpMethod": "GET",
+          "id": "cloudsearch.stats.getSession",
+          "parameterOrder": [],
+          "parameters": {
+            "fromDate.day": {
+              "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "fromDate.month": {
+              "description": "Month of date. Must be from 1 to 12.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "fromDate.year": {
+              "description": "Year of date. Must be from 1 to 9999.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "toDate.day": {
+              "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "toDate.month": {
+              "description": "Month of date. Must be from 1 to 12.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "toDate.year": {
+              "description": "Year of date. Must be from 1 to 9999.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            }
+          },
+          "path": "v1/stats/session",
+          "response": {
+            "$ref": "GetCustomerSessionStatsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud_search",
+            "https://www.googleapis.com/auth/cloud_search.stats",
+            "https://www.googleapis.com/auth/cloud_search.stats.indexing"
+          ]
+        },
+        "getUser": {
+          "description": "Get the users statistics for customer",
+          "flatPath": "v1/stats/user",
+          "httpMethod": "GET",
+          "id": "cloudsearch.stats.getUser",
+          "parameterOrder": [],
+          "parameters": {
+            "fromDate.day": {
+              "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "fromDate.month": {
+              "description": "Month of date. Must be from 1 to 12.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "fromDate.year": {
+              "description": "Year of date. Must be from 1 to 9999.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "toDate.day": {
+              "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "toDate.month": {
+              "description": "Month of date. Must be from 1 to 12.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "toDate.year": {
+              "description": "Year of date. Must be from 1 to 9999.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            }
+          },
+          "path": "v1/stats/user",
+          "response": {
+            "$ref": "GetCustomerUserStatsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud_search",
+            "https://www.googleapis.com/auth/cloud_search.stats",
+            "https://www.googleapis.com/auth/cloud_search.stats.indexing"
+          ]
         }
       },
       "resources": {
@@ -1425,11 +1587,224 @@
               }
             }
           }
+        },
+        "query": {
+          "resources": {
+            "searchapplications": {
+              "methods": {
+                "get": {
+                  "description": "Get the query statistics for search application",
+                  "flatPath": "v1/stats/query/searchapplications/{searchapplicationsId}",
+                  "httpMethod": "GET",
+                  "id": "cloudsearch.stats.query.searchapplications.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "fromDate.day": {
+                      "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "fromDate.month": {
+                      "description": "Month of date. Must be from 1 to 12.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "fromDate.year": {
+                      "description": "Year of date. Must be from 1 to 9999.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "name": {
+                      "description": "The resource id of the search application query stats, in the following\nformat: searchapplications/{application_id}",
+                      "location": "path",
+                      "pattern": "^searchapplications/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "toDate.day": {
+                      "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "toDate.month": {
+                      "description": "Month of date. Must be from 1 to 12.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "toDate.year": {
+                      "description": "Year of date. Must be from 1 to 9999.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    }
+                  },
+                  "path": "v1/stats/query/{+name}",
+                  "response": {
+                    "$ref": "GetSearchApplicationQueryStatsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud_search",
+                    "https://www.googleapis.com/auth/cloud_search.stats",
+                    "https://www.googleapis.com/auth/cloud_search.stats.indexing"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "session": {
+          "resources": {
+            "searchapplications": {
+              "methods": {
+                "get": {
+                  "description": "Get the # of search sessions for the search application",
+                  "flatPath": "v1/stats/session/searchapplications/{searchapplicationsId}",
+                  "httpMethod": "GET",
+                  "id": "cloudsearch.stats.session.searchapplications.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "fromDate.day": {
+                      "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "fromDate.month": {
+                      "description": "Month of date. Must be from 1 to 12.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "fromDate.year": {
+                      "description": "Year of date. Must be from 1 to 9999.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "name": {
+                      "description": "The resource id of the search application session stats, in the following\nformat: searchapplications/{application_id}",
+                      "location": "path",
+                      "pattern": "^searchapplications/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "toDate.day": {
+                      "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "toDate.month": {
+                      "description": "Month of date. Must be from 1 to 12.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "toDate.year": {
+                      "description": "Year of date. Must be from 1 to 9999.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    }
+                  },
+                  "path": "v1/stats/session/{+name}",
+                  "response": {
+                    "$ref": "GetSearchApplicationSessionStatsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud_search",
+                    "https://www.googleapis.com/auth/cloud_search.stats",
+                    "https://www.googleapis.com/auth/cloud_search.stats.indexing"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "user": {
+          "resources": {
+            "searchapplications": {
+              "methods": {
+                "get": {
+                  "description": "Get the users statistics for search application",
+                  "flatPath": "v1/stats/user/searchapplications/{searchapplicationsId}",
+                  "httpMethod": "GET",
+                  "id": "cloudsearch.stats.user.searchapplications.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "fromDate.day": {
+                      "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "fromDate.month": {
+                      "description": "Month of date. Must be from 1 to 12.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "fromDate.year": {
+                      "description": "Year of date. Must be from 1 to 9999.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "name": {
+                      "description": "The resource id of the search application session stats, in the following\nformat: searchapplications/{application_id}",
+                      "location": "path",
+                      "pattern": "^searchapplications/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "toDate.day": {
+                      "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "toDate.month": {
+                      "description": "Month of date. Must be from 1 to 12.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "toDate.year": {
+                      "description": "Year of date. Must be from 1 to 9999.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    }
+                  },
+                  "path": "v1/stats/user/{+name}",
+                  "response": {
+                    "$ref": "GetSearchApplicationUserStatsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud_search",
+                    "https://www.googleapis.com/auth/cloud_search.stats",
+                    "https://www.googleapis.com/auth/cloud_search.stats.indexing"
+                  ]
+                }
+              }
+            }
+          }
         }
       }
     }
   },
-  "revision": "20190905",
+  "revision": "20190925",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -1505,6 +1880,62 @@
             "$ref": "ItemCountByStatus"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "CustomerQueryStats": {
+      "id": "CustomerQueryStats",
+      "properties": {
+        "date": {
+          "$ref": "Date",
+          "description": "Date for which query stats were calculated. Stats calculated on the next\nday close to midnight are returned."
+        },
+        "queryCountByStatus": {
+          "items": {
+            "$ref": "QueryCountByStatus"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "CustomerSessionStats": {
+      "id": "CustomerSessionStats",
+      "properties": {
+        "date": {
+          "$ref": "Date",
+          "description": "Date for which session stats were calculated. Stats calculated on the next\nday close to midnight are returned."
+        },
+        "searchSessionsCount": {
+          "description": "The count of search sessions on the day",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CustomerUserStats": {
+      "id": "CustomerUserStats",
+      "properties": {
+        "date": {
+          "$ref": "Date",
+          "description": "Date for which session stats were calculated. Stats calculated on the next\nday close to midnight are returned."
+        },
+        "oneDayActiveUsersCount": {
+          "description": "The count of unique active users in the past one day",
+          "format": "int64",
+          "type": "string"
+        },
+        "sevenDaysActiveUsersCount": {
+          "description": "The count of unique active users in the past seven days",
+          "format": "int64",
+          "type": "string"
+        },
+        "thirtyDaysActiveUsersCount": {
+          "description": "The count of unique active users in the past thirty days",
+          "format": "int64",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2113,6 +2544,42 @@
       },
       "type": "object"
     },
+    "GetCustomerQueryStatsResponse": {
+      "id": "GetCustomerQueryStatsResponse",
+      "properties": {
+        "stats": {
+          "items": {
+            "$ref": "CustomerQueryStats"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GetCustomerSessionStatsResponse": {
+      "id": "GetCustomerSessionStatsResponse",
+      "properties": {
+        "stats": {
+          "items": {
+            "$ref": "CustomerSessionStats"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GetCustomerUserStatsResponse": {
+      "id": "GetCustomerUserStatsResponse",
+      "properties": {
+        "stats": {
+          "items": {
+            "$ref": "CustomerUserStats"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GetDataSourceIndexStatsResponse": {
       "id": "GetDataSourceIndexStatsResponse",
       "properties": {
@@ -2120,6 +2587,42 @@
           "description": "Summary of indexed item counts, one for each day in the requested range.",
           "items": {
             "$ref": "DataSourceIndexStats"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GetSearchApplicationQueryStatsResponse": {
+      "id": "GetSearchApplicationQueryStatsResponse",
+      "properties": {
+        "stats": {
+          "items": {
+            "$ref": "SearchApplicationQueryStats"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GetSearchApplicationSessionStatsResponse": {
+      "id": "GetSearchApplicationSessionStatsResponse",
+      "properties": {
+        "stats": {
+          "items": {
+            "$ref": "SearchApplicationSessionStats"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GetSearchApplicationUserStatsResponse": {
+      "id": "GetSearchApplicationUserStatsResponse",
+      "properties": {
+        "stats": {
+          "items": {
+            "$ref": "SearchApplicationUserStats"
           },
           "type": "array"
         }
@@ -3412,6 +3915,21 @@
       },
       "type": "object"
     },
+    "QueryCountByStatus": {
+      "id": "QueryCountByStatus",
+      "properties": {
+        "count": {
+          "format": "int64",
+          "type": "string"
+        },
+        "statusCode": {
+          "description": "This represents the http status code.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "QueryInterpretation": {
       "id": "QueryInterpretation",
       "properties": {
@@ -3431,6 +3949,20 @@
         "interpretedQuery": {
           "description": "The interpretation of the query used in search. For example, queries with\nnatural language intent like \"email from john\" will be interpreted as\n\"from:john source:mail\". This field will not be filled when the reason is\nNO_RESULTS_FOUND_FOR_USER_QUERY.",
           "type": "string"
+        },
+        "reason": {
+          "description": "The reason for interpretation of the query. This field will not be\nUNSPECIFIED if the interpretation type is not NONE.",
+          "enum": [
+            "UNSPECIFIED",
+            "QUERY_HAS_NATURAL_LANGUAGE_INTENT",
+            "NO_RESULTS_FOUND_FOR_USER_QUERY"
+          ],
+          "enumDescriptions": [
+            "",
+            "Natural language interpretation of the query is used to fetch the search\nresults.",
+            "The following values are returned only when interpretation type is\nREPLACE.\nThe search results are replaced by ones which are retrieved through a\nmuch broader version of the query since no results were found for the\nuser query. Interpreted query will be empty for the following case."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -3441,6 +3973,10 @@
       "properties": {
         "disableNlInterpretation": {
           "description": "Flag to disable natural language (NL) interpretation of queries. Default is\nfalse, Set to true to disable natural language interpretation. NL\ninterpretation only applies to predefined datasources.",
+          "type": "boolean"
+        },
+        "enableVerbatimMode": {
+          "description": "Enable this flag to turn off all internal optimizations like natural\nlanguage (NL) interpretation of queries, supplemental result retrieval,\nand usage of synonyms including custom ones.\nNl interpretation will be disabled if either one of the two flags is true.",
           "type": "boolean"
         }
       },
@@ -3875,6 +4411,62 @@
             "$ref": "SourceConfig"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SearchApplicationQueryStats": {
+      "id": "SearchApplicationQueryStats",
+      "properties": {
+        "date": {
+          "$ref": "Date",
+          "description": "Date for which query stats were calculated. Stats calculated on the next\nday close to midnight are returned."
+        },
+        "queryCountByStatus": {
+          "items": {
+            "$ref": "QueryCountByStatus"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SearchApplicationSessionStats": {
+      "id": "SearchApplicationSessionStats",
+      "properties": {
+        "date": {
+          "$ref": "Date",
+          "description": "Date for which session stats were calculated. Stats calculated on the next\nday close to midnight are returned."
+        },
+        "searchSessionsCount": {
+          "description": "The count of search sessions on the day",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SearchApplicationUserStats": {
+      "id": "SearchApplicationUserStats",
+      "properties": {
+        "date": {
+          "$ref": "Date",
+          "description": "Date for which session stats were calculated. Stats calculated on the next\nday close to midnight are returned."
+        },
+        "oneDayActiveUsersCount": {
+          "description": "The count of unique active users in the past one day",
+          "format": "int64",
+          "type": "string"
+        },
+        "sevenDaysActiveUsersCount": {
+          "description": "The count of unique active users in the past seven days",
+          "format": "int64",
+          "type": "string"
+        },
+        "thirtyDaysActiveUsersCount": {
+          "description": "The count of unique active users in the past thirty days",
+          "format": "int64",
+          "type": "string"
         }
       },
       "type": "object"

@@ -119,7 +119,7 @@
           ],
           "parameters": {
             "parent": {
-              "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-id}/locations/{location-id}` or\n`projects/{project-id}`.\n\nFor global calls, use `projects/{project-id}/locations/global` or\n`projects/{project-id}`.\n\nOnly models within the same region (has same location-id) can be used.\nOtherwise an INVALID_ARGUMENT (400) error is returned.",
+              "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-number-or-id}/locations/{location-id}` or\n`projects/{project-number-or-id}`.\n\nFor global calls, use `projects/{project-number-or-id}/locations/global` or\n`projects/{project-number-or-id}`.\n\nOnly models within the same region (has same location-id) can be used.\nOtherwise an INVALID_ARGUMENT (400) error is returned.",
               "location": "path",
               "pattern": "^projects/[^/]+$",
               "required": true,
@@ -153,12 +153,12 @@
               "type": "string"
             },
             "model": {
-              "description": "Optional. Get supported languages of this model.\n\nThe format depends on model type:\n\n- AutoML Translation models:\n  `projects/{project-id}/locations/{location-id}/models/{model-id}`\n\n- General (built-in) models:\n  `projects/{project-id}/locations/{location-id}/models/general/nmt`,\n  `projects/{project-id}/locations/{location-id}/models/general/base`\n\n\nReturns languages supported by the specified model.\nIf missing, we get supported languages of Google general base (PBMT) model.",
+              "description": "Optional. Get supported languages of this model.\n\nThe format depends on model type:\n\n- AutoML Translation models:\n  `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}`\n\n- General (built-in) models:\n  `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`,\n  `projects/{project-number-or-id}/locations/{location-id}/models/general/base`\n\n\nReturns languages supported by the specified model.\nIf missing, we get supported languages of Google general base (PBMT) model.",
               "location": "query",
               "type": "string"
             },
             "parent": {
-              "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-id}` or\n`projects/{project-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-id}/locations/global` or\n`projects/{project-id}`.\n\nNon-global location is required for AutoML models.\n\nOnly models within the same region (have same location-id) can be used,\notherwise an INVALID_ARGUMENT (400) error is returned.",
+              "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-number-or-id}` or\n`projects/{project-number-or-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-number-or-id}/locations/global` or\n`projects/{project-number-or-id}`.\n\nNon-global location is required for AutoML models.\n\nOnly models within the same region (have same location-id) can be used,\notherwise an INVALID_ARGUMENT (400) error is returned.",
               "location": "path",
               "pattern": "^projects/[^/]+$",
               "required": true,
@@ -184,7 +184,7 @@
           ],
           "parameters": {
             "parent": {
-              "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-id}` or\n`projects/{project-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-id}/locations/global` or\n`projects/{project-id}`.\n\nNon-global location is required for requests using AutoML models or\ncustom glossaries.\n\nModels and glossaries must be within the same region (have same\nlocation-id), otherwise an INVALID_ARGUMENT (400) error is returned.",
+              "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-number-or-id}` or\n`projects/{project-number-or-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-number-or-id}/locations/global` or\n`projects/{project-number-or-id}`.\n\nNon-global location is required for requests using AutoML models or\ncustom glossaries.\n\nModels and glossaries must be within the same region (have same\nlocation-id), otherwise an INVALID_ARGUMENT (400) error is returned.",
               "location": "path",
               "pattern": "^projects/[^/]+$",
               "required": true,
@@ -217,7 +217,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. Location to make a call. Must refer to a caller's project.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nThe `global` location is not supported for batch translation.\n\nOnly AutoML Translation models or glossaries within the same region (have\nthe same location-id) can be used, otherwise an INVALID_ARGUMENT (400)\nerror is returned.",
+                  "description": "Required. Location to make a call. Must refer to a caller's project.\n\nFormat: `projects/{project-number-or-id}/locations/{location-id}`.\n\nThe `global` location is not supported for batch translation.\n\nOnly AutoML Translation models or glossaries within the same region (have\nthe same location-id) can be used, otherwise an INVALID_ARGUMENT (400)\nerror is returned.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/locations/[^/]+$",
                   "required": true,
@@ -245,7 +245,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-id}/locations/{location-id}` or\n`projects/{project-id}`.\n\nFor global calls, use `projects/{project-id}/locations/global` or\n`projects/{project-id}`.\n\nOnly models within the same region (has same location-id) can be used.\nOtherwise an INVALID_ARGUMENT (400) error is returned.",
+                  "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-number-or-id}/locations/{location-id}` or\n`projects/{project-number-or-id}`.\n\nFor global calls, use `projects/{project-number-or-id}/locations/global` or\n`projects/{project-number-or-id}`.\n\nOnly models within the same region (has same location-id) can be used.\nOtherwise an INVALID_ARGUMENT (400) error is returned.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/locations/[^/]+$",
                   "required": true,
@@ -305,12 +305,12 @@
                   "type": "string"
                 },
                 "model": {
-                  "description": "Optional. Get supported languages of this model.\n\nThe format depends on model type:\n\n- AutoML Translation models:\n  `projects/{project-id}/locations/{location-id}/models/{model-id}`\n\n- General (built-in) models:\n  `projects/{project-id}/locations/{location-id}/models/general/nmt`,\n  `projects/{project-id}/locations/{location-id}/models/general/base`\n\n\nReturns languages supported by the specified model.\nIf missing, we get supported languages of Google general base (PBMT) model.",
+                  "description": "Optional. Get supported languages of this model.\n\nThe format depends on model type:\n\n- AutoML Translation models:\n  `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}`\n\n- General (built-in) models:\n  `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`,\n  `projects/{project-number-or-id}/locations/{location-id}/models/general/base`\n\n\nReturns languages supported by the specified model.\nIf missing, we get supported languages of Google general base (PBMT) model.",
                   "location": "query",
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-id}` or\n`projects/{project-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-id}/locations/global` or\n`projects/{project-id}`.\n\nNon-global location is required for AutoML models.\n\nOnly models within the same region (have same location-id) can be used,\notherwise an INVALID_ARGUMENT (400) error is returned.",
+                  "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-number-or-id}` or\n`projects/{project-number-or-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-number-or-id}/locations/global` or\n`projects/{project-number-or-id}`.\n\nNon-global location is required for AutoML models.\n\nOnly models within the same region (have same location-id) can be used,\notherwise an INVALID_ARGUMENT (400) error is returned.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/locations/[^/]+$",
                   "required": true,
@@ -378,7 +378,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-id}` or\n`projects/{project-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-id}/locations/global` or\n`projects/{project-id}`.\n\nNon-global location is required for requests using AutoML models or\ncustom glossaries.\n\nModels and glossaries must be within the same region (have same\nlocation-id), otherwise an INVALID_ARGUMENT (400) error is returned.",
+                  "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-number-or-id}` or\n`projects/{project-number-or-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-number-or-id}/locations/global` or\n`projects/{project-number-or-id}`.\n\nNon-global location is required for requests using AutoML models or\ncustom glossaries.\n\nModels and glossaries must be within the same region (have same\nlocation-id), otherwise an INVALID_ARGUMENT (400) error is returned.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/locations/[^/]+$",
                   "required": true,
@@ -686,7 +686,7 @@
       }
     }
   },
-  "revision": "20190906",
+  "revision": "20190924",
   "rootUrl": "https://translation.googleapis.com/",
   "schemas": {
     "BatchTranslateTextRequest": {
@@ -711,14 +711,14 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. The labels with user-defined metadata for the request.\n\nLabel keys and values can be no longer than 63 characters\n(Unicode codepoints), can only contain lowercase letters, numeric\ncharacters, underscores and dashes. International characters are allowed.\nLabel values are optional. Label keys must start with a letter.\n\nSee https://goo.gl/xmQnxf for more information on and examples of labels.",
+          "description": "Optional. The labels with user-defined metadata for the request.\n\nLabel keys and values can be no longer than 63 characters\n(Unicode codepoints), can only contain lowercase letters, numeric\ncharacters, underscores and dashes. International characters are allowed.\nLabel values are optional. Label keys must start with a letter.\n\nSee https://cloud.google.com/translate/docs/labels for more information.",
           "type": "object"
         },
         "models": {
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. The models to use for translation. Map's key is target language\ncode. Map's value is model name. Value can be a built-in general model,\nor an AutoML Translation model.\n\nThe value format depends on model type:\n\n- AutoML Translation models:\n  `projects/{project-id}/locations/{location-id}/models/{model-id}`\n\n- General (built-in) models:\n  `projects/{project-id}/locations/{location-id}/models/general/nmt`,\n  `projects/{project-id}/locations/{location-id}/models/general/base`\n\n\nIf the map is empty or a specific model is\nnot requested for a language pair, then default google model (nmt) is used.",
+          "description": "Optional. The models to use for translation. Map's key is target language\ncode. Map's value is model name. Value can be a built-in general model,\nor an AutoML Translation model.\n\nThe value format depends on model type:\n\n- AutoML Translation models:\n  `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}`\n\n- General (built-in) models:\n  `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`,\n  `projects/{project-number-or-id}/locations/{location-id}/models/general/base`\n\n\nIf the map is empty or a specific model is\nnot requested for a language pair, then default google model (nmt) is used.",
           "type": "object"
         },
         "outputConfig": {
@@ -757,7 +757,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. The labels with user-defined metadata for the request.\n\nLabel keys and values can be no longer than 63 characters\n(Unicode codepoints), can only contain lowercase letters, numeric\ncharacters, underscores and dashes. International characters are allowed.\nLabel values are optional. Label keys must start with a letter.\n\nSee https://goo.gl/xmQnxf for more information on and examples of labels.",
+          "description": "Optional. The labels with user-defined metadata for the request.\n\nLabel keys and values can be no longer than 63 characters\n(Unicode codepoints), can only contain lowercase letters, numeric\ncharacters, underscores and dashes. International characters are allowed.\nLabel values are optional. Label keys must start with a letter.\n\nSee https://cloud.google.com/translate/docs/labels for more information.",
           "type": "object"
         },
         "mimeType": {
@@ -765,7 +765,7 @@
           "type": "string"
         },
         "model": {
-          "description": "Optional. The language detection model to be used.\n\nFormat:\n`projects/{project-id}/locations/{location-id}/models/language-detection/{model-id}`\n\nOnly one language detection model is currently supported:\n`projects/{project-id}/locations/{location-id}/models/language-detection/default`.\n\nIf not specified, the default model is used.",
+          "description": "Optional. The language detection model to be used.\n\nFormat:\n`projects/{project-number-or-id}/locations/{location-id}/models/language-detection/{model-id}`\n\nOnly one language detection model is currently supported:\n`projects/{project-number-or-id}/locations/{location-id}/models/language-detection/default`.\n\nIf not specified, the default model is used.",
           "type": "string"
         }
       },
@@ -856,7 +856,7 @@
           "description": "Used with unidirectional glossaries."
         },
         "name": {
-          "description": "Required. The resource name of the glossary. Glossary names have the form\n`projects/{project-id}/locations/{location-id}/glossaries/{glossary-id}`.",
+          "description": "Required. The resource name of the glossary. Glossary names have the form\n`projects/{project-number-or-id}/locations/{location-id}/glossaries/{glossary-id}`.",
           "type": "string"
         },
         "submitTime": {
@@ -1154,7 +1154,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. The labels with user-defined metadata for the request.\n\nLabel keys and values can be no longer than 63 characters\n(Unicode codepoints), can only contain lowercase letters, numeric\ncharacters, underscores and dashes. International characters are allowed.\nLabel values are optional. Label keys must start with a letter.\n\nSee https://goo.gl/xmQnxf for more information on and examples of labels.",
+          "description": "Optional. The labels with user-defined metadata for the request.\n\nLabel keys and values can be no longer than 63 characters\n(Unicode codepoints), can only contain lowercase letters, numeric\ncharacters, underscores and dashes. International characters are allowed.\nLabel values are optional. Label keys must start with a letter.\n\nSee https://cloud.google.com/translate/docs/labels for more information.",
           "type": "object"
         },
         "mimeType": {
@@ -1162,7 +1162,7 @@
           "type": "string"
         },
         "model": {
-          "description": "Optional. The `model` type requested for this translation.\n\nThe format depends on model type:\n\n- AutoML Translation models:\n  `projects/{project-id}/locations/{location-id}/models/{model-id}`\n\n- General (built-in) models:\n  `projects/{project-id}/locations/{location-id}/models/general/nmt`,\n  `projects/{project-id}/locations/{location-id}/models/general/base`\n\n\nFor global (non-regionalized) requests, use `location-id` `global`.\nFor example,\n`projects/{project-id}/locations/global/models/general/nmt`.\n\nIf missing, the system decides which google base model to use.",
+          "description": "Optional. The `model` type requested for this translation.\n\nThe format depends on model type:\n\n- AutoML Translation models:\n  `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}`\n\n- General (built-in) models:\n  `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`,\n  `projects/{project-number-or-id}/locations/{location-id}/models/general/base`\n\n\nFor global (non-regionalized) requests, use `location-id` `global`.\nFor example,\n`projects/{project-number-or-id}/locations/global/models/general/nmt`.\n\nIf missing, the system decides which google base model to use.",
           "type": "string"
         },
         "sourceLanguageCode": {
@@ -1209,7 +1209,7 @@
           "description": "The `glossary_config` used for this translation."
         },
         "model": {
-          "description": "Only present when `model` is present in the request.\nThis is same as `model` provided in the request.",
+          "description": "Only present when `model` is present in the request.\n`model` here is normalized to have project number.\n\nFor example:\nIf the `model` requested in TranslationTextRequest is\n`projects/{project-id}/locations/{location-id}/models/general/nmt` then\n`model` here would be normalized to\n`projects/{project-number}/locations/{location-id}/models/general/nmt`.",
           "type": "string"
         },
         "translatedText": {

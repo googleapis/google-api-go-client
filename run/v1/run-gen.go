@@ -561,7 +561,7 @@ type AutoDomainMapping struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Metadata: Metadata associated with this BuildTemplate.
-	Metadata *K8sIoApimachineryPkgApisMetaV1ObjectMeta `json:"metadata,omitempty"`
+	Metadata *ObjectMeta `json:"metadata,omitempty"`
 
 	// Spec: The spec for this AutoDomainMapping.
 	Spec *AutoDomainMappingSpec `json:"spec,omitempty"`
@@ -991,7 +991,7 @@ type Configuration struct {
 	// Metadata: Metadata associated with this Configuration, including
 	// name, namespace,
 	// labels, and annotations.
-	Metadata *K8sIoApimachineryPkgApisMetaV1ObjectMeta `json:"metadata,omitempty"`
+	Metadata *ObjectMeta `json:"metadata,omitempty"`
 
 	// Spec: Spec holds the desired state of the Configuration (from the
 	// client).
@@ -1144,7 +1144,7 @@ func (s *ConfigurationStatus) MarshalJSON() ([]byte, error) {
 type Container struct {
 	// Args: (Optional)
 	//
-	// Cloud Run fully managed: not supported
+	// Cloud Run fully managed: supported
 	//
 	// Cloud Run for Anthos: supported
 	//
@@ -1463,7 +1463,7 @@ type DomainMapping struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Metadata: Metadata associated with this BuildTemplate.
-	Metadata *K8sIoApimachineryPkgApisMetaV1ObjectMeta `json:"metadata,omitempty"`
+	Metadata *ObjectMeta `json:"metadata,omitempty"`
 
 	// Spec: The spec for this DomainMapping.
 	Spec *DomainMappingSpec `json:"spec,omitempty"`
@@ -1920,58 +1920,6 @@ func (s *GoogleCloudRunV1Condition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleRpcStatus: The `Status` type defines a logical error model that
-// is suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
-type GoogleRpcStatus struct {
-	// Code: The status code, which should be an enum value of
-	// google.rpc.Code.
-	Code int64 `json:"code,omitempty"`
-
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
-	Details []googleapi.RawMessage `json:"details,omitempty"`
-
-	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
-	Message string `json:"message,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleRpcStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // HTTPGetAction: Cloud Run fully managed: not supported
 //
 // Cloud Run for Anthos: supported
@@ -2181,12 +2129,285 @@ func (s *IntOrString) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// K8sIoApimachineryPkgApisMetaV1ListMeta: ListMeta describes metadata
-// that synthetic resources must have, including
+// KeyToPath: Cloud Run fully managed: not supported
+//
+// Cloud Run for Anthos: supported
+//
+// Maps a string key to a path within a volume.
+type KeyToPath struct {
+	// Key: Cloud Run fully managed: not supported
+	//
+	// Cloud Run for Anthos: supported
+	//
+	// The key to project.
+	Key string `json:"key,omitempty"`
+
+	// Mode: (Optional)
+	//
+	// Cloud Run fully managed: not supported
+	//
+	// Cloud Run for Anthos: supported
+	//
+	// Mode bits to use on this file, must be a value between 0 and 0777. If
+	// not
+	// specified, the volume defaultMode will be used. This might be in
+	// conflict
+	// with other options that affect the file mode, like fsGroup, and the
+	// result
+	// can be other mode bits set.
+	Mode int64 `json:"mode,omitempty"`
+
+	// Path: Cloud Run fully managed: not supported
+	//
+	// Cloud Run for Anthos: supported
+	//
+	// The relative path of the file to map the key to.
+	// May not be an absolute path.
+	// May not contain the path element '..'.
+	// May not start with the string '..'.
+	Path string `json:"path,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KeyToPath) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyToPath
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListAuthorizedDomainsResponse: A list of Authorized Domains.
+type ListAuthorizedDomainsResponse struct {
+	// Domains: The authorized domains belonging to the user.
+	Domains []*AuthorizedDomain `json:"domains,omitempty"`
+
+	// NextPageToken: Continuation token for fetching the next page of
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Domains") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Domains") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAuthorizedDomainsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAuthorizedDomainsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListAutoDomainMappingsResponse: ListAutoDomainMappingsResponse is a
+// list of AutoDomainMapping resources.
+type ListAutoDomainMappingsResponse struct {
+	// ApiVersion: The API version for this call such as
+	// "serving.knative.dev/v1".
+	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// Items: List of AutoDomainMappings.
+	Items []*AutoDomainMapping `json:"items,omitempty"`
+
+	// Kind: The kind of this resource, in this case
+	// "AutoDomainMappingList".
+	Kind string `json:"kind,omitempty"`
+
+	// Metadata: Metadata associated with this AutoDomainMapping list.
+	Metadata *ListMeta `json:"metadata,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAutoDomainMappingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAutoDomainMappingsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListConfigurationsResponse: ListConfigurationsResponse is a list of
+// Configuration resources.
+type ListConfigurationsResponse struct {
+	// ApiVersion: The API version for this call such as
+	// "serving.knative.dev/v1".
+	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// Items: List of Configurations.
+	Items []*Configuration `json:"items,omitempty"`
+
+	// Kind: The kind of this resource, in this case "ConfigurationList".
+	Kind string `json:"kind,omitempty"`
+
+	// Metadata: Metadata associated with this Configuration list.
+	Metadata *ListMeta `json:"metadata,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListConfigurationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListConfigurationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListDomainMappingsResponse: ListDomainMappingsResponse is a list of
+// DomainMapping resources.
+type ListDomainMappingsResponse struct {
+	// ApiVersion: The API version for this call such as
+	// "domains.cloudrun.com/v1".
+	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// Items: List of DomainMappings.
+	Items []*DomainMapping `json:"items,omitempty"`
+
+	// Kind: The kind of this resource, in this case "DomainMappingList".
+	Kind string `json:"kind,omitempty"`
+
+	// Metadata: Metadata associated with this DomainMapping list.
+	Metadata *ListMeta `json:"metadata,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListDomainMappingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDomainMappingsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListLocationsResponse: The response message for
+// Locations.ListLocations.
+type ListLocationsResponse struct {
+	// Locations: A list of locations that matches the specified filter in
+	// the request.
+	Locations []*Location `json:"locations,omitempty"`
+
+	// NextPageToken: The standard List next-page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Locations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Locations") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListLocationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListMeta: ListMeta describes metadata that synthetic resources must
+// have, including
 // lists and various status objects. A resource may have only one
 // of
 // {ObjectMeta, ListMeta}.
-type K8sIoApimachineryPkgApisMetaV1ListMeta struct {
+type ListMeta struct {
 	// Continue: continue may be set if the user set a limit on the number
 	// of items
 	// returned, and indicates that the server has more data available. The
@@ -2242,18 +2463,250 @@ type K8sIoApimachineryPkgApisMetaV1ListMeta struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *K8sIoApimachineryPkgApisMetaV1ListMeta) MarshalJSON() ([]byte, error) {
-	type NoMethod K8sIoApimachineryPkgApisMetaV1ListMeta
+func (s *ListMeta) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMeta
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// K8sIoApimachineryPkgApisMetaV1ObjectMeta:
-// k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta is metadata that
-// all
+// ListRevisionsResponse: ListRevisionsResponse is a list of Revision
+// resources.
+type ListRevisionsResponse struct {
+	// ApiVersion: The API version for this call such as
+	// "serving.knative.dev/v1".
+	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// Items: List of Revisions.
+	Items []*Revision `json:"items,omitempty"`
+
+	// Kind: The kind of this resource, in this case "RevisionList".
+	Kind string `json:"kind,omitempty"`
+
+	// Metadata: Metadata associated with this revision list.
+	Metadata *ListMeta `json:"metadata,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListRevisionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListRevisionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListRoutesResponse: ListRoutesResponse is a list of Route resources.
+type ListRoutesResponse struct {
+	// ApiVersion: The API version for this call such as
+	// "serving.knative.dev/v1".
+	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// Items: List of Routes.
+	Items []*Route `json:"items,omitempty"`
+
+	// Kind: The kind of this resource, in this case always "RouteList".
+	Kind string `json:"kind,omitempty"`
+
+	// Metadata: Metadata associated with this Route list.
+	Metadata *ListMeta `json:"metadata,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListRoutesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListRoutesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListServicesResponse: A list of Service resources.
+type ListServicesResponse struct {
+	// ApiVersion: The API version for this call such as
+	// "serving.knative.dev/v1".
+	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// Items: List of Services.
+	Items []*Service `json:"items,omitempty"`
+
+	// Kind: The kind of this resource, in this case "ServiceList".
+	Kind string `json:"kind,omitempty"`
+
+	// Metadata: Metadata associated with this Service list.
+	Metadata *ListMeta `json:"metadata,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListServicesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListServicesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LocalObjectReference: Cloud Run fully managed: not supported
+//
+// Cloud Run for Anthos: supported
+//
+// LocalObjectReference contains enough information to let you locate
+// the
+// referenced object inside the same namespace.
+type LocalObjectReference struct {
+	// Name: (Optional)
+	//
+	// Cloud Run fully managed: not supported
+	//
+	// Cloud Run for Anthos: supported
+	//
+	// Name of the referent.
+	// More
+	// info:
+	// https://kubernetes.io/docs/concepts/overview/working-with-object
+	// s/names/#names
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LocalObjectReference) MarshalJSON() ([]byte, error) {
+	type NoMethod LocalObjectReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Location: A resource that represents Google Cloud Platform location.
+type Location struct {
+	// DisplayName: The friendly name for this location, typically a nearby
+	// city name.
+	// For example, "Tokyo".
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Labels: Cross-service attributes for the location. For example
+	//
+	//     {"cloud.googleapis.com/region": "us-east1"}
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// LocationId: The canonical id for this location. For example:
+	// "us-east1".
+	LocationId string `json:"locationId,omitempty"`
+
+	// Metadata: Service-specific metadata. For example the available
+	// capacity at the given
+	// location.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+
+	// Name: Resource name for the location, which may vary between
+	// implementations.
+	// For example: "projects/example-project/locations/us-east1"
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Location) MarshalJSON() ([]byte, error) {
+	type NoMethod Location
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ObjectMeta: k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta is
+// metadata that all
 // persisted resources must have, which includes all objects users must
 // create.
-type K8sIoApimachineryPkgApisMetaV1ObjectMeta struct {
+type ObjectMeta struct {
 	// Annotations: (Optional)
 	//
 	// Annotations is an unstructured key value map stored with a resource
@@ -2461,7 +2914,7 @@ type K8sIoApimachineryPkgApisMetaV1ObjectMeta struct {
 	// List of objects that own this object. If ALL objects in the list
 	// have
 	// been deleted, this object will be garbage collected.
-	OwnerReferences []*K8sIoApimachineryPkgApisMetaV1OwnerReference `json:"ownerReferences,omitempty"`
+	OwnerReferences []*OwnerReference `json:"ownerReferences,omitempty"`
 
 	// ResourceVersion: (Optional)
 	//
@@ -2524,18 +2977,18 @@ type K8sIoApimachineryPkgApisMetaV1ObjectMeta struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *K8sIoApimachineryPkgApisMetaV1ObjectMeta) MarshalJSON() ([]byte, error) {
-	type NoMethod K8sIoApimachineryPkgApisMetaV1ObjectMeta
+func (s *ObjectMeta) MarshalJSON() ([]byte, error) {
+	type NoMethod ObjectMeta
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// K8sIoApimachineryPkgApisMetaV1OwnerReference: OwnerReference contains
-// enough information to let you identify an owning
+// OwnerReference: OwnerReference contains enough information to let you
+// identify an owning
 // object. Currently, an owning object must be in the same namespace, so
 // there
 // is no namespace field.
-type K8sIoApimachineryPkgApisMetaV1OwnerReference struct {
+type OwnerReference struct {
 	// ApiVersion: API version of the referent.
 	ApiVersion string `json:"apiVersion,omitempty"`
 
@@ -2588,750 +3041,8 @@ type K8sIoApimachineryPkgApisMetaV1OwnerReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *K8sIoApimachineryPkgApisMetaV1OwnerReference) MarshalJSON() ([]byte, error) {
-	type NoMethod K8sIoApimachineryPkgApisMetaV1OwnerReference
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// K8sIoApimachineryPkgApisMetaV1Status: Status is a return value for
-// calls that don't return other objects
-type K8sIoApimachineryPkgApisMetaV1Status struct {
-	// Code: Suggested HTTP return code for this status, 0 if not
-	// set.
-	// +optional
-	Code int64 `json:"code,omitempty"`
-
-	// Details: Extended data associated with the reason.  Each reason may
-	// define its
-	// own extended details. This field is optional and the data returned
-	// is not guaranteed to conform to any schema except that defined by
-	// the reason type.
-	// +optional
-	Details *K8sIoApimachineryPkgApisMetaV1StatusDetails `json:"details,omitempty"`
-
-	// Message: A human-readable description of the status of this
-	// operation.
-	// +optional
-	Message string `json:"message,omitempty"`
-
-	// Metadata: Standard list metadata.
-	// More
-	// info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.
-	// md#types-kinds
-	// +optional
-	Metadata *K8sIoApimachineryPkgApisMetaV1ListMeta `json:"metadata,omitempty"`
-
-	// Reason: A machine-readable description of why this operation is in
-	// the
-	// "Failure" status. If this value is empty there
-	// is no information available. A Reason clarifies an HTTP status
-	// code but does not override it.
-	// +optional
-	Reason string `json:"reason,omitempty"`
-
-	// Status: Status of the operation.
-	// One of: "Success" or "Failure".
-	// More
-	// info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.
-	// md#spec-and-status
-	// +optional
-	Status string `json:"status,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *K8sIoApimachineryPkgApisMetaV1Status) MarshalJSON() ([]byte, error) {
-	type NoMethod K8sIoApimachineryPkgApisMetaV1Status
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// K8sIoApimachineryPkgApisMetaV1StatusCause: StatusCause provides more
-// information about an api.Status failure, including
-// cases when multiple errors are encountered.
-type K8sIoApimachineryPkgApisMetaV1StatusCause struct {
-	// Field: The field of the resource that has caused this error, as named
-	// by its JSON
-	// serialization. May include dot and postfix notation for nested
-	// attributes.
-	// Arrays are zero-indexed.  Fields may appear more than once in an
-	// array of
-	// causes due to fields having multiple errors.
-	// Optional.
-	//
-	// Examples:
-	//   "name" - the field "name" on the current resource
-	//   "items[0].name" - the field "name" on the first array entry in
-	// "items"
-	// +optional
-	Field string `json:"field,omitempty"`
-
-	// Message: A human-readable description of the cause of the error.
-	// This field may be
-	// presented as-is to a reader.
-	// +optional
-	Message string `json:"message,omitempty"`
-
-	// Reason: A machine-readable description of the cause of the error. If
-	// this value is
-	// empty there is no information available.
-	// +optional
-	Reason string `json:"reason,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Field") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Field") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *K8sIoApimachineryPkgApisMetaV1StatusCause) MarshalJSON() ([]byte, error) {
-	type NoMethod K8sIoApimachineryPkgApisMetaV1StatusCause
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// K8sIoApimachineryPkgApisMetaV1StatusDetails: StatusDetails is a set
-// of additional properties that MAY be set by the
-// server to provide additional information about a response. The
-// Reason
-// field of a Status object defines what attributes will be set.
-// Clients
-// must ignore fields that do not match the defined type of each
-// attribute,
-// and should assume that any attribute may be empty, invalid, or
-// under
-// defined.
-type K8sIoApimachineryPkgApisMetaV1StatusDetails struct {
-	// Causes: The Causes array includes more details associated with the
-	// StatusReason
-	// failure. Not all StatusReasons may provide detailed causes.
-	// +optional
-	Causes []*K8sIoApimachineryPkgApisMetaV1StatusCause `json:"causes,omitempty"`
-
-	// Group: The group attribute of the resource associated with the
-	// status
-	// StatusReason. +optional
-	Group string `json:"group,omitempty"`
-
-	// Kind: The kind attribute of the resource associated with the status
-	// StatusReason.
-	// On some operations may differ from the requested resource Kind.
-	// More
-	// info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.
-	// md#types-kinds
-	// +optional
-	Kind string `json:"kind,omitempty"`
-
-	// Name: The name attribute of the resource associated with the status
-	// StatusReason
-	// (when there is a single name which can be described).
-	// +optional
-	Name string `json:"name,omitempty"`
-
-	// RetryAfterSeconds: If specified, the time in seconds before the
-	// operation should be retried.
-	// Some errors may indicate the client must take an alternate action -
-	// for
-	// those errors this field may indicate how long to wait before taking
-	// the
-	// alternate action. +optional
-	RetryAfterSeconds int64 `json:"retryAfterSeconds,omitempty"`
-
-	// Uid: UID of the resource.
-	// (when there is a single resource which can be described).
-	// More info:
-	// http://kubernetes.io/docs/user-guide/identifiers#uids
-	// +optional
-	Uid string `json:"uid,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Causes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Causes") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *K8sIoApimachineryPkgApisMetaV1StatusDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod K8sIoApimachineryPkgApisMetaV1StatusDetails
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// KeyToPath: Cloud Run fully managed: not supported
-//
-// Cloud Run for Anthos: supported
-//
-// Maps a string key to a path within a volume.
-type KeyToPath struct {
-	// Key: Cloud Run fully managed: not supported
-	//
-	// Cloud Run for Anthos: supported
-	//
-	// The key to project.
-	Key string `json:"key,omitempty"`
-
-	// Mode: (Optional)
-	//
-	// Cloud Run fully managed: not supported
-	//
-	// Cloud Run for Anthos: supported
-	//
-	// Mode bits to use on this file, must be a value between 0 and 0777. If
-	// not
-	// specified, the volume defaultMode will be used. This might be in
-	// conflict
-	// with other options that affect the file mode, like fsGroup, and the
-	// result
-	// can be other mode bits set.
-	Mode int64 `json:"mode,omitempty"`
-
-	// Path: Cloud Run fully managed: not supported
-	//
-	// Cloud Run for Anthos: supported
-	//
-	// The relative path of the file to map the key to.
-	// May not be an absolute path.
-	// May not contain the path element '..'.
-	// May not start with the string '..'.
-	Path string `json:"path,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *KeyToPath) MarshalJSON() ([]byte, error) {
-	type NoMethod KeyToPath
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ListAuthorizedDomainsResponse: A list of Authorized Domains.
-type ListAuthorizedDomainsResponse struct {
-	// Domains: The authorized domains belonging to the user.
-	Domains []*AuthorizedDomain `json:"domains,omitempty"`
-
-	// NextPageToken: Continuation token for fetching the next page of
-	// results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Domains") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Domains") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ListAuthorizedDomainsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListAuthorizedDomainsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ListAutoDomainMappingsResponse: ListAutoDomainMappingsResponse is a
-// list of AutoDomainMapping resources.
-type ListAutoDomainMappingsResponse struct {
-	// ApiVersion: The API version for this call such as
-	// "serving.knative.dev/v1".
-	ApiVersion string `json:"apiVersion,omitempty"`
-
-	// Items: List of AutoDomainMappings.
-	Items []*AutoDomainMapping `json:"items,omitempty"`
-
-	// Kind: The kind of this resource, in this case
-	// "AutoDomainMappingList".
-	Kind string `json:"kind,omitempty"`
-
-	// Metadata: Metadata associated with this AutoDomainMapping list.
-	Metadata *K8sIoApimachineryPkgApisMetaV1ListMeta `json:"metadata,omitempty"`
-
-	// RegionDetails: Details for the regions used during a global call
-	// including any failures.
-	// This is not populated when targeting a specific region.
-	RegionDetails map[string]RegionDetails `json:"regionDetails,omitempty"`
-
-	// Unreachable: Locations that could not be reached.
-	Unreachable []string `json:"unreachable,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ListAutoDomainMappingsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListAutoDomainMappingsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ListConfigurationsResponse: ListConfigurationsResponse is a list of
-// Configuration resources.
-type ListConfigurationsResponse struct {
-	// ApiVersion: The API version for this call such as
-	// "serving.knative.dev/v1".
-	ApiVersion string `json:"apiVersion,omitempty"`
-
-	// Items: List of Configurations.
-	Items []*Configuration `json:"items,omitempty"`
-
-	// Kind: The kind of this resource, in this case "ConfigurationList".
-	Kind string `json:"kind,omitempty"`
-
-	// Metadata: Metadata associated with this Configuration list.
-	Metadata *K8sIoApimachineryPkgApisMetaV1ListMeta `json:"metadata,omitempty"`
-
-	// RegionDetails: Details for the regions used during a global call
-	// including any failures.
-	// This is not populated when targeting a specific region.
-	RegionDetails map[string]RegionDetails `json:"regionDetails,omitempty"`
-
-	// Unreachable: Locations that could not be reached.
-	Unreachable []string `json:"unreachable,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ListConfigurationsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListConfigurationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ListDomainMappingsResponse: ListDomainMappingsResponse is a list of
-// DomainMapping resources.
-type ListDomainMappingsResponse struct {
-	// ApiVersion: The API version for this call such as
-	// "domains.cloudrun.com/v1".
-	ApiVersion string `json:"apiVersion,omitempty"`
-
-	// Items: List of DomainMappings.
-	Items []*DomainMapping `json:"items,omitempty"`
-
-	// Kind: The kind of this resource, in this case "DomainMappingList".
-	Kind string `json:"kind,omitempty"`
-
-	// Metadata: Metadata associated with this DomainMapping list.
-	Metadata *K8sIoApimachineryPkgApisMetaV1ListMeta `json:"metadata,omitempty"`
-
-	// RegionDetails: Details for the regions used during a global call
-	// including any failures.
-	// This is not populated when targeting a specific region.
-	RegionDetails map[string]RegionDetails `json:"regionDetails,omitempty"`
-
-	// Unreachable: Locations that could not be reached.
-	Unreachable []string `json:"unreachable,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ListDomainMappingsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListDomainMappingsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ListLocationsResponse: The response message for
-// Locations.ListLocations.
-type ListLocationsResponse struct {
-	// Locations: A list of locations that matches the specified filter in
-	// the request.
-	Locations []*Location `json:"locations,omitempty"`
-
-	// NextPageToken: The standard List next-page token.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Locations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Locations") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListLocationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ListRevisionsResponse: ListRevisionsResponse is a list of Revision
-// resources.
-type ListRevisionsResponse struct {
-	// ApiVersion: The API version for this call such as
-	// "serving.knative.dev/v1".
-	ApiVersion string `json:"apiVersion,omitempty"`
-
-	// Items: List of Revisions.
-	Items []*Revision `json:"items,omitempty"`
-
-	// Kind: The kind of this resource, in this case "RevisionList".
-	Kind string `json:"kind,omitempty"`
-
-	// Metadata: Metadata associated with this revision list.
-	Metadata *K8sIoApimachineryPkgApisMetaV1ListMeta `json:"metadata,omitempty"`
-
-	// RegionDetails: Details for the regions used during a global call
-	// including any failures.
-	// This is not populated when targeting a specific region.
-	RegionDetails map[string]RegionDetails `json:"regionDetails,omitempty"`
-
-	// Unreachable: Locations that could not be reached.
-	Unreachable []string `json:"unreachable,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ListRevisionsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListRevisionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ListRoutesResponse: ListRoutesResponse is a list of Route resources.
-type ListRoutesResponse struct {
-	// ApiVersion: The API version for this call such as
-	// "serving.knative.dev/v1".
-	ApiVersion string `json:"apiVersion,omitempty"`
-
-	// Items: List of Routes.
-	Items []*Route `json:"items,omitempty"`
-
-	// Kind: The kind of this resource, in this case always "RouteList".
-	Kind string `json:"kind,omitempty"`
-
-	// Metadata: Metadata associated with this Route list.
-	Metadata *K8sIoApimachineryPkgApisMetaV1ListMeta `json:"metadata,omitempty"`
-
-	// RegionDetails: Details for the regions used during a global call
-	// including any failures.
-	// This is not populated when targeting a specific region.
-	RegionDetails map[string]RegionDetails `json:"regionDetails,omitempty"`
-
-	// Unreachable: Locations that could not be reached.
-	Unreachable []string `json:"unreachable,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ListRoutesResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListRoutesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ListServicesResponse: A list of Service resources.
-type ListServicesResponse struct {
-	// ApiVersion: The API version for this call such as
-	// "serving.knative.dev/v1".
-	ApiVersion string `json:"apiVersion,omitempty"`
-
-	// Items: List of Services.
-	Items []*Service `json:"items,omitempty"`
-
-	// Kind: The kind of this resource, in this case "ServiceList".
-	Kind string `json:"kind,omitempty"`
-
-	// Metadata: Metadata associated with this Service list.
-	Metadata *K8sIoApimachineryPkgApisMetaV1ListMeta `json:"metadata,omitempty"`
-
-	// RegionDetails: Details for the regions used during a global call
-	// including any failures.
-	// This is not populated when targeting a specific region.
-	RegionDetails map[string]RegionDetails `json:"regionDetails,omitempty"`
-
-	// Unreachable: Locations that could not be reached.
-	Unreachable []string `json:"unreachable,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ListServicesResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListServicesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// LocalObjectReference: Cloud Run fully managed: not supported
-//
-// Cloud Run for Anthos: supported
-//
-// LocalObjectReference contains enough information to let you locate
-// the
-// referenced object inside the same namespace.
-type LocalObjectReference struct {
-	// Name: (Optional)
-	//
-	// Cloud Run fully managed: not supported
-	//
-	// Cloud Run for Anthos: supported
-	//
-	// Name of the referent.
-	// More
-	// info:
-	// https://kubernetes.io/docs/concepts/overview/working-with-object
-	// s/names/#names
-	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *LocalObjectReference) MarshalJSON() ([]byte, error) {
-	type NoMethod LocalObjectReference
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Location: A resource that represents Google Cloud Platform location.
-type Location struct {
-	// DisplayName: The friendly name for this location, typically a nearby
-	// city name.
-	// For example, "Tokyo".
-	DisplayName string `json:"displayName,omitempty"`
-
-	// Labels: Cross-service attributes for the location. For example
-	//
-	//     {"cloud.googleapis.com/region": "us-east1"}
-	Labels map[string]string `json:"labels,omitempty"`
-
-	// LocationId: The canonical id for this location. For example:
-	// "us-east1".
-	LocationId string `json:"locationId,omitempty"`
-
-	// Metadata: Service-specific metadata. For example the available
-	// capacity at the given
-	// location.
-	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
-	// Name: Resource name for the location, which may vary between
-	// implementations.
-	// For example: "projects/example-project/locations/us-east1"
-	Name string `json:"name,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Location) MarshalJSON() ([]byte, error) {
-	type NoMethod Location
+func (s *OwnerReference) MarshalJSON() ([]byte, error) {
+	type NoMethod OwnerReference
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3341,31 +3052,43 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // specify access control policies for Cloud Platform resources.
 //
 //
-// A `Policy` consists of a list of `bindings`. A `binding` binds a list
-// of
-// `members` to a `role`, where the members can be user accounts, Google
-// groups,
-// Google domains, and service accounts. A `role` is a named list of
-// permissions
-// defined by IAM.
+// A `Policy` is a collection of `bindings`. A `binding` binds one or
+// more
+// `members` to a single `role`. Members can be user accounts, service
+// accounts,
+// Google groups, and domains (such as G Suite). A `role` is a named
+// list of
+// permissions (defined by IAM or configured by users). A `binding`
+// can
+// optionally specify a `condition`, which is a logic expression that
+// further
+// constrains the role binding based on attributes about the request
+// and/or
+// target resource.
 //
 // **JSON Example**
 //
 //     {
 //       "bindings": [
 //         {
-//           "role": "roles/owner",
+//           "role": "roles/resourcemanager.organizationAdmin",
 //           "members": [
 //             "user:mike@example.com",
 //             "group:admins@example.com",
 //             "domain:google.com",
 //
-// "serviceAccount:my-other-app@appspot.gserviceaccount.com"
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com"
 //           ]
 //         },
 //         {
-//           "role": "roles/viewer",
-//           "members": ["user:sean@example.com"]
+//           "role": "roles/resourcemanager.organizationViewer",
+//           "members": ["user:eve@example.com"],
+//           "condition": {
+//             "title": "expirable access",
+//             "description": "Does not grant access after Sep 2020",
+//             "expression": "request.time <
+//             timestamp('2020-10-01T00:00:00.000Z')",
+//           }
 //         }
 //       ]
 //     }
@@ -3377,12 +3100,16 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 //       - user:mike@example.com
 //       - group:admins@example.com
 //       - domain:google.com
-//       - serviceAccount:my-other-app@appspot.gserviceaccount.com
-//       role: roles/owner
+//       - serviceAccount:my-project-id@appspot.gserviceaccount.com
+//       role: roles/resourcemanager.organizationAdmin
 //     - members:
-//       - user:sean@example.com
-//       role: roles/viewer
-//
+//       - user:eve@example.com
+//       role: roles/resourcemanager.organizationViewer
+//       condition:
+//         title: expirable access
+//         description: Does not grant access after Sep 2020
+//         expression: request.time <
+// timestamp('2020-10-01T00:00:00.000Z')
 //
 // For a description of IAM and its features, see the
 // [IAM developer's guide](https://cloud.google.com/iam/docs).
@@ -3391,7 +3118,9 @@ type Policy struct {
 	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
-	// Bindings: Associates a list of `members` to a `role`.
+	// Bindings: Associates a list of `members` to a `role`. Optionally may
+	// specify a
+	// `condition` that determines when binding is in effect.
 	// `bindings` with no members will result in an error.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
@@ -3412,7 +3141,11 @@ type Policy struct {
 	//
 	// If no `etag` is provided in the call to `setIamPolicy`, then the
 	// existing
-	// policy is overwritten.
+	// policy is overwritten. Due to blind-set semantics of an etag-less
+	// policy,
+	// 'setIamPolicy' will not fail even if either of incoming or stored
+	// policy
+	// does not meet the version requirements.
 	Etag string `json:"etag,omitempty"`
 
 	// Version: Specifies the format of the policy.
@@ -3421,11 +3154,19 @@ type Policy struct {
 	// will be
 	// rejected.
 	//
-	// Policies with any conditional bindings must specify version 3.
-	// Policies
-	// without any conditional bindings may specify any valid value or leave
-	// the
-	// field unset.
+	// Operations affecting conditional bindings must specify version 3.
+	// This can
+	// be either setting a conditional policy, modifying a conditional
+	// binding,
+	// or removing a conditional binding from the stored conditional
+	// policy.
+	// Operations on non-conditional policies may specify any valid value
+	// or
+	// leave the field unset.
+	//
+	// If no etag is provided in the call to `setIamPolicy`, any
+	// version
+	// compliance checks on the incoming and/or stored policy is skipped.
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3556,34 +3297,6 @@ func (s *Probe) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RegionDetails: Information for a regional call used for a global API.
-type RegionDetails struct {
-	// Error: The status indicating why the regional call failed
-	Error *GoogleRpcStatus `json:"error,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Error") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Error") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RegionDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod RegionDetails
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ResourceRecord: A DNS resource record.
 type ResourceRecord struct {
 	// Name: Relative name of the object affected by this record. Only
@@ -3634,7 +3347,9 @@ func (s *ResourceRecord) MarshalJSON() ([]byte, error) {
 type ResourceRequirements struct {
 	// Limits: (Optional)
 	//
-	// Cloud Run fully managed: Only memory is supported
+	// Cloud Run fully managed: Only memory and CPU are supported. Note: The
+	// only
+	// supported value for CPU is '1'.
 	//
 	// Cloud Run for Anthos: supported
 	//
@@ -3647,7 +3362,9 @@ type ResourceRequirements struct {
 
 	// Requests: (Optional)
 	//
-	// Cloud Run fully managed: not supported
+	// Cloud Run fully managed: Only memory and CPU are supported. Note: The
+	// only
+	// supported value for CPU is '1'.
 	//
 	// Cloud Run for Anthos: supported
 	//
@@ -3707,7 +3424,7 @@ type Revision struct {
 	// Metadata: Metadata associated with this Revision, including name,
 	// namespace, labels,
 	// and annotations.
-	Metadata *K8sIoApimachineryPkgApisMetaV1ObjectMeta `json:"metadata,omitempty"`
+	Metadata *ObjectMeta `json:"metadata,omitempty"`
 
 	// Spec: Spec holds the desired state of the Revision (from the client).
 	Spec *RevisionSpec `json:"spec,omitempty"`
@@ -3907,7 +3624,7 @@ type RevisionTemplate struct {
 	// To set Cloud SQL connections for the revision, use
 	// the
 	// "run.googleapis.com/cloudsql-instances" annotation key.
-	Metadata *K8sIoApimachineryPkgApisMetaV1ObjectMeta `json:"metadata,omitempty"`
+	Metadata *ObjectMeta `json:"metadata,omitempty"`
 
 	// Spec: RevisionSpec holds the desired state of the Revision (from the
 	// client).
@@ -3966,7 +3683,7 @@ type Route struct {
 	// Metadata: Metadata associated with this Route, including name,
 	// namespace, labels,
 	// and annotations.
-	Metadata *K8sIoApimachineryPkgApisMetaV1ObjectMeta `json:"metadata,omitempty"`
+	Metadata *ObjectMeta `json:"metadata,omitempty"`
 
 	// Spec: Spec holds the desired state of the Route (from the client).
 	Spec *RouteSpec `json:"spec,omitempty"`
@@ -4385,7 +4102,7 @@ type Service struct {
 	// Metadata: Metadata associated with this Service, including name,
 	// namespace, labels,
 	// and annotations.
-	Metadata *K8sIoApimachineryPkgApisMetaV1ObjectMeta `json:"metadata,omitempty"`
+	Metadata *ObjectMeta `json:"metadata,omitempty"`
 
 	// Spec: Spec holds the desired state of the Service (from the client).
 	Spec *ServiceSpec `json:"spec,omitempty"`
@@ -4587,6 +4304,212 @@ type SetIamPolicyRequest struct {
 
 func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Status: Status is a return value for calls that don't return other
+// objects
+type Status struct {
+	// Code: Suggested HTTP return code for this status, 0 if not
+	// set.
+	// +optional
+	Code int64 `json:"code,omitempty"`
+
+	// Details: Extended data associated with the reason.  Each reason may
+	// define its
+	// own extended details. This field is optional and the data returned
+	// is not guaranteed to conform to any schema except that defined by
+	// the reason type.
+	// +optional
+	Details *StatusDetails `json:"details,omitempty"`
+
+	// Message: A human-readable description of the status of this
+	// operation.
+	// +optional
+	Message string `json:"message,omitempty"`
+
+	// Metadata: Standard list metadata.
+	// More
+	// info:
+	// https://git.k8s.io/community/contributors/devel/api-conventions.
+	// md#types-kinds
+	// +optional
+	Metadata *ListMeta `json:"metadata,omitempty"`
+
+	// Reason: A machine-readable description of why this operation is in
+	// the
+	// "Failure" status. If this value is empty there
+	// is no information available. A Reason clarifies an HTTP status
+	// code but does not override it.
+	// +optional
+	Reason string `json:"reason,omitempty"`
+
+	// Status: Status of the operation.
+	// One of: "Success" or "Failure".
+	// More
+	// info:
+	// https://git.k8s.io/community/contributors/devel/api-conventions.
+	// md#spec-and-status
+	// +optional
+	Status string `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StatusCause: StatusCause provides more information about an
+// api.Status failure, including
+// cases when multiple errors are encountered.
+type StatusCause struct {
+	// Field: The field of the resource that has caused this error, as named
+	// by its JSON
+	// serialization. May include dot and postfix notation for nested
+	// attributes.
+	// Arrays are zero-indexed.  Fields may appear more than once in an
+	// array of
+	// causes due to fields having multiple errors.
+	// Optional.
+	//
+	// Examples:
+	//   "name" - the field "name" on the current resource
+	//   "items[0].name" - the field "name" on the first array entry in
+	// "items"
+	// +optional
+	Field string `json:"field,omitempty"`
+
+	// Message: A human-readable description of the cause of the error.
+	// This field may be
+	// presented as-is to a reader.
+	// +optional
+	Message string `json:"message,omitempty"`
+
+	// Reason: A machine-readable description of the cause of the error. If
+	// this value is
+	// empty there is no information available.
+	// +optional
+	Reason string `json:"reason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Field") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StatusCause) MarshalJSON() ([]byte, error) {
+	type NoMethod StatusCause
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StatusDetails: StatusDetails is a set of additional properties that
+// MAY be set by the
+// server to provide additional information about a response. The
+// Reason
+// field of a Status object defines what attributes will be set.
+// Clients
+// must ignore fields that do not match the defined type of each
+// attribute,
+// and should assume that any attribute may be empty, invalid, or
+// under
+// defined.
+type StatusDetails struct {
+	// Causes: The Causes array includes more details associated with the
+	// StatusReason
+	// failure. Not all StatusReasons may provide detailed causes.
+	// +optional
+	Causes []*StatusCause `json:"causes,omitempty"`
+
+	// Group: The group attribute of the resource associated with the
+	// status
+	// StatusReason. +optional
+	Group string `json:"group,omitempty"`
+
+	// Kind: The kind attribute of the resource associated with the status
+	// StatusReason.
+	// On some operations may differ from the requested resource Kind.
+	// More
+	// info:
+	// https://git.k8s.io/community/contributors/devel/api-conventions.
+	// md#types-kinds
+	// +optional
+	Kind string `json:"kind,omitempty"`
+
+	// Name: The name attribute of the resource associated with the status
+	// StatusReason
+	// (when there is a single name which can be described).
+	// +optional
+	Name string `json:"name,omitempty"`
+
+	// RetryAfterSeconds: If specified, the time in seconds before the
+	// operation should be retried.
+	// Some errors may indicate the client must take an alternate action -
+	// for
+	// those errors this field may indicate how long to wait before taking
+	// the
+	// alternate action. +optional
+	RetryAfterSeconds int64 `json:"retryAfterSeconds,omitempty"`
+
+	// Uid: UID of the resource.
+	// (when there is a single resource which can be described).
+	// More info:
+	// http://kubernetes.io/docs/user-guide/identifiers#uids
+	// +optional
+	Uid string `json:"uid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Causes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Causes") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StatusDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod StatusDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4979,7 +4902,7 @@ func (c *NamespacesAuthorizeddomainsListCall) Header() http.Header {
 
 func (c *NamespacesAuthorizeddomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5146,7 +5069,7 @@ func (c *NamespacesAutodomainmappingsCreateCall) Header() http.Header {
 
 func (c *NamespacesAutodomainmappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5311,7 +5234,7 @@ func (c *NamespacesAutodomainmappingsDeleteCall) Header() http.Header {
 
 func (c *NamespacesAutodomainmappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5333,14 +5256,13 @@ func (c *NamespacesAutodomainmappingsDeleteCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "run.namespaces.autodomainmappings.delete" call.
-// Exactly one of *K8sIoApimachineryPkgApisMetaV1Status or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *K8sIoApimachineryPkgApisMetaV1Status.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *NamespacesAutodomainmappingsDeleteCall) Do(opts ...googleapi.CallOption) (*K8sIoApimachineryPkgApisMetaV1Status, error) {
+// Exactly one of *Status or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Status.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *NamespacesAutodomainmappingsDeleteCall) Do(opts ...googleapi.CallOption) (*Status, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5359,7 +5281,7 @@ func (c *NamespacesAutodomainmappingsDeleteCall) Do(opts ...googleapi.CallOption
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &K8sIoApimachineryPkgApisMetaV1Status{
+	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -5404,7 +5326,7 @@ func (c *NamespacesAutodomainmappingsDeleteCall) Do(opts ...googleapi.CallOption
 	//   },
 	//   "path": "apis/domains.cloudrun.com/v1/{+name}",
 	//   "response": {
-	//     "$ref": "K8sIoApimachineryPkgApisMetaV1Status"
+	//     "$ref": "Status"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -5468,7 +5390,7 @@ func (c *NamespacesAutodomainmappingsGetCall) Header() http.Header {
 
 func (c *NamespacesAutodomainmappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5667,7 +5589,7 @@ func (c *NamespacesAutodomainmappingsListCall) Header() http.Header {
 
 func (c *NamespacesAutodomainmappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5847,7 +5769,7 @@ func (c *NamespacesAutodomainmappingsReplaceAutoDomainMappingCall) Header() http
 
 func (c *NamespacesAutodomainmappingsReplaceAutoDomainMappingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5987,7 +5909,7 @@ func (c *NamespacesConfigurationsCreateCall) Header() http.Header {
 
 func (c *NamespacesConfigurationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6157,7 +6079,7 @@ func (c *NamespacesConfigurationsDeleteCall) Header() http.Header {
 
 func (c *NamespacesConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6179,14 +6101,13 @@ func (c *NamespacesConfigurationsDeleteCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "run.namespaces.configurations.delete" call.
-// Exactly one of *K8sIoApimachineryPkgApisMetaV1Status or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *K8sIoApimachineryPkgApisMetaV1Status.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *NamespacesConfigurationsDeleteCall) Do(opts ...googleapi.CallOption) (*K8sIoApimachineryPkgApisMetaV1Status, error) {
+// Exactly one of *Status or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Status.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *NamespacesConfigurationsDeleteCall) Do(opts ...googleapi.CallOption) (*Status, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -6205,7 +6126,7 @@ func (c *NamespacesConfigurationsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &K8sIoApimachineryPkgApisMetaV1Status{
+	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -6250,7 +6171,7 @@ func (c *NamespacesConfigurationsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "path": "apis/serving.knative.dev/v1/{+name}",
 	//   "response": {
-	//     "$ref": "K8sIoApimachineryPkgApisMetaV1Status"
+	//     "$ref": "Status"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -6314,7 +6235,7 @@ func (c *NamespacesConfigurationsGetCall) Header() http.Header {
 
 func (c *NamespacesConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6513,7 +6434,7 @@ func (c *NamespacesConfigurationsListCall) Header() http.Header {
 
 func (c *NamespacesConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6693,7 +6614,7 @@ func (c *NamespacesConfigurationsReplaceConfigurationCall) Header() http.Header 
 
 func (c *NamespacesConfigurationsReplaceConfigurationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6833,7 +6754,7 @@ func (c *NamespacesDomainmappingsCreateCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6998,7 +6919,7 @@ func (c *NamespacesDomainmappingsDeleteCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7020,14 +6941,13 @@ func (c *NamespacesDomainmappingsDeleteCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "run.namespaces.domainmappings.delete" call.
-// Exactly one of *K8sIoApimachineryPkgApisMetaV1Status or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *K8sIoApimachineryPkgApisMetaV1Status.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *NamespacesDomainmappingsDeleteCall) Do(opts ...googleapi.CallOption) (*K8sIoApimachineryPkgApisMetaV1Status, error) {
+// Exactly one of *Status or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Status.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *NamespacesDomainmappingsDeleteCall) Do(opts ...googleapi.CallOption) (*Status, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -7046,7 +6966,7 @@ func (c *NamespacesDomainmappingsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &K8sIoApimachineryPkgApisMetaV1Status{
+	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -7091,7 +7011,7 @@ func (c *NamespacesDomainmappingsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "path": "apis/domains.cloudrun.com/v1/{+name}",
 	//   "response": {
-	//     "$ref": "K8sIoApimachineryPkgApisMetaV1Status"
+	//     "$ref": "Status"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -7155,7 +7075,7 @@ func (c *NamespacesDomainmappingsGetCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7354,7 +7274,7 @@ func (c *NamespacesDomainmappingsListCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7534,7 +7454,7 @@ func (c *NamespacesDomainmappingsReplaceDomainMappingCall) Header() http.Header 
 
 func (c *NamespacesDomainmappingsReplaceDomainMappingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7699,7 +7619,7 @@ func (c *NamespacesRevisionsDeleteCall) Header() http.Header {
 
 func (c *NamespacesRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7721,14 +7641,13 @@ func (c *NamespacesRevisionsDeleteCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "run.namespaces.revisions.delete" call.
-// Exactly one of *K8sIoApimachineryPkgApisMetaV1Status or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *K8sIoApimachineryPkgApisMetaV1Status.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *NamespacesRevisionsDeleteCall) Do(opts ...googleapi.CallOption) (*K8sIoApimachineryPkgApisMetaV1Status, error) {
+// Exactly one of *Status or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Status.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *NamespacesRevisionsDeleteCall) Do(opts ...googleapi.CallOption) (*Status, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -7747,7 +7666,7 @@ func (c *NamespacesRevisionsDeleteCall) Do(opts ...googleapi.CallOption) (*K8sIo
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &K8sIoApimachineryPkgApisMetaV1Status{
+	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -7792,7 +7711,7 @@ func (c *NamespacesRevisionsDeleteCall) Do(opts ...googleapi.CallOption) (*K8sIo
 	//   },
 	//   "path": "apis/serving.knative.dev/v1/{+name}",
 	//   "response": {
-	//     "$ref": "K8sIoApimachineryPkgApisMetaV1Status"
+	//     "$ref": "Status"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -7856,7 +7775,7 @@ func (c *NamespacesRevisionsGetCall) Header() http.Header {
 
 func (c *NamespacesRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8055,7 +7974,7 @@ func (c *NamespacesRevisionsListCall) Header() http.Header {
 
 func (c *NamespacesRevisionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8226,7 +8145,7 @@ func (c *NamespacesRoutesCreateCall) Header() http.Header {
 
 func (c *NamespacesRoutesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8392,7 +8311,7 @@ func (c *NamespacesRoutesDeleteCall) Header() http.Header {
 
 func (c *NamespacesRoutesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8414,14 +8333,13 @@ func (c *NamespacesRoutesDeleteCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "run.namespaces.routes.delete" call.
-// Exactly one of *K8sIoApimachineryPkgApisMetaV1Status or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *K8sIoApimachineryPkgApisMetaV1Status.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *NamespacesRoutesDeleteCall) Do(opts ...googleapi.CallOption) (*K8sIoApimachineryPkgApisMetaV1Status, error) {
+// Exactly one of *Status or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Status.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *NamespacesRoutesDeleteCall) Do(opts ...googleapi.CallOption) (*Status, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -8440,7 +8358,7 @@ func (c *NamespacesRoutesDeleteCall) Do(opts ...googleapi.CallOption) (*K8sIoApi
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &K8sIoApimachineryPkgApisMetaV1Status{
+	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -8485,7 +8403,7 @@ func (c *NamespacesRoutesDeleteCall) Do(opts ...googleapi.CallOption) (*K8sIoApi
 	//   },
 	//   "path": "apis/serving.knative.dev/v1/{+name}",
 	//   "response": {
-	//     "$ref": "K8sIoApimachineryPkgApisMetaV1Status"
+	//     "$ref": "Status"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -8549,7 +8467,7 @@ func (c *NamespacesRoutesGetCall) Header() http.Header {
 
 func (c *NamespacesRoutesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8748,7 +8666,7 @@ func (c *NamespacesRoutesListCall) Header() http.Header {
 
 func (c *NamespacesRoutesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8928,7 +8846,7 @@ func (c *NamespacesRoutesReplaceRouteCall) Header() http.Header {
 
 func (c *NamespacesRoutesReplaceRouteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9068,7 +8986,7 @@ func (c *NamespacesServicesCreateCall) Header() http.Header {
 
 func (c *NamespacesServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9236,7 +9154,7 @@ func (c *NamespacesServicesDeleteCall) Header() http.Header {
 
 func (c *NamespacesServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9258,14 +9176,13 @@ func (c *NamespacesServicesDeleteCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "run.namespaces.services.delete" call.
-// Exactly one of *K8sIoApimachineryPkgApisMetaV1Status or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *K8sIoApimachineryPkgApisMetaV1Status.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *NamespacesServicesDeleteCall) Do(opts ...googleapi.CallOption) (*K8sIoApimachineryPkgApisMetaV1Status, error) {
+// Exactly one of *Status or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Status.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *NamespacesServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Status, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -9284,7 +9201,7 @@ func (c *NamespacesServicesDeleteCall) Do(opts ...googleapi.CallOption) (*K8sIoA
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &K8sIoApimachineryPkgApisMetaV1Status{
+	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -9329,7 +9246,7 @@ func (c *NamespacesServicesDeleteCall) Do(opts ...googleapi.CallOption) (*K8sIoA
 	//   },
 	//   "path": "apis/serving.knative.dev/v1/{+name}",
 	//   "response": {
-	//     "$ref": "K8sIoApimachineryPkgApisMetaV1Status"
+	//     "$ref": "Status"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -9393,7 +9310,7 @@ func (c *NamespacesServicesGetCall) Header() http.Header {
 
 func (c *NamespacesServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9592,7 +9509,7 @@ func (c *NamespacesServicesListCall) Header() http.Header {
 
 func (c *NamespacesServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9772,7 +9689,7 @@ func (c *NamespacesServicesReplaceServiceCall) Header() http.Header {
 
 func (c *NamespacesServicesReplaceServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9921,7 +9838,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10087,7 +10004,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10282,7 +10199,7 @@ func (c *ProjectsLocationsAuthorizeddomainsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAuthorizeddomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10449,7 +10366,7 @@ func (c *ProjectsLocationsAutodomainmappingsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutodomainmappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10614,7 +10531,7 @@ func (c *ProjectsLocationsAutodomainmappingsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutodomainmappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10636,14 +10553,13 @@ func (c *ProjectsLocationsAutodomainmappingsDeleteCall) doRequest(alt string) (*
 }
 
 // Do executes the "run.projects.locations.autodomainmappings.delete" call.
-// Exactly one of *K8sIoApimachineryPkgApisMetaV1Status or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *K8sIoApimachineryPkgApisMetaV1Status.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsAutodomainmappingsDeleteCall) Do(opts ...googleapi.CallOption) (*K8sIoApimachineryPkgApisMetaV1Status, error) {
+// Exactly one of *Status or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Status.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsAutodomainmappingsDeleteCall) Do(opts ...googleapi.CallOption) (*Status, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -10662,7 +10578,7 @@ func (c *ProjectsLocationsAutodomainmappingsDeleteCall) Do(opts ...googleapi.Cal
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &K8sIoApimachineryPkgApisMetaV1Status{
+	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -10707,7 +10623,7 @@ func (c *ProjectsLocationsAutodomainmappingsDeleteCall) Do(opts ...googleapi.Cal
 	//   },
 	//   "path": "v1/{+name}",
 	//   "response": {
-	//     "$ref": "K8sIoApimachineryPkgApisMetaV1Status"
+	//     "$ref": "Status"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -10771,7 +10687,7 @@ func (c *ProjectsLocationsAutodomainmappingsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutodomainmappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10970,7 +10886,7 @@ func (c *ProjectsLocationsAutodomainmappingsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutodomainmappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11150,7 +11066,7 @@ func (c *ProjectsLocationsAutodomainmappingsReplaceAutoDomainMappingCall) Header
 
 func (c *ProjectsLocationsAutodomainmappingsReplaceAutoDomainMappingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11290,7 +11206,7 @@ func (c *ProjectsLocationsConfigurationsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsConfigurationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11460,7 +11376,7 @@ func (c *ProjectsLocationsConfigurationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11482,14 +11398,13 @@ func (c *ProjectsLocationsConfigurationsDeleteCall) doRequest(alt string) (*http
 }
 
 // Do executes the "run.projects.locations.configurations.delete" call.
-// Exactly one of *K8sIoApimachineryPkgApisMetaV1Status or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *K8sIoApimachineryPkgApisMetaV1Status.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsConfigurationsDeleteCall) Do(opts ...googleapi.CallOption) (*K8sIoApimachineryPkgApisMetaV1Status, error) {
+// Exactly one of *Status or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Status.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsConfigurationsDeleteCall) Do(opts ...googleapi.CallOption) (*Status, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -11508,7 +11423,7 @@ func (c *ProjectsLocationsConfigurationsDeleteCall) Do(opts ...googleapi.CallOpt
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &K8sIoApimachineryPkgApisMetaV1Status{
+	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -11553,7 +11468,7 @@ func (c *ProjectsLocationsConfigurationsDeleteCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "path": "v1/{+name}",
 	//   "response": {
-	//     "$ref": "K8sIoApimachineryPkgApisMetaV1Status"
+	//     "$ref": "Status"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -11617,7 +11532,7 @@ func (c *ProjectsLocationsConfigurationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11816,7 +11731,7 @@ func (c *ProjectsLocationsConfigurationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11996,7 +11911,7 @@ func (c *ProjectsLocationsConfigurationsReplaceConfigurationCall) Header() http.
 
 func (c *ProjectsLocationsConfigurationsReplaceConfigurationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12136,7 +12051,7 @@ func (c *ProjectsLocationsDomainmappingsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12301,7 +12216,7 @@ func (c *ProjectsLocationsDomainmappingsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12323,14 +12238,13 @@ func (c *ProjectsLocationsDomainmappingsDeleteCall) doRequest(alt string) (*http
 }
 
 // Do executes the "run.projects.locations.domainmappings.delete" call.
-// Exactly one of *K8sIoApimachineryPkgApisMetaV1Status or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *K8sIoApimachineryPkgApisMetaV1Status.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsDomainmappingsDeleteCall) Do(opts ...googleapi.CallOption) (*K8sIoApimachineryPkgApisMetaV1Status, error) {
+// Exactly one of *Status or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Status.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDomainmappingsDeleteCall) Do(opts ...googleapi.CallOption) (*Status, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -12349,7 +12263,7 @@ func (c *ProjectsLocationsDomainmappingsDeleteCall) Do(opts ...googleapi.CallOpt
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &K8sIoApimachineryPkgApisMetaV1Status{
+	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -12394,7 +12308,7 @@ func (c *ProjectsLocationsDomainmappingsDeleteCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "path": "v1/{+name}",
 	//   "response": {
-	//     "$ref": "K8sIoApimachineryPkgApisMetaV1Status"
+	//     "$ref": "Status"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -12458,7 +12372,7 @@ func (c *ProjectsLocationsDomainmappingsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12657,7 +12571,7 @@ func (c *ProjectsLocationsDomainmappingsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12837,7 +12751,7 @@ func (c *ProjectsLocationsDomainmappingsReplaceDomainMappingCall) Header() http.
 
 func (c *ProjectsLocationsDomainmappingsReplaceDomainMappingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13002,7 +12916,7 @@ func (c *ProjectsLocationsRevisionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13024,14 +12938,13 @@ func (c *ProjectsLocationsRevisionsDeleteCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "run.projects.locations.revisions.delete" call.
-// Exactly one of *K8sIoApimachineryPkgApisMetaV1Status or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *K8sIoApimachineryPkgApisMetaV1Status.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsRevisionsDeleteCall) Do(opts ...googleapi.CallOption) (*K8sIoApimachineryPkgApisMetaV1Status, error) {
+// Exactly one of *Status or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Status.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsRevisionsDeleteCall) Do(opts ...googleapi.CallOption) (*Status, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -13050,7 +12963,7 @@ func (c *ProjectsLocationsRevisionsDeleteCall) Do(opts ...googleapi.CallOption) 
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &K8sIoApimachineryPkgApisMetaV1Status{
+	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -13095,7 +13008,7 @@ func (c *ProjectsLocationsRevisionsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//   },
 	//   "path": "v1/{+name}",
 	//   "response": {
-	//     "$ref": "K8sIoApimachineryPkgApisMetaV1Status"
+	//     "$ref": "Status"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -13159,7 +13072,7 @@ func (c *ProjectsLocationsRevisionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13358,7 +13271,7 @@ func (c *ProjectsLocationsRevisionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13529,7 +13442,7 @@ func (c *ProjectsLocationsRoutesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13695,7 +13608,7 @@ func (c *ProjectsLocationsRoutesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13717,14 +13630,13 @@ func (c *ProjectsLocationsRoutesDeleteCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "run.projects.locations.routes.delete" call.
-// Exactly one of *K8sIoApimachineryPkgApisMetaV1Status or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *K8sIoApimachineryPkgApisMetaV1Status.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsRoutesDeleteCall) Do(opts ...googleapi.CallOption) (*K8sIoApimachineryPkgApisMetaV1Status, error) {
+// Exactly one of *Status or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Status.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsRoutesDeleteCall) Do(opts ...googleapi.CallOption) (*Status, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -13743,7 +13655,7 @@ func (c *ProjectsLocationsRoutesDeleteCall) Do(opts ...googleapi.CallOption) (*K
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &K8sIoApimachineryPkgApisMetaV1Status{
+	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -13788,7 +13700,7 @@ func (c *ProjectsLocationsRoutesDeleteCall) Do(opts ...googleapi.CallOption) (*K
 	//   },
 	//   "path": "v1/{+name}",
 	//   "response": {
-	//     "$ref": "K8sIoApimachineryPkgApisMetaV1Status"
+	//     "$ref": "Status"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -13852,7 +13764,7 @@ func (c *ProjectsLocationsRoutesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14051,7 +13963,7 @@ func (c *ProjectsLocationsRoutesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14231,7 +14143,7 @@ func (c *ProjectsLocationsRoutesReplaceRouteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesReplaceRouteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14371,7 +14283,7 @@ func (c *ProjectsLocationsServicesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14539,7 +14451,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14561,14 +14473,13 @@ func (c *ProjectsLocationsServicesDeleteCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "run.projects.locations.services.delete" call.
-// Exactly one of *K8sIoApimachineryPkgApisMetaV1Status or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *K8sIoApimachineryPkgApisMetaV1Status.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (*K8sIoApimachineryPkgApisMetaV1Status, error) {
+// Exactly one of *Status or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Status.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Status, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -14587,7 +14498,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &K8sIoApimachineryPkgApisMetaV1Status{
+	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -14632,7 +14543,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (
 	//   },
 	//   "path": "v1/{+name}",
 	//   "response": {
-	//     "$ref": "K8sIoApimachineryPkgApisMetaV1Status"
+	//     "$ref": "Status"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -14696,7 +14607,7 @@ func (c *ProjectsLocationsServicesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14861,7 +14772,7 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15066,7 +14977,7 @@ func (c *ProjectsLocationsServicesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15246,7 +15157,7 @@ func (c *ProjectsLocationsServicesReplaceServiceCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesReplaceServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15388,7 +15299,7 @@ func (c *ProjectsLocationsServicesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15531,7 +15442,7 @@ func (c *ProjectsLocationsServicesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

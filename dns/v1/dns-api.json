@@ -23,7 +23,7 @@
   "description": "Configures and serves authoritative DNS records.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/cloud-dns",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/4XBvQkN5hQomez2poc7wKcvRjxM\"",
+  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/D8irFZMaRIbo-J4ghLdWbdVZZNg\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -982,7 +982,7 @@
       }
     }
   },
-  "revision": "20190903",
+  "revision": "20190923",
   "rootUrl": "https://dns.googleapis.com/",
   "schemas": {
     "Change": {
@@ -1611,6 +1611,10 @@
         },
         "enableInboundForwarding": {
           "description": "Allows networks bound to this policy to receive DNS queries sent by VMs or applications over VPN connections. When enabled, a virtual IP address will be allocated from each of the sub-networks that are bound to this policy.",
+          "type": "boolean"
+        },
+        "enableLogging": {
+          "description": "Controls whether logging is enabled for the networks bound to this policy. Defaults to no logging if not set.",
           "type": "boolean"
         },
         "id": {

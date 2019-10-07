@@ -267,7 +267,7 @@
               ]
             },
             "setIamPolicy": {
-              "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+              "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
               "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}:setIamPolicy",
               "httpMethod": "POST",
               "id": "runtimeconfig.projects.configs.setIamPolicy",
@@ -804,7 +804,7 @@
       }
     }
   },
-  "revision": "20190923",
+  "revision": "20190930",
   "rootUrl": "https://runtimeconfig.googleapis.com/",
   "schemas": {
     "Binding": {

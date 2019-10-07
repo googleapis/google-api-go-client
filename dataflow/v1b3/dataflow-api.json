@@ -1604,7 +1604,7 @@
       }
     }
   },
-  "revision": "20190827",
+  "revision": "20190917",
   "rootUrl": "https://dataflow.googleapis.com/",
   "schemas": {
     "ApproximateProgress": {
@@ -2435,6 +2435,14 @@
             "$ref": "WorkerPool"
           },
           "type": "array"
+        },
+        "workerRegion": {
+          "description": "The Compute Engine region\n(https://cloud.google.com/compute/docs/regions-zones/regions-zones) in\nwhich worker processing should occur, e.g. \"us-west1\". Mutually exclusive\nwith worker_zone. If neither worker_region nor worker_zone is specified,\ndefault to the control plane's region.",
+          "type": "string"
+        },
+        "workerZone": {
+          "description": "The Compute Engine zone\n(https://cloud.google.com/compute/docs/regions-zones/regions-zones) in\nwhich worker processing should occur, e.g. \"us-west1-a\". Mutually exclusive\nwith worker_region. If neither worker_region nor worker_zone is specified,\na zone in the control plane's region is chosen based on available capacity.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3980,8 +3988,16 @@
           "description": "Optional. Specifies whether worker pools should be started with private IP addresses.\nFalse by default.",
           "type": "boolean"
         },
+        "workerRegion": {
+          "description": "The Compute Engine region\n(https://cloud.google.com/compute/docs/regions-zones/regions-zones) in\nwhich worker processing should occur, e.g. \"us-west1\". Mutually exclusive\nwith worker_zone. If neither worker_region nor worker_zone is specified,\ndefault to the control plane's region.",
+          "type": "string"
+        },
+        "workerZone": {
+          "description": "The Compute Engine zone\n(https://cloud.google.com/compute/docs/regions-zones/regions-zones) in\nwhich worker processing should occur, e.g. \"us-west1-a\". Mutually exclusive\nwith worker_region. If neither worker_region nor worker_zone is specified,\na zone in the control plane's region is chosen based on available capacity.\nIf both `worker_zone` and `zone` are set, `worker_zone` takes precedence.",
+          "type": "string"
+        },
         "zone": {
-          "description": "The Compute Engine [availability\nzone](https://cloud.google.com/compute/docs/regions-zones/regions-zones)\nfor launching worker instances to run your pipeline.",
+          "description": "The Compute Engine [availability\nzone](https://cloud.google.com/compute/docs/regions-zones/regions-zones)\nfor launching worker instances to run your pipeline.\nIn the future, worker_zone will take precedence.",
           "type": "string"
         }
       },

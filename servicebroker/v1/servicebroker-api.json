@@ -138,7 +138,7 @@
           ]
         },
         "setIamPolicy": {
-          "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+          "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
           "flatPath": "v1/{v1Id}:setIamPolicy",
           "httpMethod": "POST",
           "id": "servicebroker.setIamPolicy",
@@ -196,7 +196,7 @@
       }
     }
   },
-  "revision": "20190924",
+  "revision": "20190930",
   "rootUrl": "https://servicebroker.googleapis.com/",
   "schemas": {
     "GoogleIamV1__Binding": {

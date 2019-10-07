@@ -140,33 +140,44 @@
       }
     },
     "locations": {
-      "methods": {
+      "resources": {
         "infoTypes": {
-          "description": "Returns a list of the sensitive information types that the DLP API\nsupports. See https://cloud.google.com/dlp/docs/infotypes-reference to\nlearn more.",
-          "flatPath": "v2/locations/{location}/infoTypes",
-          "httpMethod": "POST",
-          "id": "dlp.locations.infoTypes",
-          "parameterOrder": [
-            "location"
-          ],
-          "parameters": {
-            "location": {
-              "description": "The geographic location to list info types. Reserved for future\nextensions.",
-              "location": "path",
-              "required": true,
-              "type": "string"
+          "methods": {
+            "list": {
+              "description": "Returns a list of the sensitive information types that the DLP API\nsupports. See https://cloud.google.com/dlp/docs/infotypes-reference to\nlearn more.",
+              "flatPath": "v2/locations/{location}/infoTypes",
+              "httpMethod": "GET",
+              "id": "dlp.locations.infoTypes.list",
+              "parameterOrder": [
+                "location"
+              ],
+              "parameters": {
+                "filter": {
+                  "description": "Optional filter to only return infoTypes supported by certain parts of the\nAPI. Defaults to supported_by=INSPECT.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "languageCode": {
+                  "description": "Optional BCP-47 language code for localized infoType friendly\nnames. If omitted, or if localized strings are not available,\nen-US strings will be returned.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "location": {
+                  "description": "The geographic location to list info types. Reserved for future\nextensions.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v2/locations/{location}/infoTypes",
+              "response": {
+                "$ref": "GooglePrivacyDlpV2ListInfoTypesResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
             }
-          },
-          "path": "v2/locations/{location}/infoTypes",
-          "request": {
-            "$ref": "GooglePrivacyDlpV2ListInfoTypesRequest"
-          },
-          "response": {
-            "$ref": "GooglePrivacyDlpV2ListInfoTypesResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
-          ]
+          }
         }
       }
     },
@@ -1668,7 +1679,7 @@
       }
     }
   },
-  "revision": "20190902",
+  "revision": "20190929",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -3376,7 +3387,7 @@
           "type": "boolean"
         },
         "infoTypes": {
-          "description": "Restricts what info_types to look for. The values must correspond to\nInfoType values returned by ListInfoTypes or listed at\nhttps://cloud.google.com/dlp/docs/infotypes-reference.\n\nWhen no InfoTypes or CustomInfoTypes are specified in a request, the\nsystem may automatically choose what detectors to run. By default this may\nbe all types, but may change over time as detectors are updated.\n\nThe special InfoType name \"ALL_BASIC\" can be used to trigger all detectors,\nbut may change over time as new InfoTypes are added. If you need precise\ncontrol and predictability as to what detectors are run you should specify\nspecific InfoTypes listed in the reference.",
+          "description": "Restricts what info_types to look for. The values must correspond to\nInfoType values returned by ListInfoTypes or listed at\nhttps://cloud.google.com/dlp/docs/infotypes-reference.\n\nWhen no InfoTypes or CustomInfoTypes are specified in a request, the\nsystem may automatically choose what detectors to run. By default this may\nbe all types, but may change over time as detectors are updated.\n\nIf you need precise control and predictability as to what detectors are\nrun you should specify specific InfoTypes listed in the reference,\notherwise a default list will be used, which may change over time.",
           "items": {
             "$ref": "GooglePrivacyDlpV2InfoType"
           },
@@ -4065,21 +4076,6 @@
       },
       "type": "object"
     },
-    "GooglePrivacyDlpV2ListInfoTypesRequest": {
-      "description": "Request for the list of infoTypes.",
-      "id": "GooglePrivacyDlpV2ListInfoTypesRequest",
-      "properties": {
-        "filter": {
-          "description": "Optional filter to only return infoTypes supported by certain parts of the\nAPI. Defaults to supported_by=INSPECT.",
-          "type": "string"
-        },
-        "languageCode": {
-          "description": "Optional BCP-47 language code for localized infoType friendly\nnames. If omitted, or if localized strings are not available,\nen-US strings will be returned.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "GooglePrivacyDlpV2ListInfoTypesResponse": {
       "description": "Response to the ListInfoTypes request.",
       "id": "GooglePrivacyDlpV2ListInfoTypesResponse",
@@ -4626,7 +4622,7 @@
         },
         "reidentifyConfig": {
           "$ref": "GooglePrivacyDlpV2DeidentifyConfig",
-          "description": "Configuration for the re-identification of the content item.\nThis field shares the same proto message type that is used for\nde-identification, however its usage here is for the reversal of the\nprevious de-identification. Re-identification is performed by examining\nthe transformations used to de-identify the items and executing the\nreverse. This requires that only reversible transformations\nbe provided here. The reversible transformations are:\n\n - `CryptoReplaceFfxFpeConfig`"
+          "description": "Configuration for the re-identification of the content item.\nThis field shares the same proto message type that is used for\nde-identification, however its usage here is for the reversal of the\nprevious de-identification. Re-identification is performed by examining\nthe transformations used to de-identify the items and executing the\nreverse. This requires that only reversible transformations\nbe provided here. The reversible transformations are:\n\n - `CryptoDeterministicConfig`\n - `CryptoReplaceFfxFpeConfig`"
         },
         "reidentifyTemplateName": {
           "description": "Optional template to use. References an instance of `DeidentifyTemplate`.\nAny configuration directly specified in `reidentify_config` or\n`inspect_config` will override those set in the template. Singular fields\nthat are set in this request will replace their corresponding fields in the\ntemplate. Repeated fields are appended. Singular sub-messages and groups\nare recursively merged.",
@@ -5063,7 +5059,7 @@
         },
         "timestampField": {
           "$ref": "GooglePrivacyDlpV2FieldId",
-          "description": "Specification of the field containing the timestamp of scanned items.\nUsed for data sources like Datastore or BigQuery.\nIf not specified for BigQuery, table last modification timestamp\nis checked against given time span.\nThe valid data types of the timestamp field are:\nfor BigQuery - timestamp, date, datetime;\nfor Datastore - timestamp.\nDatastore entity will be scanned if the timestamp property does not exist\nor its value is empty or invalid."
+          "description": "Specification of the field containing the timestamp of scanned items.\nUsed for data sources like Datastore and BigQuery.\n\nFor BigQuery:\nRequired to filter out rows based on the given start and\nend times. If not specified and the table was modified between the given\nstart and end times, the entire table will be scanned.\nThe valid data types of the timestamp field are: `INTEGER`, `DATE`,\n`TIMESTAMP`, or `DATETIME` BigQuery column.\n\nFor Datastore.\nValid data types of the timestamp field are: `TIMESTAMP`.\nDatastore entity will be scanned if the timestamp property does not\nexist or its value is empty or invalid."
         }
       },
       "type": "object"

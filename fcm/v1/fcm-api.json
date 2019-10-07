@@ -141,7 +141,7 @@
       }
     }
   },
-  "revision": "20190820",
+  "revision": "20191002",
   "rootUrl": "https://fcm.googleapis.com/",
   "schemas": {
     "AndroidConfig": {
@@ -361,7 +361,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "HTTP request headers defined in Apple Push Notification Service. Refer to\n[APNs request headers](https://goo.gl/C6Yhia) for\nsupported headers, e.g. \"apns-priority\": \"10\".",
+          "description": "HTTP request headers defined in Apple Push Notification Service. Refer to\n[APNs request\nheaders](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)\nfor supported headers, e.g. \"apns-priority\": \"10\".",
           "type": "object"
         },
         "payload": {
@@ -369,7 +369,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "APNs payload as a JSON object, including both `aps` dictionary and custom\npayload. See [Payload Key Reference](https://goo.gl/32Pl5W).\nIf present, it overrides google.firebase.fcm.v1.Notification.title\nand google.firebase.fcm.v1.Notification.body.",
+          "description": "APNs payload as a JSON object, including both `aps` dictionary and custom\npayload. See [Payload Key\nReference](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification).\nIf present, it overrides google.firebase.fcm.v1.Notification.title\nand google.firebase.fcm.v1.Notification.body.",
           "type": "object"
         }
       },
@@ -469,7 +469,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Input only. Arbitrary key/value payload.",
+          "description": "Input only. Arbitrary key/value payload. The key should not be a reserved\nword (\"from\", \"message_type\", or any word starting with \"google\" or \"gcm\").",
           "type": "object"
         },
         "fcmOptions": {

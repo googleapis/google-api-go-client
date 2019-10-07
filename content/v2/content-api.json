@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/toPhcIdfDDVm8rGw8y9F_7pWqRE\"",
+  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/0ZXI0F-rKIgpC1lqQi1oyLuZu2Q\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -319,46 +319,6 @@
             "https://www.googleapis.com/auth/content"
           ]
         },
-        "patch": {
-          "description": "Updates a Merchant Center account. This method supports patch semantics.",
-          "httpMethod": "PATCH",
-          "id": "content.accounts.patch",
-          "parameterOrder": [
-            "merchantId",
-            "accountId"
-          ],
-          "parameters": {
-            "accountId": {
-              "description": "The ID of the account.",
-              "format": "uint64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "dryRun": {
-              "description": "Flag to simulate a request like in a live environment. If set to true, dry-run mode checks the validity of the request and returns errors (if any).",
-              "location": "query",
-              "type": "boolean"
-            },
-            "merchantId": {
-              "description": "The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
-              "format": "uint64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{merchantId}/accounts/{accountId}",
-          "request": {
-            "$ref": "Account"
-          },
-          "response": {
-            "$ref": "Account"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/content"
-          ]
-        },
         "update": {
           "description": "Updates a Merchant Center account.",
           "httpMethod": "PUT",
@@ -585,46 +545,6 @@
           "path": "{merchantId}/accounttax",
           "response": {
             "$ref": "AccounttaxListResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/content"
-          ]
-        },
-        "patch": {
-          "description": "Updates the tax settings of the account. This method supports patch semantics.",
-          "httpMethod": "PATCH",
-          "id": "content.accounttax.patch",
-          "parameterOrder": [
-            "merchantId",
-            "accountId"
-          ],
-          "parameters": {
-            "accountId": {
-              "description": "The ID of the account for which to get/update account tax settings.",
-              "format": "uint64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "dryRun": {
-              "description": "Flag to simulate a request like in a live environment. If set to true, dry-run mode checks the validity of the request and returns errors (if any).",
-              "location": "query",
-              "type": "boolean"
-            },
-            "merchantId": {
-              "description": "The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
-              "format": "uint64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{merchantId}/accounttax/{accountId}",
-          "request": {
-            "$ref": "AccountTax"
-          },
-          "response": {
-            "$ref": "AccountTax"
           },
           "scopes": [
             "https://www.googleapis.com/auth/content"
@@ -861,46 +781,6 @@
           "path": "{merchantId}/datafeeds",
           "response": {
             "$ref": "DatafeedsListResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/content"
-          ]
-        },
-        "patch": {
-          "description": "Updates a datafeed configuration of your Merchant Center account. This method supports patch semantics.",
-          "httpMethod": "PATCH",
-          "id": "content.datafeeds.patch",
-          "parameterOrder": [
-            "merchantId",
-            "datafeedId"
-          ],
-          "parameters": {
-            "datafeedId": {
-              "description": "The ID of the datafeed.",
-              "format": "uint64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "dryRun": {
-              "description": "Flag to simulate a request like in a live environment. If set to true, dry-run mode checks the validity of the request and returns errors (if any).",
-              "location": "query",
-              "type": "boolean"
-            },
-            "merchantId": {
-              "description": "The ID of the account that manages the datafeed. This account cannot be a multi-client account.",
-              "format": "uint64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{merchantId}/datafeeds/{datafeedId}",
-          "request": {
-            "$ref": "Datafeed"
-          },
-          "response": {
-            "$ref": "Datafeed"
           },
           "scopes": [
             "https://www.googleapis.com/auth/content"
@@ -1246,46 +1126,6 @@
           "path": "liasettings/posdataproviders",
           "response": {
             "$ref": "LiasettingsListPosDataProvidersResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/content"
-          ]
-        },
-        "patch": {
-          "description": "Updates the LIA settings of the account. This method supports patch semantics.",
-          "httpMethod": "PATCH",
-          "id": "content.liasettings.patch",
-          "parameterOrder": [
-            "merchantId",
-            "accountId"
-          ],
-          "parameters": {
-            "accountId": {
-              "description": "The ID of the account for which to get or update LIA settings.",
-              "format": "uint64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "dryRun": {
-              "description": "Flag to simulate a request like in a live environment. If set to true, dry-run mode checks the validity of the request and returns errors (if any).",
-              "location": "query",
-              "type": "boolean"
-            },
-            "merchantId": {
-              "description": "The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
-              "format": "uint64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{merchantId}/liasettings/{accountId}",
-          "request": {
-            "$ref": "LiaSettings"
-          },
-          "response": {
-            "$ref": "LiaSettings"
           },
           "scopes": [
             "https://www.googleapis.com/auth/content"
@@ -3393,46 +3233,6 @@
             "https://www.googleapis.com/auth/content"
           ]
         },
-        "patch": {
-          "description": "Updates the shipping settings of the account. This method supports patch semantics.",
-          "httpMethod": "PATCH",
-          "id": "content.shippingsettings.patch",
-          "parameterOrder": [
-            "merchantId",
-            "accountId"
-          ],
-          "parameters": {
-            "accountId": {
-              "description": "The ID of the account for which to get/update shipping settings.",
-              "format": "uint64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "dryRun": {
-              "description": "Flag to simulate a request like in a live environment. If set to true, dry-run mode checks the validity of the request and returns errors (if any).",
-              "location": "query",
-              "type": "boolean"
-            },
-            "merchantId": {
-              "description": "The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
-              "format": "uint64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{merchantId}/shippingsettings/{accountId}",
-          "request": {
-            "$ref": "ShippingSettings"
-          },
-          "response": {
-            "$ref": "ShippingSettings"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/content"
-          ]
-        },
         "update": {
           "description": "Updates the shipping settings of the account.",
           "httpMethod": "PUT",
@@ -3476,7 +3276,7 @@
       }
     }
   },
-  "revision": "20190905",
+  "revision": "20190930",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {

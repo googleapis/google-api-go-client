@@ -376,6 +376,9 @@ type SettingsSearchapplicationsService struct {
 func NewStatsService(s *Service) *StatsService {
 	rs := &StatsService{s: s}
 	rs.Index = NewStatsIndexService(s)
+	rs.Query = NewStatsQueryService(s)
+	rs.Session = NewStatsSessionService(s)
+	rs.User = NewStatsUserService(s)
 	return rs
 }
 
@@ -383,6 +386,12 @@ type StatsService struct {
 	s *Service
 
 	Index *StatsIndexService
+
+	Query *StatsQueryService
+
+	Session *StatsSessionService
+
+	User *StatsUserService
 }
 
 func NewStatsIndexService(s *Service) *StatsIndexService {
@@ -403,6 +412,69 @@ func NewStatsIndexDatasourcesService(s *Service) *StatsIndexDatasourcesService {
 }
 
 type StatsIndexDatasourcesService struct {
+	s *Service
+}
+
+func NewStatsQueryService(s *Service) *StatsQueryService {
+	rs := &StatsQueryService{s: s}
+	rs.Searchapplications = NewStatsQuerySearchapplicationsService(s)
+	return rs
+}
+
+type StatsQueryService struct {
+	s *Service
+
+	Searchapplications *StatsQuerySearchapplicationsService
+}
+
+func NewStatsQuerySearchapplicationsService(s *Service) *StatsQuerySearchapplicationsService {
+	rs := &StatsQuerySearchapplicationsService{s: s}
+	return rs
+}
+
+type StatsQuerySearchapplicationsService struct {
+	s *Service
+}
+
+func NewStatsSessionService(s *Service) *StatsSessionService {
+	rs := &StatsSessionService{s: s}
+	rs.Searchapplications = NewStatsSessionSearchapplicationsService(s)
+	return rs
+}
+
+type StatsSessionService struct {
+	s *Service
+
+	Searchapplications *StatsSessionSearchapplicationsService
+}
+
+func NewStatsSessionSearchapplicationsService(s *Service) *StatsSessionSearchapplicationsService {
+	rs := &StatsSessionSearchapplicationsService{s: s}
+	return rs
+}
+
+type StatsSessionSearchapplicationsService struct {
+	s *Service
+}
+
+func NewStatsUserService(s *Service) *StatsUserService {
+	rs := &StatsUserService{s: s}
+	rs.Searchapplications = NewStatsUserSearchapplicationsService(s)
+	return rs
+}
+
+type StatsUserService struct {
+	s *Service
+
+	Searchapplications *StatsUserSearchapplicationsService
+}
+
+func NewStatsUserSearchapplicationsService(s *Service) *StatsUserSearchapplicationsService {
+	rs := &StatsUserSearchapplicationsService{s: s}
+	return rs
+}
+
+type StatsUserSearchapplicationsService struct {
 	s *Service
 }
 
@@ -579,6 +651,110 @@ type CustomerIndexStats struct {
 
 func (s *CustomerIndexStats) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomerIndexStats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type CustomerQueryStats struct {
+	// Date: Date for which query stats were calculated. Stats calculated on
+	// the next
+	// day close to midnight are returned.
+	Date *Date `json:"date,omitempty"`
+
+	QueryCountByStatus []*QueryCountByStatus `json:"queryCountByStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Date") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Date") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomerQueryStats) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomerQueryStats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type CustomerSessionStats struct {
+	// Date: Date for which session stats were calculated. Stats calculated
+	// on the next
+	// day close to midnight are returned.
+	Date *Date `json:"date,omitempty"`
+
+	// SearchSessionsCount: The count of search sessions on the day
+	SearchSessionsCount int64 `json:"searchSessionsCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Date") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Date") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomerSessionStats) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomerSessionStats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type CustomerUserStats struct {
+	// Date: Date for which session stats were calculated. Stats calculated
+	// on the next
+	// day close to midnight are returned.
+	Date *Date `json:"date,omitempty"`
+
+	// OneDayActiveUsersCount: The count of unique active users in the past
+	// one day
+	OneDayActiveUsersCount int64 `json:"oneDayActiveUsersCount,omitempty,string"`
+
+	// SevenDaysActiveUsersCount: The count of unique active users in the
+	// past seven days
+	SevenDaysActiveUsersCount int64 `json:"sevenDaysActiveUsersCount,omitempty,string"`
+
+	// ThirtyDaysActiveUsersCount: The count of unique active users in the
+	// past thirty days
+	ThirtyDaysActiveUsersCount int64 `json:"thirtyDaysActiveUsersCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Date") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Date") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomerUserStats) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomerUserStats
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1967,6 +2143,96 @@ func (s *GetCustomerIndexStatsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type GetCustomerQueryStatsResponse struct {
+	Stats []*CustomerQueryStats `json:"stats,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Stats") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Stats") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GetCustomerQueryStatsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GetCustomerQueryStatsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type GetCustomerSessionStatsResponse struct {
+	Stats []*CustomerSessionStats `json:"stats,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Stats") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Stats") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GetCustomerSessionStatsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GetCustomerSessionStatsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type GetCustomerUserStatsResponse struct {
+	Stats []*CustomerUserStats `json:"stats,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Stats") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Stats") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GetCustomerUserStatsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GetCustomerUserStatsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type GetDataSourceIndexStatsResponse struct {
 	// Stats: Summary of indexed item counts, one for each day in the
 	// requested range.
@@ -1995,6 +2261,96 @@ type GetDataSourceIndexStatsResponse struct {
 
 func (s *GetDataSourceIndexStatsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetDataSourceIndexStatsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type GetSearchApplicationQueryStatsResponse struct {
+	Stats []*SearchApplicationQueryStats `json:"stats,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Stats") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Stats") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GetSearchApplicationQueryStatsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GetSearchApplicationQueryStatsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type GetSearchApplicationSessionStatsResponse struct {
+	Stats []*SearchApplicationSessionStats `json:"stats,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Stats") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Stats") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GetSearchApplicationSessionStatsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GetSearchApplicationSessionStatsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type GetSearchApplicationUserStatsResponse struct {
+	Stats []*SearchApplicationUserStats `json:"stats,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Stats") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Stats") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GetSearchApplicationUserStatsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GetSearchApplicationUserStatsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4417,6 +4773,35 @@ func (s *PushItemRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type QueryCountByStatus struct {
+	Count int64 `json:"count,omitempty,string"`
+
+	// StatusCode: This represents the http status code.
+	StatusCode int64 `json:"statusCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryCountByStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryCountByStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type QueryInterpretation struct {
 	// Possible values:
 	//   "NONE" - No natural language interpretation or the natural language
@@ -4438,6 +4823,25 @@ type QueryInterpretation struct {
 	// reason is
 	// NO_RESULTS_FOUND_FOR_USER_QUERY.
 	InterpretedQuery string `json:"interpretedQuery,omitempty"`
+
+	// Reason: The reason for interpretation of the query. This field will
+	// not be
+	// UNSPECIFIED if the interpretation type is not NONE.
+	//
+	// Possible values:
+	//   "UNSPECIFIED"
+	//   "QUERY_HAS_NATURAL_LANGUAGE_INTENT" - Natural language
+	// interpretation of the query is used to fetch the search
+	// results.
+	//   "NO_RESULTS_FOUND_FOR_USER_QUERY" - The following values are
+	// returned only when interpretation type is
+	// REPLACE.
+	// The search results are replaced by ones which are retrieved through
+	// a
+	// much broader version of the query since no results were found for
+	// the
+	// user query. Interpreted query will be empty for the following case.
+	Reason string `json:"reason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InterpretationType")
 	// to unconditionally include in API requests. By default, fields with
@@ -4471,6 +4875,15 @@ type QueryInterpretationOptions struct {
 	// NL
 	// interpretation only applies to predefined datasources.
 	DisableNlInterpretation bool `json:"disableNlInterpretation,omitempty"`
+
+	// EnableVerbatimMode: Enable this flag to turn off all internal
+	// optimizations like natural
+	// language (NL) interpretation of queries, supplemental result
+	// retrieval,
+	// and usage of synonyms including custom ones.
+	// Nl interpretation will be disabled if either one of the two flags is
+	// true.
+	EnableVerbatimMode bool `json:"enableVerbatimMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DisableNlInterpretation") to unconditionally include in API
@@ -5219,6 +5632,110 @@ type SearchApplication struct {
 
 func (s *SearchApplication) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchApplication
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type SearchApplicationQueryStats struct {
+	// Date: Date for which query stats were calculated. Stats calculated on
+	// the next
+	// day close to midnight are returned.
+	Date *Date `json:"date,omitempty"`
+
+	QueryCountByStatus []*QueryCountByStatus `json:"queryCountByStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Date") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Date") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SearchApplicationQueryStats) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchApplicationQueryStats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type SearchApplicationSessionStats struct {
+	// Date: Date for which session stats were calculated. Stats calculated
+	// on the next
+	// day close to midnight are returned.
+	Date *Date `json:"date,omitempty"`
+
+	// SearchSessionsCount: The count of search sessions on the day
+	SearchSessionsCount int64 `json:"searchSessionsCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Date") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Date") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SearchApplicationSessionStats) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchApplicationSessionStats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type SearchApplicationUserStats struct {
+	// Date: Date for which session stats were calculated. Stats calculated
+	// on the next
+	// day close to midnight are returned.
+	Date *Date `json:"date,omitempty"`
+
+	// OneDayActiveUsersCount: The count of unique active users in the past
+	// one day
+	OneDayActiveUsersCount int64 `json:"oneDayActiveUsersCount,omitempty,string"`
+
+	// SevenDaysActiveUsersCount: The count of unique active users in the
+	// past seven days
+	SevenDaysActiveUsersCount int64 `json:"sevenDaysActiveUsersCount,omitempty,string"`
+
+	// ThirtyDaysActiveUsersCount: The count of unique active users in the
+	// past thirty days
+	ThirtyDaysActiveUsersCount int64 `json:"thirtyDaysActiveUsersCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Date") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Date") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SearchApplicationUserStats) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchApplicationUserStats
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6694,7 +7211,7 @@ func (c *DebugDatasourcesItemsCheckAccessCall) Header() http.Header {
 
 func (c *DebugDatasourcesItemsCheckAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6842,7 +7359,7 @@ func (c *DebugDatasourcesItemsSearchByViewUrlCall) Header() http.Header {
 
 func (c *DebugDatasourcesItemsSearchByViewUrlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7037,7 +7554,7 @@ func (c *DebugDatasourcesItemsUnmappedidsListCall) Header() http.Header {
 
 func (c *DebugDatasourcesItemsUnmappedidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7256,7 +7773,7 @@ func (c *DebugIdentitysourcesItemsListForunmappedidentityCall) Header() http.Hea
 
 func (c *DebugIdentitysourcesItemsListForunmappedidentityCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7487,7 +8004,7 @@ func (c *DebugIdentitysourcesUnmappedidsListCall) Header() http.Header {
 
 func (c *DebugIdentitysourcesUnmappedidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7680,7 +8197,7 @@ func (c *IndexingDatasourcesDeleteSchemaCall) Header() http.Header {
 
 func (c *IndexingDatasourcesDeleteSchemaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7837,7 +8354,7 @@ func (c *IndexingDatasourcesGetSchemaCall) Header() http.Header {
 
 func (c *IndexingDatasourcesGetSchemaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7979,7 +8496,7 @@ func (c *IndexingDatasourcesUpdateSchemaCall) Header() http.Header {
 
 func (c *IndexingDatasourcesUpdateSchemaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8086,7 +8603,11 @@ type IndexingDatasourcesItemsDeleteCall struct {
 }
 
 // Delete: Deletes Item resource for the
-// specified resource name.
+// specified resource name. This API requires an admin or service
+// account
+// to execute. The service account used is the one whitelisted in
+// the
+// corresponding data source.
 func (r *IndexingDatasourcesItemsService) Delete(name string) *IndexingDatasourcesItemsDeleteCall {
 	c := &IndexingDatasourcesItemsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8164,7 +8685,7 @@ func (c *IndexingDatasourcesItemsDeleteCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8223,7 +8744,7 @@ func (c *IndexingDatasourcesItemsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes Item resource for the\nspecified resource name.",
+	//   "description": "Deletes Item resource for the\nspecified resource name. This API requires an admin or service account\nto execute. The service account used is the one whitelisted in the\ncorresponding data source.",
 	//   "flatPath": "v1/indexing/datasources/{datasourcesId}/items/{itemsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudsearch.indexing.datasources.items.delete",
@@ -8291,6 +8812,10 @@ type IndexingDatasourcesItemsDeleteQueueItemsCall struct {
 // DeleteQueueItems: Deletes all items in a queue. This method is useful
 // for deleting stale
 // items.
+//
+// This API requires an admin or service account to execute. The
+// service
+// account used is the one whitelisted in the corresponding data source.
 func (r *IndexingDatasourcesItemsService) DeleteQueueItems(name string, deletequeueitemsrequest *DeleteQueueItemsRequest) *IndexingDatasourcesItemsDeleteQueueItemsCall {
 	c := &IndexingDatasourcesItemsDeleteQueueItemsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8325,7 +8850,7 @@ func (c *IndexingDatasourcesItemsDeleteQueueItemsCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsDeleteQueueItemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8389,7 +8914,7 @@ func (c *IndexingDatasourcesItemsDeleteQueueItemsCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes all items in a queue. This method is useful for deleting stale\nitems.",
+	//   "description": "Deletes all items in a queue. This method is useful for deleting stale\nitems.\n\nThis API requires an admin or service account to execute. The service\naccount used is the one whitelisted in the corresponding data source.",
 	//   "flatPath": "v1/indexing/datasources/{datasourcesId}/items:deleteQueueItems",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsearch.indexing.datasources.items.deleteQueueItems",
@@ -8432,6 +8957,10 @@ type IndexingDatasourcesItemsGetCall struct {
 }
 
 // Get: Gets Item resource by item name.
+//
+// This API requires an admin or service account to execute.  The
+// service
+// account used is the one whitelisted in the corresponding data source.
 func (r *IndexingDatasourcesItemsService) Get(name string) *IndexingDatasourcesItemsGetCall {
 	c := &IndexingDatasourcesItemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8492,7 +9021,7 @@ func (c *IndexingDatasourcesItemsGetCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8554,7 +9083,7 @@ func (c *IndexingDatasourcesItemsGetCall) Do(opts ...googleapi.CallOption) (*Ite
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets Item resource by item name.",
+	//   "description": "Gets Item resource by item name.\n\nThis API requires an admin or service account to execute.  The service\naccount used is the one whitelisted in the corresponding data source.",
 	//   "flatPath": "v1/indexing/datasources/{datasourcesId}/items/{itemsId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsearch.indexing.datasources.items.get",
@@ -8609,6 +9138,10 @@ type IndexingDatasourcesItemsIndexCall struct {
 // This method does not support partial updates.  Fields with no
 // provided
 // values are cleared out in the Cloud Search index.
+//
+// This API requires an admin or service account to execute. The
+// service
+// account used is the one whitelisted in the corresponding data source.
 func (r *IndexingDatasourcesItemsService) Index(name string, indexitemrequest *IndexItemRequest) *IndexingDatasourcesItemsIndexCall {
 	c := &IndexingDatasourcesItemsIndexCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8643,7 +9176,7 @@ func (c *IndexingDatasourcesItemsIndexCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsIndexCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8707,7 +9240,7 @@ func (c *IndexingDatasourcesItemsIndexCall) Do(opts ...googleapi.CallOption) (*O
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates Item ACL, metadata, and\ncontent. It will insert the Item if it\ndoes not exist.\nThis method does not support partial updates.  Fields with no provided\nvalues are cleared out in the Cloud Search index.",
+	//   "description": "Updates Item ACL, metadata, and\ncontent. It will insert the Item if it\ndoes not exist.\nThis method does not support partial updates.  Fields with no provided\nvalues are cleared out in the Cloud Search index.\n\nThis API requires an admin or service account to execute. The service\naccount used is the one whitelisted in the corresponding data source.",
 	//   "flatPath": "v1/indexing/datasources/{datasourcesId}/items/{itemsId}:index",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsearch.indexing.datasources.items.index",
@@ -8750,6 +9283,10 @@ type IndexingDatasourcesItemsListCall struct {
 }
 
 // List: Lists all or a subset of Item resources.
+//
+// This API requires an admin or service account to execute. The
+// service
+// account used is the one whitelisted in the corresponding data source.
 func (r *IndexingDatasourcesItemsService) List(name string) *IndexingDatasourcesItemsListCall {
 	c := &IndexingDatasourcesItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8761,10 +9298,25 @@ func (r *IndexingDatasourcesItemsService) List(name string) *IndexingDatasources
 // fields:
 // name,
 // version,
+// queue.
 // metadata.hash,
-// structured_data.hash,
-// content.ha
-// sh.
+// metadata.title,
+// metadata.
+// sourceRepositoryURL,
+// metadata.objectType,
+// metadata.createTime,
+// metadat
+// a.updateTime,
+// metadata.contentLanguage,
+// metadata.mimeType,
+// structured_
+// data.hash,
+// content.hash,
+// itemType,
+// itemStatus.code,
+// itemStatus.process
+// ingError.code,
+// itemStatus.repositoryError.type,
 // <br />If this value is false, then all the fields are populated in
 // Item.
 func (c *IndexingDatasourcesItemsListCall) Brief(brief bool) *IndexingDatasourcesItemsListCall {
@@ -8844,7 +9396,7 @@ func (c *IndexingDatasourcesItemsListCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8906,7 +9458,7 @@ func (c *IndexingDatasourcesItemsListCall) Do(opts ...googleapi.CallOption) (*Li
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all or a subset of Item resources.",
+	//   "description": "Lists all or a subset of Item resources.\n\nThis API requires an admin or service account to execute. The service\naccount used is the one whitelisted in the corresponding data source.",
 	//   "flatPath": "v1/indexing/datasources/{datasourcesId}/items",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsearch.indexing.datasources.items.list",
@@ -8915,7 +9467,7 @@ func (c *IndexingDatasourcesItemsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//   ],
 	//   "parameters": {
 	//     "brief": {
-	//       "description": "When set to true, the indexing system only populates the following fields:\nname,\nversion,\nmetadata.hash,\nstructured_data.hash,\ncontent.hash.\n\u003cbr /\u003eIf this value is false, then all the fields are populated in Item.",
+	//       "description": "When set to true, the indexing system only populates the following fields:\nname,\nversion,\nqueue.\nmetadata.hash,\nmetadata.title,\nmetadata.sourceRepositoryURL,\nmetadata.objectType,\nmetadata.createTime,\nmetadata.updateTime,\nmetadata.contentLanguage,\nmetadata.mimeType,\nstructured_data.hash,\ncontent.hash,\nitemType,\nitemStatus.code,\nitemStatus.processingError.code,\nitemStatus.repositoryError.type,\n\u003cbr /\u003eIf this value is false, then all the fields are populated in Item.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -9020,6 +9572,10 @@ type IndexingDatasourcesItemsPollCall struct {
 // Items automatically become available (unreserved) after 4 hours even
 // if no
 // update or push method is called.
+//
+// This API requires an admin or service account to execute. The
+// service
+// account used is the one whitelisted in the corresponding data source.
 func (r *IndexingDatasourcesItemsService) Poll(name string, pollitemsrequest *PollItemsRequest) *IndexingDatasourcesItemsPollCall {
 	c := &IndexingDatasourcesItemsPollCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9054,7 +9610,7 @@ func (c *IndexingDatasourcesItemsPollCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsPollCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9118,7 +9674,7 @@ func (c *IndexingDatasourcesItemsPollCall) Do(opts ...googleapi.CallOption) (*Po
 	}
 	return ret, nil
 	// {
-	//   "description": "Polls for unreserved items from the indexing queue and marks a\nset as reserved, starting with items that have\nthe oldest timestamp from the highest priority\nItemStatus.\nThe priority order is as follows: \u003cbr /\u003e\nERROR\n\u003cbr /\u003e\nMODIFIED\n\u003cbr /\u003e\nNEW_ITEM\n\u003cbr /\u003e\nACCEPTED\n\u003cbr /\u003e\nReserving items ensures that polling from other threads\ncannot create overlapping sets.\n\nAfter handling the reserved items, the client should put items back\ninto the unreserved state, either by calling\nindex,\nor by calling\npush with\nthe type REQUEUE.\n\nItems automatically become available (unreserved) after 4 hours even if no\nupdate or push method is called.",
+	//   "description": "Polls for unreserved items from the indexing queue and marks a\nset as reserved, starting with items that have\nthe oldest timestamp from the highest priority\nItemStatus.\nThe priority order is as follows: \u003cbr /\u003e\nERROR\n\u003cbr /\u003e\nMODIFIED\n\u003cbr /\u003e\nNEW_ITEM\n\u003cbr /\u003e\nACCEPTED\n\u003cbr /\u003e\nReserving items ensures that polling from other threads\ncannot create overlapping sets.\n\nAfter handling the reserved items, the client should put items back\ninto the unreserved state, either by calling\nindex,\nor by calling\npush with\nthe type REQUEUE.\n\nItems automatically become available (unreserved) after 4 hours even if no\nupdate or push method is called.\n\nThis API requires an admin or service account to execute. The service\naccount used is the one whitelisted in the corresponding data source.",
 	//   "flatPath": "v1/indexing/datasources/{datasourcesId}/items:poll",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsearch.indexing.datasources.items.poll",
@@ -9160,7 +9716,12 @@ type IndexingDatasourcesItemsPushCall struct {
 	header_         http.Header
 }
 
-// Push: Pushes an item onto a queue for later polling and updating.
+// Push: Pushes an item onto a queue for later polling and
+// updating.
+//
+// This API requires an admin or service account to execute. The
+// service
+// account used is the one whitelisted in the corresponding data source.
 func (r *IndexingDatasourcesItemsService) Push(name string, pushitemrequest *PushItemRequest) *IndexingDatasourcesItemsPushCall {
 	c := &IndexingDatasourcesItemsPushCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9195,7 +9756,7 @@ func (c *IndexingDatasourcesItemsPushCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsPushCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9259,7 +9820,7 @@ func (c *IndexingDatasourcesItemsPushCall) Do(opts ...googleapi.CallOption) (*It
 	}
 	return ret, nil
 	// {
-	//   "description": "Pushes an item onto a queue for later polling and updating.",
+	//   "description": "Pushes an item onto a queue for later polling and updating.\n\nThis API requires an admin or service account to execute. The service\naccount used is the one whitelisted in the corresponding data source.",
 	//   "flatPath": "v1/indexing/datasources/{datasourcesId}/items/{itemsId}:push",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsearch.indexing.datasources.items.push",
@@ -9305,6 +9866,10 @@ type IndexingDatasourcesItemsUnreserveCall struct {
 // eligible to be
 // polled.  This method is useful for resetting the indexing queue
 // after a connector has been restarted.
+//
+// This API requires an admin or service account to execute. The
+// service
+// account used is the one whitelisted in the corresponding data source.
 func (r *IndexingDatasourcesItemsService) Unreserve(name string, unreserveitemsrequest *UnreserveItemsRequest) *IndexingDatasourcesItemsUnreserveCall {
 	c := &IndexingDatasourcesItemsUnreserveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9339,7 +9904,7 @@ func (c *IndexingDatasourcesItemsUnreserveCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsUnreserveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9403,7 +9968,7 @@ func (c *IndexingDatasourcesItemsUnreserveCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Unreserves all items from a queue, making them all eligible to be\npolled.  This method is useful for resetting the indexing queue\nafter a connector has been restarted.",
+	//   "description": "Unreserves all items from a queue, making them all eligible to be\npolled.  This method is useful for resetting the indexing queue\nafter a connector has been restarted.\n\nThis API requires an admin or service account to execute. The service\naccount used is the one whitelisted in the corresponding data source.",
 	//   "flatPath": "v1/indexing/datasources/{datasourcesId}/items:unreserve",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsearch.indexing.datasources.items.unreserve",
@@ -9450,6 +10015,10 @@ type IndexingDatasourcesItemsUploadCall struct {
 // than 100 KB, it's easier to embed the content
 // inline within
 // an index request.
+//
+// This API requires an admin or service account to execute. The
+// service
+// account used is the one whitelisted in the corresponding data source.
 func (r *IndexingDatasourcesItemsService) Upload(name string, startuploaditemrequest *StartUploadItemRequest) *IndexingDatasourcesItemsUploadCall {
 	c := &IndexingDatasourcesItemsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9484,7 +10053,7 @@ func (c *IndexingDatasourcesItemsUploadCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9548,7 +10117,7 @@ func (c *IndexingDatasourcesItemsUploadCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an upload session for uploading item content. For items smaller\nthan 100 KB, it's easier to embed the content\ninline within\nan index request.",
+	//   "description": "Creates an upload session for uploading item content. For items smaller\nthan 100 KB, it's easier to embed the content\ninline within\nan index request.\n\nThis API requires an admin or service account to execute. The service\naccount used is the one whitelisted in the corresponding data source.",
 	//   "flatPath": "v1/indexing/datasources/{datasourcesId}/items/{itemsId}:upload",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsearch.indexing.datasources.items.upload",
@@ -9693,7 +10262,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9887,7 +10456,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10031,7 +10600,7 @@ func (c *QuerySearchCall) Header() http.Header {
 
 func (c *QuerySearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10157,7 +10726,7 @@ func (c *QuerySuggestCall) Header() http.Header {
 
 func (c *QuerySuggestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10354,7 +10923,7 @@ func (c *QuerySourcesListCall) Header() http.Header {
 
 func (c *QuerySourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10522,7 +11091,7 @@ func (c *SettingsDatasourcesCreateCall) Header() http.Header {
 
 func (c *SettingsDatasourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10658,7 +11227,7 @@ func (c *SettingsDatasourcesDeleteCall) Header() http.Header {
 
 func (c *SettingsDatasourcesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10815,7 +11384,7 @@ func (c *SettingsDatasourcesGetCall) Header() http.Header {
 
 func (c *SettingsDatasourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10989,7 +11558,7 @@ func (c *SettingsDatasourcesListCall) Header() http.Header {
 
 func (c *SettingsDatasourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11151,7 +11720,7 @@ func (c *SettingsDatasourcesUpdateCall) Header() http.Header {
 
 func (c *SettingsDatasourcesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11291,7 +11860,7 @@ func (c *SettingsSearchapplicationsCreateCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11427,7 +11996,7 @@ func (c *SettingsSearchapplicationsDeleteCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11584,7 +12153,7 @@ func (c *SettingsSearchapplicationsGetCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11758,7 +12327,7 @@ func (c *SettingsSearchapplicationsListCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11922,7 +12491,7 @@ func (c *SettingsSearchapplicationsResetCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12064,7 +12633,7 @@ func (c *SettingsSearchapplicationsUpdateCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12259,7 +12828,7 @@ func (c *StatsGetIndexCall) Header() http.Header {
 
 func (c *StatsGetIndexCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12374,6 +12943,636 @@ func (c *StatsGetIndexCall) Do(opts ...googleapi.CallOption) (*GetCustomerIndexS
 
 }
 
+// method id "cloudsearch.stats.getQuery":
+
+type StatsGetQueryCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetQuery: Get the query statistics for customer
+func (r *StatsService) GetQuery() *StatsGetQueryCall {
+	c := &StatsGetQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// FromDateDay sets the optional parameter "fromDate.day": Day of month.
+// Must be from 1 to 31 and valid for the year and month.
+func (c *StatsGetQueryCall) FromDateDay(fromDateDay int64) *StatsGetQueryCall {
+	c.urlParams_.Set("fromDate.day", fmt.Sprint(fromDateDay))
+	return c
+}
+
+// FromDateMonth sets the optional parameter "fromDate.month": Month of
+// date. Must be from 1 to 12.
+func (c *StatsGetQueryCall) FromDateMonth(fromDateMonth int64) *StatsGetQueryCall {
+	c.urlParams_.Set("fromDate.month", fmt.Sprint(fromDateMonth))
+	return c
+}
+
+// FromDateYear sets the optional parameter "fromDate.year": Year of
+// date. Must be from 1 to 9999.
+func (c *StatsGetQueryCall) FromDateYear(fromDateYear int64) *StatsGetQueryCall {
+	c.urlParams_.Set("fromDate.year", fmt.Sprint(fromDateYear))
+	return c
+}
+
+// ToDateDay sets the optional parameter "toDate.day": Day of month.
+// Must be from 1 to 31 and valid for the year and month.
+func (c *StatsGetQueryCall) ToDateDay(toDateDay int64) *StatsGetQueryCall {
+	c.urlParams_.Set("toDate.day", fmt.Sprint(toDateDay))
+	return c
+}
+
+// ToDateMonth sets the optional parameter "toDate.month": Month of
+// date. Must be from 1 to 12.
+func (c *StatsGetQueryCall) ToDateMonth(toDateMonth int64) *StatsGetQueryCall {
+	c.urlParams_.Set("toDate.month", fmt.Sprint(toDateMonth))
+	return c
+}
+
+// ToDateYear sets the optional parameter "toDate.year": Year of date.
+// Must be from 1 to 9999.
+func (c *StatsGetQueryCall) ToDateYear(toDateYear int64) *StatsGetQueryCall {
+	c.urlParams_.Set("toDate.year", fmt.Sprint(toDateYear))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *StatsGetQueryCall) Fields(s ...googleapi.Field) *StatsGetQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *StatsGetQueryCall) IfNoneMatch(entityTag string) *StatsGetQueryCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *StatsGetQueryCall) Context(ctx context.Context) *StatsGetQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *StatsGetQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *StatsGetQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/stats/query")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudsearch.stats.getQuery" call.
+// Exactly one of *GetCustomerQueryStatsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GetCustomerQueryStatsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *StatsGetQueryCall) Do(opts ...googleapi.CallOption) (*GetCustomerQueryStatsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GetCustomerQueryStatsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the query statistics for customer",
+	//   "flatPath": "v1/stats/query",
+	//   "httpMethod": "GET",
+	//   "id": "cloudsearch.stats.getQuery",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "fromDate.day": {
+	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "fromDate.month": {
+	//       "description": "Month of date. Must be from 1 to 12.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "fromDate.year": {
+	//       "description": "Year of date. Must be from 1 to 9999.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "toDate.day": {
+	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "toDate.month": {
+	//       "description": "Month of date. Must be from 1 to 12.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "toDate.year": {
+	//       "description": "Year of date. Must be from 1 to 9999.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "v1/stats/query",
+	//   "response": {
+	//     "$ref": "GetCustomerQueryStatsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud_search",
+	//     "https://www.googleapis.com/auth/cloud_search.stats",
+	//     "https://www.googleapis.com/auth/cloud_search.stats.indexing"
+	//   ]
+	// }
+
+}
+
+// method id "cloudsearch.stats.getSession":
+
+type StatsGetSessionCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSession: Get the # of search sessions for the customer
+func (r *StatsService) GetSession() *StatsGetSessionCall {
+	c := &StatsGetSessionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// FromDateDay sets the optional parameter "fromDate.day": Day of month.
+// Must be from 1 to 31 and valid for the year and month.
+func (c *StatsGetSessionCall) FromDateDay(fromDateDay int64) *StatsGetSessionCall {
+	c.urlParams_.Set("fromDate.day", fmt.Sprint(fromDateDay))
+	return c
+}
+
+// FromDateMonth sets the optional parameter "fromDate.month": Month of
+// date. Must be from 1 to 12.
+func (c *StatsGetSessionCall) FromDateMonth(fromDateMonth int64) *StatsGetSessionCall {
+	c.urlParams_.Set("fromDate.month", fmt.Sprint(fromDateMonth))
+	return c
+}
+
+// FromDateYear sets the optional parameter "fromDate.year": Year of
+// date. Must be from 1 to 9999.
+func (c *StatsGetSessionCall) FromDateYear(fromDateYear int64) *StatsGetSessionCall {
+	c.urlParams_.Set("fromDate.year", fmt.Sprint(fromDateYear))
+	return c
+}
+
+// ToDateDay sets the optional parameter "toDate.day": Day of month.
+// Must be from 1 to 31 and valid for the year and month.
+func (c *StatsGetSessionCall) ToDateDay(toDateDay int64) *StatsGetSessionCall {
+	c.urlParams_.Set("toDate.day", fmt.Sprint(toDateDay))
+	return c
+}
+
+// ToDateMonth sets the optional parameter "toDate.month": Month of
+// date. Must be from 1 to 12.
+func (c *StatsGetSessionCall) ToDateMonth(toDateMonth int64) *StatsGetSessionCall {
+	c.urlParams_.Set("toDate.month", fmt.Sprint(toDateMonth))
+	return c
+}
+
+// ToDateYear sets the optional parameter "toDate.year": Year of date.
+// Must be from 1 to 9999.
+func (c *StatsGetSessionCall) ToDateYear(toDateYear int64) *StatsGetSessionCall {
+	c.urlParams_.Set("toDate.year", fmt.Sprint(toDateYear))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *StatsGetSessionCall) Fields(s ...googleapi.Field) *StatsGetSessionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *StatsGetSessionCall) IfNoneMatch(entityTag string) *StatsGetSessionCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *StatsGetSessionCall) Context(ctx context.Context) *StatsGetSessionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *StatsGetSessionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *StatsGetSessionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/stats/session")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudsearch.stats.getSession" call.
+// Exactly one of *GetCustomerSessionStatsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GetCustomerSessionStatsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *StatsGetSessionCall) Do(opts ...googleapi.CallOption) (*GetCustomerSessionStatsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GetCustomerSessionStatsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the # of search sessions for the customer",
+	//   "flatPath": "v1/stats/session",
+	//   "httpMethod": "GET",
+	//   "id": "cloudsearch.stats.getSession",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "fromDate.day": {
+	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "fromDate.month": {
+	//       "description": "Month of date. Must be from 1 to 12.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "fromDate.year": {
+	//       "description": "Year of date. Must be from 1 to 9999.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "toDate.day": {
+	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "toDate.month": {
+	//       "description": "Month of date. Must be from 1 to 12.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "toDate.year": {
+	//       "description": "Year of date. Must be from 1 to 9999.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "v1/stats/session",
+	//   "response": {
+	//     "$ref": "GetCustomerSessionStatsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud_search",
+	//     "https://www.googleapis.com/auth/cloud_search.stats",
+	//     "https://www.googleapis.com/auth/cloud_search.stats.indexing"
+	//   ]
+	// }
+
+}
+
+// method id "cloudsearch.stats.getUser":
+
+type StatsGetUserCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetUser: Get the users statistics for customer
+func (r *StatsService) GetUser() *StatsGetUserCall {
+	c := &StatsGetUserCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// FromDateDay sets the optional parameter "fromDate.day": Day of month.
+// Must be from 1 to 31 and valid for the year and month.
+func (c *StatsGetUserCall) FromDateDay(fromDateDay int64) *StatsGetUserCall {
+	c.urlParams_.Set("fromDate.day", fmt.Sprint(fromDateDay))
+	return c
+}
+
+// FromDateMonth sets the optional parameter "fromDate.month": Month of
+// date. Must be from 1 to 12.
+func (c *StatsGetUserCall) FromDateMonth(fromDateMonth int64) *StatsGetUserCall {
+	c.urlParams_.Set("fromDate.month", fmt.Sprint(fromDateMonth))
+	return c
+}
+
+// FromDateYear sets the optional parameter "fromDate.year": Year of
+// date. Must be from 1 to 9999.
+func (c *StatsGetUserCall) FromDateYear(fromDateYear int64) *StatsGetUserCall {
+	c.urlParams_.Set("fromDate.year", fmt.Sprint(fromDateYear))
+	return c
+}
+
+// ToDateDay sets the optional parameter "toDate.day": Day of month.
+// Must be from 1 to 31 and valid for the year and month.
+func (c *StatsGetUserCall) ToDateDay(toDateDay int64) *StatsGetUserCall {
+	c.urlParams_.Set("toDate.day", fmt.Sprint(toDateDay))
+	return c
+}
+
+// ToDateMonth sets the optional parameter "toDate.month": Month of
+// date. Must be from 1 to 12.
+func (c *StatsGetUserCall) ToDateMonth(toDateMonth int64) *StatsGetUserCall {
+	c.urlParams_.Set("toDate.month", fmt.Sprint(toDateMonth))
+	return c
+}
+
+// ToDateYear sets the optional parameter "toDate.year": Year of date.
+// Must be from 1 to 9999.
+func (c *StatsGetUserCall) ToDateYear(toDateYear int64) *StatsGetUserCall {
+	c.urlParams_.Set("toDate.year", fmt.Sprint(toDateYear))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *StatsGetUserCall) Fields(s ...googleapi.Field) *StatsGetUserCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *StatsGetUserCall) IfNoneMatch(entityTag string) *StatsGetUserCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *StatsGetUserCall) Context(ctx context.Context) *StatsGetUserCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *StatsGetUserCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *StatsGetUserCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/stats/user")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudsearch.stats.getUser" call.
+// Exactly one of *GetCustomerUserStatsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GetCustomerUserStatsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *StatsGetUserCall) Do(opts ...googleapi.CallOption) (*GetCustomerUserStatsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GetCustomerUserStatsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the users statistics for customer",
+	//   "flatPath": "v1/stats/user",
+	//   "httpMethod": "GET",
+	//   "id": "cloudsearch.stats.getUser",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "fromDate.day": {
+	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "fromDate.month": {
+	//       "description": "Month of date. Must be from 1 to 12.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "fromDate.year": {
+	//       "description": "Year of date. Must be from 1 to 9999.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "toDate.day": {
+	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "toDate.month": {
+	//       "description": "Month of date. Must be from 1 to 12.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "toDate.year": {
+	//       "description": "Year of date. Must be from 1 to 9999.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "v1/stats/user",
+	//   "response": {
+	//     "$ref": "GetCustomerUserStatsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud_search",
+	//     "https://www.googleapis.com/auth/cloud_search.stats",
+	//     "https://www.googleapis.com/auth/cloud_search.stats.indexing"
+	//   ]
+	// }
+
+}
+
 // method id "cloudsearch.stats.index.datasources.get":
 
 type StatsIndexDatasourcesGetCall struct {
@@ -12471,7 +13670,7 @@ func (c *StatsIndexDatasourcesGetCall) Header() http.Header {
 
 func (c *StatsIndexDatasourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12588,6 +13787,682 @@ func (c *StatsIndexDatasourcesGetCall) Do(opts ...googleapi.CallOption) (*GetDat
 	//   "path": "v1/stats/index/{+name}",
 	//   "response": {
 	//     "$ref": "GetDataSourceIndexStatsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud_search",
+	//     "https://www.googleapis.com/auth/cloud_search.stats",
+	//     "https://www.googleapis.com/auth/cloud_search.stats.indexing"
+	//   ]
+	// }
+
+}
+
+// method id "cloudsearch.stats.query.searchapplications.get":
+
+type StatsQuerySearchapplicationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the query statistics for search application
+func (r *StatsQuerySearchapplicationsService) Get(name string) *StatsQuerySearchapplicationsGetCall {
+	c := &StatsQuerySearchapplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// FromDateDay sets the optional parameter "fromDate.day": Day of month.
+// Must be from 1 to 31 and valid for the year and month.
+func (c *StatsQuerySearchapplicationsGetCall) FromDateDay(fromDateDay int64) *StatsQuerySearchapplicationsGetCall {
+	c.urlParams_.Set("fromDate.day", fmt.Sprint(fromDateDay))
+	return c
+}
+
+// FromDateMonth sets the optional parameter "fromDate.month": Month of
+// date. Must be from 1 to 12.
+func (c *StatsQuerySearchapplicationsGetCall) FromDateMonth(fromDateMonth int64) *StatsQuerySearchapplicationsGetCall {
+	c.urlParams_.Set("fromDate.month", fmt.Sprint(fromDateMonth))
+	return c
+}
+
+// FromDateYear sets the optional parameter "fromDate.year": Year of
+// date. Must be from 1 to 9999.
+func (c *StatsQuerySearchapplicationsGetCall) FromDateYear(fromDateYear int64) *StatsQuerySearchapplicationsGetCall {
+	c.urlParams_.Set("fromDate.year", fmt.Sprint(fromDateYear))
+	return c
+}
+
+// ToDateDay sets the optional parameter "toDate.day": Day of month.
+// Must be from 1 to 31 and valid for the year and month.
+func (c *StatsQuerySearchapplicationsGetCall) ToDateDay(toDateDay int64) *StatsQuerySearchapplicationsGetCall {
+	c.urlParams_.Set("toDate.day", fmt.Sprint(toDateDay))
+	return c
+}
+
+// ToDateMonth sets the optional parameter "toDate.month": Month of
+// date. Must be from 1 to 12.
+func (c *StatsQuerySearchapplicationsGetCall) ToDateMonth(toDateMonth int64) *StatsQuerySearchapplicationsGetCall {
+	c.urlParams_.Set("toDate.month", fmt.Sprint(toDateMonth))
+	return c
+}
+
+// ToDateYear sets the optional parameter "toDate.year": Year of date.
+// Must be from 1 to 9999.
+func (c *StatsQuerySearchapplicationsGetCall) ToDateYear(toDateYear int64) *StatsQuerySearchapplicationsGetCall {
+	c.urlParams_.Set("toDate.year", fmt.Sprint(toDateYear))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *StatsQuerySearchapplicationsGetCall) Fields(s ...googleapi.Field) *StatsQuerySearchapplicationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *StatsQuerySearchapplicationsGetCall) IfNoneMatch(entityTag string) *StatsQuerySearchapplicationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *StatsQuerySearchapplicationsGetCall) Context(ctx context.Context) *StatsQuerySearchapplicationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *StatsQuerySearchapplicationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *StatsQuerySearchapplicationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/stats/query/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudsearch.stats.query.searchapplications.get" call.
+// Exactly one of *GetSearchApplicationQueryStatsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GetSearchApplicationQueryStatsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *StatsQuerySearchapplicationsGetCall) Do(opts ...googleapi.CallOption) (*GetSearchApplicationQueryStatsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GetSearchApplicationQueryStatsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the query statistics for search application",
+	//   "flatPath": "v1/stats/query/searchapplications/{searchapplicationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "cloudsearch.stats.query.searchapplications.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "fromDate.day": {
+	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "fromDate.month": {
+	//       "description": "Month of date. Must be from 1 to 12.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "fromDate.year": {
+	//       "description": "Year of date. Must be from 1 to 9999.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "name": {
+	//       "description": "The resource id of the search application query stats, in the following\nformat: searchapplications/{application_id}",
+	//       "location": "path",
+	//       "pattern": "^searchapplications/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "toDate.day": {
+	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "toDate.month": {
+	//       "description": "Month of date. Must be from 1 to 12.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "toDate.year": {
+	//       "description": "Year of date. Must be from 1 to 9999.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "v1/stats/query/{+name}",
+	//   "response": {
+	//     "$ref": "GetSearchApplicationQueryStatsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud_search",
+	//     "https://www.googleapis.com/auth/cloud_search.stats",
+	//     "https://www.googleapis.com/auth/cloud_search.stats.indexing"
+	//   ]
+	// }
+
+}
+
+// method id "cloudsearch.stats.session.searchapplications.get":
+
+type StatsSessionSearchapplicationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the # of search sessions for the search application
+func (r *StatsSessionSearchapplicationsService) Get(name string) *StatsSessionSearchapplicationsGetCall {
+	c := &StatsSessionSearchapplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// FromDateDay sets the optional parameter "fromDate.day": Day of month.
+// Must be from 1 to 31 and valid for the year and month.
+func (c *StatsSessionSearchapplicationsGetCall) FromDateDay(fromDateDay int64) *StatsSessionSearchapplicationsGetCall {
+	c.urlParams_.Set("fromDate.day", fmt.Sprint(fromDateDay))
+	return c
+}
+
+// FromDateMonth sets the optional parameter "fromDate.month": Month of
+// date. Must be from 1 to 12.
+func (c *StatsSessionSearchapplicationsGetCall) FromDateMonth(fromDateMonth int64) *StatsSessionSearchapplicationsGetCall {
+	c.urlParams_.Set("fromDate.month", fmt.Sprint(fromDateMonth))
+	return c
+}
+
+// FromDateYear sets the optional parameter "fromDate.year": Year of
+// date. Must be from 1 to 9999.
+func (c *StatsSessionSearchapplicationsGetCall) FromDateYear(fromDateYear int64) *StatsSessionSearchapplicationsGetCall {
+	c.urlParams_.Set("fromDate.year", fmt.Sprint(fromDateYear))
+	return c
+}
+
+// ToDateDay sets the optional parameter "toDate.day": Day of month.
+// Must be from 1 to 31 and valid for the year and month.
+func (c *StatsSessionSearchapplicationsGetCall) ToDateDay(toDateDay int64) *StatsSessionSearchapplicationsGetCall {
+	c.urlParams_.Set("toDate.day", fmt.Sprint(toDateDay))
+	return c
+}
+
+// ToDateMonth sets the optional parameter "toDate.month": Month of
+// date. Must be from 1 to 12.
+func (c *StatsSessionSearchapplicationsGetCall) ToDateMonth(toDateMonth int64) *StatsSessionSearchapplicationsGetCall {
+	c.urlParams_.Set("toDate.month", fmt.Sprint(toDateMonth))
+	return c
+}
+
+// ToDateYear sets the optional parameter "toDate.year": Year of date.
+// Must be from 1 to 9999.
+func (c *StatsSessionSearchapplicationsGetCall) ToDateYear(toDateYear int64) *StatsSessionSearchapplicationsGetCall {
+	c.urlParams_.Set("toDate.year", fmt.Sprint(toDateYear))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *StatsSessionSearchapplicationsGetCall) Fields(s ...googleapi.Field) *StatsSessionSearchapplicationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *StatsSessionSearchapplicationsGetCall) IfNoneMatch(entityTag string) *StatsSessionSearchapplicationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *StatsSessionSearchapplicationsGetCall) Context(ctx context.Context) *StatsSessionSearchapplicationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *StatsSessionSearchapplicationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *StatsSessionSearchapplicationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/stats/session/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudsearch.stats.session.searchapplications.get" call.
+// Exactly one of *GetSearchApplicationSessionStatsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GetSearchApplicationSessionStatsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *StatsSessionSearchapplicationsGetCall) Do(opts ...googleapi.CallOption) (*GetSearchApplicationSessionStatsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GetSearchApplicationSessionStatsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the # of search sessions for the search application",
+	//   "flatPath": "v1/stats/session/searchapplications/{searchapplicationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "cloudsearch.stats.session.searchapplications.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "fromDate.day": {
+	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "fromDate.month": {
+	//       "description": "Month of date. Must be from 1 to 12.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "fromDate.year": {
+	//       "description": "Year of date. Must be from 1 to 9999.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "name": {
+	//       "description": "The resource id of the search application session stats, in the following\nformat: searchapplications/{application_id}",
+	//       "location": "path",
+	//       "pattern": "^searchapplications/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "toDate.day": {
+	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "toDate.month": {
+	//       "description": "Month of date. Must be from 1 to 12.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "toDate.year": {
+	//       "description": "Year of date. Must be from 1 to 9999.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "v1/stats/session/{+name}",
+	//   "response": {
+	//     "$ref": "GetSearchApplicationSessionStatsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud_search",
+	//     "https://www.googleapis.com/auth/cloud_search.stats",
+	//     "https://www.googleapis.com/auth/cloud_search.stats.indexing"
+	//   ]
+	// }
+
+}
+
+// method id "cloudsearch.stats.user.searchapplications.get":
+
+type StatsUserSearchapplicationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the users statistics for search application
+func (r *StatsUserSearchapplicationsService) Get(name string) *StatsUserSearchapplicationsGetCall {
+	c := &StatsUserSearchapplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// FromDateDay sets the optional parameter "fromDate.day": Day of month.
+// Must be from 1 to 31 and valid for the year and month.
+func (c *StatsUserSearchapplicationsGetCall) FromDateDay(fromDateDay int64) *StatsUserSearchapplicationsGetCall {
+	c.urlParams_.Set("fromDate.day", fmt.Sprint(fromDateDay))
+	return c
+}
+
+// FromDateMonth sets the optional parameter "fromDate.month": Month of
+// date. Must be from 1 to 12.
+func (c *StatsUserSearchapplicationsGetCall) FromDateMonth(fromDateMonth int64) *StatsUserSearchapplicationsGetCall {
+	c.urlParams_.Set("fromDate.month", fmt.Sprint(fromDateMonth))
+	return c
+}
+
+// FromDateYear sets the optional parameter "fromDate.year": Year of
+// date. Must be from 1 to 9999.
+func (c *StatsUserSearchapplicationsGetCall) FromDateYear(fromDateYear int64) *StatsUserSearchapplicationsGetCall {
+	c.urlParams_.Set("fromDate.year", fmt.Sprint(fromDateYear))
+	return c
+}
+
+// ToDateDay sets the optional parameter "toDate.day": Day of month.
+// Must be from 1 to 31 and valid for the year and month.
+func (c *StatsUserSearchapplicationsGetCall) ToDateDay(toDateDay int64) *StatsUserSearchapplicationsGetCall {
+	c.urlParams_.Set("toDate.day", fmt.Sprint(toDateDay))
+	return c
+}
+
+// ToDateMonth sets the optional parameter "toDate.month": Month of
+// date. Must be from 1 to 12.
+func (c *StatsUserSearchapplicationsGetCall) ToDateMonth(toDateMonth int64) *StatsUserSearchapplicationsGetCall {
+	c.urlParams_.Set("toDate.month", fmt.Sprint(toDateMonth))
+	return c
+}
+
+// ToDateYear sets the optional parameter "toDate.year": Year of date.
+// Must be from 1 to 9999.
+func (c *StatsUserSearchapplicationsGetCall) ToDateYear(toDateYear int64) *StatsUserSearchapplicationsGetCall {
+	c.urlParams_.Set("toDate.year", fmt.Sprint(toDateYear))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *StatsUserSearchapplicationsGetCall) Fields(s ...googleapi.Field) *StatsUserSearchapplicationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *StatsUserSearchapplicationsGetCall) IfNoneMatch(entityTag string) *StatsUserSearchapplicationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *StatsUserSearchapplicationsGetCall) Context(ctx context.Context) *StatsUserSearchapplicationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *StatsUserSearchapplicationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *StatsUserSearchapplicationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/stats/user/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudsearch.stats.user.searchapplications.get" call.
+// Exactly one of *GetSearchApplicationUserStatsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GetSearchApplicationUserStatsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *StatsUserSearchapplicationsGetCall) Do(opts ...googleapi.CallOption) (*GetSearchApplicationUserStatsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GetSearchApplicationUserStatsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the users statistics for search application",
+	//   "flatPath": "v1/stats/user/searchapplications/{searchapplicationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "cloudsearch.stats.user.searchapplications.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "fromDate.day": {
+	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "fromDate.month": {
+	//       "description": "Month of date. Must be from 1 to 12.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "fromDate.year": {
+	//       "description": "Year of date. Must be from 1 to 9999.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "name": {
+	//       "description": "The resource id of the search application session stats, in the following\nformat: searchapplications/{application_id}",
+	//       "location": "path",
+	//       "pattern": "^searchapplications/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "toDate.day": {
+	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "toDate.month": {
+	//       "description": "Month of date. Must be from 1 to 12.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "toDate.year": {
+	//       "description": "Year of date. Must be from 1 to 9999.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "v1/stats/user/{+name}",
+	//   "response": {
+	//     "$ref": "GetSearchApplicationUserStatsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud_search",

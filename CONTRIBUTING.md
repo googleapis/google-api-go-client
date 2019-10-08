@@ -298,8 +298,7 @@ $ git mail -r joe@golang.org -cc mabel@example.com,math-nuts@swtch.com
 
 Unless explicitly told otherwise, such as in the discussion leading
 up to sending in the change list, please specify
-`bradfitz@golang.org`, `gmlewis@google.com`, or
-`mcgreevy@golang.org` as a reviewer.
+`deklerk@google.com` and `cbro@google.com` as reviewers.
 
 (In Git terms, `git mail` pushes the local committed
 changes to Gerrit using `git push origin HEAD:refs/for/master`.)

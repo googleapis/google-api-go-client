@@ -44,25 +44,27 @@ func TestApply(t *testing.T) {
 		WithAudiences("https://example.com/"),
 		WithQuotaProject("user-project"),
 		WithRequestReason("Request Reason"),
+		WithTelemetryDisabled(),
 	}
 	var got internal.DialSettings
 	for _, opt := range opts {
 		opt.Apply(&got)
 	}
 	want := internal.DialSettings{
-		Scopes:          []string{"https://example.com/auth/helloworld", "https://example.com/auth/otherthing"},
-		UserAgent:       "ua",
-		Endpoint:        "https://example.com:443",
-		GRPCConn:        conn,
-		Credentials:     &google.DefaultCredentials{ProjectID: "p"},
-		CredentialsFile: "service-account.json",
-		CredentialsJSON: []byte(`{some: "json"}`),
-		APIKey:          "api-key",
-		Audiences:       []string{"https://example.com/"},
-		QuotaProject:    "user-project",
-		RequestReason:   "Request Reason",
+		Scopes:            []string{"https://example.com/auth/helloworld", "https://example.com/auth/otherthing"},
+		UserAgent:         "ua",
+		Endpoint:          "https://example.com:443",
+		GRPCConn:          conn,
+		Credentials:       &google.DefaultCredentials{ProjectID: "p"},
+		CredentialsFile:   "service-account.json",
+		CredentialsJSON:   []byte(`{some: "json"}`),
+		APIKey:            "api-key",
+		Audiences:         []string{"https://example.com/"},
+		QuotaProject:      "user-project",
+		RequestReason:     "Request Reason",
+		TelemetryDisabled: true,
 	}
 	if !cmp.Equal(got, want, cmpopts.IgnoreUnexported(grpc.ClientConn{})) {
-		t.Errorf("\ngot  %#v\nwant %#v", got, want)
+		t.Errorf(cmp.Diff(got, want, cmpopts.IgnoreUnexported(grpc.ClientConn{})))
 	}
 }

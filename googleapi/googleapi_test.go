@@ -120,45 +120,68 @@ func TestExpand(t *testing.T) {
 
 func TestResolveRelative(t *testing.T) {
 	resolveRelativeTests := []struct {
-		basestr string
-		relstr  string
-		want    string
+		basestr   string
+		relstr    string
+		want      string
+		wantPanic bool
 	}{
 		{
-			"http://www.golang.org/", "topics/myproject/mytopic",
-			"http://www.golang.org/topics/myproject/mytopic",
+			basestr: "http://www.golang.org/",
+			relstr:  "topics/myproject/mytopic",
+			want:    "http://www.golang.org/topics/myproject/mytopic",
 		},
 		{
-			"http://www.golang.org/", "topics/{+myproject}/{release}:build:test:deploy",
-			"http://www.golang.org/topics/{+myproject}/{release}:build:test:deploy",
+			basestr: "http://www.golang.org/",
+			relstr:  "topics/{+myproject}/{release}:build:test:deploy",
+			want:    "http://www.golang.org/topics/{+myproject}/{release}:build:test:deploy",
 		},
 		{
-			"https://www.googleapis.com/admin/reports/v1/", "/admin/reports_v1/channels/stop",
-			"https://www.googleapis.com/admin/reports_v1/channels/stop",
+			basestr: "https://www.googleapis.com/admin/reports/v1/",
+			relstr:  "/admin/reports_v1/channels/stop",
+			want:    "https://www.googleapis.com/admin/reports_v1/channels/stop",
 		},
 		{
-			"https://www.googleapis.com/admin/directory/v1/", "customer/{customerId}/orgunits{/orgUnitPath*}",
-			"https://www.googleapis.com/admin/directory/v1/customer/{customerId}/orgunits{/orgUnitPath*}",
+			basestr: "https://www.googleapis.com/admin/directory/v1/",
+			relstr:  "customer/{customerId}/orgunits{/orgUnitPath*}",
+			want:    "https://www.googleapis.com/admin/directory/v1/customer/{customerId}/orgunits{/orgUnitPath*}",
 		},
 		{
-			"https://www.googleapis.com/tagmanager/v2/", "accounts",
-			"https://www.googleapis.com/tagmanager/v2/accounts",
+			basestr: "https://www.googleapis.com/tagmanager/v2/",
+			relstr:  "accounts",
+			want:    "https://www.googleapis.com/tagmanager/v2/accounts",
 		},
 		{
-			"https://www.googleapis.com/tagmanager/v2/", "{+parent}/workspaces",
-			"https://www.googleapis.com/tagmanager/v2/{+parent}/workspaces",
+			basestr: "https://www.googleapis.com/tagmanager/v2/",
+			relstr:  "{+parent}/workspaces",
+			want:    "https://www.googleapis.com/tagmanager/v2/{+parent}/workspaces",
 		},
 		{
-			"https://www.googleapis.com/tagmanager/v2/", "{+path}:create_version",
-			"https://www.googleapis.com/tagmanager/v2/{+path}:create_version",
+			basestr: "https://www.googleapis.com/tagmanager/v2/",
+			relstr:  "{+path}:create_version",
+			want:    "https://www.googleapis.com/tagmanager/v2/{+path}:create_version",
+		},
+		{
+			basestr:   "http://localhost",
+			relstr:    ":8080foo",
+			wantPanic: true,
 		},
 	}
 
-	for i, test := range resolveRelativeTests {
-		got := ResolveRelative(test.basestr, test.relstr)
-		if got != test.want {
-			t.Errorf("got %q expected %q in test %d", got, test.want, i+1)
-		}
+	for _, test := range resolveRelativeTests {
+		t.Run(test.basestr+test.relstr, func(t *testing.T) {
+			if test.wantPanic {
+				defer func() {
+					if r := recover(); r == nil {
+						t.Errorf("expected panic, but did not see one")
+					}
+				}()
+			}
+
+			got := ResolveRelative(test.basestr, test.relstr)
+			if got != test.want {
+				t.Errorf("got %q expected %q", got, test.want)
+			}
+		})
 	}
 }
 

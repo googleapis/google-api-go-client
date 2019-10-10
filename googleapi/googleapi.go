@@ -256,14 +256,22 @@ func ProcessMediaOptions(opts []MediaOption) *MediaOptions {
 // "http://www.golang.org/topics/myproject/mytopic". It strips all parent
 // references (e.g. ../..) as well as anything after the host
 // (e.g. /bar/gaz gets stripped out of foo.com/bar/gaz).
+//
+// ResolveRelative panics if either basestr or relstr is not able to be parsed.
 func ResolveRelative(basestr, relstr string) string {
-	u, _ := url.Parse(basestr)
+	u, err := url.Parse(basestr)
+	if err != nil {
+		panic(fmt.Sprintf("failed to parse %q", basestr))
+	}
 	afterColonPath := ""
 	if i := strings.IndexRune(relstr, ':'); i > 0 {
 		afterColonPath = relstr[i+1:]
 		relstr = relstr[:i]
 	}
-	rel, _ := url.Parse(relstr)
+	rel, err := url.Parse(relstr)
+	if err != nil {
+		panic(fmt.Sprintf("failed to parse %q", relstr))
+	}
 	u = u.ResolveReference(rel)
 	us := u.String()
 	if afterColonPath != "" {

@@ -290,7 +290,7 @@
               ]
             },
             "setIamPolicy": {
-              "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+              "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
               "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}:setIamPolicy",
               "httpMethod": "POST",
               "id": "pubsub.projects.snapshots.setIamPolicy",
@@ -676,7 +676,7 @@
               ]
             },
             "setIamPolicy": {
-              "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+              "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
               "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}:setIamPolicy",
               "httpMethod": "POST",
               "id": "pubsub.projects.subscriptions.setIamPolicy",
@@ -946,7 +946,7 @@
               ]
             },
             "setIamPolicy": {
-              "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+              "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
               "flatPath": "v1/projects/{projectsId}/topics/{topicsId}:setIamPolicy",
               "httpMethod": "POST",
               "id": "pubsub.projects.topics.setIamPolicy",
@@ -1092,7 +1092,7 @@
       }
     }
   },
-  "revision": "20190923",
+  "revision": "20191001",
   "rootUrl": "https://pubsub.googleapis.com/",
   "schemas": {
     "AcknowledgeRequest": {

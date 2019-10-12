@@ -541,7 +541,7 @@
       }
     }
   },
-  "revision": "20190920",
+  "revision": "20191010",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "AddTenantProjectRequest": {
@@ -2487,6 +2487,17 @@
       "properties": {},
       "type": "object"
     },
+    "V1Beta1GenerateServiceIdentityResponse": {
+      "description": "Response message for the `GenerateServiceIdentity` method.\n\nThis response message is assigned to the `response` field of the returned\nOperation when that operation is done.",
+      "id": "V1Beta1GenerateServiceIdentityResponse",
+      "properties": {
+        "identity": {
+          "$ref": "V1Beta1ServiceIdentity",
+          "description": "ServiceIdentity that was created or retrieved."
+        }
+      },
+      "type": "object"
+    },
     "V1Beta1ImportProducerOverridesResponse": {
       "description": "Response message for ImportProducerOverrides",
       "id": "V1Beta1ImportProducerOverridesResponse",
@@ -2536,6 +2547,29 @@
       "description": "Response message for the `RefreshConsumer` method.\nThis response message is assigned to the `response` field of the returned\nOperation when that operation is done.",
       "id": "V1Beta1RefreshConsumerResponse",
       "properties": {},
+      "type": "object"
+    },
+    "V1Beta1ServiceIdentity": {
+      "description": "A service identity in the Identity and Access Management API.",
+      "id": "V1Beta1ServiceIdentity",
+      "properties": {
+        "email": {
+          "description": "The email address of the service identity.",
+          "type": "string"
+        },
+        "name": {
+          "description": "P4 service identity resource name.\n\nAn example name would be:\n`services/serviceconsumermanagement.googleapis.com/projects/123/serviceIdentities/default`",
+          "type": "string"
+        },
+        "tag": {
+          "description": "The P4 service identity configuration tag. This must be defined in\nactivation_grants. If not specified when creating the account, the tag is\nset to \"default\".",
+          "type": "string"
+        },
+        "uniqueId": {
+          "description": "The unique and stable id of the service identity.",
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "V1DisableConsumerResponse": {

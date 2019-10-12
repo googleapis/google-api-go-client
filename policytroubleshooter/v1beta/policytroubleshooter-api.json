@@ -127,7 +127,7 @@
       }
     }
   },
-  "revision": "20190929",
+  "revision": "20191005",
   "rootUrl": "https://policytroubleshooter.googleapis.com/",
   "schemas": {
     "GoogleCloudPolicytroubleshooterV1betaAccessTuple": {
@@ -217,6 +217,7 @@
           "type": "string"
         },
         "rolePermissionRelevance": {
+          "description": "The relevance of this permission with respect to the BindingExplanation.",
           "enum": [
             "HEURISTIC_RELEVANCE_UNSPECIFIED",
             "NORMAL",
@@ -233,9 +234,11 @@
       "type": "object"
     },
     "GoogleCloudPolicytroubleshooterV1betaBindingExplanationAnnotatedMembership": {
+      "description": "Encapsulated membership and the relevance of that membership with respect\nto BindingExplanation.",
       "id": "GoogleCloudPolicytroubleshooterV1betaBindingExplanationAnnotatedMembership",
       "properties": {
         "membership": {
+          "description": "Membership status.",
           "enum": [
             "MEMBERSHIP_UNSPECIFIED",
             "MEMBERSHIP_INCLUDED",
@@ -253,6 +256,7 @@
           "type": "string"
         },
         "relevance": {
+          "description": "Relevance of this membership with respect to BindingExplanation.",
           "enum": [
             "HEURISTIC_RELEVANCE_UNSPECIFIED",
             "NORMAL",

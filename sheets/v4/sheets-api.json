@@ -809,7 +809,7 @@
       }
     }
   },
-  "revision": "20190813",
+  "revision": "20191001",
   "rootUrl": "https://sheets.googleapis.com/",
   "schemas": {
     "AddBandingRequest": {
@@ -1132,6 +1132,47 @@
         "secondBandColor": {
           "$ref": "Color",
           "description": "The second color that is alternating. (Required)"
+        }
+      },
+      "type": "object"
+    },
+    "BaselineValueFormat": {
+      "description": "Formatting options for baseline value.",
+      "id": "BaselineValueFormat",
+      "properties": {
+        "comparisonType": {
+          "description": "The comparison type of key value with baseline value.",
+          "enum": [
+            "COMPARISON_TYPE_UNDEFINED",
+            "ABSOLUTE_DIFFERENCE",
+            "PERCENTAGE_DIFFERENCE"
+          ],
+          "enumDescriptions": [
+            "Default value, do not use.",
+            "Use absolute difference between key and baseline value.",
+            "Use percentage difference between key and baseline value."
+          ],
+          "type": "string"
+        },
+        "description": {
+          "description": "Description which is appended after the baseline value.\nThis field is optional.",
+          "type": "string"
+        },
+        "negativeColor": {
+          "$ref": "Color",
+          "description": "Color to be used, in case baseline value represents a negative change for\nkey value. This field is optional."
+        },
+        "position": {
+          "$ref": "TextPosition",
+          "description": "Specifies the horizontal text positioning of baseline value.\nThis field is optional. If not specified, default positioning is used."
+        },
+        "positiveColor": {
+          "$ref": "Color",
+          "description": "Color to be used, in case baseline value represents a positive change for\nkey value. This field is optional."
+        },
+        "textFormat": {
+          "$ref": "TextFormat",
+          "description": "Text formatting options for baseline value."
         }
       },
       "type": "object"
@@ -2281,6 +2322,21 @@
       },
       "type": "object"
     },
+    "ChartCustomNumberFormatOptions": {
+      "description": "Custom number formatting options for chart attributes.",
+      "id": "ChartCustomNumberFormatOptions",
+      "properties": {
+        "prefix": {
+          "description": "Custom prefix to be prepended to the chart attribute.\nThis field is optional.",
+          "type": "string"
+        },
+        "suffix": {
+          "description": "Custom suffix to be appended to the chart attribute.\nThis field is optional.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ChartData": {
       "description": "The data included in a domain or series.",
       "id": "ChartData",
@@ -2367,6 +2423,10 @@
         "pieChart": {
           "$ref": "PieChartSpec",
           "description": "A pie chart specification."
+        },
+        "scorecardChart": {
+          "$ref": "ScorecardChartSpec",
+          "description": "A scorecard chart specification."
         },
         "subtitle": {
           "description": "The subtitle of the chart.",
@@ -3876,6 +3936,21 @@
       },
       "type": "object"
     },
+    "KeyValueFormat": {
+      "description": "Formatting options for key value.",
+      "id": "KeyValueFormat",
+      "properties": {
+        "position": {
+          "$ref": "TextPosition",
+          "description": "Specifies the horizontal text positioning of key value.\nThis field is optional. If not specified, default positioning is used."
+        },
+        "textFormat": {
+          "$ref": "TextFormat",
+          "description": "Text formatting options for key value."
+        }
+      },
+      "type": "object"
+    },
     "LineStyle": {
       "description": "Properties that describe the style of a line.",
       "id": "LineStyle",
@@ -4922,6 +4997,74 @@
             "$ref": "CellData"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ScorecardChartSpec": {
+      "description": "A scorecard chart. Scorecard charts are used to highlight key performance\nindicators, known as KPIs, on the spreadsheet. A scorecard chart can\nrepresent things like total sales, average cost, or a top selling item. You\ncan specify a single data value, or aggregate over a range of data.\nPercentage or absolute difference from a baseline value can be highlighted,\nlike changes over time.",
+      "id": "ScorecardChartSpec",
+      "properties": {
+        "aggregateType": {
+          "description": "The aggregation type for key and baseline chart data in scorecard chart.\nThis field is optional.",
+          "enum": [
+            "CHART_AGGREGATE_TYPE_UNSPECIFIED",
+            "AVERAGE",
+            "COUNT",
+            "MAX",
+            "MEDIAN",
+            "MIN",
+            "SUM"
+          ],
+          "enumDescriptions": [
+            "Default value, do not use.",
+            "Average aggregate function.",
+            "Count aggregate function.",
+            "Maximum aggregate function.",
+            "Median aggregate function.",
+            "Minimum aggregate function.",
+            "Sum aggregate function."
+          ],
+          "type": "string"
+        },
+        "baselineValueData": {
+          "$ref": "ChartData",
+          "description": "The data for scorecard baseline value.\nThis field is optional."
+        },
+        "baselineValueFormat": {
+          "$ref": "BaselineValueFormat",
+          "description": "Formatting options for baseline value.\nThis field is needed only if baseline_value_data field is specified."
+        },
+        "customFormatOptions": {
+          "$ref": "ChartCustomNumberFormatOptions",
+          "description": "Custom formatting options for numeric key/baseline values in scorecard\nchart. This field is used only when [number_format_source] field is set to\n[ChartNumberFormatSource.CUSTOM]. This field is optional."
+        },
+        "keyValueData": {
+          "$ref": "ChartData",
+          "description": "The data for scorecard key value."
+        },
+        "keyValueFormat": {
+          "$ref": "KeyValueFormat",
+          "description": "Formatting options for key value."
+        },
+        "numberFormatSource": {
+          "description": "The number format source used in the scorecard chart.\nThis field is optional.",
+          "enum": [
+            "CHART_NUMBER_FORMAT_SOURCE_UNDEFINED",
+            "FROM_DATA",
+            "CUSTOM"
+          ],
+          "enumDescriptions": [
+            "Default value, do not use.",
+            "Inherit number formatting from data.",
+            "Apply custom formatting as specified by ChartCustomNumberFormatOptions."
+          ],
+          "type": "string"
+        },
+        "scaleFactor": {
+          "description": "Value to scale scorecard key and baseline value. For example, a factor of\n10 can be used to divide all values in the chart by 10.\nThis field is optional.",
+          "format": "double",
+          "type": "number"
         }
       },
       "type": "object"

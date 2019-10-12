@@ -993,6 +993,66 @@ func (s *BandingProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BaselineValueFormat: Formatting options for baseline value.
+type BaselineValueFormat struct {
+	// ComparisonType: The comparison type of key value with baseline value.
+	//
+	// Possible values:
+	//   "COMPARISON_TYPE_UNDEFINED" - Default value, do not use.
+	//   "ABSOLUTE_DIFFERENCE" - Use absolute difference between key and
+	// baseline value.
+	//   "PERCENTAGE_DIFFERENCE" - Use percentage difference between key and
+	// baseline value.
+	ComparisonType string `json:"comparisonType,omitempty"`
+
+	// Description: Description which is appended after the baseline
+	// value.
+	// This field is optional.
+	Description string `json:"description,omitempty"`
+
+	// NegativeColor: Color to be used, in case baseline value represents a
+	// negative change for
+	// key value. This field is optional.
+	NegativeColor *Color `json:"negativeColor,omitempty"`
+
+	// Position: Specifies the horizontal text positioning of baseline
+	// value.
+	// This field is optional. If not specified, default positioning is
+	// used.
+	Position *TextPosition `json:"position,omitempty"`
+
+	// PositiveColor: Color to be used, in case baseline value represents a
+	// positive change for
+	// key value. This field is optional.
+	PositiveColor *Color `json:"positiveColor,omitempty"`
+
+	// TextFormat: Text formatting options for baseline value.
+	TextFormat *TextFormat `json:"textFormat,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ComparisonType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ComparisonType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BaselineValueFormat) MarshalJSON() ([]byte, error) {
+	type NoMethod BaselineValueFormat
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BasicChartAxis: An axis of the chart.
 // A chart may not have more than one axis per
 // axis position.
@@ -2993,6 +3053,40 @@ func (s *ChartAxisViewWindowOptions) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// ChartCustomNumberFormatOptions: Custom number formatting options for
+// chart attributes.
+type ChartCustomNumberFormatOptions struct {
+	// Prefix: Custom prefix to be prepended to the chart attribute.
+	// This field is optional.
+	Prefix string `json:"prefix,omitempty"`
+
+	// Suffix: Custom suffix to be appended to the chart attribute.
+	// This field is optional.
+	Suffix string `json:"suffix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Prefix") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Prefix") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChartCustomNumberFormatOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ChartCustomNumberFormatOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ChartData: The data included in a domain or series.
 type ChartData struct {
 	// SourceRange: The source ranges of the data.
@@ -3125,6 +3219,9 @@ type ChartSpec struct {
 
 	// PieChart: A pie chart specification.
 	PieChart *PieChartSpec `json:"pieChart,omitempty"`
+
+	// ScorecardChart: A scorecard chart specification.
+	ScorecardChart *ScorecardChartSpec `json:"scorecardChart,omitempty"`
 
 	// Subtitle: The subtitle of the chart.
 	Subtitle string `json:"subtitle,omitempty"`
@@ -6167,6 +6264,40 @@ func (s *IterativeCalculationSettings) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// KeyValueFormat: Formatting options for key value.
+type KeyValueFormat struct {
+	// Position: Specifies the horizontal text positioning of key
+	// value.
+	// This field is optional. If not specified, default positioning is
+	// used.
+	Position *TextPosition `json:"position,omitempty"`
+
+	// TextFormat: Text formatting options for key value.
+	TextFormat *TextFormat `json:"textFormat,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Position") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Position") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KeyValueFormat) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyValueFormat
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // LineStyle: Properties that describe the style of a line.
 type LineStyle struct {
 	// Type: The dash type of the line.
@@ -7734,6 +7865,107 @@ func (s *RowData) MarshalJSON() ([]byte, error) {
 	type NoMethod RowData
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ScorecardChartSpec: A scorecard chart. Scorecard charts are used to
+// highlight key performance
+// indicators, known as KPIs, on the spreadsheet. A scorecard chart
+// can
+// represent things like total sales, average cost, or a top selling
+// item. You
+// can specify a single data value, or aggregate over a range of
+// data.
+// Percentage or absolute difference from a baseline value can be
+// highlighted,
+// like changes over time.
+type ScorecardChartSpec struct {
+	// AggregateType: The aggregation type for key and baseline chart data
+	// in scorecard chart.
+	// This field is optional.
+	//
+	// Possible values:
+	//   "CHART_AGGREGATE_TYPE_UNSPECIFIED" - Default value, do not use.
+	//   "AVERAGE" - Average aggregate function.
+	//   "COUNT" - Count aggregate function.
+	//   "MAX" - Maximum aggregate function.
+	//   "MEDIAN" - Median aggregate function.
+	//   "MIN" - Minimum aggregate function.
+	//   "SUM" - Sum aggregate function.
+	AggregateType string `json:"aggregateType,omitempty"`
+
+	// BaselineValueData: The data for scorecard baseline value.
+	// This field is optional.
+	BaselineValueData *ChartData `json:"baselineValueData,omitempty"`
+
+	// BaselineValueFormat: Formatting options for baseline value.
+	// This field is needed only if baseline_value_data field is specified.
+	BaselineValueFormat *BaselineValueFormat `json:"baselineValueFormat,omitempty"`
+
+	// CustomFormatOptions: Custom formatting options for numeric
+	// key/baseline values in scorecard
+	// chart. This field is used only when [number_format_source] field is
+	// set to
+	// [ChartNumberFormatSource.CUSTOM]. This field is optional.
+	CustomFormatOptions *ChartCustomNumberFormatOptions `json:"customFormatOptions,omitempty"`
+
+	// KeyValueData: The data for scorecard key value.
+	KeyValueData *ChartData `json:"keyValueData,omitempty"`
+
+	// KeyValueFormat: Formatting options for key value.
+	KeyValueFormat *KeyValueFormat `json:"keyValueFormat,omitempty"`
+
+	// NumberFormatSource: The number format source used in the scorecard
+	// chart.
+	// This field is optional.
+	//
+	// Possible values:
+	//   "CHART_NUMBER_FORMAT_SOURCE_UNDEFINED" - Default value, do not use.
+	//   "FROM_DATA" - Inherit number formatting from data.
+	//   "CUSTOM" - Apply custom formatting as specified by
+	// ChartCustomNumberFormatOptions.
+	NumberFormatSource string `json:"numberFormatSource,omitempty"`
+
+	// ScaleFactor: Value to scale scorecard key and baseline value. For
+	// example, a factor of
+	// 10 can be used to divide all values in the chart by 10.
+	// This field is optional.
+	ScaleFactor float64 `json:"scaleFactor,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AggregateType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AggregateType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ScorecardChartSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod ScorecardChartSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *ScorecardChartSpec) UnmarshalJSON(data []byte) error {
+	type NoMethod ScorecardChartSpec
+	var s1 struct {
+		ScaleFactor gensupport.JSONFloat64 `json:"scaleFactor"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ScaleFactor = float64(s1.ScaleFactor)
+	return nil
 }
 
 // SearchDeveloperMetadataRequest: A request to retrieve all developer
@@ -9910,7 +10142,7 @@ func (c *SpreadsheetsBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10050,7 +10282,7 @@ func (c *SpreadsheetsCreateCall) Header() http.Header {
 
 func (c *SpreadsheetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10227,7 +10459,7 @@ func (c *SpreadsheetsGetCall) Header() http.Header {
 
 func (c *SpreadsheetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10403,7 +10635,7 @@ func (c *SpreadsheetsGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10558,7 +10790,7 @@ func (c *SpreadsheetsDeveloperMetadataGetCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10712,7 +10944,7 @@ func (c *SpreadsheetsDeveloperMetadataSearchCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10857,7 +11089,7 @@ func (c *SpreadsheetsSheetsCopyToCall) Header() http.Header {
 
 func (c *SpreadsheetsSheetsCopyToCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11093,7 +11325,7 @@ func (c *SpreadsheetsValuesAppendCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesAppendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11291,7 +11523,7 @@ func (c *SpreadsheetsValuesBatchClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11439,7 +11671,7 @@ func (c *SpreadsheetsValuesBatchClearByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11648,7 +11880,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11826,7 +12058,7 @@ func (c *SpreadsheetsValuesBatchGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11971,7 +12203,7 @@ func (c *SpreadsheetsValuesBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12116,7 +12348,7 @@ func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12264,7 +12496,7 @@ func (c *SpreadsheetsValuesClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12474,7 +12706,7 @@ func (c *SpreadsheetsValuesGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12712,7 +12944,7 @@ func (c *SpreadsheetsValuesUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

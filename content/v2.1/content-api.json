@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/vR4mJ0lje_vHuAdPQodBU68W9NU\"",
+  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/Dd-Xj5oFtH5T1Eq3U3z9aLzZ2sU\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3164,11 +3164,11 @@
       }
     }
   },
-  "revision": "20190905",
+  "revision": "20191008",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
-      "description": "Account data. After the creation of a new account it may take a few minutes before it is fully operational. The methods delete, insert, patch, and update require the admin role.",
+      "description": "Account data. After the creation of a new account it may take a few minutes before it is fully operational. The methods delete, insert, and update require the admin role.",
       "id": "Account",
       "properties": {
         "adsLinks": {
@@ -4401,7 +4401,7 @@
           "type": "array"
         },
         "includedDestinations": {
-          "description": "The list of destinations to include for this target (corresponds to checked check boxes in Merchant Center). Default destinations are always included unless provided in excludedDestinations.",
+          "description": "The list of destinations to include for this target (corresponds to checked check boxes in Merchant Center). Default destinations are always included unless provided in excludedDestinations.\n\nList of supported destinations (if available to the account):  \n- DisplayAds \n- Shopping \n- ShoppingActions \n- SurfacesAcrossGoogle",
           "items": {
             "type": "string"
           },
@@ -5353,7 +5353,7 @@
       "type": "object"
     },
     "Order": {
-      "description": "Order. All methods require the order manager role.",
+      "description": "Order. Production access (all methods) requires the order manager role. Sandbox access does not.",
       "id": "Order",
       "properties": {
         "acknowledged": {
@@ -5981,11 +5981,15 @@
           "type": "array"
         },
         "appliedItems": {
-          "description": "Items which this promotion have been applied to.",
+          "description": "Items which this promotion have been applied to. Do not provide for orders.createtestorder.",
           "items": {
             "$ref": "OrderPromotionItem"
           },
           "type": "array"
+        },
+        "endTime": {
+          "description": "Promotion end time in ISO 8601 format. Date, time, and offset required, e.g., \"2020-01-02T09:00:00+01:00\" or \"2020-01-02T09:00:00Z\".",
+          "type": "string"
         },
         "funder": {
           "annotations": {
@@ -5993,7 +5997,7 @@
               "content.orders.createtestorder"
             ]
           },
-          "description": "The party funding the promotion.",
+          "description": "The party funding the promotion. Only merchant is supported for orders.createtestorder.",
           "type": "string"
         },
         "merchantPromotionId": {
@@ -6010,7 +6014,11 @@
           "description": "Estimated discount applied to price. Amount is pre-tax or post-tax depending on location of order."
         },
         "shortTitle": {
-          "description": "A short title of the promotion to be shown on the checkout page.",
+          "description": "A short title of the promotion to be shown on the checkout page. Do not provide for orders.createtestorder.",
+          "type": "string"
+        },
+        "startTime": {
+          "description": "Promotion start time in ISO 8601 format. Date, time, and offset required, e.g., \"2020-01-02T09:00:00+01:00\" or \"2020-01-02T09:00:00Z\".",
           "type": "string"
         },
         "subtype": {
@@ -6019,12 +6027,12 @@
               "content.orders.createtestorder"
             ]
           },
-          "description": "The category of the promotion.",
+          "description": "The category of the promotion. Only moneyOff is supported for orders.createtestorder.",
           "type": "string"
         },
         "taxValue": {
           "$ref": "Price",
-          "description": "Estimated discount applied to tax (if allowed by law)."
+          "description": "Estimated discount applied to tax (if allowed by law). Do not provide for orders.createtestorder."
         },
         "title": {
           "annotations": {
@@ -6041,7 +6049,7 @@
               "content.orders.createtestorder"
             ]
           },
-          "description": "The scope of the promotion.",
+          "description": "The scope of the promotion. Only product is supported for orders.createtestorder.",
           "type": "string"
         }
       },
@@ -6051,18 +6059,24 @@
       "id": "OrderPromotionItem",
       "properties": {
         "lineItemId": {
+          "description": "The line item ID of a product. Do not provide for orders.createtestorder.",
           "type": "string"
         },
-        "productId": {
+        "offerId": {
           "annotations": {
             "required": [
               "content.orders.createtestorder"
             ]
           },
+          "description": "Offer ID of a product. Only for orders.createtestorder.",
+          "type": "string"
+        },
+        "productId": {
+          "description": "orders.createtestorder.",
           "type": "string"
         },
         "quantity": {
-          "description": "The quantity of the associated product.",
+          "description": "The quantity of the associated product. Do not provide for orders.createtestorder.",
           "format": "int32",
           "type": "integer"
         }
@@ -6197,7 +6211,7 @@
       "id": "OrderShipment",
       "properties": {
         "carrier": {
-          "description": "The carrier handling the shipment.\n\nAcceptable values for US are:  \n- \"gsx\" \n- \"ups\" \n- \"usps\" \n- \"fedex\" \n- \"dhl\" \n- \"ecourier\" \n- \"cxt\" \n- \"google\" \n- \"ontrac\" \n- \"emsy\" \n- \"ont\" \n- \"deliv\" \n- \"dynamex\" \n- \"lasership\" \n- \"mpx\" \n- \"uds\" \n- \"efw\"  \n\nAcceptable values for FR are:  \n- \"colissimo\" \n- \"chronopost\" \n- \"gls\" \n- \"dpd\" \n- \"bpost\" \n- \"colis prive\" \n- \"boxtal\" \n- \"geodis\"",
+          "description": "The carrier handling the shipment.\n\nAcceptable values for US are:  \n- \"gsx\" \n- \"ups\" \n- \"usps\" \n- \"fedex\" \n- \"dhl\" \n- \"ecourier\" \n- \"cxt\" \n- \"google\" \n- \"ontrac\" \n- \"emsy\" \n- \"ont\" \n- \"deliv\" \n- \"dynamex\" \n- \"lasership\" \n- \"mpx\" \n- \"uds\" \n- \"efw\" \n- \"jd logistics\"  \n\nAcceptable values for FR are:  \n- \"colissimo\" \n- \"chronopost\" \n- \"gls\" \n- \"dpd\" \n- \"bpost\" \n- \"colis prive\" \n- \"boxtal\" \n- \"geodis\" \n- \"tnt\" \n- \"la poste\"",
           "type": "string"
         },
         "creationDate": {
@@ -8101,7 +8115,7 @@
           "type": "string"
         },
         "sizes": {
-          "description": "Size of the item.",
+          "description": "Size of the item. Only one value is allowed. For variants with different sizes, insert a separate product for each size with the same itemGroupId value (see size definition).",
           "items": {
             "type": "string"
           },

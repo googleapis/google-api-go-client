@@ -1655,10 +1655,20 @@ type GoogleDevtoolsRemotebuildbotCommandDurations struct {
 	// (includes pulling the Docker image, if necessary).
 	DockerPrep string `json:"dockerPrep,omitempty"`
 
+	// DockerPrepStartTime: The timestamp when docker prepartion begins.
+	DockerPrepStartTime string `json:"dockerPrepStartTime,omitempty"`
+
 	// Download: The time spent downloading the input files and constructing
 	// the working
 	// directory.
 	Download string `json:"download,omitempty"`
+
+	// DownloadStartTime: The timestamp when downloading the input files
+	// begins.
+	DownloadStartTime string `json:"downloadStartTime,omitempty"`
+
+	// ExecStartTime: The timestamp when execution begins.
+	ExecStartTime string `json:"execStartTime,omitempty"`
 
 	// Execution: The time spent executing the command (i.e., doing useful
 	// work).
@@ -1676,6 +1686,10 @@ type GoogleDevtoolsRemotebuildbotCommandDurations struct {
 
 	// Upload: The time spent uploading the output files.
 	Upload string `json:"upload,omitempty"`
+
+	// UploadStartTime: The timestamp when uploading the output files
+	// begins.
+	UploadStartTime string `json:"uploadStartTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DockerPrep") to
 	// unconditionally include in API requests. By default, fields with
@@ -3426,7 +3440,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3619,7 +3633,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3816,7 +3830,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3960,7 +3974,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4138,7 +4152,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4324,7 +4338,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

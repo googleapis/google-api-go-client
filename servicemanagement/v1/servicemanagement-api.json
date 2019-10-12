@@ -212,7 +212,7 @@
           ],
           "parameters": {
             "serviceName": {
-              "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
+              "description": "Required. The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -237,7 +237,7 @@
           ],
           "parameters": {
             "serviceName": {
-              "description": "Name of the service to disable. Specifying an unknown service name\nwill cause the request to fail.",
+              "description": "Required. Name of the service to disable. Specifying an unknown service name\nwill cause the request to fail.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -265,7 +265,7 @@
           ],
           "parameters": {
             "serviceName": {
-              "description": "Name of the service to enable. Specifying an unknown service name will\ncause the request to fail.",
+              "description": "Required. Name of the service to enable. Specifying an unknown service name will\ncause the request to fail.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -312,7 +312,7 @@
           ],
           "parameters": {
             "serviceName": {
-              "description": "The name of the service.  See the `ServiceManager` overview for naming\nrequirements.  For example: `example.googleapis.com`.",
+              "description": "Required. The name of the service.  See the `ServiceManager` overview for naming\nrequirements.  For example: `example.googleapis.com`.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -339,12 +339,12 @@
           ],
           "parameters": {
             "configId": {
-              "description": "The id of the service configuration resource.\n\nThis field must be specified for the server to return all fields, including\n`SourceInfo`.",
+              "description": "Required. The id of the service configuration resource.\n\nThis field must be specified for the server to return all fields, including\n`SourceInfo`.",
               "location": "query",
               "type": "string"
             },
             "serviceName": {
-              "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
+              "description": "Required. The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -442,7 +442,7 @@
           ]
         },
         "setIamPolicy": {
-          "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+          "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
           "flatPath": "v1/services/{servicesId}:setIamPolicy",
           "httpMethod": "POST",
           "id": "servicemanagement.services.setIamPolicy",
@@ -511,7 +511,7 @@
           ],
           "parameters": {
             "serviceName": {
-              "description": "The name of the service. See the [overview](/service-management/overview)\nfor naming requirements. For example: `example.googleapis.com`.",
+              "description": "Required. The name of the service. See the [overview](/service-management/overview)\nfor naming requirements. For example: `example.googleapis.com`.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -540,7 +540,7 @@
               ],
               "parameters": {
                 "serviceName": {
-                  "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
+                  "description": "Required. The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -569,13 +569,13 @@
               ],
               "parameters": {
                 "configId": {
-                  "description": "The id of the service configuration resource.\n\nThis field must be specified for the server to return all fields, including\n`SourceInfo`.",
+                  "description": "Required. The id of the service configuration resource.\n\nThis field must be specified for the server to return all fields, including\n`SourceInfo`.",
                   "location": "path",
                   "required": true,
                   "type": "string"
                 },
                 "serviceName": {
-                  "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
+                  "description": "Required. The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -622,7 +622,7 @@
                   "type": "string"
                 },
                 "serviceName": {
-                  "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
+                  "description": "Required. The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -649,7 +649,7 @@
               ],
               "parameters": {
                 "serviceName": {
-                  "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
+                  "description": "Required. The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -703,7 +703,7 @@
               ]
             },
             "setIamPolicy": {
-              "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+              "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
               "flatPath": "v1/services/{servicesId}/consumers/{consumersId}:setIamPolicy",
               "httpMethod": "POST",
               "id": "servicemanagement.services.consumers.setIamPolicy",
@@ -781,7 +781,7 @@
                   "type": "string"
                 },
                 "serviceName": {
-                  "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
+                  "description": "Required. The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -810,13 +810,13 @@
               ],
               "parameters": {
                 "rolloutId": {
-                  "description": "The id of the rollout resource.",
+                  "description": "Required. The id of the rollout resource.",
                   "location": "path",
                   "required": true,
                   "type": "string"
                 },
                 "serviceName": {
-                  "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
+                  "description": "Required. The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -843,7 +843,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "Use `filter` to return subset of rollouts.\nThe following filters are supported:\n  -- To limit the results to only those in\n     [status](google.api.servicemanagement.v1.RolloutStatus) 'SUCCESS',\n     use filter='status=SUCCESS'\n  -- To limit the results to those in\n     [status](google.api.servicemanagement.v1.RolloutStatus) 'CANCELLED'\n     or 'FAILED', use filter='status=CANCELLED OR status=FAILED'",
+                  "description": "Required. Use `filter` to return subset of rollouts.\nThe following filters are supported:\n  -- To limit the results to only those in\n     [status](google.api.servicemanagement.v1.RolloutStatus) 'SUCCESS',\n     use filter='status=SUCCESS'\n  -- To limit the results to those in\n     [status](google.api.servicemanagement.v1.RolloutStatus) 'CANCELLED'\n     or 'FAILED', use filter='status=CANCELLED OR status=FAILED'",
                   "location": "query",
                   "type": "string"
                 },
@@ -859,7 +859,7 @@
                   "type": "string"
                 },
                 "serviceName": {
-                  "description": "The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
+                  "description": "Required. The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -881,7 +881,7 @@
       }
     }
   },
-  "revision": "20190927",
+  "revision": "20191004",
   "rootUrl": "https://servicemanagement.googleapis.com/",
   "schemas": {
     "Advice": {
@@ -1473,10 +1473,16 @@
       "id": "DisableServiceRequest",
       "properties": {
         "consumerId": {
-          "description": "The identity of consumer resource which service disablement will be\napplied to.\n\nThe Google Service Management implementation accepts the following\nforms:\n- \"project:\u003cproject_id\u003e\"\n\nNote: this is made compatible with\ngoogle.api.servicecontrol.v1.Operation.consumer_id.",
+          "description": "Required. The identity of consumer resource which service disablement will be\napplied to.\n\nThe Google Service Management implementation accepts the following\nforms:\n- \"project:\u003cproject_id\u003e\"\n\nNote: this is made compatible with\ngoogle.api.servicecontrol.v1.Operation.consumer_id.",
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "DisableServiceResponse": {
+      "description": "Operation payload for DisableService method.",
+      "id": "DisableServiceResponse",
+      "properties": {},
       "type": "object"
     },
     "Documentation": {
@@ -1540,10 +1546,16 @@
       "id": "EnableServiceRequest",
       "properties": {
         "consumerId": {
-          "description": "The identity of consumer resource which service enablement will be\napplied to.\n\nThe Google Service Management implementation accepts the following\nforms:\n- \"project:\u003cproject_id\u003e\"\n\nNote: this is made compatible with\ngoogle.api.servicecontrol.v1.Operation.consumer_id.",
+          "description": "Required. The identity of consumer resource which service enablement will be\napplied to.\n\nThe Google Service Management implementation accepts the following\nforms:\n- \"project:\u003cproject_id\u003e\"\n\nNote: this is made compatible with\ngoogle.api.servicecontrol.v1.Operation.consumer_id.",
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "EnableServiceResponse": {
+      "description": "Operation payload for EnableService method.",
+      "id": "EnableServiceResponse",
+      "properties": {},
       "type": "object"
     },
     "Endpoint": {
@@ -1796,7 +1808,7 @@
             "description": "Properties of the object. Contains field @type with type URL.",
             "type": "any"
           },
-          "description": "Service configuration for which we want to generate the report.\nFor this version of API, the supported types are\ngoogle.api.servicemanagement.v1.ConfigRef,\ngoogle.api.servicemanagement.v1.ConfigSource,\nand google.api.Service",
+          "description": "Required. Service configuration for which we want to generate the report.\nFor this version of API, the supported types are\ngoogle.api.servicemanagement.v1.ConfigRef,\ngoogle.api.servicemanagement.v1.ConfigSource,\nand google.api.Service",
           "type": "object"
         },
         "oldConfig": {
@@ -1804,7 +1816,7 @@
             "description": "Properties of the object. Contains field @type with type URL.",
             "type": "any"
           },
-          "description": "Service configuration against which the comparison will be done.\nFor this version of API, the supported types are\ngoogle.api.servicemanagement.v1.ConfigRef,\ngoogle.api.servicemanagement.v1.ConfigSource,\nand google.api.Service",
+          "description": "Optional. Service configuration against which the comparison will be done.\nFor this version of API, the supported types are\ngoogle.api.servicemanagement.v1.ConfigRef,\ngoogle.api.servicemanagement.v1.ConfigSource,\nand google.api.Service",
           "type": "object"
         }
       },
@@ -2662,7 +2674,7 @@
           "description": "The strategy associated with a rollout to delete a `ManagedService`.\nReadonly."
         },
         "rolloutId": {
-          "description": "Optional unique identifier of this Rollout. Only lower case letters, digits\n and '-' are allowed.\n\nIf not specified by client, the server will generate one. The generated id\nwill have the form of \u003cdate\u003e\u003crevision number\u003e, where \"date\" is the create\ndate in ISO 8601 format.  \"revision number\" is a monotonically increasing\npositive number that is reset every day for each service.\nAn example of the generated rollout_id is '2016-02-16r1'",
+          "description": "Optional. Unique identifier of this Rollout. Only lower case letters, digits\n and '-' are allowed.\n\nIf not specified by client, the server will generate one. The generated id\nwill have the form of \u003cdate\u003e\u003crevision number\u003e, where \"date\" is the create\ndate in ISO 8601 format.  \"revision number\" is a monotonically increasing\npositive number that is reset every day for each service.\nAn example of the generated rollout_id is '2016-02-16r1'",
           "type": "string"
         },
         "serviceName": {
@@ -2947,7 +2959,7 @@
       "properties": {
         "configSource": {
           "$ref": "ConfigSource",
-          "description": "The source configuration for the service."
+          "description": "Required. The source configuration for the service."
         },
         "validateOnly": {
           "description": "Optional. If set, this will result in the generation of a\n`google.api.Service` configuration based on the `ConfigSource` provided,\nbut the generated config and the sources will NOT be persisted.",
@@ -3047,7 +3059,7 @@
       "type": "object"
     },
     "TrafficPercentStrategy": {
-      "description": "Strategy that specifies how clients of Google Service Controller want to\nsend traffic to use different config versions. This is generally\nused by API proxy to split traffic based on your configured precentage for\neach config version.\n\nOne example of how to gradually rollout a new service configuration using\nthis\nstrategy:\nDay 1\n\n    Rollout {\n      id: \"example.googleapis.com/rollout_20160206\"\n      traffic_percent_strategy {\n        percentages: {\n          \"example.googleapis.com/20160201\": 70.00\n          \"example.googleapis.com/20160206\": 30.00\n        }\n      }\n    }\n\nDay 2\n\n    Rollout {\n      id: \"example.googleapis.com/rollout_20160207\"\n      traffic_percent_strategy: {\n        percentages: {\n          \"example.googleapis.com/20160206\": 100.00\n        }\n      }\n    }",
+      "description": "Strategy that specifies how clients of Google Service Controller want to\nsend traffic to use different config versions. This is generally\nused by API proxy to split traffic based on your configured percentage for\neach config version.\n\nOne example of how to gradually rollout a new service configuration using\nthis\nstrategy:\nDay 1\n\n    Rollout {\n      id: \"example.googleapis.com/rollout_20160206\"\n      traffic_percent_strategy {\n        percentages: {\n          \"example.googleapis.com/20160201\": 70.00\n          \"example.googleapis.com/20160206\": 30.00\n        }\n      }\n    }\n\nDay 2\n\n    Rollout {\n      id: \"example.googleapis.com/rollout_20160207\"\n      traffic_percent_strategy: {\n        percentages: {\n          \"example.googleapis.com/20160206\": 100.00\n        }\n      }\n    }",
       "id": "TrafficPercentStrategy",
       "properties": {
         "percentages": {

@@ -276,6 +276,9 @@ type GoogleCloudPolicytroubleshooterV1betaBindingExplanation struct {
 	// access to the role permission relation.
 	RolePermission string `json:"rolePermission,omitempty"`
 
+	// RolePermissionRelevance: The relevance of this permission with
+	// respect to the BindingExplanation.
+	//
 	// Possible values:
 	//   "HEURISTIC_RELEVANCE_UNSPECIFIED" - Default value, presence of this
 	// should be error.
@@ -314,7 +317,13 @@ func (s *GoogleCloudPolicytroubleshooterV1betaBindingExplanation) MarshalJSON() 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPolicytroubleshooterV1betaBindingExplanationAnnotatedMember
+// ship: Encapsulated membership and the relevance of that membership
+// with respect
+// to BindingExplanation.
 type GoogleCloudPolicytroubleshooterV1betaBindingExplanationAnnotatedMembership struct {
+	// Membership: Membership status.
+	//
 	// Possible values:
 	//   "MEMBERSHIP_UNSPECIFIED" - Reserved.
 	//   "MEMBERSHIP_INCLUDED" - Member is included in group/domain/allUsers
@@ -327,6 +336,9 @@ type GoogleCloudPolicytroubleshooterV1betaBindingExplanationAnnotatedMembership 
 	// not supported.
 	Membership string `json:"membership,omitempty"`
 
+	// Relevance: Relevance of this membership with respect to
+	// BindingExplanation.
+	//
 	// Possible values:
 	//   "HEURISTIC_RELEVANCE_UNSPECIFIED" - Default value, presence of this
 	// should be error.
@@ -1011,7 +1023,7 @@ func (c *IamTroubleshootCall) Header() http.Header {
 
 func (c *IamTroubleshootCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20190926")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

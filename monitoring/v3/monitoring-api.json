@@ -1457,7 +1457,7 @@
       }
     }
   },
-  "revision": "20190929",
+  "revision": "20191005",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -2283,7 +2283,7 @@
           "type": "string"
         },
         "key": {
-          "description": "The label key.",
+          "description": "The key for this label. The key must meet the following criteria:\nDoes not exceed 100 characters.\nMatches the following regular expression: [a-zA-Z][a-zA-Z0-9_]*\nThe first character must be an upper- or lower-case letter.\nThe remaining characters must be letters, digits, or underscores.",
           "type": "string"
         },
         "valueType": {
@@ -2294,7 +2294,7 @@
             "INT64"
           ],
           "enumDescriptions": [
-            "A variable-length string. This is the default.",
+            "A variable-length string, not to exceed 1,024 characters. This is the default value type.",
             "Boolean; true or false.",
             "A 64-bit signed integer."
           ],
@@ -3323,6 +3323,10 @@
             "$ref": "InternalChecker"
           },
           "type": "array"
+        },
+        "isInternal": {
+          "description": "If this is true, then checks are made only from the 'internal_checkers'. If it is false, then checks are made only from the 'selected_regions'. It is an error to provide 'selected_regions' when is_internal is true, or to provide 'internal_checkers' when is_internal is false.",
+          "type": "boolean"
         },
         "monitoredResource": {
           "$ref": "MonitoredResource",

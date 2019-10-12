@@ -3465,6 +3465,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "sql:v1beta4",
+      "name": "sql",
+      "version": "v1beta4",
+      "title": "Cloud SQL Admin API",
+      "description": "API for Cloud SQL database instance management",
+      "discoveryRestUrl": "https://sqladmin.googleapis.com/$discovery/rest?version=v1beta4",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/cloud-sql/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "sqladmin:v1beta4",
       "name": "sqladmin",
       "version": "v1beta4",
@@ -3749,22 +3764,6 @@
       },
       "documentationLink": "https://cloud.google.com/translate/docs/quickstarts",
       "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "urlshortener:v1",
-      "name": "urlshortener",
-      "version": "v1",
-      "title": "URL Shortener API",
-      "description": "Lets you create, inspect, and manage goo.gl short URLs",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/urlshortener/v1/rest",
-      "discoveryLink": "./apis/urlshortener/v1/rest",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://developers.google.com/url-shortener/v1/getting_started",
-      "preferred": true
     },
     {
       "kind": "discovery#directoryItem",

@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/T-C0Ts-lFGdsEHoHBUSGTHs77GE\"",
+  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/E4CTHSN0AHdeHi9lEozbcqqqyUQ\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2388,7 +2388,7 @@
       }
     }
   },
-  "revision": "20190910",
+  "revision": "20191009",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -3108,6 +3108,10 @@
         "purchaseTimeMillis": {
           "description": "The time the product was purchased, in milliseconds since the epoch (Jan 1, 1970).",
           "format": "int64",
+          "type": "string"
+        },
+        "purchaseToken": {
+          "description": "The purchase token generated to identify this purchase.",
           "type": "string"
         },
         "purchaseType": {

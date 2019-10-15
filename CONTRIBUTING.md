@@ -10,8 +10,7 @@
 1. Sign one of the
 [contributor license agreements](#contributor-license-agreements) below.
 
-1. Run `GO111MODULE=off go get golang.org/x/review/git-codereview` to install
-the code reviewing tool.
+1. Run `go get golang.org/x/review/git-codereview` to install the code reviewing tool.
 
     1. Ensure it's working by running `git codereview` (check your `PATH` if
     not).
@@ -23,20 +22,20 @@ the code reviewing tool.
         * Should you run into issues with the `git-codereview` tool, please note
         that all error messages will assume that you have set up these aliases.
 
-1. Change to a directory of your choosing and clone the repo.b
+1. Change to a directory of your choosing and clone the repo.
 
     ```
     cd ~/code
-    git clone https://code.googlesource.com/gocloud
+    git clone https://code.googlesource.com/google-api-go-client
     ```
 
     * If you have already checked out the source, make sure that the remote
-    `git` `origin` is https://code.googlesource.com/gocloud:
+    `git` `origin` is https://code.googlesource.com/google-api-go-client:
 
         ```
         git remote -v
         # ...
-        git remote set-url origin https://code.googlesource.com/gocloud
+        git remote set-url origin https://code.googlesource.com/google-api-go-client
         ```
 
     * The project uses [Go Modules](https://blog.golang.org/using-go-modules)
@@ -47,7 +46,7 @@ the code reviewing tool.
 1. Change to the project directory:
 
     ```
-    cd ~/code/gocloud
+    cd ~/code/google-api-go-client
     ```
 
 1. Make sure your `git` auth is configured correctly by visiting

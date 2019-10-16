@@ -29,6 +29,7 @@ type DialSettings struct {
 	HTTPClient        *http.Client
 	GRPCDialOpts      []grpc.DialOption
 	GRPCConn          *grpc.ClientConn
+	GRPCConnPool      int
 	NoAuth            bool
 	TelemetryDisabled bool
 

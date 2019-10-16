@@ -36,21 +36,66 @@ var timeoutDialerOption grpc.DialOption
 // Dial returns a GRPC connection for use communicating with a Google cloud
 // service, configured with the given ClientOptions.
 func Dial(ctx context.Context, opts ...option.ClientOption) (*grpc.ClientConn, error) {
-	return dial(ctx, false, opts)
+	var o internal.DialSettings
+	for _, opt := range opts {
+		opt.Apply(&o)
+	}
+	if o.GRPCConnPool != 0 {
+		// NOTE(cbro): RoundRobin and WithBalancer are deprecated and we need to remove usages of it.
+		balancer := grpc.RoundRobin(internal.NewPoolResolver(o.GRPCConnPool, &o))
+		o.GRPCDialOpts = append(o.GRPCDialOpts, grpc.WithBalancer(balancer))
+	}
+	return dial(ctx, false, o)
 }
 
 // DialInsecure returns an insecure GRPC connection for use communicating
 // with fake or mock Google cloud service implementations, such as emulators.
 // The connection is configured with the given ClientOptions.
 func DialInsecure(ctx context.Context, opts ...option.ClientOption) (*grpc.ClientConn, error) {
-	return dial(ctx, true, opts)
-}
-
-func dial(ctx context.Context, insecure bool, opts []option.ClientOption) (*grpc.ClientConn, error) {
 	var o internal.DialSettings
 	for _, opt := range opts {
 		opt.Apply(&o)
 	}
+	return dial(ctx, true, o)
+}
+
+// DialPool returns a pool of GRPC connections for the given service.
+// This differs from the connection pooling implementation used by Dial, which uses a custom GRPC load balancer.
+// DialPool should be used instead of Dial when a pool is used by default or a different custom GRPC load balancer is needed.
+// The context and options are shared between each Conn in the pool.
+// The pool size is configured using the WithGRPCConnectionPool option.
+//
+// This API is subject to change as we further refine requirements. It will go away if gRPC stubs accept an interface instead of the concrete ClientConn type. See https://github.com/grpc/grpc-go/issues/1287.
+func DialPool(ctx context.Context, opts ...option.ClientOption) (ConnPool, error) {
+	var o internal.DialSettings
+	for _, opt := range opts {
+		opt.Apply(&o)
+	}
+	poolSize := o.GRPCConnPool
+	o.GRPCConnPool = 0 // we don't *need* to set this to zero, but it's safe to.
+
+	if poolSize == 0 || poolSize == 1 {
+		// Fast path for common case for a connection pool with a single connection.
+		conn, err := dial(ctx, false, o)
+		if err != nil {
+			return nil, err
+		}
+		return &singleConnPool{conn}, nil
+	}
+
+	pool := &roundRobinConnPool{}
+	for i := 0; i < poolSize; i++ {
+		conn, err := dial(ctx, false, o)
+		if err != nil {
+			defer pool.Close() // NOTE: error from Close is ignored.
+			return nil, err
+		}
+		pool.conns = append(pool.conns, conn)
+	}
+	return pool, nil
+}
+
+func dial(ctx context.Context, insecure bool, o internal.DialSettings) (*grpc.ClientConn, error) {
 	if err := o.Validate(); err != nil {
 		return nil, err
 	}

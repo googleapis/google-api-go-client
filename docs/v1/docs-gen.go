@@ -4592,6 +4592,67 @@ func (s *ReplaceImageRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ReplaceNamedRangeContentRequest: Replaces the contents of the
+// specified
+// NamedRange or
+// NamedRanges with the given replacement
+// content.
+//
+// Note that an individual NamedRange may
+// consist of multiple discontinuous
+// ranges. In this case, only the
+// content in the first range will be replaced. The other ranges and
+// their
+// content will be deleted.
+//
+// In cases where replacing or deleting any ranges would result in an
+// invalid
+// document structure, a 400 bad request error is returned.
+type ReplaceNamedRangeContentRequest struct {
+	// NamedRangeId: The ID of the named range whose content will be
+	// replaced.
+	//
+	// If there is no named range with the given ID a 400 bad request error
+	// is
+	// returned.
+	NamedRangeId string `json:"namedRangeId,omitempty"`
+
+	// NamedRangeName: The name of the NamedRanges whose
+	// content will be replaced.
+	//
+	// If there are multiple named ranges with the given name, then
+	// the content of each one will be replaced. If there are no named
+	// ranges
+	// with the given name, then the request will be a no-op.
+	NamedRangeName string `json:"namedRangeName,omitempty"`
+
+	// Text: Replaces the content of the specified named range(s) with the
+	// given text.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NamedRangeId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NamedRangeId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplaceNamedRangeContentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplaceNamedRangeContentRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Request: A single update to apply to a document.
 type Request struct {
 	// CreateNamedRange: Creates a named range.
@@ -4645,6 +4706,9 @@ type Request struct {
 
 	// ReplaceImage: Replaces an image in the document.
 	ReplaceImage *ReplaceImageRequest `json:"replaceImage,omitempty"`
+
+	// ReplaceNamedRangeContent: Replaces the content in a named range.
+	ReplaceNamedRangeContent *ReplaceNamedRangeContentRequest `json:"replaceNamedRangeContent,omitempty"`
 
 	// UnmergeTableCells: Unmerges cells in a table.
 	UnmergeTableCells *UnmergeTableCellsRequest `json:"unmergeTableCells,omitempty"`
@@ -7150,7 +7214,7 @@ func (c *DocumentsBatchUpdateCall) Header() http.Header {
 
 func (c *DocumentsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7293,7 +7357,7 @@ func (c *DocumentsCreateCall) Header() http.Header {
 
 func (c *DocumentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7449,7 +7513,7 @@ func (c *DocumentsGetCall) Header() http.Header {
 
 func (c *DocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

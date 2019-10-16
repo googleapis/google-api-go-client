@@ -266,7 +266,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "[Resource name](https://cloud.google.com/apis/design/resource_names) of the\nGroup in the format: `groups/{group_id}`, where group_id is the unique ID\nassigned to the Group.\n\nMust be left blank while creating a Group.",
+              "description": "Output only. [Resource name](https://cloud.google.com/apis/design/resource_names) of the\nGroup in the format: `groups/{group_id}`, where group_id is the unique ID\nassigned to the Group.\n\nMust be left blank while creating a Group.",
               "location": "path",
               "pattern": "^groups/[^/]+$",
               "required": true,
@@ -511,7 +511,7 @@
       }
     }
   },
-  "revision": "20191001",
+  "revision": "20191012",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "EntityKey": {
@@ -534,7 +534,7 @@
       "id": "Group",
       "properties": {
         "createTime": {
-          "description": "The time when the Group was created.\nOutput only.",
+          "description": "Output only. The time when the Group was created.\nOutput only.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -548,25 +548,25 @@
         },
         "groupKey": {
           "$ref": "EntityKey",
-          "description": "EntityKey of the Group.\n\nMust be set when creating a Group, read-only afterwards."
+          "description": "Required. Immutable. EntityKey of the Group.\n\nMust be set when creating a Group, read-only afterwards."
         },
         "labels": {
           "additionalProperties": {
             "type": "string"
           },
-          "description": "`Required`. Labels for Group resource.\nFor creating Groups under a namespace, set label key to\n'labels/system/groups/external' and label value as empty.",
+          "description": "Required. `Required`. Labels for Group resource.\nFor creating Groups under a namespace, set label key to\n'labels/system/groups/external' and label value as empty.",
           "type": "object"
         },
         "name": {
-          "description": "[Resource name](https://cloud.google.com/apis/design/resource_names) of the\nGroup in the format: `groups/{group_id}`, where group_id is the unique ID\nassigned to the Group.\n\nMust be left blank while creating a Group.",
+          "description": "Output only. [Resource name](https://cloud.google.com/apis/design/resource_names) of the\nGroup in the format: `groups/{group_id}`, where group_id is the unique ID\nassigned to the Group.\n\nMust be left blank while creating a Group.",
           "type": "string"
         },
         "parent": {
-          "description": "The entity under which this Group resides in Cloud Identity resource\nhierarchy. Must be set when creating a Group, read-only afterwards.\n\nCurrently allowed types: `identitysources`.",
+          "description": "Required. Immutable. The entity under which this Group resides in Cloud Identity resource\nhierarchy. Must be set when creating a Group, read-only afterwards.\n\nCurrently allowed types: `identitysources`.",
           "type": "string"
         },
         "updateTime": {
-          "description": "The time when the Group was last updated.\nOutput only.",
+          "description": "Output only. The time when the Group was last updated.\nOutput only.",
           "format": "google-datetime",
           "type": "string"
         }

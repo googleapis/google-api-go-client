@@ -212,7 +212,7 @@ func (s *EntityKey) MarshalJSON() ([]byte, error) {
 
 // Group: Resource representing a Group.
 type Group struct {
-	// CreateTime: The time when the Group was created.
+	// CreateTime: Output only. The time when the Group was created.
 	// Output only.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -228,18 +228,18 @@ type Group struct {
 	// DisplayName: The Group's display name.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// GroupKey: EntityKey of the Group.
+	// GroupKey: Required. Immutable. EntityKey of the Group.
 	//
 	// Must be set when creating a Group, read-only afterwards.
 	GroupKey *EntityKey `json:"groupKey,omitempty"`
 
-	// Labels: `Required`. Labels for Group resource.
+	// Labels: Required. `Required`. Labels for Group resource.
 	// For creating Groups under a namespace, set label key
 	// to
 	// 'labels/system/groups/external' and label value as empty.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: [Resource
+	// Name: Output only. [Resource
 	// name](https://cloud.google.com/apis/design/resource_names) of
 	// the
 	// Group in the format: `groups/{group_id}`, where group_id is the
@@ -249,15 +249,16 @@ type Group struct {
 	// Must be left blank while creating a Group.
 	Name string `json:"name,omitempty"`
 
-	// Parent: The entity under which this Group resides in Cloud Identity
-	// resource
+	// Parent: Required. Immutable. The entity under which this Group
+	// resides in Cloud Identity resource
 	// hierarchy. Must be set when creating a Group, read-only
 	// afterwards.
 	//
 	// Currently allowed types: `identitysources`.
 	Parent string `json:"parent,omitempty"`
 
-	// UpdateTime: The time when the Group was last updated.
+	// UpdateTime: Output only. The time when the Group was last
+	// updated.
 	// Output only.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -736,7 +737,7 @@ func (c *GroupsCreateCall) Header() http.Header {
 
 func (c *GroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -862,7 +863,7 @@ func (c *GroupsDeleteCall) Header() http.Header {
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1004,7 +1005,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1183,7 +1184,7 @@ func (c *GroupsListCall) Header() http.Header {
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1389,7 +1390,7 @@ func (c *GroupsLookupCall) Header() http.Header {
 
 func (c *GroupsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1531,7 +1532,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1604,7 +1605,7 @@ func (c *GroupsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "[Resource name](https://cloud.google.com/apis/design/resource_names) of the\nGroup in the format: `groups/{group_id}`, where group_id is the unique ID\nassigned to the Group.\n\nMust be left blank while creating a Group.",
+	//       "description": "Output only. [Resource name](https://cloud.google.com/apis/design/resource_names) of the\nGroup in the format: `groups/{group_id}`, where group_id is the unique ID\nassigned to the Group.\n\nMust be left blank while creating a Group.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
@@ -1724,7 +1725,7 @@ func (c *GroupsSearchCall) Header() http.Header {
 
 func (c *GroupsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1896,7 +1897,7 @@ func (c *GroupsMembershipsCreateCall) Header() http.Header {
 
 func (c *GroupsMembershipsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2035,7 +2036,7 @@ func (c *GroupsMembershipsDeleteCall) Header() http.Header {
 
 func (c *GroupsMembershipsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2177,7 +2178,7 @@ func (c *GroupsMembershipsGetCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2350,7 +2351,7 @@ func (c *GroupsMembershipsListCall) Header() http.Header {
 
 func (c *GroupsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2565,7 +2566,7 @@ func (c *GroupsMembershipsLookupCall) Header() http.Header {
 
 func (c *GroupsMembershipsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

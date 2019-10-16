@@ -212,7 +212,7 @@
                   ]
                 },
                 "deidentify": {
-                  "description": "Creates a new dataset containing de-identified data from the source\ndataset. The metadata field type\nis OperationMetadata.\nIf the request is successful, the\nresponse field type is\nDeidentifySummary.\nIf errors occur,\ndetails field type is\nDeidentifyErrorDetails.\nErrors are also logged to Stackdriver Logging. For more information,\nsee [Viewing logs](/healthcare/docs/how-tos/stackdriver-logging).",
+                  "description": "Creates a new dataset containing de-identified data from the source\ndataset. The metadata field type\nis OperationMetadata.\nIf the request is successful, the\nresponse field type is\nDeidentifySummary.\nIf errors occur,\nerror\ndetails field type is\nDeidentifyErrorDetails.\nErrors are also logged to Stackdriver Logging. For more information,\nsee [Viewing logs](/healthcare/docs/how-tos/stackdriver-logging).",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}:deidentify",
                   "httpMethod": "POST",
                   "id": "healthcare.projects.locations.datasets.deidentify",
@@ -478,6 +478,34 @@
                       },
                       "response": {
                         "$ref": "DicomStore"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "deidentify": {
+                      "description": "Creates a new DICOM store containing de-identified data from the source\nstore. The metadata field type\nis OperationMetadata.\nIf the request is successful, the\nresponse field type is\nDeidentifyDicomStoreSummary. If errors occur,\nerror\ndetails field type is\nDeidentifyErrorDetails.\nErrors are also logged to Stackdriver\n(see [Viewing logs](/healthcare/docs/how-tos/stackdriver-logging)).",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}:deidentify",
+                      "httpMethod": "POST",
+                      "id": "healthcare.projects.locations.datasets.dicomStores.deidentify",
+                      "parameterOrder": [
+                        "sourceStore"
+                      ],
+                      "parameters": {
+                        "sourceStore": {
+                          "description": "Source DICOM store resource name. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+sourceStore}:deidentify",
+                      "request": {
+                        "$ref": "DeidentifyDicomStoreRequest"
+                      },
+                      "response": {
+                        "$ref": "Operation"
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform"
@@ -1478,6 +1506,34 @@
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
+                    "deidentify": {
+                      "description": "Creates a new FHIR store containing de-identified data from the source\nstore. The metadata field type\nis OperationMetadata.\nIf the request is successful, the\nresponse field type is\nDeidentifyFhirStoreSummary. If errors occur,\nerror\ndetails field type is\nDeidentifyErrorDetails.\nErrors are also logged to Stackdriver\n(see [Viewing logs](/healthcare/docs/how-tos/stackdriver-logging)).",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:deidentify",
+                      "httpMethod": "POST",
+                      "id": "healthcare.projects.locations.datasets.fhirStores.deidentify",
+                      "parameterOrder": [
+                        "sourceStore"
+                      ],
+                      "parameters": {
+                        "sourceStore": {
+                          "description": "Source FHIR store resource name. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+sourceStore}:deidentify",
+                      "request": {
+                        "$ref": "DeidentifyFhirStoreRequest"
+                      },
+                      "response": {
+                        "$ref": "Operation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
                     "delete": {
                       "description": "Deletes the specified FHIR store and removes all resources within it.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}",
@@ -1751,7 +1807,7 @@
                     "fhir": {
                       "methods": {
                         "Observation-lastn": {
-                          "description": "Retrieves the N most recent `Observation` resources for a subject matching\nsearch criteria specified as query parameters, grouped by\n`Observation.code`, sorted from most recent to oldest.\n\nImplements the FHIR extended operation\n[Observation-lastn](http://hl7.org/implement/standards/fhir/STU3/observation-operations.html#lastn).\n\nSearch terms are provided as query parameters following the same pattern as\nthe search method. This operation accepts an additional\nquery parameter `max`, which specifies N, the maximum number of\nObservations to return from each group, with a default of 1.\n\nOn success, the response body will contain a JSON-encoded representation\nof a `Bundle` resource of type `searchset`, containing the results of the\noperation.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
+                          "description": "Retrieves the N most recent `Observation` resources for a subject matching\nsearch criteria specified as query parameters, grouped by\n`Observation.code`, sorted from most recent to oldest.\n\nImplements the FHIR extended operation\n[Observation-lastn](http://hl7.org/implement/standards/fhir/STU3/observation-operations.html#lastn).\n\nSearch terms are provided as query parameters following the same pattern as\nthe search method. The following search parameters must\nbe provided\n    - `subject` or `patient` to specify a subject for the Observation.\n    - `code`, `category` or any of the composite parameters that include\n      `code`.\nAny other valid Observation search parameters can also be provided. This\noperation accepts an additional query parameter `max`, which specifies N,\nthe maximum number of Observations to return from each group, with a\ndefault of 1.\n\nOn success, the response body will contain a JSON-encoded representation\nof a `Bundle` resource of type `searchset`, containing the results of the\noperation.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/Observation/$lastn",
                           "httpMethod": "GET",
                           "id": "healthcare.projects.locations.datasets.fhirStores.fhir.Observation-lastn",
@@ -2783,7 +2839,7 @@
       }
     }
   },
-  "revision": "20190924",
+  "revision": "20191008",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -2955,6 +3011,25 @@
       },
       "type": "object"
     },
+    "DeidentifyDicomStoreRequest": {
+      "description": "Creates a new DICOM store with sensitive information de-identified.",
+      "id": "DeidentifyDicomStoreRequest",
+      "properties": {
+        "config": {
+          "$ref": "DeidentifyConfig",
+          "description": "De-identify configuration."
+        },
+        "destinationStore": {
+          "description": "The name of the DICOM store to create and write the redacted data to.\nFor example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.\n\n * The destination dataset must exist.\n * The source dataset and destination dataset must both reside in the same\n   project. De-identifying data across multiple projects is not supported.\n * The destination DICOM store must not exist.\n * The caller must have the necessary permissions to create the destination\n   DICOM store.",
+          "type": "string"
+        },
+        "filterConfig": {
+          "$ref": "DicomFilterConfig",
+          "description": "Filter configuration."
+        }
+      },
+      "type": "object"
+    },
     "DeidentifyErrorDetails": {
       "description": "Contains the status of the Deidentify operation.",
       "id": "DeidentifyErrorDetails",
@@ -2978,6 +3053,25 @@
           "description": "Number of stores successfully processed.",
           "format": "int64",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DeidentifyFhirStoreRequest": {
+      "description": "Creates a new FHIR store with sensitive information de-identified.",
+      "id": "DeidentifyFhirStoreRequest",
+      "properties": {
+        "config": {
+          "$ref": "DeidentifyConfig",
+          "description": "Deidentify configuration."
+        },
+        "destinationStore": {
+          "description": "The name of the FHIR store to create and write the redacted data to.\nFor example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.\n\n * The destination dataset must exist.\n * The source dataset and destination dataset must both reside in the same\n   project. De-identifying data across multiple projects is not supported.\n * The destination FHIR store must not exist.\n * The caller must have the necessary permissions to create the destination\n   FHIR store.",
+          "type": "string"
+        },
+        "resourceFilter": {
+          "$ref": "FhirFilter",
+          "description": "A filter specifying the resources to include in the output. If not\nspecified, all resources are included in the output."
         }
       },
       "type": "object"
@@ -3037,6 +3131,17 @@
         "skipIdRedaction": {
           "description": "If true, skip replacing StudyInstanceUID, SeriesInstanceUID,\nSOPInstanceUID, and MediaStorageSOPInstanceUID and leave them untouched.\nThe Cloud Healthcare API regenerates these UIDs by default based on the\nDICOM Standard's reasoning: \"Whilst these UIDs cannot be mapped directly\nto an individual out of context, given access to the original images, or\nto a database of the original images containing the UIDs, it would be\npossible to recover the individual's identity.\"\nhttp://dicom.nema.org/medical/dicom/current/output/chtml/part15/sect_E.3.9.html",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "DicomFilterConfig": {
+      "description": "Specifies the filter configuration for DICOM resources.",
+      "id": "DicomFilterConfig",
+      "properties": {
+        "resourcePathsGcsUri": {
+          "description": "The Cloud Storage location of the filter configuration file.\nThe `gcs_uri` must be in the format `gs://bucket/path/to/object`.\nThe filter configuration file must contain a list of resource paths\nseparated by newline characters (\\n or \\r\\n). Each resource path\nmust be in the format\n\"/studies/{studyUID}[/series/{seriesUID}[/instances/{instanceUID}]]\"\n\nThe Cloud Healthcare API service account must have the\n`roles/storage.objectViewer` Cloud IAM role for this Cloud Storage\nlocation.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3151,6 +3256,17 @@
       },
       "type": "object"
     },
+    "FhirFilter": {
+      "description": "Filter configuration.",
+      "id": "FhirFilter",
+      "properties": {
+        "resources": {
+          "$ref": "Resources",
+          "description": "List of resources to include in the output. If this list is empty or\nnot specified, all resources are included in the output."
+        }
+      },
+      "type": "object"
+    },
     "FhirStore": {
       "description": "Represents a FHIR store.",
       "id": "FhirStore",
@@ -3211,6 +3327,35 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudHealthcareV1beta1DeidentifyDeidentifyDicomStoreSummary": {
+      "description": "Contains a summary of the DeidentifyDicomStore operation.",
+      "id": "GoogleCloudHealthcareV1beta1DeidentifyDeidentifyDicomStoreSummary",
+      "properties": {
+        "failureResourceCount": {
+          "description": "Number of objects that processing failed for.",
+          "format": "int64",
+          "type": "string"
+        },
+        "successResourceCount": {
+          "description": "Number of objects successfully processed.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudHealthcareV1beta1DeidentifyDeidentifyFhirStoreSummary": {
+      "description": "Contains a summary of the DeidentifyFhirStore operation.",
+      "id": "GoogleCloudHealthcareV1beta1DeidentifyDeidentifyFhirStoreSummary",
+      "properties": {
+        "successResourceCount": {
+          "description": "Number of resources successfully processed.",
+          "format": "int64",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3276,7 +3421,7 @@
       "type": "object"
     },
     "GoogleCloudHealthcareV1beta1FhirRestExportResourcesErrorDetails": {
-      "description": "Response when errors occur while exporting resources.\nThis structure is included in the\nerror details to describe the\ndetailed outcome. It is only included when the operation finishes with\nerrors.",
+      "description": "Response when errors occur while exporting resources.\nThis structure is included in the\nerror\ndetails to describe the detailed outcome. It is\nonly included when the operation finishes with errors.",
       "id": "GoogleCloudHealthcareV1beta1FhirRestExportResourcesErrorDetails",
       "properties": {
         "errorCount": {
@@ -3340,7 +3485,7 @@
       "type": "object"
     },
     "GoogleCloudHealthcareV1beta1FhirRestImportResourcesErrorDetails": {
-      "description": "Error response of importing resources.\nThis structure will be included in the\nerror details to describe the\ndetailed error. It will only be included when the operation finishes with\nsome failure.",
+      "description": "Error response of importing resources.\nThis structure will be included in the\nerror\ndetails to describe the detailed error. It will\nonly be included when the operation finishes with some failure.",
       "id": "GoogleCloudHealthcareV1beta1FhirRestImportResourcesErrorDetails",
       "properties": {
         "errorCount": {
@@ -3899,7 +4044,7 @@
       "type": "object"
     },
     "Policy": {
-      "description": "Defines an Identity and Access Management (IAM) policy. It is used to\nspecify access control policies for Cloud Platform resources.\n\n\nA `Policy` is a collection of `bindings`. A `binding` binds one or more\n`members` to a single `role`. Members can be user accounts, service accounts,\nGoogle groups, and domains (such as G Suite). A `role` is a named list of\npermissions (defined by IAM or configured by users). A `binding` can\noptionally specify a `condition`, which is a logic expression that further\nconstrains the role binding based on attributes about the request and/or\ntarget resource.\n\n**JSON Example**\n\n    {\n      \"bindings\": [\n        {\n          \"role\": \"role/resourcemanager.organizationAdmin\",\n          \"members\": [\n            \"user:mike@example.com\",\n            \"group:admins@example.com\",\n            \"domain:google.com\",\n            \"serviceAccount:my-project-id@appspot.gserviceaccount.com\"\n          ]\n        },\n        {\n          \"role\": \"roles/resourcemanager.organizationViewer\",\n          \"members\": [\"user:eve@example.com\"],\n          \"condition\": {\n            \"title\": \"expirable access\",\n            \"description\": \"Does not grant access after Sep 2020\",\n            \"expression\": \"request.time \u003c\n            timestamp('2020-10-01T00:00:00.000Z')\",\n          }\n        }\n      ]\n    }\n\n**YAML Example**\n\n    bindings:\n    - members:\n      - user:mike@example.com\n      - group:admins@example.com\n      - domain:google.com\n      - serviceAccount:my-project-id@appspot.gserviceaccount.com\n      role: roles/resourcemanager.organizationAdmin\n    - members:\n      - user:eve@example.com\n      role: roles/resourcemanager.organizationViewer\n      condition:\n        title: expirable access\n        description: Does not grant access after Sep 2020\n        expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\n\nFor a description of IAM and its features, see the\n[IAM developer's guide](https://cloud.google.com/iam/docs).",
+      "description": "Defines an Identity and Access Management (IAM) policy. It is used to\nspecify access control policies for Cloud Platform resources.\n\n\nA `Policy` is a collection of `bindings`. A `binding` binds one or more\n`members` to a single `role`. Members can be user accounts, service accounts,\nGoogle groups, and domains (such as G Suite). A `role` is a named list of\npermissions (defined by IAM or configured by users). A `binding` can\noptionally specify a `condition`, which is a logic expression that further\nconstrains the role binding based on attributes about the request and/or\ntarget resource.\n\n**JSON Example**\n\n    {\n      \"bindings\": [\n        {\n          \"role\": \"roles/resourcemanager.organizationAdmin\",\n          \"members\": [\n            \"user:mike@example.com\",\n            \"group:admins@example.com\",\n            \"domain:google.com\",\n            \"serviceAccount:my-project-id@appspot.gserviceaccount.com\"\n          ]\n        },\n        {\n          \"role\": \"roles/resourcemanager.organizationViewer\",\n          \"members\": [\"user:eve@example.com\"],\n          \"condition\": {\n            \"title\": \"expirable access\",\n            \"description\": \"Does not grant access after Sep 2020\",\n            \"expression\": \"request.time \u003c\n            timestamp('2020-10-01T00:00:00.000Z')\",\n          }\n        }\n      ]\n    }\n\n**YAML Example**\n\n    bindings:\n    - members:\n      - user:mike@example.com\n      - group:admins@example.com\n      - domain:google.com\n      - serviceAccount:my-project-id@appspot.gserviceaccount.com\n      role: roles/resourcemanager.organizationAdmin\n    - members:\n      - user:eve@example.com\n      role: roles/resourcemanager.organizationViewer\n      condition:\n        title: expirable access\n        description: Does not grant access after Sep 2020\n        expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\n\nFor a description of IAM and its features, see the\n[IAM developer's guide](https://cloud.google.com/iam/docs).",
       "id": "Policy",
       "properties": {
         "auditConfigs": {
@@ -3961,6 +4106,20 @@
       "description": "When using the INSPECT_AND_TRANSFORM action, each match is replaced with\nthe name of the info_type. For example, \"My name is Jake\" becomes \"My name is\n[PERSON_NAME].\" The TRANSFORM action is equivalent to redacting.",
       "id": "ReplaceWithInfoTypeConfig",
       "properties": {},
+      "type": "object"
+    },
+    "Resources": {
+      "description": "A list of FHIR resources.",
+      "id": "Resources",
+      "properties": {
+        "resources": {
+          "description": "List of resources IDs. For example, \"Patient/1234\".",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
       "type": "object"
     },
     "SchemaConfig": {

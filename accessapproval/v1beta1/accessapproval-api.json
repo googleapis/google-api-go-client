@@ -106,6 +106,31 @@
   "resources": {
     "folders": {
       "methods": {
+        "deleteAccessApprovalSettings": {
+          "description": "Deletes the settings associated with a project, folder, or organization.\nThis will have the effect of disabling Access Approval for the project,\nfolder, or organization, but only if all ancestors also have Access\nApproval disabled. If Access Approval is enabled at a higher level of the\nhierarchy, then Access Approval will still be enabled at this level as\nthe settings are inherited.",
+          "flatPath": "v1beta1/folders/{foldersId}/accessApprovalSettings",
+          "httpMethod": "DELETE",
+          "id": "accessapproval.folders.deleteAccessApprovalSettings",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Name of the AccessApprovalSettings to delete.",
+              "location": "path",
+              "pattern": "^folders/[^/]+/accessApprovalSettings$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1beta1/{+name}",
+          "response": {
+            "$ref": "Empty"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
         "getAccessApprovalSettings": {
           "description": "Gets the settings associated with a project, folder, or organization.",
           "flatPath": "v1beta1/folders/{foldersId}/accessApprovalSettings",
@@ -297,6 +322,31 @@
     },
     "organizations": {
       "methods": {
+        "deleteAccessApprovalSettings": {
+          "description": "Deletes the settings associated with a project, folder, or organization.\nThis will have the effect of disabling Access Approval for the project,\nfolder, or organization, but only if all ancestors also have Access\nApproval disabled. If Access Approval is enabled at a higher level of the\nhierarchy, then Access Approval will still be enabled at this level as\nthe settings are inherited.",
+          "flatPath": "v1beta1/organizations/{organizationsId}/accessApprovalSettings",
+          "httpMethod": "DELETE",
+          "id": "accessapproval.organizations.deleteAccessApprovalSettings",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Name of the AccessApprovalSettings to delete.",
+              "location": "path",
+              "pattern": "^organizations/[^/]+/accessApprovalSettings$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1beta1/{+name}",
+          "response": {
+            "$ref": "Empty"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
         "getAccessApprovalSettings": {
           "description": "Gets the settings associated with a project, folder, or organization.",
           "flatPath": "v1beta1/organizations/{organizationsId}/accessApprovalSettings",
@@ -488,6 +538,31 @@
     },
     "projects": {
       "methods": {
+        "deleteAccessApprovalSettings": {
+          "description": "Deletes the settings associated with a project, folder, or organization.\nThis will have the effect of disabling Access Approval for the project,\nfolder, or organization, but only if all ancestors also have Access\nApproval disabled. If Access Approval is enabled at a higher level of the\nhierarchy, then Access Approval will still be enabled at this level as\nthe settings are inherited.",
+          "flatPath": "v1beta1/projects/{projectsId}/accessApprovalSettings",
+          "httpMethod": "DELETE",
+          "id": "accessapproval.projects.deleteAccessApprovalSettings",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Name of the AccessApprovalSettings to delete.",
+              "location": "path",
+              "pattern": "^projects/[^/]+/accessApprovalSettings$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1beta1/{+name}",
+          "response": {
+            "$ref": "Empty"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
         "getAccessApprovalSettings": {
           "description": "Gets the settings associated with a project, folder, or organization.",
           "flatPath": "v1beta1/projects/{projectsId}/accessApprovalSettings",
@@ -678,7 +753,7 @@
       }
     }
   },
-  "revision": "20191008",
+  "revision": "20191011",
   "rootUrl": "https://accessapproval.googleapis.com/",
   "schemas": {
     "AccessApprovalSettings": {
@@ -837,6 +912,12 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "Empty": {
+      "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
+      "id": "Empty",
+      "properties": {},
       "type": "object"
     },
     "EnrolledService": {

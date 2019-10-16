@@ -282,7 +282,7 @@
         "logs": {
           "methods": {
             "delete": {
-              "description": "Deletes all the log entries in a log. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted.",
+              "description": "Deletes all the log entries in a log. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted. Entries received after the delete operation with a timestamp before the operation will be deleted.",
               "flatPath": "v2/billingAccounts/{billingAccountsId}/logs/{logsId}",
               "httpMethod": "DELETE",
               "id": "logging.billingAccounts.logs.delete",
@@ -933,7 +933,7 @@
         "logs": {
           "methods": {
             "delete": {
-              "description": "Deletes all the log entries in a log. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted.",
+              "description": "Deletes all the log entries in a log. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted. Entries received after the delete operation with a timestamp before the operation will be deleted.",
               "flatPath": "v2/folders/{foldersId}/logs/{logsId}",
               "httpMethod": "DELETE",
               "id": "logging.folders.logs.delete",
@@ -1215,7 +1215,7 @@
     "logs": {
       "methods": {
         "delete": {
-          "description": "Deletes all the log entries in a log. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted.",
+          "description": "Deletes all the log entries in a log. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted. Entries received after the delete operation with a timestamp before the operation will be deleted.",
           "flatPath": "v2/{v2Id}/{v2Id1}/logs/{logsId}",
           "httpMethod": "DELETE",
           "id": "logging.logs.delete",
@@ -1481,7 +1481,7 @@
         "logs": {
           "methods": {
             "delete": {
-              "description": "Deletes all the log entries in a log. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted.",
+              "description": "Deletes all the log entries in a log. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted. Entries received after the delete operation with a timestamp before the operation will be deleted.",
               "flatPath": "v2/organizations/{organizationsId}/logs/{logsId}",
               "httpMethod": "DELETE",
               "id": "logging.organizations.logs.delete",
@@ -1926,7 +1926,7 @@
         "logs": {
           "methods": {
             "delete": {
-              "description": "Deletes all the log entries in a log. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted.",
+              "description": "Deletes all the log entries in a log. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted. Entries received after the delete operation with a timestamp before the operation will be deleted.",
               "flatPath": "v2/projects/{projectsId}/logs/{logsId}",
               "httpMethod": "DELETE",
               "id": "logging.projects.logs.delete",
@@ -2535,7 +2535,7 @@
       }
     }
   },
-  "revision": "20190927",
+  "revision": "20191007",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "BigQueryOptions": {
@@ -3189,6 +3189,11 @@
           "description": "Required. The export destination:\n\"storage.googleapis.com/[GCS_BUCKET]\"\n\"bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]\"\n\"pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]\"\nThe sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Exporting Logs with Sinks.",
           "type": "string"
         },
+        "endTime": {
+          "description": "Do not use. This field is ignored.",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "filter": {
           "description": "Optional. An advanced logs filter. The only exported log entries are those that are in the resource owning the sink and that match the filter. For example:\nlogName=\"projects/[PROJECT_ID]/logs/[LOG_ID]\" AND severity\u003e=ERROR\n",
           "type": "string"
@@ -3213,6 +3218,11 @@
             "LogEntry version 2 format.",
             "LogEntry version 1 format."
           ],
+          "type": "string"
+        },
+        "startTime": {
+          "description": "Do not use. This field is ignored.",
+          "format": "google-datetime",
           "type": "string"
         },
         "updateTime": {

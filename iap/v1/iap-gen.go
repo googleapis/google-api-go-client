@@ -360,7 +360,7 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 //     {
 //       "bindings": [
 //         {
-//           "role": "role/resourcemanager.organizationAdmin",
+//           "role": "roles/resourcemanager.organizationAdmin",
 //           "members": [
 //             "user:mike@example.com",
 //             "group:admins@example.com",
@@ -636,7 +636,7 @@ func (c *V1GetIamPolicyCall) Header() http.Header {
 
 func (c *V1GetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -782,7 +782,7 @@ func (c *V1SetIamPolicyCall) Header() http.Header {
 
 func (c *V1SetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -928,7 +928,7 @@ func (c *V1TestIamPermissionsCall) Header() http.Header {
 
 func (c *V1TestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

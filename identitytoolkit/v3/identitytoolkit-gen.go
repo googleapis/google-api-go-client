@@ -2458,7 +2458,7 @@ func (c *RelyingpartyCreateAuthUriCall) Header() http.Header {
 
 func (c *RelyingpartyCreateAuthUriCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2580,7 +2580,7 @@ func (c *RelyingpartyDeleteAccountCall) Header() http.Header {
 
 func (c *RelyingpartyDeleteAccountCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2702,7 +2702,7 @@ func (c *RelyingpartyDownloadAccountCall) Header() http.Header {
 
 func (c *RelyingpartyDownloadAccountCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2846,7 +2846,7 @@ func (c *RelyingpartyEmailLinkSigninCall) Header() http.Header {
 
 func (c *RelyingpartyEmailLinkSigninCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2968,7 +2968,7 @@ func (c *RelyingpartyGetAccountInfoCall) Header() http.Header {
 
 func (c *RelyingpartyGetAccountInfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3090,7 +3090,7 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) Header() http.Header {
 
 func (c *RelyingpartyGetOobConfirmationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3236,7 +3236,7 @@ func (c *RelyingpartyGetProjectConfigCall) Header() http.Header {
 
 func (c *RelyingpartyGetProjectConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3376,7 +3376,7 @@ func (c *RelyingpartyGetPublicKeysCall) Header() http.Header {
 
 func (c *RelyingpartyGetPublicKeysCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3482,7 +3482,7 @@ func (c *RelyingpartyGetRecaptchaParamCall) Header() http.Header {
 
 func (c *RelyingpartyGetRecaptchaParamCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3599,7 +3599,7 @@ func (c *RelyingpartyResetPasswordCall) Header() http.Header {
 
 func (c *RelyingpartyResetPasswordCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3721,7 +3721,7 @@ func (c *RelyingpartySendVerificationCodeCall) Header() http.Header {
 
 func (c *RelyingpartySendVerificationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3846,7 +3846,7 @@ func (c *RelyingpartySetAccountInfoCall) Header() http.Header {
 
 func (c *RelyingpartySetAccountInfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3968,7 +3968,7 @@ func (c *RelyingpartySetProjectConfigCall) Header() http.Header {
 
 func (c *RelyingpartySetProjectConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4092,7 +4092,7 @@ func (c *RelyingpartySignOutUserCall) Header() http.Header {
 
 func (c *RelyingpartySignOutUserCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4216,7 +4216,7 @@ func (c *RelyingpartySignupNewUserCall) Header() http.Header {
 
 func (c *RelyingpartySignupNewUserCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4338,7 +4338,7 @@ func (c *RelyingpartyUploadAccountCall) Header() http.Header {
 
 func (c *RelyingpartyUploadAccountCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4461,7 +4461,7 @@ func (c *RelyingpartyVerifyAssertionCall) Header() http.Header {
 
 func (c *RelyingpartyVerifyAssertionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4583,7 +4583,7 @@ func (c *RelyingpartyVerifyCustomTokenCall) Header() http.Header {
 
 func (c *RelyingpartyVerifyCustomTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4705,7 +4705,7 @@ func (c *RelyingpartyVerifyPasswordCall) Header() http.Header {
 
 func (c *RelyingpartyVerifyPasswordCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4828,7 +4828,7 @@ func (c *RelyingpartyVerifyPhoneNumberCall) Header() http.Header {
 
 func (c *RelyingpartyVerifyPhoneNumberCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

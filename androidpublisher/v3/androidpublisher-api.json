@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/E4CTHSN0AHdeHi9lEozbcqqqyUQ\"",
+  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/LSoZQygk1tHGqKaZNhiO4wQlG9M\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2388,7 +2388,7 @@
       }
     }
   },
-  "revision": "20191009",
+  "revision": "20191013",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -3098,6 +3098,10 @@
         },
         "orderId": {
           "description": "The order id associated with the purchase of the inapp product.",
+          "type": "string"
+        },
+        "productId": {
+          "description": "The inapp product SKU.",
           "type": "string"
         },
         "purchaseState": {

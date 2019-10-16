@@ -1159,7 +1159,6 @@ type Container struct {
 	// double $$, ie: $$(VAR_NAME). Escaped references will never be
 	// expanded,
 	// regardless of whether the variable exists or not.
-	// Cannot be updated.
 	// More
 	// info:
 	// https://kubernetes.io/docs/tasks/inject-data-application/define-
@@ -1175,7 +1174,6 @@ type Container struct {
 	// Cloud Run for Anthos: supported
 	//
 	// List of environment variables to set in the container.
-	// Cannot be updated.
 	Env []*EnvVar `json:"env,omitempty"`
 
 	// EnvFrom: (Optional)
@@ -1217,7 +1215,6 @@ type Container struct {
 	// One of Always, Never, IfNotPresent.
 	// Defaults to Always if :latest tag is specified, or IfNotPresent
 	// otherwise.
-	// Cannot be updated.
 	// More
 	// info:
 	// https://kubernetes.io/docs/concepts/containers/images#updating-i
@@ -1232,7 +1229,6 @@ type Container struct {
 	//
 	// Periodic probe of container liveness.
 	// Container will be restarted if the probe fails.
-	// Cannot be updated.
 	// More
 	// info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle
@@ -1261,7 +1257,6 @@ type Container struct {
 	// listening on the default "0.0.0.0" address inside a container will
 	// be
 	// accessible from the network.
-	// Cannot be updated.
 	Ports []*ContainerPort `json:"ports,omitempty"`
 
 	// ReadinessProbe: (Optional)
@@ -1273,7 +1268,6 @@ type Container struct {
 	// Periodic probe of container service readiness.
 	// Container will be removed from service endpoints if the probe
 	// fails.
-	// Cannot be updated.
 	// More
 	// info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle
@@ -1287,7 +1281,6 @@ type Container struct {
 	// Cloud Run for Anthos: supported
 	//
 	// Compute Resources required by this container.
-	// Cannot be updated.
 	// More
 	// info:
 	// https://kubernetes.io/docs/concepts/storage/persistent-volumes#r
@@ -1325,7 +1318,6 @@ type Container struct {
 	// total message length across all containers will be limited to
 	// 12kb.
 	// Defaults to /dev/termination-log.
-	// Cannot be updated.
 	TerminationMessagePath string `json:"terminationMessagePath,omitempty"`
 
 	// TerminationMessagePolicy: (Optional)
@@ -1354,7 +1346,6 @@ type Container struct {
 	// Cloud Run for Anthos: supported
 	//
 	// Pod volumes to mount into the container's filesystem.
-	// Cannot be updated.
 	VolumeMounts []*VolumeMount `json:"volumeMounts,omitempty"`
 
 	// WorkingDir: (Optional)
@@ -1367,7 +1358,6 @@ type Container struct {
 	// If not specified, the container runtime's default will be used,
 	// which
 	// might be configured in the container image.
-	// Cannot be updated.
 	WorkingDir string `json:"workingDir,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Args") to
@@ -4902,7 +4892,7 @@ func (c *NamespacesAuthorizeddomainsListCall) Header() http.Header {
 
 func (c *NamespacesAuthorizeddomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5069,7 +5059,7 @@ func (c *NamespacesAutodomainmappingsCreateCall) Header() http.Header {
 
 func (c *NamespacesAutodomainmappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5234,7 +5224,7 @@ func (c *NamespacesAutodomainmappingsDeleteCall) Header() http.Header {
 
 func (c *NamespacesAutodomainmappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5312,7 +5302,7 @@ func (c *NamespacesAutodomainmappingsDeleteCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the auto domain mapping being deleted. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the auto domain mapping being deleted.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/autodomainmappings/[^/]+$",
 	//       "required": true,
@@ -5390,7 +5380,7 @@ func (c *NamespacesAutodomainmappingsGetCall) Header() http.Header {
 
 func (c *NamespacesAutodomainmappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5461,7 +5451,7 @@ func (c *NamespacesAutodomainmappingsGetCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the auto domain mapping being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the auto domain mapping being retrieved.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/autodomainmappings/[^/]+$",
 	//       "required": true,
@@ -5589,7 +5579,7 @@ func (c *NamespacesAutodomainmappingsListCall) Header() http.Header {
 
 func (c *NamespacesAutodomainmappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5769,7 +5759,7 @@ func (c *NamespacesAutodomainmappingsReplaceAutoDomainMappingCall) Header() http
 
 func (c *NamespacesAutodomainmappingsReplaceAutoDomainMappingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5842,7 +5832,7 @@ func (c *NamespacesAutodomainmappingsReplaceAutoDomainMappingCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the auto domain mapping being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the auto domain mapping being retrieved.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/autodomainmappings/[^/]+$",
 	//       "required": true,
@@ -5909,7 +5899,7 @@ func (c *NamespacesConfigurationsCreateCall) Header() http.Header {
 
 func (c *NamespacesConfigurationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5982,7 +5972,7 @@ func (c *NamespacesConfigurationsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The project ID or project number in which this configuration should be\ncreated.",
+	//       "description": "The namespace in which the configuration should be created.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -6079,7 +6069,7 @@ func (c *NamespacesConfigurationsDeleteCall) Header() http.Header {
 
 func (c *NamespacesConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6157,7 +6147,7 @@ func (c *NamespacesConfigurationsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the configuration being deleted. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the configuration to delete.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/configurations/[^/]+$",
 	//       "required": true,
@@ -6235,7 +6225,7 @@ func (c *NamespacesConfigurationsGetCall) Header() http.Header {
 
 func (c *NamespacesConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6306,7 +6296,7 @@ func (c *NamespacesConfigurationsGetCall) Do(opts ...googleapi.CallOption) (*Con
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the configuration being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the configuration to retrieve.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/configurations/[^/]+$",
 	//       "required": true,
@@ -6434,7 +6424,7 @@ func (c *NamespacesConfigurationsListCall) Header() http.Header {
 
 func (c *NamespacesConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6531,7 +6521,7 @@ func (c *NamespacesConfigurationsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The project ID or project number from which the configurations should be\nlisted.",
+	//       "description": "The namespace from which the configurations should be listed.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -6614,7 +6604,7 @@ func (c *NamespacesConfigurationsReplaceConfigurationCall) Header() http.Header 
 
 func (c *NamespacesConfigurationsReplaceConfigurationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6687,7 +6677,7 @@ func (c *NamespacesConfigurationsReplaceConfigurationCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the configuration being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the configuration being replaced.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/configurations/[^/]+$",
 	//       "required": true,
@@ -6754,7 +6744,7 @@ func (c *NamespacesDomainmappingsCreateCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6827,7 +6817,7 @@ func (c *NamespacesDomainmappingsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The project ID or project number in which this domain mapping should be\ncreated.",
+	//       "description": "The namespace in which the domain mapping should be created.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -6919,7 +6909,7 @@ func (c *NamespacesDomainmappingsDeleteCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6997,7 +6987,7 @@ func (c *NamespacesDomainmappingsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the domain mapping being deleted. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the domain mapping to delete.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/domainmappings/[^/]+$",
 	//       "required": true,
@@ -7075,7 +7065,7 @@ func (c *NamespacesDomainmappingsGetCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7146,7 +7136,7 @@ func (c *NamespacesDomainmappingsGetCall) Do(opts ...googleapi.CallOption) (*Dom
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the domain mapping being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the domain mapping to retrieve.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/domainmappings/[^/]+$",
 	//       "required": true,
@@ -7274,7 +7264,7 @@ func (c *NamespacesDomainmappingsListCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7371,7 +7361,7 @@ func (c *NamespacesDomainmappingsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The project ID or project number from which the domain mappings should be\nlisted.",
+	//       "description": "The namespace from which the domain mappings should be listed.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -7454,7 +7444,7 @@ func (c *NamespacesDomainmappingsReplaceDomainMappingCall) Header() http.Header 
 
 func (c *NamespacesDomainmappingsReplaceDomainMappingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7527,7 +7517,7 @@ func (c *NamespacesDomainmappingsReplaceDomainMappingCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the domain mapping being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the domain mapping being retrieved.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/domainmappings/[^/]+$",
 	//       "required": true,
@@ -7619,7 +7609,7 @@ func (c *NamespacesRevisionsDeleteCall) Header() http.Header {
 
 func (c *NamespacesRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7697,7 +7687,7 @@ func (c *NamespacesRevisionsDeleteCall) Do(opts ...googleapi.CallOption) (*Statu
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the revision being deleted. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the revision to delete.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/revisions/[^/]+$",
 	//       "required": true,
@@ -7775,7 +7765,7 @@ func (c *NamespacesRevisionsGetCall) Header() http.Header {
 
 func (c *NamespacesRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7846,7 +7836,7 @@ func (c *NamespacesRevisionsGetCall) Do(opts ...googleapi.CallOption) (*Revision
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the revision being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the revision to retrieve.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/revisions/[^/]+$",
 	//       "required": true,
@@ -7974,7 +7964,7 @@ func (c *NamespacesRevisionsListCall) Header() http.Header {
 
 func (c *NamespacesRevisionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8071,7 +8061,7 @@ func (c *NamespacesRevisionsListCall) Do(opts ...googleapi.CallOption) (*ListRev
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The project ID or project number from which the revisions should be listed.",
+	//       "description": "The namespace from which the revisions should be listed.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -8145,7 +8135,7 @@ func (c *NamespacesRoutesCreateCall) Header() http.Header {
 
 func (c *NamespacesRoutesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8218,7 +8208,7 @@ func (c *NamespacesRoutesCreateCall) Do(opts ...googleapi.CallOption) (*Route, e
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The project ID or project number in which this route should be created.",
+	//       "description": "The namespace in which the route should be created.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -8311,7 +8301,7 @@ func (c *NamespacesRoutesDeleteCall) Header() http.Header {
 
 func (c *NamespacesRoutesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8389,7 +8379,7 @@ func (c *NamespacesRoutesDeleteCall) Do(opts ...googleapi.CallOption) (*Status, 
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the route being deleted. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the route to delete.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/routes/[^/]+$",
 	//       "required": true,
@@ -8467,7 +8457,7 @@ func (c *NamespacesRoutesGetCall) Header() http.Header {
 
 func (c *NamespacesRoutesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8538,7 +8528,7 @@ func (c *NamespacesRoutesGetCall) Do(opts ...googleapi.CallOption) (*Route, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the route being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the route to retrieve.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/routes/[^/]+$",
 	//       "required": true,
@@ -8666,7 +8656,7 @@ func (c *NamespacesRoutesListCall) Header() http.Header {
 
 func (c *NamespacesRoutesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8763,7 +8753,7 @@ func (c *NamespacesRoutesListCall) Do(opts ...googleapi.CallOption) (*ListRoutes
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The project ID or project number from which the routes should be listed.",
+	//       "description": "The namespace from which the routes should be listed.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -8846,7 +8836,7 @@ func (c *NamespacesRoutesReplaceRouteCall) Header() http.Header {
 
 func (c *NamespacesRoutesReplaceRouteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8919,7 +8909,7 @@ func (c *NamespacesRoutesReplaceRouteCall) Do(opts ...googleapi.CallOption) (*Ro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the route being replaced. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the route being replaced.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/routes/[^/]+$",
 	//       "required": true,
@@ -8986,7 +8976,7 @@ func (c *NamespacesServicesCreateCall) Header() http.Header {
 
 func (c *NamespacesServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9059,7 +9049,7 @@ func (c *NamespacesServicesCreateCall) Do(opts ...googleapi.CallOption) (*Servic
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The project ID or project number in which this service should be created.",
+	//       "description": "The namespace in which the service should be created.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -9154,7 +9144,7 @@ func (c *NamespacesServicesDeleteCall) Header() http.Header {
 
 func (c *NamespacesServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9232,7 +9222,7 @@ func (c *NamespacesServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Status
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the service being deleted. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the service to delete.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -9310,7 +9300,7 @@ func (c *NamespacesServicesGetCall) Header() http.Header {
 
 func (c *NamespacesServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9381,7 +9371,7 @@ func (c *NamespacesServicesGetCall) Do(opts ...googleapi.CallOption) (*Service, 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the service being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the service to retrieve.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -9509,7 +9499,7 @@ func (c *NamespacesServicesListCall) Header() http.Header {
 
 func (c *NamespacesServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9606,7 +9596,7 @@ func (c *NamespacesServicesListCall) Do(opts ...googleapi.CallOption) (*ListServ
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The project ID or project number from which the services should be listed.",
+	//       "description": "The namespace from which the services should be listed.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -9689,7 +9679,7 @@ func (c *NamespacesServicesReplaceServiceCall) Header() http.Header {
 
 func (c *NamespacesServicesReplaceServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9762,7 +9752,7 @@ func (c *NamespacesServicesReplaceServiceCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the service being replaced. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the service being replaced.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -9838,7 +9828,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10004,7 +9994,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10199,7 +10189,7 @@ func (c *ProjectsLocationsAuthorizeddomainsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAuthorizeddomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10366,7 +10356,7 @@ func (c *ProjectsLocationsAutodomainmappingsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutodomainmappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10531,7 +10521,7 @@ func (c *ProjectsLocationsAutodomainmappingsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutodomainmappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10609,7 +10599,7 @@ func (c *ProjectsLocationsAutodomainmappingsDeleteCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the auto domain mapping being deleted. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the auto domain mapping being deleted.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/autodomainmappings/[^/]+$",
 	//       "required": true,
@@ -10687,7 +10677,7 @@ func (c *ProjectsLocationsAutodomainmappingsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutodomainmappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10758,7 +10748,7 @@ func (c *ProjectsLocationsAutodomainmappingsGetCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the auto domain mapping being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the auto domain mapping being retrieved.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/autodomainmappings/[^/]+$",
 	//       "required": true,
@@ -10886,7 +10876,7 @@ func (c *ProjectsLocationsAutodomainmappingsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutodomainmappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11066,7 +11056,7 @@ func (c *ProjectsLocationsAutodomainmappingsReplaceAutoDomainMappingCall) Header
 
 func (c *ProjectsLocationsAutodomainmappingsReplaceAutoDomainMappingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11139,7 +11129,7 @@ func (c *ProjectsLocationsAutodomainmappingsReplaceAutoDomainMappingCall) Do(opt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the auto domain mapping being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the auto domain mapping being retrieved.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/autodomainmappings/[^/]+$",
 	//       "required": true,
@@ -11206,7 +11196,7 @@ func (c *ProjectsLocationsConfigurationsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsConfigurationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11279,7 +11269,7 @@ func (c *ProjectsLocationsConfigurationsCreateCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The project ID or project number in which this configuration should be\ncreated.",
+	//       "description": "The namespace in which the configuration should be created.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -11376,7 +11366,7 @@ func (c *ProjectsLocationsConfigurationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11454,7 +11444,7 @@ func (c *ProjectsLocationsConfigurationsDeleteCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the configuration being deleted. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the configuration to delete.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/configurations/[^/]+$",
 	//       "required": true,
@@ -11532,7 +11522,7 @@ func (c *ProjectsLocationsConfigurationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11603,7 +11593,7 @@ func (c *ProjectsLocationsConfigurationsGetCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the configuration being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the configuration to retrieve.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/configurations/[^/]+$",
 	//       "required": true,
@@ -11731,7 +11721,7 @@ func (c *ProjectsLocationsConfigurationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11828,7 +11818,7 @@ func (c *ProjectsLocationsConfigurationsListCall) Do(opts ...googleapi.CallOptio
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The project ID or project number from which the configurations should be\nlisted.",
+	//       "description": "The namespace from which the configurations should be listed.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -11911,7 +11901,7 @@ func (c *ProjectsLocationsConfigurationsReplaceConfigurationCall) Header() http.
 
 func (c *ProjectsLocationsConfigurationsReplaceConfigurationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11984,7 +11974,7 @@ func (c *ProjectsLocationsConfigurationsReplaceConfigurationCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the configuration being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the configuration being replaced.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/configurations/[^/]+$",
 	//       "required": true,
@@ -12051,7 +12041,7 @@ func (c *ProjectsLocationsDomainmappingsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12124,7 +12114,7 @@ func (c *ProjectsLocationsDomainmappingsCreateCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The project ID or project number in which this domain mapping should be\ncreated.",
+	//       "description": "The namespace in which the domain mapping should be created.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -12216,7 +12206,7 @@ func (c *ProjectsLocationsDomainmappingsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12294,7 +12284,7 @@ func (c *ProjectsLocationsDomainmappingsDeleteCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the domain mapping being deleted. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the domain mapping to delete.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/domainmappings/[^/]+$",
 	//       "required": true,
@@ -12372,7 +12362,7 @@ func (c *ProjectsLocationsDomainmappingsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12443,7 +12433,7 @@ func (c *ProjectsLocationsDomainmappingsGetCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the domain mapping being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the domain mapping to retrieve.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/domainmappings/[^/]+$",
 	//       "required": true,
@@ -12571,7 +12561,7 @@ func (c *ProjectsLocationsDomainmappingsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12668,7 +12658,7 @@ func (c *ProjectsLocationsDomainmappingsListCall) Do(opts ...googleapi.CallOptio
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The project ID or project number from which the domain mappings should be\nlisted.",
+	//       "description": "The namespace from which the domain mappings should be listed.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -12751,7 +12741,7 @@ func (c *ProjectsLocationsDomainmappingsReplaceDomainMappingCall) Header() http.
 
 func (c *ProjectsLocationsDomainmappingsReplaceDomainMappingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12824,7 +12814,7 @@ func (c *ProjectsLocationsDomainmappingsReplaceDomainMappingCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the domain mapping being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the domain mapping being retrieved.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/domainmappings/[^/]+$",
 	//       "required": true,
@@ -12916,7 +12906,7 @@ func (c *ProjectsLocationsRevisionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12994,7 +12984,7 @@ func (c *ProjectsLocationsRevisionsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the revision being deleted. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the revision to delete.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/revisions/[^/]+$",
 	//       "required": true,
@@ -13072,7 +13062,7 @@ func (c *ProjectsLocationsRevisionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13143,7 +13133,7 @@ func (c *ProjectsLocationsRevisionsGetCall) Do(opts ...googleapi.CallOption) (*R
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the revision being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the revision to retrieve.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/revisions/[^/]+$",
 	//       "required": true,
@@ -13271,7 +13261,7 @@ func (c *ProjectsLocationsRevisionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13368,7 +13358,7 @@ func (c *ProjectsLocationsRevisionsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The project ID or project number from which the revisions should be listed.",
+	//       "description": "The namespace from which the revisions should be listed.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -13442,7 +13432,7 @@ func (c *ProjectsLocationsRoutesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13515,7 +13505,7 @@ func (c *ProjectsLocationsRoutesCreateCall) Do(opts ...googleapi.CallOption) (*R
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The project ID or project number in which this route should be created.",
+	//       "description": "The namespace in which the route should be created.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -13608,7 +13598,7 @@ func (c *ProjectsLocationsRoutesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13686,7 +13676,7 @@ func (c *ProjectsLocationsRoutesDeleteCall) Do(opts ...googleapi.CallOption) (*S
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the route being deleted. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the route to delete.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/routes/[^/]+$",
 	//       "required": true,
@@ -13764,7 +13754,7 @@ func (c *ProjectsLocationsRoutesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13835,7 +13825,7 @@ func (c *ProjectsLocationsRoutesGetCall) Do(opts ...googleapi.CallOption) (*Rout
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the route being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the route to retrieve.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/routes/[^/]+$",
 	//       "required": true,
@@ -13963,7 +13953,7 @@ func (c *ProjectsLocationsRoutesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14060,7 +14050,7 @@ func (c *ProjectsLocationsRoutesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The project ID or project number from which the routes should be listed.",
+	//       "description": "The namespace from which the routes should be listed.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -14143,7 +14133,7 @@ func (c *ProjectsLocationsRoutesReplaceRouteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesReplaceRouteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14216,7 +14206,7 @@ func (c *ProjectsLocationsRoutesReplaceRouteCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the route being replaced. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the route being replaced.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/routes/[^/]+$",
 	//       "required": true,
@@ -14283,7 +14273,7 @@ func (c *ProjectsLocationsServicesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14356,7 +14346,7 @@ func (c *ProjectsLocationsServicesCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The project ID or project number in which this service should be created.",
+	//       "description": "The namespace in which the service should be created.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -14451,7 +14441,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14529,7 +14519,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the service being deleted. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the service to delete.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -14607,7 +14597,7 @@ func (c *ProjectsLocationsServicesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14678,7 +14668,7 @@ func (c *ProjectsLocationsServicesGetCall) Do(opts ...googleapi.CallOption) (*Se
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the service being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the service to retrieve.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -14772,7 +14762,7 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14977,7 +14967,7 @@ func (c *ProjectsLocationsServicesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15074,7 +15064,7 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The project ID or project number from which the services should be listed.",
+	//       "description": "The namespace from which the services should be listed.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -15157,7 +15147,7 @@ func (c *ProjectsLocationsServicesReplaceServiceCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesReplaceServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15230,7 +15220,7 @@ func (c *ProjectsLocationsServicesReplaceServiceCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the service being replaced. If needed, replace\n{namespace_id} with the project ID.",
+	//       "description": "The name of the service being replaced.\nFor Cloud Run (fully managed), replace {namespace_id} with the project ID\nor number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -15299,7 +15289,7 @@ func (c *ProjectsLocationsServicesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15442,7 +15432,7 @@ func (c *ProjectsLocationsServicesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -1417,7 +1417,7 @@
       }
     }
   },
-  "revision": "20191003",
+  "revision": "20191008",
   "rootUrl": "https://bigquery.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
@@ -4753,6 +4753,10 @@
                 },
                 "description": "The labels associated with this table. You can use these to organize and group your tables.",
                 "type": "object"
+              },
+              "rangePartitioning": {
+                "$ref": "RangePartitioning",
+                "description": "The range partitioning specification for this table, if configured."
               },
               "tableReference": {
                 "$ref": "TableReference",

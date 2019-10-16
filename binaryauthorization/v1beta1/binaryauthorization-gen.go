@@ -543,43 +543,31 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // specify access control policies for Cloud Platform resources.
 //
 //
-// A `Policy` is a collection of `bindings`. A `binding` binds one or
-// more
-// `members` to a single `role`. Members can be user accounts, service
-// accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of
-// permissions (defined by IAM or configured by users). A `binding`
-// can
-// optionally specify a `condition`, which is a logic expression that
-// further
-// constrains the role binding based on attributes about the request
-// and/or
-// target resource.
+// A `Policy` consists of a list of `bindings`. A `binding` binds a list
+// of
+// `members` to a `role`, where the members can be user accounts, Google
+// groups,
+// Google domains, and service accounts. A `role` is a named list of
+// permissions
+// defined by IAM.
 //
 // **JSON Example**
 //
 //     {
 //       "bindings": [
 //         {
-//           "role": "roles/resourcemanager.organizationAdmin",
+//           "role": "roles/owner",
 //           "members": [
 //             "user:mike@example.com",
 //             "group:admins@example.com",
 //             "domain:google.com",
 //
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com"
+// "serviceAccount:my-other-app@appspot.gserviceaccount.com"
 //           ]
 //         },
 //         {
-//           "role": "roles/resourcemanager.organizationViewer",
-//           "members": ["user:eve@example.com"],
-//           "condition": {
-//             "title": "expirable access",
-//             "description": "Does not grant access after Sep 2020",
-//             "expression": "request.time <
-//             timestamp('2020-10-01T00:00:00.000Z')",
-//           }
+//           "role": "roles/viewer",
+//           "members": ["user:sean@example.com"]
 //         }
 //       ]
 //     }
@@ -591,23 +579,17 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 //       - user:mike@example.com
 //       - group:admins@example.com
 //       - domain:google.com
-//       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-//       role: roles/resourcemanager.organizationAdmin
+//       - serviceAccount:my-other-app@appspot.gserviceaccount.com
+//       role: roles/owner
 //     - members:
-//       - user:eve@example.com
-//       role: roles/resourcemanager.organizationViewer
-//       condition:
-//         title: expirable access
-//         description: Does not grant access after Sep 2020
-//         expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z')
+//       - user:sean@example.com
+//       role: roles/viewer
+//
 //
 // For a description of IAM and its features, see the
 // [IAM developer's guide](https://cloud.google.com/iam/docs).
 type IamPolicy struct {
-	// Bindings: Associates a list of `members` to a `role`. Optionally may
-	// specify a
-	// `condition` that determines when binding is in effect.
+	// Bindings: Associates a list of `members` to a `role`.
 	// `bindings` with no members will result in an error.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
@@ -628,11 +610,7 @@ type IamPolicy struct {
 	//
 	// If no `etag` is provided in the call to `setIamPolicy`, then the
 	// existing
-	// policy is overwritten. Due to blind-set semantics of an etag-less
-	// policy,
-	// 'setIamPolicy' will not fail even if either of incoming or stored
-	// policy
-	// does not meet the version requirements.
+	// policy is overwritten.
 	Etag string `json:"etag,omitempty"`
 
 	// Version: Specifies the format of the policy.
@@ -641,19 +619,11 @@ type IamPolicy struct {
 	// will be
 	// rejected.
 	//
-	// Operations affecting conditional bindings must specify version 3.
-	// This can
-	// be either setting a conditional policy, modifying a conditional
-	// binding,
-	// or removing a conditional binding from the stored conditional
-	// policy.
-	// Operations on non-conditional policies may specify any valid value
-	// or
-	// leave the field unset.
-	//
-	// If no etag is provided in the call to `setIamPolicy`, any
-	// version
-	// compliance checks on the incoming and/or stored policy is skipped.
+	// Policies with any conditional bindings must specify version 3.
+	// Policies
+	// without any conditional bindings may specify any valid value or leave
+	// the
+	// field unset.
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1117,7 +1087,7 @@ func (c *ProjectsGetPolicyCall) Header() http.Header {
 
 func (c *ProjectsGetPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1260,7 +1230,7 @@ func (c *ProjectsUpdatePolicyCall) Header() http.Header {
 
 func (c *ProjectsUpdatePolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1412,7 +1382,7 @@ func (c *ProjectsAttestorsCreateCall) Header() http.Header {
 
 func (c *ProjectsAttestorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1556,7 +1526,7 @@ func (c *ProjectsAttestorsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAttestorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1698,7 +1668,7 @@ func (c *ProjectsAttestorsGetCall) Header() http.Header {
 
 func (c *ProjectsAttestorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1863,7 +1833,7 @@ func (c *ProjectsAttestorsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsAttestorsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2033,7 +2003,7 @@ func (c *ProjectsAttestorsListCall) Header() http.Header {
 
 func (c *ProjectsAttestorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2202,7 +2172,7 @@ func (c *ProjectsAttestorsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsAttestorsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2352,7 +2322,7 @@ func (c *ProjectsAttestorsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsAttestorsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2493,7 +2463,7 @@ func (c *ProjectsAttestorsUpdateCall) Header() http.Header {
 
 func (c *ProjectsAttestorsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2663,7 +2633,7 @@ func (c *ProjectsPolicyGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsPolicyGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2806,7 +2776,7 @@ func (c *ProjectsPolicySetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsPolicySetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2956,7 +2926,7 @@ func (c *ProjectsPolicyTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsPolicyTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -209,7 +209,7 @@
       }
     }
   },
-  "revision": "20190827",
+  "revision": "20191010",
   "rootUrl": "https://docs.googleapis.com/",
   "schemas": {
     "AutoText": {
@@ -2541,6 +2541,25 @@
       },
       "type": "object"
     },
+    "ReplaceNamedRangeContentRequest": {
+      "description": "Replaces the contents of the specified\nNamedRange or\nNamedRanges with the given replacement\ncontent.\n\nNote that an individual NamedRange may\nconsist of multiple discontinuous\nranges. In this case, only the\ncontent in the first range will be replaced. The other ranges and their\ncontent will be deleted.\n\nIn cases where replacing or deleting any ranges would result in an invalid\ndocument structure, a 400 bad request error is returned.",
+      "id": "ReplaceNamedRangeContentRequest",
+      "properties": {
+        "namedRangeId": {
+          "description": "The ID of the named range whose content will be replaced.\n\nIf there is no named range with the given ID a 400 bad request error is\nreturned.",
+          "type": "string"
+        },
+        "namedRangeName": {
+          "description": "The name of the NamedRanges whose\ncontent will be replaced.\n\nIf there are multiple named ranges with the given name, then\nthe content of each one will be replaced. If there are no named ranges\nwith the given name, then the request will be a no-op.",
+          "type": "string"
+        },
+        "text": {
+          "description": "Replaces the content of the specified named range(s) with the given text.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Request": {
       "description": "A single update to apply to a document.",
       "id": "Request",
@@ -2612,6 +2631,10 @@
         "replaceImage": {
           "$ref": "ReplaceImageRequest",
           "description": "Replaces an image in the document."
+        },
+        "replaceNamedRangeContent": {
+          "$ref": "ReplaceNamedRangeContentRequest",
+          "description": "Replaces the content in a named range."
         },
         "unmergeTableCells": {
           "$ref": "UnmergeTableCellsRequest",

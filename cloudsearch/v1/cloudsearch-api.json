@@ -931,7 +931,7 @@
                   "type": "boolean"
                 },
                 "requestOptions.languageCode": {
-                  "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.\nFor translations.\n\nWhen specified, the documents in search results are biased towards the\nspecified language.\nSuggest API does not use this parameter. It autocompletes only based on\ncharacters in the query.",
+                  "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.\nFor translations.\n\nSet this field using the language set in browser or for the page. In the\nevent that the user's language preference is known, set this field to the\nknown user language.\n\nWhen specified, the documents in search results are biased towards the\nspecified language.\n\nThe suggest API does not use this parameter. Instead, suggest autocompletes\nonly based on characters in the query.",
                   "location": "query",
                   "type": "string"
                 },
@@ -1804,7 +1804,7 @@
       }
     }
   },
-  "revision": "20190925",
+  "revision": "20191009",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -4154,7 +4154,7 @@
           "description": "Debug options of the request"
         },
         "languageCode": {
-          "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.\nFor translations.\n\nWhen specified, the documents in search results are biased towards the\nspecified language.\nSuggest API does not use this parameter. It autocompletes only based on\ncharacters in the query.",
+          "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.\nFor translations.\n\nSet this field using the language set in browser or for the page. In the\nevent that the user's language preference is known, set this field to the\nknown user language.\n\nWhen specified, the documents in search results are biased towards the\nspecified language.\n\nThe suggest API does not use this parameter. Instead, suggest autocompletes\nonly based on characters in the query.",
           "type": "string"
         },
         "searchApplicationId": {

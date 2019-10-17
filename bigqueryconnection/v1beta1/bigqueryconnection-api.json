@@ -238,7 +238,7 @@
                   ],
                   "parameters": {
                     "maxResults": {
-                      "description": "Maximum number of results to return.",
+                      "description": "Maximum number of results per page.",
                       "format": "uint32",
                       "location": "query",
                       "type": "integer"
@@ -394,7 +394,7 @@
       }
     }
   },
-  "revision": "20191004",
+  "revision": "20191009",
   "rootUrl": "https://bigqueryconnection.googleapis.com/",
   "schemas": {
     "AuditConfig": {

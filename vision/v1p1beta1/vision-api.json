@@ -448,7 +448,7 @@
       }
     }
   },
-  "revision": "20190927",
+  "revision": "20191011",
   "rootUrl": "https://vision.googleapis.com/",
   "schemas": {
     "AnnotateFileResponse": {
@@ -2348,7 +2348,7 @@
       "properties": {
         "boundingPoly": {
           "$ref": "GoogleCloudVisionV1p1beta1BoundingPoly",
-          "description": "The bounding polygon around the area of interest in the image.\nOptional. If it is not specified, system discretion will be applied."
+          "description": "The bounding polygon around the area of interest in the image.\nIf it is not specified, system discretion will be applied."
         },
         "filter": {
           "description": "The filtering expression. This can be used to restrict search results based\non Product labels. We currently support an AND of OR of key-value\nexpressions, where each expression within an OR must have the same key. An\n'=' should be used to connect the key and value.\n\nFor example, \"(color = red OR color = blue) AND brand = Google\" is\nacceptable, but \"(color = red OR brand = Google)\" is not acceptable.\n\"color: red\" is not acceptable because it uses a ':' instead of an '='.",

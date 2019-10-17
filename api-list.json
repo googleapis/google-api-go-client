@@ -2483,6 +2483,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "lifesciences:v2beta",
+      "name": "lifesciences",
+      "version": "v2beta",
+      "title": "Cloud Life Sciences API",
+      "description": "Cloud Life Sciences is a suite of services and tools for managing, processing, and transforming life sciences data.",
+      "discoveryRestUrl": "https://lifesciences.googleapis.com/$discovery/rest?version=v2beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/life-sciences",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "logging:v2",
       "name": "logging",
       "version": "v2",
@@ -2553,6 +2568,21 @@
       "title": "Stackdriver Monitoring API",
       "description": "Manages your Stackdriver Monitoring data and configurations. Most projects must be associated with a Stackdriver account, with a few exceptions as noted on the individual method pages. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the [Stackdriver Monitoring documentation](/monitoring/docs).",
       "discoveryRestUrl": "https://monitoring.googleapis.com/$discovery/rest?version=v3p1alpha1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/monitoring/api/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "monitoring:v1",
+      "name": "monitoring",
+      "version": "v1",
+      "title": "Stackdriver Monitoring API",
+      "description": "Manages your Stackdriver Monitoring data and configurations. Most projects must be associated with a Stackdriver account, with a few exceptions as noted on the individual method pages. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the [Stackdriver Monitoring documentation](/monitoring/docs).",
+      "discoveryRestUrl": "https://monitoring.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"

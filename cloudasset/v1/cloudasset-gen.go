@@ -541,8 +541,8 @@ type ExportAssetsRequest struct {
 	// will be
 	// returned. See [Introduction to Cloud
 	// Asset
-	// Inventory](https://cloud.google.com/resource-manager/docs/cloud-
-	// asset-inventory/overview)
+	// Inventory](https://cloud.google.com/asset-inventory/docs/overvie
+	// w)
 	// for all supported asset types.
 	AssetTypes []string `json:"assetTypes,omitempty"`
 
@@ -812,11 +812,10 @@ func (s *GoogleCloudOrgpolicyV1BooleanPolicy) MarshalJSON() ([]byte, error) {
 // the
 // same as values with no prefix.
 // Ancestry subtrees must be in one of the following formats:
-//     - “projects/<project-id>”, e.g.
-// “projects/tokyo-rain-123”
-//     - “folders/<folder-id>”, e.g. “folders/1234”
-//     - “organizations/<organization-id>”, e.g.
-// “organizations/1234”
+//     - "projects/<project-id>", e.g. "projects/tokyo-rain-123"
+//     - "folders/<folder-id>", e.g. "folders/1234"
+//     - "organizations/<organization-id>", e.g.
+// "organizations/1234"
 // The `supports_under` field of the associated `Constraint`  defines
 // whether
 // ancestry prefixes can be used. You can set `allowed_values`
@@ -895,7 +894,7 @@ type GoogleCloudOrgpolicyV1ListPolicy struct {
 	//
 	// Example 1 (no inherited values):
 	//   `organizations/foo` has a `Policy` with values:
-	//     {allowed_values: “E1” allowed_values:”E2”}
+	//     {allowed_values: "E1" allowed_values:"E2"}
 	//   `projects/bar` has `inherit_from_parent` `false` and values:
 	//     {allowed_values: "E3" allowed_values: "E4"}
 	// The accepted values at `organizations/foo` are `E1`, `E2`.
@@ -903,9 +902,9 @@ type GoogleCloudOrgpolicyV1ListPolicy struct {
 	//
 	// Example 2 (inherited values):
 	//   `organizations/foo` has a `Policy` with values:
-	//     {allowed_values: “E1” allowed_values:”E2”}
+	//     {allowed_values: "E1" allowed_values:"E2"}
 	//   `projects/bar` has a `Policy` with values:
-	//     {value: “E3” value: ”E4” inherit_from_parent: true}
+	//     {value: "E3" value: "E4" inherit_from_parent: true}
 	// The accepted values at `organizations/foo` are `E1`, `E2`.
 	// The accepted values at `projects/bar` are `E1`, `E2`, `E3`, and
 	// `E4`.
@@ -920,7 +919,7 @@ type GoogleCloudOrgpolicyV1ListPolicy struct {
 	//
 	// Example 4 (RestoreDefault):
 	//   `organizations/foo` has a `Policy` with values:
-	//     {allowed_values: “E1” allowed_values:”E2”}
+	//     {allowed_values: "E1" allowed_values:"E2"}
 	//   `projects/bar` has a `Policy` with values:
 	//     {RestoreDefault: {}}
 	// The accepted values at `organizations/foo` are `E1`, `E2`.
@@ -939,7 +938,7 @@ type GoogleCloudOrgpolicyV1ListPolicy struct {
 	//
 	// Example 6 (ListConstraint allowing all):
 	//   `organizations/foo` has a `Policy` with values:
-	//     {allowed_values: “E1” allowed_values: ”E2”}
+	//     {allowed_values: "E1" allowed_values: "E2"}
 	//   `projects/bar` has a `Policy` with:
 	//     {all: ALLOW}
 	// The accepted values at `organizations/foo` are `E1`, E2`.
@@ -947,7 +946,7 @@ type GoogleCloudOrgpolicyV1ListPolicy struct {
 	//
 	// Example 7 (ListConstraint allowing none):
 	//   `organizations/foo` has a `Policy` with values:
-	//     {allowed_values: “E1” allowed_values: ”E2”}
+	//     {allowed_values: "E1" allowed_values: "E2"}
 	//   `projects/bar` has a `Policy` with:
 	//     {all: DENY}
 	// The accepted values at `organizations/foo` are `E1`, E2`.
@@ -1461,8 +1460,8 @@ type GoogleIdentityAccesscontextmanagerV1OsConstraint struct {
 	// verified Chrome OS.
 	// Verifications includes requirements that the device is
 	// enterprise-managed,
-	// conformant to Dasher domain policies, and the caller has permission
-	// to call
+	// conformant to domain policies, and the caller has permission to
+	// call
 	// the API targeted by the request.
 	RequireVerifiedChromeOs bool `json:"requireVerifiedChromeOs,omitempty"`
 
@@ -2154,7 +2153,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2283,8 +2282,8 @@ func (r *V1Service) BatchGetAssetsHistory(parent string) *V1BatchGetAssetsHistor
 // ull_resource_name)
 // and [Resource
 // Name
-// Format](https://cloud.google.com/resource-manager/docs/cloud-asse
-// t-inventory/resource-name-format)
+// Format](https://cloud.google.com/asset-inventory/docs/resource-na
+// me-format)
 // for more info.
 //
 // The request becomes a no-op if the asset name list is empty, and the
@@ -2363,7 +2362,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2434,7 +2433,7 @@ func (c *V1BatchGetAssetsHistoryCall) Do(opts ...googleapi.CallOption) (*BatchGe
 	//   ],
 	//   "parameters": {
 	//     "assetNames": {
-	//       "description": "A list of the full names of the assets. For example:\n`//compute.googleapis.com/projects/my_project_123/zones/zone1/instances/instance1`.\nSee [Resource\nNames](https://cloud.google.com/apis/design/resource_names#full_resource_name)\nand [Resource Name\nFormat](https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/resource-name-format)\nfor more info.\n\nThe request becomes a no-op if the asset name list is empty, and the max\nsize of the asset name list is 100 in one request.",
+	//       "description": "A list of the full names of the assets. For example:\n`//compute.googleapis.com/projects/my_project_123/zones/zone1/instances/instance1`.\nSee [Resource\nNames](https://cloud.google.com/apis/design/resource_names#full_resource_name)\nand [Resource Name\nFormat](https://cloud.google.com/asset-inventory/docs/resource-name-format)\nfor more info.\n\nThe request becomes a no-op if the asset name list is empty, and the max\nsize of the asset name list is 100 in one request.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -2533,7 +2532,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0-rc1 gdcl/20191012")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -1917,7 +1917,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2083,7 +2083,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2267,7 +2267,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2423,7 +2423,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2607,7 +2607,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2748,7 +2748,8 @@ type ProjectsLocationsPipelinesRunCall struct {
 // contain a
 // google.cloud.lifesciences.v2beta.Metadata object describing the
 // status
-// of the pipeline execution.  The [response] field will contain
+// of the pipeline execution. The
+// response field will contain
 // a
 // google.cloud.lifesciences.v2beta.RunPipelineResponse object if
 // the
@@ -2802,7 +2803,7 @@ func (c *ProjectsLocationsPipelinesRunCall) Header() http.Header {
 
 func (c *ProjectsLocationsPipelinesRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2866,7 +2867,7 @@ func (c *ProjectsLocationsPipelinesRunCall) Do(opts ...googleapi.CallOption) (*O
 	}
 	return ret, nil
 	// {
-	//   "description": "Runs a pipeline.  The returned Operation's metadata field will contain a\ngoogle.cloud.lifesciences.v2beta.Metadata object describing the status\nof the pipeline execution.  The [response] field will contain a\ngoogle.cloud.lifesciences.v2beta.RunPipelineResponse object if the\npipeline completes successfully.\n\n**Note:** Before you can use this method, the *Life Sciences Service Agent*\nmust have access to your project. This is done automatically when the\nCloud Life Sciences API is first enabled, but if you delete this permission\nyou must disable and re-enable the API to grant the Life Sciences\nService Agent the required permissions.\nAuthorization requires the following [Google\nIAM](https://cloud.google.com/iam/) permission:\n\n* `lifesciences.workflows.run`",
+	//   "description": "Runs a pipeline.  The returned Operation's metadata field will contain a\ngoogle.cloud.lifesciences.v2beta.Metadata object describing the status\nof the pipeline execution. The\nresponse field will contain a\ngoogle.cloud.lifesciences.v2beta.RunPipelineResponse object if the\npipeline completes successfully.\n\n**Note:** Before you can use this method, the *Life Sciences Service Agent*\nmust have access to your project. This is done automatically when the\nCloud Life Sciences API is first enabled, but if you delete this permission\nyou must disable and re-enable the API to grant the Life Sciences\nService Agent the required permissions.\nAuthorization requires the following [Google\nIAM](https://cloud.google.com/iam/) permission:\n\n* `lifesciences.workflows.run`",
 	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/pipelines:run",
 	//   "httpMethod": "POST",
 	//   "id": "lifesciences.projects.locations.pipelines.run",

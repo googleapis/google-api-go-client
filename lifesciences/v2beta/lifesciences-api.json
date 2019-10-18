@@ -277,7 +277,7 @@
             "pipelines": {
               "methods": {
                 "run": {
-                  "description": "Runs a pipeline.  The returned Operation's metadata field will contain a\ngoogle.cloud.lifesciences.v2beta.Metadata object describing the status\nof the pipeline execution.  The [response] field will contain a\ngoogle.cloud.lifesciences.v2beta.RunPipelineResponse object if the\npipeline completes successfully.\n\n**Note:** Before you can use this method, the *Life Sciences Service Agent*\nmust have access to your project. This is done automatically when the\nCloud Life Sciences API is first enabled, but if you delete this permission\nyou must disable and re-enable the API to grant the Life Sciences\nService Agent the required permissions.\nAuthorization requires the following [Google\nIAM](https://cloud.google.com/iam/) permission:\n\n* `lifesciences.workflows.run`",
+                  "description": "Runs a pipeline.  The returned Operation's metadata field will contain a\ngoogle.cloud.lifesciences.v2beta.Metadata object describing the status\nof the pipeline execution. The\nresponse field will contain a\ngoogle.cloud.lifesciences.v2beta.RunPipelineResponse object if the\npipeline completes successfully.\n\n**Note:** Before you can use this method, the *Life Sciences Service Agent*\nmust have access to your project. This is done automatically when the\nCloud Life Sciences API is first enabled, but if you delete this permission\nyou must disable and re-enable the API to grant the Life Sciences\nService Agent the required permissions.\nAuthorization requires the following [Google\nIAM](https://cloud.google.com/iam/) permission:\n\n* `lifesciences.workflows.run`",
                   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/pipelines:run",
                   "httpMethod": "POST",
                   "id": "lifesciences.projects.locations.pipelines.run",
@@ -311,7 +311,7 @@
       }
     }
   },
-  "revision": "20191007",
+  "revision": "20191015",
   "rootUrl": "https://lifesciences.googleapis.com/",
   "schemas": {
     "Accelerator": {

@@ -1227,7 +1227,7 @@
       }
     }
   },
-  "revision": "20191010",
+  "revision": "20191004",
   "rootUrl": "https://iam.googleapis.com/",
   "schemas": {
     "AdminAuditData": {
@@ -1576,7 +1576,7 @@
           "type": "string"
         },
         "validationUnitName": {
-          "description": "The validation unit name, for instance\n\"lintValidationUnits/ConditionComplexityCheck\".",
+          "description": "The validation unit name, for instance\n“lintValidationUnits/ConditionComplexityCheck”.",
           "type": "string"
         }
       },

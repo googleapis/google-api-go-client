@@ -2485,7 +2485,7 @@
       }
     }
   },
-  "revision": "20190802",
+  "revision": "20191017",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -2653,7 +2653,7 @@
         },
         "impressionsWon": {
           "$ref": "MetricValue",
-          "description": "The number of bids that won an impression."
+          "description": "The number of bids that won the auction."
         },
         "measurableImpressions": {
           "$ref": "MetricValue",

@@ -287,7 +287,7 @@
       }
     }
   },
-  "revision": "20190724",
+  "revision": "20191016",
   "rootUrl": "https://cloudshell.googleapis.com/",
   "schemas": {
     "AuthorizeEnvironmentRequest": {
@@ -350,6 +350,20 @@
           },
           "type": "array"
         },
+        "size": {
+          "description": "Indicates the size of the backing VM running the environment.  If set to\nsomething other than DEFAULT, it will be reverted to the default VM size\nafter vm_size_expire_time.",
+          "enum": [
+            "VM_SIZE_UNSPECIFIED",
+            "DEFAULT",
+            "BOOSTED"
+          ],
+          "enumDescriptions": [
+            "The VM size is unknown.",
+            "The default VM size.",
+            "The boosted VM size."
+          ],
+          "type": "string"
+        },
         "sshHost": {
           "description": "Output only. Host to which clients can connect to initiate SSH sessions\nwith the environment.",
           "type": "string"
@@ -377,6 +391,11 @@
             "The environment is being started but is not yet ready to accept\nconnections.",
             "The environment is running and ready to accept connections. It will\nautomatically transition back to DISABLED after a period of inactivity or\nif another environment is started."
           ],
+          "type": "string"
+        },
+        "vmSizeExpireTime": {
+          "description": "Output only. The time when the Environment will expire back to the default\nVM size.",
+          "format": "google-datetime",
           "type": "string"
         },
         "webHost": {

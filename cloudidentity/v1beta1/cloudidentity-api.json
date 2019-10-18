@@ -465,7 +465,7 @@
       }
     }
   },
-  "revision": "20191012",
+  "revision": "20191015",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "EntityKey": {
@@ -576,16 +576,16 @@
       "id": "Membership",
       "properties": {
         "createTime": {
-          "description": "Creation timestamp of the Membership.",
+          "description": "Output only. Creation timestamp of the Membership.",
           "format": "google-datetime",
           "type": "string"
         },
         "memberKey": {
           "$ref": "EntityKey",
-          "description": "EntityKey of the entity to be added as the member. Must be set while\ncreating a Membership, read-only afterwards.\n\nCurrently allowed entity types: `Users`, `Groups`."
+          "description": "Required. Immutable. EntityKey of the entity to be added as the member. Must be set while\ncreating a Membership, read-only afterwards.\n\nCurrently allowed entity types: `Users`, `Groups`."
         },
         "name": {
-          "description": "[Resource name](https://cloud.google.com/apis/design/resource_names) of the\nMembership in the format: `groups/{group_id}/memberships/{member_id}`,\nwhere group_id is the unique id assigned to the Group to which Membership\nbelongs to, and member_id is the unique id assigned to the member\n\nMust be left blank while creating a Membership.",
+          "description": "Output only. [Resource name](https://cloud.google.com/apis/design/resource_names) of the\nMembership in the format: `groups/{group_id}/memberships/{member_id}`,\nwhere group_id is the unique id assigned to the Group to which Membership\nbelongs to, and member_id is the unique id assigned to the member\n\nMust be left blank while creating a Membership.",
           "type": "string"
         },
         "roles": {
@@ -596,7 +596,7 @@
           "type": "array"
         },
         "updateTime": {
-          "description": "Last updated timestamp of the Membership.",
+          "description": "Output only. Last updated timestamp of the Membership.",
           "format": "google-datetime",
           "type": "string"
         }

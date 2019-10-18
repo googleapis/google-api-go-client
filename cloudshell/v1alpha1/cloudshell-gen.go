@@ -286,6 +286,18 @@ type Environment struct {
 	// methods.
 	PublicKeys []*PublicKey `json:"publicKeys,omitempty"`
 
+	// Size: Indicates the size of the backing VM running the environment.
+	// If set to
+	// something other than DEFAULT, it will be reverted to the default VM
+	// size
+	// after vm_size_expire_time.
+	//
+	// Possible values:
+	//   "VM_SIZE_UNSPECIFIED" - The VM size is unknown.
+	//   "DEFAULT" - The default VM size.
+	//   "BOOSTED" - The boosted VM size.
+	Size string `json:"size,omitempty"`
+
 	// SshHost: Output only. Host to which clients can connect to initiate
 	// SSH sessions
 	// with the environment.
@@ -317,6 +329,11 @@ type Environment struct {
 	// inactivity or
 	// if another environment is started.
 	State string `json:"state,omitempty"`
+
+	// VmSizeExpireTime: Output only. The time when the Environment will
+	// expire back to the default
+	// VM size.
+	VmSizeExpireTime string `json:"vmSizeExpireTime,omitempty"`
 
 	// WebHost: Output only. Host to which clients can connect to initiate
 	// HTTPS or WSS
@@ -700,7 +717,7 @@ func (c *UsersEnvironmentsAuthorizeCall) Header() http.Header {
 
 func (c *UsersEnvironmentsAuthorizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -850,7 +867,7 @@ func (c *UsersEnvironmentsGetCall) Header() http.Header {
 
 func (c *UsersEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -992,7 +1009,7 @@ func (c *UsersEnvironmentsPatchCall) Header() http.Header {
 
 func (c *UsersEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1148,7 +1165,7 @@ func (c *UsersEnvironmentsStartCall) Header() http.Header {
 
 func (c *UsersEnvironmentsStartCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1294,7 +1311,7 @@ func (c *UsersEnvironmentsPublicKeysCreateCall) Header() http.Header {
 
 func (c *UsersEnvironmentsPublicKeysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1435,7 +1452,7 @@ func (c *UsersEnvironmentsPublicKeysDeleteCall) Header() http.Header {
 
 func (c *UsersEnvironmentsPublicKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

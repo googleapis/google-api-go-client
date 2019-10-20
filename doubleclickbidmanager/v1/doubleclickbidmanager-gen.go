@@ -378,14 +378,12 @@ type FilterPair struct {
 	//
 	// Possible values:
 	//   "FILTER_ACTIVE_VIEW_EXPECTED_VIEWABILITY"
-	//   "FILTER_ACTIVITY_ID"
 	//   "FILTER_ADVERTISER"
 	//   "FILTER_ADVERTISER_CURRENCY"
 	//   "FILTER_ADVERTISER_TIMEZONE"
 	//   "FILTER_AD_POSITION"
 	//   "FILTER_AGE"
 	//   "FILTER_AUTHORIZED_SELLER_STATE"
-	//   "FILTER_BRANDSAFE_CHANNEL_ID"
 	//   "FILTER_BROWSER"
 	//   "FILTER_BUDGET_SEGMENT_DESCRIPTION"
 	//   "FILTER_CAMPAIGN_DAILY_FREQUENCY"
@@ -446,7 +444,6 @@ type FilterPair struct {
 	//   "FILTER_PUBLIC_INVENTORY"
 	//   "FILTER_QUARTER"
 	//   "FILTER_REGION"
-	//   "FILTER_REGULAR_CHANNEL_ID"
 	//   "FILTER_SITE_ID"
 	//   "FILTER_SITE_LANGUAGE"
 	//   "FILTER_SKIPPABLE_SUPPORT"
@@ -614,14 +611,12 @@ type Parameters struct {
 	//
 	// Possible values:
 	//   "FILTER_ACTIVE_VIEW_EXPECTED_VIEWABILITY"
-	//   "FILTER_ACTIVITY_ID"
 	//   "FILTER_ADVERTISER"
 	//   "FILTER_ADVERTISER_CURRENCY"
 	//   "FILTER_ADVERTISER_TIMEZONE"
 	//   "FILTER_AD_POSITION"
 	//   "FILTER_AGE"
 	//   "FILTER_AUTHORIZED_SELLER_STATE"
-	//   "FILTER_BRANDSAFE_CHANNEL_ID"
 	//   "FILTER_BROWSER"
 	//   "FILTER_BUDGET_SEGMENT_DESCRIPTION"
 	//   "FILTER_CAMPAIGN_DAILY_FREQUENCY"
@@ -682,7 +677,6 @@ type Parameters struct {
 	//   "FILTER_PUBLIC_INVENTORY"
 	//   "FILTER_QUARTER"
 	//   "FILTER_REGION"
-	//   "FILTER_REGULAR_CHANNEL_ID"
 	//   "FILTER_SITE_ID"
 	//   "FILTER_SITE_LANGUAGE"
 	//   "FILTER_SKIPPABLE_SUPPORT"
@@ -1018,20 +1012,8 @@ type Parameters struct {
 	//   "METRIC_TRUEVIEW_CONVERSION_COST_MANY_PER_VIEW_ADVERTISER"
 	//   "METRIC_TRUEVIEW_CONVERSION_COST_MANY_PER_VIEW_PARTNER"
 	//   "METRIC_TRUEVIEW_CONVERSION_COST_MANY_PER_VIEW_USD"
-	//   "METRIC_TRUEVIEW_CONVERSION_COST_ONE_PER_VIEW_ADVERTISER"
-	//   "METRIC_TRUEVIEW_CONVERSION_COST_ONE_PER_VIEW_PARTNER"
-	//   "METRIC_TRUEVIEW_CONVERSION_COST_ONE_PER_VIEW_USD"
 	//   "METRIC_TRUEVIEW_CONVERSION_MANY_PER_VIEW"
-	//   "METRIC_TRUEVIEW_CONVERSION_ONE_PER_VIEW"
 	//   "METRIC_TRUEVIEW_CONVERSION_RATE_ONE_PER_VIEW"
-	//   "METRIC_TRUEVIEW_CONVERSION_VALUE_MANY_PER_VIEW_ADVERTISER"
-	//   "METRIC_TRUEVIEW_CONVERSION_VALUE_MANY_PER_VIEW_PARTNER"
-	//   "METRIC_TRUEVIEW_CONVERSION_VALUE_MANY_PER_VIEW_USD"
-	//   "METRIC_TRUEVIEW_CONVERSION_VALUE_ONE_PER_VIEW_ADVERTISER"
-	//   "METRIC_TRUEVIEW_CONVERSION_VALUE_ONE_PER_VIEW_PARTNER"
-	//   "METRIC_TRUEVIEW_CONVERSION_VALUE_ONE_PER_VIEW_USD"
-	//   "METRIC_TRUEVIEW_COST_CONVERSION_MANY_PER_VIEW_RATIO"
-	//   "METRIC_TRUEVIEW_COST_CONVERSION_ONE_PER_VIEW_RATIO"
 	//   "METRIC_TRUEVIEW_CPV_ADVERTISER"
 	//   "METRIC_TRUEVIEW_CPV_PARTNER"
 	//   "METRIC_TRUEVIEW_CPV_USD"
@@ -1050,8 +1032,6 @@ type Parameters struct {
 	//   "METRIC_TRUEVIEW_TOTAL_CONVERSION_VALUES_PARTNER"
 	//   "METRIC_TRUEVIEW_TOTAL_CONVERSION_VALUES_USD"
 	//   "METRIC_TRUEVIEW_UNIQUE_VIEWERS"
-	//   "METRIC_TRUEVIEW_VALUE_CONVERSION_MANY_PER_VIEW_RATIO"
-	//   "METRIC_TRUEVIEW_VALUE_CONVERSION_ONE_PER_VIEW_RATIO"
 	//   "METRIC_TRUEVIEW_VIEWS"
 	//   "METRIC_TRUEVIEW_VIEW_RATE"
 	//   "METRIC_TRUEVIEW_VIEW_THROUGH_CONVERSION"
@@ -1784,7 +1764,7 @@ func (c *LineitemsDownloadlineitemsCall) Header() http.Header {
 
 func (c *LineitemsDownloadlineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1907,7 +1887,7 @@ func (c *LineitemsUploadlineitemsCall) Header() http.Header {
 
 func (c *LineitemsUploadlineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2029,7 +2009,7 @@ func (c *QueriesCreatequeryCall) Header() http.Header {
 
 func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2152,7 +2132,7 @@ func (c *QueriesDeletequeryCall) Header() http.Header {
 
 func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2264,7 +2244,7 @@ func (c *QueriesGetqueryCall) Header() http.Header {
 
 func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2405,7 +2385,7 @@ func (c *QueriesListqueriesCall) Header() http.Header {
 
 func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2524,7 +2504,7 @@ func (c *QueriesRunqueryCall) Header() http.Header {
 
 func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2644,7 +2624,7 @@ func (c *ReportsListreportsCall) Header() http.Header {
 
 func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2776,7 +2756,7 @@ func (c *SdfDownloadCall) Header() http.Header {
 
 func (c *SdfDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

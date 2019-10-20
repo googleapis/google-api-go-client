@@ -139,6 +139,70 @@ type V1Service struct {
 	s *Service
 }
 
+// AccessSettings: Access related settings for IAP protected apps.
+type AccessSettings struct {
+	// CorsSettings: Configuration to allow cross-origin requests via IAP.
+	CorsSettings *CorsSettings `json:"corsSettings,omitempty"`
+
+	// GcipSettings: GCIP claims and endpoint configurations for 3p identity
+	// providers.
+	GcipSettings *GcipSettings `json:"gcipSettings,omitempty"`
+
+	// OauthSettings: Settings to configure IAP's OAuth behavior.
+	OauthSettings *OAuthSettings `json:"oauthSettings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CorsSettings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CorsSettings") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccessSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ApplicationSettings: Wrapper over application specific settings for
+// IAP.
+type ApplicationSettings struct {
+	// CsmSettings: Settings to configure IAP's behavior for a CSM mesh.
+	CsmSettings *CsmSettings `json:"csmSettings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CsmSettings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CsmSettings") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApplicationSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ApplicationSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding.
@@ -211,6 +275,75 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CorsSettings: Allows customers to configure HTTP request paths
+// that'll allow HTTP OPTIONS
+// call to bypass authentication and authorization.
+type CorsSettings struct {
+	// AllowHttpOptions: Configuration to allow HTTP OPTIONS calls to skip
+	// authorization. If
+	// undefined, IAP will not apply any special logic to OPTIONS requests.
+	AllowHttpOptions bool `json:"allowHttpOptions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowHttpOptions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowHttpOptions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CorsSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod CorsSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CsmSettings: Configuration for RCTokens generated for CSM workloads
+// protected by IAP.
+// RCTokens are IAP generated JWTs that can be verified at the
+// application. The
+// RCToken is primarily used for ISTIO deployments, and can be scoped to
+// a
+// single mesh by configuring the audience field accordingly
+type CsmSettings struct {
+	// RctokenAud: Audience claim set in the generated RCToken. This value
+	// is not validated by
+	// IAP.
+	RctokenAud string `json:"rctokenAud,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RctokenAud") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RctokenAud") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CsmSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod CsmSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Expr: Represents an expression text. Example:
 //
 //     title: "User account presence"
@@ -261,6 +394,51 @@ type Expr struct {
 
 func (s *Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GcipSettings: Allows customers to configure tenant_id for GCIP
+// instance per-app.
+type GcipSettings struct {
+	// LoginPageUri: Login page URI associated with the GCIP
+	// tenants.
+	// Typically, all resources within the same project share the same login
+	// page,
+	// though it could be overridden at the sub resource level.
+	LoginPageUri string `json:"loginPageUri,omitempty"`
+
+	// TenantIds: GCIP tenant ids that are linked to the IAP
+	// resource.
+	// tenant_ids could be a string beginning with a number character to
+	// indicate
+	// authenticating with GCIP tenant flow, or in the format of
+	// _<ProjectNumber>
+	// to indicate authenticating with GCIP agent flow.
+	// If agent flow is used, tenant_ids should only contain one single
+	// element,
+	// while for tenant flow, tenant_ids can contain multiple elements.
+	TenantIds []string `json:"tenantIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LoginPageUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LoginPageUri") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GcipSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GcipSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -332,6 +510,83 @@ type GetPolicyOptions struct {
 
 func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GetPolicyOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IapSettings: The IAP configurable settings.
+type IapSettings struct {
+	// AccessSettings: Top level wrapper for all access related setting in
+	// IAP
+	AccessSettings *AccessSettings `json:"accessSettings,omitempty"`
+
+	// ApplicationSettings: Top level wrapper for all application related
+	// settings in IAP
+	ApplicationSettings *ApplicationSettings `json:"applicationSettings,omitempty"`
+
+	// Name: Required. The resource name of the IAP protected resource.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessSettings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessSettings") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IapSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod IapSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OAuthSettings: Configuration for OAuth login&consent flow behavior.
+type OAuthSettings struct {
+	// LoginHint: Domain hint to send as hd=? parameter in OAuth request
+	// flow. Enables
+	// redirect to primary IDP by skipping Google's login
+	// screen.
+	// https://developers.google.com/identity/protocols/OpenIDConnect
+	// #hd-param
+	// Note: IAP does not verify that the id token's hd claim matches this
+	// value
+	// since access behavior is managed by IAM policies.
+	LoginHint string `json:"loginHint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LoginHint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LoginHint") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OAuthSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod OAuthSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -636,7 +891,7 @@ func (c *V1GetIamPolicyCall) Header() http.Header {
 
 func (c *V1GetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -730,6 +985,151 @@ func (c *V1GetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 
 }
 
+// method id "iap.getIapSettings":
+
+type V1GetIapSettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIapSettings: Gets the IAP settings on a particular IAP protected
+// resource.
+func (r *V1Service) GetIapSettings(name string) *V1GetIapSettingsCall {
+	c := &V1GetIapSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1GetIapSettingsCall) Fields(s ...googleapi.Field) *V1GetIapSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *V1GetIapSettingsCall) IfNoneMatch(entityTag string) *V1GetIapSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1GetIapSettingsCall) Context(ctx context.Context) *V1GetIapSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1GetIapSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1GetIapSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:iapSettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "iap.getIapSettings" call.
+// Exactly one of *IapSettings or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *IapSettings.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *V1GetIapSettingsCall) Do(opts ...googleapi.CallOption) (*IapSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &IapSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the IAP settings on a particular IAP protected resource.",
+	//   "flatPath": "v1/{v1Id}:iapSettings",
+	//   "httpMethod": "GET",
+	//   "id": "iap.getIapSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name for which to retrieve the settings.\nAuthorization: Requires the `getSettings` permission for the associated\nresource.",
+	//       "location": "path",
+	//       "pattern": "^.+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:iapSettings",
+	//   "response": {
+	//     "$ref": "IapSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "iap.setIamPolicy":
 
 type V1SetIamPolicyCall struct {
@@ -782,7 +1182,7 @@ func (c *V1SetIamPolicyCall) Header() http.Header {
 
 func (c *V1SetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -928,7 +1328,7 @@ func (c *V1TestIamPermissionsCall) Header() http.Header {
 
 func (c *V1TestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191017")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1014,6 +1414,165 @@ func (c *V1TestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPer
 	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "iap.updateIapSettings":
+
+type V1UpdateIapSettingsCall struct {
+	s           *Service
+	name        string
+	iapsettings *IapSettings
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// UpdateIapSettings: Updates the IAP settings on a particular IAP
+// protected resource. It
+// replaces all fields unless the `update_mask` is set.
+func (r *V1Service) UpdateIapSettings(name string, iapsettings *IapSettings) *V1UpdateIapSettingsCall {
+	c := &V1UpdateIapSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.iapsettings = iapsettings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The field mask
+// specifying which IAP settings should be updated.
+// If omitted, the all of the settings are updated.
+// See
+// https://developers.google.com/protocol-buffers/docs/reference/goog
+// le.protobuf#fieldmask
+func (c *V1UpdateIapSettingsCall) UpdateMask(updateMask string) *V1UpdateIapSettingsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1UpdateIapSettingsCall) Fields(s ...googleapi.Field) *V1UpdateIapSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1UpdateIapSettingsCall) Context(ctx context.Context) *V1UpdateIapSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1UpdateIapSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1UpdateIapSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.iapsettings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:iapSettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "iap.updateIapSettings" call.
+// Exactly one of *IapSettings or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *IapSettings.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *V1UpdateIapSettingsCall) Do(opts ...googleapi.CallOption) (*IapSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &IapSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the IAP settings on a particular IAP protected resource. It\nreplaces all fields unless the `update_mask` is set.",
+	//   "flatPath": "v1/{v1Id}:iapSettings",
+	//   "httpMethod": "PATCH",
+	//   "id": "iap.updateIapSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the IAP protected resource.",
+	//       "location": "path",
+	//       "pattern": "^.+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The field mask specifying which IAP settings should be updated.\nIf omitted, the all of the settings are updated. See\nhttps://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:iapSettings",
+	//   "request": {
+	//     "$ref": "IapSettings"
+	//   },
+	//   "response": {
+	//     "$ref": "IapSettings"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

@@ -134,6 +134,31 @@
             "https://www.googleapis.com/auth/cloud-platform"
           ]
         },
+        "getIapSettings": {
+          "description": "Gets the IAP settings on a particular IAP protected resource.",
+          "flatPath": "v1/{v1Id}:iapSettings",
+          "httpMethod": "GET",
+          "id": "iap.getIapSettings",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The resource name for which to retrieve the settings.\nAuthorization: Requires the `getSettings` permission for the associated\nresource.",
+              "location": "path",
+              "pattern": "^.+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+name}:iapSettings",
+          "response": {
+            "$ref": "IapSettings"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
         "setIamPolicy": {
           "description": "Sets the access control policy for an Identity-Aware Proxy protected\nresource. Replaces any existing policy.\nMore information about managing access via IAP can be found at:\nhttps://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api",
           "flatPath": "v1/{v1Id}:setIamPolicy",
@@ -189,13 +214,77 @@
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform"
           ]
+        },
+        "updateIapSettings": {
+          "description": "Updates the IAP settings on a particular IAP protected resource. It\nreplaces all fields unless the `update_mask` is set.",
+          "flatPath": "v1/{v1Id}:iapSettings",
+          "httpMethod": "PATCH",
+          "id": "iap.updateIapSettings",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The resource name of the IAP protected resource.",
+              "location": "path",
+              "pattern": "^.+$",
+              "required": true,
+              "type": "string"
+            },
+            "updateMask": {
+              "description": "The field mask specifying which IAP settings should be updated.\nIf omitted, the all of the settings are updated. See\nhttps://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+              "format": "google-fieldmask",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "v1/{+name}:iapSettings",
+          "request": {
+            "$ref": "IapSettings"
+          },
+          "response": {
+            "$ref": "IapSettings"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
         }
       }
     }
   },
-  "revision": "20191004",
+  "revision": "20191011",
   "rootUrl": "https://iap.googleapis.com/",
   "schemas": {
+    "AccessSettings": {
+      "description": "Access related settings for IAP protected apps.",
+      "id": "AccessSettings",
+      "properties": {
+        "corsSettings": {
+          "$ref": "CorsSettings",
+          "description": "Configuration to allow cross-origin requests via IAP."
+        },
+        "gcipSettings": {
+          "$ref": "GcipSettings",
+          "description": "GCIP claims and endpoint configurations for 3p identity providers."
+        },
+        "oauthSettings": {
+          "$ref": "OAuthSettings",
+          "description": "Settings to configure IAP's OAuth behavior."
+        }
+      },
+      "type": "object"
+    },
+    "ApplicationSettings": {
+      "description": "Wrapper over application specific settings for IAP.",
+      "id": "ApplicationSettings",
+      "properties": {
+        "csmSettings": {
+          "$ref": "CsmSettings",
+          "description": "Settings to configure IAP's behavior for a CSM mesh."
+        }
+      },
+      "type": "object"
+    },
     "Binding": {
       "description": "Associates `members` with a `role`.",
       "id": "Binding",
@@ -213,6 +302,28 @@
         },
         "role": {
           "description": "Role that is assigned to `members`.\nFor example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CorsSettings": {
+      "description": "Allows customers to configure HTTP request paths that'll allow HTTP OPTIONS\ncall to bypass authentication and authorization.",
+      "id": "CorsSettings",
+      "properties": {
+        "allowHttpOptions": {
+          "description": "Configuration to allow HTTP OPTIONS calls to skip authorization. If\nundefined, IAP will not apply any special logic to OPTIONS requests.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "CsmSettings": {
+      "description": "Configuration for RCTokens generated for CSM workloads protected by IAP.\nRCTokens are IAP generated JWTs that can be verified at the application. The\nRCToken is primarily used for ISTIO deployments, and can be scoped to a\nsingle mesh by configuring the audience field accordingly",
+      "id": "CsmSettings",
+      "properties": {
+        "rctokenAud": {
+          "description": "Audience claim set in the generated RCToken. This value is not validated by\nIAP.",
           "type": "string"
         }
       },
@@ -241,6 +352,24 @@
       },
       "type": "object"
     },
+    "GcipSettings": {
+      "description": "Allows customers to configure tenant_id for GCIP instance per-app.",
+      "id": "GcipSettings",
+      "properties": {
+        "loginPageUri": {
+          "description": "Login page URI associated with the GCIP tenants.\nTypically, all resources within the same project share the same login page,\nthough it could be overridden at the sub resource level.",
+          "type": "string"
+        },
+        "tenantIds": {
+          "description": "GCIP tenant ids that are linked to the IAP resource.\ntenant_ids could be a string beginning with a number character to indicate\nauthenticating with GCIP tenant flow, or in the format of _\u003cProjectNumber\u003e\nto indicate authenticating with GCIP agent flow.\nIf agent flow is used, tenant_ids should only contain one single element,\nwhile for tenant flow, tenant_ids can contain multiple elements.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GetIamPolicyRequest": {
       "description": "Request message for `GetIamPolicy` method.",
       "id": "GetIamPolicyRequest",
@@ -260,6 +389,36 @@
           "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "IapSettings": {
+      "description": "The IAP configurable settings.",
+      "id": "IapSettings",
+      "properties": {
+        "accessSettings": {
+          "$ref": "AccessSettings",
+          "description": "Top level wrapper for all access related setting in IAP"
+        },
+        "applicationSettings": {
+          "$ref": "ApplicationSettings",
+          "description": "Top level wrapper for all application related settings in IAP"
+        },
+        "name": {
+          "description": "Required. The resource name of the IAP protected resource.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OAuthSettings": {
+      "description": "Configuration for OAuth login\u0026consent flow behavior.",
+      "id": "OAuthSettings",
+      "properties": {
+        "loginHint": {
+          "description": "Domain hint to send as hd=? parameter in OAuth request flow. Enables\nredirect to primary IDP by skipping Google's login screen.\nhttps://developers.google.com/identity/protocols/OpenIDConnect#hd-param\nNote: IAP does not verify that the id token's hd claim matches this value\nsince access behavior is managed by IAM policies.",
+          "type": "string"
         }
       },
       "type": "object"

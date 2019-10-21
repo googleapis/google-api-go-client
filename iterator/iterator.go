@@ -82,17 +82,23 @@ type PageInfo struct {
 // It is not a stable interface.
 var NewPageInfo = newPageInfo
 
-// If an iterator can support paging, its iterator-creating method should call
-// this (via the NewPageInfo variable above).
+// newPageInfo creates and returns a PageInfo and a next func. If an iterator can
+// support paging, its iterator-creating method should call this. Each time the
+// iterator's Next is called, it should call the returned next fn to determine
+// whether a next item exists, and if so it should pop an item from the buffer.
 //
-// The fetch, bufLen and takeBuf arguments provide access to the
-// iterator's internal slice of buffered items. They behave as described in
-// PageInfo, above.
+// The fetch, bufLen and takeBuf arguments provide access to the iterator's
+// internal slice of buffered items. They behave as described in PageInfo, above.
 //
 // The return value is the PageInfo.next method bound to the returned PageInfo value.
 // (Returning it avoids exporting PageInfo.next.)
-func newPageInfo(fetch func(int, string) (string, error), bufLen func() int, takeBuf func() interface{}) (*PageInfo, func() error) {
-	pi := &PageInfo{
+//
+// Note: the returned PageInfo and next fn do not remove items from the buffer.
+// It is up to the iterator using these to remove items from the buffer:
+// typically by performing a pop in its Next. If items are not removed from the
+// buffer, memory may grow unbounded.
+func newPageInfo(fetch func(int, string) (string, error), bufLen func() int, takeBuf func() interface{}) (pi *PageInfo, next func() error) {
+	pi = &PageInfo{
 		fetch:   fetch,
 		bufLen:  bufLen,
 		takeBuf: takeBuf,

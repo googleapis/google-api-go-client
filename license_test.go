@@ -24,7 +24,8 @@ const prefix = "// Copyright"
 // A few files have to be skipped.
 var skip = map[string]bool{
 	"tools.go": true, // This file requires another comment above the license.
-	"googleapi/internal/uritemplates/uritemplates.go": true, // This file is licensed to an individual.
+	"internal/third_party/uritemplates/uritemplates.go":      true, // This file is licensed to an individual.
+	"internal/third_party/uritemplates/uritemplates_test.go": true, // This file is licensed to an individual.
 }
 
 // This test validates that all go files in the repo start with an appropriate license.

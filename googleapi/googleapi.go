@@ -16,7 +16,7 @@ import (
 	"net/url"
 	"strings"
 
-	"google.golang.org/api/googleapi/internal/uritemplates"
+	"google.golang.org/api/internal/third_party/uritemplates"
 )
 
 // ContentTyper is an interface for Readers which know (or would like

@@ -272,7 +272,7 @@
       }
     }
   },
-  "revision": "20191013",
+  "revision": "20191021",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -377,6 +377,10 @@
             "Run test without using orchestrator."
           ],
           "type": "string"
+        },
+        "shardingOption": {
+          "$ref": "ShardingOption",
+          "description": "The option to run tests in multiple shards in parallel."
         },
         "testApk": {
           "$ref": "FileReference",
@@ -1267,6 +1271,20 @@
       },
       "type": "object"
     },
+    "ManualSharding": {
+      "description": "Shards test cases into the specified groups of packages, classes, and/or\nmethods.\n\nWith manual sharding enabled, specifying test targets via\nenvironment_variables or in InstrumentationTest is invalid.",
+      "id": "ManualSharding",
+      "properties": {
+        "testTargetsForShard": {
+          "description": "Required. Group of packages, classes, and/or test methods to be run for\neach shard. The number of shard_test_targets must be \u003e 1, and \u003c= 50.",
+          "items": {
+            "$ref": "TestTargetsForShard"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "NetworkConfiguration": {
       "id": "NetworkConfiguration",
       "properties": {
@@ -1434,6 +1452,42 @@
       },
       "type": "object"
     },
+    "Shard": {
+      "description": "Output only. Details about the shard.",
+      "id": "Shard",
+      "properties": {
+        "numShards": {
+          "description": "Output only. The total number of shards.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "shardIndex": {
+          "description": "Output only. The index of the shard among all the shards.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "testTargetsForShard": {
+          "$ref": "TestTargetsForShard",
+          "description": "Output only. Test targets for each shard."
+        }
+      },
+      "type": "object"
+    },
+    "ShardingOption": {
+      "description": "Options for enabling sharding.",
+      "id": "ShardingOption",
+      "properties": {
+        "manualSharding": {
+          "$ref": "ManualSharding",
+          "description": "Shards test cases into the specified groups of packages, classes, and/or\nmethods."
+        },
+        "uniformSharding": {
+          "$ref": "UniformSharding",
+          "description": "Uniformly shards test cases given a total number of shards."
+        }
+      },
+      "type": "object"
+    },
     "StartActivityIntent": {
       "description": "A starting intent specified by an action, uri, and categories.",
       "id": "StartActivityIntent",
@@ -1516,6 +1570,10 @@
         "projectId": {
           "description": "Output only. The cloud project that owns the test execution.",
           "type": "string"
+        },
+        "shard": {
+          "$ref": "Shard",
+          "description": "Output only. Details about the shard."
         },
         "state": {
           "description": "Output only. Indicates the current progress of the test execution\n(e.g., FINISHED).",
@@ -1832,6 +1890,20 @@
       },
       "type": "object"
     },
+    "TestTargetsForShard": {
+      "description": "Test targets for a shard.",
+      "id": "TestTargetsForShard",
+      "properties": {
+        "testTargets": {
+          "description": "Group of packages, classes, and/or test methods to be run for each shard.\nThe targets need to be specified in AndroidJUnitRunner argument format. For\nexample, “package com.my.packages” “class com.my.package.MyClass”.\n\nThe number of shard_test_targets must be greater than 0.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "ToolResultsExecution": {
       "description": "Represents a tool results execution resource.\n\nThis has the results of a TestMatrix.",
       "id": "ToolResultsExecution",
@@ -1917,6 +1989,18 @@
           "description": "Packet loss ratio (0.0 - 1.0).",
           "format": "float",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "UniformSharding": {
+      "description": "Uniformly shards test cases given a total number of shards.\n\nFor Instrumentation test, it will be translated to “-e numShard” “-e\nshardIndex” AndroidJUnitRunner arguments. With uniform sharding enabled,\nspecifying these sharding arguments via environment_variables is invalid.",
+      "id": "UniformSharding",
+      "properties": {
+        "numShards": {
+          "description": "Required. Total number of shards. The number must be \u003e 1, and \u003c= 50.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"

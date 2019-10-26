@@ -228,7 +228,7 @@
       }
     }
   },
-  "revision": "20191016",
+  "revision": "20191023",
   "rootUrl": "https://cloudshell.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {
@@ -250,6 +250,14 @@
         "dockerImage": {
           "description": "Required. Full path to the Docker image used to run this environment, e.g.\n\"gcr.io/dev-con/cloud-devshell:latest\".",
           "type": "string"
+        },
+        "httpsPorts": {
+          "description": "Output only. List of ports users can connect to on the environment.",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "type": "array"
         },
         "id": {
           "description": "Output only. The environment's identifier, which is always \"default\".",

@@ -753,13 +753,17 @@
       }
     }
   },
-  "revision": "20191011",
+  "revision": "20191018",
   "rootUrl": "https://accessapproval.googleapis.com/",
   "schemas": {
     "AccessApprovalSettings": {
       "description": "Settings on a Project/Folder/Organization related to Access Approval.",
       "id": "AccessApprovalSettings",
       "properties": {
+        "enrolledAncestor": {
+          "description": "Output only. This field is read only (not settable via\nUpdateAccessAccessApprovalSettings method). If the field is true, that\nindicates that at least one service is enrolled for Access Approval in one\nor more ancestors of the Project or Folder (this field will always be\nunset for the organization since organizations do not have ancestors).",
+          "type": "boolean"
+        },
         "enrolledServices": {
           "description": "A list of Google Cloud Services for which the given resource has Access\nApproval enrolled. Access requests for the resource given by name against\nany of these services contained here will be required to have explicit\napproval. If name refers to an organization, enrollment can be done for\nindividual services. If name refers to a folder or project, enrollment can\nonly be done on an all or nothing basis.\n\nIf a cloud_product is repeated in this list, the first entry will be\nhonored and all following entries will be discarded. A maximum of 10\nenrolled services will be enforced, to be expanded as the set of supported\nservices is expanded.",
           "items": {

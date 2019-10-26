@@ -38,7 +38,7 @@
   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/drive/",
-  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/_q587BhHvqZGp_ex4_rqB4tXxkw\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/oBMvKC4XV0NjxxOx_Y5WENsew0Q\"",
   "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -3459,7 +3459,7 @@
       }
     }
   },
-  "revision": "20190926",
+  "revision": "20191015",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {
@@ -3664,7 +3664,7 @@
           "type": "array"
         },
         "quotaBytesTotal": {
-          "description": "The total number of quota bytes.",
+          "description": "The total number of quota bytes. This is only relevant when quotaType is LIMITED.",
           "format": "int64",
           "type": "string"
         },

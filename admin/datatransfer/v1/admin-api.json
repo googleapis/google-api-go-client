@@ -18,7 +18,7 @@
   "description": "Transfers user data from one user to another.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/admin-sdk/data-transfer/",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/PJB_zqya-G8YVADxM394C0jmFUA\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/4nXC3yxZNbcRmDAehf253f0RsHM\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -109,7 +109,7 @@
           "id": "datatransfer.applications.list",
           "parameters": {
             "customerId": {
-              "description": "Immutable ID of the Google Apps account.",
+              "description": "Immutable ID of the G Suite account.",
               "location": "query",
               "type": "string"
             },
@@ -185,7 +185,7 @@
           "id": "datatransfer.transfers.list",
           "parameters": {
             "customerId": {
-              "description": "Immutable ID of the Google Apps account.",
+              "description": "Immutable ID of the G Suite account.",
               "location": "query",
               "type": "string"
             },
@@ -230,7 +230,7 @@
       }
     }
   },
-  "revision": "20160223",
+  "revision": "20190829",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Application": {
@@ -256,7 +256,7 @@
           "type": "string"
         },
         "transferParams": {
-          "description": "The list of all possible transfer parameters for this application. These parameters can be used to select the data of the user in this application to be transfered.",
+          "description": "The list of all possible transfer parameters for this application. These parameters can be used to select the data of the user in this application to be transferred.",
           "items": {
             "$ref": "ApplicationTransferParam"
           },
@@ -275,7 +275,7 @@
           "type": "string"
         },
         "applicationTransferParams": {
-          "description": "The transfer parameters for the application. These parameters are used to select the data which will get transfered in context of this application.",
+          "description": "The transfer parameters for the application. These parameters are used to select the data which will get transferred in context of this application.",
           "items": {
             "$ref": "ApplicationTransferParam"
           },
@@ -297,7 +297,7 @@
           "type": "string"
         },
         "value": {
-          "description": "The value of the coressponding transfer parameter. eg: 'PRIVATE' or 'SHARED'",
+          "description": "The value of the corresponding transfer parameter. eg: 'PRIVATE' or 'SHARED'",
           "items": {
             "type": "string"
           },
@@ -358,11 +358,11 @@
           "type": "string"
         },
         "newOwnerUserId": {
-          "description": "ID of the user to whom the data is being transfered.",
+          "description": "ID of the user to whom the data is being transferred.",
           "type": "string"
         },
         "oldOwnerUserId": {
-          "description": "ID of the user whose data is being transfered.",
+          "description": "ID of the user whose data is being transferred.",
           "type": "string"
         },
         "overallTransferStatusCode": {

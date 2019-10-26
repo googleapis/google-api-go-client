@@ -391,7 +391,7 @@
                   ]
                 },
                 "setIamPolicy": {
-                  "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+                  "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}:setIamPolicy",
                   "httpMethod": "POST",
                   "id": "healthcare.projects.locations.datasets.setIamPolicy",
@@ -823,7 +823,7 @@
                       ]
                     },
                     "setIamPolicy": {
-                      "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+                      "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}:setIamPolicy",
                       "httpMethod": "POST",
                       "id": "healthcare.projects.locations.datasets.dicomStores.setIamPolicy",
@@ -1747,7 +1747,7 @@
                       ]
                     },
                     "setIamPolicy": {
-                      "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+                      "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:setIamPolicy",
                       "httpMethod": "POST",
                       "id": "healthcare.projects.locations.datasets.fhirStores.setIamPolicy",
@@ -2131,7 +2131,7 @@
                           ],
                           "parameters": {
                             "_page_token": {
-                              "description": "Same as `page`. Please use either `page` or `_page_token`.",
+                              "description": "Used to retrieve the first, previous, next, or last page of resource\nversions when using pagination. Value should be set to the value of\n`_page_token` set in next or previous page links' URLs. Next and previous\npage are returned in the response bundle's links field, where\n`link.relation` is \"previous\" or \"next\".\n\nOmit `_page_token` if no previous request has been made.",
                               "location": "query",
                               "type": "string"
                             },
@@ -2154,7 +2154,7 @@
                               "type": "string"
                             },
                             "page": {
-                              "description": "Used to retrieve the first, previous, next, or last page of resource\nversions when using pagination. Value should be set to the value of\n`page` set in next or previous page links' URLs. Next and previous\npage are returned in the response bundle's links field, where\n`link.relation` is \"previous\" or \"next\".\n\nOmit `page` if no previous request has been made.",
+                              "description": "DEPRECATED! Use `_page_token`.",
                               "location": "query",
                               "type": "string"
                             },
@@ -2502,7 +2502,7 @@
                       ]
                     },
                     "setIamPolicy": {
-                      "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+                      "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}:setIamPolicy",
                       "httpMethod": "POST",
                       "id": "healthcare.projects.locations.datasets.hl7V2Stores.setIamPolicy",

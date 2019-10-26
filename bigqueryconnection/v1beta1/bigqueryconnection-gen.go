@@ -1012,8 +1012,8 @@ func (r *ProjectsLocationsConnectionsService) Create(parent string, connection *
 	return c
 }
 
-// ConnectionId sets the optional parameter "connectionId": Optional
-// connection id that should be assigned to the created connection.
+// ConnectionId sets the optional parameter "connectionId": Connection
+// id that should be assigned to the created connection.
 func (c *ProjectsLocationsConnectionsCreateCall) ConnectionId(connectionId string) *ProjectsLocationsConnectionsCreateCall {
 	c.urlParams_.Set("connectionId", connectionId)
 	return c
@@ -1046,7 +1046,7 @@ func (c *ProjectsLocationsConnectionsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1119,7 +1119,7 @@ func (c *ProjectsLocationsConnectionsCreateCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "connectionId": {
-	//       "description": "Optional connection id that should be assigned to the created connection.",
+	//       "description": "Optional. Connection id that should be assigned to the created connection.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1190,7 +1190,7 @@ func (c *ProjectsLocationsConnectionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1332,7 +1332,7 @@ func (c *ProjectsLocationsConnectionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1471,7 +1471,7 @@ func (c *ProjectsLocationsConnectionsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1634,7 +1634,7 @@ func (c *ProjectsLocationsConnectionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1811,7 +1811,7 @@ func (c *ProjectsLocationsConnectionsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1963,7 +1963,7 @@ func (c *ProjectsLocationsConnectionsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2114,7 +2114,7 @@ func (c *ProjectsLocationsConnectionsTestIamPermissionsCall) Header() http.Heade
 
 func (c *ProjectsLocationsConnectionsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2255,7 +2255,7 @@ func (c *ProjectsLocationsConnectionsUpdateCredentialCall) Header() http.Header 
 
 func (c *ProjectsLocationsConnectionsUpdateCredentialCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

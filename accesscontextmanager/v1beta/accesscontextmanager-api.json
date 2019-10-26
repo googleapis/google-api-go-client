@@ -598,7 +598,7 @@
       }
     }
   },
-  "revision": "20191012",
+  "revision": "20191018",
   "rootUrl": "https://accesscontextmanager.googleapis.com/",
   "schemas": {
     "AccessLevel": {
@@ -685,24 +685,6 @@
             "$ref": "Condition"
           },
           "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "BridgeServiceRestriction": {
-      "description": "Alpha. Specifies which services are granted access via this Bridge Service\nPerimeter.",
-      "id": "BridgeServiceRestriction",
-      "properties": {
-        "allowedServices": {
-          "description": "The list of APIs usable through the Bridge Perimeter. Must be empty\nunless 'enable_restriction' is True.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "enableRestriction": {
-          "description": "Whether to restrict the set of APIs callable through the Bridge Service\nPerimeter.",
-          "type": "boolean"
         }
       },
       "type": "object"
@@ -809,24 +791,6 @@
         },
         "requireScreenlock": {
           "description": "Whether or not screenlock is required for the DevicePolicy to be true.\nDefaults to `false`.",
-          "type": "boolean"
-        }
-      },
-      "type": "object"
-    },
-    "IngressServiceRestriction": {
-      "description": "Alpha. Specifies how Access Levels are to be used for accessing the Service\nPerimeter.",
-      "id": "IngressServiceRestriction",
-      "properties": {
-        "allowedServices": {
-          "description": "The list of APIs usable with a valid Access Level. Must be empty unless\n'enable_restriction' is True.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "enableRestriction": {
-          "description": "Whether to restrict the set of APIs callable outside the Service\nPerimeter via Access Levels.",
           "type": "boolean"
         }
       },
@@ -1009,14 +973,6 @@
             "type": "string"
           },
           "type": "array"
-        },
-        "bridgeServiceRestriction": {
-          "$ref": "BridgeServiceRestriction",
-          "description": "Alpha. Configuration for what services are accessible via the Bridge\nPerimeter. Must be empty for non-Bridge Perimeters."
-        },
-        "ingressServiceRestriction": {
-          "$ref": "IngressServiceRestriction",
-          "description": "Alpha. Configuration for which services may be used with Access Levels."
         },
         "resources": {
           "description": "A list of GCP resources that are inside of the service perimeter.\nCurrently only projects are allowed. Format: `projects/{project_number}`",

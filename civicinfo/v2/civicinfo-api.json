@@ -6,7 +6,7 @@
   "description": "Provides polling places, early vote locations, contest data, election officials, and government representatives for U.S. residential addresses.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/civic-information",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/UBGbvHxl5b0nTEIbQKoQKowlxXY\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/uW0v7qtcbrarZ2Ljov2AeFqC07Y\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -322,7 +322,7 @@
       }
     }
   },
-  "revision": "20181017",
+  "revision": "20191010",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AdministrationRegion": {
@@ -1441,12 +1441,12 @@
           "type": "string"
         },
         "startLatE7": {
-          "format": "int64",
-          "type": "string"
+          "format": "int32",
+          "type": "integer"
         },
         "startLngE7": {
-          "format": "int64",
-          "type": "string"
+          "format": "int32",
+          "type": "integer"
         },
         "state": {
           "type": "string"

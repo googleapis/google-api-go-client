@@ -209,7 +209,7 @@
       }
     }
   },
-  "revision": "20191010",
+  "revision": "20191021",
   "rootUrl": "https://docs.googleapis.com/",
   "schemas": {
     "AutoText": {
@@ -412,6 +412,66 @@
         "textStyle": {
           "$ref": "TextStyle",
           "description": "The text style of this ColumnBreak.\n\nSimilar to text content, like text runs and footnote references, the text\nstyle of a column break can affect content layout as well as the styling of\ntext inserted adjacent to it."
+        }
+      },
+      "type": "object"
+    },
+    "CreateFooterRequest": {
+      "description": "Creates a Footer. The new footer will be\napplied to the DocumentStyle.\n\nIf a footer of the specified type already exists then a 400 bad request error\nwill be returned.",
+      "id": "CreateFooterRequest",
+      "properties": {
+        "type": {
+          "description": "The type of footer to create.",
+          "enum": [
+            "HEADER_FOOTER_TYPE_UNSPECIFIED",
+            "DEFAULT"
+          ],
+          "enumDescriptions": [
+            "The header/footer type is unspecified.",
+            "A default header/footer."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CreateFooterResponse": {
+      "description": "The result of creating a footer.",
+      "id": "CreateFooterResponse",
+      "properties": {
+        "footerId": {
+          "description": "The ID of the created footer.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CreateHeaderRequest": {
+      "description": "Creates a Header. The new header will be\napplied to the DocumentStyle.\n\nIf a header of the specified type already exists then a 400 bad request error\nwill be returned.",
+      "id": "CreateHeaderRequest",
+      "properties": {
+        "type": {
+          "description": "The type of header to create.",
+          "enum": [
+            "HEADER_FOOTER_TYPE_UNSPECIFIED",
+            "DEFAULT"
+          ],
+          "enumDescriptions": [
+            "The header/footer type is unspecified.",
+            "A default header/footer."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CreateHeaderResponse": {
+      "description": "The result of creating a header.",
+      "id": "CreateHeaderResponse",
+      "properties": {
+        "headerId": {
+          "description": "The ID of the created header.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2564,6 +2624,14 @@
       "description": "A single update to apply to a document.",
       "id": "Request",
       "properties": {
+        "createFooter": {
+          "$ref": "CreateFooterRequest",
+          "description": "Creates a footer."
+        },
+        "createHeader": {
+          "$ref": "CreateHeaderRequest",
+          "description": "Creates a header."
+        },
         "createNamedRange": {
           "$ref": "CreateNamedRangeRequest",
           "description": "Creates a named range."
@@ -2671,6 +2739,14 @@
       "description": "A single response from an update.",
       "id": "Response",
       "properties": {
+        "createFooter": {
+          "$ref": "CreateFooterResponse",
+          "description": "The result of creating a footer."
+        },
+        "createHeader": {
+          "$ref": "CreateHeaderResponse",
+          "description": "The result of creating a header."
+        },
         "createNamedRange": {
           "$ref": "CreateNamedRangeResponse",
           "description": "The result of creating a named range."

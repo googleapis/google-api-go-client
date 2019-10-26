@@ -1002,7 +1002,7 @@
       }
     }
   },
-  "revision": "20190928",
+  "revision": "20191021",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1961,6 +1961,10 @@
           ],
           "type": "string"
         },
+        "useChiefInTfConfig": {
+          "description": "Optional. Use 'chief' instead of 'master' in TF_CONFIG when Custom\nContainer is used and evaluator is not specified.\n\nDefaults to false.",
+          "type": "boolean"
+        },
         "workerConfig": {
           "$ref": "GoogleCloudMlV1__ReplicaConfig",
           "description": "Optional. The configuration for workers.\n\nYou should only set `workerConfig.acceleratorConfig` if `workerType` is set\nto a Compute Engine machine type. [Learn about restrictions on accelerator\nconfigurations for\ntraining.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-machine-types-with-gpu)\n\nSet `workerConfig.imageUri` only if you build a custom image for your\nworker. If `workerConfig.imageUri` has not been set, AI Platform uses\nthe value of `masterConfig.imageUri`. Learn more about\n[configuring custom\ncontainers](/ml-engine/docs/distributed-training-containers)."
@@ -2401,7 +2405,7 @@
     }
   },
   "servicePath": "",
-  "title": "Cloud Machine Learning Engine",
+  "title": "AI Platform Training \u0026 Prediction API",
   "version": "v1",
   "version_module": true
 }

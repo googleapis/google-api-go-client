@@ -803,13 +803,12 @@ type GoogleCloudVideointelligenceV1SpeechTranscription struct {
 	// ranked by the recognizer.
 	Alternatives []*GoogleCloudVideointelligenceV1SpeechRecognitionAlternative `json:"alternatives,omitempty"`
 
-	// LanguageCode: Output only.
-	// The
+	// LanguageCode: Output only. The
 	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
-	// of the
-	// language in this result. This language code was detected to have the
-	// most
-	// likelihood of being spoken in the audio.
+	// of
+	// the language in this result. This language code was detected to have
+	// the
+	// most likelihood of being spoken in the audio.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
@@ -1899,13 +1898,12 @@ type GoogleCloudVideointelligenceV1beta2SpeechTranscription struct {
 	// ranked by the recognizer.
 	Alternatives []*GoogleCloudVideointelligenceV1beta2SpeechRecognitionAlternative `json:"alternatives,omitempty"`
 
-	// LanguageCode: Output only.
-	// The
+	// LanguageCode: Output only. The
 	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
-	// of the
-	// language in this result. This language code was detected to have the
-	// most
-	// likelihood of being spoken in the audio.
+	// of
+	// the language in this result. This language code was detected to have
+	// the
+	// most likelihood of being spoken in the audio.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
@@ -2997,13 +2995,12 @@ type GoogleCloudVideointelligenceV1p1beta1SpeechTranscription struct {
 	// ranked by the recognizer.
 	Alternatives []*GoogleCloudVideointelligenceV1p1beta1SpeechRecognitionAlternative `json:"alternatives,omitempty"`
 
-	// LanguageCode: Output only.
-	// The
+	// LanguageCode: Output only. The
 	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
-	// of the
-	// language in this result. This language code was detected to have the
-	// most
-	// likelihood of being spoken in the audio.
+	// of
+	// the language in this result. This language code was detected to have
+	// the
+	// most likelihood of being spoken in the audio.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
@@ -4095,13 +4092,12 @@ type GoogleCloudVideointelligenceV1p2beta1SpeechTranscription struct {
 	// ranked by the recognizer.
 	Alternatives []*GoogleCloudVideointelligenceV1p2beta1SpeechRecognitionAlternative `json:"alternatives,omitempty"`
 
-	// LanguageCode: Output only.
-	// The
+	// LanguageCode: Output only. The
 	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
-	// of the
-	// language in this result. This language code was detected to have the
-	// most
-	// likelihood of being spoken in the audio.
+	// of
+	// the language in this result. This language code was detected to have
+	// the
+	// most likelihood of being spoken in the audio.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
@@ -4564,7 +4560,7 @@ func (s *GoogleCloudVideointelligenceV1p3beta1AnnotateVideoProgress) MarshalJSON
 // GoogleCloudVideointelligenceV1p3beta1AnnotateVideoRequest: Video
 // annotation request.
 type GoogleCloudVideointelligenceV1p3beta1AnnotateVideoRequest struct {
-	// Features: Requested video annotation features.
+	// Features: Required. Requested video annotation features.
 	//
 	// Possible values:
 	//   "FEATURE_UNSPECIFIED" - Unspecified.
@@ -4602,16 +4598,16 @@ type GoogleCloudVideointelligenceV1p3beta1AnnotateVideoRequest struct {
 	// unset.
 	InputUri string `json:"inputUri,omitempty"`
 
-	// LocationId: Optional cloud region where annotation should take place.
-	// Supported cloud
+	// LocationId: Optional. Cloud region where annotation should take
+	// place. Supported cloud
 	// regions: `us-east1`, `us-west1`, `europe-west1`, `asia-east1`. If no
 	// region
 	// is specified, a region will be determined based on video file
 	// location.
 	LocationId string `json:"locationId,omitempty"`
 
-	// OutputUri: Optional location where the output (in JSON format) should
-	// be stored.
+	// OutputUri: Optional. Location where the output (in JSON format)
+	// should be stored.
 	// Currently, only [Google Cloud
 	// Storage](https://cloud.google.com/storage/)
 	// URIs are supported, which must be specified in the following
@@ -5496,7 +5492,7 @@ func (s *GoogleCloudVideointelligenceV1p3beta1ShotChangeDetectionConfig) Marshal
 // to the speech recognizer to favor specific words and phrases
 // in the results.
 type GoogleCloudVideointelligenceV1p3beta1SpeechContext struct {
-	// Phrases: *Optional* A list of strings containing words and phrases
+	// Phrases: Optional. A list of strings containing words and phrases
 	// "hints" so that
 	// the speech recognition is more likely to recognize them. This can be
 	// used
@@ -5607,13 +5603,12 @@ type GoogleCloudVideointelligenceV1p3beta1SpeechTranscription struct {
 	// ranked by the recognizer.
 	Alternatives []*GoogleCloudVideointelligenceV1p3beta1SpeechRecognitionAlternative `json:"alternatives,omitempty"`
 
-	// LanguageCode: Output only.
-	// The
+	// LanguageCode: Output only. The
 	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
-	// of the
-	// language in this result. This language code was detected to have the
-	// most
-	// likelihood of being spoken in the audio.
+	// of
+	// the language in this result. This language code was detected to have
+	// the
+	// most likelihood of being spoken in the audio.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
@@ -5642,19 +5637,18 @@ func (s *GoogleCloudVideointelligenceV1p3beta1SpeechTranscription) MarshalJSON()
 // GoogleCloudVideointelligenceV1p3beta1SpeechTranscriptionConfig:
 // Config for SPEECH_TRANSCRIPTION.
 type GoogleCloudVideointelligenceV1p3beta1SpeechTranscriptionConfig struct {
-	// AudioTracks: *Optional* For file formats, such as MXF or MKV,
+	// AudioTracks: Optional. For file formats, such as MXF or MKV,
 	// supporting multiple audio
 	// tracks, specify up to two tracks. Default: track 0.
 	AudioTracks []int64 `json:"audioTracks,omitempty"`
 
-	// DiarizationSpeakerCount: *Optional*
-	// If set, specifies the estimated number of speakers in the
-	// conversation.
+	// DiarizationSpeakerCount: Optional. If set, specifies the estimated
+	// number of speakers in the conversation.
 	// If not set, defaults to '2'.
 	// Ignored unless enable_speaker_diarization is set to true.
 	DiarizationSpeakerCount int64 `json:"diarizationSpeakerCount,omitempty"`
 
-	// EnableAutomaticPunctuation: *Optional* If 'true', adds punctuation to
+	// EnableAutomaticPunctuation: Optional. If 'true', adds punctuation to
 	// recognition result hypotheses.
 	// This feature is only available in select languages. Setting this
 	// for
@@ -5667,7 +5661,7 @@ type GoogleCloudVideointelligenceV1p3beta1SpeechTranscriptionConfig struct {
 	// future this may be exclusively available as a premium feature."
 	EnableAutomaticPunctuation bool `json:"enableAutomaticPunctuation,omitempty"`
 
-	// EnableSpeakerDiarization: *Optional* If 'true', enables speaker
+	// EnableSpeakerDiarization: Optional. If 'true', enables speaker
 	// detection for each recognized word in
 	// the top alternative of the recognition result using a speaker_tag
 	// provided
@@ -5680,14 +5674,14 @@ type GoogleCloudVideointelligenceV1p3beta1SpeechTranscriptionConfig struct {
 	// identify the speakers in the conversation over time.
 	EnableSpeakerDiarization bool `json:"enableSpeakerDiarization,omitempty"`
 
-	// EnableWordConfidence: *Optional* If `true`, the top result includes a
+	// EnableWordConfidence: Optional. If `true`, the top result includes a
 	// list of words and the
 	// confidence for those words. If `false`, no word-level
 	// confidence
 	// information is returned. The default is `false`.
 	EnableWordConfidence bool `json:"enableWordConfidence,omitempty"`
 
-	// FilterProfanity: *Optional* If set to `true`, the server will attempt
+	// FilterProfanity: Optional. If set to `true`, the server will attempt
 	// to filter out
 	// profanities, replacing all but the initial character in each filtered
 	// word
@@ -5696,8 +5690,8 @@ type GoogleCloudVideointelligenceV1p3beta1SpeechTranscriptionConfig struct {
 	// won't be filtered out.
 	FilterProfanity bool `json:"filterProfanity,omitempty"`
 
-	// LanguageCode: *Required* The language of the supplied audio as
-	// a
+	// LanguageCode: Required. *Required* The language of the supplied audio
+	// as a
 	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language
 	// tag.
 	// Example: "en-US".
@@ -5706,7 +5700,7 @@ type GoogleCloudVideointelligenceV1p3beta1SpeechTranscriptionConfig struct {
 	// for a list of the currently supported language codes.
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// MaxAlternatives: *Optional* Maximum number of recognition hypotheses
+	// MaxAlternatives: Optional. Maximum number of recognition hypotheses
 	// to be returned.
 	// Specifically, the maximum number of `SpeechRecognitionAlternative`
 	// messages
@@ -5717,7 +5711,7 @@ type GoogleCloudVideointelligenceV1p3beta1SpeechTranscriptionConfig struct {
 	// return a maximum of one. If omitted, will return a maximum of one.
 	MaxAlternatives int64 `json:"maxAlternatives,omitempty"`
 
-	// SpeechContexts: *Optional* A means to provide context to assist the
+	// SpeechContexts: Optional. A means to provide context to assist the
 	// speech recognition.
 	SpeechContexts []*GoogleCloudVideointelligenceV1p3beta1SpeechContext `json:"speechContexts,omitempty"`
 
@@ -6610,7 +6604,7 @@ func (c *VideosAnnotateCall) Header() http.Header {
 
 func (c *VideosAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

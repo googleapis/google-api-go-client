@@ -202,6 +202,18 @@ type ProjectsApprovalRequestsService struct {
 // AccessApprovalSettings: Settings on a Project/Folder/Organization
 // related to Access Approval.
 type AccessApprovalSettings struct {
+	// EnrolledAncestor: Output only. This field is read only (not settable
+	// via
+	// UpdateAccessAccessApprovalSettings method). If the field is true,
+	// that
+	// indicates that at least one service is enrolled for Access Approval
+	// in one
+	// or more ancestors of the Project or Folder (this field will always
+	// be
+	// unset for the organization since organizations do not have
+	// ancestors).
+	EnrolledAncestor bool `json:"enrolledAncestor,omitempty"`
+
 	// EnrolledServices: A list of Google Cloud Services for which the given
 	// resource has Access
 	// Approval enrolled. Access requests for the resource given by name
@@ -245,7 +257,7 @@ type AccessApprovalSettings struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "EnrolledServices") to
+	// ForceSendFields is a list of field names (e.g. "EnrolledAncestor") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -253,7 +265,7 @@ type AccessApprovalSettings struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EnrolledServices") to
+	// NullFields is a list of field names (e.g. "EnrolledAncestor") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -758,7 +770,7 @@ func (c *FoldersDeleteAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *FoldersDeleteAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -900,7 +912,7 @@ func (c *FoldersGetAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *FoldersGetAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1050,7 +1062,7 @@ func (c *FoldersUpdateAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *FoldersUpdateAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1202,7 +1214,7 @@ func (c *FoldersApprovalRequestsApproveCall) Header() http.Header {
 
 func (c *FoldersApprovalRequestsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1355,7 +1367,7 @@ func (c *FoldersApprovalRequestsDismissCall) Header() http.Header {
 
 func (c *FoldersApprovalRequestsDismissCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1505,7 +1517,7 @@ func (c *FoldersApprovalRequestsGetCall) Header() http.Header {
 
 func (c *FoldersApprovalRequestsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1683,7 +1695,7 @@ func (c *FoldersApprovalRequestsListCall) Header() http.Header {
 
 func (c *FoldersApprovalRequestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1863,7 +1875,7 @@ func (c *OrganizationsDeleteAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *OrganizationsDeleteAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2005,7 +2017,7 @@ func (c *OrganizationsGetAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2155,7 +2167,7 @@ func (c *OrganizationsUpdateAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *OrganizationsUpdateAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2307,7 +2319,7 @@ func (c *OrganizationsApprovalRequestsApproveCall) Header() http.Header {
 
 func (c *OrganizationsApprovalRequestsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2460,7 +2472,7 @@ func (c *OrganizationsApprovalRequestsDismissCall) Header() http.Header {
 
 func (c *OrganizationsApprovalRequestsDismissCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2610,7 +2622,7 @@ func (c *OrganizationsApprovalRequestsGetCall) Header() http.Header {
 
 func (c *OrganizationsApprovalRequestsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2788,7 +2800,7 @@ func (c *OrganizationsApprovalRequestsListCall) Header() http.Header {
 
 func (c *OrganizationsApprovalRequestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2968,7 +2980,7 @@ func (c *ProjectsDeleteAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *ProjectsDeleteAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3110,7 +3122,7 @@ func (c *ProjectsGetAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *ProjectsGetAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3260,7 +3272,7 @@ func (c *ProjectsUpdateAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *ProjectsUpdateAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3412,7 +3424,7 @@ func (c *ProjectsApprovalRequestsApproveCall) Header() http.Header {
 
 func (c *ProjectsApprovalRequestsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3565,7 +3577,7 @@ func (c *ProjectsApprovalRequestsDismissCall) Header() http.Header {
 
 func (c *ProjectsApprovalRequestsDismissCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3715,7 +3727,7 @@ func (c *ProjectsApprovalRequestsGetCall) Header() http.Header {
 
 func (c *ProjectsApprovalRequestsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3893,7 +3905,7 @@ func (c *ProjectsApprovalRequestsListCall) Header() http.Header {
 
 func (c *ProjectsApprovalRequestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191018")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

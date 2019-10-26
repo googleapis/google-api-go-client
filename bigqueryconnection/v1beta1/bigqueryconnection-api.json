@@ -123,7 +123,7 @@
                   ],
                   "parameters": {
                     "connectionId": {
-                      "description": "Optional connection id that should be assigned to the created connection.",
+                      "description": "Optional. Connection id that should be assigned to the created connection.",
                       "location": "query",
                       "type": "string"
                     },
@@ -394,7 +394,7 @@
       }
     }
   },
-  "revision": "20191009",
+  "revision": "20191011",
   "rootUrl": "https://bigqueryconnection.googleapis.com/",
   "schemas": {
     "AuditConfig": {

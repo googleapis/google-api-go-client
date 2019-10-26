@@ -65,7 +65,7 @@
   "description": "Stores and accesses user data in the fitness store from apps on any platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/fit/rest/",
-  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/kaoG48v59OEfACZ92fgeeJnYbTg\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/Soxy876ekH_sXwnArF197wS9-Dk\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -578,7 +578,7 @@
         "dataset": {
           "methods": {
             "aggregate": {
-              "description": "Aggregates data of a certain type or stream into buckets divided by a given type of boundary. Multiple data sets of multiple types and from multiple sources can be aggreated into exactly one bucket type per request.",
+              "description": "Aggregates data of a certain type or stream into buckets divided by a given type of boundary. Multiple data sets of multiple types and from multiple sources can be aggregated into exactly one bucket type per request.",
               "httpMethod": "POST",
               "id": "fitness.users.dataset.aggregate",
               "parameterOrder": [
@@ -761,7 +761,7 @@
       }
     }
   },
-  "revision": "20190910",
+  "revision": "20191014",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AggregateBucket": {

@@ -200,7 +200,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/admin-sdk/reports/",
+      "documentationLink": "/admin-sdk/reports/",
       "preferred": true
     },
     {
@@ -2470,15 +2470,15 @@
       "id": "licensing:v1",
       "name": "licensing",
       "version": "v1",
-      "title": "Enterprise License Manager API",
-      "description": "Views and manages licenses for your domain.",
+      "title": "Licensing API",
+      "description": "Licensing API to view and manage licenses for your domain",
       "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/licensing/v1/rest",
       "discoveryLink": "./apis/licensing/v1/rest",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/google-apps/licensing/",
+      "documentationLink": "https://developers.google.com/admin-sdk/licensing/",
       "preferred": true
     },
     {
@@ -3477,6 +3477,21 @@
       },
       "documentationLink": "https://cloud.google.com/speech-to-text/docs/quickstart-protocol",
       "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "speech:v2beta1",
+      "name": "speech",
+      "version": "v2beta1",
+      "title": "Cloud Speech-to-Text API",
+      "description": "Converts audio to text by applying powerful neural network models.",
+      "discoveryRestUrl": "https://speech.googleapis.com/$discovery/rest?version=v2beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/speech-to-text/docs/quickstart-protocol",
+      "preferred": false
     },
     {
       "kind": "discovery#directoryItem",

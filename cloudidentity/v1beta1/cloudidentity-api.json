@@ -465,7 +465,7 @@
       }
     }
   },
-  "revision": "20191015",
+  "revision": "20191023",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "EntityKey": {
@@ -589,7 +589,7 @@
           "type": "string"
         },
         "roles": {
-          "description": "Roles for a member within the Group.\n\nCurrently supported MembershipRoles: `\"MEMBER\"`.",
+          "description": "Roles for a member within the Group.\n\nCurrently supported MembershipRoles: `\"MEMBER\", \"OWNER\", \"MANAGER\"`.",
           "items": {
             "$ref": "MembershipRole"
           },
@@ -608,7 +608,7 @@
       "id": "MembershipRole",
       "properties": {
         "name": {
-          "description": "MembershipRole in string format.\n\nCurrently supported MembershipRoles: `\"MEMBER\"`.",
+          "description": "MembershipRole in string format.\nCurrently supported MembershipRoles: `\"MEMBER\", \"OWNER\", \"MANAGER\"`.",
           "type": "string"
         }
       },

@@ -2458,7 +2458,7 @@
       }
     }
   },
-  "revision": "20190906",
+  "revision": "20191021",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2500,6 +2500,21 @@
       },
       "type": "object"
     },
+    "AuthenticatorGroupsConfig": {
+      "description": "Configuration for returning group information from authenticators.",
+      "id": "AuthenticatorGroupsConfig",
+      "properties": {
+        "enabled": {
+          "description": "Whether this cluster should return group membership lookups\nduring authentication using a group of security groups.",
+          "type": "boolean"
+        },
+        "securityGroup": {
+          "description": "The name of the security group-of-groups to be used. Only relevant\nif enabled = true.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "AutoUpgradeOptions": {
       "description": "AutoUpgradeOptions defines the set of options for the user to control how\nthe Auto Upgrades will proceed.",
       "id": "AutoUpgradeOptions",
@@ -2510,6 +2525,24 @@
         },
         "description": {
           "description": "[Output only] This field is set when upgrades are about to commence\nwith the description of the upgrade.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AutoprovisioningNodePoolDefaults": {
+      "description": "AutoprovisioningNodePoolDefaults contains defaults for a node pool created\nby NAP.",
+      "id": "AutoprovisioningNodePoolDefaults",
+      "properties": {
+        "oauthScopes": {
+          "description": "Scopes that are used by NAP when creating node pools. If oauth_scopes are\nspecified, service_account should be empty.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "serviceAccount": {
+          "description": "The Google Cloud Platform Service Account to be used by the node VMs. If\nservice_account is specified, scopes should be empty.",
           "type": "string"
         }
       },
@@ -2593,6 +2626,14 @@
         "addonsConfig": {
           "$ref": "AddonsConfig",
           "description": "Configurations for the various addons available to run in the cluster."
+        },
+        "authenticatorGroupsConfig": {
+          "$ref": "AuthenticatorGroupsConfig",
+          "description": "Configuration controlling RBAC group membership information."
+        },
+        "autoscaling": {
+          "$ref": "ClusterAutoscaling",
+          "description": "Cluster-level autoscaling configuration."
         },
         "binaryAuthorization": {
           "$ref": "BinaryAuthorization",
@@ -2694,7 +2735,7 @@
           "type": "array"
         },
         "loggingService": {
-          "description": "The logging service the cluster should use to write logs.\nCurrently available options:\n\n* \"logging.googleapis.com/kubernetes\" - the Google Cloud Logging\nservice with Kubernetes-native resource model in Stackdriver\n* `logging.googleapis.com` - the Google Cloud Logging service.\n* `none` - no logs will be exported from the cluster.\n* if left as an empty string,`logging.googleapis.com` will be used.",
+          "description": "The logging service the cluster should use to write logs.\nCurrently available options:\n\n* \"logging.googleapis.com/kubernetes\" - the Google Cloud Logging\nservice with Kubernetes-native resource model\n* `logging.googleapis.com` - the Google Cloud Logging service.\n* `none` - no logs will be exported from the cluster.\n* if left as an empty string,`logging.googleapis.com` will be used.",
           "type": "string"
         },
         "maintenancePolicy": {
@@ -2802,9 +2843,42 @@
           "description": "[Output only] The IP address range of the Cloud TPUs in this cluster, in\n[CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)\nnotation (e.g. `1.2.3.4/29`).",
           "type": "string"
         },
+        "verticalPodAutoscaling": {
+          "$ref": "VerticalPodAutoscaling",
+          "description": "Cluster-level Vertical Pod Autoscaling configuration."
+        },
         "zone": {
           "description": "[Output only] The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) in which the cluster\nresides.\nThis field is deprecated, use location instead.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ClusterAutoscaling": {
+      "description": "ClusterAutoscaling contains global, per-cluster information\nrequired by Cluster Autoscaler to automatically adjust\nthe size of the cluster and create/delete\nnode pools based on the current needs.",
+      "id": "ClusterAutoscaling",
+      "properties": {
+        "autoprovisioningLocations": {
+          "description": "The list of Google Compute Engine [zones](/compute/docs/zones#available)\nin which the NodePool's nodes can be created by NAP.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "autoprovisioningNodePoolDefaults": {
+          "$ref": "AutoprovisioningNodePoolDefaults",
+          "description": "AutoprovisioningNodePoolDefaults contains defaults for a node pool\ncreated by NAP."
+        },
+        "enableNodeAutoprovisioning": {
+          "description": "Enables automatic node pool creation and deletion.",
+          "type": "boolean"
+        },
+        "resourceLimits": {
+          "description": "Contains global constraints regarding minimum and maximum\namount of resources in the cluster.",
+          "items": {
+            "$ref": "ResourceLimit"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -2820,6 +2894,10 @@
         "desiredBinaryAuthorization": {
           "$ref": "BinaryAuthorization",
           "description": "The desired configuration options for the Binary Authorization feature."
+        },
+        "desiredClusterAutoscaling": {
+          "$ref": "ClusterAutoscaling",
+          "description": "Cluster-level autoscaling configuration."
         },
         "desiredDatabaseEncryption": {
           "$ref": "DatabaseEncryption",
@@ -2841,7 +2919,7 @@
           "type": "array"
         },
         "desiredLoggingService": {
-          "description": "The logging service the cluster should use to write logs.\nCurrently available options:\n\n* \"logging.googleapis.com/kubernetes\" - the Google Cloud Logging\nservice with Kubernetes-native resource model in Stackdriver\n* \"logging.googleapis.com\" - the Google Cloud Logging service\n* \"none\" - no logs will be exported from the cluster",
+          "description": "The logging service the cluster should use to write logs.\nCurrently available options:\n\n* \"logging.googleapis.com/kubernetes\" - the Google Cloud Logging\nservice with Kubernetes-native resource model\n* \"logging.googleapis.com\" - the Google Cloud Logging service\n* \"none\" - no logs will be exported from the cluster",
           "type": "string"
         },
         "desiredMasterAuthorizedNetworksConfig": {
@@ -2853,7 +2931,7 @@
           "type": "string"
         },
         "desiredMonitoringService": {
-          "description": "The monitoring service the cluster should use to write metrics.\nCurrently available options:\n\n* \"monitoring.googleapis.com/kubernetes\" - the Google Cloud Monitoring\nservice with Kubernetes-native resource model in Stackdriver\n* \"monitoring.googleapis.com\" - the Google Cloud Monitoring service\n* \"none\" - no metrics will be exported from the cluster",
+          "description": "The monitoring service the cluster should use to write metrics.\nCurrently available options:\n\n* \"monitoring.googleapis.com/kubernetes\" - the Google Cloud Monitoring\nservice with Kubernetes-native resource model\n* \"monitoring.googleapis.com\" - the Google Cloud Monitoring service\n* \"none\" - no metrics will be exported from the cluster",
           "type": "string"
         },
         "desiredNodePoolAutoscaling": {
@@ -2871,6 +2949,10 @@
         "desiredResourceUsageExportConfig": {
           "$ref": "ResourceUsageExportConfig",
           "description": "The desired configuration for exporting resource usage."
+        },
+        "desiredVerticalPodAutoscaling": {
+          "$ref": "VerticalPodAutoscaling",
+          "description": "Cluster-level Vertical Pod Autoscaling configuration."
         }
       },
       "type": "object"
@@ -3655,6 +3737,10 @@
       "description": "NodePoolAutoscaling contains information required by cluster autoscaler to\nadjust the size of the node pool to the current cluster usage.",
       "id": "NodePoolAutoscaling",
       "properties": {
+        "autoprovisioned": {
+          "description": "Can this node pool be deleted automatically.",
+          "type": "boolean"
+        },
         "enabled": {
           "description": "Is autoscaling enabled for this node pool.",
           "type": "boolean"
@@ -3842,6 +3928,27 @@
         },
         "publicEndpoint": {
           "description": "Output only. The external IP address of this cluster's master endpoint.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ResourceLimit": {
+      "description": "Contains information about amount of some resource in the cluster.\nFor memory, value should be in GB.",
+      "id": "ResourceLimit",
+      "properties": {
+        "maximum": {
+          "description": "Maximum amount of the resource in the cluster.",
+          "format": "int64",
+          "type": "string"
+        },
+        "minimum": {
+          "description": "Minimum amount of the resource in the cluster.",
+          "format": "int64",
+          "type": "string"
+        },
+        "resourceType": {
+          "description": "Resource name \"cpu\", \"memory\" or gpu-specific string.",
           "type": "string"
         }
       },
@@ -4153,7 +4260,7 @@
           "type": "string"
         },
         "monitoringService": {
-          "description": "The monitoring service the cluster should use to write metrics.\nCurrently available options:\n\n* \"monitoring.googleapis.com/kubernetes\" - the Google Cloud Monitoring\nservice with Kubernetes-native resource model in Stackdriver\n* \"monitoring.googleapis.com\" - the Google Cloud Monitoring service\n* \"none\" - no metrics will be exported from the cluster",
+          "description": "The monitoring service the cluster should use to write metrics.\nCurrently available options:\n\n* \"monitoring.googleapis.com/kubernetes\" - the Google Cloud Monitoring\nservice with Kubernetes-native resource model\n* \"monitoring.googleapis.com\" - the Google Cloud Monitoring service\n* \"none\" - no metrics will be exported from the cluster",
           "type": "string"
         },
         "name": {
@@ -4513,6 +4620,17 @@
             "IN_USE_MANAGED_POD denotes this range was created by GKE and is claimed\nfor pods. It cannot be used for other clusters."
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "VerticalPodAutoscaling": {
+      "description": "VerticalPodAutoscaling contains global, per-cluster information\nrequired by Vertical Pod Autoscaler to automatically adjust\nthe resources of pods controlled by it.",
+      "id": "VerticalPodAutoscaling",
+      "properties": {
+        "enabled": {
+          "description": "Enables vertical pod autoscaling.",
+          "type": "boolean"
         }
       },
       "type": "object"

@@ -258,7 +258,7 @@ func (c *ArchiveInsertCall) Header() http.Header {
 
 func (c *ArchiveInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0 gdcl/20191026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -268,7 +268,7 @@ func (c *ArchiveInsertCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{groupId}/archive")
 	if c.mediaInfo_ != nil {
-		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
+		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/groups/v1/groups/{groupId}/archive")
 		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
 	}
 	if body == nil {

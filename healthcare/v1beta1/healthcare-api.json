@@ -734,14 +734,14 @@
                       ],
                       "parameters": {
                         "dicomWebPath": {
-                          "description": "The path of the SearchForInstancesRequest DICOMweb request (for example,\n`instances` or `series/{series_uid}/instances` or\n`studies/{study_uid}/instances`).",
+                          "description": "The path of the SearchForInstancesRequest DICOMweb request. For example,\n`instances`, `series/{series_uid}/instances`, or\n`studies/{study_uid}/instances`.",
                           "location": "path",
                           "pattern": "^instances$",
                           "required": true,
                           "type": "string"
                         },
                         "parent": {
-                          "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                          "description": "The name of the DICOM store that is being accessed. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                           "required": true,
@@ -767,14 +767,14 @@
                       ],
                       "parameters": {
                         "dicomWebPath": {
-                          "description": "The path of the SearchForSeries DICOMweb request(for example, `series` or\n`studies/{study_uid}/series`).",
+                          "description": "The path of the SearchForSeries DICOMweb request. For example, `series` or\n`studies/{study_uid}/series`.",
                           "location": "path",
                           "pattern": "^series$",
                           "required": true,
                           "type": "string"
                         },
                         "parent": {
-                          "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                          "description": "The name of the DICOM store that is being accessed. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                           "required": true,
@@ -800,14 +800,14 @@
                       ],
                       "parameters": {
                         "dicomWebPath": {
-                          "description": "The path of the SearchForStudies DICOMweb request (for example, `studies`).",
+                          "description": "The path of the SearchForStudies DICOMweb request. For example, `studies`.",
                           "location": "path",
                           "pattern": "^studies$",
                           "required": true,
                           "type": "string"
                         },
                         "parent": {
-                          "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                          "description": "The name of the DICOM store that is being accessed. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                           "required": true,
@@ -861,14 +861,14 @@
                       ],
                       "parameters": {
                         "dicomWebPath": {
-                          "description": "The path of the StoreInstances DICOMweb request (for example,\n`studies/[{study_uid}]`). Note that the `study_uid` is optional.",
+                          "description": "The path of the StoreInstances DICOMweb request. For example,\n`studies/[{study_uid}]`. Note that the `study_uid` is optional.",
                           "location": "path",
                           "pattern": "^studies$",
                           "required": true,
                           "type": "string"
                         },
                         "parent": {
-                          "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                          "description": "The name of the DICOM store that is being accessed. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                           "required": true,
@@ -929,14 +929,13 @@
                           ],
                           "parameters": {
                             "dicomWebPath": {
-                              "description": "The path of the DeleteStudy request (for example, `studies/{study_uid}`).",
+                              "description": "The path of the DeleteStudy request. For example, `studies/{study_uid}`.",
                               "location": "path",
                               "pattern": "^studies/[^/]+$",
                               "required": true,
                               "type": "string"
                             },
                             "parent": {
-                              "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                               "required": true,
@@ -962,14 +961,14 @@
                           ],
                           "parameters": {
                             "dicomWebPath": {
-                              "description": "The path of the RetrieveStudyMetadata DICOMweb request (for example,\n`studies/{study_uid}/metadata`).",
+                              "description": "The path of the RetrieveStudyMetadata DICOMweb request. For example,\n`studies/{study_uid}/metadata`.",
                               "location": "path",
                               "pattern": "^studies/[^/]+/metadata$",
                               "required": true,
                               "type": "string"
                             },
                             "parent": {
-                              "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                              "description": "The name of the DICOM store that is being accessed. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                               "required": true,
@@ -995,14 +994,14 @@
                           ],
                           "parameters": {
                             "dicomWebPath": {
-                              "description": "The path of the RetrieveStudy DICOMweb request (for example,\n`studies/{study_uid}`).",
+                              "description": "The path of the RetrieveStudy DICOMweb request. For example,\n`studies/{study_uid}`.",
                               "location": "path",
                               "pattern": "^studies/[^/]+$",
                               "required": true,
                               "type": "string"
                             },
                             "parent": {
-                              "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                              "description": "The name of the DICOM store that is being accessed. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                               "required": true,
@@ -1028,14 +1027,14 @@
                           ],
                           "parameters": {
                             "dicomWebPath": {
-                              "description": "The path of the SearchForInstancesRequest DICOMweb request (for example,\n`instances` or `series/{series_uid}/instances` or\n`studies/{study_uid}/instances`).",
+                              "description": "The path of the SearchForInstancesRequest DICOMweb request. For example,\n`instances`, `series/{series_uid}/instances`, or\n`studies/{study_uid}/instances`.",
                               "location": "path",
                               "pattern": "^studies/[^/]+/instances$",
                               "required": true,
                               "type": "string"
                             },
                             "parent": {
-                              "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                              "description": "The name of the DICOM store that is being accessed. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                               "required": true,
@@ -1061,14 +1060,14 @@
                           ],
                           "parameters": {
                             "dicomWebPath": {
-                              "description": "The path of the SearchForSeries DICOMweb request(for example, `series` or\n`studies/{study_uid}/series`).",
+                              "description": "The path of the SearchForSeries DICOMweb request. For example, `series` or\n`studies/{study_uid}/series`.",
                               "location": "path",
                               "pattern": "^studies/[^/]+/series$",
                               "required": true,
                               "type": "string"
                             },
                             "parent": {
-                              "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                              "description": "The name of the DICOM store that is being accessed. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                               "required": true,
@@ -1094,14 +1093,14 @@
                           ],
                           "parameters": {
                             "dicomWebPath": {
-                              "description": "The path of the StoreInstances DICOMweb request (for example,\n`studies/[{study_uid}]`). Note that the `study_uid` is optional.",
+                              "description": "The path of the StoreInstances DICOMweb request. For example,\n`studies/[{study_uid}]`. Note that the `study_uid` is optional.",
                               "location": "path",
                               "pattern": "^studies/[^/]+$",
                               "required": true,
                               "type": "string"
                             },
                             "parent": {
-                              "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                              "description": "The name of the DICOM store that is being accessed. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                               "required": true,
@@ -1134,14 +1133,14 @@
                               ],
                               "parameters": {
                                 "dicomWebPath": {
-                                  "description": "The path of the DeleteSeries request (for example,\n`studies/{study_uid}/series/{series_uid}`).",
+                                  "description": "The path of the DeleteSeries request. For example,\n`studies/{study_uid}/series/{series_uid}`.",
                                   "location": "path",
                                   "pattern": "^studies/[^/]+/series/[^/]+$",
                                   "required": true,
                                   "type": "string"
                                 },
                                 "parent": {
-                                  "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                                  "description": "The name of the DICOM store that is being accessed. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                   "required": true,
@@ -1167,14 +1166,14 @@
                               ],
                               "parameters": {
                                 "dicomWebPath": {
-                                  "description": "The path of the RetrieveSeriesMetadata DICOMweb request (for example,\n`studies/{study_uid}/series/{series_uid}/metadata`).",
+                                  "description": "The path of the RetrieveSeriesMetadata DICOMweb request. For example,\n`studies/{study_uid}/series/{series_uid}/metadata`.",
                                   "location": "path",
                                   "pattern": "^studies/[^/]+/series/[^/]+/metadata$",
                                   "required": true,
                                   "type": "string"
                                 },
                                 "parent": {
-                                  "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                                  "description": "The name of the DICOM store that is being accessed. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                   "required": true,
@@ -1200,14 +1199,14 @@
                               ],
                               "parameters": {
                                 "dicomWebPath": {
-                                  "description": "The path of the RetrieveSeries DICOMweb request (for example,\n`studies/{study_uid}/series/{series_uid}`).",
+                                  "description": "The path of the RetrieveSeries DICOMweb request. For example,\n`studies/{study_uid}/series/{series_uid}`.",
                                   "location": "path",
                                   "pattern": "^studies/[^/]+/series/[^/]+$",
                                   "required": true,
                                   "type": "string"
                                 },
                                 "parent": {
-                                  "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                                  "description": "The name of the DICOM store that is being accessed. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                   "required": true,
@@ -1233,14 +1232,14 @@
                               ],
                               "parameters": {
                                 "dicomWebPath": {
-                                  "description": "The path of the SearchForInstancesRequest DICOMweb request (for example,\n`instances` or `series/{series_uid}/instances` or\n`studies/{study_uid}/instances`).",
+                                  "description": "The path of the SearchForInstancesRequest DICOMweb request. For example,\n`instances`, `series/{series_uid}/instances`, or\n`studies/{study_uid}/instances`.",
                                   "location": "path",
                                   "pattern": "^studies/[^/]+/series/[^/]+/instances$",
                                   "required": true,
                                   "type": "string"
                                 },
                                 "parent": {
-                                  "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                                  "description": "The name of the DICOM store that is being accessed. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                   "required": true,
@@ -1270,14 +1269,14 @@
                                   ],
                                   "parameters": {
                                     "dicomWebPath": {
-                                      "description": "The path of the DeleteInstance request (for example,\n`studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`).",
+                                      "description": "The path of the DeleteInstance request. For example,\n`studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.",
                                       "location": "path",
                                       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+$",
                                       "required": true,
                                       "type": "string"
                                     },
                                     "parent": {
-                                      "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                                      "description": "The name of the DICOM store that is being accessed. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                       "location": "path",
                                       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                       "required": true,
@@ -1303,14 +1302,14 @@
                                   ],
                                   "parameters": {
                                     "dicomWebPath": {
-                                      "description": "The path of the RetrieveInstance DICOMweb request (for example,\n`studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`).",
+                                      "description": "The path of the RetrieveInstance DICOMweb request. For example,\n`studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.",
                                       "location": "path",
                                       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+$",
                                       "required": true,
                                       "type": "string"
                                     },
                                     "parent": {
-                                      "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                                      "description": "The name of the DICOM store that is being accessed. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                       "location": "path",
                                       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                       "required": true,
@@ -1336,14 +1335,14 @@
                                   ],
                                   "parameters": {
                                     "dicomWebPath": {
-                                      "description": "The path of the RetrieveInstanceMetadata DICOMweb request (for example,\n`studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/metadata`).",
+                                      "description": "The path of the RetrieveInstanceMetadata DICOMweb request. For example,\n`studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/metadata`.",
                                       "location": "path",
                                       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/metadata$",
                                       "required": true,
                                       "type": "string"
                                     },
                                     "parent": {
-                                      "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                                      "description": "The name of the DICOM store that is being accessed. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                       "location": "path",
                                       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                       "required": true,
@@ -1369,14 +1368,14 @@
                                   ],
                                   "parameters": {
                                     "dicomWebPath": {
-                                      "description": "The path of the RetrieveRenderedInstance DICOMweb request (for example,\n`studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/rendered`).",
+                                      "description": "The path of the RetrieveRenderedInstance DICOMweb request. For example,\n`studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/rendered`.",
                                       "location": "path",
                                       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/rendered$",
                                       "required": true,
                                       "type": "string"
                                     },
                                     "parent": {
-                                      "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                                      "description": "The name of the DICOM store that is being accessed. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                       "location": "path",
                                       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                       "required": true,
@@ -1406,14 +1405,14 @@
                                       ],
                                       "parameters": {
                                         "dicomWebPath": {
-                                          "description": "The path of the RetrieveFrames DICOMweb request (for example,\n`studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/frames/{frame_list}`).",
+                                          "description": "The path of the RetrieveFrames DICOMweb request. For example,\n`studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/frames/{frame_list}`.",
                                           "location": "path",
                                           "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/frames/[^/]+$",
                                           "required": true,
                                           "type": "string"
                                         },
                                         "parent": {
-                                          "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                                          "description": "The name of the DICOM store that is being accessed. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                           "location": "path",
                                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                           "required": true,
@@ -1439,14 +1438,14 @@
                                       ],
                                       "parameters": {
                                         "dicomWebPath": {
-                                          "description": "The path of the RetrieveRenderedFrames DICOMweb request (for example,\n`studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/frames/{frame_list}/rendered`).",
+                                          "description": "The path of the RetrieveRenderedFrames DICOMweb request. For example,\n`studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/frames/{frame_list}/rendered`.",
                                           "location": "path",
                                           "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/frames/[^/]+/rendered$",
                                           "required": true,
                                           "type": "string"
                                         },
                                         "parent": {
-                                          "description": "The name of the DICOM store that is being accessed (for example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                                          "description": "The name of the DICOM store that is being accessed. For example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                           "location": "path",
                                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                           "required": true,
@@ -1807,7 +1806,7 @@
                     "fhir": {
                       "methods": {
                         "Observation-lastn": {
-                          "description": "Retrieves the N most recent `Observation` resources for a subject matching\nsearch criteria specified as query parameters, grouped by\n`Observation.code`, sorted from most recent to oldest.\n\nImplements the FHIR extended operation\n[Observation-lastn](http://hl7.org/implement/standards/fhir/STU3/observation-operations.html#lastn).\n\nSearch terms are provided as query parameters following the same pattern as\nthe search method. The following search parameters must\nbe provided\n    - `subject` or `patient` to specify a subject for the Observation.\n    - `code`, `category` or any of the composite parameters that include\n      `code`.\nAny other valid Observation search parameters can also be provided. This\noperation accepts an additional query parameter `max`, which specifies N,\nthe maximum number of Observations to return from each group, with a\ndefault of 1.\n\nOn success, the response body will contain a JSON-encoded representation\nof a `Bundle` resource of type `searchset`, containing the results of the\noperation.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
+                          "description": "Retrieves the N most recent `Observation` resources for a subject matching\nsearch criteria specified as query parameters, grouped by\n`Observation.code`, sorted from most recent to oldest.\n\nImplements the FHIR extended operation\n[Observation-lastn](http://hl7.org/implement/standards/fhir/STU3/observation-operations.html#lastn).\n\nSearch terms are provided as query parameters following the same pattern as\nthe search method. The following search parameters must\nbe provided:\n\n    - `subject` or `patient` to specify a subject for the Observation.\n    - `code`, `category` or any of the composite parameters that include\n      `code`.\n\nAny other valid Observation search parameters can also be provided. This\noperation accepts an additional query parameter `max`, which specifies N,\nthe maximum number of Observations to return from each group, with a\ndefault of 1.\n\nSearches with over 1000 results are rejected. Results are counted before\ngrouping and limiting the results with `max`. To stay within the limit,\nconstrain these searches using Observation search parameters such as\n`_lastUpdated` or `date`.\n\nOn success, the response body will contain a JSON-encoded representation\nof a `Bundle` resource of type `searchset`, containing the results of the\noperation.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/Observation/$lastn",
                           "httpMethod": "GET",
                           "id": "healthcare.projects.locations.datasets.fhirStores.fhir.Observation-lastn",
@@ -1832,7 +1831,7 @@
                           ]
                         },
                         "Patient-everything": {
-                          "description": "Retrieves all the resources directly referenced by a patient, as well as\nall of the resources in the patient compartment.\n\nImplements the FHIR extended operation\n[Patient-everything](http://hl7.org/implement/standards/fhir/STU3/patient-operations.html#everything).\n\nOn success, the response body will contain a JSON-encoded representation\nof a `Bundle` resource of type `searchset`, containing the results of the\noperation.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
+                          "description": "On success, the response body will contain a JSON-encoded representation\nof a `Bundle` resource of type `searchset`, containing the results of the\noperation.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/Patient/{PatientId}/$everything",
                           "httpMethod": "GET",
                           "id": "healthcare.projects.locations.datasets.fhirStores.fhir.Patient-everything",
@@ -2226,7 +2225,7 @@
                           ]
                         },
                         "search": {
-                          "description": "Searches for resources in the given FHIR store according to criteria\nspecified as query parameters.\n\nImplements the FHIR standard [search\ninteraction](http://hl7.org/implement/standards/fhir/STU3/http.html#search)\nusing the search semantics described in the [FHIR Search\nspecification](http://hl7.org/implement/standards/fhir/STU3/search.html).\n\nSupports three methods of search defined by the specification:\n\n*  `GET [base]?[parameters]` to search across all resources.\n*  `GET [base]/[type]?[parameters]` to search resources of a specified\ntype.\n*  `POST [base]/[type]/_search?[parameters]` as an alternate form having\nthe same semantics as the `GET` method.\n\nThe `GET` methods do not support compartment searches. The `POST` method\ndoes not support `application/x-www-form-urlencoded` search parameters.\n\nOn success, the response body will contain a JSON-encoded representation\nof a `Bundle` resource of type `searchset`, containing the results of the\nsearch.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.\n\nThe server's capability statement, retrieved through\ncapabilities, indicates what search parameters\nare supported on each FHIR resource. A list of all search parameters\ndefined by the specification can be found in the [FHIR Search Parameter\nRegistry](http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html).\n\nSupported search modifiers: `:missing`, `:exact`, `:contains`, `:text`,\n`:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `:recurse`.\n\nSupported search result parameters: `_sort`, `_count`, `_include`,\n`_revinclude`, `_summary=text`, `_summary=data`, and `_elements`.\n\nThe maximum number of search results returned defaults to 100, which can\nbe overridden by the `_count` parameter up to a maximum limit of 1000. If\nthere are additional results, the returned `Bundle` will contain\npagination links.\n\nResources with a total size larger than 5MB or a field count larger than\n50,000 might not be fully searchable as the server might trim its generated\nsearch index in those cases.\n\nNote: FHIR resources are indexed asynchronously, so there might be a slight\ndelay between the time a resource is created or changes and when the change\nis reflected in search results.",
+                          "description": "Searches for resources in the given FHIR store according to criteria\nspecified as query parameters.\n\nImplements the FHIR standard [search\ninteraction](http://hl7.org/implement/standards/fhir/STU3/http.html#search)\nusing the search semantics described in the [FHIR Search\nspecification](http://hl7.org/implement/standards/fhir/STU3/search.html).\n\nSupports three methods of search defined by the specification:\n\n*  `GET [base]?[parameters]` to search across all resources.\n*  `GET [base]/[type]?[parameters]` to search resources of a specified\ntype.\n*  `POST [base]/[type]/_search?[parameters]` as an alternate form having\nthe same semantics as the `GET` method.\n\nThe `GET` methods do not support compartment searches. The `POST` method\ndoes not support `application/x-www-form-urlencoded` search parameters.\n\nOn success, the response body will contain a JSON-encoded representation\nof a `Bundle` resource of type `searchset`, containing the results of the\nsearch.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.\n\nThe server's capability statement, retrieved through\ncapabilities, indicates the search parameters\nthat are supported on each FHIR resource. For the list of search\nparameters for STU3, see the\n[STU3 FHIR Search Parameter\nRegistry](http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html).\n\nSupported search modifiers: `:missing`, `:exact`, `:contains`, `:text`,\n`:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `:recurse`.\n\nSupported search result parameters: `_sort`, `_count`, `_include`,\n`_revinclude`, `_summary=text`, `_summary=data`, and `_elements`.\n\nThe maximum number of search results returned defaults to 100, which can\nbe overridden by the `_count` parameter up to a maximum limit of 1000. If\nthere are additional results, the returned `Bundle` will contain\npagination links.\n\nResources with a total size larger than 5MB or a field count larger than\n50,000 might not be fully searchable as the server might trim its generated\nsearch index in those cases.\n\nNote: FHIR resources are indexed asynchronously, so there might be a slight\ndelay between the time a resource is created or changes and when the change\nis reflected in search results.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/_search",
                           "httpMethod": "POST",
                           "id": "healthcare.projects.locations.datasets.fhirStores.fhir.search",
@@ -2688,7 +2687,7 @@
                           ],
                           "parameters": {
                             "filter": {
-                              "description": "Restricts messages returned to those matching a filter. Syntax:\nhttps://cloud.google.com/appengine/docs/standard/python/search/query_strings\n\nFields/functions available for filtering are:\n\n*  `message_type`, from the MSH-9 segment. For example,\n`NOT message_type = \"ADT\"`.\n*  `send_date` or `sendDate`, the YYYY-MM-DD date the message was sent in\nthe dataset's time_zone, from the MSH-7 segment. For example,\n`send_date \u003c \"2017-01-02\"`.\n*  `send_time`, the timestamp when the message was sent, using the\nRFC3339 time format for comparisons, from the MSH-7 segment. For example,\n`send_time \u003c \"2017-01-02T00:00:00-05:00\"`.\n*  `send_facility`, the care center that the message came from, from the\nMSH-4 segment. For example, `send_facility = \"ABC\"`.\n*  `HL7RegExp(expr)`, which does regular expression matching of `expr`\nagainst the message payload using RE2 syntax\n(https://github.com/google/re2/wiki/Syntax). For example,\n`HL7RegExp(\"^.*\\|.*\\|EMERG\")`.\n*  `PatientId(value, type)`, which matches if the message lists a patient\nhaving an ID of the given value and type in the PID-2, PID-3, or PID-4\nsegments. For example, `PatientId(\"123456\", \"MRN\")`.\n*  `labels.x`, a string value of the label with key `x` as set using the\nMessage.labels\nmap. For example, `labels.\"priority\"=\"high\"`. The operator `:*` can be used\nto assert the existence of a label. For example, `labels.\"priority\":*`.\n\nLimitations on conjunctions:\n\n*  Negation on the patient ID function or the labels field is not\nsupported. For example, these queries are invalid:\n`NOT PatientId(\"123456\", \"MRN\")`, `NOT labels.\"tag1\":*`,\n`NOT labels.\"tag2\"=\"val2\"`.\n*  Conjunction of multiple patient ID functions is not supported, for\nexample this query is invalid:\n`PatientId(\"123456\", \"MRN\") AND PatientId(\"456789\", \"MRN\")`.\n*  Conjunction of multiple labels fields is also not supported, for\nexample this query is invalid: `labels.\"tag1\":* AND labels.\"tag2\"=\"val2\"`.\n*  Conjunction of one patient ID function, one labels field and conditions\non other fields is supported. For example, this query is valid:\n`PatientId(\"123456\", \"MRN\") AND labels.\"tag1\":* AND message_type = \"ADT\"`.",
+                              "description": "Restricts messages returned to those matching a filter. Syntax:\nhttps://cloud.google.com/appengine/docs/standard/python/search/query_strings\n\nFields/functions available for filtering are:\n\n*  `message_type`, from the MSH-9 segment. For example,\n`NOT message_type = \"ADT\"`.\n*  `send_date` or `sendDate`, the YYYY-MM-DD date the message was sent in\nthe dataset's time_zone, from the MSH-7 segment. For example,\n`send_date \u003c \"2017-01-02\"`.\n*  `send_time`, the timestamp when the message was sent, using the\nRFC3339 time format for comparisons, from the MSH-7 segment. For example,\n`send_time \u003c \"2017-01-02T00:00:00-05:00\"`.\n*  `send_facility`, the care center that the message came from, from the\nMSH-4 segment. For example, `send_facility = \"ABC\"`.\n*  `PatientId(value, type)`, which matches if the message lists a patient\nhaving an ID of the given value and type in the PID-2, PID-3, or PID-4\nsegments. For example, `PatientId(\"123456\", \"MRN\")`.\n*  `labels.x`, a string value of the label with key `x` as set using the\nMessage.labels\nmap. For example, `labels.\"priority\"=\"high\"`. The operator `:*` can be used\nto assert the existence of a label. For example, `labels.\"priority\":*`.\n\nLimitations on conjunctions:\n\n*  Negation on the patient ID function or the labels field is not\nsupported. For example, these queries are invalid:\n`NOT PatientId(\"123456\", \"MRN\")`, `NOT labels.\"tag1\":*`,\n`NOT labels.\"tag2\"=\"val2\"`.\n*  Conjunction of multiple patient ID functions is not supported, for\nexample this query is invalid:\n`PatientId(\"123456\", \"MRN\") AND PatientId(\"456789\", \"MRN\")`.\n*  Conjunction of multiple labels fields is also not supported, for\nexample this query is invalid: `labels.\"tag1\":* AND labels.\"tag2\"=\"val2\"`.\n*  Conjunction of one patient ID function, one labels field and conditions\non other fields is supported. For example, this query is valid:\n`PatientId(\"123456\", \"MRN\") AND labels.\"tag1\":* AND message_type = \"ADT\"`.",
                               "location": "query",
                               "type": "string"
                             },
@@ -2839,7 +2838,7 @@
       }
     }
   },
-  "revision": "20191008",
+  "revision": "20191021",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -3081,7 +3080,7 @@
       "id": "DeidentifySummary",
       "properties": {
         "failureResourceCount": {
-          "description": "Number of resources that failed to process.\nThe failures might be caused by:\n  * Invalid user input data\n  * Transient errors that could be skipped",
+          "description": "Number of resources that failed to process.\nThe failures might be caused by:\n\n  * Invalid user input data\n  * Transient errors that could be skipped",
           "format": "int64",
           "type": "string"
         },
@@ -4127,7 +4126,7 @@
       "id": "SchemaConfig",
       "properties": {
         "recursiveStructureDepth": {
-          "description": "The depth for all recursive structures in the output analytics\nschema. For example, `concept` in the CodeSystem resource is a recursive\nstructure; when the depth is 2, the CodeSystem table will have a column\ncalled `concept.concept` but not `concept.concept.concept`. If not\nspecified or set to 0, the server will use the default value 2.",
+          "description": "The depth for all recursive structures in the output analytics\nschema. For example, `concept` in the CodeSystem resource is a recursive\nstructure; when the depth is 2, the CodeSystem table will have a column\ncalled `concept.concept` but not `concept.concept.concept`. If not\nspecified or set to 0, the server will use the default value 2. The\nmaximum depth allowed is 5.",
           "format": "int64",
           "type": "string"
         },

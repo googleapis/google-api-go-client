@@ -465,7 +465,7 @@
       }
     }
   },
-  "revision": "20191023",
+  "revision": "20191027",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "EntityKey": {
@@ -582,7 +582,7 @@
         },
         "memberKey": {
           "$ref": "EntityKey",
-          "description": "Required. Immutable. EntityKey of the entity to be added as the member. Must be set while\ncreating a Membership, read-only afterwards.\n\nCurrently allowed entity types: `Users`, `Groups`."
+          "description": "Required. Immutable. EntityKey of the entity to be added as the member. Must be set while\ncreating a Membership, read-only afterwards.\n\nCurrently allowed entity types: `Users`, `Groups`.\nThis field will be deprecated soon."
         },
         "name": {
           "description": "Output only. [Resource name](https://cloud.google.com/apis/design/resource_names) of the\nMembership in the format: `groups/{group_id}/memberships/{member_id}`,\nwhere group_id is the unique id assigned to the Group to which Membership\nbelongs to, and member_id is the unique id assigned to the member\n\nMust be left blank while creating a Membership.",

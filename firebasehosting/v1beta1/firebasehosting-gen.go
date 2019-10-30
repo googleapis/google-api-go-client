@@ -789,6 +789,42 @@ func (s *PopulateVersionFilesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PreviewConfig: Version preview configuration. If active and
+// unexpired,
+// this version will be accessible via a custom URL even
+// if it is not the currently released version.
+type PreviewConfig struct {
+	// Active: If true, preview URLs are enabled for this version.
+	Active bool `json:"active,omitempty"`
+
+	// ExpireTime: Indicates the expiration time for previewing
+	// this
+	// version; preview URL requests received after this time will 404.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Active") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Active") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PreviewConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PreviewConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Redirect: A [`redirect`](/docs/hosting/full-config#redirects)
 // represents the
 // configuration for returning an HTTP redirect response given a
@@ -1149,6 +1185,15 @@ type Version struct {
 	// [`CreateVersion`](../sites.versions/create) endpoint.
 	Name string `json:"name,omitempty"`
 
+	// Preview: Version preview configuration for the site version. This
+	// configuration
+	// specfies whether previewing is enabled for this site version.
+	// Version
+	// previews allow you to preview your site at a custom URL
+	// before
+	// releasing it as the live version.
+	Preview *PreviewConfig `json:"preview,omitempty"`
+
 	// Status: The deploy status of a version.
 	// <br>
 	// <br>For a successful deploy, call
@@ -1322,7 +1367,7 @@ func (c *SitesGetConfigCall) Header() http.Header {
 
 func (c *SitesGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0 gdcl/20191026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1473,7 +1518,7 @@ func (c *SitesUpdateConfigCall) Header() http.Header {
 
 func (c *SitesUpdateConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0 gdcl/20191026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1620,7 +1665,7 @@ func (c *SitesDomainsCreateCall) Header() http.Header {
 
 func (c *SitesDomainsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0 gdcl/20191026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1759,7 +1804,7 @@ func (c *SitesDomainsDeleteCall) Header() http.Header {
 
 func (c *SitesDomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0 gdcl/20191026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1901,7 +1946,7 @@ func (c *SitesDomainsGetCall) Header() http.Header {
 
 func (c *SitesDomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0 gdcl/20191026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2062,7 +2107,7 @@ func (c *SitesDomainsListCall) Header() http.Header {
 
 func (c *SitesDomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0 gdcl/20191026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2234,7 +2279,7 @@ func (c *SitesDomainsUpdateCall) Header() http.Header {
 
 func (c *SitesDomainsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0 gdcl/20191026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2394,7 +2439,7 @@ func (c *SitesReleasesCreateCall) Header() http.Header {
 
 func (c *SitesReleasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0 gdcl/20191026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2564,7 +2609,7 @@ func (c *SitesReleasesListCall) Header() http.Header {
 
 func (c *SitesReleasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0 gdcl/20191026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2750,7 +2795,7 @@ func (c *SitesVersionsCreateCall) Header() http.Header {
 
 func (c *SitesVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0 gdcl/20191026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2900,7 +2945,7 @@ func (c *SitesVersionsDeleteCall) Header() http.Header {
 
 func (c *SitesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0 gdcl/20191026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3055,7 +3100,7 @@ func (c *SitesVersionsPatchCall) Header() http.Header {
 
 func (c *SitesVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0 gdcl/20191026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3202,7 +3247,7 @@ func (c *SitesVersionsPopulateFilesCall) Header() http.Header {
 
 func (c *SitesVersionsPopulateFilesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0 gdcl/20191026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3382,7 +3427,7 @@ func (c *SitesVersionsFilesListCall) Header() http.Header {
 
 func (c *SitesVersionsFilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0 gdcl/20191026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

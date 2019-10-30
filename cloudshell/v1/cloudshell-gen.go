@@ -175,10 +175,6 @@ type Environment struct {
 	// "gcr.io/dev-con/cloud-devshell:latest".
 	DockerImage string `json:"dockerImage,omitempty"`
 
-	// HttpsPorts: Output only. List of ports users can connect to on the
-	// environment.
-	HttpsPorts []int64 `json:"httpsPorts,omitempty"`
-
 	// Id: Output only. The environment's identifier, which is always
 	// "default".
 	Id string `json:"id,omitempty"`
@@ -258,6 +254,11 @@ type Environment struct {
 	// HTTPS or WSS
 	// connections with the environment.
 	WebHost string `json:"webHost,omitempty"`
+
+	// WebPorts: Output only. Ports to which clients can connect to initiate
+	// HTTPS or WSS
+	// connections with the environment.
+	WebPorts []int64 `json:"webPorts,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DockerImage") to
 	// unconditionally include in API requests. By default, fields with
@@ -642,7 +643,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0 gdcl/20191026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -786,7 +787,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0 gdcl/20191026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -931,7 +932,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0 gdcl/20191026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1112,7 +1113,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.0 gdcl/20191026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

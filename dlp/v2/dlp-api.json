@@ -1522,6 +1522,45 @@
                   ]
                 }
               }
+            },
+            "image": {
+              "methods": {
+                "redact": {
+                  "description": "Redacts potentially sensitive info from an image.\nThis method has limits on input size, processing time, and output size.\nSee https://cloud.google.com/dlp/docs/redacting-sensitive-data-images to\nlearn more.\n\nWhen no InfoTypes or CustomInfoTypes are specified in this request, the\nsystem will automatically choose what detectors to run. By default this may\nbe all types, but may change over time as detectors are updated.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{location}/image:redact",
+                  "httpMethod": "POST",
+                  "id": "dlp.projects.locations.image.redact",
+                  "parameterOrder": [
+                    "parent",
+                    "location"
+                  ],
+                  "parameters": {
+                    "location": {
+                      "description": "The geographic location to process the request. Reserved for future\nextensions.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "The parent resource name, for example projects/my-project-id.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+parent}/locations/{location}/image:redact",
+                  "request": {
+                    "$ref": "GooglePrivacyDlpV2RedactImageRequest"
+                  },
+                  "response": {
+                    "$ref": "GooglePrivacyDlpV2RedactImageResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
             }
           }
         },
@@ -1679,7 +1718,7 @@
       }
     }
   },
-  "revision": "20190929",
+  "revision": "20191027",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -2033,14 +2072,14 @@
       "id": "GooglePrivacyDlpV2CharacterMaskConfig",
       "properties": {
         "charactersToIgnore": {
-          "description": "When masking a string, items in this list will be skipped when replacing.\nFor example, if your string is 555-555-5555 and you ask us to skip `-` and\nmask 5 chars with * we would produce ***-*55-5555.",
+          "description": "When masking a string, items in this list will be skipped when replacing\ncharacters. For example, if the input string is `555-555-5555` and you\ninstruct Cloud DLP to skip `-` and mask 5 characters with `*`, Cloud DLP\nreturns `***-**5-5555`.",
           "items": {
             "$ref": "GooglePrivacyDlpV2CharsToIgnore"
           },
           "type": "array"
         },
         "maskingCharacter": {
-          "description": "Character to mask the sensitive values\u0026mdash;for example, \"*\" for an\nalphabetic string such as name, or \"0\" for a numeric string such as ZIP\ncode or credit card number. String must have length 1. If not supplied, we\nwill default to \"*\" for strings, 0 for digits.",
+          "description": "Character to use to mask the sensitive values\u0026mdash;for example, `*` for an\nalphabetic string such as a name, or `0` for a numeric string such as ZIP\ncode or credit card number. This string must have a length of 1. If not\nsupplied, this value defaults to `*` for strings, and `0` for digits.",
           "type": "string"
         },
         "numberToMask": {
@@ -2049,7 +2088,7 @@
           "type": "integer"
         },
         "reverseOrder": {
-          "description": "Mask characters in reverse order. For example, if `masking_character` is\n'0', number_to_mask is 14, and `reverse_order` is false, then\n1234-5678-9012-3456 -\u003e 00000000000000-3456\nIf `masking_character` is '*', `number_to_mask` is 3, and `reverse_order`\nis true, then 12345 -\u003e 12***",
+          "description": "Mask characters in reverse order. For example, if `masking_character` is\n`0`, `number_to_mask` is `14`, and `reverse_order` is `false`, then the\ninput string `1234-5678-9012-3456` is masked as `00000000000000-3456`.\nIf `masking_character` is `*`, `number_to_mask` is `3`, and `reverse_order`\nis `true`, then the string `12345` is masked as `12***`.",
           "type": "boolean"
         }
       },
@@ -4557,6 +4596,10 @@
         "inspectConfig": {
           "$ref": "GooglePrivacyDlpV2InspectConfig",
           "description": "Configuration for the inspector."
+        },
+        "location": {
+          "description": "The geographic location to process the request. Reserved for future\nextensions.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -5020,7 +5063,7 @@
             "[1-12]",
             "[1-31]",
             "[1-7]",
-            "[1-52]",
+            "[1-53]",
             "[0-23]"
           ],
           "type": "string"

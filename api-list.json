@@ -1604,22 +1604,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "dfareporting:v3.2",
-      "name": "dfareporting",
-      "version": "v3.2",
-      "title": "DCM/DFA Reporting And Trafficking API",
-      "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dfareporting/v3.2/rest",
-      "discoveryLink": "./apis/dfareporting/v3.2/rest",
-      "icons": {
-        "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
-        "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
-      },
-      "documentationLink": "https://developers.google.com/doubleclick-advertisers/",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "dfareporting:v3.3",
       "name": "dfareporting",
       "version": "v3.3",
@@ -2550,7 +2534,7 @@
       "id": "ml:v1",
       "name": "ml",
       "version": "v1",
-      "title": "Cloud Machine Learning Engine",
+      "title": "AI Platform Training & Prediction API",
       "description": "An API to enable creating and using machine learning models.",
       "discoveryRestUrl": "https://ml.googleapis.com/$discovery/rest?version=v1",
       "icons": {

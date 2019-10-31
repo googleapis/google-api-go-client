@@ -306,6 +306,7 @@ type ProjectsJobTriggersService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Content = NewProjectsLocationsContentService(s)
+	rs.Image = NewProjectsLocationsImageService(s)
 	return rs
 }
 
@@ -313,6 +314,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	Content *ProjectsLocationsContentService
+
+	Image *ProjectsLocationsImageService
 }
 
 func NewProjectsLocationsContentService(s *Service) *ProjectsLocationsContentService {
@@ -321,6 +324,15 @@ func NewProjectsLocationsContentService(s *Service) *ProjectsLocationsContentSer
 }
 
 type ProjectsLocationsContentService struct {
+	s *Service
+}
+
+func NewProjectsLocationsImageService(s *Service) *ProjectsLocationsImageService {
+	rs := &ProjectsLocationsImageService{s: s}
+	return rs
+}
+
+type ProjectsLocationsImageService struct {
 	s *Service
 }
 
@@ -948,19 +960,21 @@ func (s *GooglePrivacyDlpV2CategoricalStatsResult) MarshalJSON() ([]byte, error)
 // **3.
 type GooglePrivacyDlpV2CharacterMaskConfig struct {
 	// CharactersToIgnore: When masking a string, items in this list will be
-	// skipped when replacing.
-	// For example, if your string is 555-555-5555 and you ask us to skip
-	// `-` and
-	// mask 5 chars with * we would produce ***-*55-5555.
+	// skipped when replacing
+	// characters. For example, if the input string is `555-555-5555` and
+	// you
+	// instruct Cloud DLP to skip `-` and mask 5 characters with `*`, Cloud
+	// DLP
+	// returns `***-**5-5555`.
 	CharactersToIgnore []*GooglePrivacyDlpV2CharsToIgnore `json:"charactersToIgnore,omitempty"`
 
-	// MaskingCharacter: Character to mask the sensitive values&mdash;for
-	// example, "*" for an
-	// alphabetic string such as name, or "0" for a numeric string such as
+	// MaskingCharacter: Character to use to mask the sensitive
+	// values&mdash;for example, `*` for an
+	// alphabetic string such as a name, or `0` for a numeric string such as
 	// ZIP
-	// code or credit card number. String must have length 1. If not
-	// supplied, we
-	// will default to "*" for strings, 0 for digits.
+	// code or credit card number. This string must have a length of 1. If
+	// not
+	// supplied, this value defaults to `*` for strings, and `0` for digits.
 	MaskingCharacter string `json:"maskingCharacter,omitempty"`
 
 	// NumberToMask: Number of characters to mask. If not set, all matching
@@ -970,12 +984,13 @@ type GooglePrivacyDlpV2CharacterMaskConfig struct {
 
 	// ReverseOrder: Mask characters in reverse order. For example, if
 	// `masking_character` is
-	// '0', number_to_mask is 14, and `reverse_order` is false,
-	// then
-	// 1234-5678-9012-3456 -> 00000000000000-3456
-	// If `masking_character` is '*', `number_to_mask` is 3, and
+	// `0`, `number_to_mask` is `14`, and `reverse_order` is `false`, then
+	// the
+	// input string `1234-5678-9012-3456` is masked as
+	// `00000000000000-3456`.
+	// If `masking_character` is `*`, `number_to_mask` is `3`, and
 	// `reverse_order`
-	// is true, then 12345 -> 12***
+	// is `true`, then the string `12345` is masked as `12***`.
 	ReverseOrder bool `json:"reverseOrder,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CharactersToIgnore")
@@ -6222,6 +6237,11 @@ type GooglePrivacyDlpV2RedactImageRequest struct {
 	// InspectConfig: Configuration for the inspector.
 	InspectConfig *GooglePrivacyDlpV2InspectConfig `json:"inspectConfig,omitempty"`
 
+	// Location: The geographic location to process the request. Reserved
+	// for future
+	// extensions.
+	Location string `json:"location,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ByteItem") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -7174,7 +7194,7 @@ type GooglePrivacyDlpV2TimePartConfig struct {
 	//   "MONTH" - [1-12]
 	//   "DAY_OF_MONTH" - [1-31]
 	//   "DAY_OF_WEEK" - [1-7]
-	//   "WEEK_OF_YEAR" - [1-52]
+	//   "WEEK_OF_YEAR" - [1-53]
 	//   "HOUR_OF_DAY" - [0-23]
 	PartToExtract string `json:"partToExtract,omitempty"`
 
@@ -8011,7 +8031,7 @@ func (c *InfoTypesListCall) Header() http.Header {
 
 func (c *InfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8180,7 +8200,7 @@ func (c *LocationsInfoTypesListCall) Header() http.Header {
 
 func (c *LocationsInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8330,7 +8350,7 @@ func (c *OrganizationsDeidentifyTemplatesCreateCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8472,7 +8492,7 @@ func (c *OrganizationsDeidentifyTemplatesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8616,7 +8636,7 @@ func (c *OrganizationsDeidentifyTemplatesGetCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8801,7 +8821,7 @@ func (c *OrganizationsDeidentifyTemplatesListCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8978,7 +8998,7 @@ func (c *OrganizationsDeidentifyTemplatesPatchCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9123,7 +9143,7 @@ func (c *OrganizationsInspectTemplatesCreateCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9264,7 +9284,7 @@ func (c *OrganizationsInspectTemplatesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9407,7 +9427,7 @@ func (c *OrganizationsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9591,7 +9611,7 @@ func (c *OrganizationsInspectTemplatesListCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9767,7 +9787,7 @@ func (c *OrganizationsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9912,7 +9932,7 @@ func (c *OrganizationsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10053,7 +10073,7 @@ func (c *OrganizationsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10197,7 +10217,7 @@ func (c *OrganizationsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10383,7 +10403,7 @@ func (c *OrganizationsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10562,7 +10582,7 @@ func (c *OrganizationsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10713,7 +10733,7 @@ func (c *ProjectsContentDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsContentDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10867,7 +10887,7 @@ func (c *ProjectsContentInspectCall) Header() http.Header {
 
 func (c *ProjectsContentInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11014,7 +11034,7 @@ func (c *ProjectsContentReidentifyCall) Header() http.Header {
 
 func (c *ProjectsContentReidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11161,7 +11181,7 @@ func (c *ProjectsDeidentifyTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11303,7 +11323,7 @@ func (c *ProjectsDeidentifyTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11447,7 +11467,7 @@ func (c *ProjectsDeidentifyTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11632,7 +11652,7 @@ func (c *ProjectsDeidentifyTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11809,7 +11829,7 @@ func (c *ProjectsDeidentifyTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11958,7 +11978,7 @@ func (c *ProjectsDlpJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12109,7 +12129,7 @@ func (c *ProjectsDlpJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12255,7 +12275,7 @@ func (c *ProjectsDlpJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12400,7 +12420,7 @@ func (c *ProjectsDlpJobsGetCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12633,7 +12653,7 @@ func (c *ProjectsDlpJobsListCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12832,7 +12852,7 @@ func (c *ProjectsImageRedactCall) Header() http.Header {
 
 func (c *ProjectsImageRedactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12977,7 +12997,7 @@ func (c *ProjectsInspectTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13118,7 +13138,7 @@ func (c *ProjectsInspectTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13261,7 +13281,7 @@ func (c *ProjectsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13445,7 +13465,7 @@ func (c *ProjectsInspectTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13621,7 +13641,7 @@ func (c *ProjectsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13764,7 +13784,7 @@ func (c *ProjectsJobTriggersActivateCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13908,7 +13928,7 @@ func (c *ProjectsJobTriggersCreateCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14048,7 +14068,7 @@ func (c *ProjectsJobTriggersDeleteCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14191,7 +14211,7 @@ func (c *ProjectsJobTriggersGetCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14411,7 +14431,7 @@ func (c *ProjectsJobTriggersListCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14592,7 +14612,7 @@ func (c *ProjectsJobTriggersPatchCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14745,7 +14765,7 @@ func (c *ProjectsLocationsContentDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14909,7 +14929,7 @@ func (c *ProjectsLocationsContentInspectCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15066,7 +15086,7 @@ func (c *ProjectsLocationsContentReidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentReidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15170,6 +15190,168 @@ func (c *ProjectsLocationsContentReidentifyCall) Do(opts ...googleapi.CallOption
 
 }
 
+// method id "dlp.projects.locations.image.redact":
+
+type ProjectsLocationsImageRedactCall struct {
+	s                                    *Service
+	parent                               string
+	location                             string
+	googleprivacydlpv2redactimagerequest *GooglePrivacyDlpV2RedactImageRequest
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// Redact: Redacts potentially sensitive info from an image.
+// This method has limits on input size, processing time, and output
+// size.
+// See https://cloud.google.com/dlp/docs/redacting-sensitive-data-images
+// to
+// learn more.
+//
+// When no InfoTypes or CustomInfoTypes are specified in this request,
+// the
+// system will automatically choose what detectors to run. By default
+// this may
+// be all types, but may change over time as detectors are updated.
+func (r *ProjectsLocationsImageService) Redact(parent string, location string, googleprivacydlpv2redactimagerequest *GooglePrivacyDlpV2RedactImageRequest) *ProjectsLocationsImageRedactCall {
+	c := &ProjectsLocationsImageRedactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.location = location
+	c.googleprivacydlpv2redactimagerequest = googleprivacydlpv2redactimagerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsImageRedactCall) Fields(s ...googleapi.Field) *ProjectsLocationsImageRedactCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsImageRedactCall) Context(ctx context.Context) *ProjectsLocationsImageRedactCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsImageRedactCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsImageRedactCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2redactimagerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{location}/image:redact")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent":   c.parent,
+		"location": c.location,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.image.redact" call.
+// Exactly one of *GooglePrivacyDlpV2RedactImageResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GooglePrivacyDlpV2RedactImageResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsImageRedactCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2RedactImageResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2RedactImageResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Redacts potentially sensitive info from an image.\nThis method has limits on input size, processing time, and output size.\nSee https://cloud.google.com/dlp/docs/redacting-sensitive-data-images to\nlearn more.\n\nWhen no InfoTypes or CustomInfoTypes are specified in this request, the\nsystem will automatically choose what detectors to run. By default this may\nbe all types, but may change over time as detectors are updated.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{location}/image:redact",
+	//   "httpMethod": "POST",
+	//   "id": "dlp.projects.locations.image.redact",
+	//   "parameterOrder": [
+	//     "parent",
+	//     "location"
+	//   ],
+	//   "parameters": {
+	//     "location": {
+	//       "description": "The geographic location to process the request. Reserved for future\nextensions.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "The parent resource name, for example projects/my-project-id.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/locations/{location}/image:redact",
+	//   "request": {
+	//     "$ref": "GooglePrivacyDlpV2RedactImageRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2RedactImageResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "dlp.projects.storedInfoTypes.create":
 
 type ProjectsStoredInfoTypesCreateCall struct {
@@ -15220,7 +15402,7 @@ func (c *ProjectsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15361,7 +15543,7 @@ func (c *ProjectsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15505,7 +15687,7 @@ func (c *ProjectsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15691,7 +15873,7 @@ func (c *ProjectsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15870,7 +16052,7 @@ func (c *ProjectsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

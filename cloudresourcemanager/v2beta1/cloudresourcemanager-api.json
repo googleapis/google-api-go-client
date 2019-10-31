@@ -117,7 +117,7 @@
           "parameterOrder": [],
           "parameters": {
             "parent": {
-              "description": "The resource name of the new Folder's parent.\nMust be of the form `folders/{folder_id}` or `organizations/{org_id}`.",
+              "description": "Required. The resource name of the new Folder's parent.\nMust be of the form `folders/{folder_id}` or `organizations/{org_id}`.",
               "location": "query",
               "type": "string"
             }
@@ -143,7 +143,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "the resource name of the Folder to be deleted.\nMust be of the form `folders/{folder_id}`.",
+              "description": "Required. the resource name of the Folder to be deleted.\nMust be of the form `folders/{folder_id}`.",
               "location": "path",
               "pattern": "^folders/[^/]+$",
               "required": true,
@@ -168,7 +168,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "The resource name of the Folder to retrieve.\nMust be of the form `folders/{folder_id}`.",
+              "description": "Required. The resource name of the Folder to retrieve.\nMust be of the form `folders/{folder_id}`.",
               "location": "path",
               "pattern": "^folders/[^/]+$",
               "required": true,
@@ -221,23 +221,23 @@
           "parameterOrder": [],
           "parameters": {
             "pageSize": {
-              "description": "The maximum number of Folders to return in the response.\nThis field is optional.",
+              "description": "Optional. The maximum number of Folders to return in the response.",
               "format": "int32",
               "location": "query",
               "type": "integer"
             },
             "pageToken": {
-              "description": "A pagination token returned from a previous call to `ListFolders`\nthat indicates where this listing should continue from.\nThis field is optional.",
+              "description": "Optional. A pagination token returned from a previous call to `ListFolders`\nthat indicates where this listing should continue from.",
               "location": "query",
               "type": "string"
             },
             "parent": {
-              "description": "The resource name of the Organization or Folder whose Folders are\nbeing listed.\nMust be of the form `folders/{folder_id}` or `organizations/{org_id}`.\nAccess to this method is controlled by checking the\n`resourcemanager.folders.list` permission on the `parent`.",
+              "description": "Required. The resource name of the Organization or Folder whose Folders are\nbeing listed.\nMust be of the form `folders/{folder_id}` or `organizations/{org_id}`.\nAccess to this method is controlled by checking the\n`resourcemanager.folders.list` permission on the `parent`.",
               "location": "query",
               "type": "string"
             },
             "showDeleted": {
-              "description": "Controls whether Folders in the\nDELETE_REQUESTED\nstate should be returned. Defaults to false. This field is optional.",
+              "description": "Optional. Controls whether Folders in the\nDELETE_REQUESTED\nstate should be returned. Defaults to false.",
               "location": "query",
               "type": "boolean"
             }
@@ -261,7 +261,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "The resource name of the Folder to move.\nMust be of the form folders/{folder_id}",
+              "description": "Required. The resource name of the Folder to move.\nMust be of the form folders/{folder_id}",
               "location": "path",
               "pattern": "^folders/[^/]+$",
               "required": true,
@@ -296,7 +296,7 @@
               "type": "string"
             },
             "updateMask": {
-              "description": "Fields to be updated.\nOnly the `display_name` can be updated.",
+              "description": "Required. Fields to be updated.\nOnly the `display_name` can be updated.",
               "format": "google-fieldmask",
               "location": "query",
               "type": "string"
@@ -398,7 +398,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "The resource name of the Folder to undelete.\nMust be of the form `folders/{folder_id}`.",
+              "description": "Required. The resource name of the Folder to undelete.\nMust be of the form `folders/{folder_id}`.",
               "location": "path",
               "pattern": "^folders/[^/]+$",
               "required": true,
@@ -449,7 +449,7 @@
       }
     }
   },
-  "revision": "20190927",
+  "revision": "20191018",
   "rootUrl": "https://cloudresourcemanager.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -577,7 +577,7 @@
           "type": "string"
         },
         "parent": {
-          "description": "The Folder’s parent's resource name.\nUpdates to the folder's parent must be performed via\nMoveFolder.",
+          "description": "Required. The Folder’s parent's resource name.\nUpdates to the folder's parent must be performed via\nMoveFolder.",
           "type": "string"
         }
       },
@@ -686,7 +686,7 @@
           "type": "array"
         },
         "nextPageToken": {
-          "description": "A pagination token returned from a previous call to `ListFolders`\nthat indicates from where listing should continue.\nThis field is optional.",
+          "description": "A pagination token returned from a previous call to `ListFolders`\nthat indicates from where listing should continue.",
           "type": "string"
         }
       },
@@ -697,7 +697,7 @@
       "id": "MoveFolderRequest",
       "properties": {
         "destinationParent": {
-          "description": "The resource name of the Folder or Organization to reparent\nthe folder under.\nMust be of the form `folders/{folder_id}` or `organizations/{org_id}`.",
+          "description": "Required. The resource name of the Folder or Organization to reparent\nthe folder under.\nMust be of the form `folders/{folder_id}` or `organizations/{org_id}`.",
           "type": "string"
         }
       },
@@ -794,12 +794,12 @@
       "id": "SearchFoldersRequest",
       "properties": {
         "pageSize": {
-          "description": "The maximum number of folders to return in the response.\nThis field is optional.",
+          "description": "Optional. The maximum number of folders to return in the response.",
           "format": "int32",
           "type": "integer"
         },
         "pageToken": {
-          "description": "A pagination token returned from a previous call to `SearchFolders`\nthat indicates from where search should continue.\nThis field is optional.",
+          "description": "Optional. A pagination token returned from a previous call to `SearchFolders`\nthat indicates from where search should continue.",
           "type": "string"
         },
         "query": {
@@ -821,7 +821,7 @@
           "type": "array"
         },
         "nextPageToken": {
-          "description": "A pagination token returned from a previous call to `SearchFolders`\nthat indicates from where searching should continue.\nThis field is optional.",
+          "description": "A pagination token returned from a previous call to `SearchFolders`\nthat indicates from where searching should continue.",
           "type": "string"
         }
       },

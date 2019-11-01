@@ -182,7 +182,7 @@ func (b *Bundler) add(item interface{}, size int) {
 	// (We could try to call Reset on the timer instead, but that would add a lot
 	// of complexity to the code just to save one small allocation.)
 	if b.flushTimer == nil {
-		b.flushTimer = time.AfterFunc(b.DelayThreshold, b.Flush)
+		b.flushTimer = time.AfterFunc(b.DelayThreshold, b.flushWithoutWait)
 	}
 
 	// If the current bundle equals the count threshold, close it.
@@ -224,6 +224,14 @@ func (b *Bundler) AddWait(ctx context.Context, item interface{}, size int) error
 	// resulting from locking the mutex after sem.Acquire returns.
 	b.add(item, size)
 	return nil
+}
+
+// flushWithoutWait forces the current bundle to be be flushed if non-empty (but
+// doesn't wait for any bundles to actually be handled).
+func (b *Bundler) flushWithoutWait() {
+	b.mu.Lock()
+	b.startFlushLocked()
+	b.mu.Unlock()
 }
 
 // Flush invokes the handler for all remaining items in the Bundler and waits

@@ -311,7 +311,7 @@
       }
     }
   },
-  "revision": "20191015",
+  "revision": "20191030",
   "rootUrl": "https://lifesciences.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -335,7 +335,7 @@
       "id": "Action",
       "properties": {
         "alwaysRun": {
-          "description": "By default, after an action fails, no further actions are run. This flag\nindicates that this action must be run even if the pipeline has already\nfailed. This is useful for actions that copy output files off of the VM\nor for debugging.",
+          "description": "By default, after an action fails, no further actions are run. This flag\nindicates that this action must be run even if the pipeline has already\nfailed. This is useful for actions that copy output files off of the VM\nor for debugging. Note that no actions will be run if image prefetching\nfails.",
           "type": "boolean"
         },
         "commands": {

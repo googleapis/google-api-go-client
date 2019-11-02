@@ -1101,7 +1101,7 @@
       }
     }
   },
-  "revision": "20190804",
+  "revision": "20191018",
   "rootUrl": "https://firestore.googleapis.com/",
   "schemas": {
     "ArrayValue": {
@@ -1484,7 +1484,9 @@
             "GREATER_THAN",
             "GREATER_THAN_OR_EQUAL",
             "EQUAL",
-            "ARRAY_CONTAINS"
+            "ARRAY_CONTAINS",
+            "IN",
+            "ARRAY_CONTAINS_ANY"
           ],
           "enumDescriptions": [
             "Unspecified. This value must not be used.",
@@ -1493,7 +1495,9 @@
             "Greater than. Requires that the field come first in `order_by`.",
             "Greater than or equal. Requires that the field come first in\n`order_by`.",
             "Equal.",
-            "Contains. Requires that the field is an array."
+            "Contains. Requires that the field is an array.",
+            "In. Requires that `value` is a non-empty ArrayValue with at most 10\nvalues.",
+            "Contains any. Requires that the field is an array and\n`value` is a non-empty ArrayValue with at most 10 values."
           ],
           "type": "string"
         },

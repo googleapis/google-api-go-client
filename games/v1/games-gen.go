@@ -127,8 +127,6 @@ func New(client *http.Client) (*Service, error) {
 	s.Metagame = NewMetagameService(s)
 	s.Players = NewPlayersService(s)
 	s.Pushtokens = NewPushtokensService(s)
-	s.QuestMilestones = NewQuestMilestonesService(s)
-	s.Quests = NewQuestsService(s)
 	s.Revisions = NewRevisionsService(s)
 	s.Rooms = NewRoomsService(s)
 	s.Scores = NewScoresService(s)
@@ -157,10 +155,6 @@ type Service struct {
 	Players *PlayersService
 
 	Pushtokens *PushtokensService
-
-	QuestMilestones *QuestMilestonesService
-
-	Quests *QuestsService
 
 	Revisions *RevisionsService
 
@@ -249,24 +243,6 @@ func NewPushtokensService(s *Service) *PushtokensService {
 }
 
 type PushtokensService struct {
-	s *Service
-}
-
-func NewQuestMilestonesService(s *Service) *QuestMilestonesService {
-	rs := &QuestMilestonesService{s: s}
-	return rs
-}
-
-type QuestMilestonesService struct {
-	s *Service
-}
-
-func NewQuestsService(s *Service) *QuestsService {
-	rs := &QuestsService{s: s}
-	return rs
-}
-
-type QuestsService struct {
 	s *Service
 }
 
@@ -2386,6 +2362,8 @@ type Player struct {
 	// PlayerId: The ID of the player.
 	PlayerId string `json:"playerId,omitempty"`
 
+	PlayerStattus string `json:"playerStattus,omitempty"`
+
 	// ProfileSettings: The player's profile settings. Controls whether or
 	// not the player's profile is visible to other players.
 	ProfileSettings *ProfileSettings `json:"profileSettings,omitempty"`
@@ -3185,293 +3163,6 @@ type PushTokenIdIos struct {
 
 func (s *PushTokenIdIos) MarshalJSON() ([]byte, error) {
 	type NoMethod PushTokenIdIos
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Quest: This is a JSON template for a Quest resource.
-type Quest struct {
-	// AcceptedTimestampMillis: The timestamp at which the user accepted the
-	// quest in milliseconds since the epoch in UTC. Only present if the
-	// player has accepted the quest.
-	AcceptedTimestampMillis int64 `json:"acceptedTimestampMillis,omitempty,string"`
-
-	// ApplicationId: The ID of the application this quest is part of.
-	ApplicationId string `json:"applicationId,omitempty"`
-
-	// BannerUrl: The banner image URL for the quest.
-	BannerUrl string `json:"bannerUrl,omitempty"`
-
-	// Description: The description of the quest.
-	Description string `json:"description,omitempty"`
-
-	// EndTimestampMillis: The timestamp at which the quest ceases to be
-	// active in milliseconds since the epoch in UTC.
-	EndTimestampMillis int64 `json:"endTimestampMillis,omitempty,string"`
-
-	// IconUrl: The icon image URL for the quest.
-	IconUrl string `json:"iconUrl,omitempty"`
-
-	// Id: The ID of the quest.
-	Id string `json:"id,omitempty"`
-
-	// IsDefaultBannerUrl: Indicates whether the banner image being returned
-	// is a default image, or is game-provided.
-	IsDefaultBannerUrl bool `json:"isDefaultBannerUrl,omitempty"`
-
-	// IsDefaultIconUrl: Indicates whether the icon image being returned is
-	// a default image, or is game-provided.
-	IsDefaultIconUrl bool `json:"isDefaultIconUrl,omitempty"`
-
-	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed string games#quest.
-	Kind string `json:"kind,omitempty"`
-
-	// LastUpdatedTimestampMillis: The timestamp at which the quest was last
-	// updated by the user in milliseconds since the epoch in UTC. Only
-	// present if the player has accepted the quest.
-	LastUpdatedTimestampMillis int64 `json:"lastUpdatedTimestampMillis,omitempty,string"`
-
-	// Milestones: The quest milestones.
-	Milestones []*QuestMilestone `json:"milestones,omitempty"`
-
-	// Name: The name of the quest.
-	Name string `json:"name,omitempty"`
-
-	// NotifyTimestampMillis: The timestamp at which the user should be
-	// notified that the quest will end soon in milliseconds since the epoch
-	// in UTC.
-	NotifyTimestampMillis int64 `json:"notifyTimestampMillis,omitempty,string"`
-
-	// StartTimestampMillis: The timestamp at which the quest becomes active
-	// in milliseconds since the epoch in UTC.
-	StartTimestampMillis int64 `json:"startTimestampMillis,omitempty,string"`
-
-	// State: The state of the quest.
-	// Possible values are:
-	// - "UPCOMING": The quest is upcoming. The user can see the quest, but
-	// cannot accept it until it is open.
-	// - "OPEN": The quest is currently open and may be accepted at this
-	// time.
-	// - "ACCEPTED": The user is currently participating in this quest.
-	// - "COMPLETED": The user has completed the quest.
-	// - "FAILED": The quest was attempted but was not completed before the
-	// deadline expired.
-	// - "EXPIRED": The quest has expired and was not accepted.
-	// - "DELETED": The quest should be deleted from the local database.
-	State string `json:"state,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AcceptedTimestampMillis") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AcceptedTimestampMillis")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Quest) MarshalJSON() ([]byte, error) {
-	type NoMethod Quest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// QuestContribution: This is a JSON template for a Quest Criterion
-// Contribution resource.
-type QuestContribution struct {
-	// FormattedValue: The formatted value of the contribution as a string.
-	// Format depends on the configuration for the associated event
-	// definition in the Play Games Developer Console.
-	FormattedValue string `json:"formattedValue,omitempty"`
-
-	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed string games#questContribution.
-	Kind string `json:"kind,omitempty"`
-
-	// Value: The value of the contribution.
-	Value int64 `json:"value,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "FormattedValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FormattedValue") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *QuestContribution) MarshalJSON() ([]byte, error) {
-	type NoMethod QuestContribution
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// QuestCriterion: This is a JSON template for a Quest Criterion
-// resource.
-type QuestCriterion struct {
-	// CompletionContribution: The total number of times the associated
-	// event must be incremented for the player to complete this quest.
-	CompletionContribution *QuestContribution `json:"completionContribution,omitempty"`
-
-	// CurrentContribution: The number of increments the player has made
-	// toward the completion count event increments required to complete the
-	// quest. This value will not exceed the completion contribution.
-	// There will be no currentContribution until the player has accepted
-	// the quest.
-	CurrentContribution *QuestContribution `json:"currentContribution,omitempty"`
-
-	// EventId: The ID of the event the criterion corresponds to.
-	EventId string `json:"eventId,omitempty"`
-
-	// InitialPlayerProgress: The value of the event associated with this
-	// quest at the time that the quest was accepted. This value may change
-	// if event increments that took place before the start of quest are
-	// uploaded after the quest starts.
-	// There will be no initialPlayerProgress until the player has accepted
-	// the quest.
-	InitialPlayerProgress *QuestContribution `json:"initialPlayerProgress,omitempty"`
-
-	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed string games#questCriterion.
-	Kind string `json:"kind,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CompletionContribution") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CompletionContribution")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *QuestCriterion) MarshalJSON() ([]byte, error) {
-	type NoMethod QuestCriterion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// QuestListResponse: This is a JSON template for a list of quest
-// objects.
-type QuestListResponse struct {
-	// Items: The quests.
-	Items []*Quest `json:"items,omitempty"`
-
-	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed string games#questListResponse.
-	Kind string `json:"kind,omitempty"`
-
-	// NextPageToken: Token corresponding to the next page of results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *QuestListResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod QuestListResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// QuestMilestone: This is a JSON template for a Quest Milestone
-// resource.
-type QuestMilestone struct {
-	// CompletionRewardData: The completion reward data of the milestone,
-	// represented as a Base64-encoded string. This is a developer-specified
-	// binary blob with size between 0 and 2 KB before encoding.
-	CompletionRewardData string `json:"completionRewardData,omitempty"`
-
-	// Criteria: The criteria of the milestone.
-	Criteria []*QuestCriterion `json:"criteria,omitempty"`
-
-	// Id: The milestone ID.
-	Id string `json:"id,omitempty"`
-
-	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed string games#questMilestone.
-	Kind string `json:"kind,omitempty"`
-
-	// State: The current state of the milestone.
-	// Possible values are:
-	// - "COMPLETED_NOT_CLAIMED" - The milestone is complete, but has not
-	// yet been claimed.
-	// - "CLAIMED" - The milestone is complete and has been claimed.
-	// - "NOT_COMPLETED" - The milestone has not yet been completed.
-	// - "NOT_STARTED" - The milestone is for a quest that has not yet been
-	// accepted.
-	State string `json:"state,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CompletionRewardData") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CompletionRewardData") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *QuestMilestone) MarshalJSON() ([]byte, error) {
-	type NoMethod QuestMilestone
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5160,7 +4851,7 @@ func (c *AchievementDefinitionsListCall) Header() http.Header {
 
 func (c *AchievementDefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5330,7 +5021,7 @@ func (c *AchievementsIncrementCall) Header() http.Header {
 
 func (c *AchievementsIncrementCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5522,7 +5213,7 @@ func (c *AchievementsListCall) Header() http.Header {
 
 func (c *AchievementsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5710,7 +5401,7 @@ func (c *AchievementsRevealCall) Header() http.Header {
 
 func (c *AchievementsRevealCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5842,7 +5533,7 @@ func (c *AchievementsSetStepsAtLeastCall) Header() http.Header {
 
 func (c *AchievementsSetStepsAtLeastCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5988,7 +5679,7 @@ func (c *AchievementsUnlockCall) Header() http.Header {
 
 func (c *AchievementsUnlockCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6129,7 +5820,7 @@ func (c *AchievementsUpdateMultipleCall) Header() http.Header {
 
 func (c *AchievementsUpdateMultipleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6293,7 +5984,7 @@ func (c *ApplicationsGetCall) Header() http.Header {
 
 func (c *ApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6450,7 +6141,7 @@ func (c *ApplicationsPlayedCall) Header() http.Header {
 
 func (c *ApplicationsPlayedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6556,7 +6247,7 @@ func (c *ApplicationsVerifyCall) Header() http.Header {
 
 func (c *ApplicationsVerifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6720,7 +6411,7 @@ func (c *EventsListByPlayerCall) Header() http.Header {
 
 func (c *EventsListByPlayerCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6911,7 +6602,7 @@ func (c *EventsListDefinitionsCall) Header() http.Header {
 
 func (c *EventsListDefinitionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7077,7 +6768,7 @@ func (c *EventsRecordCall) Header() http.Header {
 
 func (c *EventsRecordCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7224,7 +6915,7 @@ func (c *LeaderboardsGetCall) Header() http.Header {
 
 func (c *LeaderboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7392,7 +7083,7 @@ func (c *LeaderboardsListCall) Header() http.Header {
 
 func (c *LeaderboardsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7560,7 +7251,7 @@ func (c *MetagameGetMetagameConfigCall) Header() http.Header {
 
 func (c *MetagameGetMetagameConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7714,7 +7405,7 @@ func (c *MetagameListCategoriesByPlayerCall) Header() http.Header {
 
 func (c *MetagameListCategoriesByPlayerCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7917,7 +7608,7 @@ func (c *PlayersGetCall) Header() http.Header {
 
 func (c *PlayersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8088,7 +7779,7 @@ func (c *PlayersListCall) Header() http.Header {
 
 func (c *PlayersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8271,7 +7962,7 @@ func (c *PushtokensRemoveCall) Header() http.Header {
 
 func (c *PushtokensRemoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8365,7 +8056,7 @@ func (c *PushtokensUpdateCall) Header() http.Header {
 
 func (c *PushtokensUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8413,474 +8104,6 @@ func (c *PushtokensUpdateCall) Do(opts ...googleapi.CallOption) error {
 	//   ]
 	// }
 
-}
-
-// method id "games.questMilestones.claim":
-
-type QuestMilestonesClaimCall struct {
-	s           *Service
-	questId     string
-	milestoneId string
-	urlParams_  gensupport.URLParams
-	ctx_        context.Context
-	header_     http.Header
-}
-
-// Claim: Report that a reward for the milestone corresponding to
-// milestoneId for the quest corresponding to questId has been claimed
-// by the currently authorized user.
-func (r *QuestMilestonesService) Claim(questId string, milestoneId string, requestId int64) *QuestMilestonesClaimCall {
-	c := &QuestMilestonesClaimCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.questId = questId
-	c.milestoneId = milestoneId
-	c.urlParams_.Set("requestId", fmt.Sprint(requestId))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *QuestMilestonesClaimCall) Fields(s ...googleapi.Field) *QuestMilestonesClaimCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *QuestMilestonesClaimCall) Context(ctx context.Context) *QuestMilestonesClaimCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *QuestMilestonesClaimCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *QuestMilestonesClaimCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/{questId}/milestones/{milestoneId}/claim")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"questId":     c.questId,
-		"milestoneId": c.milestoneId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "games.questMilestones.claim" call.
-func (c *QuestMilestonesClaimCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Report that a reward for the milestone corresponding to milestoneId for the quest corresponding to questId has been claimed by the currently authorized user.",
-	//   "httpMethod": "PUT",
-	//   "id": "games.questMilestones.claim",
-	//   "parameterOrder": [
-	//     "questId",
-	//     "milestoneId",
-	//     "requestId"
-	//   ],
-	//   "parameters": {
-	//     "milestoneId": {
-	//       "description": "The ID of the milestone.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "questId": {
-	//       "description": "The ID of the quest.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "A numeric ID to ensure that the request is handled correctly across retries. Your client application must generate this ID randomly.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "quests/{questId}/milestones/{milestoneId}/claim",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
-	//   ]
-	// }
-
-}
-
-// method id "games.quests.accept":
-
-type QuestsAcceptCall struct {
-	s          *Service
-	questId    string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Accept: Indicates that the currently authorized user will participate
-// in the quest.
-func (r *QuestsService) Accept(questId string) *QuestsAcceptCall {
-	c := &QuestsAcceptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.questId = questId
-	return c
-}
-
-// Language sets the optional parameter "language": The preferred
-// language to use for strings returned by this method.
-func (c *QuestsAcceptCall) Language(language string) *QuestsAcceptCall {
-	c.urlParams_.Set("language", language)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *QuestsAcceptCall) Fields(s ...googleapi.Field) *QuestsAcceptCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *QuestsAcceptCall) Context(ctx context.Context) *QuestsAcceptCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *QuestsAcceptCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *QuestsAcceptCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/{questId}/accept")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"questId": c.questId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "games.quests.accept" call.
-// Exactly one of *Quest or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Quest.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *QuestsAcceptCall) Do(opts ...googleapi.CallOption) (*Quest, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Quest{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Indicates that the currently authorized user will participate in the quest.",
-	//   "httpMethod": "POST",
-	//   "id": "games.quests.accept",
-	//   "parameterOrder": [
-	//     "questId"
-	//   ],
-	//   "parameters": {
-	//     "language": {
-	//       "description": "The preferred language to use for strings returned by this method.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "questId": {
-	//       "description": "The ID of the quest.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "quests/{questId}/accept",
-	//   "response": {
-	//     "$ref": "Quest"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
-	//   ]
-	// }
-
-}
-
-// method id "games.quests.list":
-
-type QuestsListCall struct {
-	s            *Service
-	playerId     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Get a list of quests for your application and the currently
-// authenticated player.
-func (r *QuestsService) List(playerId string) *QuestsListCall {
-	c := &QuestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.playerId = playerId
-	return c
-}
-
-// Language sets the optional parameter "language": The preferred
-// language to use for strings returned by this method.
-func (c *QuestsListCall) Language(language string) *QuestsListCall {
-	c.urlParams_.Set("language", language)
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": The maximum
-// number of quest resources to return in the response, used for paging.
-// For any response, the actual number of quest resources returned may
-// be less than the specified maxResults. Acceptable values are 1 to 50,
-// inclusive. (Default: 50).
-func (c *QuestsListCall) MaxResults(maxResults int64) *QuestsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": The token returned
-// by the previous request.
-func (c *QuestsListCall) PageToken(pageToken string) *QuestsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *QuestsListCall) Fields(s ...googleapi.Field) *QuestsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *QuestsListCall) IfNoneMatch(entityTag string) *QuestsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *QuestsListCall) Context(ctx context.Context) *QuestsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *QuestsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *QuestsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "players/{playerId}/quests")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"playerId": c.playerId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "games.quests.list" call.
-// Exactly one of *QuestListResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *QuestListResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *QuestsListCall) Do(opts ...googleapi.CallOption) (*QuestListResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &QuestListResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Get a list of quests for your application and the currently authenticated player.",
-	//   "httpMethod": "GET",
-	//   "id": "games.quests.list",
-	//   "parameterOrder": [
-	//     "playerId"
-	//   ],
-	//   "parameters": {
-	//     "language": {
-	//       "description": "The preferred language to use for strings returned by this method.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "description": "The maximum number of quest resources to return in the response, used for paging. For any response, the actual number of quest resources returned may be less than the specified maxResults. Acceptable values are 1 to 50, inclusive. (Default: 50).",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "maximum": "50",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The token returned by the previous request.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "playerId": {
-	//       "description": "A player ID. A value of me may be used in place of the authenticated player's ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "players/{playerId}/quests",
-	//   "response": {
-	//     "$ref": "QuestListResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *QuestsListCall) Pages(ctx context.Context, f func(*QuestListResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
 }
 
 // method id "games.revisions.check":
@@ -8937,7 +8160,7 @@ func (c *RevisionsCheckCall) Header() http.Header {
 
 func (c *RevisionsCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9073,7 +8296,7 @@ func (c *RoomsCreateCall) Header() http.Header {
 
 func (c *RoomsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9210,7 +8433,7 @@ func (c *RoomsDeclineCall) Header() http.Header {
 
 func (c *RoomsDeclineCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9344,7 +8567,7 @@ func (c *RoomsDismissCall) Header() http.Header {
 
 func (c *RoomsDismissCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9462,7 +8685,7 @@ func (c *RoomsGetCall) Header() http.Header {
 
 func (c *RoomsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9608,7 +8831,7 @@ func (c *RoomsJoinCall) Header() http.Header {
 
 func (c *RoomsJoinCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9759,7 +8982,7 @@ func (c *RoomsLeaveCall) Header() http.Header {
 
 func (c *RoomsLeaveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9932,7 +9155,7 @@ func (c *RoomsListCall) Header() http.Header {
 
 func (c *RoomsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10101,7 +9324,7 @@ func (c *RoomsReportStatusCall) Header() http.Header {
 
 func (c *RoomsReportStatusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10299,7 +9522,7 @@ func (c *ScoresGetCall) Header() http.Header {
 
 func (c *ScoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10550,7 +9773,7 @@ func (c *ScoresListCall) Header() http.Header {
 
 func (c *ScoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10811,7 +10034,7 @@ func (c *ScoresListWindowCall) Header() http.Header {
 
 func (c *ScoresListWindowCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11044,7 +10267,7 @@ func (c *ScoresSubmitCall) Header() http.Header {
 
 func (c *ScoresSubmitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11198,7 +10421,7 @@ func (c *ScoresSubmitMultipleCall) Header() http.Header {
 
 func (c *ScoresSubmitMultipleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11345,7 +10568,7 @@ func (c *SnapshotsGetCall) Header() http.Header {
 
 func (c *SnapshotsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11517,7 +10740,7 @@ func (c *SnapshotsListCall) Header() http.Header {
 
 func (c *SnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11688,7 +10911,7 @@ func (c *TurnBasedMatchesCancelCall) Header() http.Header {
 
 func (c *TurnBasedMatchesCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11795,7 +11018,7 @@ func (c *TurnBasedMatchesCreateCall) Header() http.Header {
 
 func (c *TurnBasedMatchesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11931,7 +11154,7 @@ func (c *TurnBasedMatchesDeclineCall) Header() http.Header {
 
 func (c *TurnBasedMatchesDeclineCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12066,7 +11289,7 @@ func (c *TurnBasedMatchesDismissCall) Header() http.Header {
 
 func (c *TurnBasedMatchesDismissCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12177,7 +11400,7 @@ func (c *TurnBasedMatchesFinishCall) Header() http.Header {
 
 func (c *TurnBasedMatchesFinishCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12343,7 +11566,7 @@ func (c *TurnBasedMatchesGetCall) Header() http.Header {
 
 func (c *TurnBasedMatchesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12491,7 +11714,7 @@ func (c *TurnBasedMatchesJoinCall) Header() http.Header {
 
 func (c *TurnBasedMatchesJoinCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12632,7 +11855,7 @@ func (c *TurnBasedMatchesLeaveCall) Header() http.Header {
 
 func (c *TurnBasedMatchesLeaveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12784,7 +12007,7 @@ func (c *TurnBasedMatchesLeaveTurnCall) Header() http.Header {
 
 func (c *TurnBasedMatchesLeaveTurnCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12982,7 +12205,7 @@ func (c *TurnBasedMatchesListCall) Header() http.Header {
 
 func (c *TurnBasedMatchesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13172,7 +12395,7 @@ func (c *TurnBasedMatchesRematchCall) Header() http.Header {
 
 func (c *TurnBasedMatchesRematchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13366,7 +12589,7 @@ func (c *TurnBasedMatchesSyncCall) Header() http.Header {
 
 func (c *TurnBasedMatchesSyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13546,7 +12769,7 @@ func (c *TurnBasedMatchesTakeTurnCall) Header() http.Header {
 
 func (c *TurnBasedMatchesTakeTurnCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

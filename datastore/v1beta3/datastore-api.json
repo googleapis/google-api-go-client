@@ -220,7 +220,7 @@
           ]
         },
         "reserveIds": {
-          "description": "Prevents the supplied keys' IDs from being auto-allocated by Cloud\nDatastore.",
+          "description": "Prevents the supplied keys' IDs from being auto-allocated by Cloud\nDatastore. Used for imports only; other workloads are not supported.",
           "flatPath": "v1beta3/projects/{projectId}:reserveIds",
           "httpMethod": "POST",
           "id": "datastore.projects.reserveIds",
@@ -306,7 +306,7 @@
       }
     }
   },
-  "revision": "20190421",
+  "revision": "20191020",
   "rootUrl": "https://datastore.googleapis.com/",
   "schemas": {
     "AllocateIdsRequest": {

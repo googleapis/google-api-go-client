@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/4PlABS11YhVC29RMpHjknv0BH38\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/y12cypGINR50A5jCwhgMfi1IS8s\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -24690,7 +24690,7 @@
       }
     }
   },
-  "revision": "20190929",
+  "revision": "20191009",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -26757,7 +26757,7 @@
         },
         "circuitBreakers": {
           "$ref": "CircuitBreakers",
-          "description": "Settings controlling the volume of connections to a backend service.\n\nThis field is applicable to either:  \n- A regional backend service with the service_protocol set to HTTP, HTTPS, or HTTP2, and load_balancing_scheme set to INTERNAL_MANAGED. \n- A global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED."
+          "description": "Settings controlling the volume of connections to a backend service. If not set, this feature is considered disabled.\n\nThis field is applicable to either:  \n- A regional backend service with the service_protocol set to HTTP, HTTPS, or HTTP2, and load_balancing_scheme set to INTERNAL_MANAGED. \n- A global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED."
         },
         "connectionDraining": {
           "$ref": "ConnectionDraining"
@@ -26869,7 +26869,7 @@
         },
         "outlierDetection": {
           "$ref": "OutlierDetection",
-          "description": "Settings controlling eviction of unhealthy hosts from the load balancing pool. This field is applicable to either:  \n- A regional backend service with the service_protocol set to HTTP, HTTPS, or HTTP2, and load_balancing_scheme set to INTERNAL_MANAGED. \n- A global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED."
+          "description": "Settings controlling the eviction of unhealthy hosts from the load balancing pool for the backend service. If not set, this feature is considered disabled.\n\nThis field is applicable to either:  \n- A regional backend service with the service_protocol set to HTTP, HTTPS, or HTTP2, and load_balancing_scheme set to INTERNAL_MANAGED. \n- A global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED."
         },
         "port": {
           "description": "Deprecated in favor of portName. The TCP port to connect on the backend. The default value is 80.\n\nThis cannot be used if the loadBalancingScheme is INTERNAL (Internal TCP/UDP Load Balancing).",
@@ -27687,27 +27687,27 @@
           "description": "The timeout for new network connections to hosts."
         },
         "maxConnections": {
-          "description": "The maximum number of connections to the backend cluster. If not specified, the default is 1024.",
+          "description": "The maximum number of connections to the backend service. If not specified, there is no limit.",
           "format": "int32",
           "type": "integer"
         },
         "maxPendingRequests": {
-          "description": "The maximum number of pending requests allowed to the backend cluster. If not specified, the default is 1024.",
+          "description": "The maximum number of pending requests allowed to the backend service. If not specified, there is no limit.",
           "format": "int32",
           "type": "integer"
         },
         "maxRequests": {
-          "description": "The maximum number of parallel requests that allowed to the backend cluster. If not specified, the default is 1024.",
+          "description": "The maximum number of parallel requests that allowed to the backend service. If not specified, there is no limit.",
           "format": "int32",
           "type": "integer"
         },
         "maxRequestsPerConnection": {
-          "description": "Maximum requests for a single backend connection. This parameter is respected by both the HTTP/1.1 and HTTP/2 implementations. If not specified, there is no limit. Setting this parameter to 1 will effectively disable keep alive.",
+          "description": "Maximum requests for a single connection to the backend service. This parameter is respected by both the HTTP/1.1 and HTTP/2 implementations. If not specified, there is no limit. Setting this parameter to 1 will effectively disable keep alive.",
           "format": "int32",
           "type": "integer"
         },
         "maxRetries": {
-          "description": "The maximum number of parallel retries allowed to the backend cluster. If not specified, the default is 3.",
+          "description": "The maximum number of parallel retries allowed to the backend cluster. If not specified, the default is 1.",
           "format": "int32",
           "type": "integer"
         }
@@ -29254,7 +29254,7 @@
       "id": "DisksAddResourcePoliciesRequest",
       "properties": {
         "resourcePolicies": {
-          "description": "Resource policies to be added to this disk.",
+          "description": "Resource policies to be added to this disk. Currently you can only specify one policy here.",
           "items": {
             "type": "string"
           },
@@ -31810,13 +31810,13 @@
       "id": "HttpRetryPolicy",
       "properties": {
         "numRetries": {
-          "description": "Specifies the allowed number retries. This number must be \u003e 0.",
+          "description": "Specifies the allowed number retries. This number must be \u003e 0. If not specified, defaults to 1.",
           "format": "uint32",
           "type": "integer"
         },
         "perTryTimeout": {
           "$ref": "Duration",
-          "description": "Specifies a non-zero timeout per retry attempt."
+          "description": "Specifies a non-zero timeout per retry attempt.\nIf not specified, will use the timeout set in HttpRouteAction. If timeout in HttpRouteAction is not set, will use the largest timeout among all backend services associated with the route."
         },
         "retryConditions": {
           "description": "Specfies one or more conditions when this retry rule applies. Valid values are:  \n- 5xx: Loadbalancer will attempt a retry if the backend service responds with any 5xx response code, or if the backend service does not respond at all, example: disconnects, reset, read timeout, connection failure, and refused streams. \n- gateway-error: Similar to 5xx, but only applies to response codes 502, 503 or 504.\n- \n- connect-failure: Loadbalancer will retry on failures connecting to backend services, for example due to connection timeouts. \n- retriable-4xx: Loadbalancer will retry for retriable 4xx response codes. Currently the only retriable error supported is 409. \n- refused-stream:Loadbalancer will retry if the backend service resets the stream with a REFUSED_STREAM error code. This reset type indicates that it is safe to retry. \n- cancelledLoadbalancer will retry if the gRPC status code in the response header is set to cancelled \n- deadline-exceeded: Loadbalancer will retry if the gRPC status code in the response header is set to deadline-exceeded \n- resource-exhausted: Loadbalancer will retry if the gRPC status code in the response header is set to resource-exhausted \n- unavailable: Loadbalancer will retry if the gRPC status code in the response header is set to unavailable",
@@ -31849,7 +31849,7 @@
         },
         "timeout": {
           "$ref": "Duration",
-          "description": "Specifies the timeout for the selected route. Timeout is computed from the time the request is has been fully processed (i.e. end-of-stream) up until the response has been completely processed. Timeout includes all retries.\nIf not specified, the default value is 15 seconds."
+          "description": "Specifies the timeout for the selected route. Timeout is computed from the time the request has been fully processed (i.e. end-of-stream) up until the response has been completely processed. Timeout includes all retries.\nIf not specified, will use the largest timeout among all backend services associated with the route."
         },
         "urlRewrite": {
           "$ref": "UrlRewrite",
@@ -36470,7 +36470,7 @@
       "type": "object"
     },
     "LogConfigCounterOptions": {
-      "description": "Increment a streamz counter with the specified metric and field names.\n\nMetric names should start with a '/', generally be lowercase-only, and end in \"_count\". Field names should not contain an initial slash. The actual exported metric names will have \"/iam/policy\" prepended.\n\nField names correspond to IAM request parameters and field values are their respective values.\n\nSupported field names: - \"authority\", which is \"[token]\" if IAMContext.token is present, otherwise the value of IAMContext.authority_selector if present, and otherwise a representation of IAMContext.principal; or - \"iam_principal\", a representation of IAMContext.principal even if a token or authority selector is present; or - \"\" (empty string), resulting in a counter with no fields.\n\nExamples: counter { metric: \"/debug_access_count\" field: \"iam_principal\" } ==\u003e increment counter /iam/policy/backend_debug_access_count {iam_principal=[value of IAMContext.principal]}\n\nAt this time we do not support multiple field names (though this may be supported in the future).",
+      "description": "Increment a streamz counter with the specified metric and field names.\n\nMetric names should start with a '/', generally be lowercase-only, and end in \"_count\". Field names should not contain an initial slash. The actual exported metric names will have \"/iam/policy\" prepended.\n\nField names correspond to IAM request parameters and field values are their respective values.\n\nSupported field names: - \"authority\", which is \"[token]\" if IAMContext.token is present, otherwise the value of IAMContext.authority_selector if present, and otherwise a representation of IAMContext.principal; or - \"iam_principal\", a representation of IAMContext.principal even if a token or authority selector is present; or - \"\" (empty string), resulting in a counter with no fields.\n\nExamples: counter { metric: \"/debug_access_count\" field: \"iam_principal\" } ==\u003e increment counter /iam/policy/debug_access_count {iam_principal=[value of IAMContext.principal]}\n\nTODO(b/141846426): Consider supporting \"authority\" and \"iam_principal\" fields in the same counter.",
       "id": "LogConfigCounterOptions",
       "properties": {
         "customFields": {
@@ -40003,12 +40003,12 @@
       "type": "object"
     },
     "OutlierDetection": {
-      "description": "Settings controlling eviction of unhealthy hosts from the load balancing pool.",
+      "description": "Settings controlling the eviction of unhealthy hosts from the load balancing pool for the backend service.",
       "id": "OutlierDetection",
       "properties": {
         "baseEjectionTime": {
           "$ref": "Duration",
-          "description": "The base time that a host is ejected for. The real time is equal to the base time multiplied by the number of times the host has been ejected. Defaults to 30000ms or 30s."
+          "description": "The base time that a host is ejected for. The real ejection time is equal to the base ejection time multiplied by the number of times the host has been ejected. Defaults to 30000ms or 30s."
         },
         "consecutiveErrors": {
           "description": "Number of errors before a host is ejected from the connection pool. When the backend host is accessed over HTTP, a 5xx return code qualifies as an error. Defaults to 5.",
@@ -40016,17 +40016,17 @@
           "type": "integer"
         },
         "consecutiveGatewayFailure": {
-          "description": "The number of consecutive gateway failures (502, 503, 504 status or connection errors that are mapped to one of those status codes) before a consecutive gateway failure ejection occurs. Defaults to 5.",
+          "description": "The number of consecutive gateway failures (502, 503, 504 status or connection errors that are mapped to one of those status codes) before a consecutive gateway failure ejection occurs. Defaults to 3.",
           "format": "int32",
           "type": "integer"
         },
         "enforcingConsecutiveErrors": {
-          "description": "The percentage chance that a host will be actually ejected when an outlier status is detected through consecutive 5xx. This setting can be used to disable ejection or to ramp it up slowly. Defaults to 100.",
+          "description": "The percentage chance that a host will be actually ejected when an outlier status is detected through consecutive 5xx. This setting can be used to disable ejection or to ramp it up slowly. Defaults to 0.",
           "format": "int32",
           "type": "integer"
         },
         "enforcingConsecutiveGatewayFailure": {
-          "description": "The percentage chance that a host will be actually ejected when an outlier status is detected through consecutive gateway failures. This setting can be used to disable ejection or to ramp it up slowly. Defaults to 0.",
+          "description": "The percentage chance that a host will be actually ejected when an outlier status is detected through consecutive gateway failures. This setting can be used to disable ejection or to ramp it up slowly. Defaults to 100.",
           "format": "int32",
           "type": "integer"
         },
@@ -40037,10 +40037,10 @@
         },
         "interval": {
           "$ref": "Duration",
-          "description": "Time interval between ejection sweep analysis. This can result in both new ejections as well as hosts being returned to service. Defaults to 10 seconds."
+          "description": "Time interval between ejection sweep analysis. This can result in both new ejections as well as hosts being returned to service. Defaults to 1 seconds."
         },
         "maxEjectionPercent": {
-          "description": "Maximum percentage of hosts in the load balancing pool for the backend service that can be ejected. Defaults to 10%.",
+          "description": "Maximum percentage of hosts in the load balancing pool for the backend service that can be ejected. Defaults to 50%.",
           "format": "int32",
           "type": "integer"
         },
@@ -40961,6 +40961,7 @@
             "INTERCONNECTS",
             "INTERCONNECT_ATTACHMENTS_PER_REGION",
             "INTERCONNECT_ATTACHMENTS_TOTAL_MBPS",
+            "INTERCONNECT_TOTAL_GBPS",
             "INTERNAL_ADDRESSES",
             "IN_USE_ADDRESSES",
             "IN_USE_BACKUP_SCHEDULES",
@@ -41012,6 +41013,7 @@
             "VPN_TUNNELS"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",

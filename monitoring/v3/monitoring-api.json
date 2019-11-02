@@ -1225,7 +1225,7 @@
                   "type": "string"
                 },
                 "orderBy": {
-                  "description": "Unsupported: must be left blank. The points in each time series are returned in reverse time order.",
+                  "description": "Unsupported: must be left blank. The points in each time series are currently returned in reverse time order (most recent to oldest).",
                   "location": "query",
                   "type": "string"
                 },
@@ -1457,7 +1457,7 @@
       }
     }
   },
-  "revision": "20191005",
+  "revision": "20191027",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -2545,7 +2545,7 @@
       "id": "MetricAbsence",
       "properties": {
         "aggregations": {
-          "description": "Specifies the alignment of data points in individual time series as well as how to combine the retrieved time series together (such as when aggregating multiple streams on each resource to a single stream for each resource or when aggregating streams across all members of a group of resrouces). Multiple aggregations are applied in the order specified.This field is similar to the one in the MetricService.ListTimeSeries request. It is advisable to use the ListTimeSeries method when debugging this field.",
+          "description": "Specifies the alignment of data points in individual time series as well as how to combine the retrieved time series together (such as when aggregating multiple streams on each resource to a single stream for each resource or when aggregating streams across all members of a group of resrouces). Multiple aggregations are applied in the order specified.This field is similar to the one in the ListTimeSeries request. It is advisable to use the ListTimeSeries method when debugging this field.",
           "items": {
             "$ref": "Aggregation"
           },
@@ -2557,7 +2557,7 @@
           "type": "string"
         },
         "filter": {
-          "description": "A filter that identifies which time series should be compared with the threshold.The filter is similar to the one that is specified in the MetricService.ListTimeSeries request (that call is useful to verify the time series that will be retrieved / processed) and must specify the metric type and optionally may contain restrictions on resource type, resource labels, and metric labels. This field may not exceed 2048 Unicode characters in length.",
+          "description": "A filter that identifies which time series should be compared with the threshold.The filter is similar to the one that is specified in the ListTimeSeries request (that call is useful to verify the time series that will be retrieved / processed) and must specify the metric type and optionally may contain restrictions on resource type, resource labels, and metric labels. This field may not exceed 2048 Unicode characters in length.",
           "type": "string"
         },
         "trigger": {
@@ -2712,7 +2712,7 @@
       "id": "MetricThreshold",
       "properties": {
         "aggregations": {
-          "description": "Specifies the alignment of data points in individual time series as well as how to combine the retrieved time series together (such as when aggregating multiple streams on each resource to a single stream for each resource or when aggregating streams across all members of a group of resrouces). Multiple aggregations are applied in the order specified.This field is similar to the one in the MetricService.ListTimeSeries request. It is advisable to use the ListTimeSeries method when debugging this field.",
+          "description": "Specifies the alignment of data points in individual time series as well as how to combine the retrieved time series together (such as when aggregating multiple streams on each resource to a single stream for each resource or when aggregating streams across all members of a group of resrouces). Multiple aggregations are applied in the order specified.This field is similar to the one in the ListTimeSeries request. It is advisable to use the ListTimeSeries method when debugging this field.",
           "items": {
             "$ref": "Aggregation"
           },
@@ -2757,7 +2757,7 @@
           "type": "string"
         },
         "filter": {
-          "description": "A filter that identifies which time series should be compared with the threshold.The filter is similar to the one that is specified in the MetricService.ListTimeSeries request (that call is useful to verify the time series that will be retrieved / processed) and must specify the metric type and optionally may contain restrictions on resource type, resource labels, and metric labels. This field may not exceed 2048 Unicode characters in length.",
+          "description": "A filter that identifies which time series should be compared with the threshold.The filter is similar to the one that is specified in the ListTimeSeries request (that call is useful to verify the time series that will be retrieved / processed) and must specify the metric type and optionally may contain restrictions on resource type, resource labels, and metric labels. This field may not exceed 2048 Unicode characters in length.",
           "type": "string"
         },
         "thresholdValue": {

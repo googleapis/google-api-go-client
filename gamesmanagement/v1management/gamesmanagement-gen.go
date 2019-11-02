@@ -115,7 +115,6 @@ func New(client *http.Client) (*Service, error) {
 	s.Applications = NewApplicationsService(s)
 	s.Events = NewEventsService(s)
 	s.Players = NewPlayersService(s)
-	s.Quests = NewQuestsService(s)
 	s.Rooms = NewRoomsService(s)
 	s.Scores = NewScoresService(s)
 	s.TurnBasedMatches = NewTurnBasedMatchesService(s)
@@ -134,8 +133,6 @@ type Service struct {
 	Events *EventsService
 
 	Players *PlayersService
-
-	Quests *QuestsService
 
 	Rooms *RoomsService
 
@@ -184,15 +181,6 @@ func NewPlayersService(s *Service) *PlayersService {
 }
 
 type PlayersService struct {
-	s *Service
-}
-
-func NewQuestsService(s *Service) *QuestsService {
-	rs := &QuestsService{s: s}
-	return rs
-}
-
-type QuestsService struct {
 	s *Service
 }
 
@@ -609,6 +597,8 @@ type Player struct {
 	// PlayerId: The ID of the player.
 	PlayerId string `json:"playerId,omitempty"`
 
+	PlayerStattus string `json:"playerStattus,omitempty"`
+
 	// ProfileSettings: The player's profile settings. Controls whether or
 	// not the player's profile is visible to other players.
 	ProfileSettings *ProfileSettings `json:"profileSettings,omitempty"`
@@ -787,39 +777,6 @@ func (s *ProfileSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// QuestsResetMultipleForAllRequest: This is a JSON template for
-// multiple quests reset all request.
-type QuestsResetMultipleForAllRequest struct {
-	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed string gamesManagement#questsResetMultipleForAllRequest.
-	Kind string `json:"kind,omitempty"`
-
-	// QuestIds: The IDs of quests to reset.
-	QuestIds []string `json:"quest_ids,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *QuestsResetMultipleForAllRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod QuestsResetMultipleForAllRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ScoresResetMultipleForAllRequest: This is a JSON template for
 // multiple scores reset all request.
 type ScoresResetMultipleForAllRequest struct {
@@ -899,7 +856,7 @@ func (c *AchievementsResetCall) Header() http.Header {
 
 func (c *AchievementsResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1027,7 +984,7 @@ func (c *AchievementsResetAllCall) Header() http.Header {
 
 func (c *AchievementsResetAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1141,7 +1098,7 @@ func (c *AchievementsResetAllForAllPlayersCall) Header() http.Header {
 
 func (c *AchievementsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1229,7 +1186,7 @@ func (c *AchievementsResetForAllPlayersCall) Header() http.Header {
 
 func (c *AchievementsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1331,7 +1288,7 @@ func (c *AchievementsResetMultipleForAllPlayersCall) Header() http.Header {
 
 func (c *AchievementsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1454,7 +1411,7 @@ func (c *ApplicationsListHiddenCall) Header() http.Header {
 
 func (c *ApplicationsListHiddenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1622,7 +1579,7 @@ func (c *EventsResetCall) Header() http.Header {
 
 func (c *EventsResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1723,7 +1680,7 @@ func (c *EventsResetAllCall) Header() http.Header {
 
 func (c *EventsResetAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1809,7 +1766,7 @@ func (c *EventsResetAllForAllPlayersCall) Header() http.Header {
 
 func (c *EventsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1898,7 +1855,7 @@ func (c *EventsResetForAllPlayersCall) Header() http.Header {
 
 func (c *EventsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2001,7 +1958,7 @@ func (c *EventsResetMultipleForAllPlayersCall) Header() http.Header {
 
 func (c *EventsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2099,7 +2056,7 @@ func (c *PlayersHideCall) Header() http.Header {
 
 func (c *PlayersHideCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2211,7 +2168,7 @@ func (c *PlayersUnhideCall) Header() http.Header {
 
 func (c *PlayersUnhideCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2275,477 +2232,6 @@ func (c *PlayersUnhideCall) Do(opts ...googleapi.CallOption) error {
 
 }
 
-// method id "gamesManagement.quests.reset":
-
-type QuestsResetCall struct {
-	s          *Service
-	questId    string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Reset: Resets all player progress on the quest with the given ID for
-// the currently authenticated player. This method is only accessible to
-// whitelisted tester accounts for your application.
-func (r *QuestsService) Reset(questId string) *QuestsResetCall {
-	c := &QuestsResetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.questId = questId
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *QuestsResetCall) Fields(s ...googleapi.Field) *QuestsResetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *QuestsResetCall) Context(ctx context.Context) *QuestsResetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *QuestsResetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *QuestsResetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/{questId}/reset")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"questId": c.questId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "gamesManagement.quests.reset" call.
-func (c *QuestsResetCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Resets all player progress on the quest with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
-	//   "httpMethod": "POST",
-	//   "id": "gamesManagement.quests.reset",
-	//   "parameterOrder": [
-	//     "questId"
-	//   ],
-	//   "parameters": {
-	//     "questId": {
-	//       "description": "The ID of the quest.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "quests/{questId}/reset",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
-	//   ]
-	// }
-
-}
-
-// method id "gamesManagement.quests.resetAll":
-
-type QuestsResetAllCall struct {
-	s          *Service
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// ResetAll: Resets all player progress on all quests for the currently
-// authenticated player. This method is only accessible to whitelisted
-// tester accounts for your application.
-func (r *QuestsService) ResetAll() *QuestsResetAllCall {
-	c := &QuestsResetAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *QuestsResetAllCall) Fields(s ...googleapi.Field) *QuestsResetAllCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *QuestsResetAllCall) Context(ctx context.Context) *QuestsResetAllCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *QuestsResetAllCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *QuestsResetAllCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/reset")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "gamesManagement.quests.resetAll" call.
-func (c *QuestsResetAllCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Resets all player progress on all quests for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
-	//   "httpMethod": "POST",
-	//   "id": "gamesManagement.quests.resetAll",
-	//   "path": "quests/reset",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
-	//   ]
-	// }
-
-}
-
-// method id "gamesManagement.quests.resetAllForAllPlayers":
-
-type QuestsResetAllForAllPlayersCall struct {
-	s          *Service
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// ResetAllForAllPlayers: Resets all draft quests for all players. This
-// method is only available to user accounts for your developer console.
-func (r *QuestsService) ResetAllForAllPlayers() *QuestsResetAllForAllPlayersCall {
-	c := &QuestsResetAllForAllPlayersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *QuestsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsResetAllForAllPlayersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *QuestsResetAllForAllPlayersCall) Context(ctx context.Context) *QuestsResetAllForAllPlayersCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *QuestsResetAllForAllPlayersCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *QuestsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/resetAllForAllPlayers")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "gamesManagement.quests.resetAllForAllPlayers" call.
-func (c *QuestsResetAllForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Resets all draft quests for all players. This method is only available to user accounts for your developer console.",
-	//   "httpMethod": "POST",
-	//   "id": "gamesManagement.quests.resetAllForAllPlayers",
-	//   "path": "quests/resetAllForAllPlayers",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
-	//   ]
-	// }
-
-}
-
-// method id "gamesManagement.quests.resetForAllPlayers":
-
-type QuestsResetForAllPlayersCall struct {
-	s          *Service
-	questId    string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// ResetForAllPlayers: Resets all player progress on the quest with the
-// given ID for all players. This method is only available to user
-// accounts for your developer console. Only draft quests can be reset.
-func (r *QuestsService) ResetForAllPlayers(questId string) *QuestsResetForAllPlayersCall {
-	c := &QuestsResetForAllPlayersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.questId = questId
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *QuestsResetForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsResetForAllPlayersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *QuestsResetForAllPlayersCall) Context(ctx context.Context) *QuestsResetForAllPlayersCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *QuestsResetForAllPlayersCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *QuestsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/{questId}/resetForAllPlayers")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"questId": c.questId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "gamesManagement.quests.resetForAllPlayers" call.
-func (c *QuestsResetForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Resets all player progress on the quest with the given ID for all players. This method is only available to user accounts for your developer console. Only draft quests can be reset.",
-	//   "httpMethod": "POST",
-	//   "id": "gamesManagement.quests.resetForAllPlayers",
-	//   "parameterOrder": [
-	//     "questId"
-	//   ],
-	//   "parameters": {
-	//     "questId": {
-	//       "description": "The ID of the quest.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "quests/{questId}/resetForAllPlayers",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
-	//   ]
-	// }
-
-}
-
-// method id "gamesManagement.quests.resetMultipleForAllPlayers":
-
-type QuestsResetMultipleForAllPlayersCall struct {
-	s                                *Service
-	questsresetmultipleforallrequest *QuestsResetMultipleForAllRequest
-	urlParams_                       gensupport.URLParams
-	ctx_                             context.Context
-	header_                          http.Header
-}
-
-// ResetMultipleForAllPlayers: Resets quests with the given IDs for all
-// players. This method is only available to user accounts for your
-// developer console. Only draft quests may be reset.
-func (r *QuestsService) ResetMultipleForAllPlayers(questsresetmultipleforallrequest *QuestsResetMultipleForAllRequest) *QuestsResetMultipleForAllPlayersCall {
-	c := &QuestsResetMultipleForAllPlayersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.questsresetmultipleforallrequest = questsresetmultipleforallrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *QuestsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsResetMultipleForAllPlayersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *QuestsResetMultipleForAllPlayersCall) Context(ctx context.Context) *QuestsResetMultipleForAllPlayersCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *QuestsResetMultipleForAllPlayersCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *QuestsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.questsresetmultipleforallrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/resetMultipleForAllPlayers")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "gamesManagement.quests.resetMultipleForAllPlayers" call.
-func (c *QuestsResetMultipleForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Resets quests with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft quests may be reset.",
-	//   "httpMethod": "POST",
-	//   "id": "gamesManagement.quests.resetMultipleForAllPlayers",
-	//   "path": "quests/resetMultipleForAllPlayers",
-	//   "request": {
-	//     "$ref": "QuestsResetMultipleForAllRequest"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
-	//   ]
-	// }
-
-}
-
 // method id "gamesManagement.rooms.reset":
 
 type RoomsResetCall struct {
@@ -2790,7 +2276,7 @@ func (c *RoomsResetCall) Header() http.Header {
 
 func (c *RoomsResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2876,7 +2362,7 @@ func (c *RoomsResetForAllPlayersCall) Header() http.Header {
 
 func (c *RoomsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2964,7 +2450,7 @@ func (c *ScoresResetCall) Header() http.Header {
 
 func (c *ScoresResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3092,7 +2578,7 @@ func (c *ScoresResetAllCall) Header() http.Header {
 
 func (c *ScoresResetAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3206,7 +2692,7 @@ func (c *ScoresResetAllForAllPlayersCall) Header() http.Header {
 
 func (c *ScoresResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3294,7 +2780,7 @@ func (c *ScoresResetForAllPlayersCall) Header() http.Header {
 
 func (c *ScoresResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3397,7 +2883,7 @@ func (c *ScoresResetMultipleForAllPlayersCall) Header() http.Header {
 
 func (c *ScoresResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3490,7 +2976,7 @@ func (c *TurnBasedMatchesResetCall) Header() http.Header {
 
 func (c *TurnBasedMatchesResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3577,7 +3063,7 @@ func (c *TurnBasedMatchesResetForAllPlayersCall) Header() http.Header {
 
 func (c *TurnBasedMatchesResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

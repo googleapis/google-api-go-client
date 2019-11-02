@@ -35,7 +35,7 @@
   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/drive/",
-  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/ixkLftF7SIEiqkkwNYopCpZnQlw\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/9DRQtjCJI84oZSC4iB474iWR2g8\"",
   "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -2096,7 +2096,7 @@
       }
     }
   },
-  "revision": "20190926",
+  "revision": "20191017",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {
@@ -2378,7 +2378,7 @@
         },
         "author": {
           "$ref": "User",
-          "description": "The user who created the comment."
+          "description": "The author of the comment. The author's email address and permission ID will not be populated."
         },
         "content": {
           "annotations": {
@@ -3389,7 +3389,7 @@
         },
         "author": {
           "$ref": "User",
-          "description": "The user who created the reply."
+          "description": "The author of the reply. The author's email address and permission ID will not be populated."
         },
         "content": {
           "annotations": {

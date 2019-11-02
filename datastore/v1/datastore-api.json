@@ -276,7 +276,7 @@
           ]
         },
         "reserveIds": {
-          "description": "Prevents the supplied keys' IDs from being auto-allocated by Cloud\nDatastore.",
+          "description": "Prevents the supplied keys' IDs from being auto-allocated by Cloud\nDatastore. Used for imports only; other workloads are not supported.",
           "flatPath": "v1/projects/{projectId}:reserveIds",
           "httpMethod": "POST",
           "id": "datastore.projects.reserveIds",
@@ -363,6 +363,66 @@
       "resources": {
         "indexes": {
           "methods": {
+            "create": {
+              "description": "Creates the specified index.\nA newly created index's initial state is `CREATING`. On completion of the\nreturned google.longrunning.Operation, the state will be `READY`.\nIf the index already exists, the call will return an `ALREADY_EXISTS`\nstatus.\n\nDuring index creation, the process could result in an error, in which\ncase the index will move to the `ERROR` state. The process can be recovered\nby fixing the data that caused the error, removing the index with\ndelete, then\nre-creating the index with create.\n\nIndexes with a single property cannot be created.",
+              "flatPath": "v1/projects/{projectId}/indexes",
+              "httpMethod": "POST",
+              "id": "datastore.projects.indexes.create",
+              "parameterOrder": [
+                "projectId"
+              ],
+              "parameters": {
+                "projectId": {
+                  "description": "Project ID against which to make the request.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/projects/{projectId}/indexes",
+              "request": {
+                "$ref": "GoogleDatastoreAdminV1Index"
+              },
+              "response": {
+                "$ref": "GoogleLongrunningOperation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/datastore"
+              ]
+            },
+            "delete": {
+              "description": "Deletes an existing index.\nAn index can only be deleted if it is in a `READY` or `ERROR` state. On\nsuccessful execution of the request, the index will be in a `DELETING`\nstate. And on completion of the\nreturned google.longrunning.Operation, the index will be removed.\n\nDuring index deletion, the process could result in an error, in which\ncase the index will move to the `ERROR` state. The process can be recovered\nby fixing the data that caused the error, followed by calling\ndelete again.",
+              "flatPath": "v1/projects/{projectId}/indexes/{indexId}",
+              "httpMethod": "DELETE",
+              "id": "datastore.projects.indexes.delete",
+              "parameterOrder": [
+                "projectId",
+                "indexId"
+              ],
+              "parameters": {
+                "indexId": {
+                  "description": "The resource ID of the index to delete.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "projectId": {
+                  "description": "Project ID against which to make the request.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/projects/{projectId}/indexes/{indexId}",
+              "response": {
+                "$ref": "GoogleLongrunningOperation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/datastore"
+              ]
+            },
             "get": {
               "description": "Gets an index.",
               "flatPath": "v1/projects/{projectId}/indexes/{indexId}",
@@ -564,7 +624,7 @@
       }
     }
   },
-  "revision": "20190804",
+  "revision": "20191020",
   "rootUrl": "https://datastore.googleapis.com/",
   "schemas": {
     "AllocateIdsRequest": {

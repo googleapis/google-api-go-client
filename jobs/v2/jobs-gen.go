@@ -4251,6 +4251,51 @@ func (s *MatchingJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MendelDebugInput: Message representing input to a Mendel server for
+// debug forcing.
+// See go/mendel-debug-forcing for more details.
+// Next ID: 2
+type MendelDebugInput struct {
+	// NamespacedDebugInput: When a request spans multiple servers, a
+	// MendelDebugInput may travel with
+	// the request and take effect in all the servers. This field is a map
+	// of
+	// namespaces to NamespacedMendelDebugInput protos. In a single server,
+	// up to
+	// two NamespacedMendelDebugInput protos are applied:
+	// 1. NamespacedMendelDebugInput with the global namespace (key ==
+	// "").
+	// 2. NamespacedMendelDebugInput with the server's namespace.
+	// When both NamespacedMendelDebugInput protos are present, they are
+	// merged.
+	// See go/mendel-debug-forcing for more details.
+	NamespacedDebugInput map[string]NamespacedDebugInput `json:"namespacedDebugInput,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "NamespacedDebugInput") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NamespacedDebugInput") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MendelDebugInput) MarshalJSON() ([]byte, error) {
+	type NoMethod MendelDebugInput
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Money: Represents an amount of money with its currency type.
 type Money struct {
 	// CurrencyCode: The 3-letter currency code defined in ISO 4217.
@@ -4289,6 +4334,146 @@ type Money struct {
 
 func (s *Money) MarshalJSON() ([]byte, error) {
 	type NoMethod Money
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NamespacedDebugInput: Next ID: 15
+type NamespacedDebugInput struct {
+	// AbsolutelyForcedExpNames: Set of experiment names to be absolutely
+	// forced.
+	// These experiments will be forced without evaluating the conditions.
+	AbsolutelyForcedExpNames []string `json:"absolutelyForcedExpNames,omitempty"`
+
+	// AbsolutelyForcedExpTags: Set of experiment tags to be absolutely
+	// forced.
+	// The experiments with these tags will be forced without evaluating
+	// the
+	// conditions.
+	AbsolutelyForcedExpTags []string `json:"absolutelyForcedExpTags,omitempty"`
+
+	// AbsolutelyForcedExps: Set of experiment ids to be absolutely
+	// forced.
+	// These ids will be forced without evaluating the conditions.
+	AbsolutelyForcedExps []int64 `json:"absolutelyForcedExps,omitempty"`
+
+	// ConditionallyForcedExpNames: Set of experiment names to be
+	// conditionally forced.
+	// These experiments will be forced only if their conditions and
+	// their
+	// parent domain's conditions are true.
+	ConditionallyForcedExpNames []string `json:"conditionallyForcedExpNames,omitempty"`
+
+	// ConditionallyForcedExpTags: Set of experiment tags to be
+	// conditionally forced.
+	// The experiments with these tags will be forced only if their
+	// conditions
+	// and their parent domain's conditions are true.
+	ConditionallyForcedExpTags []string `json:"conditionallyForcedExpTags,omitempty"`
+
+	// ConditionallyForcedExps: Set of experiment ids to be conditionally
+	// forced.
+	// These ids will be forced only if their conditions and their
+	// parent
+	// domain's conditions are true.
+	ConditionallyForcedExps []int64 `json:"conditionallyForcedExps,omitempty"`
+
+	// DisableAutomaticEnrollmentSelection: If true, disable automatic
+	// enrollment selection (at all diversion
+	// points). Automatic enrollment selection means experiment
+	// selection
+	// process based on the experiment's automatic enrollment condition.
+	// This
+	// does not disable selection of forced experiments.
+	DisableAutomaticEnrollmentSelection bool `json:"disableAutomaticEnrollmentSelection,omitempty"`
+
+	// DisableExpNames: Set of experiment names to be disabled.
+	// If an experiment is disabled, it is never selected nor forced.
+	// If an aggregate experiment is disabled, its partitions are
+	// disabled
+	// together. If an experiment with an enrollment is disabled, the
+	// enrollment
+	// is disabled together. If a name corresponds to a domain, the
+	// domain
+	// itself and all descendant experiments and domains are disabled
+	// together.
+	DisableExpNames []string `json:"disableExpNames,omitempty"`
+
+	// DisableExpTags: Set of experiment tags to be disabled. All
+	// experiments that are tagged
+	// with one or more of these tags are disabled.
+	// If an experiment is disabled, it is never selected nor forced.
+	// If an aggregate experiment is disabled, its partitions are
+	// disabled
+	// together. If an experiment with an enrollment is disabled, the
+	// enrollment
+	// is disabled together.
+	DisableExpTags []string `json:"disableExpTags,omitempty"`
+
+	// DisableExps: Set of experiment ids to be disabled.
+	// If an experiment is disabled, it is never selected nor forced.
+	// If an aggregate experiment is disabled, its partitions are
+	// disabled
+	// together. If an experiment with an enrollment is disabled, the
+	// enrollment
+	// is disabled together. If an ID corresponds to a domain, the domain
+	// itself
+	// and all descendant experiments and domains are disabled together.
+	DisableExps []int64 `json:"disableExps,omitempty"`
+
+	// DisableManualEnrollmentSelection: If true, disable manual enrollment
+	// selection (at all diversion points).
+	// Manual enrollment selection means experiment selection process based
+	// on
+	// the request's manual enrollment states (a.k.a. opt-in
+	// experiments).
+	// This does not disable selection of forced experiments.
+	DisableManualEnrollmentSelection bool `json:"disableManualEnrollmentSelection,omitempty"`
+
+	// DisableOrganicSelection: If true, disable organic experiment
+	// selection (at all diversion points).
+	// Organic selection means experiment selection process based on
+	// traffic
+	// allocation and diversion condition evaluation.
+	// This does not disable selection of forced experiments.
+	//
+	// This is useful in cases when it is not known whether experiment
+	// selection
+	// behavior is responsible for a error or breakage. Disabling
+	// organic
+	// selection may help to isolate the cause of a given problem.
+	DisableOrganicSelection bool `json:"disableOrganicSelection,omitempty"`
+
+	// ForcedFlags: Flags to force in a particular experiment state.
+	// Map from flag name to flag value.
+	ForcedFlags map[string]string `json:"forcedFlags,omitempty"`
+
+	// ForcedRollouts: Rollouts to force in a particular experiment
+	// state.
+	// Map from rollout name to rollout value.
+	ForcedRollouts map[string]bool `json:"forcedRollouts,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AbsolutelyForcedExpNames") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AbsolutelyForcedExpNames")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NamespacedDebugInput) MarshalJSON() ([]byte, error) {
+	type NoMethod NamespacedDebugInput
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5301,7 +5486,7 @@ func (c *CompaniesCreateCall) Header() http.Header {
 
 func (c *CompaniesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5427,7 +5612,7 @@ func (c *CompaniesDeleteCall) Header() http.Header {
 
 func (c *CompaniesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5569,7 +5754,7 @@ func (c *CompaniesGetCall) Header() http.Header {
 
 func (c *CompaniesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5740,7 +5925,7 @@ func (c *CompaniesListCall) Header() http.Header {
 
 func (c *CompaniesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5935,7 +6120,7 @@ func (c *CompaniesPatchCall) Header() http.Header {
 
 func (c *CompaniesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6150,7 +6335,7 @@ func (c *CompaniesJobsListCall) Header() http.Header {
 
 func (c *CompaniesJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6331,7 +6516,7 @@ func (c *JobsBatchDeleteCall) Header() http.Header {
 
 func (c *JobsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6461,7 +6646,7 @@ func (c *JobsCreateCall) Header() http.Header {
 
 func (c *JobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6606,7 +6791,7 @@ func (c *JobsDeleteCall) Header() http.Header {
 
 func (c *JobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6748,7 +6933,7 @@ func (c *JobsDeleteByFilterCall) Header() http.Header {
 
 func (c *JobsDeleteByFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6887,7 +7072,7 @@ func (c *JobsGetCall) Header() http.Header {
 
 func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7037,7 +7222,7 @@ func (c *JobsHistogramCall) Header() http.Header {
 
 func (c *JobsHistogramCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7222,7 +7407,7 @@ func (c *JobsListCall) Header() http.Header {
 
 func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7392,7 +7577,7 @@ func (c *JobsPatchCall) Header() http.Header {
 
 func (c *JobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7536,7 +7721,7 @@ func (c *JobsSearchCall) Header() http.Header {
 
 func (c *JobsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7697,7 +7882,7 @@ func (c *JobsSearchForAlertCall) Header() http.Header {
 
 func (c *JobsSearchForAlertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7927,7 +8112,7 @@ func (c *V2CompleteCall) Header() http.Header {
 
 func (c *V2CompleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

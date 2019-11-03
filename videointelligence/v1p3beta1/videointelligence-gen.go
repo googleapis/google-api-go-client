@@ -5995,9 +5995,7 @@ func (s *GoogleCloudVideointelligenceV1p3beta1TextSegment) UnmarshalJSON(data []
 }
 
 // GoogleCloudVideointelligenceV1p3beta1TimestampedObject: For tracking
-// related features, such as LOGO_RECOGNITION,
-// FACE_DETECTION,
-// CELEBRITY_RECOGNITION, PERSON_DETECTION.
+// related features.
 // An object at time_offset with attributes, and located
 // with
 // normalized_bounding_box.
@@ -6604,7 +6602,7 @@ func (c *VideosAnnotateCall) Header() http.Header {
 
 func (c *VideosAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

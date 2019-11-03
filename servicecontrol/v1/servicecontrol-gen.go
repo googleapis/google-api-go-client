@@ -1912,17 +1912,6 @@ type Operation struct {
 	// check will be performed.
 	QuotaProperties *QuotaProperties `json:"quotaProperties,omitempty"`
 
-	// ResourceContainer: DO NOT USE. This field is deprecated, use
-	// "resources" field instead.
-	// The resource name of the parent of a resource in the resource
-	// hierarchy.
-	//
-	// This can be in one of the following formats:
-	//     - “projects/<project-id or project-number>”
-	//     - “folders/<folder-id>”
-	//     - “organizations/<organization-id>”
-	ResourceContainer string `json:"resourceContainer,omitempty"`
-
 	// Resources: The resources that are involved in the operation.
 	// The maximum supported number of entries in this field is 100.
 	Resources []*ResourceInfo `json:"resources,omitempty"`
@@ -3034,7 +3023,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3196,7 +3185,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3355,7 +3344,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191031")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

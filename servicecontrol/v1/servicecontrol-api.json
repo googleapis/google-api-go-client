@@ -196,7 +196,7 @@
       }
     }
   },
-  "revision": "20191003",
+  "revision": "20191027",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -1167,10 +1167,6 @@
         "quotaProperties": {
           "$ref": "QuotaProperties",
           "description": "Represents the properties needed for quota check. Applicable only if this\noperation is for a quota check request. If this is not specified, no quota\ncheck will be performed."
-        },
-        "resourceContainer": {
-          "description": "DO NOT USE. This field is deprecated, use \"resources\" field instead.\nThe resource name of the parent of a resource in the resource hierarchy.\n\nThis can be in one of the following formats:\n    - “projects/\u003cproject-id or project-number\u003e”\n    - “folders/\u003cfolder-id\u003e”\n    - “organizations/\u003corganization-id\u003e”",
-          "type": "string"
         },
         "resources": {
           "description": "The resources that are involved in the operation.\nThe maximum supported number of entries in this field is 100.",

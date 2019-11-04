@@ -349,7 +349,7 @@
       }
     }
   },
-  "revision": "20191028",
+  "revision": "20191018",
   "rootUrl": "https://videointelligence.googleapis.com/",
   "schemas": {
     "GoogleCloudVideointelligenceV1_AnnotateVideoProgress": {
@@ -3252,7 +3252,7 @@
       "type": "object"
     },
     "GoogleCloudVideointelligenceV1p3beta1_TimestampedObject": {
-      "description": "For tracking related features.\nAn object at time_offset with attributes, and located with\nnormalized_bounding_box.",
+      "description": "For tracking related features, such as LOGO_RECOGNITION, FACE_DETECTION,\nCELEBRITY_RECOGNITION, PERSON_DETECTION.\nAn object at time_offset with attributes, and located with\nnormalized_bounding_box.",
       "id": "GoogleCloudVideointelligenceV1p3beta1_TimestampedObject",
       "properties": {
         "attributes": {

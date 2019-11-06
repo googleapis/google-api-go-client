@@ -8,6 +8,7 @@ import (
 	"context"
 	"fmt"
 	"reflect"
+	"sort"
 	"sync"
 	"testing"
 	"time"
@@ -105,6 +106,12 @@ func TestBundlerByteThreshold(t *testing.T) {
 	b := NewBundler(int(0), handler.handleImmediate)
 	b.BundleCountThreshold = 10
 	b.BundleByteThreshold = 3
+	// Increase the limit beyond the number of bundles we expect (3)
+	// so that bundles get handled immediately after they cross the
+	// threshold. Otherwise, the test is non-deterministic. With the default
+	// HandlerLimit of 1, the 2nd and 3rd bundles may or may not be
+	// combined based on how long it takes to handle the 1st bundle.
+	b.HandlerLimit = 10
 	add := func(i interface{}, s int) {
 		if err := b.Add(i, s); err != nil {
 			t.Fatal(err)
@@ -113,14 +120,21 @@ func TestBundlerByteThreshold(t *testing.T) {
 
 	add(1, 1)
 	add(2, 2)
-	// Hit byte threshold: bundle = 1, 2
+	// Hit byte threshold AND under HandlerLimit:
+	// bundle = 1, 2
 	add(3, 1)
 	add(4, 1)
 	add(5, 2)
-	// Passed byte threshold, but not limit: bundle = 3, 4, 5
+	// Passed byte threshold AND under byte limit AND under HandlerLimit:
+	// bundle = 3, 4, 5
 	add(6, 1)
 	b.Flush()
 	bgot := handler.bundles()
+	// We don't care about the order they were handled in. We just want
+	// to test that crossing the threshold triggered handling.
+	sort.Slice(bgot, func(i, j int) bool {
+		return bgot[i][0] < bgot[j][0]
+	})
 	bwant := [][]int{{1, 2}, {3, 4, 5}, {6}}
 	if !reflect.DeepEqual(bgot, bwant) {
 		t.Errorf("bundles: got %v, want %v", bgot, bwant)

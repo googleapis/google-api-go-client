@@ -109,16 +109,15 @@ func (t parameterTransport) RoundTrip(req *http.Request) (*http.Response, error)
 	if rt == nil {
 		return nil, errors.New("transport: no Transport specified")
 	}
-	if t.userAgent == "" {
-		return rt.RoundTrip(req)
-	}
 	newReq := *req
 	newReq.Header = make(http.Header)
 	for k, vv := range req.Header {
 		newReq.Header[k] = vv
 	}
-	// TODO(cbro): append to existing User-Agent header?
-	newReq.Header.Set("User-Agent", t.userAgent)
+	if t.userAgent != "" {
+		// TODO(cbro): append to existing User-Agent header?
+		newReq.Header.Set("User-Agent", t.userAgent)
+	}
 
 	// Attach system parameters into the header
 	if t.quotaProject != "" {

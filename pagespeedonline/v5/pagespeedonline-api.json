@@ -5,7 +5,7 @@
   "description": "Analyzes the performance of a web page and provides tailored suggestions to make that page faster.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/speed/docs/insights/v5/get-started",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/WoDVu14FNziqSFWMWSbzsOZPZNQ\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/0NYpZPBBXGhzfbqEP9bLgGyZsRk\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/pagespeed-16.png",
     "x32": "https://www.google.com/images/icons/product/pagespeed-32.png"
@@ -137,7 +137,7 @@
       }
     }
   },
-  "revision": "20190906",
+  "revision": "20191028",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "GoogleprotobufListValue": {
@@ -180,6 +180,11 @@
         "id": {
           "description": "The audit's id.",
           "type": "string"
+        },
+        "numericValue": {
+          "description": "A numeric value that has a meaning specific to the audit, e.g. the number of nodes in the DOM or the timestamp of a specific load event. More information can be found in the audit details, if present.",
+          "format": "double",
+          "type": "number"
         },
         "score": {
           "type": "any"

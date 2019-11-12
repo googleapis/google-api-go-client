@@ -3599,6 +3599,17 @@ func (r *BackupRunsService) Delete(project string, instance string, id int64) *B
 	return c
 }
 
+// ResourceName sets the optional parameter "resourceName": The name of
+// the backupRun to
+// delete.
+// Format:
+// projects/{project}/locations/{location}/instances/{ins
+// tance}/backupRuns/{backupRun}
+func (c *BackupRunsDeleteCall) ResourceName(resourceName string) *BackupRunsDeleteCall {
+	c.urlParams_.Set("resourceName", resourceName)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3626,7 +3637,7 @@ func (c *BackupRunsDeleteCall) Header() http.Header {
 
 func (c *BackupRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3715,6 +3726,11 @@ func (c *BackupRunsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "resourceName": {
+	//       "description": "The name of the backupRun to delete.\nFormat:\nprojects/{project}/locations/{location}/instances/{instance}/backupRuns/{backupRun}",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns/{id}",
@@ -3799,7 +3815,7 @@ func (c *BackupRunsGetCall) Header() http.Header {
 
 func (c *BackupRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3968,7 +3984,7 @@ func (c *BackupRunsInsertCall) Header() http.Header {
 
 func (c *BackupRunsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4158,7 +4174,7 @@ func (c *BackupRunsListCall) Header() http.Header {
 
 func (c *BackupRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4313,6 +4329,17 @@ func (r *DatabasesService) Delete(project string, instance string, database stri
 	return c
 }
 
+// ResourceName sets the optional parameter "resourceName": The name of
+// the database to
+// delete.
+// Format:
+// projects/{project}/locations/{location}/instances/{ins
+// tance}/databases/{database}
+func (c *DatabasesDeleteCall) ResourceName(resourceName string) *DatabasesDeleteCall {
+	c.urlParams_.Set("resourceName", resourceName)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4340,7 +4367,7 @@ func (c *DatabasesDeleteCall) Header() http.Header {
 
 func (c *DatabasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4428,6 +4455,11 @@ func (c *DatabasesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "resourceName": {
+	//       "description": "The name of the database to delete.\nFormat:\nprojects/{project}/locations/{location}/instances/{instance}/databases/{database}",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}",
@@ -4514,7 +4546,7 @@ func (c *DatabasesGetCall) Header() http.Header {
 
 func (c *DatabasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4682,7 +4714,7 @@ func (c *DatabasesInsertCall) Header() http.Header {
 
 func (c *DatabasesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4854,7 +4886,7 @@ func (c *DatabasesListCall) Header() http.Header {
 
 func (c *DatabasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4981,6 +5013,17 @@ func (r *DatabasesService) Patch(project string, instance string, database strin
 	return c
 }
 
+// ResourceName sets the optional parameter "resourceName": The name of
+// the database for Cloud SQL to
+// update.
+// Format:
+// projects/{project}/locations/{location}/instances/{ins
+// tance}/databases/{database}
+func (c *DatabasesPatchCall) ResourceName(resourceName string) *DatabasesPatchCall {
+	c.urlParams_.Set("resourceName", resourceName)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5008,7 +5051,7 @@ func (c *DatabasesPatchCall) Header() http.Header {
 
 func (c *DatabasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5101,6 +5144,11 @@ func (c *DatabasesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "resourceName": {
+	//       "description": "The name of the database for Cloud SQL to update.\nFormat:\nprojects/{project}/locations/{location}/instances/{instance}/databases/{database}",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}",
@@ -5143,6 +5191,17 @@ func (r *DatabasesService) Update(project string, instance string, database stri
 	return c
 }
 
+// ResourceName sets the optional parameter "resourceName": The name of
+// the database for Cloud SQL to
+// update.
+// Format:
+// projects/{project}/locations/{location}/instances/{ins
+// tance}/databases/{database}
+func (c *DatabasesUpdateCall) ResourceName(resourceName string) *DatabasesUpdateCall {
+	c.urlParams_.Set("resourceName", resourceName)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5170,7 +5229,7 @@ func (c *DatabasesUpdateCall) Header() http.Header {
 
 func (c *DatabasesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5263,6 +5322,11 @@ func (c *DatabasesUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "resourceName": {
+	//       "description": "The name of the database for Cloud SQL to update.\nFormat:\nprojects/{project}/locations/{location}/instances/{instance}/databases/{database}",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}",
@@ -5342,7 +5406,7 @@ func (c *FlagsListCall) Header() http.Header {
 
 func (c *FlagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5487,7 +5551,7 @@ func (c *InstancesAddServerCaCall) Header() http.Header {
 
 func (c *InstancesAddServerCaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5643,7 +5707,7 @@ func (c *InstancesCloneCall) Header() http.Header {
 
 func (c *InstancesCloneCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5769,6 +5833,14 @@ func (r *InstancesService) Delete(project string, instance string) *InstancesDel
 	return c
 }
 
+// ResourceName sets the optional parameter "resourceName": The name of
+// database instance to delete.
+// Format: projects/{project}/locations/{location}/instances/{instance}
+func (c *InstancesDeleteCall) ResourceName(resourceName string) *InstancesDeleteCall {
+	c.urlParams_.Set("resourceName", resourceName)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5796,7 +5868,7 @@ func (c *InstancesDeleteCall) Header() http.Header {
 
 func (c *InstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5876,6 +5948,11 @@ func (c *InstancesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "resourceName": {
+	//       "description": "The name of database instance to delete.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}",
@@ -5948,7 +6025,7 @@ func (c *InstancesDemoteMasterCall) Header() http.Header {
 
 func (c *InstancesDemoteMasterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6113,7 +6190,7 @@ func (c *InstancesExportCall) Header() http.Header {
 
 func (c *InstancesExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6277,7 +6354,7 @@ func (c *InstancesFailoverCall) Header() http.Header {
 
 func (c *InstancesFailoverCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6450,7 +6527,7 @@ func (c *InstancesGetCall) Header() http.Header {
 
 func (c *InstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6610,7 +6687,7 @@ func (c *InstancesImportCall) Header() http.Header {
 
 func (c *InstancesImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6770,7 +6847,7 @@ func (c *InstancesInsertCall) Header() http.Header {
 
 func (c *InstancesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6950,7 +7027,7 @@ func (c *InstancesListCall) Header() http.Header {
 
 func (c *InstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7149,7 +7226,7 @@ func (c *InstancesListServerCasCall) Header() http.Header {
 
 func (c *InstancesListServerCasCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7273,6 +7350,14 @@ func (r *InstancesService) Patch(project string, instance string, databaseinstan
 	return c
 }
 
+// ResourceName sets the optional parameter "resourceName": The name of
+// the database instance for Cloud SQL to update.
+// Format: projects/{project}/locations/{location}/instances/{instance}
+func (c *InstancesPatchCall) ResourceName(resourceName string) *InstancesPatchCall {
+	c.urlParams_.Set("resourceName", resourceName)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7300,7 +7385,7 @@ func (c *InstancesPatchCall) Header() http.Header {
 
 func (c *InstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7385,6 +7470,11 @@ func (c *InstancesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "resourceName": {
+	//       "description": "The name of the database instance for Cloud SQL to update.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}",
@@ -7457,7 +7547,7 @@ func (c *InstancesPromoteReplicaCall) Header() http.Header {
 
 func (c *InstancesPromoteReplicaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7612,7 +7702,7 @@ func (c *InstancesResetSslConfigCall) Header() http.Header {
 
 func (c *InstancesResetSslConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7765,7 +7855,7 @@ func (c *InstancesRestartCall) Header() http.Header {
 
 func (c *InstancesRestartCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7922,7 +8012,7 @@ func (c *InstancesRestoreBackupCall) Header() http.Header {
 
 func (c *InstancesRestoreBackupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8087,7 +8177,7 @@ func (c *InstancesRotateServerCaCall) Header() http.Header {
 
 func (c *InstancesRotateServerCaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8250,7 +8340,7 @@ func (c *InstancesStartReplicaCall) Header() http.Header {
 
 func (c *InstancesStartReplicaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8405,7 +8495,7 @@ func (c *InstancesStopReplicaCall) Header() http.Header {
 
 func (c *InstancesStopReplicaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8560,7 +8650,7 @@ func (c *InstancesTruncateLogCall) Header() http.Header {
 
 func (c *InstancesTruncateLogCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8697,6 +8787,14 @@ func (r *InstancesService) Update(project string, instance string, databaseinsta
 	return c
 }
 
+// ResourceName sets the optional parameter "resourceName": The name of
+// the database instance for Cloud SQL to update.
+// Format: projects/{project}/locations/{location}/instances/{instance}
+func (c *InstancesUpdateCall) ResourceName(resourceName string) *InstancesUpdateCall {
+	c.urlParams_.Set("resourceName", resourceName)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8724,7 +8822,7 @@ func (c *InstancesUpdateCall) Header() http.Header {
 
 func (c *InstancesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8809,6 +8907,11 @@ func (c *InstancesUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "resourceName": {
+	//       "description": "The name of the database instance for Cloud SQL to update.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}",
@@ -8884,7 +8987,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9072,7 +9175,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9265,7 +9368,7 @@ func (c *SslCertsCreateEphemeralCall) Header() http.Header {
 
 func (c *SslCertsCreateEphemeralCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9395,6 +9498,17 @@ func (r *SslCertsService) Delete(project string, instance string, sha1Fingerprin
 	return c
 }
 
+// ResourceName sets the optional parameter "resourceName": The name of
+// SSL certificate to
+// delete.
+// Format:
+// projects/{project}/locations/{location}/instances/{ins
+// tance}/sslCerts/{sslCert}
+func (c *SslCertsDeleteCall) ResourceName(resourceName string) *SslCertsDeleteCall {
+	c.urlParams_.Set("resourceName", resourceName)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -9422,7 +9536,7 @@ func (c *SslCertsDeleteCall) Header() http.Header {
 
 func (c *SslCertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9503,6 +9617,11 @@ func (c *SslCertsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resourceName": {
+	//       "description": "The name of SSL certificate to delete.\nFormat:\nprojects/{project}/locations/{location}/instances/{instance}/sslCerts/{sslCert}",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sha1Fingerprint": {
@@ -9598,7 +9717,7 @@ func (c *SslCertsGetCall) Header() http.Header {
 
 func (c *SslCertsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9768,7 +9887,7 @@ func (c *SslCertsInsertCall) Header() http.Header {
 
 func (c *SslCertsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9940,7 +10059,7 @@ func (c *SslCertsListCall) Header() http.Header {
 
 func (c *SslCertsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10101,7 +10220,7 @@ func (c *TiersListCall) Header() http.Header {
 
 func (c *TiersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10223,6 +10342,15 @@ func (c *UsersDeleteCall) Name(name string) *UsersDeleteCall {
 	return c
 }
 
+// ResourceName sets the optional parameter "resourceName": The name of
+// the user to delete.
+// Format:
+// projects/{project}/locations/{location}/instances/{instance}/users
+func (c *UsersDeleteCall) ResourceName(resourceName string) *UsersDeleteCall {
+	c.urlParams_.Set("resourceName", resourceName)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -10250,7 +10378,7 @@ func (c *UsersDeleteCall) Header() http.Header {
 
 func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10340,6 +10468,11 @@ func (c *UsersDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "resourceName": {
+	//       "description": "The name of the user to delete.\nFormat: projects/{project}/locations/{location}/instances/{instance}/users",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/users",
@@ -10410,7 +10543,7 @@ func (c *UsersInsertCall) Header() http.Header {
 
 func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10582,7 +10715,7 @@ func (c *UsersListCall) Header() http.Header {
 
 func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10720,6 +10853,15 @@ func (c *UsersUpdateCall) Name(name string) *UsersUpdateCall {
 	return c
 }
 
+// ResourceName sets the optional parameter "resourceName": The name of
+// the user for Cloud SQL to update.
+// Format:
+// projects/{project}/locations/{location}/instances/{instance}/users
+func (c *UsersUpdateCall) ResourceName(resourceName string) *UsersUpdateCall {
+	c.urlParams_.Set("resourceName", resourceName)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -10747,7 +10889,7 @@ func (c *UsersUpdateCall) Header() http.Header {
 
 func (c *UsersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10841,6 +10983,11 @@ func (c *UsersUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resourceName": {
+	//       "description": "The name of the user for Cloud SQL to update.\nFormat: projects/{project}/locations/{location}/instances/{instance}/users",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

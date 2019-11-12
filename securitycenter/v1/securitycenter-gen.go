@@ -212,7 +212,8 @@ type Asset struct {
 	// https://cloud.google.com/apis/design/resource_names#relative_reso
 	// urce_name
 	// Example:
-	// "organizations/123/assets/456".
+	// "organizations/{organization_id}/assets/{asset_id}"
+	// .
 	Name string `json:"name,omitempty"`
 
 	// ResourceProperties: Resource managed properties. These properties are
@@ -491,6 +492,38 @@ type Binding struct {
 	// group.
 	//    For example, `admins@example.com`.
 	//
+	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique
+	//    identifier) representing a user that has been recently deleted.
+	// For
+	//    example,`alice@example.com?uid=123456789012345678901`. If the user
+	// is
+	//    recovered, this value reverts to `user:{emailid}` and the
+	// recovered user
+	//    retains the role in the binding.
+	//
+	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus
+	//    unique identifier) representing a service account that has been
+	// recently
+	//    deleted. For example,
+	//
+	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
+	//
+	//    If the service account is undeleted, this value reverts to
+	//    `serviceAccount:{emailid}` and the undeleted service account
+	// retains the
+	//    role in the binding.
+	//
+	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique
+	//    identifier) representing a Google group that has been recently
+	//    deleted. For example,
+	// `admins@example.com?uid=123456789012345678901`. If
+	//    the group is recovered, this value reverts to `group:{emailid}`
+	// and the
+	//    recovered group retains the role in the binding.
+	//
 	//
 	// * `domain:{domain}`: The G Suite domain (primary) that represents all
 	// the
@@ -601,13 +634,14 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 
 // Finding: Cloud Security Command Center (Cloud SCC) finding.
 //
-// A finding is a record of assessment data (security, risk, health or
-// privacy)
-// ingested into Cloud SCC for presentation, notification,
-// analysis,
-// policy testing, and enforcement. For example, an XSS vulnerability in
-// an
-// App Engine application is a finding.
+// A finding is a record of assessment data like security, risk, health,
+// or
+// privacy, that is ingested into Cloud SCC for presentation,
+// notification,
+// analysis, policy testing, and enforcement. For example, a
+// cross-site scripting (XSS) vulnerability in an App Engine application
+// is a
+// finding.
 type Finding struct {
 	// Category: The additional taxonomy group within findings from a given
 	// source.
@@ -637,7 +671,8 @@ type Finding struct {
 	// https://cloud.google.com/apis/design/resource_names#relative_reso
 	// urce_name
 	// Example:
-	// "organizations/123/sources/456/findings/789"
+	// "organizations/{organization_id}/sources/{source_id
+	// }/findings/{finding_id}"
 	Name string `json:"name,omitempty"`
 
 	// Parent: The relative resource name of the source the finding belongs
@@ -647,7 +682,7 @@ type Finding struct {
 	// urce_name
 	// This field is immutable after creation time.
 	// For example:
-	// "organizations/123/sources/456"
+	// "organizations/{organization_id}/sources/{source_id}"
 	Parent string `json:"parent,omitempty"`
 
 	// ResourceName: The full resource name of the Google Cloud Platform
@@ -1488,6 +1523,9 @@ type ListFindingsResult struct {
 	// Finding: Finding matching the search request.
 	Finding *Finding `json:"finding,omitempty"`
 
+	// Resource: Output only. Resource that is associated with this finding.
+	Resource *Resource `json:"resource,omitempty"`
+
 	// StateChange: State change of the finding between the points in time.
 	//
 	// Possible values:
@@ -1700,7 +1738,8 @@ type OrganizationSettings struct {
 	// https://cloud.google.com/apis/design/resource_names#relative_reso
 	// urce_name
 	// Example:
-	// "organizations/123/organizationSettings".
+	// "organizations/{organization_id}/organizationSettin
+	// gs".
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1881,6 +1920,53 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Resource: Information related to the Google Cloud Platform (GCP)
+// resource that is
+// associated with this finding.
+type Resource struct {
+	// Name: The full resource name of the resource.
+	// See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource
+	// _name
+	Name string `json:"name,omitempty"`
+
+	// ParentDisplayName: The human readable name of resource's parent.
+	ParentDisplayName string `json:"parentDisplayName,omitempty"`
+
+	// ParentName: The full resource name of resource's parent.
+	ParentName string `json:"parentName,omitempty"`
+
+	// ProjectDisplayName: The human readable name of project that the
+	// resource belongs to.
+	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
+
+	// ProjectName: The full resource name of project that the resource
+	// belongs to.
+	ProjectName string `json:"projectName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Resource) MarshalJSON() ([]byte, error) {
+	type NoMethod Resource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RunAssetDiscoveryRequest: Request message for running asset discovery
 // for an organization.
 type RunAssetDiscoveryRequest struct {
@@ -1969,9 +2055,10 @@ type SecurityMarks struct {
 	// https://cloud.google.com/apis/design/resource_names#relative_reso
 	// urce_name
 	// Examples:
-	// "organizations/123/assets/456/securityMarks"
-	// "orga
-	// nizations/123/sources/456/findings/789/securityMarks".
+	// "organizations/{organization_id}/assets/{asset_id}
+	// /securityMarks"
+	// "organizations/{organization_id}/sources/{source_id}/f
+	// indings/{finding_id}/securityMarks".
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2089,19 +2176,19 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // is an entity or a mechanism that can produce a finding. A source is
 // like a
 // container of findings that come from the same scanner, logger,
-// monitor, etc.
+// monitor, and
+// other tools.
 type Source struct {
 	// Description: The description of the source (max of 1024
 	// characters).
 	// Example:
-	// "Cloud Security Scanner is a web security scanner for
+	// "Web Security Scanner is a web security scanner for
 	// common
 	// vulnerabilities in App Engine applications. It can automatically
 	// scan and detect four common vulnerabilities, including
 	// cross-site-scripting
-	// (XSS), Flash injection, mixed content (HTTP in HTTPS),
-	// and
-	// outdated/insecure libraries."
+	// (XSS), Flash injection, mixed content (HTTP in HTTPS), and
+	// outdated or insecure libraries."
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: The source's display name.
@@ -2119,7 +2206,8 @@ type Source struct {
 	// https://cloud.google.com/apis/design/resource_names#relative_reso
 	// urce_name
 	// Example:
-	// "organizations/123/sources/456"
+	// "organizations/{organization_id}/sources/{source_id
+	// }"
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2326,7 +2414,7 @@ func (c *OrganizationsGetOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2470,7 +2558,7 @@ func (c *OrganizationsUpdateOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsUpdateOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2543,7 +2631,7 @@ func (c *OrganizationsUpdateOrganizationSettingsCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of the settings. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/123/organizationSettings\".",
+	//       "description": "The relative resource name of the settings. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/organizationSettings\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/organizationSettings$",
 	//       "required": true,
@@ -2618,7 +2706,7 @@ func (c *OrganizationsAssetsGroupCall) Header() http.Header {
 
 func (c *OrganizationsAssetsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2967,7 +3055,7 @@ func (c *OrganizationsAssetsListCall) Header() http.Header {
 
 func (c *OrganizationsAssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3170,7 +3258,7 @@ func (c *OrganizationsAssetsRunDiscoveryCall) Header() http.Header {
 
 func (c *OrganizationsAssetsRunDiscoveryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3332,7 +3420,7 @@ func (c *OrganizationsAssetsUpdateSecurityMarksCall) Header() http.Header {
 
 func (c *OrganizationsAssetsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3405,7 +3493,7 @@ func (c *OrganizationsAssetsUpdateSecurityMarksCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of the SecurityMarks. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExamples:\n\"organizations/123/assets/456/securityMarks\"\n\"organizations/123/sources/456/findings/789/securityMarks\".",
+	//       "description": "The relative resource name of the SecurityMarks. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExamples:\n\"organizations/{organization_id}/assets/{asset_id}/securityMarks\"\n\"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/securityMarks\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/assets/[^/]+/securityMarks$",
 	//       "required": true,
@@ -3499,7 +3587,7 @@ func (c *OrganizationsOperationsCancelCall) Header() http.Header {
 
 func (c *OrganizationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3635,7 +3723,7 @@ func (c *OrganizationsOperationsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3780,7 +3868,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3961,7 +4049,7 @@ func (c *OrganizationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4133,7 +4221,7 @@ func (c *OrganizationsSourcesCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4282,7 +4370,7 @@ func (c *OrganizationsSourcesGetCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4417,7 +4505,7 @@ func (c *OrganizationsSourcesGetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4583,7 +4671,7 @@ func (c *OrganizationsSourcesListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4759,7 +4847,7 @@ func (c *OrganizationsSourcesPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4832,7 +4920,7 @@ func (c *OrganizationsSourcesPatchCall) Do(opts ...googleapi.CallOption) (*Sourc
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of this source. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/123/sources/456\"",
+	//       "description": "The relative resource name of this source. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/sources/{source_id}\"",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+$",
 	//       "required": true,
@@ -4905,7 +4993,7 @@ func (c *OrganizationsSourcesSetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5046,7 +5134,7 @@ func (c *OrganizationsSourcesTestIamPermissionsCall) Header() http.Header {
 
 func (c *OrganizationsSourcesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5198,7 +5286,7 @@ func (c *OrganizationsSourcesFindingsCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5313,7 +5401,7 @@ type OrganizationsSourcesFindingsGroupCall struct {
 // specified properties.
 //
 // To group across all sources provide a `-` as the source id.
-// Example: /v1/organizations/123/sources/-/findings
+// Example: /v1/organizations/{organization_id}/sources/-/findings
 func (r *OrganizationsSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *OrganizationsSourcesFindingsGroupCall {
 	c := &OrganizationsSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5348,7 +5436,7 @@ func (c *OrganizationsSourcesFindingsGroupCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5412,7 +5500,7 @@ func (c *OrganizationsSourcesFindingsGroupCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Filters an organization or source's findings and  groups them by their\nspecified properties.\n\nTo group across all sources provide a `-` as the source id.\nExample: /v1/organizations/123/sources/-/findings",
+	//   "description": "Filters an organization or source's findings and  groups them by their\nspecified properties.\n\nTo group across all sources provide a `-` as the source id.\nExample: /v1/organizations/{organization_id}/sources/-/findings",
 	//   "flatPath": "v1/organizations/{organizationsId}/sources/{sourcesId}/findings:group",
 	//   "httpMethod": "POST",
 	//   "id": "securitycenter.organizations.sources.findings.group",
@@ -5421,7 +5509,7 @@ func (c *OrganizationsSourcesFindingsGroupCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Name of the source to groupBy. Its format is\n\"organizations/[organization_id]/sources/[source_id]\". To groupBy across\nall sources provide a source_id of `-`. For example:\norganizations/123/sources/-",
+	//       "description": "Required. Name of the source to groupBy. Its format is\n\"organizations/[organization_id]/sources/[source_id]\". To groupBy across\nall sources provide a source_id of `-`. For example:\norganizations/{organization_id}/sources/-",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+$",
 	//       "required": true,
@@ -5477,7 +5565,7 @@ type OrganizationsSourcesFindingsListCall struct {
 // List: Lists an organization or source's findings.
 //
 // To list across all sources provide a `-` as the source id.
-// Example: /v1/organizations/123/sources/-/findings
+// Example: /v1/organizations/{organization_id}/sources/-/findings
 func (r *OrganizationsSourcesFindingsService) List(parent string) *OrganizationsSourcesFindingsListCall {
 	c := &OrganizationsSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5690,7 +5778,7 @@ func (c *OrganizationsSourcesFindingsListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5752,7 +5840,7 @@ func (c *OrganizationsSourcesFindingsListCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists an organization or source's findings.\n\nTo list across all sources provide a `-` as the source id.\nExample: /v1/organizations/123/sources/-/findings",
+	//   "description": "Lists an organization or source's findings.\n\nTo list across all sources provide a `-` as the source id.\nExample: /v1/organizations/{organization_id}/sources/-/findings",
 	//   "flatPath": "v1/organizations/{organizationsId}/sources/{sourcesId}/findings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.sources.findings.list",
@@ -5794,7 +5882,7 @@ func (c *OrganizationsSourcesFindingsListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the source the findings belong to. Its format is\n\"organizations/[organization_id]/sources/[source_id]\". To list across all\nsources provide a source_id of `-`. For example:\norganizations/123/sources/-",
+	//       "description": "Required. Name of the source the findings belong to. Its format is\n\"organizations/[organization_id]/sources/[source_id]\". To list across all\nsources provide a source_id of `-`. For example:\norganizations/{organization_id}/sources/-",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+$",
 	//       "required": true,
@@ -5903,7 +5991,7 @@ func (c *OrganizationsSourcesFindingsPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5976,7 +6064,7 @@ func (c *OrganizationsSourcesFindingsPatchCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of this finding. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/123/sources/456/findings/789\"",
+	//       "description": "The relative resource name of this finding. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\"",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -6049,7 +6137,7 @@ func (c *OrganizationsSourcesFindingsSetStateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsSetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6122,7 +6210,7 @@ func (c *OrganizationsSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/123/sources/456/finding/789\".",
+	//       "description": "Required. The relative resource name of the finding. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -6211,7 +6299,7 @@ func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) Header() http.Head
 
 func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6284,7 +6372,7 @@ func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of the SecurityMarks. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExamples:\n\"organizations/123/assets/456/securityMarks\"\n\"organizations/123/sources/456/findings/789/securityMarks\".",
+	//       "description": "The relative resource name of the SecurityMarks. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExamples:\n\"organizations/{organization_id}/assets/{asset_id}/securityMarks\"\n\"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/securityMarks\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+/securityMarks$",
 	//       "required": true,

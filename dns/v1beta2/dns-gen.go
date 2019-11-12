@@ -643,6 +643,13 @@ type ManagedZone struct {
 	// Virtual Private Cloud resources that the zone is visible from.
 	PrivateVisibilityConfig *ManagedZonePrivateVisibilityConfig `json:"privateVisibilityConfig,omitempty"`
 
+	// ReverseLookupConfig: The presence of this field indicates that this
+	// is a managed reverse lookup zone and Cloud DNS will resolve reverse
+	// lookup queries using automatically configured records for VPC
+	// resources. This only applies to networks listed under
+	// private_visibility_config.
+	ReverseLookupConfig *ManagedZoneReverseLookupConfig `json:"reverseLookupConfig,omitempty"`
+
 	// Visibility: The zone's visibility: public zones are exposed to the
 	// Internet, while private zones are visible only to Virtual Private
 	// Cloud resources.
@@ -763,6 +770,17 @@ func (s *ManagedZoneForwardingConfig) MarshalJSON() ([]byte, error) {
 }
 
 type ManagedZoneForwardingConfigNameServerTarget struct {
+	// ForwardingPath: Forwarding path for this NameServerTarget, if unset
+	// or set to DEFAULT, Cloud DNS will make forwarding decision based on
+	// address ranges, i.e. RFC1918 addresses go to the VPC, Non-RFC1918
+	// addresses go to the Internet. When set to PRIVATE, Cloud DNS will
+	// always send queries through VPC for this target
+	//
+	// Possible values:
+	//   "default"
+	//   "private"
+	ForwardingPath string `json:"forwardingPath,omitempty"`
+
 	// Ipv4Address: IPv4 address of a target name server.
 	Ipv4Address string `json:"ipv4Address,omitempty"`
 
@@ -770,7 +788,7 @@ type ManagedZoneForwardingConfigNameServerTarget struct {
 	// string "dns#managedZoneForwardingConfigNameServerTarget".
 	Kind string `json:"kind,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Ipv4Address") to
+	// ForceSendFields is a list of field names (e.g. "ForwardingPath") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -778,12 +796,13 @@ type ManagedZoneForwardingConfigNameServerTarget struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Ipv4Address") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ForwardingPath") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -974,6 +993,34 @@ type ManagedZonePrivateVisibilityConfigNetwork struct {
 
 func (s *ManagedZonePrivateVisibilityConfigNetwork) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedZonePrivateVisibilityConfigNetwork
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ManagedZoneReverseLookupConfig struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dns#managedZoneReverseLookupConfig".
+	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ManagedZoneReverseLookupConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ManagedZoneReverseLookupConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1378,6 +1425,17 @@ func (s *PolicyAlternativeNameServerConfig) MarshalJSON() ([]byte, error) {
 }
 
 type PolicyAlternativeNameServerConfigTargetNameServer struct {
+	// ForwardingPath: Forwarding path for this TargetNameServer, if unset
+	// or set to DEFAULT, Cloud DNS will make forwarding decision based on
+	// address ranges, i.e. RFC1918 addresses go to the VPC, Non-RFC1918
+	// addresses go to the Internet. When set to PRIVATE, Cloud DNS will
+	// always send queries through VPC for this target
+	//
+	// Possible values:
+	//   "default"
+	//   "private"
+	ForwardingPath string `json:"forwardingPath,omitempty"`
+
 	// Ipv4Address: IPv4 address to forward to.
 	Ipv4Address string `json:"ipv4Address,omitempty"`
 
@@ -1385,7 +1443,7 @@ type PolicyAlternativeNameServerConfigTargetNameServer struct {
 	// string "dns#policyAlternativeNameServerConfigTargetNameServer".
 	Kind string `json:"kind,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Ipv4Address") to
+	// ForceSendFields is a list of field names (e.g. "ForwardingPath") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1393,12 +1451,13 @@ type PolicyAlternativeNameServerConfigTargetNameServer struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Ipv4Address") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ForwardingPath") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1754,7 +1813,7 @@ func (c *ChangesCreateCall) Header() http.Header {
 
 func (c *ChangesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1928,7 +1987,7 @@ func (c *ChangesGetCall) Header() http.Header {
 
 func (c *ChangesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2129,7 +2188,7 @@ func (c *ChangesListCall) Header() http.Header {
 
 func (c *ChangesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2353,7 +2412,7 @@ func (c *DnsKeysGetCall) Header() http.Header {
 
 func (c *DnsKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2551,7 +2610,7 @@ func (c *DnsKeysListCall) Header() http.Header {
 
 func (c *DnsKeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2754,7 +2813,7 @@ func (c *ManagedZoneOperationsGetCall) Header() http.Header {
 
 func (c *ManagedZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2949,7 +3008,7 @@ func (c *ManagedZoneOperationsListCall) Header() http.Header {
 
 func (c *ManagedZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3149,7 +3208,7 @@ func (c *ManagedZonesCreateCall) Header() http.Header {
 
 func (c *ManagedZonesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3302,7 +3361,7 @@ func (c *ManagedZonesDeleteCall) Header() http.Header {
 
 func (c *ManagedZonesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3438,7 +3497,7 @@ func (c *ManagedZonesGetCall) Header() http.Header {
 
 func (c *ManagedZonesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3620,7 +3679,7 @@ func (c *ManagedZonesListCall) Header() http.Header {
 
 func (c *ManagedZonesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3804,7 +3863,7 @@ func (c *ManagedZonesPatchCall) Header() http.Header {
 
 func (c *ManagedZonesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3967,7 +4026,7 @@ func (c *ManagedZonesUpdateCall) Header() http.Header {
 
 func (c *ManagedZonesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4128,7 +4187,7 @@ func (c *PoliciesCreateCall) Header() http.Header {
 
 func (c *PoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4282,7 +4341,7 @@ func (c *PoliciesDeleteCall) Header() http.Header {
 
 func (c *PoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4418,7 +4477,7 @@ func (c *PoliciesGetCall) Header() http.Header {
 
 func (c *PoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4592,7 +4651,7 @@ func (c *PoliciesListCall) Header() http.Header {
 
 func (c *PoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4771,7 +4830,7 @@ func (c *PoliciesPatchCall) Header() http.Header {
 
 func (c *PoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4934,7 +4993,7 @@ func (c *PoliciesUpdateCall) Header() http.Header {
 
 func (c *PoliciesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5104,7 +5163,7 @@ func (c *ProjectsGetCall) Header() http.Header {
 
 func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5288,7 +5347,7 @@ func (c *ResourceRecordSetsListCall) Header() http.Header {
 
 func (c *ResourceRecordSetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -137,6 +137,11 @@
               "location": "path",
               "required": true,
               "type": "string"
+            },
+            "resourceName": {
+              "description": "The name of the backupRun to delete.\nFormat:\nprojects/{project}/locations/{location}/instances/{instance}/backupRuns/{backupRun}",
+              "location": "query",
+              "type": "string"
             }
           },
           "path": "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns/{id}",
@@ -313,6 +318,11 @@
               "location": "path",
               "required": true,
               "type": "string"
+            },
+            "resourceName": {
+              "description": "The name of the database to delete.\nFormat:\nprojects/{project}/locations/{location}/instances/{instance}/databases/{database}",
+              "location": "query",
+              "type": "string"
             }
           },
           "path": "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}",
@@ -473,6 +483,11 @@
               "location": "path",
               "required": true,
               "type": "string"
+            },
+            "resourceName": {
+              "description": "The name of the database for Cloud SQL to update.\nFormat:\nprojects/{project}/locations/{location}/instances/{instance}/databases/{database}",
+              "location": "query",
+              "type": "string"
             }
           },
           "path": "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}",
@@ -514,6 +529,11 @@
               "description": "Project ID of the project that contains the instance.",
               "location": "path",
               "required": true,
+              "type": "string"
+            },
+            "resourceName": {
+              "description": "The name of the database for Cloud SQL to update.\nFormat:\nprojects/{project}/locations/{location}/instances/{instance}/databases/{database}",
+              "location": "query",
               "type": "string"
             }
           },
@@ -656,6 +676,11 @@
               "description": "Project ID of the project that contains the instance to be deleted.",
               "location": "path",
               "required": true,
+              "type": "string"
+            },
+            "resourceName": {
+              "description": "The name of database instance to delete.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
+              "location": "query",
               "type": "string"
             }
           },
@@ -994,6 +1019,11 @@
               "description": "Project ID of the project that contains the instance.",
               "location": "path",
               "required": true,
+              "type": "string"
+            },
+            "resourceName": {
+              "description": "The name of the database instance for Cloud SQL to update.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
+              "location": "query",
               "type": "string"
             }
           },
@@ -1335,6 +1365,11 @@
               "location": "path",
               "required": true,
               "type": "string"
+            },
+            "resourceName": {
+              "description": "The name of the database instance for Cloud SQL to update.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
+              "location": "query",
+              "type": "string"
             }
           },
           "path": "sql/v1beta4/projects/{project}/instances/{instance}",
@@ -1496,6 +1531,11 @@
               "description": "Project ID of the project that contains the instance.",
               "location": "path",
               "required": true,
+              "type": "string"
+            },
+            "resourceName": {
+              "description": "The name of SSL certificate to delete.\nFormat:\nprojects/{project}/locations/{location}/instances/{instance}/sslCerts/{sslCert}",
+              "location": "query",
               "type": "string"
             },
             "sha1Fingerprint": {
@@ -1699,6 +1739,11 @@
               "location": "path",
               "required": true,
               "type": "string"
+            },
+            "resourceName": {
+              "description": "The name of the user to delete.\nFormat: projects/{project}/locations/{location}/instances/{instance}/users",
+              "location": "query",
+              "type": "string"
             }
           },
           "path": "sql/v1beta4/projects/{project}/instances/{instance}/users",
@@ -1818,6 +1863,11 @@
               "location": "path",
               "required": true,
               "type": "string"
+            },
+            "resourceName": {
+              "description": "The name of the user for Cloud SQL to update.\nFormat: projects/{project}/locations/{location}/instances/{instance}/users",
+              "location": "query",
+              "type": "string"
             }
           },
           "path": "sql/v1beta4/projects/{project}/instances/{instance}/users",
@@ -1835,7 +1885,7 @@
       }
     }
   },
-  "revision": "20191018",
+  "revision": "20191029",
   "rootUrl": "https://sqladmin.googleapis.com/",
   "schemas": {
     "AclEntry": {

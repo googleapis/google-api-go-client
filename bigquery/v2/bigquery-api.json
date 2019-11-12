@@ -1417,7 +1417,7 @@
       }
     }
   },
-  "revision": "20191011",
+  "revision": "20191019",
   "rootUrl": "https://bigquery.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
@@ -2064,6 +2064,21 @@
           "description": "[Optional] The number of rows at the top of a CSV file that BigQuery will skip when reading the data. The default value is 0. This property is useful if you have header rows in the file that should be skipped. When autodetect is on, the behavior is the following: * skipLeadingRows unspecified - Autodetect tries to detect headers in the first row. If they are not detected, the row is read as data. Otherwise data is read starting from the second row. * skipLeadingRows is 0 - Instructs autodetect that there are no headers and data should be read starting from the first row. * skipLeadingRows = N \u003e 0 - Autodetect skips N-1 rows and tries to detect headers in row N. If headers are not detected, row N is just skipped. Otherwise row N is used to extract column names for the detected schema.",
           "format": "int64",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DataSplitResult": {
+      "description": "Data split result. This contains references to the training and evaluation\ndata tables that were used to train the model.",
+      "id": "DataSplitResult",
+      "properties": {
+        "evaluationTable": {
+          "$ref": "TableReference",
+          "description": "Table reference of the evaluation data after split."
+        },
+        "trainingTable": {
+          "$ref": "TableReference",
+          "description": "Table reference of the training data after split."
         }
       },
       "type": "object"
@@ -4945,12 +4960,14 @@
           "enum": [
             "KMEANS_INITIALIZATION_METHOD_UNSPECIFIED",
             "RANDOM",
-            "CUSTOM"
+            "CUSTOM",
+            "KMEANS_PLUS_PLUS"
           ],
           "enumDescriptions": [
             "",
             "Initializes the centroids randomly.",
-            "Initializes the centroids using data specified in\nkmeans_initialization_column."
+            "Initializes the centroids using data specified in\nkmeans_initialization_column.",
+            "Initializes with kmeans++."
           ],
           "type": "string"
         },
@@ -5049,6 +5066,10 @@
       "description": "Information about a single training query run for the model.",
       "id": "TrainingRun",
       "properties": {
+        "dataSplitResult": {
+          "$ref": "DataSplitResult",
+          "description": "Data split result of the training run. Only set when the input data is\nactually split."
+        },
         "evaluationMetrics": {
           "$ref": "EvaluationMetrics",
           "description": "The evaluation metrics over training/eval data that were computed at the\nend of training."

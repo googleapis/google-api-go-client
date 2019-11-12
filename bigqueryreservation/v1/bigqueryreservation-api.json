@@ -180,20 +180,9 @@
       }
     }
   },
-  "revision": "20190928",
+  "revision": "20191029",
   "rootUrl": "https://bigqueryreservation.googleapis.com/",
   "schemas": {
-    "CreateCapacityCommitmentMetadata": {
-      "description": "The metadata for operation returned from\nReservationService.CreateCapacityCommitment.",
-      "id": "CreateCapacityCommitmentMetadata",
-      "properties": {
-        "capacityCommitment": {
-          "description": "Resource name of the capacity commitment that is being created. E.g.,\nprojects/myproject/locations/US/capacityCommitments/123",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "Empty": {
       "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
       "id": "Empty",

@@ -1281,7 +1281,7 @@
       }
     }
   },
-  "revision": "20191011",
+  "revision": "20191105",
   "rootUrl": "https://vision.googleapis.com/",
   "schemas": {
     "AddProductToProductSetRequest": {
@@ -6772,6 +6772,25 @@
       },
       "type": "object"
     },
+    "GoogleCloudVisionV1p4beta1Celebrity": {
+      "description": "A Celebrity is a group of Faces with an identity.",
+      "id": "GoogleCloudVisionV1p4beta1Celebrity",
+      "properties": {
+        "description": {
+          "description": "The Celebrity's description.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "The Celebrity's display name.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The resource name of the preloaded Celebrity. Has the format\n`builtin/{mid}`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudVisionV1p4beta1ColorInfo": {
       "description": "Color information consists of RGB channels, score, and the fraction of\nthe image that the color occupies in the image.",
       "id": "GoogleCloudVisionV1p4beta1ColorInfo",
@@ -7008,6 +7027,13 @@
           "format": "float",
           "type": "number"
         },
+        "recognitionResult": {
+          "description": "Additional recognition information. Only computed if\nimage_context.face_recognition_params is provided, **and** a match is found\nto a Celebrity in the input CelebritySet. This field is\nsorted in order of decreasing confidence values.",
+          "items": {
+            "$ref": "GoogleCloudVisionV1p4beta1FaceRecognitionResult"
+          },
+          "type": "array"
+        },
         "rollAngle": {
           "description": "Roll angle, which indicates the amount of clockwise/anti-clockwise rotation\nof the face relative to the image vertical about the axis perpendicular to\nthe face. Range [-180,180].",
           "format": "float",
@@ -7166,6 +7192,22 @@
             "Chin right gonion."
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVisionV1p4beta1FaceRecognitionResult": {
+      "description": "Information about a face's identity.",
+      "id": "GoogleCloudVisionV1p4beta1FaceRecognitionResult",
+      "properties": {
+        "celebrity": {
+          "$ref": "GoogleCloudVisionV1p4beta1Celebrity",
+          "description": "The Celebrity that this face was matched to."
+        },
+        "confidence": {
+          "description": "Recognition confidence. Range [0, 1].",
+          "format": "float",
+          "type": "number"
         }
       },
       "type": "object"

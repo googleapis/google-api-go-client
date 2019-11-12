@@ -141,7 +141,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "The relative resource name of the settings. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/123/organizationSettings\".",
+              "description": "The relative resource name of the settings. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/organizationSettings\".",
               "location": "path",
               "pattern": "^organizations/[^/]+/organizationSettings$",
               "required": true,
@@ -299,7 +299,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The relative resource name of the SecurityMarks. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExamples:\n\"organizations/123/assets/456/securityMarks\"\n\"organizations/123/sources/456/findings/789/securityMarks\".",
+                  "description": "The relative resource name of the SecurityMarks. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExamples:\n\"organizations/{organization_id}/assets/{asset_id}/securityMarks\"\n\"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/securityMarks\".",
                   "location": "path",
                   "pattern": "^organizations/[^/]+/assets/[^/]+/securityMarks$",
                   "required": true,
@@ -580,7 +580,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The relative resource name of this source. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/123/sources/456\"",
+                  "description": "The relative resource name of this source. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/sources/{source_id}\"",
                   "location": "path",
                   "pattern": "^organizations/[^/]+/sources/[^/]+$",
                   "required": true,
@@ -698,7 +698,7 @@
                   ]
                 },
                 "group": {
-                  "description": "Filters an organization or source's findings and  groups them by their\nspecified properties.\n\nTo group across all sources provide a `-` as the source id.\nExample: /v1/organizations/123/sources/-/findings",
+                  "description": "Filters an organization or source's findings and  groups them by their\nspecified properties.\n\nTo group across all sources provide a `-` as the source id.\nExample: /v1/organizations/{organization_id}/sources/-/findings",
                   "flatPath": "v1/organizations/{organizationsId}/sources/{sourcesId}/findings:group",
                   "httpMethod": "POST",
                   "id": "securitycenter.organizations.sources.findings.group",
@@ -707,7 +707,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. Name of the source to groupBy. Its format is\n\"organizations/[organization_id]/sources/[source_id]\". To groupBy across\nall sources provide a source_id of `-`. For example:\norganizations/123/sources/-",
+                      "description": "Required. Name of the source to groupBy. Its format is\n\"organizations/[organization_id]/sources/[source_id]\". To groupBy across\nall sources provide a source_id of `-`. For example:\norganizations/{organization_id}/sources/-",
                       "location": "path",
                       "pattern": "^organizations/[^/]+/sources/[^/]+$",
                       "required": true,
@@ -726,7 +726,7 @@
                   ]
                 },
                 "list": {
-                  "description": "Lists an organization or source's findings.\n\nTo list across all sources provide a `-` as the source id.\nExample: /v1/organizations/123/sources/-/findings",
+                  "description": "Lists an organization or source's findings.\n\nTo list across all sources provide a `-` as the source id.\nExample: /v1/organizations/{organization_id}/sources/-/findings",
                   "flatPath": "v1/organizations/{organizationsId}/sources/{sourcesId}/findings",
                   "httpMethod": "GET",
                   "id": "securitycenter.organizations.sources.findings.list",
@@ -768,7 +768,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. Name of the source the findings belong to. Its format is\n\"organizations/[organization_id]/sources/[source_id]\". To list across all\nsources provide a source_id of `-`. For example:\norganizations/123/sources/-",
+                      "description": "Required. Name of the source the findings belong to. Its format is\n\"organizations/[organization_id]/sources/[source_id]\". To list across all\nsources provide a source_id of `-`. For example:\norganizations/{organization_id}/sources/-",
                       "location": "path",
                       "pattern": "^organizations/[^/]+/sources/[^/]+$",
                       "required": true,
@@ -799,7 +799,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The relative resource name of this finding. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/123/sources/456/findings/789\"",
+                      "description": "The relative resource name of this finding. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\"",
                       "location": "path",
                       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+$",
                       "required": true,
@@ -833,7 +833,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The relative resource name of the finding. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/123/sources/456/finding/789\".",
+                      "description": "Required. The relative resource name of the finding. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\".",
                       "location": "path",
                       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+$",
                       "required": true,
@@ -861,7 +861,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The relative resource name of the SecurityMarks. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExamples:\n\"organizations/123/assets/456/securityMarks\"\n\"organizations/123/sources/456/findings/789/securityMarks\".",
+                      "description": "The relative resource name of the SecurityMarks. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExamples:\n\"organizations/{organization_id}/assets/{asset_id}/securityMarks\"\n\"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/securityMarks\".",
                       "location": "path",
                       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+/securityMarks$",
                       "required": true,
@@ -898,7 +898,7 @@
       }
     }
   },
-  "revision": "20191004",
+  "revision": "20191108",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -915,7 +915,7 @@
           "description": "IAM Policy information associated with the GCP resource described by the\nCloud SCC asset. This information is managed and defined by the GCP\nresource and cannot be modified by the user."
         },
         "name": {
-          "description": "The relative resource name of this asset. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/123/assets/456\".",
+          "description": "The relative resource name of this asset. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/assets/{asset_id}\".",
           "type": "string"
         },
         "resourceProperties": {
@@ -1026,7 +1026,7 @@
           "description": "The condition that is associated with this binding.\nNOTE: An unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
         },
         "members": {
-          "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@example.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
+          "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@example.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n* `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique\n   identifier) representing a user that has been recently deleted. For\n   example,`alice@example.com?uid=123456789012345678901`. If the user is\n   recovered, this value reverts to `user:{emailid}` and the recovered user\n   retains the role in the binding.\n\n* `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus\n   unique identifier) representing a service account that has been recently\n   deleted. For example,\n   `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.\n   If the service account is undeleted, this value reverts to\n   `serviceAccount:{emailid}` and the undeleted service account retains the\n   role in the binding.\n\n* `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique\n   identifier) representing a Google group that has been recently\n   deleted. For example, `admins@example.com?uid=123456789012345678901`. If\n   the group is recovered, this value reverts to `group:{emailid}` and the\n   recovered group retains the role in the binding.\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
           "items": {
             "type": "string"
           },
@@ -1069,7 +1069,7 @@
       "type": "object"
     },
     "Finding": {
-      "description": "Cloud Security Command Center (Cloud SCC) finding.\n\nA finding is a record of assessment data (security, risk, health or privacy)\ningested into Cloud SCC for presentation, notification, analysis,\npolicy testing, and enforcement. For example, an XSS vulnerability in an\nApp Engine application is a finding.",
+      "description": "Cloud Security Command Center (Cloud SCC) finding.\n\nA finding is a record of assessment data like security, risk, health, or\nprivacy, that is ingested into Cloud SCC for presentation, notification,\nanalysis, policy testing, and enforcement. For example, a\ncross-site scripting (XSS) vulnerability in an App Engine application is a\nfinding.",
       "id": "Finding",
       "properties": {
         "category": {
@@ -1091,11 +1091,11 @@
           "type": "string"
         },
         "name": {
-          "description": "The relative resource name of this finding. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/123/sources/456/findings/789\"",
+          "description": "The relative resource name of this finding. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\"",
           "type": "string"
         },
         "parent": {
-          "description": "The relative resource name of the source the finding belongs to. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nThis field is immutable after creation time.\nFor example:\n\"organizations/123/sources/456\"",
+          "description": "The relative resource name of the source the finding belongs to. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nThis field is immutable after creation time.\nFor example:\n\"organizations/{organization_id}/sources/{source_id}\"",
           "type": "string"
         },
         "resourceName": {
@@ -1454,6 +1454,10 @@
           "$ref": "Finding",
           "description": "Finding matching the search request."
         },
+        "resource": {
+          "$ref": "Resource",
+          "description": "Output only. Resource that is associated with this finding."
+        },
         "stateChange": {
           "description": "State change of the finding between the points in time.",
           "enum": [
@@ -1559,7 +1563,7 @@
           "type": "boolean"
         },
         "name": {
-          "description": "The relative resource name of the settings. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/123/organizationSettings\".",
+          "description": "The relative resource name of the settings. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/organizationSettings\".",
           "type": "string"
         }
       },
@@ -1592,6 +1596,33 @@
           "description": "Specifies the format of the policy.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nOperations affecting conditional bindings must specify version 3. This can\nbe either setting a conditional policy, modifying a conditional binding,\nor removing a conditional binding from the stored conditional policy.\nOperations on non-conditional policies may specify any valid value or\nleave the field unset.\n\nIf no etag is provided in the call to `setIamPolicy`, any version\ncompliance checks on the incoming and/or stored policy is skipped.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "Resource": {
+      "description": "Information related to the Google Cloud Platform (GCP) resource that is\nassociated with this finding.",
+      "id": "Resource",
+      "properties": {
+        "name": {
+          "description": "The full resource name of the resource. See:\nhttps://cloud.google.com/apis/design/resource_names#full_resource_name",
+          "type": "string"
+        },
+        "parentDisplayName": {
+          "description": "The human readable name of resource's parent.",
+          "type": "string"
+        },
+        "parentName": {
+          "description": "The full resource name of resource's parent.",
+          "type": "string"
+        },
+        "projectDisplayName": {
+          "description": "The human readable name of project that the resource belongs to.",
+          "type": "string"
+        },
+        "projectName": {
+          "description": "The full resource name of project that the resource belongs to.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1644,7 +1675,7 @@
           "type": "object"
         },
         "name": {
-          "description": "The relative resource name of the SecurityMarks. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExamples:\n\"organizations/123/assets/456/securityMarks\"\n\"organizations/123/sources/456/findings/789/securityMarks\".",
+          "description": "The relative resource name of the SecurityMarks. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExamples:\n\"organizations/{organization_id}/assets/{asset_id}/securityMarks\"\n\"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/securityMarks\".",
           "type": "string"
         }
       },
@@ -1693,11 +1724,11 @@
       "type": "object"
     },
     "Source": {
-      "description": "Cloud Security Command Center's (Cloud SCC) finding source. A finding source\nis an entity or a mechanism that can produce a finding. A source is like a\ncontainer of findings that come from the same scanner, logger, monitor, etc.",
+      "description": "Cloud Security Command Center's (Cloud SCC) finding source. A finding source\nis an entity or a mechanism that can produce a finding. A source is like a\ncontainer of findings that come from the same scanner, logger, monitor, and\nother tools.",
       "id": "Source",
       "properties": {
         "description": {
-          "description": "The description of the source (max of 1024 characters).\nExample:\n\"Cloud Security Scanner is a web security scanner for common\nvulnerabilities in App Engine applications. It can automatically\nscan and detect four common vulnerabilities, including cross-site-scripting\n(XSS), Flash injection, mixed content (HTTP in HTTPS), and\noutdated/insecure libraries.\"",
+          "description": "The description of the source (max of 1024 characters).\nExample:\n\"Web Security Scanner is a web security scanner for common\nvulnerabilities in App Engine applications. It can automatically\nscan and detect four common vulnerabilities, including cross-site-scripting\n(XSS), Flash injection, mixed content (HTTP in HTTPS), and\noutdated or insecure libraries.\"",
           "type": "string"
         },
         "displayName": {
@@ -1705,7 +1736,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The relative resource name of this source. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/123/sources/456\"",
+          "description": "The relative resource name of this source. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/sources/{source_id}\"",
           "type": "string"
         }
       },

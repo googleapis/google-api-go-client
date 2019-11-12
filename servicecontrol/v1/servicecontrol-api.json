@@ -196,7 +196,7 @@
       }
     }
   },
-  "revision": "20191027",
+  "revision": "20191102",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -394,6 +394,10 @@
         },
         "principalEmail": {
           "description": "The email address of the authenticated user (or service account on behalf\nof third party principal) making the request. For privacy reasons, the\nprincipal email address is redacted for all read-only operations that fail\nwith a \"permission denied\" error.",
+          "type": "string"
+        },
+        "principalSubject": {
+          "description": "String representation of identity of requesting party.\nPopulated for both first and third party identities.",
           "type": "string"
         },
         "serviceAccountDelegationInfo": {

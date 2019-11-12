@@ -418,6 +418,11 @@
                       "required": true,
                       "type": "string"
                     },
+                    "serviceAccountName": {
+                      "description": "Optional service account name. If this field is set, transfer config will\nbe created with this service account credentials. It requires that\nrequesting user calling this API has permissions to act as this service\naccount.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "versionInfo": {
                       "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the \"none+gsession\" response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
                       "location": "query",
@@ -553,6 +558,11 @@
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
                       "required": true,
+                      "type": "string"
+                    },
+                    "serviceAccountName": {
+                      "description": "Optional service account name. If this field is set and\n\"service_account_name\" is set in update_mask, transfer config will be\nupdated to use this service account credentials. It requires that\nrequesting user calling this API has permissions to act as this service\naccount.",
+                      "location": "query",
                       "type": "string"
                     },
                     "updateMask": {
@@ -842,6 +852,11 @@
                   "required": true,
                   "type": "string"
                 },
+                "serviceAccountName": {
+                  "description": "Optional service account name. If this field is set, transfer config will\nbe created with this service account credentials. It requires that\nrequesting user calling this API has permissions to act as this service\naccount.",
+                  "location": "query",
+                  "type": "string"
+                },
                 "versionInfo": {
                   "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the \"none+gsession\" response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
                   "location": "query",
@@ -977,6 +992,11 @@
                   "location": "path",
                   "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
                   "required": true,
+                  "type": "string"
+                },
+                "serviceAccountName": {
+                  "description": "Optional service account name. If this field is set and\n\"service_account_name\" is set in update_mask, transfer config will be\nupdated to use this service account credentials. It requires that\nrequesting user calling this API has permissions to act as this service\naccount.",
+                  "location": "query",
                   "type": "string"
                 },
                 "updateMask": {
@@ -1244,7 +1264,7 @@
       }
     }
   },
-  "revision": "20190918",
+  "revision": "20191103",
   "rootUrl": "https://bigquerydatatransfer.googleapis.com/",
   "schemas": {
     "CheckValidCredsRequest": {

@@ -1901,104 +1901,13 @@ type GoogleCloudMlV1__TrainingInput struct {
 
 	// MasterType: Optional. Specifies the type of virtual machine to use
 	// for your training
-	// job's master worker.
+	// job's master worker. You must specify this field when `scaleTier` is
+	// set to
+	// `CUSTOM`.
 	//
+	// You can use certain Compute Engine machine types directly in this
+	// field.
 	// The following types are supported:
-	//
-	// <dl>
-	//   <dt>standard</dt>
-	//   <dd>
-	//   A basic machine configuration suitable for training simple models
-	// with
-	//   small to moderate datasets.
-	//   </dd>
-	//   <dt>large_model</dt>
-	//   <dd>
-	//   A machine with a lot of memory, specially suited for parameter
-	// servers
-	//   when your model is large (having many hidden layers or layers with
-	// very
-	//   large numbers of nodes).
-	//   </dd>
-	//   <dt>complex_model_s</dt>
-	//   <dd>
-	//   A machine suitable for the master and workers of the cluster when
-	// your
-	//   model requires more computation than the standard machine can
-	// handle
-	//   satisfactorily.
-	//   </dd>
-	//   <dt>complex_model_m</dt>
-	//   <dd>
-	//   A machine with roughly twice the number of cores and roughly double
-	// the
-	//   memory of <i>complex_model_s</i>.
-	//   </dd>
-	//   <dt>complex_model_l</dt>
-	//   <dd>
-	//   A machine with roughly twice the number of cores and roughly double
-	// the
-	//   memory of <i>complex_model_m</i>.
-	//   </dd>
-	//   <dt>standard_gpu</dt>
-	//   <dd>
-	//   A machine equivalent to <i>standard</i> that
-	//   also includes a single NVIDIA Tesla K80 GPU. See more about
-	//   <a href="/ml-engine/docs/tensorflow/using-gpus">using GPUs to
-	//   train your model</a>.
-	//   </dd>
-	//   <dt>complex_model_m_gpu</dt>
-	//   <dd>
-	//   A machine equivalent to <i>complex_model_m</i> that also includes
-	//   four NVIDIA Tesla K80 GPUs.
-	//   </dd>
-	//   <dt>complex_model_l_gpu</dt>
-	//   <dd>
-	//   A machine equivalent to <i>complex_model_l</i> that also includes
-	//   eight NVIDIA Tesla K80 GPUs.
-	//   </dd>
-	//   <dt>standard_p100</dt>
-	//   <dd>
-	//   A machine equivalent to <i>standard</i> that
-	//   also includes a single NVIDIA Tesla P100 GPU.
-	//   </dd>
-	//   <dt>complex_model_m_p100</dt>
-	//   <dd>
-	//   A machine equivalent to <i>complex_model_m</i> that also includes
-	//   four NVIDIA Tesla P100 GPUs.
-	//   </dd>
-	//   <dt>standard_v100</dt>
-	//   <dd>
-	//   A machine equivalent to <i>standard</i> that
-	//   also includes a single NVIDIA Tesla V100 GPU.
-	//   </dd>
-	//   <dt>large_model_v100</dt>
-	//   <dd>
-	//   A machine equivalent to <i>large_model</i> that
-	//   also includes a single NVIDIA Tesla V100 GPU.
-	//   </dd>
-	//   <dt>complex_model_m_v100</dt>
-	//   <dd>
-	//   A machine equivalent to <i>complex_model_m</i> that
-	//   also includes four NVIDIA Tesla V100 GPUs.
-	//   </dd>
-	//   <dt>complex_model_l_v100</dt>
-	//   <dd>
-	//   A machine equivalent to <i>complex_model_l</i> that
-	//   also includes eight NVIDIA Tesla V100 GPUs.
-	//   </dd>
-	//   <dt>cloud_tpu</dt>
-	//   <dd>
-	//   A TPU VM including one Cloud TPU. See more about
-	//   <a href="/ml-engine/docs/tensorflow/using-tpus">using TPUs to
-	// train
-	//   your model</a>.
-	//   </dd>
-	// </dl>
-	//
-	// You may also use certain Compute Engine machine types directly in
-	// this
-	// field. The following types are supported:
 	//
 	// - `n1-standard-4`
 	// - `n1-standard-8`
@@ -2018,12 +1927,40 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// - `n1-highcpu-64`
 	// - `n1-highcpu-96`
 	//
-	// See more about [using Compute Engine
+	// Learn more about [using Compute Engine
 	// machine
-	// types](/ml-engine/docs/tensorflow/machine-types#compute-engine
-	// -machine-types).
+	// types](/ml-engine/docs/machine-types#compute-engine-machine-ty
+	// pes).
 	//
-	// You must set this value when `scaleTier` is set to `CUSTOM`.
+	// Alternatively, you can use the following legacy machine types:
+	//
+	// - `standard`
+	// - `large_model`
+	// - `complex_model_s`
+	// - `complex_model_m`
+	// - `complex_model_l`
+	// - `standard_gpu`
+	// - `complex_model_m_gpu`
+	// - `complex_model_l_gpu`
+	// - `standard_p100`
+	// - `complex_model_m_p100`
+	// - `standard_v100`
+	// - `large_model_v100`
+	// - `complex_model_m_v100`
+	// - `complex_model_l_v100`
+	//
+	// Learn more about [using legacy
+	// machine
+	// types](/ml-engine/docs/machine-types#legacy-machine-types).
+	//
+	// F
+	// inally, if you want to use a TPU for training, specify `cloud_tpu` in
+	// this
+	// field. Learn more about the [special configuration options for
+	// training
+	// with
+	// TPUs](/ml-engine/docs/tensorflow/using-tpus#configuring_
+	// a_custom_tpu_machine).
 	MasterType string `json:"masterType,omitempty"`
 
 	// PackageUris: Required. The Google Cloud Storage location of the
@@ -2077,9 +2014,9 @@ type GoogleCloudMlV1__TrainingInput struct {
 	//
 	// This value must be consistent with the category of machine type
 	// that
-	// `masterType` uses. In other words, both must be AI Platform
+	// `masterType` uses. In other words, both must be Compute Engine
 	// machine
-	// types or both must be Compute Engine machine types.
+	// types or both must be legacy machine types.
 	//
 	// This value must be present when `scaleTier` is set to `CUSTOM`
 	// and
@@ -2219,9 +2156,9 @@ type GoogleCloudMlV1__TrainingInput struct {
 	//
 	// This value must be consistent with the category of machine type
 	// that
-	// `masterType` uses. In other words, both must be AI Platform
+	// `masterType` uses. In other words, both must be Compute Engine
 	// machine
-	// types or both must be Compute Engine machine types.
+	// types or both must be legacy machine types.
 	//
 	// If you use `cloud_tpu` for this value, see special instructions
 	// for
@@ -3482,7 +3419,7 @@ func (c *ProjectsGetConfigCall) Header() http.Header {
 
 func (c *ProjectsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3624,7 +3561,7 @@ func (c *ProjectsPredictCall) Header() http.Header {
 
 func (c *ProjectsPredictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3769,7 +3706,7 @@ func (c *ProjectsJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3909,7 +3846,7 @@ func (c *ProjectsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4058,7 +3995,7 @@ func (c *ProjectsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4223,7 +4160,7 @@ func (c *ProjectsJobsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4420,7 +4357,7 @@ func (c *ProjectsJobsListCall) Header() http.Header {
 
 func (c *ProjectsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4624,7 +4561,7 @@ func (c *ProjectsJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4775,7 +4712,7 @@ func (c *ProjectsJobsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4925,7 +4862,7 @@ func (c *ProjectsJobsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsJobsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5077,7 +5014,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5245,7 +5182,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5421,7 +5358,7 @@ func (c *ProjectsModelsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5566,7 +5503,7 @@ func (c *ProjectsModelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5711,7 +5648,7 @@ func (c *ProjectsModelsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5876,7 +5813,7 @@ func (c *ProjectsModelsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6064,7 +6001,7 @@ func (c *ProjectsModelsListCall) Header() http.Header {
 
 func (c *ProjectsModelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6266,7 +6203,7 @@ func (c *ProjectsModelsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6417,7 +6354,7 @@ func (c *ProjectsModelsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6567,7 +6504,7 @@ func (c *ProjectsModelsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsModelsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6722,7 +6659,7 @@ func (c *ProjectsModelsVersionsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6868,7 +6805,7 @@ func (c *ProjectsModelsVersionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7017,7 +6954,7 @@ func (c *ProjectsModelsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7201,7 +7138,7 @@ func (c *ProjectsModelsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7406,7 +7343,7 @@ func (c *ProjectsModelsVersionsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7563,7 +7500,7 @@ func (c *ProjectsModelsVersionsSetDefaultCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsSetDefaultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7718,7 +7655,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7863,7 +7800,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8044,7 +7981,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

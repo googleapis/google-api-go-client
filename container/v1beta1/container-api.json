@@ -2483,7 +2483,7 @@
       }
     }
   },
-  "revision": "20191021",
+  "revision": "20191024",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2567,6 +2567,10 @@
       "description": "AutoprovisioningNodePoolDefaults contains defaults for a node pool created\nby NAP.",
       "id": "AutoprovisioningNodePoolDefaults",
       "properties": {
+        "management": {
+          "$ref": "NodeManagement",
+          "description": "Specifies the node management options for NAP created node-pools."
+        },
         "oauthScopes": {
           "description": "Scopes that are used by NAP when creating node pools. If oauth_scopes are\nspecified, service_account should be empty.",
           "items": {
@@ -2577,6 +2581,10 @@
         "serviceAccount": {
           "description": "The Google Cloud Platform Service Account to be used by the node VMs. If\nservice_account is specified, scopes should be empty.",
           "type": "string"
+        },
+        "upgradeSettings": {
+          "$ref": "UpgradeSettings",
+          "description": "Specifies the upgrade settings for NAP created node pools"
         }
       },
       "type": "object"
@@ -2803,7 +2811,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The name of this cluster. The name must be unique within this project\nand zone, and can be up to 40 characters with the following restrictions:\n\n* Lowercase letters, numbers, and hyphens only.\n* Must start with a letter.\n* Must end with a number or a letter.",
+          "description": "The name of this cluster. The name must be unique within this project\nand location (e.g. zone or region), and can be up to 40 characters with\nthe following restrictions:\n\n* Lowercase letters, numbers, and hyphens only.\n* Must start with a letter.\n* Must end with a number or a letter.",
           "type": "string"
         },
         "network": {

@@ -287,7 +287,7 @@
       }
     }
   },
-  "revision": "20191028",
+  "revision": "20191111",
   "rootUrl": "https://cloudshell.googleapis.com/",
   "schemas": {
     "AuthorizeEnvironmentRequest": {
@@ -336,7 +336,7 @@
           "type": "string"
         },
         "id": {
-          "description": "Output only. The environment's identifier, which is always \"default\".",
+          "description": "Output only. The environment's identifier, unique among the user's\nenvironments.",
           "type": "string"
         },
         "name": {

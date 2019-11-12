@@ -1534,7 +1534,7 @@
       }
     }
   },
-  "revision": "20191027",
+  "revision": "20191102",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -2275,6 +2275,10 @@
           "$ref": "GoogleCloudDialogflowV2IntentMessageBasicCard",
           "description": "The basic card response for Actions on Google."
         },
+        "browseCarouselCard": {
+          "$ref": "GoogleCloudDialogflowV2IntentMessageBrowseCarouselCard",
+          "description": "Browse carousel card for Actions on Google."
+        },
         "card": {
           "$ref": "GoogleCloudDialogflowV2IntentMessageCard",
           "description": "The card response."
@@ -2294,6 +2298,10 @@
         "listSelect": {
           "$ref": "GoogleCloudDialogflowV2IntentMessageListSelect",
           "description": "The list card response for Actions on Google."
+        },
+        "mediaContent": {
+          "$ref": "GoogleCloudDialogflowV2IntentMessageMediaContent",
+          "description": "The media content card for Actions on Google."
         },
         "payload": {
           "additionalProperties": {
@@ -2342,6 +2350,10 @@
         "suggestions": {
           "$ref": "GoogleCloudDialogflowV2IntentMessageSuggestions",
           "description": "The suggestion chips for Actions on Google."
+        },
+        "tableCard": {
+          "$ref": "GoogleCloudDialogflowV2IntentMessageTableCard",
+          "description": "Table card for Actions on Google."
         },
         "text": {
           "$ref": "GoogleCloudDialogflowV2IntentMessageText",
@@ -2401,6 +2413,90 @@
       "properties": {
         "uri": {
           "description": "Required. The HTTP or HTTPS scheme URI.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2IntentMessageBrowseCarouselCard": {
+      "description": "Browse Carousel Card for Actions on Google.\nhttps://developers.google.com/actions/assistant/responses#browsing_carousel",
+      "id": "GoogleCloudDialogflowV2IntentMessageBrowseCarouselCard",
+      "properties": {
+        "imageDisplayOptions": {
+          "description": "Optional. Settings for displaying the image. Applies to every image in\nitems.",
+          "enum": [
+            "IMAGE_DISPLAY_OPTIONS_UNSPECIFIED",
+            "GRAY",
+            "WHITE",
+            "CROPPED",
+            "BLURRED_BACKGROUND"
+          ],
+          "enumDescriptions": [
+            "Fill the gaps between the image and the image container with gray\nbars.",
+            "Fill the gaps between the image and the image container with gray\nbars.",
+            "Fill the gaps between the image and the image container with white\nbars.",
+            "Image is scaled such that the image width and height match or exceed\nthe container dimensions. This may crop the top and bottom of the\nimage if the scaled image height is greater than the container\nheight, or crop the left and right of the image if the scaled image\nwidth is greater than the container width. This is similar to \"Zoom\nMode\" on a widescreen TV when playing a 4:3 video.",
+            "Pad the gaps between image and image frame with a blurred copy of the\nsame image."
+          ],
+          "type": "string"
+        },
+        "items": {
+          "description": "Required. List of items in the Browse Carousel Card. Minimum of two\nitems, maximum of ten.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2IntentMessageBrowseCarouselCardBrowseCarouselCardItem"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2IntentMessageBrowseCarouselCardBrowseCarouselCardItem": {
+      "description": "Browsing carousel tile",
+      "id": "GoogleCloudDialogflowV2IntentMessageBrowseCarouselCardBrowseCarouselCardItem",
+      "properties": {
+        "description": {
+          "description": "Optional. Description of the carousel item. Maximum of four lines of\ntext.",
+          "type": "string"
+        },
+        "footer": {
+          "description": "Optional. Text that appears at the bottom of the Browse Carousel\nCard. Maximum of one line of text.",
+          "type": "string"
+        },
+        "image": {
+          "$ref": "GoogleCloudDialogflowV2IntentMessageImage",
+          "description": "Optional. Hero image for the carousel item."
+        },
+        "openUriAction": {
+          "$ref": "GoogleCloudDialogflowV2IntentMessageBrowseCarouselCardBrowseCarouselCardItemOpenUrlAction",
+          "description": "Required. Action to present to the user."
+        },
+        "title": {
+          "description": "Required. Title of the carousel item. Maximum of two lines of text.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2IntentMessageBrowseCarouselCardBrowseCarouselCardItemOpenUrlAction": {
+      "description": "Actions on Google action to open a given url.",
+      "id": "GoogleCloudDialogflowV2IntentMessageBrowseCarouselCardBrowseCarouselCardItemOpenUrlAction",
+      "properties": {
+        "url": {
+          "description": "Required. URL",
+          "type": "string"
+        },
+        "urlTypeHint": {
+          "description": "Optional. Specifies the type of viewer that is used when opening\nthe URL. Defaults to opening via web browser.",
+          "enum": [
+            "URL_TYPE_HINT_UNSPECIFIED",
+            "AMP_ACTION",
+            "AMP_CONTENT"
+          ],
+          "enumDescriptions": [
+            "Unspecified",
+            "Url would be an amp action",
+            "URL that points directly to AMP content, or to a canonical URL\nwhich refers to AMP content via \u003clink rel=\"amphtml\"\u003e."
+          ],
           "type": "string"
         }
       },
@@ -2484,6 +2580,33 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2IntentMessageColumnProperties": {
+      "description": "Column properties for TableCard.",
+      "id": "GoogleCloudDialogflowV2IntentMessageColumnProperties",
+      "properties": {
+        "header": {
+          "description": "Required. Column heading.",
+          "type": "string"
+        },
+        "horizontalAlignment": {
+          "description": "Optional. Defines text alignment for all cells in this column.",
+          "enum": [
+            "HORIZONTAL_ALIGNMENT_UNSPECIFIED",
+            "LEADING",
+            "CENTER",
+            "TRAILING"
+          ],
+          "enumDescriptions": [
+            "Text is aligned to the leading edge of the column.",
+            "Text is aligned to the leading edge of the column.",
+            "Text is centered in the column.",
+            "Text is aligned to the trailing edge of the column."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2IntentMessageImage": {
       "description": "The image response message.",
       "id": "GoogleCloudDialogflowV2IntentMessageImage",
@@ -2554,6 +2677,59 @@
         },
         "title": {
           "description": "Required. The title of the list item.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2IntentMessageMediaContent": {
+      "description": "The media content card for Actions on Google.",
+      "id": "GoogleCloudDialogflowV2IntentMessageMediaContent",
+      "properties": {
+        "mediaObjects": {
+          "description": "Required. List of media objects.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2IntentMessageMediaContentResponseMediaObject"
+          },
+          "type": "array"
+        },
+        "mediaType": {
+          "description": "Optional. What type of media is the content (ie \"audio\").",
+          "enum": [
+            "RESPONSE_MEDIA_TYPE_UNSPECIFIED",
+            "AUDIO"
+          ],
+          "enumDescriptions": [
+            "Unspecified.",
+            "Response media type is audio."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2IntentMessageMediaContentResponseMediaObject": {
+      "description": "Response media object for media content card.",
+      "id": "GoogleCloudDialogflowV2IntentMessageMediaContentResponseMediaObject",
+      "properties": {
+        "contentUrl": {
+          "description": "Required. Url where the media is stored.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Optional. Description of media card.",
+          "type": "string"
+        },
+        "icon": {
+          "$ref": "GoogleCloudDialogflowV2IntentMessageImage",
+          "description": "Optional. Icon to display above media content."
+        },
+        "largeImage": {
+          "$ref": "GoogleCloudDialogflowV2IntentMessageImage",
+          "description": "Optional. Image to display above media content."
+        },
+        "name": {
+          "description": "Required. Name of media card.",
           "type": "string"
         }
       },
@@ -2649,6 +2825,75 @@
             "$ref": "GoogleCloudDialogflowV2IntentMessageSuggestion"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2IntentMessageTableCard": {
+      "description": "Table card for Actions on Google.",
+      "id": "GoogleCloudDialogflowV2IntentMessageTableCard",
+      "properties": {
+        "buttons": {
+          "description": "Optional. List of buttons for the card.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2IntentMessageBasicCardButton"
+          },
+          "type": "array"
+        },
+        "columnProperties": {
+          "description": "Optional. Display properties for the columns in this table.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2IntentMessageColumnProperties"
+          },
+          "type": "array"
+        },
+        "image": {
+          "$ref": "GoogleCloudDialogflowV2IntentMessageImage",
+          "description": "Optional. Image which should be displayed on the card."
+        },
+        "rows": {
+          "description": "Optional. Rows in this table of data.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2IntentMessageTableCardRow"
+          },
+          "type": "array"
+        },
+        "subtitle": {
+          "description": "Optional. Subtitle to the title.",
+          "type": "string"
+        },
+        "title": {
+          "description": "Required. Title of the card.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2IntentMessageTableCardCell": {
+      "description": "Cell of TableCardRow.",
+      "id": "GoogleCloudDialogflowV2IntentMessageTableCardCell",
+      "properties": {
+        "text": {
+          "description": "Required. Text in this cell.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2IntentMessageTableCardRow": {
+      "description": "Row of TableCard.",
+      "id": "GoogleCloudDialogflowV2IntentMessageTableCardRow",
+      "properties": {
+        "cells": {
+          "description": "Optional. List of cells that make up this row.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2IntentMessageTableCardCell"
+          },
+          "type": "array"
+        },
+        "dividerAfter": {
+          "description": "Optional. Whether to add a visual divider after this row.",
+          "type": "boolean"
         }
       },
       "type": "object"

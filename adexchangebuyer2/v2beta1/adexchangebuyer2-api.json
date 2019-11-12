@@ -2485,7 +2485,7 @@
       }
     }
   },
-  "revision": "20191017",
+  "revision": "20191111",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -2693,8 +2693,8 @@
           "enumDescriptions": [
             "A placeholder for an undefined status.\nThis value will never be returned in responses.",
             "The response had no bids.",
-            "The response had no bids for the specified account, though it may have\nincluded bids on behalf of other accounts.",
-            "The response had no bids for the specified deal, though it may have\nincluded bids on other deals on behalf of the account to which the deal\nbelongs."
+            "The response had no bids for the specified account, though it may have\nincluded bids on behalf of other accounts.\nApplies if:\n1. Request is on behalf of a bidder and an account filter is present.\n2. Request is on behalf of a child seat.",
+            "The response had no bids for the specified deal, though it may have\nincluded bids on other deals on behalf of the account to which the deal\nbelongs. If request is on behalf of a bidder and an account filter is not\npresent, this also includes responses that have bids on behalf of\naccounts other than the account to which the deal belongs."
           ],
           "type": "string"
         }

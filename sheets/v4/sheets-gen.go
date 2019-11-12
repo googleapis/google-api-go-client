@@ -683,6 +683,67 @@ func (s *AddSheetResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AddSlicerRequest: Adds a slicer to a sheet in the spreadsheet.
+type AddSlicerRequest struct {
+	// Slicer: The slicer that should be added to the spreadsheet,
+	// including
+	// the position where it should be placed. The slicerId field is
+	// optional; if one is not set, an id
+	// will be randomly generated. (It is an error to specify the ID
+	// of a slicer that already exists.)
+	Slicer *Slicer `json:"slicer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Slicer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Slicer") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AddSlicerRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AddSlicerRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AddSlicerResponse: The result of adding a slicer to a spreadsheet.
+type AddSlicerResponse struct {
+	// Slicer: The newly added slicer.
+	Slicer *Slicer `json:"slicer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Slicer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Slicer") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AddSlicerResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AddSlicerResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AppendCellsRequest: Adds new cells after the last row with data in a
 // sheet,
 // inserting new rows into the sheet if necessary.
@@ -5353,6 +5414,23 @@ type FilterCriteria struct {
 	// HiddenValues: Values that should be hidden.
 	HiddenValues []string `json:"hiddenValues,omitempty"`
 
+	// VisibleBackgroundColor: The background fill color to filter by; only
+	// cells with this fill color are
+	// shown. Mutually exclusive with all other filter criteria. Requests to
+	// set
+	// this field will fail with a 400 error if any other filter criteria
+	// field is
+	// set.
+	VisibleBackgroundColor *Color `json:"visibleBackgroundColor,omitempty"`
+
+	// VisibleForegroundColor: The text color to filter by; only cells with
+	// this text color are shown.
+	// Mutually exclusive with all other filter criteria. Requests to set
+	// this
+	// field will fail with a 400 error if any other filter criteria field
+	// is set.
+	VisibleForegroundColor *Color `json:"visibleForegroundColor,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -7565,6 +7643,9 @@ type Request struct {
 	// AddSheet: Adds a sheet.
 	AddSheet *AddSheetRequest `json:"addSheet,omitempty"`
 
+	// AddSlicer: Adds a slicer.
+	AddSlicer *AddSlicerRequest `json:"addSlicer,omitempty"`
+
 	// AppendCells: Appends cells after the last row with data in a sheet.
 	AppendCells *AppendCellsRequest `json:"appendCells,omitempty"`
 
@@ -7724,6 +7805,9 @@ type Request struct {
 	// UpdateSheetProperties: Updates a sheet's properties.
 	UpdateSheetProperties *UpdateSheetPropertiesRequest `json:"updateSheetProperties,omitempty"`
 
+	// UpdateSlicerSpec: Updates a slicer's specifications.
+	UpdateSlicerSpec *UpdateSlicerSpecRequest `json:"updateSlicerSpec,omitempty"`
+
 	// UpdateSpreadsheetProperties: Updates the spreadsheet's properties.
 	UpdateSpreadsheetProperties *UpdateSpreadsheetPropertiesRequest `json:"updateSpreadsheetProperties,omitempty"`
 
@@ -7772,6 +7856,9 @@ type Response struct {
 
 	// AddSheet: A reply from adding a sheet.
 	AddSheet *AddSheetResponse `json:"addSheet,omitempty"`
+
+	// AddSlicer: A reply from adding a slicer.
+	AddSlicer *AddSlicerResponse `json:"addSlicer,omitempty"`
 
 	// CreateDeveloperMetadata: A reply from creating a developer metadata
 	// entry.
@@ -7898,14 +7985,14 @@ type ScorecardChartSpec struct {
 	BaselineValueData *ChartData `json:"baselineValueData,omitempty"`
 
 	// BaselineValueFormat: Formatting options for baseline value.
-	// This field is needed only if baseline_value_data field is specified.
+	// This field is needed only if baseline_value_data is specified.
 	BaselineValueFormat *BaselineValueFormat `json:"baselineValueFormat,omitempty"`
 
 	// CustomFormatOptions: Custom formatting options for numeric
 	// key/baseline values in scorecard
-	// chart. This field is used only when [number_format_source] field is
-	// set to
-	// [ChartNumberFormatSource.CUSTOM]. This field is optional.
+	// chart. This field is used only when number_format_source is set
+	// to
+	// CUSTOM. This field is optional.
 	CustomFormatOptions *ChartCustomNumberFormatOptions `json:"customFormatOptions,omitempty"`
 
 	// KeyValueData: The data for scorecard key value.
@@ -8153,6 +8240,9 @@ type Sheet struct {
 	// by group depth.
 	RowGroups []*DimensionGroup `json:"rowGroups,omitempty"`
 
+	// Slicers: The slicers on this sheet.
+	Slicers []*Slicer `json:"slicers,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "BandedRanges") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -8255,6 +8345,107 @@ func (s *SheetProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Slicer: A slicer in a sheet.
+type Slicer struct {
+	// Position: The position of the slicer. Note that slicer can be
+	// positioned only on
+	// existing sheet. Also, width and height of slicer can be
+	// automatically
+	// adjusted to keep it within permitted limits.
+	Position *EmbeddedObjectPosition `json:"position,omitempty"`
+
+	// SlicerId: The ID of the slicer.
+	SlicerId int64 `json:"slicerId,omitempty"`
+
+	// Spec: The specification of the slicer.
+	Spec *SlicerSpec `json:"spec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Position") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Position") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Slicer) MarshalJSON() ([]byte, error) {
+	type NoMethod Slicer
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SlicerSpec: The specifications of a slicer.
+type SlicerSpec struct {
+	// ApplyToPivotTables: True if the filter should apply to pivot
+	// tables.
+	// If not set, default to `True`.
+	ApplyToPivotTables bool `json:"applyToPivotTables,omitempty"`
+
+	// BackgroundColor: The background color of the slicer.
+	BackgroundColor *Color `json:"backgroundColor,omitempty"`
+
+	// ColumnIndex: The column index in the data table on which the filter
+	// is applied to.
+	ColumnIndex int64 `json:"columnIndex,omitempty"`
+
+	// DataRange: The data range of the slicer.
+	DataRange *GridRange `json:"dataRange,omitempty"`
+
+	// FilterCriteria: The filtering criteria of the slicer.
+	FilterCriteria *FilterCriteria `json:"filterCriteria,omitempty"`
+
+	// HorizontalAlignment: The horizontal alignment of title in the
+	// slicer.
+	// If unspecified, defaults to `LEFT`
+	//
+	// Possible values:
+	//   "HORIZONTAL_ALIGN_UNSPECIFIED" - The horizontal alignment is not
+	// specified. Do not use this.
+	//   "LEFT" - The text is explicitly aligned to the left of the cell.
+	//   "CENTER" - The text is explicitly aligned to the center of the
+	// cell.
+	//   "RIGHT" - The text is explicitly aligned to the right of the cell.
+	HorizontalAlignment string `json:"horizontalAlignment,omitempty"`
+
+	// TextFormat: The text format of title in the slicer.
+	TextFormat *TextFormat `json:"textFormat,omitempty"`
+
+	// Title: The title of the slicer.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApplyToPivotTables")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApplyToPivotTables") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SlicerSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod SlicerSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SortRangeRequest: Sorts data in rows based on a sort order per
 // column.
 type SortRangeRequest struct {
@@ -8291,8 +8482,22 @@ func (s *SortRangeRequest) MarshalJSON() ([]byte, error) {
 
 // SortSpec: A sort order associated with a specific column or row.
 type SortSpec struct {
+	// BackgroundColor: The background fill color to sort by. Mutually
+	// exclusive with sorting by
+	// text color. Requests to set this field will fail with a 400 error
+	// if
+	// foreground color is also set.
+	BackgroundColor *Color `json:"backgroundColor,omitempty"`
+
 	// DimensionIndex: The dimension the sort should be applied to.
 	DimensionIndex int64 `json:"dimensionIndex,omitempty"`
+
+	// ForegroundColor: The text color to sort by. Mutually exclusive with
+	// sorting by background
+	// fill color. Requests to set this field will fail with a 400 error
+	// if
+	// background color is also set.
+	ForegroundColor *Color `json:"foregroundColor,omitempty"`
 
 	// SortOrder: The order data should be sorted.
 	//
@@ -8302,7 +8507,7 @@ type SortSpec struct {
 	//   "DESCENDING" - Sort descending.
 	SortOrder string `json:"sortOrder,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DimensionIndex") to
+	// ForceSendFields is a list of field names (e.g. "BackgroundColor") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -8310,7 +8515,7 @@ type SortSpec struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DimensionIndex") to
+	// NullFields is a list of field names (e.g. "BackgroundColor") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -9629,6 +9834,47 @@ func (s *UpdateSheetPropertiesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UpdateSlicerSpecRequest: Updates a slicer’s specifications.
+// (This does not move or resize a slicer. To move or resize a slicer
+// use
+// UpdateEmbeddedObjectPositionRequest.
+type UpdateSlicerSpecRequest struct {
+	// Fields: The fields that should be updated.  At least one field must
+	// be specified.
+	// The root `SlicerSpec` is implied and should not be specified. A
+	// single "*"
+	// can be used as short-hand for listing every field.
+	Fields string `json:"fields,omitempty"`
+
+	// SlicerId: The id of the slicer to update.
+	SlicerId int64 `json:"slicerId,omitempty"`
+
+	// Spec: The specification to apply to the slicer.
+	Spec *SlicerSpec `json:"spec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Fields") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateSlicerSpecRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateSlicerSpecRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UpdateSpreadsheetPropertiesRequest: Updates properties of a
 // spreadsheet.
 type UpdateSpreadsheetPropertiesRequest struct {
@@ -10142,7 +10388,7 @@ func (c *SpreadsheetsBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10282,7 +10528,7 @@ func (c *SpreadsheetsCreateCall) Header() http.Header {
 
 func (c *SpreadsheetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10459,7 +10705,7 @@ func (c *SpreadsheetsGetCall) Header() http.Header {
 
 func (c *SpreadsheetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10635,7 +10881,7 @@ func (c *SpreadsheetsGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10790,7 +11036,7 @@ func (c *SpreadsheetsDeveloperMetadataGetCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10944,7 +11190,7 @@ func (c *SpreadsheetsDeveloperMetadataSearchCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11089,7 +11335,7 @@ func (c *SpreadsheetsSheetsCopyToCall) Header() http.Header {
 
 func (c *SpreadsheetsSheetsCopyToCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11325,7 +11571,7 @@ func (c *SpreadsheetsValuesAppendCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesAppendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11523,7 +11769,7 @@ func (c *SpreadsheetsValuesBatchClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11671,7 +11917,7 @@ func (c *SpreadsheetsValuesBatchClearByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11880,7 +12126,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12058,7 +12304,7 @@ func (c *SpreadsheetsValuesBatchGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12203,7 +12449,7 @@ func (c *SpreadsheetsValuesBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12348,7 +12594,7 @@ func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12496,7 +12742,7 @@ func (c *SpreadsheetsValuesClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12706,7 +12952,7 @@ func (c *SpreadsheetsValuesGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12944,7 +13190,7 @@ func (c *SpreadsheetsValuesUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -349,7 +349,7 @@
       }
     }
   },
-  "revision": "20191018",
+  "revision": "20191109",
   "rootUrl": "https://videointelligence.googleapis.com/",
   "schemas": {
     "GoogleCloudVideointelligenceV1_AnnotateVideoProgress": {
@@ -2821,6 +2821,57 @@
       },
       "type": "object"
     },
+    "GoogleCloudVideointelligenceV1p3beta1_Celebrity": {
+      "description": "Celebrity definition.",
+      "id": "GoogleCloudVideointelligenceV1p3beta1_Celebrity",
+      "properties": {
+        "description": {
+          "description": "Textual description of additional information about the celebrity, if\napplicable.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "The celebrity name.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The resource name of the celebrity. Have the format\n`video-intelligence/kg-mid` indicates a celebrity from preloaded gallery.\nkg-mid is the id in Google knowledge graph, which is unique for the\ncelebrity.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1p3beta1_CelebrityRecognitionAnnotation": {
+      "description": "Celebrity recognition annotation per video.",
+      "id": "GoogleCloudVideointelligenceV1p3beta1_CelebrityRecognitionAnnotation",
+      "properties": {
+        "celebrityTracks": {
+          "description": "The tracks detected from the input video, including recognized celebrities\nand other detected faces in the video.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p3beta1_CelebrityTrack"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1p3beta1_CelebrityTrack": {
+      "description": "The annotation result of a celebrity face track. RecognizedCelebrity field\ncould be empty if the face track does not have any matched celebrities.",
+      "id": "GoogleCloudVideointelligenceV1p3beta1_CelebrityTrack",
+      "properties": {
+        "celebrities": {
+          "description": "Top N match of the celebrities for the face in this track.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p3beta1_RecognizedCelebrity"
+          },
+          "type": "array"
+        },
+        "faceTrack": {
+          "$ref": "GoogleCloudVideointelligenceV1p3beta1_Track",
+          "description": "A track of a person's face."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudVideointelligenceV1p3beta1_DetectedAttribute": {
       "description": "A generic detected attribute represented by name in string format.",
       "id": "GoogleCloudVideointelligenceV1p3beta1_DetectedAttribute",
@@ -3102,6 +3153,22 @@
       },
       "type": "object"
     },
+    "GoogleCloudVideointelligenceV1p3beta1_RecognizedCelebrity": {
+      "description": "The recognized celebrity with confidence score.",
+      "id": "GoogleCloudVideointelligenceV1p3beta1_RecognizedCelebrity",
+      "properties": {
+        "celebrity": {
+          "$ref": "GoogleCloudVideointelligenceV1p3beta1_Celebrity",
+          "description": "The recognized celebrity."
+        },
+        "confidence": {
+          "description": "Recognition confidence. Range [0, 1].",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudVideointelligenceV1p3beta1_SpeechRecognitionAlternative": {
       "description": "Alternative hypotheses (a.k.a. n-best list).",
       "id": "GoogleCloudVideointelligenceV1p3beta1_SpeechRecognitionAlternative",
@@ -3252,7 +3319,7 @@
       "type": "object"
     },
     "GoogleCloudVideointelligenceV1p3beta1_TimestampedObject": {
-      "description": "For tracking related features, such as LOGO_RECOGNITION, FACE_DETECTION,\nCELEBRITY_RECOGNITION, PERSON_DETECTION.\nAn object at time_offset with attributes, and located with\nnormalized_bounding_box.",
+      "description": "For tracking related features.\nAn object at time_offset with attributes, and located with\nnormalized_bounding_box.",
       "id": "GoogleCloudVideointelligenceV1p3beta1_TimestampedObject",
       "properties": {
         "attributes": {
@@ -3318,7 +3385,8 @@
             "SPEECH_TRANSCRIPTION",
             "TEXT_DETECTION",
             "OBJECT_TRACKING",
-            "LOGO_RECOGNITION"
+            "LOGO_RECOGNITION",
+            "CELEBRITY_RECOGNITION"
           ],
           "enumDescriptions": [
             "Unspecified.",
@@ -3328,7 +3396,8 @@
             "Speech transcription.",
             "OCR text detection and tracking.",
             "Object detection and tracking.",
-            "Logo detection, tracking, and recognition."
+            "Logo detection, tracking, and recognition.",
+            "Celebrity recognition."
           ],
           "type": "string"
         },
@@ -3362,6 +3431,10 @@
       "description": "Annotation results for a single video.",
       "id": "GoogleCloudVideointelligenceV1p3beta1_VideoAnnotationResults",
       "properties": {
+        "celebrityRecognitionAnnotations": {
+          "$ref": "GoogleCloudVideointelligenceV1p3beta1_CelebrityRecognitionAnnotation",
+          "description": "Celebrity recognition annotations."
+        },
         "error": {
           "$ref": "GoogleRpc_Status",
           "description": "If set, indicates an error. Note that for a single `AnnotateVideoRequest`\nsome videos may succeed and some may fail."

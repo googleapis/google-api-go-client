@@ -1457,7 +1457,7 @@
       }
     }
   },
-  "revision": "20191027",
+  "revision": "20191102",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -1810,11 +1810,11 @@
       "type": "object"
     },
     "ContentMatcher": {
-      "description": "Used to perform string matching. It allows substring and regular expressions, together with their negations.",
+      "description": "Optional. Used to perform content matching. This allows matching based on substrings and regular expressions, together with their negations. Only the first 4\u0026nbsp;MB of an HTTP or HTTPS check's response (and the first 1\u0026nbsp;MB of a TCP check's response) are examined for purposes of content matching.",
       "id": "ContentMatcher",
       "properties": {
         "content": {
-          "description": "String or regex content to match (max 1024 bytes)",
+          "description": "String or regex content to match. Maximum 1024 bytes. An empty content string indicates no content matching is to be performed.",
           "type": "string"
         },
         "matcher": {
@@ -1828,10 +1828,10 @@
           ],
           "enumDescriptions": [
             "No content matcher type specified (maintained for backward compatibility, but deprecated for future use). Treated as CONTAINS_STRING.",
-            "Selects substring matching (there is a match if the output contains the content string). This is the default value for checks without a matcher option, or where the value of matcher is CONTENT_MATCHER_OPTION_UNSPECIFIED.",
-            "Selects negation of substring matching (there is a match if the output does NOT contain the content string).",
-            "Selects regular expression matching (there is a match of the output matches the regular expression specified in the content string).",
-            "Selects negation of regular expression matching (there is a match if the output does NOT match the regular expression specified in the content string)."
+            "Selects substring matching. The match succeeds if the output contains the content string. This is the default value for checks without a matcher option, or where the value of matcher is CONTENT_MATCHER_OPTION_UNSPECIFIED.",
+            "Selects negation of substring matching. The match succeeds if the output does NOT contain the content string.",
+            "Selects regular-expression matching. The match succeeds of the output matches the regular expression specified in the content string.",
+            "Selects negation of regular-expression matching. The match succeeds if the output does NOT match the regular expression specified in the content string."
           ],
           "type": "string"
         }
@@ -1865,11 +1865,15 @@
       "id": "CreateCollectdTimeSeriesResponse",
       "properties": {
         "payloadErrors": {
-          "description": "Records the error status for points that were not written due to an error.Failed requests for which nothing is written will return an error response instead.",
+          "description": "Records the error status for points that were not written due to an error in the request.Failed requests for which nothing is written will return an error response instead. Requests where data points were rejected by the backend will set summary instead.",
           "items": {
             "$ref": "CollectdPayloadError"
           },
           "type": "array"
+        },
+        "summary": {
+          "$ref": "CreateTimeSeriesSummary",
+          "description": "Aggregate statistics from writing the payloads. This field is omitted if all points were successfully written, so that the response is empty. This is for backwards compatibility with clients that log errors on any non-empty response."
         }
       },
       "type": "object"
@@ -1884,6 +1888,30 @@
             "$ref": "TimeSeries"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "CreateTimeSeriesSummary": {
+      "description": "Summary of the result of a failed request to write data to a time series.",
+      "id": "CreateTimeSeriesSummary",
+      "properties": {
+        "errors": {
+          "description": "The number of points that failed to be written. Order is not guaranteed.",
+          "items": {
+            "$ref": "Error"
+          },
+          "type": "array"
+        },
+        "successPointCount": {
+          "description": "The number of points that were successfully written.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "totalPointCount": {
+          "description": "The number of points in the request.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -1966,6 +1994,22 @@
       "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance:\nservice Foo {\n  rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n}\nThe JSON representation for Empty is empty JSON object {}.",
       "id": "Empty",
       "properties": {},
+      "type": "object"
+    },
+    "Error": {
+      "description": "Detailed information about an error category.",
+      "id": "Error",
+      "properties": {
+        "pointCount": {
+          "description": "The number of points that couldn't be written because of status.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "status": {
+          "$ref": "Status",
+          "description": "The status of the requested write operation."
+        }
+      },
       "type": "object"
     },
     "Exemplar": {

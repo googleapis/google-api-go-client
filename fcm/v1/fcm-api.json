@@ -141,7 +141,7 @@
       }
     }
   },
-  "revision": "20191002",
+  "revision": "20191111",
   "rootUrl": "https://fcm.googleapis.com/",
   "schemas": {
     "AndroidConfig": {
@@ -570,6 +570,10 @@
       "description": "Options for features provided by the FCM SDK for Web.",
       "id": "WebpushFcmOptions",
       "properties": {
+        "analyticsLabel": {
+          "description": "Label associated with the message's analytics data.",
+          "type": "string"
+        },
         "link": {
           "description": "The link to open when the user clicks on the notification.\nFor all URL values, HTTPS is required.",
           "type": "string"

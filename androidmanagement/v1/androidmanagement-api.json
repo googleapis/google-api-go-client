@@ -918,7 +918,7 @@
       }
     }
   },
-  "revision": "20191001",
+  "revision": "20191107",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -2928,7 +2928,7 @@
         },
         "passwordRequirements": {
           "$ref": "PasswordRequirements",
-          "description": "Password requirements. DEPRECATED - Use password_policies"
+          "description": "Password requirements. The field password_requirements.require_password_unlock must not be set. DEPRECATED - Use password_policies."
         },
         "permissionGrants": {
           "description": "Explicit permission or group grants or denials for all apps. These values override the default_permission_policy.",

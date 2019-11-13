@@ -1165,11 +1165,14 @@ func (s *WebpushConfig) MarshalJSON() ([]byte, error) {
 // WebpushFcmOptions: Options for features provided by the FCM SDK for
 // Web.
 type WebpushFcmOptions struct {
+	// AnalyticsLabel: Label associated with the message's analytics data.
+	AnalyticsLabel string `json:"analyticsLabel,omitempty"`
+
 	// Link: The link to open when the user clicks on the notification.
 	// For all URL values, HTTPS is required.
 	Link string `json:"link,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Link") to
+	// ForceSendFields is a list of field names (e.g. "AnalyticsLabel") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1177,12 +1180,13 @@ type WebpushFcmOptions struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Link") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AnalyticsLabel") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1240,7 +1244,7 @@ func (c *ProjectsMessagesSendCall) Header() http.Header {
 
 func (c *ProjectsMessagesSendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

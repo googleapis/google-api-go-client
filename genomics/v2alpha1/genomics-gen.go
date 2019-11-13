@@ -473,6 +473,9 @@ type CheckInRequest struct {
 	// Event: A workflow specific event occurred.
 	Event googleapi.RawMessage `json:"event,omitempty"`
 
+	// Events: A list of timestamped events.
+	Events []*TimestampedEvent `json:"events,omitempty"`
+
 	// Result: The operation has finished with the given result.
 	Result *Status `json:"result,omitempty"`
 
@@ -1791,6 +1794,39 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TimestampedEvent: An event that occured in the operation assigned to
+// the
+// worker and the time of occurance.
+type TimestampedEvent struct {
+	// Data: The event data.
+	Data googleapi.RawMessage `json:"data,omitempty"`
+
+	// Timestamp: The time when the event happened.
+	Timestamp string `json:"timestamp,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Data") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Data") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimestampedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod TimestampedEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UnexpectedExitStatusEvent: An event generated when the execution of a
 // container results in a
 // non-zero exit status that was not otherwise ignored. Execution
@@ -2140,7 +2176,7 @@ func (c *PipelinesRunCall) Header() http.Header {
 
 func (c *PipelinesRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2280,7 +2316,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2437,7 +2473,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2643,7 +2679,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2818,7 +2854,7 @@ func (c *WorkersCheckInCall) Header() http.Header {
 
 func (c *WorkersCheckInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -247,6 +247,47 @@ func (s *Assignment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BiReservation: Represents a BI Reservation.
+type BiReservation struct {
+	// Name: The resource name of the singleton BI reservation.
+	// Reservation names have the
+	// form
+	// `projects/{project_id}/locations/{location_id}/bireservation`.
+	Name string `json:"name,omitempty"`
+
+	// Size: Size of a reservation, in bytes.
+	Size int64 `json:"size,omitempty,string"`
+
+	// UpdateTime: Output only. The last update timestamp of a reservation.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BiReservation) MarshalJSON() ([]byte, error) {
+	type NoMethod BiReservation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CapacityCommitment: Capacity commitment is a way to purchase compute
 // capacity for BigQuery jobs
 // (in the form of slots) with some minimum committed period of usage.
@@ -844,7 +885,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -934,6 +975,151 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 
 }
 
+// method id "bigqueryreservation.projects.locations.getBiReservation":
+
+type ProjectsLocationsGetBiReservationCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetBiReservation: Retrieves a BI reservation.
+func (r *ProjectsLocationsService) GetBiReservation(name string) *ProjectsLocationsGetBiReservationCall {
+	c := &ProjectsLocationsGetBiReservationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGetBiReservationCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetBiReservationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGetBiReservationCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetBiReservationCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGetBiReservationCall) Context(ctx context.Context) *ProjectsLocationsGetBiReservationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGetBiReservationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetBiReservationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigqueryreservation.projects.locations.getBiReservation" call.
+// Exactly one of *BiReservation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *BiReservation.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGetBiReservationCall) Do(opts ...googleapi.CallOption) (*BiReservation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BiReservation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a BI reservation.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/biReservation",
+	//   "httpMethod": "GET",
+	//   "id": "bigqueryreservation.projects.locations.getBiReservation",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the requested reservation, for example:\n`projects/{project_id}/locations/{location_id}/bireservation`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/biReservation$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "BiReservation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "bigqueryreservation.projects.locations.list":
 
 type ProjectsLocationsListCall struct {
@@ -1011,7 +1197,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1238,7 +1424,7 @@ func (c *ProjectsLocationsSearchAssignmentsCall) Header() http.Header {
 
 func (c *ProjectsLocationsSearchAssignmentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1365,6 +1551,307 @@ func (c *ProjectsLocationsSearchAssignmentsCall) Pages(ctx context.Context, f fu
 	}
 }
 
+// method id "bigqueryreservation.projects.locations.updateBiReservation":
+
+type ProjectsLocationsUpdateBiReservationCall struct {
+	s             *Service
+	name          string
+	bireservation *BiReservation
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// UpdateBiReservation: Updates a BI reservation.
+// Only fields specified in the field_mask are updated.
+// Singleton BI reservation always exists with default size 0.
+// In order to reserve BI capacity it needs to be updated to an
+// amount
+// greater than 0. In order to release BI capacity reservation size
+// must be set to 0.
+func (r *ProjectsLocationsService) UpdateBiReservation(name string, bireservation *BiReservation) *ProjectsLocationsUpdateBiReservationCall {
+	c := &ProjectsLocationsUpdateBiReservationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.bireservation = bireservation
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": A list of fields
+// to be updated in this request.
+func (c *ProjectsLocationsUpdateBiReservationCall) UpdateMask(updateMask string) *ProjectsLocationsUpdateBiReservationCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsUpdateBiReservationCall) Fields(s ...googleapi.Field) *ProjectsLocationsUpdateBiReservationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsUpdateBiReservationCall) Context(ctx context.Context) *ProjectsLocationsUpdateBiReservationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsUpdateBiReservationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUpdateBiReservationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bireservation)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigqueryreservation.projects.locations.updateBiReservation" call.
+// Exactly one of *BiReservation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *BiReservation.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsUpdateBiReservationCall) Do(opts ...googleapi.CallOption) (*BiReservation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BiReservation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a BI reservation.\nOnly fields specified in the field_mask are updated.\nSingleton BI reservation always exists with default size 0.\nIn order to reserve BI capacity it needs to be updated to an amount\ngreater than 0. In order to release BI capacity reservation size\nmust be set to 0.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/biReservation",
+	//   "httpMethod": "PATCH",
+	//   "id": "bigqueryreservation.projects.locations.updateBiReservation",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the singleton BI reservation.\nReservation names have the form\n`projects/{project_id}/locations/{location_id}/bireservation`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/biReservation$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "A list of fields to be updated in this request.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "request": {
+	//     "$ref": "BiReservation"
+	//   },
+	//   "response": {
+	//     "$ref": "BiReservation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "bigqueryreservation.projects.locations.capacityCommitments.create":
+
+type ProjectsLocationsCapacityCommitmentsCreateCall struct {
+	s                  *Service
+	parent             string
+	capacitycommitment *CapacityCommitment
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Create: Creates a new capacity commitment resource.
+func (r *ProjectsLocationsCapacityCommitmentsService) Create(parent string, capacitycommitment *CapacityCommitment) *ProjectsLocationsCapacityCommitmentsCreateCall {
+	c := &ProjectsLocationsCapacityCommitmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.capacitycommitment = capacitycommitment
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCapacityCommitmentsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCapacityCommitmentsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCapacityCommitmentsCreateCall) Context(ctx context.Context) *ProjectsLocationsCapacityCommitmentsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCapacityCommitmentsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCapacityCommitmentsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.capacitycommitment)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/capacityCommitments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigqueryreservation.projects.locations.capacityCommitments.create" call.
+// Exactly one of *CapacityCommitment or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *CapacityCommitment.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCapacityCommitmentsCreateCall) Do(opts ...googleapi.CallOption) (*CapacityCommitment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CapacityCommitment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new capacity commitment resource.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/capacityCommitments",
+	//   "httpMethod": "POST",
+	//   "id": "bigqueryreservation.projects.locations.capacityCommitments.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Resource name of the parent reservation. E.g.,\n   projects/myproject/locations/US",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/capacityCommitments",
+	//   "request": {
+	//     "$ref": "CapacityCommitment"
+	//   },
+	//   "response": {
+	//     "$ref": "CapacityCommitment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "bigqueryreservation.projects.locations.capacityCommitments.delete":
 
 type ProjectsLocationsCapacityCommitmentsDeleteCall struct {
@@ -1413,7 +1900,7 @@ func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1555,7 +2042,7 @@ func (c *ProjectsLocationsCapacityCommitmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1714,7 +2201,7 @@ func (c *ProjectsLocationsCapacityCommitmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1856,9 +2343,9 @@ func (r *ProjectsLocationsReservationsService) Create(parent string, reservation
 }
 
 // ReservationId sets the optional parameter "reservationId": The
-// reservation ID. This field must only contain alphanumeric characters
-// or
-// dash.
+// reservation ID. This field must only contain lower case
+// alphanumeric
+// characters or dash.
 func (c *ProjectsLocationsReservationsCreateCall) ReservationId(reservationId string) *ProjectsLocationsReservationsCreateCall {
 	c.urlParams_.Set("reservationId", reservationId)
 	return c
@@ -1891,7 +2378,7 @@ func (c *ProjectsLocationsReservationsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1971,7 +2458,7 @@ func (c *ProjectsLocationsReservationsCreateCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "reservationId": {
-	//       "description": "The reservation ID. This field must only contain alphanumeric characters or\ndash.",
+	//       "description": "The reservation ID. This field must only contain lower case alphanumeric\ncharacters or dash.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2038,7 +2525,7 @@ func (c *ProjectsLocationsReservationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2180,7 +2667,7 @@ func (c *ProjectsLocationsReservationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2354,7 +2841,7 @@ func (c *ProjectsLocationsReservationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2534,7 +3021,7 @@ func (c *ProjectsLocationsReservationsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2687,7 +3174,7 @@ func (c *ProjectsLocationsReservationsAssignmentsCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsReservationsAssignmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2840,7 +3327,7 @@ func (c *ProjectsLocationsReservationsAssignmentsDeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsReservationsAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3013,7 +3500,7 @@ func (c *ProjectsLocationsReservationsAssignmentsListCall) Header() http.Header 
 
 func (c *ProjectsLocationsReservationsAssignmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3191,7 +3678,7 @@ func (c *ProjectsLocationsReservationsAssignmentsMoveCall) Header() http.Header 
 
 func (c *ProjectsLocationsReservationsAssignmentsMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

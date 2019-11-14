@@ -137,6 +137,32 @@
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
+            "getBiReservation": {
+              "description": "Retrieves a BI reservation.",
+              "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/biReservation",
+              "httpMethod": "GET",
+              "id": "bigqueryreservation.projects.locations.getBiReservation",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Name of the requested reservation, for example:\n`projects/{project_id}/locations/{location_id}/bireservation`",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/locations/[^/]+/biReservation$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+name}",
+              "response": {
+                "$ref": "BiReservation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/bigquery",
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
             "list": {
               "description": "Lists information about the supported locations for this service.",
               "flatPath": "v1beta1/projects/{projectsId}/locations",
@@ -220,11 +246,75 @@
                 "https://www.googleapis.com/auth/bigquery",
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
+            },
+            "updateBiReservation": {
+              "description": "Updates a BI reservation.\nOnly fields specified in the field_mask are updated.\nSingleton BI reservation always exists with default size 0.\nIn order to reserve BI capacity it needs to be updated to an amount\ngreater than 0. In order to release BI capacity reservation size\nmust be set to 0.",
+              "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/biReservation",
+              "httpMethod": "PATCH",
+              "id": "bigqueryreservation.projects.locations.updateBiReservation",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "The resource name of the singleton BI reservation.\nReservation names have the form\n`projects/{project_id}/locations/{location_id}/bireservation`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/locations/[^/]+/biReservation$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "A list of fields to be updated in this request.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+name}",
+              "request": {
+                "$ref": "BiReservation"
+              },
+              "response": {
+                "$ref": "BiReservation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/bigquery",
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
             }
           },
           "resources": {
             "capacityCommitments": {
               "methods": {
+                "create": {
+                  "description": "Creates a new capacity commitment resource.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/capacityCommitments",
+                  "httpMethod": "POST",
+                  "id": "bigqueryreservation.projects.locations.capacityCommitments.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Resource name of the parent reservation. E.g.,\n   projects/myproject/locations/US",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+parent}/capacityCommitments",
+                  "request": {
+                    "$ref": "CapacityCommitment"
+                  },
+                  "response": {
+                    "$ref": "CapacityCommitment"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/bigquery",
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "delete": {
                   "description": "Deletes a capacity commitment. Attempting to delete capacity commitment\nbefore its commitment_end_time will fail with the error code\n`google.rpc.Code.FAILED_PRECONDITION`.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/capacityCommitments/{capacityCommitmentsId}",
@@ -335,7 +425,7 @@
                       "type": "string"
                     },
                     "reservationId": {
-                      "description": "The reservation ID. This field must only contain alphanumeric characters or\ndash.",
+                      "description": "The reservation ID. This field must only contain lower case alphanumeric\ncharacters or dash.",
                       "location": "query",
                       "type": "string"
                     }
@@ -615,7 +705,7 @@
       }
     }
   },
-  "revision": "20191029",
+  "revision": "20191106",
   "rootUrl": "https://bigqueryreservation.googleapis.com/",
   "schemas": {
     "Assignment": {
@@ -642,6 +732,27 @@
         },
         "name": {
           "description": "Output only. Name of the resource. E.g.:\nprojects/myproject/locations/US/reservations/team1-prod/assignments/123.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BiReservation": {
+      "description": "Represents a BI Reservation.",
+      "id": "BiReservation",
+      "properties": {
+        "name": {
+          "description": "The resource name of the singleton BI reservation.\nReservation names have the form\n`projects/{project_id}/locations/{location_id}/bireservation`.",
+          "type": "string"
+        },
+        "size": {
+          "description": "Size of a reservation, in bytes.",
+          "format": "int64",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Output only. The last update timestamp of a reservation.",
+          "format": "google-datetime",
           "type": "string"
         }
       },

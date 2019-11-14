@@ -6,28 +6,28 @@
           "description": "Index and serve your organization's data with Cloud Search"
         },
         "https://www.googleapis.com/auth/cloud_search.debug": {
-          "description": "New Service: https://www.googleapis.com/auth/cloud_search.debug"
+          "description": "Index and serve your organization's data with Cloud Search"
         },
         "https://www.googleapis.com/auth/cloud_search.indexing": {
-          "description": "New Service: https://www.googleapis.com/auth/cloud_search.indexing"
+          "description": "Index and serve your organization's data with Cloud Search"
         },
         "https://www.googleapis.com/auth/cloud_search.query": {
           "description": "Search your organization's data in the Cloud Search index"
         },
         "https://www.googleapis.com/auth/cloud_search.settings": {
-          "description": "New Service: https://www.googleapis.com/auth/cloud_search.settings"
+          "description": "Index and serve your organization's data with Cloud Search"
         },
         "https://www.googleapis.com/auth/cloud_search.settings.indexing": {
-          "description": "New Service: https://www.googleapis.com/auth/cloud_search.settings.indexing"
+          "description": "Index and serve your organization's data with Cloud Search"
         },
         "https://www.googleapis.com/auth/cloud_search.settings.query": {
-          "description": "New Service: https://www.googleapis.com/auth/cloud_search.settings.query"
+          "description": "Index and serve your organization's data with Cloud Search"
         },
         "https://www.googleapis.com/auth/cloud_search.stats": {
-          "description": "New Service: https://www.googleapis.com/auth/cloud_search.stats"
+          "description": "Index and serve your organization's data with Cloud Search"
         },
         "https://www.googleapis.com/auth/cloud_search.stats.indexing": {
-          "description": "New Service: https://www.googleapis.com/auth/cloud_search.stats.indexing"
+          "description": "Index and serve your organization's data with Cloud Search"
         }
       }
     }
@@ -135,7 +135,7 @@
             "items": {
               "methods": {
                 "checkAccess": {
-                  "description": "Checks whether an item is accessible by specified principal.",
+                  "description": "Checks whether an item is accessible by specified principal.\n\n**Note:** This API requires an admin account to execute.",
                   "flatPath": "v1/debug/datasources/{datasourcesId}/items/{itemsId}:checkAccess",
                   "httpMethod": "POST",
                   "id": "cloudsearch.debug.datasources.items.checkAccess",
@@ -169,7 +169,7 @@
                   ]
                 },
                 "searchByViewUrl": {
-                  "description": "Fetches the item whose viewUrl exactly matches that of the URL provided\nin the request.",
+                  "description": "Fetches the item whose viewUrl exactly matches that of the URL provided\nin the request.\n\n**Note:** This API requires an admin account to execute.",
                   "flatPath": "v1/debug/datasources/{datasourcesId}/items:searchByViewUrl",
                   "httpMethod": "POST",
                   "id": "cloudsearch.debug.datasources.items.searchByViewUrl",
@@ -202,7 +202,7 @@
                 "unmappedids": {
                   "methods": {
                     "list": {
-                      "description": "List all unmapped identities for a specific item.",
+                      "description": "List all unmapped identities for a specific item.\n\n**Note:** This API requires an admin account to execute.",
                       "flatPath": "v1/debug/datasources/{datasourcesId}/items/{itemsId}/unmappedids",
                       "httpMethod": "GET",
                       "id": "cloudsearch.debug.datasources.items.unmappedids.list",
@@ -254,7 +254,7 @@
             "items": {
               "methods": {
                 "listForunmappedidentity": {
-                  "description": "Lists names of items associated with an unmapped identity.",
+                  "description": "Lists names of items associated with an unmapped identity.\n\n**Note:** This API requires an admin account to execute.",
                   "flatPath": "v1/debug/identitysources/{identitysourcesId}/items:forunmappedidentity",
                   "httpMethod": "GET",
                   "id": "cloudsearch.debug.identitysources.items.listForunmappedidentity",
@@ -308,7 +308,7 @@
             "unmappedids": {
               "methods": {
                 "list": {
-                  "description": "Lists unmapped user identities for an identity source.",
+                  "description": "Lists unmapped user identities for an identity source.\n\n**Note:** This API requires an admin account to execute.",
                   "flatPath": "v1/debug/identitysources/{identitysourcesId}/unmappedids",
                   "httpMethod": "GET",
                   "id": "cloudsearch.debug.identitysources.unmappedids.list",
@@ -373,7 +373,7 @@
         "datasources": {
           "methods": {
             "deleteSchema": {
-              "description": "Deletes the schema of a data source.",
+              "description": "Deletes the schema of a data source.\n\n**Note:** This API requires an admin or service account to execute.",
               "flatPath": "v1/indexing/datasources/{datasourcesId}/schema",
               "httpMethod": "DELETE",
               "id": "cloudsearch.indexing.datasources.deleteSchema",
@@ -405,7 +405,7 @@
               ]
             },
             "getSchema": {
-              "description": "Gets the schema of a data source.",
+              "description": "Gets the schema of a data source.\n\n**Note:** This API requires an admin or service account to execute.",
               "flatPath": "v1/indexing/datasources/{datasourcesId}/schema",
               "httpMethod": "GET",
               "id": "cloudsearch.indexing.datasources.getSchema",
@@ -437,7 +437,7 @@
               ]
             },
             "updateSchema": {
-              "description": "Updates the schema of a data source.",
+              "description": "Updates the schema of a data source. This method does not perform\nincremental updates to the schema. Instead, this method updates the schema\nby overwriting the entire schema.\n\n**Note:** This API requires an admin or service account to execute.",
               "flatPath": "v1/indexing/datasources/{datasourcesId}/schema",
               "httpMethod": "PUT",
               "id": "cloudsearch.indexing.datasources.updateSchema",
@@ -793,7 +793,7 @@
     "media": {
       "methods": {
         "upload": {
-          "description": "Uploads media for indexing.\n\nThe upload endpoint supports direct and resumable upload protocols and\nis intended for large items that can not be\n[inlined during index requests](https://developers.google.com/cloud-search/docs/reference/rest/v1/indexing.datasources.items#itemcontent).\nTo index large content:\n\n1. Call\n   indexing.datasources.items.upload\n   with the resource name to begin an upload session and retrieve the\n   UploadItemRef.\n1. Call media.upload to upload the content using the same resource name from step 1.\n1. Call indexing.datasources.items.index\n   to index the item. Populate the\n   [ItemContent](/cloud-search/docs/reference/rest/v1/indexing.datasources.items#ItemContent)\n   with the UploadItemRef from step 1.\n\n\nFor additional information, see\n[Create a content connector using the REST API](https://developers.google.com/cloud-search/docs/guides/content-connector#rest).",
+          "description": "Uploads media for indexing.\n\nThe upload endpoint supports direct and resumable upload protocols and\nis intended for large items that can not be\n[inlined during index requests](https://developers.google.com/cloud-search/docs/reference/rest/v1/indexing.datasources.items#itemcontent).\nTo index large content:\n\n1. Call\n   indexing.datasources.items.upload\n   with the resource name to begin an upload session and retrieve the\n   UploadItemRef.\n1. Call media.upload to upload the content using the same resource name from step 1.\n1. Call indexing.datasources.items.index\n   to index the item. Populate the\n   [ItemContent](/cloud-search/docs/reference/rest/v1/indexing.datasources.items#ItemContent)\n   with the UploadItemRef from step 1.\n\n\nFor additional information, see\n[Create a content connector using the REST API](https://developers.google.com/cloud-search/docs/guides/content-connector#rest).\n\n  **Note:** This API requires a service account to execute.",
           "flatPath": "v1/media/{mediaId}",
           "httpMethod": "POST",
           "id": "cloudsearch.media.upload",
@@ -872,7 +872,7 @@
     "query": {
       "methods": {
         "search": {
-          "description": "The Cloud Search Query API provides the search method, which returns\nthe most relevant results from a user query.  The results can come from\nG Suite Apps, such as Gmail or Google Drive, or they can come from data\nthat you have indexed from a third party.",
+          "description": "The Cloud Search Query API provides the search method, which returns\nthe most relevant results from a user query.  The results can come from\nG Suite Apps, such as Gmail or Google Drive, or they can come from data\nthat you have indexed from a third party.\n\n**Note:** This API requires a standard end user account to execute.",
           "flatPath": "v1/query/search",
           "httpMethod": "POST",
           "id": "cloudsearch.query.search",
@@ -891,7 +891,7 @@
           ]
         },
         "suggest": {
-          "description": "Provides suggestions for autocompleting the query.",
+          "description": "Provides suggestions for autocompleting the query.\n\n**Note:** This API requires a standard end user account to execute.",
           "flatPath": "v1/query/suggest",
           "httpMethod": "POST",
           "id": "cloudsearch.query.suggest",
@@ -914,7 +914,7 @@
         "sources": {
           "methods": {
             "list": {
-              "description": "Returns list of sources that user can use for Search and Suggest APIs.",
+              "description": "Returns list of sources that user can use for Search and Suggest APIs.\n\n**Note:** This API requires a standard end user account to execute.",
               "flatPath": "v1/query/sources",
               "httpMethod": "GET",
               "id": "cloudsearch.query.sources.list",
@@ -964,7 +964,7 @@
         "datasources": {
           "methods": {
             "create": {
-              "description": "Creates a datasource.",
+              "description": "Creates a datasource.\n\n**Note:** This API requires an admin account to execute.",
               "flatPath": "v1/settings/datasources",
               "httpMethod": "POST",
               "id": "cloudsearch.settings.datasources.create",
@@ -984,7 +984,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes a datasource.",
+              "description": "Deletes a datasource.\n\n**Note:** This API requires an admin account to execute.",
               "flatPath": "v1/settings/datasources/{datasourcesId}",
               "httpMethod": "DELETE",
               "id": "cloudsearch.settings.datasources.delete",
@@ -1016,7 +1016,7 @@
               ]
             },
             "get": {
-              "description": "Gets a datasource.",
+              "description": "Gets a datasource.\n\n**Note:** This API requires an admin account to execute.",
               "flatPath": "v1/settings/datasources/{datasourcesId}",
               "httpMethod": "GET",
               "id": "cloudsearch.settings.datasources.get",
@@ -1048,7 +1048,7 @@
               ]
             },
             "list": {
-              "description": "Lists datasources.",
+              "description": "Lists datasources.\n\n**Note:** This API requires an admin account to execute.",
               "flatPath": "v1/settings/datasources",
               "httpMethod": "GET",
               "id": "cloudsearch.settings.datasources.list",
@@ -1082,7 +1082,7 @@
               ]
             },
             "update": {
-              "description": "Updates a datasource.",
+              "description": "Updates a datasource.\n\n**Note:** This API requires an admin account to execute.",
               "flatPath": "v1/settings/datasources/{datasourcesId}",
               "httpMethod": "PUT",
               "id": "cloudsearch.settings.datasources.update",
@@ -1116,7 +1116,7 @@
         "searchapplications": {
           "methods": {
             "create": {
-              "description": "Creates a search application.",
+              "description": "Creates a search application.\n\n**Note:** This API requires an admin account to execute.",
               "flatPath": "v1/settings/searchapplications",
               "httpMethod": "POST",
               "id": "cloudsearch.settings.searchapplications.create",
@@ -1136,7 +1136,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes a search application.",
+              "description": "Deletes a search application.\n\n**Note:** This API requires an admin account to execute.",
               "flatPath": "v1/settings/searchapplications/{searchapplicationsId}",
               "httpMethod": "DELETE",
               "id": "cloudsearch.settings.searchapplications.delete",
@@ -1168,7 +1168,7 @@
               ]
             },
             "get": {
-              "description": "Gets the specified search application.",
+              "description": "Gets the specified search application.\n\n**Note:** This API requires an admin account to execute.",
               "flatPath": "v1/settings/searchapplications/{searchapplicationsId}",
               "httpMethod": "GET",
               "id": "cloudsearch.settings.searchapplications.get",
@@ -1200,7 +1200,7 @@
               ]
             },
             "list": {
-              "description": "Lists all search applications.",
+              "description": "Lists all search applications.\n\n**Note:** This API requires an admin account to execute.",
               "flatPath": "v1/settings/searchapplications",
               "httpMethod": "GET",
               "id": "cloudsearch.settings.searchapplications.list",
@@ -1234,7 +1234,7 @@
               ]
             },
             "reset": {
-              "description": "Resets a search application to default settings. This will return an empty\nresponse.",
+              "description": "Resets a search application to default settings. This will return an empty\nresponse.\n\n**Note:** This API requires an admin account to execute.",
               "flatPath": "v1/settings/searchapplications/{searchapplicationsId}:reset",
               "httpMethod": "POST",
               "id": "cloudsearch.settings.searchapplications.reset",
@@ -1264,7 +1264,7 @@
               ]
             },
             "update": {
-              "description": "Updates a search application.",
+              "description": "Updates a search application.\n\n**Note:** This API requires an admin account to execute.",
               "flatPath": "v1/settings/searchapplications/{searchapplicationsId}",
               "httpMethod": "PUT",
               "id": "cloudsearch.settings.searchapplications.update",
@@ -1300,7 +1300,7 @@
     "stats": {
       "methods": {
         "getIndex": {
-          "description": "Gets indexed item statistics aggreggated across all data sources. This\nAPI only returns statistics for previous dates; it doesn't return\nstatistics for the current day.",
+          "description": "Gets indexed item statistics aggreggated across all data sources. This\nAPI only returns statistics for previous dates; it doesn't return\nstatistics for the current day.\n\n**Note:** This API requires a standard end user account to execute.",
           "flatPath": "v1/stats/index",
           "httpMethod": "GET",
           "id": "cloudsearch.stats.getIndex",
@@ -1354,7 +1354,7 @@
           ]
         },
         "getQuery": {
-          "description": "Get the query statistics for customer",
+          "description": "Get the query statistics for customer.\n\n**Note:** This API requires a standard end user account to execute.",
           "flatPath": "v1/stats/query",
           "httpMethod": "GET",
           "id": "cloudsearch.stats.getQuery",
@@ -1408,7 +1408,7 @@
           ]
         },
         "getSession": {
-          "description": "Get the # of search sessions for the customer",
+          "description": "Get the # of search sessions, % of successful sessions with a click query\nstatistics for customer.\n\n**Note:** This API requires a standard end user account to execute.",
           "flatPath": "v1/stats/session",
           "httpMethod": "GET",
           "id": "cloudsearch.stats.getSession",
@@ -1462,7 +1462,7 @@
           ]
         },
         "getUser": {
-          "description": "Get the users statistics for customer",
+          "description": "Get the users statistics for customer.\n\n**Note:** This API requires a standard end user account to execute.",
           "flatPath": "v1/stats/user",
           "httpMethod": "GET",
           "id": "cloudsearch.stats.getUser",
@@ -1522,7 +1522,7 @@
             "datasources": {
               "methods": {
                 "get": {
-                  "description": "Gets indexed item statistics for a single data source.",
+                  "description": "Gets indexed item statistics for a single data source.\n\n**Note:** This API requires a standard end user account to execute.",
                   "flatPath": "v1/stats/index/datasources/{datasourcesId}",
                   "httpMethod": "GET",
                   "id": "cloudsearch.stats.index.datasources.get",
@@ -1593,7 +1593,7 @@
             "searchapplications": {
               "methods": {
                 "get": {
-                  "description": "Get the query statistics for search application",
+                  "description": "Get the query statistics for search application.\n\n**Note:** This API requires a standard end user account to execute.",
                   "flatPath": "v1/stats/query/searchapplications/{searchapplicationsId}",
                   "httpMethod": "GET",
                   "id": "cloudsearch.stats.query.searchapplications.get",
@@ -1664,7 +1664,7 @@
             "searchapplications": {
               "methods": {
                 "get": {
-                  "description": "Get the # of search sessions for the search application",
+                  "description": "Get the # of search sessions, % of successful sessions with a click query\nstatistics for search application.\n\n**Note:** This API requires a standard end user account to execute.",
                   "flatPath": "v1/stats/session/searchapplications/{searchapplicationsId}",
                   "httpMethod": "GET",
                   "id": "cloudsearch.stats.session.searchapplications.get",
@@ -1735,7 +1735,7 @@
             "searchapplications": {
               "methods": {
                 "get": {
-                  "description": "Get the users statistics for search application",
+                  "description": "Get the users statistics for search application.\n\n**Note:** This API requires a standard end user account to execute.",
                   "flatPath": "v1/stats/user/searchapplications/{searchapplicationsId}",
                   "httpMethod": "GET",
                   "id": "cloudsearch.stats.user.searchapplications.get",
@@ -1804,7 +1804,7 @@
       }
     }
   },
-  "revision": "20191009",
+  "revision": "20191112",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -2625,158 +2625,6 @@
             "$ref": "SearchApplicationUserStats"
           },
           "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "GmailActionRestrict": {
-      "description": "Gmail Action restricts (i.e. read/replied/snoozed).",
-      "id": "GmailActionRestrict",
-      "properties": {
-        "type": {
-          "enum": [
-            "UNSPECIFIED",
-            "UNREAD",
-            "READ",
-            "REPLIED_TO",
-            "MUTED"
-          ],
-          "enumDescriptions": [
-            "",
-            "is:unread",
-            "is:read",
-            "label:^io_re",
-            "label:mute"
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GmailAttachmentRestrict": {
-      "description": "Gmail Attachment restricts (i.e. has:attachment, has:drive, filename:pdf).",
-      "id": "GmailAttachmentRestrict",
-      "properties": {
-        "type": {
-          "enum": [
-            "UNSPECIFIED",
-            "HAS_ATTACHMENT",
-            "HAS_PHOTO",
-            "HAS_DRIVE",
-            "HAS_DOCUMENT",
-            "HAS_SPREADSHEET",
-            "HAS_PRESENTATION",
-            "HAS_YOUTUBE",
-            "HAS_PDF"
-          ],
-          "enumDescriptions": [
-            "",
-            "has:attachment",
-            "has photos (changes to filename:(jpg OR jpeg OR png)  when typed)",
-            "has:drive",
-            "has:document",
-            "has:spreadsheet",
-            "has:presentation",
-            "has:youtube",
-            "filename:pdf"
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GmailFolderRestrict": {
-      "description": "Gmail Folder restricts (i.e. in Drafts/Sent/Chats/User Generated Labels).",
-      "id": "GmailFolderRestrict",
-      "properties": {
-        "type": {
-          "enum": [
-            "UNSPECIFIED",
-            "IN_SENT",
-            "IN_DRAFT",
-            "CHATS",
-            "IN_TRASH",
-            "USER_GENERATED_LABEL"
-          ],
-          "enumDescriptions": [
-            "",
-            "in:sent",
-            "in:draft",
-            "label:chats",
-            "in:trash",
-            "label:\u003cuser generated\u003e"
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GmailIntelligentRestrict": {
-      "description": "Gmail Intelligent restricts (i.e. smartlabels, important).",
-      "id": "GmailIntelligentRestrict",
-      "properties": {
-        "type": {
-          "enum": [
-            "UNSPECIFIED",
-            "SOCIAL",
-            "UPDATES",
-            "FORUMS",
-            "PROMOTIONS",
-            "IMPORTANT",
-            "FLIGHT_RESERVATION",
-            "LODGING_RESERVATION",
-            "CAR_RESERVATION",
-            "BUS_RESERVATION"
-          ],
-          "enumDescriptions": [
-            "",
-            "category:social",
-            "category:updates",
-            "category:forums",
-            "category:promotions",
-            "is:important",
-            "label:^cob_sm_flightreservation",
-            "label:^cob_sm_lodgingreservation",
-            "label:^cob_sm_rentalcarreservation",
-            "label:^cob_sm_busreservation"
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GmailTimeRestrict": {
-      "description": "Gmail Time restricts (i.e. received today, this week).",
-      "id": "GmailTimeRestrict",
-      "properties": {
-        "type": {
-          "enum": [
-            "UNSPECIFIED",
-            "FROM_THIS_WEEK",
-            "OLDER_THAN_ONE_YEAR",
-            "FROM_TODAY",
-            "FROM_YESTERDAY",
-            "FROM_THIS_MONTH",
-            "FROM_CERTAIN_MONTH",
-            "OLDER_THAN_TODAY",
-            "OLDER_THAN_YESTERDAY",
-            "OLDER_THAN_A_WEEK",
-            "OLDER_THAN_A_MONTH"
-          ],
-          "enumDescriptions": [
-            "",
-            "newer_than:7d",
-            "older_than:1y",
-            "newer_than:1d",
-            "newer_than:2d older_than:1d",
-            "newer_than:30d",
-            "This will read as something like \"From November\" and will have operator\nbefore:X after:Y",
-            "older_than:1d",
-            "older_than:2d",
-            "older_than:7d",
-            "older_than:30d"
-          ],
-          "type": "string"
         }
       },
       "type": "object"
@@ -3671,7 +3519,7 @@
           "description": "Common debug options."
         },
         "limit": {
-          "description": "Maximum number of items to return.\n\u003cbr /\u003eThe maximum and the default value is 1000",
+          "description": "Maximum number of items to return.\n\u003cbr /\u003eThe maximum value is 100 and the default value is 20.",
           "format": "int32",
           "type": "integer"
         },
@@ -3955,12 +3803,14 @@
           "enum": [
             "UNSPECIFIED",
             "QUERY_HAS_NATURAL_LANGUAGE_INTENT",
+            "NOT_ENOUGH_RESULTS_FOUND_FOR_USER_QUERY",
             "NO_RESULTS_FOUND_FOR_USER_QUERY"
           ],
           "enumDescriptions": [
             "",
             "Natural language interpretation of the query is used to fetch the search\nresults.",
-            "The following values are returned only when interpretation type is\nREPLACE.\nThe search results are replaced by ones which are retrieved through a\nmuch broader version of the query since no results were found for the\nuser query. Interpreted query will be empty for the following case."
+            "A much broader version of the query is used to retrieve the search\nresults since enough results were not found for the user query.\nInterpreted query will be empty for this case.",
+            ""
           ],
           "type": "string"
         }
@@ -4206,22 +4056,6 @@
         },
         "driveTimeSpanRestrict": {
           "$ref": "DriveTimeSpanRestrict"
-        },
-        "gmailActionRestrict": {
-          "$ref": "GmailActionRestrict"
-        },
-        "gmailAttachmentRestrict": {
-          "$ref": "GmailAttachmentRestrict"
-        },
-        "gmailFolderRestrict": {
-          "$ref": "GmailFolderRestrict",
-          "description": "Gmail Types."
-        },
-        "gmailIntelligentRestrict": {
-          "$ref": "GmailIntelligentRestrict"
-        },
-        "gmailTimeRestrict": {
-          "$ref": "GmailTimeRestrict"
         },
         "searchOperator": {
           "description": "The search restrict (e.g. \"after:2017-09-11 before:2017-09-12\").",
@@ -4903,7 +4737,7 @@
       "id": "SuggestRequest",
       "properties": {
         "dataSourceRestrictions": {
-          "description": "The sources to use for suggestions. If not specified, all data sources\nfrom the current search application are used.\nSuggestions are based on Gmail titles. Suggestions from third party sources\nare not available.",
+          "description": "The sources to use for suggestions. If not specified, the data sources\nare taken from the current search application.\n\nNOTE: Suggestions are supported only for third party data sources and\npeople (i.e. PredefinedSource.PERSON).",
           "items": {
             "$ref": "DataSourceRestriction"
           },

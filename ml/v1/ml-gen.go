@@ -604,6 +604,76 @@ func (s *GoogleCloudMlV1__Config) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudMlV1__ExplainRequest: Request for explanations to be
+// issued against a trained model.
+type GoogleCloudMlV1__ExplainRequest struct {
+	// HttpBody: Required.
+	// The explanation request body.
+	HttpBody *GoogleApi__HttpBody `json:"httpBody,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HttpBody") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HttpBody") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__ExplainRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__ExplainRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1__ExplanationConfig: Message holding configuration
+// options for explaining model predictions.
+// Currently, the only supported mechanism to explain a model's
+// prediction is
+// through attributing its output back to its inputs which is
+// essentially a
+// credit assignment task. We support multiple attribution methods,
+// some
+// specific to particular frameworks like Tensorflow and XGBoost.
+// Next idx: 7.
+type GoogleCloudMlV1__ExplanationConfig struct {
+	IntegratedGradientsAttribution *GoogleCloudMlV1__IntegratedGradientsAttribution `json:"integratedGradientsAttribution,omitempty"`
+
+	SampledShapleyAttribution *GoogleCloudMlV1__SampledShapleyAttribution `json:"sampledShapleyAttribution,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "IntegratedGradientsAttribution") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "IntegratedGradientsAttribution") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__ExplanationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__ExplanationConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudMlV1__GetConfigResponse: Returns service account
 // information associated with a project.
 type GoogleCloudMlV1__GetConfigResponse struct {
@@ -830,6 +900,42 @@ type GoogleCloudMlV1__HyperparameterSpec struct {
 
 func (s *GoogleCloudMlV1__HyperparameterSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudMlV1__HyperparameterSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1__IntegratedGradientsAttribution: Attributes credit by
+// computing the Aumann-Shapley value taking advantage
+// of the model's fully differentiable structure. Refer to this paper
+// for
+// more details: http://proceedings.mlr.press/v70/sundararajan17a.html
+type GoogleCloudMlV1__IntegratedGradientsAttribution struct {
+	// NumIntegralSteps: Number of steps for approximating the path
+	// integral.
+	// A good value to start is 50 and gradually increase until the
+	// sum to diff property is met within the desired error range.
+	NumIntegralSteps int64 `json:"numIntegralSteps,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NumIntegralSteps") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NumIntegralSteps") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__IntegratedGradientsAttribution) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__IntegratedGradientsAttribution
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1847,6 +1953,41 @@ func (s *GoogleCloudMlV1__RequestLoggingConfig) UnmarshalJSON(data []byte) error
 	return nil
 }
 
+// GoogleCloudMlV1__SampledShapleyAttribution: An attribution method
+// that approximates Shapley values for features that
+// contribute to the label being predicted. A sampling strategy is used
+// to
+// approximate the value rather than considering all subsets of
+// features.
+type GoogleCloudMlV1__SampledShapleyAttribution struct {
+	// NumPaths: The number of feature permutations to consider when
+	// approximating the
+	// shapley values.
+	NumPaths int64 `json:"numPaths,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NumPaths") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NumPaths") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__SampledShapleyAttribution) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__SampledShapleyAttribution
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudMlV1__SetDefaultVersionRequest: Request message for the
 // SetDefaultVersion request.
 type GoogleCloudMlV1__SetDefaultVersionRequest struct {
@@ -2351,6 +2492,12 @@ type GoogleCloudMlV1__Version struct {
 	// `UpdateVersion` to
 	// ensure that their change will be applied to the model as intended.
 	Etag string `json:"etag,omitempty"`
+
+	// ExplanationConfig: Optional. Configures explainability features on
+	// the model's version.
+	// Some explanation features require additional metadata to be loaded
+	// as part of the model payload.
+	ExplanationConfig *GoogleCloudMlV1__ExplanationConfig `json:"explanationConfig,omitempty"`
 
 	// Framework: Optional. The machine learning framework AI Platform uses
 	// to train
@@ -2955,9 +3102,9 @@ type GoogleIamV1__Policy struct {
 	// existing
 	// policy is overwritten. Due to blind-set semantics of an etag-less
 	// policy,
-	// 'setIamPolicy' will not fail even if either of incoming or stored
-	// policy
-	// does not meet the version requirements.
+	// 'setIamPolicy' will not fail even if the incoming policy version does
+	// not
+	// meet the requirements for modifying the stored policy.
 	Etag string `json:"etag,omitempty"`
 
 	// Version: Specifies the format of the policy.
@@ -2970,15 +3117,16 @@ type GoogleIamV1__Policy struct {
 	// This can
 	// be either setting a conditional policy, modifying a conditional
 	// binding,
-	// or removing a conditional binding from the stored conditional
-	// policy.
+	// or removing a binding (conditional or unconditional) from the
+	// stored
+	// conditional policy.
 	// Operations on non-conditional policies may specify any valid value
 	// or
 	// leave the field unset.
 	//
-	// If no etag is provided in the call to `setIamPolicy`, any
-	// version
-	// compliance checks on the incoming and/or stored policy is skipped.
+	// If no etag is provided in the call to `setIamPolicy`, version
+	// compliance
+	// checks against the stored policy is skipped.
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3358,6 +3506,152 @@ func (s *GoogleType__Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "ml.projects.explain":
+
+type ProjectsExplainCall struct {
+	s                               *Service
+	name                            string
+	googlecloudmlv1__explainrequest *GoogleCloudMlV1__ExplainRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// Explain: Performs explanation on the data in the request.
+// AI Platform implements a custom `explain` verb on top of an HTTP
+// POST
+// method. <p>For details of the request and response format, see the
+// **guide
+// to the [explain request
+// format](/ml-engine/docs/v1/explain-request)**.
+func (r *ProjectsService) Explain(name string, googlecloudmlv1__explainrequest *GoogleCloudMlV1__ExplainRequest) *ProjectsExplainCall {
+	c := &ProjectsExplainCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudmlv1__explainrequest = googlecloudmlv1__explainrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsExplainCall) Fields(s ...googleapi.Field) *ProjectsExplainCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsExplainCall) Context(ctx context.Context) *ProjectsExplainCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsExplainCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsExplainCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmlv1__explainrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:explain")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ml.projects.explain" call.
+// Exactly one of *GoogleApi__HttpBody or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleApi__HttpBody.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsExplainCall) Do(opts ...googleapi.CallOption) (*GoogleApi__HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleApi__HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Performs explanation on the data in the request.\nAI Platform implements a custom `explain` verb on top of an HTTP POST\nmethod. \u003cp\u003eFor details of the request and response format, see the **guide\nto the [explain request format](/ml-engine/docs/v1/explain-request)**.",
+	//   "flatPath": "v1/projects/{projectsId}:explain",
+	//   "httpMethod": "POST",
+	//   "id": "ml.projects.explain",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of a model or a version.\n\nAuthorization: requires the `predict` permission on the specified resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/.+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:explain",
+	//   "request": {
+	//     "$ref": "GoogleCloudMlV1__ExplainRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleApi__HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "ml.projects.getConfig":
 
 type ProjectsGetConfigCall struct {
@@ -3419,7 +3713,7 @@ func (c *ProjectsGetConfigCall) Header() http.Header {
 
 func (c *ProjectsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3561,7 +3855,7 @@ func (c *ProjectsPredictCall) Header() http.Header {
 
 func (c *ProjectsPredictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3706,7 +4000,7 @@ func (c *ProjectsJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3846,7 +4140,7 @@ func (c *ProjectsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3995,7 +4289,7 @@ func (c *ProjectsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4160,7 +4454,7 @@ func (c *ProjectsJobsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4357,7 +4651,7 @@ func (c *ProjectsJobsListCall) Header() http.Header {
 
 func (c *ProjectsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4561,7 +4855,7 @@ func (c *ProjectsJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4712,7 +5006,7 @@ func (c *ProjectsJobsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4862,7 +5156,7 @@ func (c *ProjectsJobsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsJobsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5014,7 +5308,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5182,7 +5476,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5358,7 +5652,7 @@ func (c *ProjectsModelsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5503,7 +5797,7 @@ func (c *ProjectsModelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5648,7 +5942,7 @@ func (c *ProjectsModelsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5813,7 +6107,7 @@ func (c *ProjectsModelsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6001,7 +6295,7 @@ func (c *ProjectsModelsListCall) Header() http.Header {
 
 func (c *ProjectsModelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6203,7 +6497,7 @@ func (c *ProjectsModelsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6354,7 +6648,7 @@ func (c *ProjectsModelsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6504,7 +6798,7 @@ func (c *ProjectsModelsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsModelsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6659,7 +6953,7 @@ func (c *ProjectsModelsVersionsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6805,7 +7099,7 @@ func (c *ProjectsModelsVersionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6954,7 +7248,7 @@ func (c *ProjectsModelsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7138,7 +7432,7 @@ func (c *ProjectsModelsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7343,7 +7637,7 @@ func (c *ProjectsModelsVersionsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7500,7 +7794,7 @@ func (c *ProjectsModelsVersionsSetDefaultCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsSetDefaultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7655,7 +7949,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7800,7 +8094,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7981,7 +8275,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

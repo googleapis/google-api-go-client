@@ -1423,6 +1423,366 @@
         }
       }
     },
+    "services": {
+      "methods": {
+        "create": {
+          "description": "Create a Service.",
+          "flatPath": "v3/{v3Id}/{v3Id1}/services",
+          "httpMethod": "POST",
+          "id": "monitoring.services.create",
+          "parameterOrder": [
+            "parent"
+          ],
+          "parameters": {
+            "parent": {
+              "description": "Resource name of the parent workspace. Of the form projects/{project_id}.",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+$",
+              "required": true,
+              "type": "string"
+            },
+            "serviceId": {
+              "description": "Optional. The Service id to use for this Service. If omitted, an id will be generated instead. Must match the pattern a-z0-9-+",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "v3/{+parent}/services",
+          "request": {
+            "$ref": "Service"
+          },
+          "response": {
+            "$ref": "Service"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/monitoring"
+          ]
+        },
+        "delete": {
+          "description": "Soft delete this Service.",
+          "flatPath": "v3/{v3Id}/{v3Id1}/services/{servicesId}",
+          "httpMethod": "DELETE",
+          "id": "monitoring.services.delete",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Resource name of the Service to delete. Of the form projects/{project_id}/service/{service_id}.",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+/services/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v3/{+name}",
+          "response": {
+            "$ref": "Empty"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/monitoring"
+          ]
+        },
+        "get": {
+          "description": "Get the named Service.",
+          "flatPath": "v3/{v3Id}/{v3Id1}/services/{servicesId}",
+          "httpMethod": "GET",
+          "id": "monitoring.services.get",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Resource name of the Service. Of the form projects/{project_id}/services/{service_id}.",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+/services/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v3/{+name}",
+          "response": {
+            "$ref": "Service"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/monitoring",
+            "https://www.googleapis.com/auth/monitoring.read"
+          ]
+        },
+        "list": {
+          "description": "List Services for this workspace.",
+          "flatPath": "v3/{v3Id}/{v3Id1}/services",
+          "httpMethod": "GET",
+          "id": "monitoring.services.list",
+          "parameterOrder": [
+            "parent"
+          ],
+          "parameters": {
+            "filter": {
+              "description": "A filter specifying what Services to return. The filter currently supports the following fields:\n- `identifier_case`\n- `app_engine.module_id`\n- `cloud_endpoints.service`\n- `cluster_istio.location`\n- `cluster_istio.cluster_name`\n- `cluster_istio.service_namespace`\n- `cluster_istio.service_name`\nidentifier_case refers to which option in the identifier oneof is populated. For example, the filter identifier_case = \"CUSTOM\" would match all services with a value for the custom field. Valid options are \"CUSTOM\", \"APP_ENGINE\", \"CLOUD_ENDPOINTS\", and \"CLUSTER_ISTIO\".",
+              "location": "query",
+              "type": "string"
+            },
+            "pageSize": {
+              "description": "A non-negative number that is the maximum number of results to return. When 0, use default page size.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "pageToken": {
+              "description": "If this field is not empty then it must contain the nextPageToken value returned by a previous call to this method. Using this field causes the method to return additional results from the previous method call.",
+              "location": "query",
+              "type": "string"
+            },
+            "parent": {
+              "description": "Resource name of the parent Workspace. Of the form projects/{project_id}.",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v3/{+parent}/services",
+          "response": {
+            "$ref": "ListServicesResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/monitoring",
+            "https://www.googleapis.com/auth/monitoring.read"
+          ]
+        },
+        "patch": {
+          "description": "Update this Service.",
+          "flatPath": "v3/{v3Id}/{v3Id1}/services/{servicesId}",
+          "httpMethod": "PATCH",
+          "id": "monitoring.services.patch",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Resource name for this Service. Of the form projects/{project_id}/services/{service_id}.",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+/services/[^/]+$",
+              "required": true,
+              "type": "string"
+            },
+            "updateMask": {
+              "description": "A set of field paths defining which fields to use for the update.",
+              "format": "google-fieldmask",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "v3/{+name}",
+          "request": {
+            "$ref": "Service"
+          },
+          "response": {
+            "$ref": "Service"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/monitoring"
+          ]
+        }
+      },
+      "resources": {
+        "serviceLevelObjectives": {
+          "methods": {
+            "create": {
+              "description": "Create a ServiceLevelObjective for the given Service.",
+              "flatPath": "v3/{v3Id}/{v3Id1}/services/{servicesId}/serviceLevelObjectives",
+              "httpMethod": "POST",
+              "id": "monitoring.services.serviceLevelObjectives.create",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Resource name of the parent Service. Of the form projects/{project_id}/services/{service_id}.",
+                  "location": "path",
+                  "pattern": "^[^/]+/[^/]+/services/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "serviceLevelObjectiveId": {
+                  "description": "Optional. The ServiceLevelObjective id to use for this ServiceLevelObjective. If omitted, an id will be generated instead. Must match the pattern a-z0-9-+",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v3/{+parent}/serviceLevelObjectives",
+              "request": {
+                "$ref": "ServiceLevelObjective"
+              },
+              "response": {
+                "$ref": "ServiceLevelObjective"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/monitoring"
+              ]
+            },
+            "delete": {
+              "description": "Delete the given ServiceLevelObjective.",
+              "flatPath": "v3/{v3Id}/{v3Id1}/services/{servicesId}/serviceLevelObjectives/{serviceLevelObjectivesId}",
+              "httpMethod": "DELETE",
+              "id": "monitoring.services.serviceLevelObjectives.delete",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Resource name of the ServiceLevelObjective to delete. Of the form projects/{project_id}/services/{service_id}/serviceLevelObjectives/{slo_name}.",
+                  "location": "path",
+                  "pattern": "^[^/]+/[^/]+/services/[^/]+/serviceLevelObjectives/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v3/{+name}",
+              "response": {
+                "$ref": "Empty"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/monitoring"
+              ]
+            },
+            "get": {
+              "description": "Get a ServiceLevelObjective by name.",
+              "flatPath": "v3/{v3Id}/{v3Id1}/services/{servicesId}/serviceLevelObjectives/{serviceLevelObjectivesId}",
+              "httpMethod": "GET",
+              "id": "monitoring.services.serviceLevelObjectives.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Resource name of the ServiceLevelObjective to get. Of the form projects/{project_id}/services/{service_id}/serviceLevelObjectives/{slo_name}.",
+                  "location": "path",
+                  "pattern": "^[^/]+/[^/]+/services/[^/]+/serviceLevelObjectives/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "view": {
+                  "description": "View of the ServiceLevelObjective to return. If DEFAULT, return the ServiceLevelObjective as originally defined. If EXPLICIT and the ServiceLevelObjective is defined in terms of a BasicSli, replace the BasicSli with a RequestBasedSli spelling out how the SLI is computed.",
+                  "enum": [
+                    "VIEW_UNSPECIFIED",
+                    "FULL",
+                    "EXPLICIT"
+                  ],
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v3/{+name}",
+              "response": {
+                "$ref": "ServiceLevelObjective"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/monitoring",
+                "https://www.googleapis.com/auth/monitoring.read"
+              ]
+            },
+            "list": {
+              "description": "List the ServiceLevelObjectives for the given Service.",
+              "flatPath": "v3/{v3Id}/{v3Id1}/services/{servicesId}/serviceLevelObjectives",
+              "httpMethod": "GET",
+              "id": "monitoring.services.serviceLevelObjectives.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "filter": {
+                  "description": "A filter specifying what ServiceLevelObjectives to return.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "pageSize": {
+                  "description": "A non-negative number that is the maximum number of results to return. When 0, use default page size.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "If this field is not empty then it must contain the nextPageToken value returned by a previous call to this method. Using this field causes the method to return additional results from the previous method call.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Resource name of the parent Service. Of the form projects/{project_id}/services/{service_id}.",
+                  "location": "path",
+                  "pattern": "^[^/]+/[^/]+/services/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "view": {
+                  "description": "View of the ServiceLevelObjectives to return. If DEFAULT, return each ServiceLevelObjective as originally defined. If EXPLICIT and the ServiceLevelObjective is defined in terms of a BasicSli, replace the BasicSli with a RequestBasedSli spelling out how the SLI is computed.",
+                  "enum": [
+                    "VIEW_UNSPECIFIED",
+                    "FULL",
+                    "EXPLICIT"
+                  ],
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v3/{+parent}/serviceLevelObjectives",
+              "response": {
+                "$ref": "ListServiceLevelObjectivesResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/monitoring",
+                "https://www.googleapis.com/auth/monitoring.read"
+              ]
+            },
+            "patch": {
+              "description": "Update the given ServiceLevelObjective.",
+              "flatPath": "v3/{v3Id}/{v3Id1}/services/{servicesId}/serviceLevelObjectives/{serviceLevelObjectivesId}",
+              "httpMethod": "PATCH",
+              "id": "monitoring.services.serviceLevelObjectives.patch",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Resource name for this ServiceLevelObjective. Of the form projects/{project_id}/services/{service_id}/serviceLevelObjectives/{slo_name}.",
+                  "location": "path",
+                  "pattern": "^[^/]+/[^/]+/services/[^/]+/serviceLevelObjectives/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "A set of field paths defining which fields to use for the update.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v3/{+name}",
+              "request": {
+                "$ref": "ServiceLevelObjective"
+              },
+              "response": {
+                "$ref": "ServiceLevelObjective"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/monitoring"
+              ]
+            }
+          }
+        }
+      }
+    },
     "uptimeCheckIps": {
       "methods": {
         "list": {
@@ -1457,7 +1817,7 @@
       }
     }
   },
-  "revision": "20191102",
+  "revision": "20191111",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -1633,6 +1993,23 @@
       },
       "type": "object"
     },
+    "AppEngine": {
+      "description": "App Engine service. Learn more at https://cloud.google.com/appengine.",
+      "id": "AppEngine",
+      "properties": {
+        "moduleId": {
+          "description": "The ID of the App Engine module underlying this service. Corresponds to the module_id resource label in the gae_app monitored resource: https://cloud.google.com/monitoring/api/resources#tag_gae_app",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AvailabilityCriteria": {
+      "description": "Future parameters for the availability SLI.",
+      "id": "AvailabilityCriteria",
+      "properties": {},
+      "type": "object"
+    },
     "BasicAuthentication": {
       "description": "The authentication parameters to provide to the specified resource or URL that requires a username and password. Currently, only Basic HTTP authentication (https://tools.ietf.org/html/rfc7617) is supported in Uptime checks.",
       "id": "BasicAuthentication",
@@ -1644,6 +2021,42 @@
         "username": {
           "description": "The username to use when authenticating with the HTTP server.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BasicSli": {
+      "description": "An SLI measuring performance on a well-known service type. Performance will be computed on the basis of pre-defined metrics. The type of the service_resource determines the metrics to use and the service_resource.labels and metric_labels are used to construct a monitoring filter to filter that metric down to just the data relevant to this service.",
+      "id": "BasicSli",
+      "properties": {
+        "availability": {
+          "$ref": "AvailabilityCriteria",
+          "description": "Good service is defined to be the count of requests made to this service that return successfully."
+        },
+        "latency": {
+          "$ref": "LatencyCriteria",
+          "description": "Good service is defined to be the count of requests made to this service that are fast enough with respect to latency.threshold."
+        },
+        "location": {
+          "description": "OPTIONAL: The set of locations to which this SLI is relevant. Telemetry from other locations will not be used to calculate performance for this SLI. If omitted, this SLI applies to all locations in which the Service has activity. For service types that don't support breaking down by location, setting this field will result in an error.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "method": {
+          "description": "OPTIONAL: The set of RPCs to which this SLI is relevant. Telemetry from other methods will not be used to calculate performance for this SLI. If omitted, this SLI applies to all the Service's methods. For service types that don't support breaking down by method, setting this field will result in an error.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "version": {
+          "description": "OPTIONAL: The set of API versions to which this SLI is relevant. Telemetry from other API versions will not be used to calculate performance for this SLI. If omitted, this SLI applies to all API versions. For service types that don't support breaking down by version, setting this field will result in an error.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -1663,6 +2076,40 @@
         "linearBuckets": {
           "$ref": "Linear",
           "description": "The linear bucket."
+        }
+      },
+      "type": "object"
+    },
+    "CloudEndpoints": {
+      "description": "Cloud Endpoints service. Learn more at https://cloud.google.com/endpoints.",
+      "id": "CloudEndpoints",
+      "properties": {
+        "service": {
+          "description": "The name of the Cloud Endpoints service underlying this service. Corresponds to the service resource label in the api monitored resource: https://cloud.google.com/monitoring/api/resources#tag_api",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ClusterIstio": {
+      "description": "Istio service. Learn more at http://istio.io.",
+      "id": "ClusterIstio",
+      "properties": {
+        "clusterName": {
+          "description": "The name of the Kubernetes cluster in which this Istio service is defined. Corresponds to the cluster_name resource label in k8s_cluster resources.",
+          "type": "string"
+        },
+        "location": {
+          "description": "The location of the Kubernetes cluster in which this Istio service is defined. Corresponds to the location resource label in k8s_cluster resources.",
+          "type": "string"
+        },
+        "serviceName": {
+          "description": "The name of the Istio service underlying this service. Corresponds to the destination_service_name metric label in Istio metrics.",
+          "type": "string"
+        },
+        "serviceNamespace": {
+          "description": "The namespace of the Istio service underlying this service. Corresponds to the destination_service_namespace metric label in Istio metrics.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1916,6 +2363,12 @@
       },
       "type": "object"
     },
+    "Custom": {
+      "description": "Custom view of service telemetry. Currently a place-holder pending final design.",
+      "id": "Custom",
+      "properties": {},
+      "type": "object"
+    },
     "Distribution": {
       "description": "Distribution contains summary statistics for a population of values. It optionally contains a histogram representing the distribution of those values across a set of buckets.The summary statistics are the count, mean, sum of the squared deviation from the mean, the minimum, and the maximum of the set of population of values. The histogram is based on a sequence of buckets and gives a count of values that fall into each bucket. The boundaries of the buckets are given either explicitly or by formulas for buckets of fixed or exponentially increasing widths.Although it is not forbidden, it is generally a bad idea to include non-finite values (infinities or NaNs) in the population of values, as this will render the mean and sum_of_squared_deviation fields meaningless.",
       "id": "Distribution",
@@ -1957,6 +2410,21 @@
           "description": "The sum of squared deviations from the mean of the values in the population. For values x_i this is:\nSum[i=1..n]((x_i - mean)^2)\nKnuth, \"The Art of Computer Programming\", Vol. 2, page 323, 3rd edition describes Welford's method for accumulating this sum in one pass.If count is zero then this field must be zero.",
           "format": "double",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "DistributionCut": {
+      "description": "A DistributionCut defines a TimeSeries and thresholds used for measuring good service and total service. The TimeSeries must have ValueType =\nDISTRIBUTION and MetricKind = DELTA or MetricKind = CUMULATIVE. The computed good_service will be the count of values x in the Distribution such that range.min \u003c= x \u003c range.max.",
+      "id": "DistributionCut",
+      "properties": {
+        "distributionFilter": {
+          "description": "A monitoring filter (https://cloud.google.com/monitoring/api/v3/filters) specifying a TimeSeries aggregating values. Must have ValueType =\nDISTRIBUTION and MetricKind = DELTA or MetricKind = CUMULATIVE.",
+          "type": "string"
+        },
+        "range": {
+          "$ref": "GoogleMonitoringV3Range",
+          "description": "Range of values considered \"good.\" For a one-sided range, set one bound to an infinite value."
         }
       },
       "type": "object"
@@ -2211,6 +2679,23 @@
       },
       "type": "object"
     },
+    "GoogleMonitoringV3Range": {
+      "description": "Range of numerical values, inclusive of min and exclusive of max. If the open range \"\u003c range.max\" is desired, set range.min = -infinity. If the open range \"\u003e= range.min\" is desired, set range.max = infinity.",
+      "id": "GoogleMonitoringV3Range",
+      "properties": {
+        "max": {
+          "description": "Range maximum.",
+          "format": "double",
+          "type": "number"
+        },
+        "min": {
+          "description": "Range minimum.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "Group": {
       "description": "The description of a dynamic collection of monitored resources. Each group has a filter that is matched against monitored resources and their associated metadata. If a group's filter matches an available monitored resource, then that resource is a member of that group. Groups can contain any number of monitored resources, and each monitored resource can be a member of any number of groups.Groups can be nested in parent-child hierarchies. The parentName field identifies an optional parent for each group. If a group has a parent, then the only monitored resources available to be matched by the group's filter are the resources contained in the parent group. In other words, a group contains the monitored resources that match its filter and the filters of all the group's ancestors. A group without a parent can contain any monitored resource.For example, consider an infrastructure running a set of instances with two user-defined tags: \"environment\" and \"role\". A parent group has a filter, environment=\"production\". A child of that parent group has a filter, role=\"transcoder\". The parent group contains all instances in the production environment, regardless of their roles. The child group contains instances that have the transcoder role and are in the production environment.The monitored resources contained in a group can change at any moment, depending on what resources exist and what filters are associated with the group and its ancestors.",
       "id": "Group",
@@ -2342,6 +2827,18 @@
             "Boolean; true or false.",
             "A 64-bit signed integer."
           ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LatencyCriteria": {
+      "description": "Parameters for a latency threshold SLI.",
+      "id": "LatencyCriteria",
+      "properties": {
+        "threshold": {
+          "description": "Good service is defined to be the count of requests made to this service that return in no more than threshold.",
+          "format": "google-duration",
           "type": "string"
         }
       },
@@ -2494,6 +2991,42 @@
           "description": "The notification channels defined for the specified project.",
           "items": {
             "$ref": "NotificationChannel"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ListServiceLevelObjectivesResponse": {
+      "description": "The ListServiceLevelObjectives response.",
+      "id": "ListServiceLevelObjectivesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as pageToken in the next call to this method.",
+          "type": "string"
+        },
+        "serviceLevelObjectives": {
+          "description": "The ServiceLevelObjectives matching the specified filter.",
+          "items": {
+            "$ref": "ServiceLevelObjective"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ListServicesResponse": {
+      "description": "The ListServices response.",
+      "id": "ListServicesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as pageToken in the next call to this method.",
+          "type": "string"
+        },
+        "services": {
+          "description": "The Services matching the specified filter.",
+          "items": {
+            "$ref": "Service"
           },
           "type": "array"
         }
@@ -2746,6 +3279,21 @@
         "samplePeriod": {
           "description": "The sampling period of metric data points. For metrics which are written periodically, consecutive data points are stored at this time interval, excluding data loss due to errors. Metrics with a higher granularity have a smaller sampling period.",
           "format": "google-duration",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "MetricRange": {
+      "description": "A MetricRange is used when each window is good when the value x of a single TimeSeries satisfies range.min \u003c= x \u003c range.max. The provided TimeSeries must have ValueType = INT64 or ValueType = DOUBLE and MetricKind = GAUGE.",
+      "id": "MetricRange",
+      "properties": {
+        "range": {
+          "$ref": "GoogleMonitoringV3Range",
+          "description": "Range of values considered \"good.\" For a one-sided range, set one bound to an infinite value."
+        },
+        "timeSeries": {
+          "description": "A monitoring filter (https://cloud.google.com/monitoring/api/v3/filters) specifying the TimeSeries to use for evaluating window quality.",
           "type": "string"
         }
       },
@@ -3043,6 +3591,26 @@
       },
       "type": "object"
     },
+    "PerformanceThreshold": {
+      "description": "A PerformanceThreshold is used when each window is good when that window has a sufficiently high performance.",
+      "id": "PerformanceThreshold",
+      "properties": {
+        "basicSliPerformance": {
+          "$ref": "BasicSli",
+          "description": "BasicSli to evaluate to judge window quality."
+        },
+        "performance": {
+          "$ref": "RequestBasedSli",
+          "description": "RequestBasedSli to evaluate to judge window quality."
+        },
+        "threshold": {
+          "description": "If window performance \u003e= threshold, the window is counted as good.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "Point": {
       "description": "A single data point in a time series.",
       "id": "Point",
@@ -3071,6 +3639,21 @@
           "description": "The minimum of the population values.",
           "format": "double",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "RequestBasedSli": {
+      "description": "Service Level Indicators for which atomic units of service are counted directly.",
+      "id": "RequestBasedSli",
+      "properties": {
+        "distributionCut": {
+          "$ref": "DistributionCut",
+          "description": "distribution_cut is used when good_service is a count of values aggregated in a Distribution that fall into a good range. The total_service is the total count of all values aggregated in the Distribution."
+        },
+        "goodTotalRatio": {
+          "$ref": "TimeSeriesRatio",
+          "description": "good_total_ratio is used when the ratio of good_service to total_service is computed from two TimeSeries."
         }
       },
       "type": "object"
@@ -3104,6 +3687,113 @@
       "description": "The SendNotificationChannelVerificationCode request.",
       "id": "SendNotificationChannelVerificationCodeRequest",
       "properties": {},
+      "type": "object"
+    },
+    "Service": {
+      "description": "A Service is a discrete, autonomous, and network-accessible unit, designed to solve an individual concern (Wikipedia (https://en.wikipedia.org/wiki/Service-orientation)). In Stackdriver Monitoring, a Service acts as the root resource under which operational aspects of the service are accessible.",
+      "id": "Service",
+      "properties": {
+        "appEngine": {
+          "$ref": "AppEngine",
+          "description": "Type used for App Engine services."
+        },
+        "cloudEndpoints": {
+          "$ref": "CloudEndpoints",
+          "description": "Type used for Cloud Endpoints services."
+        },
+        "clusterIstio": {
+          "$ref": "ClusterIstio",
+          "description": "Type used for Istio services that live in a Kubernetes cluster."
+        },
+        "custom": {
+          "$ref": "Custom",
+          "description": "Custom service type."
+        },
+        "displayName": {
+          "description": "Name used for UI elements listing this Service.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Resource name for this Service. Of the form projects/{project_id}/services/{service_id}.",
+          "type": "string"
+        },
+        "telemetry": {
+          "$ref": "Telemetry",
+          "description": "Configuration for how to query telemetry on a Service."
+        }
+      },
+      "type": "object"
+    },
+    "ServiceLevelIndicator": {
+      "description": "A Service-Level Indicator (SLI) describes the \"performance\" of a service. For some services, the SLI is well-defined. In such cases, the SLI can be described easily by referencing the well-known SLI and providing the needed parameters. Alternatively, a \"custom\" SLI can be defined with a query to the underlying metric store. An SLI is defined to be good_service /\ntotal_service over any queried time interval. The value of performance always falls into the range 0 \u003c= performance \u003c= 1. A custom SLI describes how to compute this ratio, whether this is by dividing values from a pair of time series, cutting a Distribution into good and bad counts, or counting time windows in which the service complies with a criterion. For separation of concerns, a single Service-Level Indicator measures performance for only one aspect of service quality, such as fraction of successful queries or fast-enough queries.",
+      "id": "ServiceLevelIndicator",
+      "properties": {
+        "basicSli": {
+          "$ref": "BasicSli",
+          "description": "Basic SLI on a well-known service type."
+        },
+        "requestBased": {
+          "$ref": "RequestBasedSli",
+          "description": "Request-based SLIs"
+        },
+        "windowsBased": {
+          "$ref": "WindowsBasedSli",
+          "description": "Windows-based SLIs"
+        }
+      },
+      "type": "object"
+    },
+    "ServiceLevelObjective": {
+      "description": "A Service-Level Objective (SLO) describes a level of desired good service. It consists of a service-level indicator (SLI), a performance goal, and a period over which the objective is to be evaluated against that goal. The SLO can use SLIs defined in a number of different manners. Typical SLOs might include \"99% of requests in each rolling week have latency below 200 milliseconds\" or \"99.5% of requests in each calendar month return successfully.\"",
+      "id": "ServiceLevelObjective",
+      "properties": {
+        "calendarPeriod": {
+          "description": "A calendar period, semantically \"since the start of the current \u003ccalendar_period\u003e\". At this time, only DAY, WEEK, FORTNIGHT, and MONTH are supported.",
+          "enum": [
+            "CALENDAR_PERIOD_UNSPECIFIED",
+            "DAY",
+            "WEEK",
+            "FORTNIGHT",
+            "MONTH",
+            "QUARTER",
+            "HALF",
+            "YEAR"
+          ],
+          "enumDescriptions": [
+            "Undefined period, raises an error.",
+            "A day.",
+            "A week. Weeks begin on Monday, following ISO 8601 (https://en.wikipedia.org/wiki/ISO_week_date).",
+            "A fortnight. The first calendar fortnight of the year begins at the start of week 1 according to ISO 8601 (https://en.wikipedia.org/wiki/ISO_week_date).",
+            "A month.",
+            "A quarter. Quarters start on dates 1-Jan, 1-Apr, 1-Jul, and 1-Oct of each year.",
+            "A half-year. Half-years start on dates 1-Jan and 1-Jul.",
+            "A year."
+          ],
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Name used for UI elements listing this SLO.",
+          "type": "string"
+        },
+        "goal": {
+          "description": "The fraction of service that must be good in order for this objective to be met. 0 \u003c goal \u003c= 1.",
+          "format": "double",
+          "type": "number"
+        },
+        "name": {
+          "description": "Resource name for this ServiceLevelObjective. Of the form projects/{project_id}/services/{service_id}/serviceLevelObjectives/{slo_name}.",
+          "type": "string"
+        },
+        "rollingPeriod": {
+          "description": "A rolling time period, semantically \"in the past \u003crolling_period\u003e\". Must be an integer multiple of 1 day no larger than 30 days.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "serviceLevelIndicator": {
+          "$ref": "ServiceLevelIndicator",
+          "description": "The definition of good service, used to measure and calculate the quality of the Service's performance with respect to a single aspect of service quality."
+        }
+      },
       "type": "object"
     },
     "SourceContext": {
@@ -3163,6 +3853,17 @@
           "description": "The TCP port on the server against which to run the check. Will be combined with host (specified within the monitored_resource) to construct the full URL. Required.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "Telemetry": {
+      "description": "Configuration for how to query telemetry on a Service.",
+      "id": "Telemetry",
+      "properties": {
+        "resourceName": {
+          "description": "The full name of the resource that defines this service. Formatted as described in https://cloud.google.com/apis/design/resource_names.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3243,6 +3944,25 @@
             "The value is a Distribution.",
             "The value is money."
           ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TimeSeriesRatio": {
+      "description": "A TimeSeriesRatio specifies two TimeSeries to use for computing the good_service / total_service ratio. The specified TimeSeries must have ValueType = DOUBLE or ValueType = INT64 and must have MetricKind =\nDELTA or MetricKind = CUMULATIVE. The TimeSeriesRatio must specify exactly two of good, bad, and total, and the relationship good_service +\nbad_service = total_service will be assumed.",
+      "id": "TimeSeriesRatio",
+      "properties": {
+        "badServiceFilter": {
+          "description": "A monitoring filter (https://cloud.google.com/monitoring/api/v3/filters) specifying a TimeSeries quantifying bad service, either demanded service that was not provided or demanded service that was of inadequate quality. Must have ValueType = DOUBLE or ValueType = INT64 and must have MetricKind = DELTA or MetricKind = CUMULATIVE.",
+          "type": "string"
+        },
+        "goodServiceFilter": {
+          "description": "A monitoring filter (https://cloud.google.com/monitoring/api/v3/filters) specifying a TimeSeries quantifying good service provided. Must have ValueType = DOUBLE or ValueType = INT64 and must have MetricKind =\nDELTA or MetricKind = CUMULATIVE.",
+          "type": "string"
+        },
+        "totalServiceFilter": {
+          "description": "A monitoring filter (https://cloud.google.com/monitoring/api/v3/filters) specifying a TimeSeries quantifying total demanded service. Must have ValueType = DOUBLE or ValueType = INT64 and must have MetricKind =\nDELTA or MetricKind = CUMULATIVE.",
           "type": "string"
         }
       },
@@ -3461,6 +4181,34 @@
       "properties": {
         "code": {
           "description": "The verification code that was delivered to the channel as a result of invoking the SendNotificationChannelVerificationCode API method or that was retrieved from a verified channel via GetNotificationChannelVerificationCode. For example, one might have \"G-123456\" or \"TKNZGhhd2EyN3I1MnRnMjRv\" (in general, one is only guaranteed that the code is valid UTF-8; one should not make any assumptions regarding the structure or format of the code).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "WindowsBasedSli": {
+      "description": "A WindowsBasedSli defines good_service as the count of time windows for which the provided service was of good quality. Criteria for determining if service was good are embedded in the window_criterion.",
+      "id": "WindowsBasedSli",
+      "properties": {
+        "goodBadMetricFilter": {
+          "description": "A monitoring filter (https://cloud.google.com/monitoring/api/v3/filters) specifying a TimeSeries with ValueType = BOOL. The window is good if any true values appear in the window.",
+          "type": "string"
+        },
+        "goodTotalRatioThreshold": {
+          "$ref": "PerformanceThreshold",
+          "description": "A window is good if its performance is high enough."
+        },
+        "metricMeanInRange": {
+          "$ref": "MetricRange",
+          "description": "A window is good if the metric's value is in a good range, averaged across returned streams."
+        },
+        "metricSumInRange": {
+          "$ref": "MetricRange",
+          "description": "A window is good if the metric's value is in a good range, summed across returned streams."
+        },
+        "windowPeriod": {
+          "description": "Duration over which window quality is evaluated. Must be an integer fraction of a day and at least 60s.",
+          "format": "google-duration",
           "type": "string"
         }
       },

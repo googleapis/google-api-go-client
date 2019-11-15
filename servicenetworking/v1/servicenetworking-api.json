@@ -275,7 +275,7 @@
           ],
           "parameters": {
             "parent": {
-              "description": "Required. This is in a form services/{service}.\n{service} the name of the private access management service, for example\n'service-peering.example.com'.",
+              "description": "Required. This is in a form services/{service}. {service} the name of the private\naccess management service, for example 'service-peering.example.com'.",
               "location": "path",
               "pattern": "^services/[^/]+$",
               "required": true,
@@ -288,6 +288,35 @@
           },
           "response": {
             "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/service.management"
+          ]
+        },
+        "validate": {
+          "description": "Service producers use this method to validate if the consumer provided\nnetwork, project and the requested range is valid. This allows them to use\na fail-fast mechanism for consumer requests, and not have to wait for\nAddSubnetwork operation completion to determine if user request is invalid.",
+          "flatPath": "v1/services/{servicesId}:validate",
+          "httpMethod": "POST",
+          "id": "servicenetworking.services.validate",
+          "parameterOrder": [
+            "parent"
+          ],
+          "parameters": {
+            "parent": {
+              "description": "Required. This is in a form services/{service} where {service} is the name of the\nprivate access management service. For example\n'service-peering.example.com'.",
+              "location": "path",
+              "pattern": "^services/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+parent}:validate",
+          "request": {
+            "$ref": "ValidateConsumerConfigRequest"
+          },
+          "response": {
+            "$ref": "ValidateConsumerConfigResponse"
           },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
@@ -403,7 +432,7 @@
       }
     }
   },
-  "revision": "20190922",
+  "revision": "20191113",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddSubnetworkRequest": {
@@ -419,7 +448,7 @@
           "type": "string"
         },
         "description": {
-          "description": "An optional description of the subnet.",
+          "description": "Optional. Description of the subnet.",
           "type": "string"
         },
         "ipPrefixLength": {
@@ -710,6 +739,18 @@
         },
         "service": {
           "description": "Output only. The name of the peering service that's associated with this connection, in\nthe following format: `services/{service name}`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ConsumerProject": {
+      "description": "Represents a consumer project.",
+      "id": "ConsumerProject",
+      "properties": {
+        "projectNum": {
+          "description": "Required. Project number of the consumer that is launching the service instance. It\ncan own the network that is peered with Google or, be a service project in\nan XPN where the host project has the network.",
+          "format": "int64",
           "type": "string"
         }
       },
@@ -1798,17 +1839,29 @@
       },
       "type": "object"
     },
+    "RangeReservation": {
+      "description": "Represents a range reservation.",
+      "id": "RangeReservation",
+      "properties": {
+        "ipPrefixLength": {
+          "description": "Required. The size of the desired subnet. Use usual CIDR range notation. For example,\n'30' to find unused x.x.x.x/30 CIDR range. The goal is to determine if one\nof the allocated ranges has enough free space for a subnet of the requested\nsize.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "SearchRangeRequest": {
       "description": "Request to search for an unused range within allocated ranges.",
       "id": "SearchRangeRequest",
       "properties": {
         "ipPrefixLength": {
-          "description": "Required. The prefix length of the IP range.\nUse usual CIDR range notation.\nFor example, '30' to find unused x.x.x.x/30 CIDR range.\nActual range will be determined using allocated range for the consumer\npeered network and returned in the result.",
+          "description": "Required. The prefix length of the IP range. Use usual CIDR range notation. For\nexample, '30' to find unused x.x.x.x/30 CIDR range. Actual range will be\ndetermined using allocated range for the consumer peered network and\nreturned in the result.",
           "format": "int32",
           "type": "integer"
         },
         "network": {
-          "description": "Network name in the consumer project.   This network must have been\nalready peered with a shared VPC network using CreateConnection\nmethod.\nMust be in a form 'projects/{project}/global/networks/{network}'.\n{project} is a project number, as in '12345'\n{network} is network name.",
+          "description": "Network name in the consumer project. This network must have been\nalready peered with a shared VPC network using CreateConnection\nmethod. Must be in a form 'projects/{project}/global/networks/{network}'.\n{project} is a project number, as in '12345' {network} is network name.",
           "type": "string"
         }
       },
@@ -1877,7 +1930,7 @@
           "description": "HTTP configuration."
         },
         "id": {
-          "description": "A unique ID for a specific instance of this message, typically assigned\nby the client for tracking purpose. If empty, the server may choose to\ngenerate one instead. Must be no longer than 60 characters.",
+          "description": "A unique ID for a specific instance of this message, typically assigned\nby the client for tracking purpose. Must be no longer than 63 characters\nand only lower case letters, digits, '.', '_' and '-' are allowed. If\nempty, the server may choose to generate one instead.",
           "type": "string"
         },
         "logging": {
@@ -2172,6 +2225,70 @@
         "skipServiceControl": {
           "description": "If true, the selected method should skip service control and the control\nplane features, such as quota and billing, will not be available.\nThis flag is used by Google Cloud Endpoints to bypass checks for internal\nmethods, such as service health check methods.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "ValidateConsumerConfigRequest": {
+      "id": "ValidateConsumerConfigRequest",
+      "properties": {
+        "consumerNetwork": {
+          "description": "Required. The network that the consumer is using to connect with services. Must be in\nthe form of projects/{project}/global/networks/{network} {project} is a\nproject number, as in '12345' {network} is network name.",
+          "type": "string"
+        },
+        "consumerProject": {
+          "$ref": "ConsumerProject",
+          "description": "NETWORK_NOT_IN_CONSUMERS_PROJECT, NETWORK_NOT_IN_CONSUMERS_HOST_PROJECT,\nand HOST_PROJECT_NOT_FOUND are done when consumer_project is provided."
+        },
+        "rangeReservation": {
+          "$ref": "RangeReservation",
+          "description": "RANGES_EXHAUSTED, RANGES_EXHAUSTED, and RANGES_DELETED_LATER are done\nwhen range_reservation is provided."
+        },
+        "validateNetwork": {
+          "description": "The validations will be performed in the order listed in the\nValidationError enum. The first failure will return. If a validation is not\nrequested, then the next one will be performed.\nSERVICE_NETWORKING_NOT_ENABLED and NETWORK_NOT_PEERED checks are performed\nfor all requests where validation is requested. NETWORK_NOT_FOUND and\nNETWORK_DISCONNECTED checks are done for requests that have\nvalidate_network set to true.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "ValidateConsumerConfigResponse": {
+      "id": "ValidateConsumerConfigResponse",
+      "properties": {
+        "isValid": {
+          "type": "boolean"
+        },
+        "validationError": {
+          "enum": [
+            "VALIDATION_ERROR_UNSPECIFIED",
+            "VALIDATION_NOT_REQUESTED",
+            "SERVICE_NETWORKING_NOT_ENABLED",
+            "NETWORK_NOT_FOUND",
+            "NETWORK_NOT_PEERED",
+            "NETWORK_PEERING_DELETED",
+            "NETWORK_NOT_IN_CONSUMERS_PROJECT",
+            "NETWORK_NOT_IN_CONSUMERS_HOST_PROJECT",
+            "HOST_PROJECT_NOT_FOUND",
+            "CONSUMER_PROJECT_NOT_SERVICE_PROJECT",
+            "RANGES_EXHAUSTED",
+            "RANGES_NOT_RESERVED",
+            "RANGES_DELETED_LATER"
+          ],
+          "enumDescriptions": [
+            "",
+            "In case none of the validations are requested.",
+            "",
+            "The network provided by the consumer does not exist.",
+            "The network has not been peered with the producer org.",
+            "The peering was created and later deleted.",
+            "The network is a regular VPC but the network is not in the consumer's\nproject.",
+            "The consumer project is a service project, and network is a shared VPC,\nbut the network is not in the host project of this consumer project.",
+            "The host project associated with the consumer project\nwas not found.",
+            "The consumer project is not a service project for\nthe specified host project.",
+            "The reserved IP ranges do not have enough space to create\na subnet of desired size.",
+            "The IP ranges were not reserved.",
+            "The IP ranges were reserved but deleted later."
+          ],
+          "type": "string"
         }
       },
       "type": "object"

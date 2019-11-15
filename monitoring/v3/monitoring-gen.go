@@ -97,8 +97,8 @@ const (
 	MonitoringWriteScope = "https://www.googleapis.com/auth/monitoring.write"
 )
 
-// NewService creates a new Service.
-func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+// NewService creates a new APIService.
+func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, error) {
 	scopesOption := option.WithScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/monitoring",
@@ -121,39 +121,42 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	return s, nil
 }
 
-// New creates a new Service. It uses the provided http.Client for requests.
+// New creates a new APIService. It uses the provided http.Client for requests.
 //
 // Deprecated: please use NewService instead.
 // To provide a custom HTTP client, use option.WithHTTPClient.
 // If you are using google.golang.org/api/googleapis/transport.APIKey, use option.WithAPIKey with NewService instead.
-func New(client *http.Client) (*Service, error) {
+func New(client *http.Client) (*APIService, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
+	s := &APIService{client: client, BasePath: basePath}
 	s.Projects = NewProjectsService(s)
+	s.Services = NewServicesService(s)
 	s.UptimeCheckIps = NewUptimeCheckIpsService(s)
 	return s, nil
 }
 
-type Service struct {
+type APIService struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
 	Projects *ProjectsService
 
+	Services *ServicesService
+
 	UptimeCheckIps *UptimeCheckIpsService
 }
 
-func (s *Service) userAgent() string {
+func (s *APIService) userAgent() string {
 	if s.UserAgent == "" {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
-func NewProjectsService(s *Service) *ProjectsService {
+func NewProjectsService(s *APIService) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.AlertPolicies = NewProjectsAlertPoliciesService(s)
 	rs.CollectdTimeSeries = NewProjectsCollectdTimeSeriesService(s)
@@ -168,7 +171,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 }
 
 type ProjectsService struct {
-	s *Service
+	s *APIService
 
 	AlertPolicies *ProjectsAlertPoliciesService
 
@@ -189,106 +192,127 @@ type ProjectsService struct {
 	UptimeCheckConfigs *ProjectsUptimeCheckConfigsService
 }
 
-func NewProjectsAlertPoliciesService(s *Service) *ProjectsAlertPoliciesService {
+func NewProjectsAlertPoliciesService(s *APIService) *ProjectsAlertPoliciesService {
 	rs := &ProjectsAlertPoliciesService{s: s}
 	return rs
 }
 
 type ProjectsAlertPoliciesService struct {
-	s *Service
+	s *APIService
 }
 
-func NewProjectsCollectdTimeSeriesService(s *Service) *ProjectsCollectdTimeSeriesService {
+func NewProjectsCollectdTimeSeriesService(s *APIService) *ProjectsCollectdTimeSeriesService {
 	rs := &ProjectsCollectdTimeSeriesService{s: s}
 	return rs
 }
 
 type ProjectsCollectdTimeSeriesService struct {
-	s *Service
+	s *APIService
 }
 
-func NewProjectsGroupsService(s *Service) *ProjectsGroupsService {
+func NewProjectsGroupsService(s *APIService) *ProjectsGroupsService {
 	rs := &ProjectsGroupsService{s: s}
 	rs.Members = NewProjectsGroupsMembersService(s)
 	return rs
 }
 
 type ProjectsGroupsService struct {
-	s *Service
+	s *APIService
 
 	Members *ProjectsGroupsMembersService
 }
 
-func NewProjectsGroupsMembersService(s *Service) *ProjectsGroupsMembersService {
+func NewProjectsGroupsMembersService(s *APIService) *ProjectsGroupsMembersService {
 	rs := &ProjectsGroupsMembersService{s: s}
 	return rs
 }
 
 type ProjectsGroupsMembersService struct {
-	s *Service
+	s *APIService
 }
 
-func NewProjectsMetricDescriptorsService(s *Service) *ProjectsMetricDescriptorsService {
+func NewProjectsMetricDescriptorsService(s *APIService) *ProjectsMetricDescriptorsService {
 	rs := &ProjectsMetricDescriptorsService{s: s}
 	return rs
 }
 
 type ProjectsMetricDescriptorsService struct {
-	s *Service
+	s *APIService
 }
 
-func NewProjectsMonitoredResourceDescriptorsService(s *Service) *ProjectsMonitoredResourceDescriptorsService {
+func NewProjectsMonitoredResourceDescriptorsService(s *APIService) *ProjectsMonitoredResourceDescriptorsService {
 	rs := &ProjectsMonitoredResourceDescriptorsService{s: s}
 	return rs
 }
 
 type ProjectsMonitoredResourceDescriptorsService struct {
-	s *Service
+	s *APIService
 }
 
-func NewProjectsNotificationChannelDescriptorsService(s *Service) *ProjectsNotificationChannelDescriptorsService {
+func NewProjectsNotificationChannelDescriptorsService(s *APIService) *ProjectsNotificationChannelDescriptorsService {
 	rs := &ProjectsNotificationChannelDescriptorsService{s: s}
 	return rs
 }
 
 type ProjectsNotificationChannelDescriptorsService struct {
-	s *Service
+	s *APIService
 }
 
-func NewProjectsNotificationChannelsService(s *Service) *ProjectsNotificationChannelsService {
+func NewProjectsNotificationChannelsService(s *APIService) *ProjectsNotificationChannelsService {
 	rs := &ProjectsNotificationChannelsService{s: s}
 	return rs
 }
 
 type ProjectsNotificationChannelsService struct {
-	s *Service
+	s *APIService
 }
 
-func NewProjectsTimeSeriesService(s *Service) *ProjectsTimeSeriesService {
+func NewProjectsTimeSeriesService(s *APIService) *ProjectsTimeSeriesService {
 	rs := &ProjectsTimeSeriesService{s: s}
 	return rs
 }
 
 type ProjectsTimeSeriesService struct {
-	s *Service
+	s *APIService
 }
 
-func NewProjectsUptimeCheckConfigsService(s *Service) *ProjectsUptimeCheckConfigsService {
+func NewProjectsUptimeCheckConfigsService(s *APIService) *ProjectsUptimeCheckConfigsService {
 	rs := &ProjectsUptimeCheckConfigsService{s: s}
 	return rs
 }
 
 type ProjectsUptimeCheckConfigsService struct {
-	s *Service
+	s *APIService
 }
 
-func NewUptimeCheckIpsService(s *Service) *UptimeCheckIpsService {
+func NewServicesService(s *APIService) *ServicesService {
+	rs := &ServicesService{s: s}
+	rs.ServiceLevelObjectives = NewServicesServiceLevelObjectivesService(s)
+	return rs
+}
+
+type ServicesService struct {
+	s *APIService
+
+	ServiceLevelObjectives *ServicesServiceLevelObjectivesService
+}
+
+func NewServicesServiceLevelObjectivesService(s *APIService) *ServicesServiceLevelObjectivesService {
+	rs := &ServicesServiceLevelObjectivesService{s: s}
+	return rs
+}
+
+type ServicesServiceLevelObjectivesService struct {
+	s *APIService
+}
+
+func NewUptimeCheckIpsService(s *APIService) *UptimeCheckIpsService {
 	rs := &UptimeCheckIpsService{s: s}
 	return rs
 }
 
 type UptimeCheckIpsService struct {
-	s *Service
+	s *APIService
 }
 
 // Aggregation: Describes how to combine multiple time series to provide
@@ -651,6 +675,42 @@ func (s *AlertPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AppEngine: App Engine service. Learn more at
+// https://cloud.google.com/appengine.
+type AppEngine struct {
+	// ModuleId: The ID of the App Engine module underlying this service.
+	// Corresponds to the module_id resource label in the gae_app monitored
+	// resource:
+	// https://cloud.google.com/monitoring/api/resources#tag_gae_app
+	ModuleId string `json:"moduleId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ModuleId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ModuleId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppEngine) MarshalJSON() ([]byte, error) {
+	type NoMethod AppEngine
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AvailabilityCriteria: Future parameters for the availability SLI.
+type AvailabilityCriteria struct {
+}
+
 // BasicAuthentication: The authentication parameters to provide to the
 // specified resource or URL that requires a username and password.
 // Currently, only Basic HTTP authentication
@@ -683,6 +743,66 @@ type BasicAuthentication struct {
 
 func (s *BasicAuthentication) MarshalJSON() ([]byte, error) {
 	type NoMethod BasicAuthentication
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BasicSli: An SLI measuring performance on a well-known service type.
+// Performance will be computed on the basis of pre-defined metrics. The
+// type of the service_resource determines the metrics to use and the
+// service_resource.labels and metric_labels are used to construct a
+// monitoring filter to filter that metric down to just the data
+// relevant to this service.
+type BasicSli struct {
+	// Availability: Good service is defined to be the count of requests
+	// made to this service that return successfully.
+	Availability *AvailabilityCriteria `json:"availability,omitempty"`
+
+	// Latency: Good service is defined to be the count of requests made to
+	// this service that are fast enough with respect to latency.threshold.
+	Latency *LatencyCriteria `json:"latency,omitempty"`
+
+	// Location: OPTIONAL: The set of locations to which this SLI is
+	// relevant. Telemetry from other locations will not be used to
+	// calculate performance for this SLI. If omitted, this SLI applies to
+	// all locations in which the Service has activity. For service types
+	// that don't support breaking down by location, setting this field will
+	// result in an error.
+	Location []string `json:"location,omitempty"`
+
+	// Method: OPTIONAL: The set of RPCs to which this SLI is relevant.
+	// Telemetry from other methods will not be used to calculate
+	// performance for this SLI. If omitted, this SLI applies to all the
+	// Service's methods. For service types that don't support breaking down
+	// by method, setting this field will result in an error.
+	Method []string `json:"method,omitempty"`
+
+	// Version: OPTIONAL: The set of API versions to which this SLI is
+	// relevant. Telemetry from other API versions will not be used to
+	// calculate performance for this SLI. If omitted, this SLI applies to
+	// all API versions. For service types that don't support breaking down
+	// by version, setting this field will result in an error.
+	Version []string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Availability") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Availability") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BasicSli) MarshalJSON() ([]byte, error) {
+	type NoMethod BasicSli
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -732,6 +852,83 @@ type BucketOptions struct {
 
 func (s *BucketOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod BucketOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudEndpoints: Cloud Endpoints service. Learn more at
+// https://cloud.google.com/endpoints.
+type CloudEndpoints struct {
+	// Service: The name of the Cloud Endpoints service underlying this
+	// service. Corresponds to the service resource label in the api
+	// monitored resource:
+	// https://cloud.google.com/monitoring/api/resources#tag_api
+	Service string `json:"service,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Service") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Service") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudEndpoints) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudEndpoints
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClusterIstio: Istio service. Learn more at http://istio.io.
+type ClusterIstio struct {
+	// ClusterName: The name of the Kubernetes cluster in which this Istio
+	// service is defined. Corresponds to the cluster_name resource label in
+	// k8s_cluster resources.
+	ClusterName string `json:"clusterName,omitempty"`
+
+	// Location: The location of the Kubernetes cluster in which this Istio
+	// service is defined. Corresponds to the location resource label in
+	// k8s_cluster resources.
+	Location string `json:"location,omitempty"`
+
+	// ServiceName: The name of the Istio service underlying this service.
+	// Corresponds to the destination_service_name metric label in Istio
+	// metrics.
+	ServiceName string `json:"serviceName,omitempty"`
+
+	// ServiceNamespace: The namespace of the Istio service underlying this
+	// service. Corresponds to the destination_service_namespace metric
+	// label in Istio metrics.
+	ServiceNamespace string `json:"serviceNamespace,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterIstio) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterIstio
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1179,6 +1376,11 @@ func (s *CreateTimeSeriesSummary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Custom: Custom view of service telemetry. Currently a place-holder
+// pending final design.
+type Custom struct {
+}
+
 // Distribution: Distribution contains summary statistics for a
 // population of values. It optionally contains a histogram representing
 // the distribution of those values across a set of buckets.The summary
@@ -1270,6 +1472,47 @@ func (s *Distribution) UnmarshalJSON(data []byte) error {
 	s.Mean = float64(s1.Mean)
 	s.SumOfSquaredDeviation = float64(s1.SumOfSquaredDeviation)
 	return nil
+}
+
+// DistributionCut: A DistributionCut defines a TimeSeries and
+// thresholds used for measuring good service and total service. The
+// TimeSeries must have ValueType =
+// DISTRIBUTION and MetricKind = DELTA or MetricKind = CUMULATIVE. The
+// computed good_service will be the count of values x in the
+// Distribution such that range.min <= x < range.max.
+type DistributionCut struct {
+	// DistributionFilter: A monitoring filter
+	// (https://cloud.google.com/monitoring/api/v3/filters) specifying a
+	// TimeSeries aggregating values. Must have ValueType =
+	// DISTRIBUTION and MetricKind = DELTA or MetricKind = CUMULATIVE.
+	DistributionFilter string `json:"distributionFilter,omitempty"`
+
+	// Range: Range of values considered "good." For a one-sided range, set
+	// one bound to an infinite value.
+	Range *GoogleMonitoringV3Range `json:"range,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DistributionFilter")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DistributionFilter") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DistributionCut) MarshalJSON() ([]byte, error) {
+	type NoMethod DistributionCut
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Documentation: A content string and a MIME type that describes the
@@ -1716,6 +1959,56 @@ func (s *GetNotificationChannelVerificationCodeResponse) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleMonitoringV3Range: Range of numerical values, inclusive of min
+// and exclusive of max. If the open range "< range.max" is desired, set
+// range.min = -infinity. If the open range ">= range.min" is desired,
+// set range.max = infinity.
+type GoogleMonitoringV3Range struct {
+	// Max: Range maximum.
+	Max float64 `json:"max,omitempty"`
+
+	// Min: Range minimum.
+	Min float64 `json:"min,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Max") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Max") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMonitoringV3Range) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMonitoringV3Range
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleMonitoringV3Range) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleMonitoringV3Range
+	var s1 struct {
+		Max gensupport.JSONFloat64 `json:"max"`
+		Min gensupport.JSONFloat64 `json:"min"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Max = float64(s1.Max)
+	s.Min = float64(s1.Min)
+	return nil
+}
+
 // Group: The description of a dynamic collection of monitored
 // resources. Each group has a filter that is matched against monitored
 // resources and their associated metadata. If a group's filter matches
@@ -1973,6 +2266,35 @@ type LabelDescriptor struct {
 
 func (s *LabelDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod LabelDescriptor
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LatencyCriteria: Parameters for a latency threshold SLI.
+type LatencyCriteria struct {
+	// Threshold: Good service is defined to be the count of requests made
+	// to this service that return in no more than threshold.
+	Threshold string `json:"threshold,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Threshold") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Threshold") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LatencyCriteria) MarshalJSON() ([]byte, error) {
+	type NoMethod LatencyCriteria
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2303,6 +2625,82 @@ type ListNotificationChannelsResponse struct {
 
 func (s *ListNotificationChannelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListNotificationChannelsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListServiceLevelObjectivesResponse: The ListServiceLevelObjectives
+// response.
+type ListServiceLevelObjectivesResponse struct {
+	// NextPageToken: If there are more results than have been returned,
+	// then this field is set to a non-empty value. To see the additional
+	// results, use that value as pageToken in the next call to this method.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServiceLevelObjectives: The ServiceLevelObjectives matching the
+	// specified filter.
+	ServiceLevelObjectives []*ServiceLevelObjective `json:"serviceLevelObjectives,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListServiceLevelObjectivesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListServiceLevelObjectivesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListServicesResponse: The ListServices response.
+type ListServicesResponse struct {
+	// NextPageToken: If there are more results than have been returned,
+	// then this field is set to a non-empty value. To see the additional
+	// results, use that value as pageToken in the next call to this method.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Services: The Services matching the specified filter.
+	Services []*Service `json:"services,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListServicesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListServicesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2791,6 +3189,43 @@ type MetricDescriptorMetadata struct {
 
 func (s *MetricDescriptorMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricDescriptorMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MetricRange: A MetricRange is used when each window is good when the
+// value x of a single TimeSeries satisfies range.min <= x < range.max.
+// The provided TimeSeries must have ValueType = INT64 or ValueType =
+// DOUBLE and MetricKind = GAUGE.
+type MetricRange struct {
+	// Range: Range of values considered "good." For a one-sided range, set
+	// one bound to an infinite value.
+	Range *GoogleMonitoringV3Range `json:"range,omitempty"`
+
+	// TimeSeries: A monitoring filter
+	// (https://cloud.google.com/monitoring/api/v3/filters) specifying the
+	// TimeSeries to use for evaluating window quality.
+	TimeSeries string `json:"timeSeries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Range") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Range") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MetricRange) MarshalJSON() ([]byte, error) {
+	type NoMethod MetricRange
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3366,6 +3801,57 @@ func (s *Option) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PerformanceThreshold: A PerformanceThreshold is used when each window
+// is good when that window has a sufficiently high performance.
+type PerformanceThreshold struct {
+	// BasicSliPerformance: BasicSli to evaluate to judge window quality.
+	BasicSliPerformance *BasicSli `json:"basicSliPerformance,omitempty"`
+
+	// Performance: RequestBasedSli to evaluate to judge window quality.
+	Performance *RequestBasedSli `json:"performance,omitempty"`
+
+	// Threshold: If window performance >= threshold, the window is counted
+	// as good.
+	Threshold float64 `json:"threshold,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BasicSliPerformance")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BasicSliPerformance") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PerformanceThreshold) MarshalJSON() ([]byte, error) {
+	type NoMethod PerformanceThreshold
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *PerformanceThreshold) UnmarshalJSON(data []byte) error {
+	type NoMethod PerformanceThreshold
+	var s1 struct {
+		Threshold gensupport.JSONFloat64 `json:"threshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Threshold = float64(s1.Threshold)
+	return nil
+}
+
 // Point: A single data point in a time series.
 type Point struct {
 	// Interval: The time interval to which the data point applies. For
@@ -3452,6 +3938,43 @@ func (s *Range) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// RequestBasedSli: Service Level Indicators for which atomic units of
+// service are counted directly.
+type RequestBasedSli struct {
+	// DistributionCut: distribution_cut is used when good_service is a
+	// count of values aggregated in a Distribution that fall into a good
+	// range. The total_service is the total count of all values aggregated
+	// in the Distribution.
+	DistributionCut *DistributionCut `json:"distributionCut,omitempty"`
+
+	// GoodTotalRatio: good_total_ratio is used when the ratio of
+	// good_service to total_service is computed from two TimeSeries.
+	GoodTotalRatio *TimeSeriesRatio `json:"goodTotalRatio,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DistributionCut") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DistributionCut") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RequestBasedSli) MarshalJSON() ([]byte, error) {
+	type NoMethod RequestBasedSli
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ResourceGroup: The resource submessage for group checks. It can be
 // used instead of a monitored resource, when multiple resources are
 // being monitored.
@@ -3496,6 +4019,203 @@ func (s *ResourceGroup) MarshalJSON() ([]byte, error) {
 // SendNotificationChannelVerificationCodeRequest: The
 // SendNotificationChannelVerificationCode request.
 type SendNotificationChannelVerificationCodeRequest struct {
+}
+
+// Service: A Service is a discrete, autonomous, and network-accessible
+// unit, designed to solve an individual concern (Wikipedia
+// (https://en.wikipedia.org/wiki/Service-orientation)). In Stackdriver
+// Monitoring, a Service acts as the root resource under which
+// operational aspects of the service are accessible.
+type Service struct {
+	// AppEngine: Type used for App Engine services.
+	AppEngine *AppEngine `json:"appEngine,omitempty"`
+
+	// CloudEndpoints: Type used for Cloud Endpoints services.
+	CloudEndpoints *CloudEndpoints `json:"cloudEndpoints,omitempty"`
+
+	// ClusterIstio: Type used for Istio services that live in a Kubernetes
+	// cluster.
+	ClusterIstio *ClusterIstio `json:"clusterIstio,omitempty"`
+
+	// Custom: Custom service type.
+	Custom *Custom `json:"custom,omitempty"`
+
+	// DisplayName: Name used for UI elements listing this Service.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Name: Resource name for this Service. Of the form
+	// projects/{project_id}/services/{service_id}.
+	Name string `json:"name,omitempty"`
+
+	// Telemetry: Configuration for how to query telemetry on a Service.
+	Telemetry *Telemetry `json:"telemetry,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AppEngine") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppEngine") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Service) MarshalJSON() ([]byte, error) {
+	type NoMethod Service
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ServiceLevelIndicator: A Service-Level Indicator (SLI) describes the
+// "performance" of a service. For some services, the SLI is
+// well-defined. In such cases, the SLI can be described easily by
+// referencing the well-known SLI and providing the needed parameters.
+// Alternatively, a "custom" SLI can be defined with a query to the
+// underlying metric store. An SLI is defined to be good_service
+// /
+// total_service over any queried time interval. The value of
+// performance always falls into the range 0 <= performance <= 1. A
+// custom SLI describes how to compute this ratio, whether this is by
+// dividing values from a pair of time series, cutting a Distribution
+// into good and bad counts, or counting time windows in which the
+// service complies with a criterion. For separation of concerns, a
+// single Service-Level Indicator measures performance for only one
+// aspect of service quality, such as fraction of successful queries or
+// fast-enough queries.
+type ServiceLevelIndicator struct {
+	// BasicSli: Basic SLI on a well-known service type.
+	BasicSli *BasicSli `json:"basicSli,omitempty"`
+
+	// RequestBased: Request-based SLIs
+	RequestBased *RequestBasedSli `json:"requestBased,omitempty"`
+
+	// WindowsBased: Windows-based SLIs
+	WindowsBased *WindowsBasedSli `json:"windowsBased,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BasicSli") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BasicSli") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceLevelIndicator) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceLevelIndicator
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ServiceLevelObjective: A Service-Level Objective (SLO) describes a
+// level of desired good service. It consists of a service-level
+// indicator (SLI), a performance goal, and a period over which the
+// objective is to be evaluated against that goal. The SLO can use SLIs
+// defined in a number of different manners. Typical SLOs might include
+// "99% of requests in each rolling week have latency below 200
+// milliseconds" or "99.5% of requests in each calendar month return
+// successfully."
+type ServiceLevelObjective struct {
+	// CalendarPeriod: A calendar period, semantically "since the start of
+	// the current <calendar_period>". At this time, only DAY, WEEK,
+	// FORTNIGHT, and MONTH are supported.
+	//
+	// Possible values:
+	//   "CALENDAR_PERIOD_UNSPECIFIED" - Undefined period, raises an error.
+	//   "DAY" - A day.
+	//   "WEEK" - A week. Weeks begin on Monday, following ISO 8601
+	// (https://en.wikipedia.org/wiki/ISO_week_date).
+	//   "FORTNIGHT" - A fortnight. The first calendar fortnight of the year
+	// begins at the start of week 1 according to ISO 8601
+	// (https://en.wikipedia.org/wiki/ISO_week_date).
+	//   "MONTH" - A month.
+	//   "QUARTER" - A quarter. Quarters start on dates 1-Jan, 1-Apr, 1-Jul,
+	// and 1-Oct of each year.
+	//   "HALF" - A half-year. Half-years start on dates 1-Jan and 1-Jul.
+	//   "YEAR" - A year.
+	CalendarPeriod string `json:"calendarPeriod,omitempty"`
+
+	// DisplayName: Name used for UI elements listing this SLO.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Goal: The fraction of service that must be good in order for this
+	// objective to be met. 0 < goal <= 1.
+	Goal float64 `json:"goal,omitempty"`
+
+	// Name: Resource name for this ServiceLevelObjective. Of the form
+	// projects/{project_id}/services/{service_id}/serviceLevelObjectives/{sl
+	// o_name}.
+	Name string `json:"name,omitempty"`
+
+	// RollingPeriod: A rolling time period, semantically "in the past
+	// <rolling_period>". Must be an integer multiple of 1 day no larger
+	// than 30 days.
+	RollingPeriod string `json:"rollingPeriod,omitempty"`
+
+	// ServiceLevelIndicator: The definition of good service, used to
+	// measure and calculate the quality of the Service's performance with
+	// respect to a single aspect of service quality.
+	ServiceLevelIndicator *ServiceLevelIndicator `json:"serviceLevelIndicator,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CalendarPeriod") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CalendarPeriod") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceLevelObjective) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceLevelObjective
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *ServiceLevelObjective) UnmarshalJSON(data []byte) error {
+	type NoMethod ServiceLevelObjective
+	var s1 struct {
+		Goal gensupport.JSONFloat64 `json:"goal"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Goal = float64(s1.Goal)
+	return nil
 }
 
 // SourceContext: SourceContext represents information about the source
@@ -3641,6 +4361,36 @@ func (s *TcpCheck) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Telemetry: Configuration for how to query telemetry on a Service.
+type Telemetry struct {
+	// ResourceName: The full name of the resource that defines this
+	// service. Formatted as described in
+	// https://cloud.google.com/apis/design/resource_names.
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Telemetry) MarshalJSON() ([]byte, error) {
+	type NoMethod Telemetry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TimeInterval: A closed time interval. It extends from the start time
 // to the end time, and includes both: [startTime, endTime]. Valid time
 // intervals depend on the MetricKind of the metric value. In no case
@@ -3776,6 +4526,61 @@ type TimeSeries struct {
 
 func (s *TimeSeries) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeSeries
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TimeSeriesRatio: A TimeSeriesRatio specifies two TimeSeries to use
+// for computing the good_service / total_service ratio. The specified
+// TimeSeries must have ValueType = DOUBLE or ValueType = INT64 and must
+// have MetricKind =
+// DELTA or MetricKind = CUMULATIVE. The TimeSeriesRatio must specify
+// exactly two of good, bad, and total, and the relationship
+// good_service +
+// bad_service = total_service will be assumed.
+type TimeSeriesRatio struct {
+	// BadServiceFilter: A monitoring filter
+	// (https://cloud.google.com/monitoring/api/v3/filters) specifying a
+	// TimeSeries quantifying bad service, either demanded service that was
+	// not provided or demanded service that was of inadequate quality. Must
+	// have ValueType = DOUBLE or ValueType = INT64 and must have MetricKind
+	// = DELTA or MetricKind = CUMULATIVE.
+	BadServiceFilter string `json:"badServiceFilter,omitempty"`
+
+	// GoodServiceFilter: A monitoring filter
+	// (https://cloud.google.com/monitoring/api/v3/filters) specifying a
+	// TimeSeries quantifying good service provided. Must have ValueType =
+	// DOUBLE or ValueType = INT64 and must have MetricKind =
+	// DELTA or MetricKind = CUMULATIVE.
+	GoodServiceFilter string `json:"goodServiceFilter,omitempty"`
+
+	// TotalServiceFilter: A monitoring filter
+	// (https://cloud.google.com/monitoring/api/v3/filters) specifying a
+	// TimeSeries quantifying total demanded service. Must have ValueType =
+	// DOUBLE or ValueType = INT64 and must have MetricKind =
+	// DELTA or MetricKind = CUMULATIVE.
+	TotalServiceFilter string `json:"totalServiceFilter,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BadServiceFilter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BadServiceFilter") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeSeriesRatio) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeSeriesRatio
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4138,10 +4943,61 @@ func (s *VerifyNotificationChannelRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// WindowsBasedSli: A WindowsBasedSli defines good_service as the count
+// of time windows for which the provided service was of good quality.
+// Criteria for determining if service was good are embedded in the
+// window_criterion.
+type WindowsBasedSli struct {
+	// GoodBadMetricFilter: A monitoring filter
+	// (https://cloud.google.com/monitoring/api/v3/filters) specifying a
+	// TimeSeries with ValueType = BOOL. The window is good if any true
+	// values appear in the window.
+	GoodBadMetricFilter string `json:"goodBadMetricFilter,omitempty"`
+
+	// GoodTotalRatioThreshold: A window is good if its performance is high
+	// enough.
+	GoodTotalRatioThreshold *PerformanceThreshold `json:"goodTotalRatioThreshold,omitempty"`
+
+	// MetricMeanInRange: A window is good if the metric's value is in a
+	// good range, averaged across returned streams.
+	MetricMeanInRange *MetricRange `json:"metricMeanInRange,omitempty"`
+
+	// MetricSumInRange: A window is good if the metric's value is in a good
+	// range, summed across returned streams.
+	MetricSumInRange *MetricRange `json:"metricSumInRange,omitempty"`
+
+	// WindowPeriod: Duration over which window quality is evaluated. Must
+	// be an integer fraction of a day and at least 60s.
+	WindowPeriod string `json:"windowPeriod,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GoodBadMetricFilter")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GoodBadMetricFilter") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WindowsBasedSli) MarshalJSON() ([]byte, error) {
+	type NoMethod WindowsBasedSli
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "monitoring.projects.alertPolicies.create":
 
 type ProjectsAlertPoliciesCreateCall struct {
-	s           *Service
+	s           *APIService
 	name        string
 	alertpolicy *AlertPolicy
 	urlParams_  gensupport.URLParams
@@ -4184,7 +5040,7 @@ func (c *ProjectsAlertPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4282,7 +5138,7 @@ func (c *ProjectsAlertPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*Ale
 // method id "monitoring.projects.alertPolicies.delete":
 
 type ProjectsAlertPoliciesDeleteCall struct {
-	s          *Service
+	s          *APIService
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -4323,7 +5179,7 @@ func (c *ProjectsAlertPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4413,7 +5269,7 @@ func (c *ProjectsAlertPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 // method id "monitoring.projects.alertPolicies.get":
 
 type ProjectsAlertPoliciesGetCall struct {
-	s            *Service
+	s            *APIService
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -4465,7 +5321,7 @@ func (c *ProjectsAlertPoliciesGetCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4559,7 +5415,7 @@ func (c *ProjectsAlertPoliciesGetCall) Do(opts ...googleapi.CallOption) (*AlertP
 // method id "monitoring.projects.alertPolicies.list":
 
 type ProjectsAlertPoliciesListCall struct {
-	s            *Service
+	s            *APIService
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -4645,7 +5501,7 @@ func (c *ProjectsAlertPoliciesListCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4781,7 +5637,7 @@ func (c *ProjectsAlertPoliciesListCall) Pages(ctx context.Context, f func(*ListA
 // method id "monitoring.projects.alertPolicies.patch":
 
 type ProjectsAlertPoliciesPatchCall struct {
-	s           *Service
+	s           *APIService
 	name        string
 	alertpolicy *AlertPolicy
 	urlParams_  gensupport.URLParams
@@ -4851,7 +5707,7 @@ func (c *ProjectsAlertPoliciesPatchCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4955,7 +5811,7 @@ func (c *ProjectsAlertPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Aler
 // method id "monitoring.projects.collectdTimeSeries.create":
 
 type ProjectsCollectdTimeSeriesCreateCall struct {
-	s                               *Service
+	s                               *APIService
 	name                            string
 	createcollectdtimeseriesrequest *CreateCollectdTimeSeriesRequest
 	urlParams_                      gensupport.URLParams
@@ -5001,7 +5857,7 @@ func (c *ProjectsCollectdTimeSeriesCreateCall) Header() http.Header {
 
 func (c *ProjectsCollectdTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5100,7 +5956,7 @@ func (c *ProjectsCollectdTimeSeriesCreateCall) Do(opts ...googleapi.CallOption) 
 // method id "monitoring.projects.groups.create":
 
 type ProjectsGroupsCreateCall struct {
-	s          *Service
+	s          *APIService
 	name       string
 	group      *Group
 	urlParams_ gensupport.URLParams
@@ -5150,7 +6006,7 @@ func (c *ProjectsGroupsCreateCall) Header() http.Header {
 
 func (c *ProjectsGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5253,7 +6109,7 @@ func (c *ProjectsGroupsCreateCall) Do(opts ...googleapi.CallOption) (*Group, err
 // method id "monitoring.projects.groups.delete":
 
 type ProjectsGroupsDeleteCall struct {
-	s          *Service
+	s          *APIService
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -5303,7 +6159,7 @@ func (c *ProjectsGroupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5398,7 +6254,7 @@ func (c *ProjectsGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 // method id "monitoring.projects.groups.get":
 
 type ProjectsGroupsGetCall struct {
-	s            *Service
+	s            *APIService
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -5450,7 +6306,7 @@ func (c *ProjectsGroupsGetCall) Header() http.Header {
 
 func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5544,7 +6400,7 @@ func (c *ProjectsGroupsGetCall) Do(opts ...googleapi.CallOption) (*Group, error)
 // method id "monitoring.projects.groups.list":
 
 type ProjectsGroupsListCall struct {
-	s            *Service
+	s            *APIService
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -5642,7 +6498,7 @@ func (c *ProjectsGroupsListCall) Header() http.Header {
 
 func (c *ProjectsGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5783,7 +6639,7 @@ func (c *ProjectsGroupsListCall) Pages(ctx context.Context, f func(*ListGroupsRe
 // method id "monitoring.projects.groups.update":
 
 type ProjectsGroupsUpdateCall struct {
-	s          *Service
+	s          *APIService
 	name       string
 	group      *Group
 	urlParams_ gensupport.URLParams
@@ -5834,7 +6690,7 @@ func (c *ProjectsGroupsUpdateCall) Header() http.Header {
 
 func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5937,7 +6793,7 @@ func (c *ProjectsGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Group, err
 // method id "monitoring.projects.groups.members.list":
 
 type ProjectsGroupsMembersListCall struct {
-	s            *Service
+	s            *APIService
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -6032,7 +6888,7 @@ func (c *ProjectsGroupsMembersListCall) Header() http.Header {
 
 func (c *ProjectsGroupsMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6175,7 +7031,7 @@ func (c *ProjectsGroupsMembersListCall) Pages(ctx context.Context, f func(*ListG
 // method id "monitoring.projects.metricDescriptors.create":
 
 type ProjectsMetricDescriptorsCreateCall struct {
-	s                *Service
+	s                *APIService
 	name             string
 	metricdescriptor *MetricDescriptor
 	urlParams_       gensupport.URLParams
@@ -6219,7 +7075,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6318,7 +7174,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Do(opts ...googleapi.CallOption) (
 // method id "monitoring.projects.metricDescriptors.delete":
 
 type ProjectsMetricDescriptorsDeleteCall struct {
-	s          *Service
+	s          *APIService
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -6360,7 +7216,7 @@ func (c *ProjectsMetricDescriptorsDeleteCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6450,7 +7306,7 @@ func (c *ProjectsMetricDescriptorsDeleteCall) Do(opts ...googleapi.CallOption) (
 // method id "monitoring.projects.metricDescriptors.get":
 
 type ProjectsMetricDescriptorsGetCall struct {
-	s            *Service
+	s            *APIService
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -6503,7 +7359,7 @@ func (c *ProjectsMetricDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6598,7 +7454,7 @@ func (c *ProjectsMetricDescriptorsGetCall) Do(opts ...googleapi.CallOption) (*Me
 // method id "monitoring.projects.metricDescriptors.list":
 
 type ProjectsMetricDescriptorsListCall struct {
-	s            *Service
+	s            *APIService
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -6678,7 +7534,7 @@ func (c *ProjectsMetricDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6810,7 +7666,7 @@ func (c *ProjectsMetricDescriptorsListCall) Pages(ctx context.Context, f func(*L
 // method id "monitoring.projects.monitoredResourceDescriptors.get":
 
 type ProjectsMonitoredResourceDescriptorsGetCall struct {
-	s            *Service
+	s            *APIService
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -6863,7 +7719,7 @@ func (c *ProjectsMonitoredResourceDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsMonitoredResourceDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6958,7 +7814,7 @@ func (c *ProjectsMonitoredResourceDescriptorsGetCall) Do(opts ...googleapi.CallO
 // method id "monitoring.projects.monitoredResourceDescriptors.list":
 
 type ProjectsMonitoredResourceDescriptorsListCall struct {
-	s            *Service
+	s            *APIService
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -7038,7 +7894,7 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsMonitoredResourceDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7172,7 +8028,7 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Pages(ctx context.Context
 // method id "monitoring.projects.notificationChannelDescriptors.get":
 
 type ProjectsNotificationChannelDescriptorsGetCall struct {
-	s            *Service
+	s            *APIService
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -7226,7 +8082,7 @@ func (c *ProjectsNotificationChannelDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7320,7 +8176,7 @@ func (c *ProjectsNotificationChannelDescriptorsGetCall) Do(opts ...googleapi.Cal
 // method id "monitoring.projects.notificationChannelDescriptors.list":
 
 type ProjectsNotificationChannelDescriptorsListCall struct {
-	s            *Service
+	s            *APIService
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -7390,7 +8246,7 @@ func (c *ProjectsNotificationChannelDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7518,7 +8374,7 @@ func (c *ProjectsNotificationChannelDescriptorsListCall) Pages(ctx context.Conte
 // method id "monitoring.projects.notificationChannels.create":
 
 type ProjectsNotificationChannelsCreateCall struct {
-	s                   *Service
+	s                   *APIService
 	name                string
 	notificationchannel *NotificationChannel
 	urlParams_          gensupport.URLParams
@@ -7563,7 +8419,7 @@ func (c *ProjectsNotificationChannelsCreateCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7661,7 +8517,7 @@ func (c *ProjectsNotificationChannelsCreateCall) Do(opts ...googleapi.CallOption
 // method id "monitoring.projects.notificationChannels.delete":
 
 type ProjectsNotificationChannelsDeleteCall struct {
-	s          *Service
+	s          *APIService
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -7712,7 +8568,7 @@ func (c *ProjectsNotificationChannelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7807,7 +8663,7 @@ func (c *ProjectsNotificationChannelsDeleteCall) Do(opts ...googleapi.CallOption
 // method id "monitoring.projects.notificationChannels.get":
 
 type ProjectsNotificationChannelsGetCall struct {
-	s            *Service
+	s            *APIService
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -7864,7 +8720,7 @@ func (c *ProjectsNotificationChannelsGetCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7958,7 +8814,7 @@ func (c *ProjectsNotificationChannelsGetCall) Do(opts ...googleapi.CallOption) (
 // method id "monitoring.projects.notificationChannels.getVerificationCode":
 
 type ProjectsNotificationChannelsGetVerificationCodeCall struct {
-	s                                             *Service
+	s                                             *APIService
 	name                                          string
 	getnotificationchannelverificationcoderequest *GetNotificationChannelVerificationCodeRequest
 	urlParams_                                    gensupport.URLParams
@@ -8021,7 +8877,7 @@ func (c *ProjectsNotificationChannelsGetVerificationCodeCall) Header() http.Head
 
 func (c *ProjectsNotificationChannelsGetVerificationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8121,7 +8977,7 @@ func (c *ProjectsNotificationChannelsGetVerificationCodeCall) Do(opts ...googlea
 // method id "monitoring.projects.notificationChannels.list":
 
 type ProjectsNotificationChannelsListCall struct {
-	s            *Service
+	s            *APIService
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -8209,7 +9065,7 @@ func (c *ProjectsNotificationChannelsListCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8345,7 +9201,7 @@ func (c *ProjectsNotificationChannelsListCall) Pages(ctx context.Context, f func
 // method id "monitoring.projects.notificationChannels.patch":
 
 type ProjectsNotificationChannelsPatchCall struct {
-	s                   *Service
+	s                   *APIService
 	name                string
 	notificationchannel *NotificationChannel
 	urlParams_          gensupport.URLParams
@@ -8396,7 +9252,7 @@ func (c *ProjectsNotificationChannelsPatchCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8500,7 +9356,7 @@ func (c *ProjectsNotificationChannelsPatchCall) Do(opts ...googleapi.CallOption)
 // method id "monitoring.projects.notificationChannels.sendVerificationCode":
 
 type ProjectsNotificationChannelsSendVerificationCodeCall struct {
-	s                                              *Service
+	s                                              *APIService
 	name                                           string
 	sendnotificationchannelverificationcoderequest *SendNotificationChannelVerificationCodeRequest
 	urlParams_                                     gensupport.URLParams
@@ -8545,7 +9401,7 @@ func (c *ProjectsNotificationChannelsSendVerificationCodeCall) Header() http.Hea
 
 func (c *ProjectsNotificationChannelsSendVerificationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8643,7 +9499,7 @@ func (c *ProjectsNotificationChannelsSendVerificationCodeCall) Do(opts ...google
 // method id "monitoring.projects.notificationChannels.verify":
 
 type ProjectsNotificationChannelsVerifyCall struct {
-	s                                *Service
+	s                                *APIService
 	name                             string
 	verifynotificationchannelrequest *VerifyNotificationChannelRequest
 	urlParams_                       gensupport.URLParams
@@ -8688,7 +9544,7 @@ func (c *ProjectsNotificationChannelsVerifyCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsVerifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8786,7 +9642,7 @@ func (c *ProjectsNotificationChannelsVerifyCall) Do(opts ...googleapi.CallOption
 // method id "monitoring.projects.timeSeries.create":
 
 type ProjectsTimeSeriesCreateCall struct {
-	s                       *Service
+	s                       *APIService
 	name                    string
 	createtimeseriesrequest *CreateTimeSeriesRequest
 	urlParams_              gensupport.URLParams
@@ -8832,7 +9688,7 @@ func (c *ProjectsTimeSeriesCreateCall) Header() http.Header {
 
 func (c *ProjectsTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8931,7 +9787,7 @@ func (c *ProjectsTimeSeriesCreateCall) Do(opts ...googleapi.CallOption) (*Empty,
 // method id "monitoring.projects.timeSeries.list":
 
 type ProjectsTimeSeriesListCall struct {
-	s            *Service
+	s            *APIService
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -9150,7 +10006,7 @@ func (c *ProjectsTimeSeriesListCall) Header() http.Header {
 
 func (c *ProjectsTimeSeriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9366,7 +10222,7 @@ func (c *ProjectsTimeSeriesListCall) Pages(ctx context.Context, f func(*ListTime
 // method id "monitoring.projects.uptimeCheckConfigs.create":
 
 type ProjectsUptimeCheckConfigsCreateCall struct {
-	s                 *Service
+	s                 *APIService
 	parent            string
 	uptimecheckconfig *UptimeCheckConfig
 	urlParams_        gensupport.URLParams
@@ -9409,7 +10265,7 @@ func (c *ProjectsUptimeCheckConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9507,7 +10363,7 @@ func (c *ProjectsUptimeCheckConfigsCreateCall) Do(opts ...googleapi.CallOption) 
 // method id "monitoring.projects.uptimeCheckConfigs.delete":
 
 type ProjectsUptimeCheckConfigsDeleteCall struct {
-	s          *Service
+	s          *APIService
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -9551,7 +10407,7 @@ func (c *ProjectsUptimeCheckConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9641,7 +10497,7 @@ func (c *ProjectsUptimeCheckConfigsDeleteCall) Do(opts ...googleapi.CallOption) 
 // method id "monitoring.projects.uptimeCheckConfigs.get":
 
 type ProjectsUptimeCheckConfigsGetCall struct {
-	s            *Service
+	s            *APIService
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -9693,7 +10549,7 @@ func (c *ProjectsUptimeCheckConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9787,7 +10643,7 @@ func (c *ProjectsUptimeCheckConfigsGetCall) Do(opts ...googleapi.CallOption) (*U
 // method id "monitoring.projects.uptimeCheckConfigs.list":
 
 type ProjectsUptimeCheckConfigsListCall struct {
-	s            *Service
+	s            *APIService
 	parent       string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -9859,7 +10715,7 @@ func (c *ProjectsUptimeCheckConfigsListCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9985,7 +10841,7 @@ func (c *ProjectsUptimeCheckConfigsListCall) Pages(ctx context.Context, f func(*
 // method id "monitoring.projects.uptimeCheckConfigs.patch":
 
 type ProjectsUptimeCheckConfigsPatchCall struct {
-	s                 *Service
+	s                 *APIService
 	name              string
 	uptimecheckconfig *UptimeCheckConfig
 	urlParams_        gensupport.URLParams
@@ -10041,7 +10897,7 @@ func (c *ProjectsUptimeCheckConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10142,10 +10998,1658 @@ func (c *ProjectsUptimeCheckConfigsPatchCall) Do(opts ...googleapi.CallOption) (
 
 }
 
+// method id "monitoring.services.create":
+
+type ServicesCreateCall struct {
+	s          *APIService
+	parent     string
+	service    *Service
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Create a Service.
+func (r *ServicesService) Create(parent string, service *Service) *ServicesCreateCall {
+	c := &ServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.service = service
+	return c
+}
+
+// ServiceId sets the optional parameter "serviceId": The Service id to
+// use for this Service. If omitted, an id will be generated instead.
+// Must match the pattern a-z0-9-+
+func (c *ServicesCreateCall) ServiceId(serviceId string) *ServicesCreateCall {
+	c.urlParams_.Set("serviceId", serviceId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesCreateCall) Fields(s ...googleapi.Field) *ServicesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesCreateCall) Context(ctx context.Context) *ServicesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.service)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/services")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.services.create" call.
+// Exactly one of *Service or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Service.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ServicesCreateCall) Do(opts ...googleapi.CallOption) (*Service, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Service{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a Service.",
+	//   "flatPath": "v3/{v3Id}/{v3Id1}/services",
+	//   "httpMethod": "POST",
+	//   "id": "monitoring.services.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Resource name of the parent workspace. Of the form projects/{project_id}.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "serviceId": {
+	//       "description": "Optional. The Service id to use for this Service. If omitted, an id will be generated instead. Must match the pattern a-z0-9-+",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/services",
+	//   "request": {
+	//     "$ref": "Service"
+	//   },
+	//   "response": {
+	//     "$ref": "Service"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.services.delete":
+
+type ServicesDeleteCall struct {
+	s          *APIService
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Soft delete this Service.
+func (r *ServicesService) Delete(name string) *ServicesDeleteCall {
+	c := &ServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesDeleteCall) Fields(s ...googleapi.Field) *ServicesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesDeleteCall) Context(ctx context.Context) *ServicesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.services.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Soft delete this Service.",
+	//   "flatPath": "v3/{v3Id}/{v3Id1}/services/{servicesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "monitoring.services.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name of the Service to delete. Of the form projects/{project_id}/service/{service_id}.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.services.get":
+
+type ServicesGetCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the named Service.
+func (r *ServicesService) Get(name string) *ServicesGetCall {
+	c := &ServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesGetCall) Fields(s ...googleapi.Field) *ServicesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ServicesGetCall) IfNoneMatch(entityTag string) *ServicesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesGetCall) Context(ctx context.Context) *ServicesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.services.get" call.
+// Exactly one of *Service or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Service.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ServicesGetCall) Do(opts ...googleapi.CallOption) (*Service, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Service{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the named Service.",
+	//   "flatPath": "v3/{v3Id}/{v3Id1}/services/{servicesId}",
+	//   "httpMethod": "GET",
+	//   "id": "monitoring.services.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name of the Service. Of the form projects/{project_id}/services/{service_id}.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "Service"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.services.list":
+
+type ServicesListCall struct {
+	s            *APIService
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List Services for this workspace.
+func (r *ServicesService) List(parent string) *ServicesListCall {
+	c := &ServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter specifying what
+// Services to return. The filter currently supports the following
+// fields:
+// - `identifier_case`
+// - `app_engine.module_id`
+// - `cloud_endpoints.service`
+// - `cluster_istio.location`
+// - `cluster_istio.cluster_name`
+// - `cluster_istio.service_namespace`
+// - `cluster_istio.service_name`
+// identifier_case refers to which option in the identifier oneof is
+// populated. For example, the filter identifier_case = "CUSTOM" would
+// match all services with a value for the custom field. Valid options
+// are "CUSTOM", "APP_ENGINE", "CLOUD_ENDPOINTS", and "CLUSTER_ISTIO".
+func (c *ServicesListCall) Filter(filter string) *ServicesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": A non-negative
+// number that is the maximum number of results to return. When 0, use
+// default page size.
+func (c *ServicesListCall) PageSize(pageSize int64) *ServicesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If this field is
+// not empty then it must contain the nextPageToken value returned by a
+// previous call to this method. Using this field causes the method to
+// return additional results from the previous method call.
+func (c *ServicesListCall) PageToken(pageToken string) *ServicesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesListCall) Fields(s ...googleapi.Field) *ServicesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ServicesListCall) IfNoneMatch(entityTag string) *ServicesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesListCall) Context(ctx context.Context) *ServicesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/services")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.services.list" call.
+// Exactly one of *ListServicesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListServicesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListServicesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List Services for this workspace.",
+	//   "flatPath": "v3/{v3Id}/{v3Id1}/services",
+	//   "httpMethod": "GET",
+	//   "id": "monitoring.services.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "A filter specifying what Services to return. The filter currently supports the following fields:\n- `identifier_case`\n- `app_engine.module_id`\n- `cloud_endpoints.service`\n- `cluster_istio.location`\n- `cluster_istio.cluster_name`\n- `cluster_istio.service_namespace`\n- `cluster_istio.service_name`\nidentifier_case refers to which option in the identifier oneof is populated. For example, the filter identifier_case = \"CUSTOM\" would match all services with a value for the custom field. Valid options are \"CUSTOM\", \"APP_ENGINE\", \"CLOUD_ENDPOINTS\", and \"CLUSTER_ISTIO\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "A non-negative number that is the maximum number of results to return. When 0, use default page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "If this field is not empty then it must contain the nextPageToken value returned by a previous call to this method. Using this field causes the method to return additional results from the previous method call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Resource name of the parent Workspace. Of the form projects/{project_id}.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/services",
+	//   "response": {
+	//     "$ref": "ListServicesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ServicesListCall) Pages(ctx context.Context, f func(*ListServicesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "monitoring.services.patch":
+
+type ServicesPatchCall struct {
+	s          *APIService
+	name       string
+	service    *Service
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Update this Service.
+func (r *ServicesService) Patch(name string, service *Service) *ServicesPatchCall {
+	c := &ServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.service = service
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": A set of field
+// paths defining which fields to use for the update.
+func (c *ServicesPatchCall) UpdateMask(updateMask string) *ServicesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesPatchCall) Fields(s ...googleapi.Field) *ServicesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesPatchCall) Context(ctx context.Context) *ServicesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.service)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.services.patch" call.
+// Exactly one of *Service or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Service.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ServicesPatchCall) Do(opts ...googleapi.CallOption) (*Service, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Service{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update this Service.",
+	//   "flatPath": "v3/{v3Id}/{v3Id1}/services/{servicesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "monitoring.services.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name for this Service. Of the form projects/{project_id}/services/{service_id}.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "A set of field paths defining which fields to use for the update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "request": {
+	//     "$ref": "Service"
+	//   },
+	//   "response": {
+	//     "$ref": "Service"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.services.serviceLevelObjectives.create":
+
+type ServicesServiceLevelObjectivesCreateCall struct {
+	s                     *APIService
+	parent                string
+	servicelevelobjective *ServiceLevelObjective
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Create: Create a ServiceLevelObjective for the given Service.
+func (r *ServicesServiceLevelObjectivesService) Create(parent string, servicelevelobjective *ServiceLevelObjective) *ServicesServiceLevelObjectivesCreateCall {
+	c := &ServicesServiceLevelObjectivesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.servicelevelobjective = servicelevelobjective
+	return c
+}
+
+// ServiceLevelObjectiveId sets the optional parameter
+// "serviceLevelObjectiveId": The ServiceLevelObjective id to use for
+// this ServiceLevelObjective. If omitted, an id will be generated
+// instead. Must match the pattern a-z0-9-+
+func (c *ServicesServiceLevelObjectivesCreateCall) ServiceLevelObjectiveId(serviceLevelObjectiveId string) *ServicesServiceLevelObjectivesCreateCall {
+	c.urlParams_.Set("serviceLevelObjectiveId", serviceLevelObjectiveId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesServiceLevelObjectivesCreateCall) Fields(s ...googleapi.Field) *ServicesServiceLevelObjectivesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesServiceLevelObjectivesCreateCall) Context(ctx context.Context) *ServicesServiceLevelObjectivesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesServiceLevelObjectivesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesServiceLevelObjectivesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.servicelevelobjective)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/serviceLevelObjectives")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.services.serviceLevelObjectives.create" call.
+// Exactly one of *ServiceLevelObjective or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ServiceLevelObjective.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ServicesServiceLevelObjectivesCreateCall) Do(opts ...googleapi.CallOption) (*ServiceLevelObjective, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ServiceLevelObjective{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a ServiceLevelObjective for the given Service.",
+	//   "flatPath": "v3/{v3Id}/{v3Id1}/services/{servicesId}/serviceLevelObjectives",
+	//   "httpMethod": "POST",
+	//   "id": "monitoring.services.serviceLevelObjectives.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Resource name of the parent Service. Of the form projects/{project_id}/services/{service_id}.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "serviceLevelObjectiveId": {
+	//       "description": "Optional. The ServiceLevelObjective id to use for this ServiceLevelObjective. If omitted, an id will be generated instead. Must match the pattern a-z0-9-+",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/serviceLevelObjectives",
+	//   "request": {
+	//     "$ref": "ServiceLevelObjective"
+	//   },
+	//   "response": {
+	//     "$ref": "ServiceLevelObjective"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.services.serviceLevelObjectives.delete":
+
+type ServicesServiceLevelObjectivesDeleteCall struct {
+	s          *APIService
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete the given ServiceLevelObjective.
+func (r *ServicesServiceLevelObjectivesService) Delete(name string) *ServicesServiceLevelObjectivesDeleteCall {
+	c := &ServicesServiceLevelObjectivesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesServiceLevelObjectivesDeleteCall) Fields(s ...googleapi.Field) *ServicesServiceLevelObjectivesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesServiceLevelObjectivesDeleteCall) Context(ctx context.Context) *ServicesServiceLevelObjectivesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesServiceLevelObjectivesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesServiceLevelObjectivesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.services.serviceLevelObjectives.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ServicesServiceLevelObjectivesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Delete the given ServiceLevelObjective.",
+	//   "flatPath": "v3/{v3Id}/{v3Id1}/services/{servicesId}/serviceLevelObjectives/{serviceLevelObjectivesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "monitoring.services.serviceLevelObjectives.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name of the ServiceLevelObjective to delete. Of the form projects/{project_id}/services/{service_id}/serviceLevelObjectives/{slo_name}.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+/serviceLevelObjectives/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.services.serviceLevelObjectives.get":
+
+type ServicesServiceLevelObjectivesGetCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a ServiceLevelObjective by name.
+func (r *ServicesServiceLevelObjectivesService) Get(name string) *ServicesServiceLevelObjectivesGetCall {
+	c := &ServicesServiceLevelObjectivesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// View sets the optional parameter "view": View of the
+// ServiceLevelObjective to return. If DEFAULT, return the
+// ServiceLevelObjective as originally defined. If EXPLICIT and the
+// ServiceLevelObjective is defined in terms of a BasicSli, replace the
+// BasicSli with a RequestBasedSli spelling out how the SLI is computed.
+//
+// Possible values:
+//   "VIEW_UNSPECIFIED"
+//   "FULL"
+//   "EXPLICIT"
+func (c *ServicesServiceLevelObjectivesGetCall) View(view string) *ServicesServiceLevelObjectivesGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesServiceLevelObjectivesGetCall) Fields(s ...googleapi.Field) *ServicesServiceLevelObjectivesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ServicesServiceLevelObjectivesGetCall) IfNoneMatch(entityTag string) *ServicesServiceLevelObjectivesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesServiceLevelObjectivesGetCall) Context(ctx context.Context) *ServicesServiceLevelObjectivesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesServiceLevelObjectivesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesServiceLevelObjectivesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.services.serviceLevelObjectives.get" call.
+// Exactly one of *ServiceLevelObjective or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ServiceLevelObjective.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ServicesServiceLevelObjectivesGetCall) Do(opts ...googleapi.CallOption) (*ServiceLevelObjective, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ServiceLevelObjective{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a ServiceLevelObjective by name.",
+	//   "flatPath": "v3/{v3Id}/{v3Id1}/services/{servicesId}/serviceLevelObjectives/{serviceLevelObjectivesId}",
+	//   "httpMethod": "GET",
+	//   "id": "monitoring.services.serviceLevelObjectives.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name of the ServiceLevelObjective to get. Of the form projects/{project_id}/services/{service_id}/serviceLevelObjectives/{slo_name}.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+/serviceLevelObjectives/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "View of the ServiceLevelObjective to return. If DEFAULT, return the ServiceLevelObjective as originally defined. If EXPLICIT and the ServiceLevelObjective is defined in terms of a BasicSli, replace the BasicSli with a RequestBasedSli spelling out how the SLI is computed.",
+	//       "enum": [
+	//         "VIEW_UNSPECIFIED",
+	//         "FULL",
+	//         "EXPLICIT"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "ServiceLevelObjective"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.services.serviceLevelObjectives.list":
+
+type ServicesServiceLevelObjectivesListCall struct {
+	s            *APIService
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List the ServiceLevelObjectives for the given Service.
+func (r *ServicesServiceLevelObjectivesService) List(parent string) *ServicesServiceLevelObjectivesListCall {
+	c := &ServicesServiceLevelObjectivesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter specifying what
+// ServiceLevelObjectives to return.
+func (c *ServicesServiceLevelObjectivesListCall) Filter(filter string) *ServicesServiceLevelObjectivesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": A non-negative
+// number that is the maximum number of results to return. When 0, use
+// default page size.
+func (c *ServicesServiceLevelObjectivesListCall) PageSize(pageSize int64) *ServicesServiceLevelObjectivesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If this field is
+// not empty then it must contain the nextPageToken value returned by a
+// previous call to this method. Using this field causes the method to
+// return additional results from the previous method call.
+func (c *ServicesServiceLevelObjectivesListCall) PageToken(pageToken string) *ServicesServiceLevelObjectivesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": View of the
+// ServiceLevelObjectives to return. If DEFAULT, return each
+// ServiceLevelObjective as originally defined. If EXPLICIT and the
+// ServiceLevelObjective is defined in terms of a BasicSli, replace the
+// BasicSli with a RequestBasedSli spelling out how the SLI is computed.
+//
+// Possible values:
+//   "VIEW_UNSPECIFIED"
+//   "FULL"
+//   "EXPLICIT"
+func (c *ServicesServiceLevelObjectivesListCall) View(view string) *ServicesServiceLevelObjectivesListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesServiceLevelObjectivesListCall) Fields(s ...googleapi.Field) *ServicesServiceLevelObjectivesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ServicesServiceLevelObjectivesListCall) IfNoneMatch(entityTag string) *ServicesServiceLevelObjectivesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesServiceLevelObjectivesListCall) Context(ctx context.Context) *ServicesServiceLevelObjectivesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesServiceLevelObjectivesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesServiceLevelObjectivesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/serviceLevelObjectives")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.services.serviceLevelObjectives.list" call.
+// Exactly one of *ListServiceLevelObjectivesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListServiceLevelObjectivesResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ServicesServiceLevelObjectivesListCall) Do(opts ...googleapi.CallOption) (*ListServiceLevelObjectivesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListServiceLevelObjectivesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List the ServiceLevelObjectives for the given Service.",
+	//   "flatPath": "v3/{v3Id}/{v3Id1}/services/{servicesId}/serviceLevelObjectives",
+	//   "httpMethod": "GET",
+	//   "id": "monitoring.services.serviceLevelObjectives.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "A filter specifying what ServiceLevelObjectives to return.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "A non-negative number that is the maximum number of results to return. When 0, use default page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "If this field is not empty then it must contain the nextPageToken value returned by a previous call to this method. Using this field causes the method to return additional results from the previous method call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Resource name of the parent Service. Of the form projects/{project_id}/services/{service_id}.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "View of the ServiceLevelObjectives to return. If DEFAULT, return each ServiceLevelObjective as originally defined. If EXPLICIT and the ServiceLevelObjective is defined in terms of a BasicSli, replace the BasicSli with a RequestBasedSli spelling out how the SLI is computed.",
+	//       "enum": [
+	//         "VIEW_UNSPECIFIED",
+	//         "FULL",
+	//         "EXPLICIT"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/serviceLevelObjectives",
+	//   "response": {
+	//     "$ref": "ListServiceLevelObjectivesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ServicesServiceLevelObjectivesListCall) Pages(ctx context.Context, f func(*ListServiceLevelObjectivesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "monitoring.services.serviceLevelObjectives.patch":
+
+type ServicesServiceLevelObjectivesPatchCall struct {
+	s                     *APIService
+	name                  string
+	servicelevelobjective *ServiceLevelObjective
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Patch: Update the given ServiceLevelObjective.
+func (r *ServicesServiceLevelObjectivesService) Patch(name string, servicelevelobjective *ServiceLevelObjective) *ServicesServiceLevelObjectivesPatchCall {
+	c := &ServicesServiceLevelObjectivesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.servicelevelobjective = servicelevelobjective
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": A set of field
+// paths defining which fields to use for the update.
+func (c *ServicesServiceLevelObjectivesPatchCall) UpdateMask(updateMask string) *ServicesServiceLevelObjectivesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesServiceLevelObjectivesPatchCall) Fields(s ...googleapi.Field) *ServicesServiceLevelObjectivesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesServiceLevelObjectivesPatchCall) Context(ctx context.Context) *ServicesServiceLevelObjectivesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesServiceLevelObjectivesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesServiceLevelObjectivesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.servicelevelobjective)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.services.serviceLevelObjectives.patch" call.
+// Exactly one of *ServiceLevelObjective or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ServiceLevelObjective.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ServicesServiceLevelObjectivesPatchCall) Do(opts ...googleapi.CallOption) (*ServiceLevelObjective, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ServiceLevelObjective{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the given ServiceLevelObjective.",
+	//   "flatPath": "v3/{v3Id}/{v3Id1}/services/{servicesId}/serviceLevelObjectives/{serviceLevelObjectivesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "monitoring.services.serviceLevelObjectives.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name for this ServiceLevelObjective. Of the form projects/{project_id}/services/{service_id}/serviceLevelObjectives/{slo_name}.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+/serviceLevelObjectives/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "A set of field paths defining which fields to use for the update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "request": {
+	//     "$ref": "ServiceLevelObjective"
+	//   },
+	//   "response": {
+	//     "$ref": "ServiceLevelObjective"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring"
+	//   ]
+	// }
+
+}
+
 // method id "monitoring.uptimeCheckIps.list":
 
 type UptimeCheckIpsListCall struct {
-	s            *Service
+	s            *APIService
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -10215,7 +12719,7 @@ func (c *UptimeCheckIpsListCall) Header() http.Header {
 
 func (c *UptimeCheckIpsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

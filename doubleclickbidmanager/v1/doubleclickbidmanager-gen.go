@@ -424,9 +424,6 @@ type FilterPair struct {
 	//   "FILTER_LINE_ITEM_LIFETIME_FREQUENCY"
 	//   "FILTER_LINE_ITEM_TYPE"
 	//   "FILTER_MEDIA_PLAN"
-	//   "FILTER_MOBILE_DEVICE_MAKE"
-	//   "FILTER_MOBILE_DEVICE_MAKE_MODEL"
-	//   "FILTER_MOBILE_DEVICE_TYPE"
 	//   "FILTER_MOBILE_GEO"
 	//   "FILTER_MONTH"
 	//   "FILTER_MRAID_SUPPORT"
@@ -441,7 +438,6 @@ type FilterPair struct {
 	//   "FILTER_PAGE_LAYOUT"
 	//   "FILTER_PARTNER"
 	//   "FILTER_PARTNER_CURRENCY"
-	//   "FILTER_PUBLIC_INVENTORY"
 	//   "FILTER_QUARTER"
 	//   "FILTER_REGION"
 	//   "FILTER_SITE_ID"
@@ -500,7 +496,6 @@ type FilterPair struct {
 	//   "FILTER_VIDEO_VPAID_SUPPORT"
 	//   "FILTER_WEEK"
 	//   "FILTER_YEAR"
-	//   "FILTER_YOUTUBE_VERTICAL"
 	//   "FILTER_ZIP_CODE"
 	Type string `json:"type,omitempty"`
 
@@ -657,9 +652,6 @@ type Parameters struct {
 	//   "FILTER_LINE_ITEM_LIFETIME_FREQUENCY"
 	//   "FILTER_LINE_ITEM_TYPE"
 	//   "FILTER_MEDIA_PLAN"
-	//   "FILTER_MOBILE_DEVICE_MAKE"
-	//   "FILTER_MOBILE_DEVICE_MAKE_MODEL"
-	//   "FILTER_MOBILE_DEVICE_TYPE"
 	//   "FILTER_MOBILE_GEO"
 	//   "FILTER_MONTH"
 	//   "FILTER_MRAID_SUPPORT"
@@ -674,7 +666,6 @@ type Parameters struct {
 	//   "FILTER_PAGE_LAYOUT"
 	//   "FILTER_PARTNER"
 	//   "FILTER_PARTNER_CURRENCY"
-	//   "FILTER_PUBLIC_INVENTORY"
 	//   "FILTER_QUARTER"
 	//   "FILTER_REGION"
 	//   "FILTER_SITE_ID"
@@ -733,7 +724,6 @@ type Parameters struct {
 	//   "FILTER_VIDEO_VPAID_SUPPORT"
 	//   "FILTER_WEEK"
 	//   "FILTER_YEAR"
-	//   "FILTER_YOUTUBE_VERTICAL"
 	//   "FILTER_ZIP_CODE"
 	GroupBys []string `json:"groupBys,omitempty"`
 
@@ -776,11 +766,6 @@ type Parameters struct {
 	//   "METRIC_CLICK_TO_POST_CLICK_CONVERSION_RATE"
 	//   "METRIC_CM_POST_CLICK_REVENUE"
 	//   "METRIC_CM_POST_VIEW_REVENUE"
-	//   "METRIC_COMSCORE_VCE_AUDIENCE_AVG_FREQUENCY"
-	//   "METRIC_COMSCORE_VCE_AUDIENCE_IMPRESSIONS_SHARE"
-	//   "METRIC_COMSCORE_VCE_AUDIENCE_REACH_PCT"
-	//   "METRIC_COMSCORE_VCE_AUDIENCE_SHARE_PCT"
-	//   "METRIC_COMSCORE_VCE_GROSS_RATING_POINTS"
 	//   "METRIC_CONVERSIONS_PER_MILLE"
 	//   "METRIC_COOKIE_REACH_AVERAGE_IMPRESSION_FREQUENCY"
 	//   "METRIC_COOKIE_REACH_IMPRESSION_REACH"
@@ -924,7 +909,6 @@ type Parameters struct {
 	//   "METRIC_PROFIT_VIEWABLE_ECPM_ADVERTISER"
 	//   "METRIC_PROFIT_VIEWABLE_ECPM_PARTNER"
 	//   "METRIC_PROFIT_VIEWABLE_ECPM_USD"
-	//   "METRIC_REACH_COOKIE_REACH"
 	//   "METRIC_REVENUE_ADVERTISER"
 	//   "METRIC_REVENUE_ECPAPC_ADVERTISER"
 	//   "METRIC_REVENUE_ECPAPC_PARTNER"
@@ -1744,7 +1728,7 @@ func (c *LineitemsDownloadlineitemsCall) Header() http.Header {
 
 func (c *LineitemsDownloadlineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1867,7 +1851,7 @@ func (c *LineitemsUploadlineitemsCall) Header() http.Header {
 
 func (c *LineitemsUploadlineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1989,7 +1973,7 @@ func (c *QueriesCreatequeryCall) Header() http.Header {
 
 func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2112,7 +2096,7 @@ func (c *QueriesDeletequeryCall) Header() http.Header {
 
 func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2224,7 +2208,7 @@ func (c *QueriesGetqueryCall) Header() http.Header {
 
 func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2365,7 +2349,7 @@ func (c *QueriesListqueriesCall) Header() http.Header {
 
 func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2484,7 +2468,7 @@ func (c *QueriesRunqueryCall) Header() http.Header {
 
 func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2604,7 +2588,7 @@ func (c *ReportsListreportsCall) Header() http.Header {
 
 func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2736,7 +2720,7 @@ func (c *SdfDownloadCall) Header() http.Header {
 
 func (c *SdfDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.4 gdcl/20191114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

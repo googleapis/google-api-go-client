@@ -106,6 +106,34 @@
   "resources": {
     "projects": {
       "methods": {
+        "explain": {
+          "description": "Performs explanation on the data in the request.\nAI Platform implements a custom `explain` verb on top of an HTTP POST\nmethod. \u003cp\u003eFor details of the request and response format, see the **guide\nto the [explain request format](/ml-engine/docs/v1/explain-request)**.",
+          "flatPath": "v1/projects/{projectsId}:explain",
+          "httpMethod": "POST",
+          "id": "ml.projects.explain",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The resource name of a model or a version.\n\nAuthorization: requires the `predict` permission on the specified resource.",
+              "location": "path",
+              "pattern": "^projects/.+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+name}:explain",
+          "request": {
+            "$ref": "GoogleCloudMlV1__ExplainRequest"
+          },
+          "response": {
+            "$ref": "GoogleApi__HttpBody"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
         "getConfig": {
           "description": "Get the service account information associated with your project. You need\nthis information in order to grant the service account permissions for\nthe Google Cloud Storage location where you put your model training code\nfor training the model with Google Cloud Machine Learning.",
           "flatPath": "v1/projects/{projectsId}:getConfig",
@@ -1002,7 +1030,7 @@
       }
     }
   },
-  "revision": "20191101",
+  "revision": "20191112",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1184,6 +1212,30 @@
       },
       "type": "object"
     },
+    "GoogleCloudMlV1__ExplainRequest": {
+      "description": "Request for explanations to be issued against a trained model.",
+      "id": "GoogleCloudMlV1__ExplainRequest",
+      "properties": {
+        "httpBody": {
+          "$ref": "GoogleApi__HttpBody",
+          "description": "Required.\nThe explanation request body."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1__ExplanationConfig": {
+      "description": "Message holding configuration options for explaining model predictions.\nCurrently, the only supported mechanism to explain a model's prediction is\nthrough attributing its output back to its inputs which is essentially a\ncredit assignment task. We support multiple attribution methods, some\nspecific to particular frameworks like Tensorflow and XGBoost.\nNext idx: 7.",
+      "id": "GoogleCloudMlV1__ExplanationConfig",
+      "properties": {
+        "integratedGradientsAttribution": {
+          "$ref": "GoogleCloudMlV1__IntegratedGradientsAttribution"
+        },
+        "sampledShapleyAttribution": {
+          "$ref": "GoogleCloudMlV1__SampledShapleyAttribution"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudMlV1__GetConfigResponse": {
       "description": "Returns service account information associated with a project.",
       "id": "GoogleCloudMlV1__GetConfigResponse",
@@ -1339,6 +1391,18 @@
         "resumePreviousJobId": {
           "description": "Optional. The prior hyperparameter tuning job id that users hope to\ncontinue with. The job id will be used to find the corresponding vizier\nstudy guid and resume the study.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1__IntegratedGradientsAttribution": {
+      "description": "Attributes credit by computing the Aumann-Shapley value taking advantage\nof the model's fully differentiable structure. Refer to this paper for\nmore details: http://proceedings.mlr.press/v70/sundararajan17a.html",
+      "id": "GoogleCloudMlV1__IntegratedGradientsAttribution",
+      "properties": {
+        "numIntegralSteps": {
+          "description": "Number of steps for approximating the path integral.\nA good value to start is 50 and gradually increase until the\nsum to diff property is met within the desired error range.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -1872,6 +1936,18 @@
       },
       "type": "object"
     },
+    "GoogleCloudMlV1__SampledShapleyAttribution": {
+      "description": "An attribution method that approximates Shapley values for features that\ncontribute to the label being predicted. A sampling strategy is used to\napproximate the value rather than considering all subsets of features.",
+      "id": "GoogleCloudMlV1__SampledShapleyAttribution",
+      "properties": {
+        "numPaths": {
+          "description": "The number of feature permutations to consider when approximating the\nshapley values.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudMlV1__SetDefaultVersionRequest": {
       "description": "Request message for the SetDefaultVersion request.",
       "id": "GoogleCloudMlV1__SetDefaultVersionRequest",
@@ -2054,6 +2130,10 @@
           "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a model from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform model updates in order to avoid race\nconditions: An `etag` is returned in the response to `GetVersion`, and\nsystems are expected to put that etag in the request to `UpdateVersion` to\nensure that their change will be applied to the model as intended.",
           "format": "byte",
           "type": "string"
+        },
+        "explanationConfig": {
+          "$ref": "GoogleCloudMlV1__ExplanationConfig",
+          "description": "Optional. Configures explainability features on the model's version.\nSome explanation features require additional metadata to be loaded\nas part of the model payload."
         },
         "framework": {
           "description": "Optional. The machine learning framework AI Platform uses to train\nthis version of the model. Valid values are `TENSORFLOW`, `SCIKIT_LEARN`,\n`XGBOOST`. If you do not specify a framework, AI Platform\nwill analyze files in the deployment_uri to determine a framework. If you\nchoose `SCIKIT_LEARN` or `XGBOOST`, you must also set the runtime version\nof the model to 1.4 or greater.\n\nDo **not** specify a framework if you're deploying a [custom\nprediction routine](/ml-engine/docs/tensorflow/custom-prediction-routines).\n\nIf you specify a [Compute Engine (N1) machine\ntype](/ml-engine/docs/machine-types-online-prediction) in the\n`machineType` field, you must specify `TENSORFLOW`\nfor the framework.",
@@ -2238,12 +2318,12 @@
           "type": "array"
         },
         "etag": {
-          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a policy from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform policy updates in order to avoid race\nconditions: An `etag` is returned in the response to `getIamPolicy`, and\nsystems are expected to put that etag in the request to `setIamPolicy` to\nensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing\npolicy is overwritten. Due to blind-set semantics of an etag-less policy,\n'setIamPolicy' will not fail even if either of incoming or stored policy\ndoes not meet the version requirements.",
+          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a policy from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform policy updates in order to avoid race\nconditions: An `etag` is returned in the response to `getIamPolicy`, and\nsystems are expected to put that etag in the request to `setIamPolicy` to\nensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing\npolicy is overwritten. Due to blind-set semantics of an etag-less policy,\n'setIamPolicy' will not fail even if the incoming policy version does not\nmeet the requirements for modifying the stored policy.",
           "format": "byte",
           "type": "string"
         },
         "version": {
-          "description": "Specifies the format of the policy.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nOperations affecting conditional bindings must specify version 3. This can\nbe either setting a conditional policy, modifying a conditional binding,\nor removing a conditional binding from the stored conditional policy.\nOperations on non-conditional policies may specify any valid value or\nleave the field unset.\n\nIf no etag is provided in the call to `setIamPolicy`, any version\ncompliance checks on the incoming and/or stored policy is skipped.",
+          "description": "Specifies the format of the policy.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nOperations affecting conditional bindings must specify version 3. This can\nbe either setting a conditional policy, modifying a conditional binding,\nor removing a binding (conditional or unconditional) from the stored\nconditional policy.\nOperations on non-conditional policies may specify any valid value or\nleave the field unset.\n\nIf no etag is provided in the call to `setIamPolicy`, version compliance\nchecks against the stored policy is skipped.",
           "format": "int32",
           "type": "integer"
         }

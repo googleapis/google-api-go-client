@@ -480,6 +480,39 @@
                 "https://www.googleapis.com/auth/firebase"
               ]
             },
+            "list": {
+              "description": "Lists the versions that have been created on the specified site.\nWill include filtering in the future.",
+              "flatPath": "v1beta1/sites/{sitesId}/versions",
+              "httpMethod": "GET",
+              "id": "firebasehosting.sites.versions.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "pageSize": {
+                  "description": "The maximum number of versions to return. The service may return fewer than\nthis value.\nIf unspecified, at most 25 versions will be returned.\nThe maximum value is 100; values above 100 will be coerced to 100",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "The next_page_token from a previous request, if provided.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Required. The parent for which to list files, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+                  "location": "path",
+                  "pattern": "^sites/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+parent}/versions",
+              "response": {
+                "$ref": "ListVersionsResponse"
+              }
+            },
             "patch": {
               "description": "Updates the specified metadata for a version. Note that this method will\nfail with `FAILED_PRECONDITION` in the event of an invalid state\ntransition. The only valid transition for a version is currently from a\n`CREATED` status to a `FINALIZED` status.\nUse [`DeleteVersion`](../sites.versions/delete) to set the status of a\nversion to `DELETED`.",
               "flatPath": "v1beta1/sites/{sitesId}/versions/{versionsId}",
@@ -604,7 +637,7 @@
       }
     }
   },
-  "revision": "20191029",
+  "revision": "20191115",
   "rootUrl": "https://firebasehosting.googleapis.com/",
   "schemas": {
     "ActingUser": {
@@ -894,6 +927,23 @@
         "nextPageToken": {
           "description": "The pagination token, if more results exist.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ListVersionsResponse": {
+      "id": "ListVersionsResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "The pagination token, if more results exist",
+          "type": "string"
+        },
+        "versions": {
+          "description": "The list of versions, if any exist.",
+          "items": {
+            "$ref": "Version"
+          },
+          "type": "array"
         }
       },
       "type": "object"

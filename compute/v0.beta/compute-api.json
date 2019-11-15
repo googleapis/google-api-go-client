@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/y12cypGINR50A5jCwhgMfi1IS8s\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/3gO7MONLgiuE3J8_1AoqK9PsQCI\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -24690,7 +24690,7 @@
       }
     }
   },
-  "revision": "20191009",
+  "revision": "20191014",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -25671,7 +25671,7 @@
           "type": "string"
         },
         "inUseCount": {
-          "description": "[OutputOnly] Indicates how many instances are in use.",
+          "description": "[Output Only] Indicates how many instances are in use.",
           "format": "int64",
           "type": "string"
         },
@@ -25968,7 +25968,7 @@
           "type": "string"
         },
         "status": {
-          "description": "[Output Only] The status of the autoscaler configuration.",
+          "description": "[Output Only] The status of the autoscaler configuration. Current set of possible values: PENDING: Autoscaler backend hasn't read new/updated configuration DELETING: Configuration is being deleted ACTIVE: Configuration is acknowledged to be effective. Some warnings might or might not be present in the status_details field. ERROR: Configuration has errors. Actionable for users. Details are present in the status_details field. New values might be added in the future.",
           "enum": [
             "ACTIVE",
             "DELETING",
@@ -26233,7 +26233,7 @@
           "type": "string"
         },
         "type": {
-          "description": "The type of error returned.",
+          "description": "The type of error, warning or notice returned. Current set of possible values: ALL_INSTANCES_UNHEALTHY (WARNING): All instances in the instance group are unhealthy (not in RUNNING state). BACKEND_SERVICE_DOES_NOT_EXIST (ERROR): There is no backend service attached to the instance group. CAPPED_AT_MAX_NUM_REPLICAS (WARNING): Autoscaler recommends size bigger than maxNumReplicas. CUSTOM_METRIC_DATA_POINTS_TOO_SPARSE (WARNING): The custom metric samples are not exported often enough to be a credible base for autoscaling. CUSTOM_METRIC_INVALID (ERROR): The custom metric that was specified does not exist or does not have the necessary labels. MIN_EQUALS_MAX (WARNING): The minNumReplicas is equal to maxNumReplicas. This means the autoscaler cannot add or remove instances from the instance group. MISSING_CUSTOM_METRIC_DATA_POINTS (WARNING): The autoscaler did not receive any data from the custom metric configured for autoscaling. MISSING_LOAD_BALANCING_DATA_POINTS (WARNING): The autoscaler is configured to scale based on a load balancing signal but the instance group has not received any requests from the load balancer. MODE_OFF (WARNING): Autoscaling is turned off. The number of instances in the group won't change automatically. The autoscaling configuration is preserved. MODE_ONLY_UP (WARNING): Autoscaling is in the \"Autoscale only up\" mode. Instances in the group will be only added. MORE_THAN_ONE_BACKEND_SERVICE (ERROR): The instance group cannot be autoscaled because it has more than one backend service attached to it. NOT_ENOUGH_QUOTA_AVAILABLE (ERROR): Exceeded quota for necessary resources, such as CPU, number of instances and so on. REGION_RESOURCE_STOCKOUT (ERROR): Showed only for regional autoscalers: there is a resource stockout in the chosen region. SCALING_TARGET_DOES_NOT_EXIST (ERROR): The target to be scaled does not exist. UNSUPPORTED_MAX_RATE_LOAD_BALANCING_CONFIGURATION (ERROR): Autoscaling does not work with an HTTP/S load balancer that has been configured for maxRate. ZONE_RESOURCE_STOCKOUT (ERROR): For zonal autoscalers: there is a resource stockout in the chosen zone. For regional autoscalers: in at least one of the zones you're using there is a resource stockout. New values might be added in the future. Some of the values might not be available in all API versions.",
           "enum": [
             "ALL_INSTANCES_UNHEALTHY",
             "BACKEND_SERVICE_DOES_NOT_EXIST",
@@ -37265,7 +37265,7 @@
       "type": "object"
     },
     "NetworkEndpointGroup": {
-      "description": "Represents a collection of network endpoints.",
+      "description": "Represents a collection of network endpoints.\n\nFor more information read Setting up network endpoint groups in load balancing. (== resource_for v1.networkEndpointGroups ==) (== resource_for beta.networkEndpointGroups ==)",
       "id": "NetworkEndpointGroup",
       "properties": {
         "creationTimestamp": {
@@ -38114,7 +38114,7 @@
       "type": "object"
     },
     "NodeGroup": {
-      "description": "Represent a sole-tenant Node Group resource.\n\nA sole-tenant node is a physical server that is dedicated to hosting VM instances only for your specific project. Use sole-tenant nodes to keep your instances physically separated from instances in other projects, or to group your instances together on the same host hardware. For more information, read Sole-tenant nodes. (== resource_for beta.nodeGroups ==) (== resource_for v1.nodeGroups ==) NextID: 15",
+      "description": "Represent a sole-tenant Node Group resource.\n\nA sole-tenant node is a physical server that is dedicated to hosting VM instances only for your specific project. Use sole-tenant nodes to keep your instances physically separated from instances in other projects, or to group your instances together on the same host hardware. For more information, read Sole-tenant nodes. (== resource_for beta.nodeGroups ==) (== resource_for v1.nodeGroups ==) NextID: 16",
       "id": "NodeGroup",
       "properties": {
         "creationTimestamp": {
@@ -42192,7 +42192,7 @@
       "id": "Reservation",
       "properties": {
         "commitment": {
-          "description": "[OutputOnly] Full or partial URL to a parent commitment. This field displays for reservations that are tied to a commitment.",
+          "description": "[Output Only] Full or partial URL to a parent commitment. This field displays for reservations that are tied to a commitment.",
           "type": "string"
         },
         "creationTimestamp": {
@@ -44176,7 +44176,7 @@
           "type": "boolean"
         },
         "filter": {
-          "description": "Specifies the desired filtering of logs on this NAT. If unspecified, logs are exported for all connections handled by this NAT.",
+          "description": "Specify the desired filtering of logs on this NAT. If unspecified, logs are exported for all connections handled by this NAT. This option can take one of the following values: \n- ERRORS_ONLY: Export logs only for connection failures. \n- TRANSLATIONS_ONLY: Export logs only for successful connections. \n- ALL: Export logs for all connections, successful and unsuccessful.",
           "enum": [
             "ALL",
             "ERRORS_ONLY",
@@ -44338,14 +44338,14 @@
           "type": "array"
         },
         "drainAutoAllocatedNatIps": {
-          "description": "A list of IPs auto-allocated for NAT that are in drain mode. Example: [\"1.1.1.1\", ?179.12.26.133?].",
+          "description": "A list of IPs auto-allocated for NAT that are in drain mode. Example: [\"1.1.1.1\", \"179.12.26.133\"].",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "drainUserAllocatedNatIps": {
-          "description": "A list of IPs user-allocated for NAT that are in drain mode. Example: [\"1.1.1.1\", ?179.12.26.133?].",
+          "description": "A list of IPs user-allocated for NAT that are in drain mode. Example: [\"1.1.1.1\", \"179.12.26.133\"].",
           "items": {
             "type": "string"
           },
@@ -45036,7 +45036,7 @@
       "properties": {
         "encryptionKey": {
           "$ref": "ShieldedInstanceIdentityEntry",
-          "description": "An Endorsement Key (EK) issued to the Shielded Instance's vTPM."
+          "description": "An Endorsement Key (EK) made by the RSA 2048 algorithm issued to the Shielded Instance's vTPM."
         },
         "kind": {
           "default": "compute#shieldedInstanceIdentity",
@@ -45045,7 +45045,7 @@
         },
         "signingKey": {
           "$ref": "ShieldedInstanceIdentityEntry",
-          "description": "An Attestation Key (AK) issued to the Shielded Instance's vTPM."
+          "description": "An Attestation Key (AK) made by the RSA 2048 algorithm issued to the Shielded Instance's vTPM."
         }
       },
       "type": "object"
@@ -45174,7 +45174,7 @@
           "type": "string"
         },
         "diskSizeGb": {
-          "description": "[Output Only] Size of the snapshot, specified in GB.",
+          "description": "[Output Only] Size of the source disk, specified in GB.",
           "format": "int64",
           "type": "string"
         },

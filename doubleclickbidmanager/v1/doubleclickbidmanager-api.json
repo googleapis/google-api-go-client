@@ -15,7 +15,7 @@
   "description": "API for viewing and managing your reports in DoubleClick Bid Manager.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/bid-manager/",
-  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/I7WurO1pcPXBgsEKnqAq2fX-Dsk\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/77m_7DT6mYWlXdKWIi-PD459QMc\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -257,7 +257,7 @@
       }
     }
   },
-  "revision": "20191025",
+  "revision": "20191107",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "DownloadLineItemsRequest": {
@@ -466,9 +466,6 @@
             "FILTER_LINE_ITEM_LIFETIME_FREQUENCY",
             "FILTER_LINE_ITEM_TYPE",
             "FILTER_MEDIA_PLAN",
-            "FILTER_MOBILE_DEVICE_MAKE",
-            "FILTER_MOBILE_DEVICE_MAKE_MODEL",
-            "FILTER_MOBILE_DEVICE_TYPE",
             "FILTER_MOBILE_GEO",
             "FILTER_MONTH",
             "FILTER_MRAID_SUPPORT",
@@ -483,7 +480,6 @@
             "FILTER_PAGE_LAYOUT",
             "FILTER_PARTNER",
             "FILTER_PARTNER_CURRENCY",
-            "FILTER_PUBLIC_INVENTORY",
             "FILTER_QUARTER",
             "FILTER_REGION",
             "FILTER_SITE_ID",
@@ -542,15 +538,9 @@
             "FILTER_VIDEO_VPAID_SUPPORT",
             "FILTER_WEEK",
             "FILTER_YEAR",
-            "FILTER_YOUTUBE_VERTICAL",
             "FILTER_ZIP_CODE"
           ],
           "enumDescriptions": [
-            "",
-            "",
-            "",
-            "",
-            "",
             "",
             "",
             "",
@@ -781,9 +771,6 @@
               "FILTER_LINE_ITEM_LIFETIME_FREQUENCY",
               "FILTER_LINE_ITEM_TYPE",
               "FILTER_MEDIA_PLAN",
-              "FILTER_MOBILE_DEVICE_MAKE",
-              "FILTER_MOBILE_DEVICE_MAKE_MODEL",
-              "FILTER_MOBILE_DEVICE_TYPE",
               "FILTER_MOBILE_GEO",
               "FILTER_MONTH",
               "FILTER_MRAID_SUPPORT",
@@ -798,7 +785,6 @@
               "FILTER_PAGE_LAYOUT",
               "FILTER_PARTNER",
               "FILTER_PARTNER_CURRENCY",
-              "FILTER_PUBLIC_INVENTORY",
               "FILTER_QUARTER",
               "FILTER_REGION",
               "FILTER_SITE_ID",
@@ -857,15 +843,9 @@
               "FILTER_VIDEO_VPAID_SUPPORT",
               "FILTER_WEEK",
               "FILTER_YEAR",
-              "FILTER_YOUTUBE_VERTICAL",
               "FILTER_ZIP_CODE"
             ],
             "enumDescriptions": [
-              "",
-              "",
-              "",
-              "",
-              "",
               "",
               "",
               "",
@@ -1032,11 +1012,6 @@
               "METRIC_CLICK_TO_POST_CLICK_CONVERSION_RATE",
               "METRIC_CM_POST_CLICK_REVENUE",
               "METRIC_CM_POST_VIEW_REVENUE",
-              "METRIC_COMSCORE_VCE_AUDIENCE_AVG_FREQUENCY",
-              "METRIC_COMSCORE_VCE_AUDIENCE_IMPRESSIONS_SHARE",
-              "METRIC_COMSCORE_VCE_AUDIENCE_REACH_PCT",
-              "METRIC_COMSCORE_VCE_AUDIENCE_SHARE_PCT",
-              "METRIC_COMSCORE_VCE_GROSS_RATING_POINTS",
               "METRIC_CONVERSIONS_PER_MILLE",
               "METRIC_COOKIE_REACH_AVERAGE_IMPRESSION_FREQUENCY",
               "METRIC_COOKIE_REACH_IMPRESSION_REACH",
@@ -1180,7 +1155,6 @@
               "METRIC_PROFIT_VIEWABLE_ECPM_ADVERTISER",
               "METRIC_PROFIT_VIEWABLE_ECPM_PARTNER",
               "METRIC_PROFIT_VIEWABLE_ECPM_USD",
-              "METRIC_REACH_COOKIE_REACH",
               "METRIC_REVENUE_ADVERTISER",
               "METRIC_REVENUE_ECPAPC_ADVERTISER",
               "METRIC_REVENUE_ECPAPC_PARTNER",
@@ -1279,12 +1253,6 @@
               "METRIC_VIEWABLE_BID_REQUESTS"
             ],
             "enumDescriptions": [
-              "",
-              "",
-              "",
-              "",
-              "",
-              "",
               "",
               "",
               "",

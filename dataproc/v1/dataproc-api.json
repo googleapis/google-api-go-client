@@ -253,7 +253,7 @@
                   ]
                 },
                 "setIamPolicy": {
-                  "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+                  "description": "Sets the access control policy on the specified resource. Replaces any existing policy.Can return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/autoscalingPolicies/{autoscalingPoliciesId}:setIamPolicy",
                   "httpMethod": "POST",
                   "id": "dataproc.projects.locations.autoscalingPolicies.setIamPolicy",
@@ -556,7 +556,7 @@
                   ]
                 },
                 "setIamPolicy": {
-                  "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+                  "description": "Sets the access control policy on the specified resource. Replaces any existing policy.Can return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workflowTemplates/{workflowTemplatesId}:setIamPolicy",
                   "httpMethod": "POST",
                   "id": "dataproc.projects.locations.workflowTemplates.setIamPolicy",
@@ -790,7 +790,7 @@
                   ]
                 },
                 "setIamPolicy": {
-                  "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+                  "description": "Sets the access control policy on the specified resource. Replaces any existing policy.Can return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
                   "flatPath": "v1/projects/{projectsId}/regions/{regionsId}/autoscalingPolicies/{autoscalingPoliciesId}:setIamPolicy",
                   "httpMethod": "POST",
                   "id": "dataproc.projects.regions.autoscalingPolicies.setIamPolicy",
@@ -1177,7 +1177,7 @@
                   ]
                 },
                 "setIamPolicy": {
-                  "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+                  "description": "Sets the access control policy on the specified resource. Replaces any existing policy.Can return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
                   "flatPath": "v1/projects/{projectsId}/regions/{regionsId}/clusters/{clustersId}:setIamPolicy",
                   "httpMethod": "POST",
                   "id": "dataproc.projects.regions.clusters.setIamPolicy",
@@ -1491,7 +1491,7 @@
                   ]
                 },
                 "setIamPolicy": {
-                  "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+                  "description": "Sets the access control policy on the specified resource. Replaces any existing policy.Can return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
                   "flatPath": "v1/projects/{projectsId}/regions/{regionsId}/jobs/{jobsId}:setIamPolicy",
                   "httpMethod": "POST",
                   "id": "dataproc.projects.regions.jobs.setIamPolicy",
@@ -1729,7 +1729,7 @@
                   ]
                 },
                 "setIamPolicy": {
-                  "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+                  "description": "Sets the access control policy on the specified resource. Replaces any existing policy.Can return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
                   "flatPath": "v1/projects/{projectsId}/regions/{regionsId}/operations/{operationsId}:setIamPolicy",
                   "httpMethod": "POST",
                   "id": "dataproc.projects.regions.operations.setIamPolicy",
@@ -2004,7 +2004,7 @@
                   ]
                 },
                 "setIamPolicy": {
-                  "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+                  "description": "Sets the access control policy on the specified resource. Replaces any existing policy.Can return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
                   "flatPath": "v1/projects/{projectsId}/regions/{regionsId}/workflowTemplates/{workflowTemplatesId}:setIamPolicy",
                   "httpMethod": "POST",
                   "id": "dataproc.projects.regions.workflowTemplates.setIamPolicy",
@@ -2094,7 +2094,7 @@
       }
     }
   },
-  "revision": "20190920",
+  "revision": "20191031",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2789,7 +2789,7 @@
       "id": "InstanceGroupConfig",
       "properties": {
         "accelerators": {
-          "description": "Optional. The Compute Engine accelerator configuration for these instances.Beta Feature: This feature is still under development. It may be changed before final release.",
+          "description": "Optional. The Compute Engine accelerator configuration for these instances.",
           "items": {
             "$ref": "AcceleratorConfig"
           },
@@ -2821,6 +2821,10 @@
         "managedGroupConfig": {
           "$ref": "ManagedGroupConfig",
           "description": "Output only. The config for Compute Engine Instance Group Manager that manages this group. This is only used for preemptible instance groups."
+        },
+        "minCpuPlatform": {
+          "description": "Optional. Specifies the minimum cpu platform for the Instance Group. See Cloud Dataproc\u0026rarr;Minimum CPU Platform.",
+          "type": "string"
         },
         "numInstances": {
           "description": "Optional. The number of VM instances in the instance group. For master instance groups, must be set to 1.",
@@ -2907,6 +2911,10 @@
         "sparkJob": {
           "$ref": "SparkJob",
           "description": "Job is a Spark job."
+        },
+        "sparkRJob": {
+          "$ref": "SparkRJob",
+          "description": "Job is a SparkR job."
         },
         "sparkSqlJob": {
           "$ref": "SparkSqlJob",
@@ -3446,7 +3454,7 @@
       "type": "object"
     },
     "Policy": {
-      "description": "Defines an Identity and Access Management (IAM) policy. It is used to specify access control policies for Cloud Platform resources.A Policy is a collection of bindings. A binding binds one or more members to a single role. Members can be user accounts, service accounts, Google groups, and domains (such as G Suite). A role is a named list of permissions (defined by IAM or configured by users). A binding can optionally specify a condition, which is a logic expression that further constrains the role binding based on attributes about the request and/or target resource.JSON Example\n{\n  \"bindings\": [\n    {\n      \"role\": \"role/resourcemanager.organizationAdmin\",\n      \"members\": [\n        \"user:mike@example.com\",\n        \"group:admins@example.com\",\n        \"domain:google.com\",\n        \"serviceAccount:my-project-id@appspot.gserviceaccount.com\"\n      ]\n    },\n    {\n      \"role\": \"roles/resourcemanager.organizationViewer\",\n      \"members\": [\"user:eve@example.com\"],\n      \"condition\": {\n        \"title\": \"expirable access\",\n        \"description\": \"Does not grant access after Sep 2020\",\n        \"expression\": \"request.time \u003c\n        timestamp('2020-10-01T00:00:00.000Z')\",\n      }\n    }\n  ]\n}\nYAML Example\nbindings:\n- members:\n  - user:mike@example.com\n  - group:admins@example.com\n  - domain:google.com\n  - serviceAccount:my-project-id@appspot.gserviceaccount.com\n  role: roles/resourcemanager.organizationAdmin\n- members:\n  - user:eve@example.com\n  role: roles/resourcemanager.organizationViewer\n  condition:\n    title: expirable access\n    description: Does not grant access after Sep 2020\n    expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\nFor a description of IAM and its features, see the IAM developer's guide (https://cloud.google.com/iam/docs).",
+      "description": "Defines an Identity and Access Management (IAM) policy. It is used to specify access control policies for Cloud Platform resources.A Policy is a collection of bindings. A binding binds one or more members to a single role. Members can be user accounts, service accounts, Google groups, and domains (such as G Suite). A role is a named list of permissions (defined by IAM or configured by users). A binding can optionally specify a condition, which is a logic expression that further constrains the role binding based on attributes about the request and/or target resource.JSON Example\n{\n  \"bindings\": [\n    {\n      \"role\": \"roles/resourcemanager.organizationAdmin\",\n      \"members\": [\n        \"user:mike@example.com\",\n        \"group:admins@example.com\",\n        \"domain:google.com\",\n        \"serviceAccount:my-project-id@appspot.gserviceaccount.com\"\n      ]\n    },\n    {\n      \"role\": \"roles/resourcemanager.organizationViewer\",\n      \"members\": [\"user:eve@example.com\"],\n      \"condition\": {\n        \"title\": \"expirable access\",\n        \"description\": \"Does not grant access after Sep 2020\",\n        \"expression\": \"request.time \u003c\n        timestamp('2020-10-01T00:00:00.000Z')\",\n      }\n    }\n  ]\n}\nYAML Example\nbindings:\n- members:\n  - user:mike@example.com\n  - group:admins@example.com\n  - domain:google.com\n  - serviceAccount:my-project-id@appspot.gserviceaccount.com\n  role: roles/resourcemanager.organizationAdmin\n- members:\n  - user:eve@example.com\n  role: roles/resourcemanager.organizationViewer\n  condition:\n    title: expirable access\n    description: Does not grant access after Sep 2020\n    expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\nFor a description of IAM and its features, see the IAM developer's guide (https://cloud.google.com/iam/docs).",
       "id": "Policy",
       "properties": {
         "bindings": {
@@ -3664,6 +3672,49 @@
             "type": "string"
           },
           "description": "Optional. A mapping of property names to values, used to configure Spark. Properties that conflict with values set by the Cloud Dataproc API may be overwritten. Can include properties set in /etc/spark/conf/spark-defaults.conf and classes in user code.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "SparkRJob": {
+      "description": "A Cloud Dataproc job for running Apache SparkR (https://spark.apache.org/docs/latest/sparkr.html) applications on YARN.",
+      "id": "SparkRJob",
+      "properties": {
+        "archiveUris": {
+          "description": "Optional. HCFS URIs of archives to be extracted in the working directory of Spark drivers and tasks. Supported file types: .jar, .tar, .tar.gz, .tgz, and .zip.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "args": {
+          "description": "Optional. The arguments to pass to the driver. Do not include arguments, such as --conf, that can be set as job properties, since a collision may occur that causes an incorrect job submission.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "fileUris": {
+          "description": "Optional. HCFS URIs of files to be copied to the working directory of R drivers and distributed tasks. Useful for naively parallel tasks.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "loggingConfig": {
+          "$ref": "LoggingConfig",
+          "description": "Optional. The runtime log config for job execution."
+        },
+        "mainRFileUri": {
+          "description": "Required. The HCFS URI of the main R file to use as the driver. Must be a .R file.",
+          "type": "string"
+        },
+        "properties": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. A mapping of property names to values, used to configure SparkR. Properties that conflict with values set by the Cloud Dataproc API may be overwritten. Can include properties set in /etc/spark/conf/spark-defaults.conf and classes in user code.",
           "type": "object"
         }
       },

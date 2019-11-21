@@ -77,24 +77,20 @@ type Bundler struct {
 	handlerCount int                 // # of bundles currently being handled (i.e. handler is invoked on them)
 	sem          *semaphore.Weighted // enforces BufferedByteLimit
 	semOnce      sync.Once           // guards semaphore initialization
-
 	// The current bundle we're adding items to. Not yet in the queue.
 	// Appended to the queue once the flushTimer fires or the bundle
 	// thresholds/limits are reached. If curBundle is nil and tail is
 	// not, we first try to add items to tail. Once tail is full or handled,
 	// we create a new curBundle for the incoming item.
 	curBundle *bundle
-
 	// The next bundle in the queue to be handled. Nil if the queue is
 	// empty.
 	head *bundle
-
 	// The last bundle in the queue to be handled. Nil if the queue is
 	// empty. If curBundle is nil and tail isn't, we attempt to add new
 	// items to the tail until if becomes full or has been passed to the
 	// handler.
-	tail *bundle
-
+	tail      *bundle
 	curFlush  *sync.WaitGroup // counts outstanding bundles since last flush
 	prevFlush chan bool       // signal used to wait for prior flush
 

@@ -411,8 +411,8 @@ func (s *GoogleCloudRecommenderV1beta1MarkRecommendationSucceededRequest) Marsha
 type GoogleCloudRecommenderV1beta1Operation struct {
 	// Action: Type of this operation. Contains one of 'and', 'remove',
 	// 'replace', 'move',
-	// 'copy', 'test' and custom operations. This field is case-insensitive
-	// and
+	// 'copy', 'test' and 'custom' operations. This field is
+	// case-insensitive and
 	// always populated.
 	Action string `json:"action,omitempty"`
 
@@ -434,15 +434,15 @@ type GoogleCloudRecommenderV1beta1Operation struct {
 	// * Example: {
 	//   "/versions/*/name" : "it-123"
 	//   "/versions/*/targetSize/percent": 20
-	//  }
+	//   }
 	// * Example: {
 	//   "/bindings/*/role": "roles/admin"
 	//   "/bindings/*/condition" : null
-	//  }
+	//   }
 	// * Example: {
 	//   "/bindings/*/role": "roles/admin"
 	//   "/bindings/*/members/*" : ["x@google.com", "y@google.com"]
-	//  }
+	//   }
 	// When both path_filters and path_value_matchers are set, an implicit
 	// AND
 	// must be performed.
@@ -873,7 +873,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsGetCall) Header() http.Head
 
 func (c *ProjectsLocationsRecommendersRecommendationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1052,7 +1052,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Header() http.Hea
 
 func (c *ProjectsLocationsRecommendersRecommendationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1192,17 +1192,18 @@ type ProjectsLocationsRecommendersRecommendationsMarkClaimedCall struct {
 	header_                                                       http.Header
 }
 
-// MarkClaimed: Mark the Recommendation State as Claimed. Users can use
+// MarkClaimed: Marks the Recommendation State as Claimed. Users can use
 // this method to
 // indicate to the Recommender API that they are starting to apply
 // the
 // recommendation themselves. This stops the recommendation content from
 // being
-// updated.
+// updated. Associated insights are frozen and placed in the ACCEPTED
+// state.
 //
 // MarkRecommendationClaimed can be applied to recommendations in
-// CLAIMED,
-// SUCCEEDED, FAILED, or ACTIVE state.
+// CLAIMED or
+// ACTIVE state.
 //
 // Requires the recommender.*.update IAM permission for the
 // specified
@@ -1241,7 +1242,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) Header() h
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1307,7 +1308,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) Do(opts ..
 	}
 	return ret, nil
 	// {
-	//   "description": "Mark the Recommendation State as Claimed. Users can use this method to\nindicate to the Recommender API that they are starting to apply the\nrecommendation themselves. This stops the recommendation content from being\nupdated.\n\nMarkRecommendationClaimed can be applied to recommendations in CLAIMED,\nSUCCEEDED, FAILED, or ACTIVE state.\n\nRequires the recommender.*.update IAM permission for the specified\nrecommender.",
+	//   "description": "Marks the Recommendation State as Claimed. Users can use this method to\nindicate to the Recommender API that they are starting to apply the\nrecommendation themselves. This stops the recommendation content from being\nupdated. Associated insights are frozen and placed in the ACCEPTED state.\n\nMarkRecommendationClaimed can be applied to recommendations in CLAIMED or\nACTIVE state.\n\nRequires the recommender.*.update IAM permission for the specified\nrecommender.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/recommenders/{recommendersId}/recommendations/{recommendationsId}:markClaimed",
 	//   "httpMethod": "POST",
 	//   "id": "recommender.projects.locations.recommenders.recommendations.markClaimed",
@@ -1348,13 +1349,15 @@ type ProjectsLocationsRecommendersRecommendationsMarkFailedCall struct {
 	header_                                                      http.Header
 }
 
-// MarkFailed: Mark the Recommendation State as Failed. Users can use
+// MarkFailed: Marks the Recommendation State as Failed. Users can use
 // this method to
 // indicate to the Recommender API that they have applied the
 // recommendation
 // themselves, and the operation failed. This stops the recommendation
 // content
-// from being updated.
+// from being updated. Associated insights are frozen and placed in
+// the
+// ACCEPTED state.
 //
 // MarkRecommendationFailed can be applied to recommendations in
 // ACTIVE,
@@ -1397,7 +1400,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) Header() ht
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1463,7 +1466,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) Do(opts ...
 	}
 	return ret, nil
 	// {
-	//   "description": "Mark the Recommendation State as Failed. Users can use this method to\nindicate to the Recommender API that they have applied the recommendation\nthemselves, and the operation failed. This stops the recommendation content\nfrom being updated.\n\nMarkRecommendationFailed can be applied to recommendations in ACTIVE,\nCLAIMED, SUCCEEDED, or FAILED state.\n\nRequires the recommender.*.update IAM permission for the specified\nrecommender.",
+	//   "description": "Marks the Recommendation State as Failed. Users can use this method to\nindicate to the Recommender API that they have applied the recommendation\nthemselves, and the operation failed. This stops the recommendation content\nfrom being updated. Associated insights are frozen and placed in the\nACCEPTED state.\n\nMarkRecommendationFailed can be applied to recommendations in ACTIVE,\nCLAIMED, SUCCEEDED, or FAILED state.\n\nRequires the recommender.*.update IAM permission for the specified\nrecommender.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/recommenders/{recommendersId}/recommendations/{recommendationsId}:markFailed",
 	//   "httpMethod": "POST",
 	//   "id": "recommender.projects.locations.recommenders.recommendations.markFailed",
@@ -1504,13 +1507,15 @@ type ProjectsLocationsRecommendersRecommendationsMarkSucceededCall struct {
 	header_                                                         http.Header
 }
 
-// MarkSucceeded: Mark the Recommendation State as Succeeded. Users can
+// MarkSucceeded: Marks the Recommendation State as Succeeded. Users can
 // use this method to
 // indicate to the Recommender API that they have applied the
 // recommendation
 // themselves, and the operation was successful. This stops the
 // recommendation
-// content from being updated.
+// content from being updated. Associated insights are frozen and placed
+// in
+// the ACCEPTED state.
 //
 // MarkRecommendationSucceeded can be applied to recommendations in
 // ACTIVE,
@@ -1553,7 +1558,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) Header()
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1619,7 +1624,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) Do(opts 
 	}
 	return ret, nil
 	// {
-	//   "description": "Mark the Recommendation State as Succeeded. Users can use this method to\nindicate to the Recommender API that they have applied the recommendation\nthemselves, and the operation was successful. This stops the recommendation\ncontent from being updated.\n\nMarkRecommendationSucceeded can be applied to recommendations in ACTIVE,\nCLAIMED, SUCCEEDED, or FAILED state.\n\nRequires the recommender.*.update IAM permission for the specified\nrecommender.",
+	//   "description": "Marks the Recommendation State as Succeeded. Users can use this method to\nindicate to the Recommender API that they have applied the recommendation\nthemselves, and the operation was successful. This stops the recommendation\ncontent from being updated. Associated insights are frozen and placed in\nthe ACCEPTED state.\n\nMarkRecommendationSucceeded can be applied to recommendations in ACTIVE,\nCLAIMED, SUCCEEDED, or FAILED state.\n\nRequires the recommender.*.update IAM permission for the specified\nrecommender.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/recommenders/{recommendersId}/recommendations/{recommendationsId}:markSucceeded",
 	//   "httpMethod": "POST",
 	//   "id": "recommender.projects.locations.recommenders.recommendations.markSucceeded",

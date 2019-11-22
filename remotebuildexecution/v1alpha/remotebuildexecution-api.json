@@ -387,7 +387,7 @@
       }
     }
   },
-  "revision": "20191008",
+  "revision": "20191119",
   "rootUrl": "https://admin-remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -1230,6 +1230,26 @@
             "$ref": "GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerPool"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateInstanceRequest": {
+      "description": "The request used for `UpdateInstance`.",
+      "id": "GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateInstanceRequest",
+      "properties": {
+        "loggingEnabled": {
+          "description": "Whether to enable Stackdriver logging for this instance.",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Name of the instance to update.\nFormat: `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.",
+          "type": "string"
+        },
+        "updateMask": {
+          "description": "The fields to update.",
+          "format": "google-fieldmask",
+          "type": "string"
         }
       },
       "type": "object"

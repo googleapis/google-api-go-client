@@ -420,7 +420,7 @@
       }
     }
   },
-  "revision": "20190907",
+  "revision": "20191118",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AwsAccessKey": {
@@ -966,7 +966,8 @@
             "PAUSED",
             "SUCCESS",
             "FAILED",
-            "ABORTED"
+            "ABORTED",
+            "QUEUED"
           ],
           "enumDescriptions": [
             "Zero is an illegal value.",
@@ -974,7 +975,8 @@
             "Paused.",
             "Completed successfully.",
             "Terminated due to an unrecoverable failure.",
-            "Aborted by the user."
+            "Aborted by the user.",
+            "Execution is temporarily delayed by the system. No user action is\nrequired."
           ],
           "type": "string"
         },

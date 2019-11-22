@@ -1534,7 +1534,7 @@
       }
     }
   },
-  "revision": "20191102",
+  "revision": "20191120",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -1625,6 +1625,25 @@
         },
         "timeZone": {
           "description": "Required. The time zone of this agent from the\n[time zone database](https://www.iana.org/time-zones), e.g.,\nAmerica/New_York, Europe/Paris.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2AnnotatedMessagePart": {
+      "description": "Represents a part of a message possibly annotated with an entity. The part\ncan be an entity or purely a part of the message between two entities or\nmessage start/end.",
+      "id": "GoogleCloudDialogflowV2AnnotatedMessagePart",
+      "properties": {
+        "entityType": {
+          "description": "The [Dialogflow system entity\ntype](https://cloud.google.com/dialogflow/docs/reference/system-entities)\nof this message part. If this is empty, Dialogflow could not annotate the\nphrase part with a system entity.",
+          "type": "string"
+        },
+        "formattedValue": {
+          "description": "The [Dialogflow system entity formatted value\n](https://cloud.google.com/dialogflow/docs/reference/system-entities) of\nthis message part. For example for a system entity of type\n`@sys.unit-currency`, this may contain:\n\u003cpre\u003e\n{\n  \"amount\": 5,\n  \"currency\": \"USD\"\n}\n\u003c/pre\u003e",
+          "type": "any"
+        },
+        "text": {
+          "description": "A part of a message possibly annotated with an entity.",
           "type": "string"
         }
       },
@@ -1825,6 +1844,45 @@
           },
           "description": "Optional. The collection of parameters associated with this context.\nRefer to [this\ndoc](https://cloud.google.com/dialogflow/docs/intents-actions-parameters)\nfor syntax.",
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2ConversationEvent": {
+      "description": "Represents a notification sent to Cloud Pub/Sub subscribers for conversation\nlifecycle events.",
+      "id": "GoogleCloudDialogflowV2ConversationEvent",
+      "properties": {
+        "conversation": {
+          "description": "The unique identifier of the conversation this notification\nrefers to.\nFormat: `projects/\u003cProject ID\u003e/conversations/\u003cConversation ID\u003e`.",
+          "type": "string"
+        },
+        "errorStatus": {
+          "$ref": "GoogleRpcStatus",
+          "description": "More detailed information about an error. Only set for type\nUNRECOVERABLE_ERROR_IN_PHONE_CALL."
+        },
+        "newMessagePayload": {
+          "$ref": "GoogleCloudDialogflowV2Message",
+          "description": "Payload of NEW_MESSAGE event."
+        },
+        "type": {
+          "description": "The type of the event that this notification refers to.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "CONVERSATION_STARTED",
+            "CONVERSATION_FINISHED",
+            "HUMAN_INTERVENTION_NEEDED",
+            "NEW_MESSAGE",
+            "UNRECOVERABLE_ERROR"
+          ],
+          "enumDescriptions": [
+            "Type not set.",
+            "A new conversation has been opened. This is fired when a telephone call\nis answered, or a conversation is created via the API.",
+            "An existing conversation has closed. This is fired when a telephone call\nis terminated, or a conversation is closed via the API.",
+            "An existing conversation has received notification from Dialogflow that\nhuman intervention is required.",
+            "An existing conversation has received a new message, either from API or\ntelephony. It is configured in\nConversationProfile.new_message_event_notification_config",
+            "Unrecoverable error during a telephone call.\n\nIn general non-recoverable errors only occur if something was\nmisconfigured in the ConversationProfile corresponding to the call. After\na non-recoverable error, Dialogflow may stop responding.\n\nWe don't fire this event:\n* in an API call because we can directly return the error, or,\n* when we can recover from an error."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -3086,6 +3144,72 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2Message": {
+      "description": "Represents a message posted into a conversation.",
+      "id": "GoogleCloudDialogflowV2Message",
+      "properties": {
+        "content": {
+          "description": "Required. The message content.",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Output only. The time when the message was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "languageCode": {
+          "description": "Optional. The message language.\nThis should be a [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt)\nlanguage tag. Example: \"en-US\".",
+          "type": "string"
+        },
+        "messageAnnotation": {
+          "$ref": "GoogleCloudDialogflowV2MessageAnnotation",
+          "description": "Output only. The annotation for the message."
+        },
+        "name": {
+          "description": "The unique identifier of the message.\nFormat: `projects/\u003cProject ID\u003e/conversations/\u003cConversation\nID\u003e/messages/\u003cMessage ID\u003e`.",
+          "type": "string"
+        },
+        "participant": {
+          "description": "Output only. The participant that sends this message.",
+          "type": "string"
+        },
+        "participantRole": {
+          "description": "Output only. The role of the participant.",
+          "enum": [
+            "ROLE_UNSPECIFIED",
+            "HUMAN_AGENT",
+            "AUTOMATED_AGENT",
+            "END_USER"
+          ],
+          "enumDescriptions": [
+            "Participant role not set.",
+            "Participant is a human agent.",
+            "Participant is an automated agent, such as a Dialogflow agent.",
+            "Participant is an end user that has called or chatted with\nDialogflow services."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2MessageAnnotation": {
+      "description": "Represents the result of annotation for the message.",
+      "id": "GoogleCloudDialogflowV2MessageAnnotation",
+      "properties": {
+        "containEntities": {
+          "description": "Indicates whether the text message contains entities.",
+          "type": "boolean"
+        },
+        "parts": {
+          "description": "The collection of annotated message parts ordered by their\nposition in the message. You can recover the annotated message by\nconcatenating [AnnotatedMessagePart.text].",
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2AnnotatedMessagePart"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2OriginalDetectIntentRequest": {
       "description": "Represents the contents of the original request that was passed to\nthe `[Streaming]DetectIntent` call.",
       "id": "GoogleCloudDialogflowV2OriginalDetectIntentRequest",
@@ -3124,7 +3248,7 @@
           "enumDescriptions": [
             "Not specified.",
             "Uncompressed 16-bit signed little-endian samples (Linear PCM).\nAudio content returned as LINEAR16 also contains a WAV header.",
-            "MP3 audio.",
+            "MP3 audio at 32kbps.",
             "Opus encoded audio wrapped in an ogg container. The result will be a\nfile which can be played natively on Android, and in browsers (at least\nChrome and Firefox). The quality of the encoding is considerably higher\nthan MP3 while using approximately the same bitrate."
           ],
           "type": "string"
@@ -3456,7 +3580,7 @@
       "id": "GoogleCloudDialogflowV2VoiceSelectionParams",
       "properties": {
         "name": {
-          "description": "Optional. The name of the voice. If not set, the service will choose a\nvoice based on the other parameters such as language_code and gender.",
+          "description": "Optional. The name of the voice. If not set, the service will choose a\nvoice based on the other parameters such as language_code and\nssml_gender.",
           "type": "string"
         },
         "ssmlGender": {

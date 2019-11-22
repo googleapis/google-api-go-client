@@ -918,7 +918,7 @@
       }
     }
   },
-  "revision": "20191107",
+  "revision": "20191119",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -1229,12 +1229,14 @@
         "state": {
           "description": "Application state.",
           "enum": [
-            "INSTALLED",
-            "REMOVED"
+            "APPLICATION_STATE_UNSPECIFIED",
+            "REMOVED",
+            "INSTALLED"
           ],
           "enumDescriptions": [
-            "App is installed on the device",
-            "App was removed from the device"
+            "App state is unspecified",
+            "App was removed from the device",
+            "App is installed on the device"
           ],
           "type": "string"
         },

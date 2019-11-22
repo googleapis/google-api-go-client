@@ -674,7 +674,7 @@
       }
     }
   },
-  "revision": "20191023",
+  "revision": "20191111",
   "rootUrl": "https://cloudtasks.googleapis.com/",
   "schemas": {
     "AppEngineHttpRequest": {
@@ -876,6 +876,61 @@
       },
       "type": "object"
     },
+    "HttpRequest": {
+      "description": "HTTP request.\n\nThe task will be pushed to the worker as an HTTP request. If the worker\nor the redirected worker acknowledges the task by returning a successful HTTP\nresponse code ([`200` - `299`]), the task will removed from the queue. If\nany other HTTP response code is returned or no response is received, the\ntask will be retried according to the following:\n\n* User-specified throttling: retry configuration,\n  rate limits, and the queue's state.\n\n* System throttling: To prevent the worker from overloading, Cloud Tasks may\n  temporarily reduce the queue's effective rate. User-specified settings\n  will not be changed.\n\n System throttling happens because:\n\n  * Cloud Tasks backs off on all errors. Normally the backoff specified in\n    rate limits will be used. But if the worker returns\n    `429` (Too Many Requests), `503` (Service Unavailable), or the rate of\n    errors is high, Cloud Tasks will use a higher backoff rate. The retry\n    specified in the `Retry-After` HTTP response header is considered.\n\n  * To prevent traffic spikes and to smooth sudden large traffic spikes,\n    dispatches ramp up slowly when the queue is newly created or idle and\n    if large numbers of tasks suddenly become available to dispatch (due to\n    spikes in create task rates, the queue being unpaused, or many tasks\n    that are scheduled at the same time).",
+      "id": "HttpRequest",
+      "properties": {
+        "body": {
+          "description": "HTTP request body.\n\nA request body is allowed only if the\nHTTP method is POST, PUT, or PATCH. It is an\nerror to set body on a task with an incompatible HttpMethod.",
+          "format": "byte",
+          "type": "string"
+        },
+        "headers": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "HTTP request headers.\n\nThis map contains the header field names and values.\nHeaders can be set when the\ntask is created.\n\nThese headers represent a subset of the headers that will accompany the\ntask's HTTP request. Some HTTP request headers will be ignored or replaced.\n\nA partial list of headers that will be ignored or replaced is:\n\n* Host: This will be computed by Cloud Tasks and derived from\n  HttpRequest.url.\n* Content-Length: This will be computed by Cloud Tasks.\n* User-Agent: This will be set to `\"Google-Cloud-Tasks\"`.\n* X-Google-*: Google use only.\n* X-AppEngine-*: Google use only.\n\n`Content-Type` won't be set by Cloud Tasks. You can explicitly set\n`Content-Type` to a media type when the\n task is created.\n For example, `Content-Type` can be set to `\"application/octet-stream\"` or\n `\"application/json\"`.\n\nHeaders which can have multiple values (according to RFC2616) can be\nspecified using comma-separated values.\n\nThe size of the headers must be less than 80KB.",
+          "type": "object"
+        },
+        "httpMethod": {
+          "description": "The HTTP method to use for the request. The default is POST.",
+          "enum": [
+            "HTTP_METHOD_UNSPECIFIED",
+            "POST",
+            "GET",
+            "HEAD",
+            "PUT",
+            "DELETE",
+            "PATCH",
+            "OPTIONS"
+          ],
+          "enumDescriptions": [
+            "HTTP method unspecified",
+            "HTTP POST",
+            "HTTP GET",
+            "HTTP HEAD",
+            "HTTP PUT",
+            "HTTP DELETE",
+            "HTTP PATCH",
+            "HTTP OPTIONS"
+          ],
+          "type": "string"
+        },
+        "oauthToken": {
+          "$ref": "OAuthToken",
+          "description": "If specified, an\n[OAuth token](https://developers.google.com/identity/protocols/OAuth2)\nwill be generated and attached as an `Authorization` header in the HTTP\nrequest.\n\nThis type of authorization should generally only be used when calling\nGoogle APIs hosted on *.googleapis.com."
+        },
+        "oidcToken": {
+          "$ref": "OidcToken",
+          "description": "If specified, an\n[OIDC](https://developers.google.com/identity/protocols/OpenIDConnect)\ntoken will be generated and attached as an `Authorization` header in the\nHTTP request.\n\nThis type of authorization can be used for many scenarios, including\ncalling Cloud Run, or endpoints where you intend to validate the token\nyourself."
+        },
+        "url": {
+          "description": "Required. The full url path that the request will be sent to.\n\nThis string must begin with either \"http://\" or \"https://\". Some examples\nare: `http://acme.com` and `https://acme.com/sales:8080`. Cloud Tasks will\nencode some characters for safety and compatibility. The maximum allowed\nURL length is 2083 characters after encoding.\n\nThe `Location` header response from a redirect response [`300` - `399`]\nmay be followed. The redirect is not counted as a separate attempt.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ListLocationsResponse": {
       "description": "The response message for Locations.ListLocations.",
       "id": "ListLocationsResponse",
@@ -964,6 +1019,36 @@
       },
       "type": "object"
     },
+    "OAuthToken": {
+      "description": "Contains information needed for generating an\n[OAuth token](https://developers.google.com/identity/protocols/OAuth2).\nThis type of authorization should generally only be used when calling Google\nAPIs hosted on *.googleapis.com.",
+      "id": "OAuthToken",
+      "properties": {
+        "scope": {
+          "description": "OAuth scope to be used for generating OAuth access token.\nIf not specified, \"https://www.googleapis.com/auth/cloud-platform\"\nwill be used.",
+          "type": "string"
+        },
+        "serviceAccountEmail": {
+          "description": "[Service account email](https://cloud.google.com/iam/docs/service-accounts)\nto be used for generating OAuth token.\nThe service account must be within the same project as the queue. The\ncaller must have iam.serviceAccounts.actAs permission for the service\naccount.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OidcToken": {
+      "description": "Contains information needed for generating an\n[OpenID Connect\ntoken](https://developers.google.com/identity/protocols/OpenIDConnect).\nThis type of authorization can be used for many scenarios, including\ncalling Cloud Run, or endpoints where you intend to validate the token\nyourself.",
+      "id": "OidcToken",
+      "properties": {
+        "audience": {
+          "description": "Audience to be used when generating OIDC token. If not specified, the URI\nspecified in target will be used.",
+          "type": "string"
+        },
+        "serviceAccountEmail": {
+          "description": "[Service account email](https://cloud.google.com/iam/docs/service-accounts)\nto be used for generating OIDC token.\nThe service account must be within the same project as the queue. The\ncaller must have iam.serviceAccounts.actAs permission for the service\naccount.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "PauseQueueRequest": {
       "description": "Request message for PauseQueue.",
       "id": "PauseQueueRequest",
@@ -982,12 +1067,12 @@
           "type": "array"
         },
         "etag": {
-          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a policy from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform policy updates in order to avoid race\nconditions: An `etag` is returned in the response to `getIamPolicy`, and\nsystems are expected to put that etag in the request to `setIamPolicy` to\nensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing\npolicy is overwritten. Due to blind-set semantics of an etag-less policy,\n'setIamPolicy' will not fail even if either of incoming or stored policy\ndoes not meet the version requirements.",
+          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a policy from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform policy updates in order to avoid race\nconditions: An `etag` is returned in the response to `getIamPolicy`, and\nsystems are expected to put that etag in the request to `setIamPolicy` to\nensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing\npolicy is overwritten. Due to blind-set semantics of an etag-less policy,\n'setIamPolicy' will not fail even if the incoming policy version does not\nmeet the requirements for modifying the stored policy.",
           "format": "byte",
           "type": "string"
         },
         "version": {
-          "description": "Specifies the format of the policy.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nOperations affecting conditional bindings must specify version 3. This can\nbe either setting a conditional policy, modifying a conditional binding,\nor removing a conditional binding from the stored conditional policy.\nOperations on non-conditional policies may specify any valid value or\nleave the field unset.\n\nIf no etag is provided in the call to `setIamPolicy`, any version\ncompliance checks on the incoming and/or stored policy is skipped.",
+          "description": "Specifies the format of the policy.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nOperations affecting conditional bindings must specify version 3. This can\nbe either setting a conditional policy, modifying a conditional binding,\nor removing a binding (conditional or unconditional) from the stored\nconditional policy.\nOperations on non-conditional policies may specify any valid value or\nleave the field unset.\n\nIf no etag is provided in the call to `setIamPolicy`, version compliance\nchecks against the stored policy is skipped.",
           "format": "int32",
           "type": "integer"
         }
@@ -1006,7 +1091,7 @@
       "properties": {
         "appEngineRoutingOverride": {
           "$ref": "AppEngineRouting",
-          "description": "Overrides for\ntask-level app_engine_routing.\nThese settings apply only to\nApp Engine tasks in this queue.\n\nIf set, `app_engine_routing_override` is used for all\nApp Engine tasks in the queue, no matter what the\nsetting is for the\ntask-level app_engine_routing."
+          "description": "Overrides for\ntask-level app_engine_routing.\nThese settings apply only to\nApp Engine tasks in this queue.\nHttp tasks are not affected.\n\nIf set, `app_engine_routing_override` is used for all\nApp Engine tasks in the queue, no matter what the\nsetting is for the\ntask-level app_engine_routing."
         },
         "name": {
           "description": "Caller-specified and required in CreateQueue,\nafter which it becomes output only.\n\nThe queue name.\n\nThe queue name must have the following format:\n`projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`\n\n* `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]),\n   hyphens (-), colons (:), or periods (.).\n   For more information, see\n   [Identifying\n   projects](https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects)\n* `LOCATION_ID` is the canonical ID for the queue's location.\n   The list of available locations can be obtained by calling\n   ListLocations.\n   For more information, see https://cloud.google.com/about/locations/.\n* `QUEUE_ID` can contain letters ([A-Za-z]), numbers ([0-9]), or\n  hyphens (-). The maximum length is 100 characters.",
@@ -1182,13 +1267,17 @@
           "type": "integer"
         },
         "dispatchDeadline": {
-          "description": "The deadline for requests sent to the worker. If the worker does not\nrespond by this deadline then the request is cancelled and the attempt\nis marked as a `DEADLINE_EXCEEDED` failure. Cloud Tasks will retry the\ntask according to the RetryConfig.\n\nNote that when the request is cancelled, Cloud Tasks will stop listing for\nthe response, but whether the worker stops processing depends on the\nworker. For example, if the worker is stuck, it may not react to cancelled\nrequests.\n\nThe default and maximum values depend on the type of request:\n\n\n* For App Engine tasks, 0 indicates that the\n  request has the default deadline. The default deadline depends on the\n  [scaling\n  type](https://cloud.google.com/appengine/docs/standard/go/how-instances-are-managed#instance_scaling)\n  of the service: 10 minutes for standard apps with automatic scaling, 24\n  hours for standard apps with manual and basic scaling, and 60 minutes for\n  flex apps. If the request deadline is set, it must be in the interval [15\n  seconds, 24 hours 15 seconds]. Regardless of the task's\n  `dispatch_deadline`, the app handler will not run for longer than than\n  the service's timeout. We recommend setting the `dispatch_deadline` to\n  at most a few seconds more than the app handler's timeout. For more\n  information see\n  [Timeouts](https://cloud.google.com/tasks/docs/creating-appengine-handlers#timeouts).\n\n`dispatch_deadline` will be truncated to the nearest millisecond. The\ndeadline is an approximate deadline.",
+          "description": "The deadline for requests sent to the worker. If the worker does not\nrespond by this deadline then the request is cancelled and the attempt\nis marked as a `DEADLINE_EXCEEDED` failure. Cloud Tasks will retry the\ntask according to the RetryConfig.\n\nNote that when the request is cancelled, Cloud Tasks will stop listing for\nthe response, but whether the worker stops processing depends on the\nworker. For example, if the worker is stuck, it may not react to cancelled\nrequests.\n\nThe default and maximum values depend on the type of request:\n\n* For HTTP tasks, the default is 10 minutes. The deadline\n  must be in the interval [15 seconds, 30 minutes].\n\n* For App Engine tasks, 0 indicates that the\n  request has the default deadline. The default deadline depends on the\n  [scaling\n  type](https://cloud.google.com/appengine/docs/standard/go/how-instances-are-managed#instance_scaling)\n  of the service: 10 minutes for standard apps with automatic scaling, 24\n  hours for standard apps with manual and basic scaling, and 60 minutes for\n  flex apps. If the request deadline is set, it must be in the interval [15\n  seconds, 24 hours 15 seconds]. Regardless of the task's\n  `dispatch_deadline`, the app handler will not run for longer than than\n  the service's timeout. We recommend setting the `dispatch_deadline` to\n  at most a few seconds more than the app handler's timeout. For more\n  information see\n  [Timeouts](https://cloud.google.com/tasks/docs/creating-appengine-handlers#timeouts).\n\n`dispatch_deadline` will be truncated to the nearest millisecond. The\ndeadline is an approximate deadline.",
           "format": "google-duration",
           "type": "string"
         },
         "firstAttempt": {
           "$ref": "Attempt",
           "description": "Output only. The status of the task's first attempt.\n\nOnly dispatch_time will be set.\nThe other Attempt information is not retained by Cloud Tasks."
+        },
+        "httpRequest": {
+          "$ref": "HttpRequest",
+          "description": "HTTP request that is sent to the worker.\n\nAn HTTP task is a task that has HttpRequest set."
         },
         "lastAttempt": {
           "$ref": "Attempt",

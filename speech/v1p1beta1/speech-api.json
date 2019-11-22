@@ -289,7 +289,7 @@
       }
     }
   },
-  "revision": "20190926",
+  "revision": "20191115",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "ListOperationsResponse": {
@@ -678,6 +678,11 @@
         },
         "minSpeakerCount": {
           "description": "Minimum number of speakers in the conversation. This range gives you more\nflexibility by allowing the system to automatically determine the correct\nnumber of speakers. If not set, the default value is 2.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "speakerTag": {
+          "description": "Output only. Unused.",
           "format": "int32",
           "type": "integer"
         }

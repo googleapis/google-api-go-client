@@ -2535,7 +2535,7 @@
       }
     }
   },
-  "revision": "20191007",
+  "revision": "20191107",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "BigQueryOptions": {
@@ -3055,7 +3055,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Required. A client-assigned identifier, such as \"load-balancer-exclusion\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+          "description": "Required. A client-assigned identifier, such as \"load-balancer-exclusion\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. First character has to be alphanumeric.",
           "type": "string"
         },
         "updateTime": {
@@ -3203,7 +3203,7 @@
           "type": "boolean"
         },
         "name": {
-          "description": "Required. The client-assigned sink identifier, unique within the project. Example: \"my-syslog-errors-to-pubsub\". Sink identifiers are limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, and periods.",
+          "description": "Required. The client-assigned sink identifier, unique within the project. Example: \"my-syslog-errors-to-pubsub\". Sink identifiers are limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, and periods. First character has to be alphanumeric.",
           "type": "string"
         },
         "outputVersionFormat": {

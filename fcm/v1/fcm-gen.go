@@ -167,6 +167,14 @@ type AndroidConfig struct {
 	// google.firebase.fcm.v1.Message.data.
 	Data map[string]string `json:"data,omitempty"`
 
+	// DirectBootOk: If set to true, messages will be allowed to be
+	// delivered to the app while
+	// the device is in direct boot mode. See [Support Direct
+	// Boot
+	// mode](https://developer.android.com/training/articles/direct-boot
+	// ).
+	DirectBootOk bool `json:"directBootOk,omitempty"`
+
 	// FcmOptions: Options for features provided by the FCM SDK for Android.
 	FcmOptions *AndroidFcmOptions `json:"fcmOptions,omitempty"`
 
@@ -1244,7 +1252,7 @@ func (c *ProjectsMessagesSendCall) Header() http.Header {
 
 func (c *ProjectsMessagesSendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

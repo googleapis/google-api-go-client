@@ -141,7 +141,7 @@
       }
     }
   },
-  "revision": "20191111",
+  "revision": "20191119",
   "rootUrl": "https://fcm.googleapis.com/",
   "schemas": {
     "AndroidConfig": {
@@ -158,6 +158,10 @@
           },
           "description": "Arbitrary key/value payload. If present, it will override\ngoogle.firebase.fcm.v1.Message.data.",
           "type": "object"
+        },
+        "directBootOk": {
+          "description": "If set to true, messages will be allowed to be delivered to the app while\nthe device is in direct boot mode. See [Support Direct Boot\nmode](https://developer.android.com/training/articles/direct-boot).",
+          "type": "boolean"
         },
         "fcmOptions": {
           "$ref": "AndroidFcmOptions",

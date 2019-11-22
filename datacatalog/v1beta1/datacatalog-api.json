@@ -141,7 +141,7 @@
               "type": "string"
             },
             "sqlResource": {
-              "description": "The SQL name of the entry. SQL names are case-sensitive.\n\nExamples:\n\n  * `cloud_pubsub.project_id.topic_id`\n  * ``pubsub.project_id.`topic.id.with.dots` ``\n  * `bigquery.project_id.dataset_id.table_id`\n  * `datacatalog.project_id.location_id.entry_group_id.entry_id`\n\n`*_id`s shoud satisfy the standard SQL rules for identifiers.\nhttps://cloud.google.com/bigquery/docs/reference/standard-sql/lexical.",
+              "description": "The SQL name of the entry. SQL names are case-sensitive.\n\nExamples:\n\n  * `cloud_pubsub.project_id.topic_id`\n  * ``pubsub.project_id.`topic.id.with.dots` ``\n  * `bigquery.table.project_id.dataset_id.table_id`\n  * `bigquery.dataset.project_id.dataset_id`\n  * `datacatalog.project_id.location_id.entry_group_id.entry_id`\n\n`*_id`s shoud satisfy the standard SQL rules for identifiers.\nhttps://cloud.google.com/bigquery/docs/reference/standard-sql/lexical.",
               "location": "query",
               "type": "string"
             }
@@ -1013,13 +1013,551 @@
                   }
                 }
               }
+            },
+            "taxonomies": {
+              "methods": {
+                "create": {
+                  "description": "Creates a taxonomy in the specified project.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies",
+                  "httpMethod": "POST",
+                  "id": "datacatalog.projects.locations.taxonomies.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. Resource name of the project that the taxonomy will belong to.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+parent}/taxonomies",
+                  "request": {
+                    "$ref": "GoogleCloudDatacatalogV1beta1Taxonomy"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudDatacatalogV1beta1Taxonomy"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "delete": {
+                  "description": "Deletes a taxonomy. This operation will also delete all\npolicy tags in this taxonomy along with their associated policies.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies/{taxonomiesId}",
+                  "httpMethod": "DELETE",
+                  "id": "datacatalog.projects.locations.taxonomies.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Resource name of the taxonomy to be deleted. All policy tags in\nthis taxonomy will also be deleted.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+name}",
+                  "response": {
+                    "$ref": "Empty"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "export": {
+                  "description": "Exports all taxonomies and their policy tags in a project.\n\nThis method generates SerializedTaxonomy protos with nested policy tags\nthat can be used as an input for future ImportTaxonomies calls.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies:export",
+                  "httpMethod": "GET",
+                  "id": "datacatalog.projects.locations.taxonomies.export",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. Resource name of the project that taxonomies to be exported\nwill share.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "serializedTaxonomies": {
+                      "description": "Export taxonomies as serialized taxonomies.",
+                      "location": "query",
+                      "type": "boolean"
+                    },
+                    "taxonomies": {
+                      "description": "Required. Resource names of the taxonomies to be exported.",
+                      "location": "query",
+                      "repeated": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+parent}/taxonomies:export",
+                  "response": {
+                    "$ref": "GoogleCloudDatacatalogV1beta1ExportTaxonomiesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Gets a taxonomy.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies/{taxonomiesId}",
+                  "httpMethod": "GET",
+                  "id": "datacatalog.projects.locations.taxonomies.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Resource name of the requested taxonomy.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+name}",
+                  "response": {
+                    "$ref": "GoogleCloudDatacatalogV1beta1Taxonomy"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "getIamPolicy": {
+                  "description": "Gets the IAM policy for a taxonomy or a policy tag.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies/{taxonomiesId}:getIamPolicy",
+                  "httpMethod": "POST",
+                  "id": "datacatalog.projects.locations.taxonomies.getIamPolicy",
+                  "parameterOrder": [
+                    "resource"
+                  ],
+                  "parameters": {
+                    "resource": {
+                      "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+resource}:getIamPolicy",
+                  "request": {
+                    "$ref": "GetIamPolicyRequest"
+                  },
+                  "response": {
+                    "$ref": "Policy"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "import": {
+                  "description": "Imports all taxonomies and their policy tags to a project as new\ntaxonomies.\n\nThis method provides a bulk taxonomy / policy tag creation using nested\nproto structure.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies:import",
+                  "httpMethod": "POST",
+                  "id": "datacatalog.projects.locations.taxonomies.import",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. Resource name of project that the newly created taxonomies will\nbelong to.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+parent}/taxonomies:import",
+                  "request": {
+                    "$ref": "GoogleCloudDatacatalogV1beta1ImportTaxonomiesRequest"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudDatacatalogV1beta1ImportTaxonomiesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Lists all taxonomies in a project in a particular location that the caller\nhas permission to view.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies",
+                  "httpMethod": "GET",
+                  "id": "datacatalog.projects.locations.taxonomies.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "The maximum number of items to return. Must be a value between 1 and 1000.\nIf not set, defaults to 50.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "The next_page_token value returned from a previous list request, if any. If\nnot set, defaults to an empty string.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. Resource name of the project to list the taxonomies of.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+parent}/taxonomies",
+                  "response": {
+                    "$ref": "GoogleCloudDatacatalogV1beta1ListTaxonomiesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "patch": {
+                  "description": "Updates a taxonomy.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies/{taxonomiesId}",
+                  "httpMethod": "PATCH",
+                  "id": "datacatalog.projects.locations.taxonomies.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Output only. Resource name of this taxonomy, whose format is:\n\"projects/{project_number}/locations/{location_id}/taxonomies/{id}\".",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "The update mask applies to the resource. For the `FieldMask` definition,\nsee\nhttps://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask\nIf not set, defaults to all of the fields that are allowed to update.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+name}",
+                  "request": {
+                    "$ref": "GoogleCloudDatacatalogV1beta1Taxonomy"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudDatacatalogV1beta1Taxonomy"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "setIamPolicy": {
+                  "description": "Sets the IAM policy for a taxonomy or a policy tag.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies/{taxonomiesId}:setIamPolicy",
+                  "httpMethod": "POST",
+                  "id": "datacatalog.projects.locations.taxonomies.setIamPolicy",
+                  "parameterOrder": [
+                    "resource"
+                  ],
+                  "parameters": {
+                    "resource": {
+                      "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+resource}:setIamPolicy",
+                  "request": {
+                    "$ref": "SetIamPolicyRequest"
+                  },
+                  "response": {
+                    "$ref": "Policy"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "testIamPermissions": {
+                  "description": "Returns the permissions that a caller has on the specified taxonomy or\npolicy tag.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies/{taxonomiesId}:testIamPermissions",
+                  "httpMethod": "POST",
+                  "id": "datacatalog.projects.locations.taxonomies.testIamPermissions",
+                  "parameterOrder": [
+                    "resource"
+                  ],
+                  "parameters": {
+                    "resource": {
+                      "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+resource}:testIamPermissions",
+                  "request": {
+                    "$ref": "TestIamPermissionsRequest"
+                  },
+                  "response": {
+                    "$ref": "TestIamPermissionsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              },
+              "resources": {
+                "policyTags": {
+                  "methods": {
+                    "create": {
+                      "description": "Creates a policy tag in the specified taxonomy.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies/{taxonomiesId}/policyTags",
+                      "httpMethod": "POST",
+                      "id": "datacatalog.projects.locations.taxonomies.policyTags.create",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Required. Resource name of the taxonomy that the policy tag will belong to.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+parent}/policyTags",
+                      "request": {
+                        "$ref": "GoogleCloudDatacatalogV1beta1PolicyTag"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudDatacatalogV1beta1PolicyTag"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "delete": {
+                      "description": "Deletes a policy tag. Also deletes all of its descendant policy tags.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies/{taxonomiesId}/policyTags/{policyTagsId}",
+                      "httpMethod": "DELETE",
+                      "id": "datacatalog.projects.locations.taxonomies.policyTags.delete",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. Resource name of the policy tag to be deleted. All of its descendant\npolicy tags will also be deleted.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+name}",
+                      "response": {
+                        "$ref": "Empty"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "get": {
+                      "description": "Gets a policy tag.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies/{taxonomiesId}/policyTags/{policyTagsId}",
+                      "httpMethod": "GET",
+                      "id": "datacatalog.projects.locations.taxonomies.policyTags.get",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. Resource name of the requested policy tag.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+name}",
+                      "response": {
+                        "$ref": "GoogleCloudDatacatalogV1beta1PolicyTag"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "getIamPolicy": {
+                      "description": "Gets the IAM policy for a taxonomy or a policy tag.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies/{taxonomiesId}/policyTags/{policyTagsId}:getIamPolicy",
+                      "httpMethod": "POST",
+                      "id": "datacatalog.projects.locations.taxonomies.policyTags.getIamPolicy",
+                      "parameterOrder": [
+                        "resource"
+                      ],
+                      "parameters": {
+                        "resource": {
+                          "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+resource}:getIamPolicy",
+                      "request": {
+                        "$ref": "GetIamPolicyRequest"
+                      },
+                      "response": {
+                        "$ref": "Policy"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "list": {
+                      "description": "Lists all policy tags in a taxonomy.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies/{taxonomiesId}/policyTags",
+                      "httpMethod": "GET",
+                      "id": "datacatalog.projects.locations.taxonomies.policyTags.list",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "pageSize": {
+                          "description": "The maximum number of items to return. Must be a value between 1 and 1000.\nIf not set, defaults to 50.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "The next_page_token value returned from a previous List request, if any. If\nnot set, defaults to an empty string.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. Resource name of the taxonomy to list the policy tags of.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+parent}/policyTags",
+                      "response": {
+                        "$ref": "GoogleCloudDatacatalogV1beta1ListPolicyTagsResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "patch": {
+                      "description": "Updates a policy tag.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies/{taxonomiesId}/policyTags/{policyTagsId}",
+                      "httpMethod": "PATCH",
+                      "id": "datacatalog.projects.locations.taxonomies.policyTags.patch",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Output only. Resource name of this policy tag, whose format is:\n\"projects/{project_number}/locations/{location_id}/taxonomies/{taxonomy_id}/policyTags/{id}\".",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "updateMask": {
+                          "description": "The update mask applies to the resource. Only display_name, description and\nparent_policy_tag can be updated and thus can be listed in the mask. If\nupdate_mask is not provided, all allowed fields (i.e. display_name,\ndescription and parent) will be updated. For more information including the\n`FieldMask` definition, see\nhttps://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask\nIf not set, defaults to all of the fields that are allowed to update.",
+                          "format": "google-fieldmask",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+name}",
+                      "request": {
+                        "$ref": "GoogleCloudDatacatalogV1beta1PolicyTag"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudDatacatalogV1beta1PolicyTag"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "setIamPolicy": {
+                      "description": "Sets the IAM policy for a taxonomy or a policy tag.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies/{taxonomiesId}/policyTags/{policyTagsId}:setIamPolicy",
+                      "httpMethod": "POST",
+                      "id": "datacatalog.projects.locations.taxonomies.policyTags.setIamPolicy",
+                      "parameterOrder": [
+                        "resource"
+                      ],
+                      "parameters": {
+                        "resource": {
+                          "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+resource}:setIamPolicy",
+                      "request": {
+                        "$ref": "SetIamPolicyRequest"
+                      },
+                      "response": {
+                        "$ref": "Policy"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "testIamPermissions": {
+                      "description": "Returns the permissions that a caller has on the specified taxonomy or\npolicy tag.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies/{taxonomiesId}/policyTags/{policyTagsId}:testIamPermissions",
+                      "httpMethod": "POST",
+                      "id": "datacatalog.projects.locations.taxonomies.policyTags.testIamPermissions",
+                      "parameterOrder": [
+                        "resource"
+                      ],
+                      "parameters": {
+                        "resource": {
+                          "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+resource}:testIamPermissions",
+                      "request": {
+                        "$ref": "TestIamPermissionsRequest"
+                      },
+                      "response": {
+                        "$ref": "TestIamPermissionsResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    }
+                  }
+                }
+              }
             }
           }
         }
       }
     }
   },
-  "revision": "20191104",
+  "revision": "20191118",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -1257,6 +1795,20 @@
       },
       "type": "object"
     },
+    "GoogleCloudDatacatalogV1beta1ExportTaxonomiesResponse": {
+      "description": "Response message for\nExportTaxonomies.",
+      "id": "GoogleCloudDatacatalogV1beta1ExportTaxonomiesResponse",
+      "properties": {
+        "taxonomies": {
+          "description": "List of taxonomies and policy tags in a tree structure.",
+          "items": {
+            "$ref": "GoogleCloudDatacatalogV1beta1SerializedTaxonomy"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDatacatalogV1beta1FieldType": {
       "id": "GoogleCloudDatacatalogV1beta1FieldType",
       "properties": {
@@ -1333,7 +1885,7 @@
       "id": "GoogleCloudDatacatalogV1beta1GcsFilesetSpec",
       "properties": {
         "filePatterns": {
-          "description": "Required. Patterns to identify a set of files in Google Cloud Storage.\n\nExamples of valid file_patterns:\n\n * `gs://bucket_name/*`: matches all files in `bucket_name`\n * `gs://bucket_name/file*`: matches files prefixed by `file` in\n                             `bucket_name`\n * `gs://bucket_name/a/*/b`: matches all files in `bucket_name` that match\n                             `a/*/b` pattern, such as `a/c/b`, `a/d/b`\n * `gs://another_bucket/a.txt`: matches `gs://another_bucket/a.txt`",
+          "description": "Required. Patterns to identify a set of files in Google Cloud Storage. See [Cloud\nStorage documentation](storage/docs/gsutil/addlhelp/WildcardNames) for\nmore information. Note that bucket wildcards are currently not supported.\n\nExamples of valid file_patterns:\n\n * `gs://bucket_name/dir/*`: matches all files within `bucket_name/dir`\n                             directory.\n * `gs://bucket_name/dir/**`: matches all files in `bucket_name/dir`\n                              spanning all subdirectories.\n * `gs://bucket_name/file*`: matches files prefixed by `file` in\n                             `bucket_name`\n * `gs://bucket_name/a/*/b`: matches all files in `bucket_name` that match\n                             `a/*/b` pattern, such as `a/c/b`, `a/d/b`\n * `gs://another_bucket/a.txt`: matches `gs://another_bucket/a.txt`",
           "items": {
             "type": "string"
           },
@@ -1343,6 +1895,63 @@
           "description": "Output only. Sample files contained in this fileset, not all files contained in this\nfileset are represented here.",
           "items": {
             "$ref": "GoogleCloudDatacatalogV1beta1GcsFileSpec"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1beta1ImportTaxonomiesRequest": {
+      "description": "Request message for\nImportTaxonomies.",
+      "id": "GoogleCloudDatacatalogV1beta1ImportTaxonomiesRequest",
+      "properties": {
+        "inlineSource": {
+          "$ref": "GoogleCloudDatacatalogV1beta1InlineSource",
+          "description": "Inline source used for taxonomies import"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1beta1ImportTaxonomiesResponse": {
+      "description": "Response message for\nImportTaxonomies.",
+      "id": "GoogleCloudDatacatalogV1beta1ImportTaxonomiesResponse",
+      "properties": {
+        "taxonomies": {
+          "description": "Taxonomies that were imported.",
+          "items": {
+            "$ref": "GoogleCloudDatacatalogV1beta1Taxonomy"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1beta1InlineSource": {
+      "description": "Inline source used for taxonomies import.",
+      "id": "GoogleCloudDatacatalogV1beta1InlineSource",
+      "properties": {
+        "taxonomies": {
+          "description": "Required. Taxonomies to be imported.",
+          "items": {
+            "$ref": "GoogleCloudDatacatalogV1beta1SerializedTaxonomy"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1beta1ListPolicyTagsResponse": {
+      "description": "Response message for\nListPolicyTags.",
+      "id": "GoogleCloudDatacatalogV1beta1ListPolicyTagsResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "Token used to retrieve the next page of results, or empty if there are no\nmore results in the list.",
+          "type": "string"
+        },
+        "policyTags": {
+          "description": "The policy tags that are in the requested taxonomy.",
+          "items": {
+            "$ref": "GoogleCloudDatacatalogV1beta1PolicyTag"
           },
           "type": "array"
         }
@@ -1363,6 +1972,54 @@
             "$ref": "GoogleCloudDatacatalogV1beta1Tag"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1beta1ListTaxonomiesResponse": {
+      "description": "Response message for\nListTaxonomies.",
+      "id": "GoogleCloudDatacatalogV1beta1ListTaxonomiesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "Token used to retrieve the next page of results, or empty if there are no\nmore results in the list.",
+          "type": "string"
+        },
+        "taxonomies": {
+          "description": "Taxonomies that the project contains.",
+          "items": {
+            "$ref": "GoogleCloudDatacatalogV1beta1Taxonomy"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1beta1PolicyTag": {
+      "description": "Denotes one policy tag in a taxonomy (e.g. ssn). Policy Tags can be defined\nin a hierarchy. For example, consider the following hierachy:\n              Geolocation\n                   |\n  ------------------------------------\n  |                |                 |\nLatLong          City              ZipCode\nPolicyTag \"Geolocation\" contains three child policy tags: \"LatLong\",\n\"City\", and \"ZipCode\".",
+      "id": "GoogleCloudDatacatalogV1beta1PolicyTag",
+      "properties": {
+        "childPolicyTags": {
+          "description": "Output only. Resource names of child policy tags of this policy tag.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "description": {
+          "description": "Description of this policy tag. It must: contain only unicode characters,\ntabs, newlines, carriage returns and page breaks; and be at most 2000 bytes\nlong when encoded in UTF-8. If not set, defaults to an empty description.\nIf not set, defaults to an empty description.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Required. User defined name of this policy tag. It must: be unique within the parent\ntaxonomy; contain only unicode letters, numbers, underscores, dashes and\nspaces; not start or end with spaces; and be at most 200 bytes long when\nencoded in UTF-8.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. Resource name of this policy tag, whose format is:\n\"projects/{project_number}/locations/{location_id}/taxonomies/{taxonomy_id}/policyTags/{id}\".",
+          "type": "string"
+        },
+        "parentPolicyTag": {
+          "description": "Resource name of this policy tag's parent policy tag (e.g. for the\n\"LatLong\" policy tag in the example above, this field contains the\nresource name of the \"Geolocation\" policy tag). If empty, it means this\npolicy tag is a top level policy tag (e.g. this field is empty for the\n\"Geolocation\" policy tag in the example above). If not set, defaults to an\nempty string.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1493,6 +2150,50 @@
             "An EntryGroup."
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1beta1SerializedPolicyTag": {
+      "description": "Message representing one policy tag when exported as a nested proto.",
+      "id": "GoogleCloudDatacatalogV1beta1SerializedPolicyTag",
+      "properties": {
+        "childPolicyTags": {
+          "description": "Children of the policy tag if any.",
+          "items": {
+            "$ref": "GoogleCloudDatacatalogV1beta1SerializedPolicyTag"
+          },
+          "type": "array"
+        },
+        "description": {
+          "description": "Description of the serialized policy tag. The length of the\ndescription is limited to 2000 bytes when encoded in UTF-8. If not set,\ndefaults to an empty description.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Required. Display name of the policy tag. Max 200 bytes when encoded in UTF-8.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1beta1SerializedTaxonomy": {
+      "description": "Message capturing a taxonomy and its policy tag hierarchy as a nested proto.\nUsed for taxonomy import/export and mutation.",
+      "id": "GoogleCloudDatacatalogV1beta1SerializedTaxonomy",
+      "properties": {
+        "description": {
+          "description": "Description of the serialized taxonomy. The length of the\ndescription is limited to 2000 bytes when encoded in UTF-8. If not set,\ndefaults to an empty description.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Required. Display name of the taxonomy. Max 200 bytes when encoded in UTF-8.",
+          "type": "string"
+        },
+        "policyTags": {
+          "description": "Top level policy tags associated with the taxonomy if any.",
+          "items": {
+            "$ref": "GoogleCloudDatacatalogV1beta1SerializedPolicyTag"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -1645,6 +2346,40 @@
       },
       "type": "object"
     },
+    "GoogleCloudDatacatalogV1beta1Taxonomy": {
+      "description": "A taxonomy is a collection of policy tags that classify data along a common\naxis. For instance a data *sensitivity* taxonomy could contain policy tags\ndenoting PII such as age, zipcode, and SSN. A data *origin* taxonomy could\ncontain policy tags to distinguish user data, employee data, partner data,\npublic data.",
+      "id": "GoogleCloudDatacatalogV1beta1Taxonomy",
+      "properties": {
+        "activatedPolicyTypes": {
+          "description": "Optional. A list of policy types that are activated for this taxonomy. If not set,\ndefaults to an empty list.",
+          "enumDescriptions": [
+            "Unspecified policy type.",
+            "Fine grained access control policy, which enables access control on\ntagged resources."
+          ],
+          "items": {
+            "enum": [
+              "POLICY_TYPE_UNSPECIFIED",
+              "FINE_GRAINED_ACCESS_CONTROL"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "description": {
+          "description": "Optional. Description of this taxonomy. It must: contain only unicode characters,\ntabs, newlines, carriage returns and page breaks; and be at most 2000 bytes\nlong when encoded in UTF-8. If not set, defaults to an empty description.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Required. User defined name of this taxonomy. It must: contain only unicode letters,\nnumbers, underscores, dashes and spaces; not start or end with spaces; and\nbe at most 200 bytes long when encoded in UTF-8.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. Resource name of this taxonomy, whose format is:\n\"projects/{project_number}/locations/{location_id}/taxonomies/{id}\".",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDatacatalogV1beta1ViewSpec": {
       "description": "Table view specification.",
       "id": "GoogleCloudDatacatalogV1beta1ViewSpec",
@@ -1668,12 +2403,12 @@
           "type": "array"
         },
         "etag": {
-          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a policy from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform policy updates in order to avoid race\nconditions: An `etag` is returned in the response to `getIamPolicy`, and\nsystems are expected to put that etag in the request to `setIamPolicy` to\nensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing\npolicy is overwritten. Due to blind-set semantics of an etag-less policy,\n'setIamPolicy' will not fail even if either of incoming or stored policy\ndoes not meet the version requirements.",
+          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a policy from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform policy updates in order to avoid race\nconditions: An `etag` is returned in the response to `getIamPolicy`, and\nsystems are expected to put that etag in the request to `setIamPolicy` to\nensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing\npolicy is overwritten. Due to blind-set semantics of an etag-less policy,\n'setIamPolicy' will not fail even if the incoming policy version does not\nmeet the requirements for modifying the stored policy.",
           "format": "byte",
           "type": "string"
         },
         "version": {
-          "description": "Specifies the format of the policy.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nOperations affecting conditional bindings must specify version 3. This can\nbe either setting a conditional policy, modifying a conditional binding,\nor removing a conditional binding from the stored conditional policy.\nOperations on non-conditional policies may specify any valid value or\nleave the field unset.\n\nIf no etag is provided in the call to `setIamPolicy`, any version\ncompliance checks on the incoming and/or stored policy is skipped.",
+          "description": "Specifies the format of the policy.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nOperations affecting conditional bindings must specify version 3. This can\nbe either setting a conditional policy, modifying a conditional binding,\nor removing a binding (conditional or unconditional) from the stored\nconditional policy.\nOperations on non-conditional policies may specify any valid value or\nleave the field unset.\n\nIf no etag is provided in the call to `setIamPolicy`, version compliance\nchecks against the stored policy is skipped.",
           "format": "int32",
           "type": "integer"
         }

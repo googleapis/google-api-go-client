@@ -809,7 +809,7 @@
       }
     }
   },
-  "revision": "20191105",
+  "revision": "20191115",
   "rootUrl": "https://sheets.googleapis.com/",
   "schemas": {
     "AddBandingRequest": {
@@ -3485,7 +3485,7 @@
       "properties": {
         "condition": {
           "$ref": "BooleanCondition",
-          "description": "A condition that must be true for values to be shown.\n(This does not override hiddenValues -- if a value is listed there,\n it will still be hidden.)"
+          "description": "A condition that must be true for values to be shown.\n(This does not override hidden_values -- if a value is listed there,\n it will still be hidden.)"
         },
         "hiddenValues": {
           "description": "Values that should be hidden.",

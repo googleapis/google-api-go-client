@@ -191,7 +191,7 @@
       }
     }
   },
-  "revision": "20191106",
+  "revision": "20191120",
   "rootUrl": "https://homegraph.googleapis.com/",
   "schemas": {
     "AgentDeviceId": {
@@ -233,8 +233,12 @@
           "type": "object"
         },
         "customData": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
           "description": "Custom JSON data provided by the manufacturer and attached to QUERY and\nEXECUTE requests in AoG.",
-          "type": "string"
+          "type": "object"
         },
         "deviceInfo": {
           "$ref": "DeviceInfo",

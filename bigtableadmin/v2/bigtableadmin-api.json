@@ -1218,7 +1218,7 @@
                       "type": "string"
                     },
                     "view": {
-                      "description": "The view to be applied to the returned tables' fields.\nDefaults to `NAME_ONLY` if unspecified; no others are currently supported.",
+                      "description": "The view to be applied to the returned tables' fields.\nOnly NAME_ONLY view (default) and REPLICATION_VIEW are supported.",
                       "enum": [
                         "VIEW_UNSPECIFIED",
                         "NAME_ONLY",
@@ -1428,7 +1428,7 @@
       }
     }
   },
-  "revision": "20191022",
+  "revision": "20191102",
   "rootUrl": "https://bigtableadmin.googleapis.com/",
   "schemas": {
     "AppProfile": {

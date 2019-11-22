@@ -226,6 +226,12 @@
                   "pattern": "^projects/[^/]+/workerPools/[^/]+$",
                   "required": true,
                   "type": "string"
+                },
+                "updateMask": {
+                  "description": "A mask specifying which fields in `WorkerPool` should be updated.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
                 }
               },
               "path": "v1alpha1/{+name}",
@@ -244,7 +250,7 @@
       }
     }
   },
-  "revision": "20191109",
+  "revision": "20191120",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {

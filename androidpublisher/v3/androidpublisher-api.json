@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/LSoZQygk1tHGqKaZNhiO4wQlG9M\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/xy04ood3kp7DhJc1iZopsRriYwM\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2388,7 +2388,7 @@
       }
     }
   },
-  "revision": "20191013",
+  "revision": "20191113",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -2541,6 +2541,25 @@
         "userComment": {
           "$ref": "UserComment",
           "description": "A comment from a user."
+        }
+      },
+      "type": "object"
+    },
+    "Control": {
+      "id": "Control",
+      "properties": {
+        "modRanges": {
+          "items": {
+            "$ref": "ModRange"
+          },
+          "type": "array"
+        },
+        "versionCodes": {
+          "items": {
+            "format": "int64",
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -3025,6 +3044,40 @@
       },
       "type": "object"
     },
+    "MendelSampling": {
+      "id": "MendelSampling",
+      "properties": {
+        "modRanges": {
+          "items": {
+            "$ref": "ModRange"
+          },
+          "type": "array"
+        },
+        "modulus": {
+          "format": "int64",
+          "type": "string"
+        },
+        "salt": {
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "ModRange": {
+      "id": "ModRange",
+      "properties": {
+        "end": {
+          "format": "int64",
+          "type": "string"
+        },
+        "start": {
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "MonthDay": {
       "id": "MonthDay",
       "properties": {
@@ -3495,6 +3548,12 @@
     "TrackRelease": {
       "id": "TrackRelease",
       "properties": {
+        "controls": {
+          "items": {
+            "$ref": "Control"
+          },
+          "type": "array"
+        },
         "countryTargeting": {
           "$ref": "CountryTargeting"
         },
@@ -3508,6 +3567,9 @@
             "$ref": "LocalizedText"
           },
           "type": "array"
+        },
+        "sampling": {
+          "$ref": "MendelSampling"
         },
         "status": {
           "description": "The desired status of this release.",

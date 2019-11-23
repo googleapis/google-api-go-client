@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/Dd-Xj5oFtH5T1Eq3U3z9aLzZ2sU\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/akvVB_xTE_k6l5PpFf1PjSMbVzk\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3164,7 +3164,7 @@
       }
     }
   },
-  "revision": "20191008",
+  "revision": "20191107",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5517,7 +5517,7 @@
           "type": "integer"
         },
         "reason": {
-          "description": "The reason for the cancellation. Orders that are cancelled with a noInventory reason will lead to the removal of the product from Shopping Actions until you make an update to that product. This will not affect your Shopping ads.",
+          "description": "The reason for the cancellation. Orders that are canceled with a noInventory reason will lead to the removal of the product from Shopping Actions until you make an update to that product. This will not affect your Shopping ads.",
           "type": "string"
         },
         "reasonText": {
@@ -6211,7 +6211,7 @@
       "id": "OrderShipment",
       "properties": {
         "carrier": {
-          "description": "The carrier handling the shipment.\n\nAcceptable values for US are:  \n- \"gsx\" \n- \"ups\" \n- \"usps\" \n- \"fedex\" \n- \"dhl\" \n- \"ecourier\" \n- \"cxt\" \n- \"google\" \n- \"ontrac\" \n- \"emsy\" \n- \"ont\" \n- \"deliv\" \n- \"dynamex\" \n- \"lasership\" \n- \"mpx\" \n- \"uds\" \n- \"efw\" \n- \"jd logistics\"  \n\nAcceptable values for FR are:  \n- \"colissimo\" \n- \"chronopost\" \n- \"gls\" \n- \"dpd\" \n- \"bpost\" \n- \"colis prive\" \n- \"boxtal\" \n- \"geodis\" \n- \"tnt\" \n- \"la poste\"",
+          "description": "The carrier handling the shipment.\n\nAcceptable values for US are:  \n- \"gsx\" \n- \"ups\" \n- \"usps\" \n- \"fedex\" \n- \"dhl\" \n- \"ecourier\" \n- \"cxt\" \n- \"google\" \n- \"ontrac\" \n- \"emsy\" \n- \"ont\" \n- \"deliv\" \n- \"dynamex\" \n- \"lasership\" \n- \"mpx\" \n- \"uds\" \n- \"efw\" \n- \"yunexpress\" \n- \"china post\" \n- \"china ems\" \n- \"singapore post\" \n- \"pos malaysia\" \n- \"postnl\" \n- \"ptt\" \n- \"eub\" \n- \"chukou1\"  \n\nAcceptable values for FR are:  \n- \"colissimo\" \n- \"chronopost\" \n- \"gls\" \n- \"dpd\" \n- \"bpost\" \n- \"colis prive\" \n- \"boxtal\" \n- \"geodis\" \n- \"tnt\" \n- \"la poste\" \n- \"ups\"",
           "type": "string"
         },
         "creationDate": {
@@ -6252,7 +6252,7 @@
       "id": "OrderShipmentLineItemShipment",
       "properties": {
         "lineItemId": {
-          "description": "The ID of the line item that is shipped. Either lineItemId or productId is required.",
+          "description": "The ID of the line item that is shipped. This value is assigned by Google when an order is created. Either lineItemId or productId is required.",
           "type": "string"
         },
         "productId": {

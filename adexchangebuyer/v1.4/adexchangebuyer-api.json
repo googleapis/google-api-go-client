@@ -15,7 +15,7 @@
   "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/ad-exchange/buyer-rest",
-  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/lcHWEHJSjcR2oDTKvEdNwPbXDEA\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/kylXz47Q3_sc3JaxX2Y-ulfwPrA\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
     "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
@@ -1255,7 +1255,7 @@
       }
     }
   },
-  "revision": "20191018",
+  "revision": "20191108",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -2919,6 +2919,11 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "maximumQps": {
+          "description": "The maximum QPS allocated to this pretargeting configuration, used for pretargeting-level QPS limits. By default, this is not set, which indicates that there is no QPS limit at the configuration level (a global or account-level limit may still be imposed).",
+          "format": "int64",
+          "type": "string"
         },
         "minimumViewabilityDecile": {
           "description": "Requests where the predicted viewability is below the specified decile will not match. E.g. if the buyer sets this value to 5, requests from slots where the predicted viewability is below 50% will not match. If the predicted viewability is unknown this field will be ignored.",

@@ -20,7 +20,7 @@
   "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/doubleclick-advertisers/",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/HNMBrDps9fzMojHNMgaSQ-haG84\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/fzUoAicHtsdBHIuiyOwY0Z80r3c\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
     "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
@@ -2155,7 +2155,7 @@
               "type": "integer"
             },
             "minChangeTime": {
-              "description": "Select only change logs whose change time is before the specified minChangeTime.The time should be formatted as an RFC3339 date/time string. For example, for 10:54 PM on July 18th, 2015, in the America/New York time zone, the format is \"2015-07-18T22:54:00-04:00\". In other words, the year, month, day, the letter T, the hour (24-hour clock system), minute, second, and then the time zone offset.",
+              "description": "Select only change logs whose change time is after the specified minChangeTime.The time should be formatted as an RFC3339 date/time string. For example, for 10:54 PM on July 18th, 2015, in the America/New York time zone, the format is \"2015-07-18T22:54:00-04:00\". In other words, the year, month, day, the letter T, the hour (24-hour clock system), minute, second, and then the time zone offset.",
               "location": "query",
               "type": "string"
             },
@@ -9399,7 +9399,7 @@
       }
     }
   },
-  "revision": "20190531",
+  "revision": "20191112",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -9472,7 +9472,7 @@
           "type": "string"
         },
         "currencyId": {
-          "description": "ID of currency associated with this account. This is a required field.\nAcceptable values are: \n- \"1\" for USD \n- \"2\" for GBP \n- \"3\" for ESP \n- \"4\" for SEK \n- \"5\" for CAD \n- \"6\" for JPY \n- \"7\" for DEM \n- \"8\" for AUD \n- \"9\" for FRF \n- \"10\" for ITL \n- \"11\" for DKK \n- \"12\" for NOK \n- \"13\" for FIM \n- \"14\" for ZAR \n- \"15\" for IEP \n- \"16\" for NLG \n- \"17\" for EUR \n- \"18\" for KRW \n- \"19\" for TWD \n- \"20\" for SGD \n- \"21\" for CNY \n- \"22\" for HKD \n- \"23\" for NZD \n- \"24\" for MYR \n- \"25\" for BRL \n- \"26\" for PTE \n- \"27\" for MXP \n- \"28\" for CLP \n- \"29\" for TRY \n- \"30\" for ARS \n- \"31\" for PEN \n- \"32\" for ILS \n- \"33\" for CHF \n- \"34\" for VEF \n- \"35\" for COP \n- \"36\" for GTQ \n- \"37\" for PLN \n- \"39\" for INR \n- \"40\" for THB \n- \"41\" for IDR \n- \"42\" for CZK \n- \"43\" for RON \n- \"44\" for HUF \n- \"45\" for RUB \n- \"46\" for AED \n- \"47\" for BGN \n- \"48\" for HRK \n- \"49\" for MXN \n- \"50\" for NGN",
+          "description": "ID of currency associated with this account. This is a required field.\nAcceptable values are: \n- \"1\" for USD \n- \"2\" for GBP \n- \"3\" for ESP \n- \"4\" for SEK \n- \"5\" for CAD \n- \"6\" for JPY \n- \"7\" for DEM \n- \"8\" for AUD \n- \"9\" for FRF \n- \"10\" for ITL \n- \"11\" for DKK \n- \"12\" for NOK \n- \"13\" for FIM \n- \"14\" for ZAR \n- \"15\" for IEP \n- \"16\" for NLG \n- \"17\" for EUR \n- \"18\" for KRW \n- \"19\" for TWD \n- \"20\" for SGD \n- \"21\" for CNY \n- \"22\" for HKD \n- \"23\" for NZD \n- \"24\" for MYR \n- \"25\" for BRL \n- \"26\" for PTE \n- \"27\" for MXP \n- \"28\" for CLP \n- \"29\" for TRY \n- \"30\" for ARS \n- \"31\" for PEN \n- \"32\" for ILS \n- \"33\" for CHF \n- \"34\" for VEF \n- \"35\" for COP \n- \"36\" for GTQ \n- \"37\" for PLN \n- \"39\" for INR \n- \"40\" for THB \n- \"41\" for IDR \n- \"42\" for CZK \n- \"43\" for RON \n- \"44\" for HUF \n- \"45\" for RUB \n- \"46\" for AED \n- \"47\" for BGN \n- \"48\" for HRK \n- \"49\" for MXN \n- \"50\" for NGN \n- \"51\" for EGP",
           "format": "int64",
           "type": "string"
         },
@@ -11069,7 +11069,7 @@
           "type": "string"
         },
         "encryptedUserIdCandidates": {
-          "description": "A list of the alphanumeric encrypted user IDs. Any user ID with exposure prior to the conversion timestamp will be used in the inserted conversion. If no such user ID is found then the conversion will be rejected with NO_COOKIE_MATCH_FOUND error. When set, encryptionInfo should also be specified. This field may only be used when calling batchinsert; it is not supported by batchupdate. This field is mutually exclusive with encryptedUserId, matchId, mobileDeviceId and gclid. This or encryptedUserId or matchId or mobileDeviceId or gclid is a required field.",
+          "description": "A list of the alphanumeric encrypted user IDs. Any user ID with exposure prior to the conversion timestamp will be used in the inserted conversion. If no such user ID is found then the conversion will be rejected with INVALID_ARGUMENT error. When set, encryptionInfo should also be specified. This field may only be used when calling batchinsert; it is not supported by batchupdate. This field is mutually exclusive with encryptedUserId, matchId, mobileDeviceId and gclid. This or encryptedUserId or matchId or mobileDeviceId or gclid is a required field.",
           "items": {
             "type": "string"
           },
@@ -18321,7 +18321,7 @@
           "description": "Default lookback windows for new advertisers in this account."
         },
         "reportGenerationTimeZoneId": {
-          "description": "Report generation time zone ID of this account. This is a required field that can only be changed by a superuser.\nAcceptable values are:\n\n- \"1\" for \"America/New_York\" \n- \"2\" for \"Europe/London\" \n- \"3\" for \"Europe/Paris\" \n- \"4\" for \"Africa/Johannesburg\" \n- \"5\" for \"Asia/Jerusalem\" \n- \"6\" for \"Asia/Shanghai\" \n- \"7\" for \"Asia/Hong_Kong\" \n- \"8\" for \"Asia/Tokyo\" \n- \"9\" for \"Australia/Sydney\" \n- \"10\" for \"Asia/Dubai\" \n- \"11\" for \"America/Los_Angeles\" \n- \"12\" for \"Pacific/Auckland\" \n- \"13\" for \"America/Sao_Paulo\"",
+          "description": "Report generation time zone ID of this account. This is a required field that can only be changed by a superuser.\nAcceptable values are:\n\n- \"1\" for \"America/New_York\" \n- \"2\" for \"Europe/London\" \n- \"3\" for \"Europe/Paris\" \n- \"4\" for \"Africa/Johannesburg\" \n- \"5\" for \"Asia/Jerusalem\" \n- \"6\" for \"Asia/Shanghai\" \n- \"7\" for \"Asia/Hong_Kong\" \n- \"8\" for \"Asia/Tokyo\" \n- \"9\" for \"Australia/Sydney\" \n- \"10\" for \"Asia/Dubai\" \n- \"11\" for \"America/Los_Angeles\" \n- \"12\" for \"Pacific/Auckland\" \n- \"13\" for \"America/Sao_Paulo\" \n- \"16\" for \"America/Asuncion\" \n- \"17\" for \"America/Chicago\" \n- \"18\" for \"America/Denver\" \n- \"19\" for \"America/St_Johns\" \n- \"20\" for \"Asia/Dhaka\" \n- \"21\" for \"Asia/Jakarta\" \n- \"22\" for \"Asia/Kabul\" \n- \"23\" for \"Asia/Karachi\" \n- \"24\" for \"Asia/Calcutta\" \n- \"25\" for \"Asia/Pyongyang\" \n- \"26\" for \"Asia/Rangoon\" \n- \"27\" for \"Atlantic/Cape_Verde\" \n- \"28\" for \"Atlantic/South_Georgia\" \n- \"29\" for \"Australia/Adelaide\" \n- \"30\" for \"Australia/Lord_Howe\" \n- \"31\" for \"Europe/Moscow\" \n- \"32\" for \"Pacific/Kiritimati\" \n- \"35\" for \"Pacific/Norfolk\" \n- \"36\" for \"Pacific/Tongatapu\"",
           "format": "int64",
           "type": "string"
         }

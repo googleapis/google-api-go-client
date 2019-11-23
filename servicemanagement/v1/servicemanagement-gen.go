@@ -1041,38 +1041,6 @@ type Binding struct {
 	// group.
 	//    For example, `admins@example.com`.
 	//
-	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a user that has been recently deleted.
-	// For
-	//    example,`alice@example.com?uid=123456789012345678901`. If the user
-	// is
-	//    recovered, this value reverts to `user:{emailid}` and the
-	// recovered user
-	//    retains the role in the binding.
-	//
-	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus
-	//    unique identifier) representing a service account that has been
-	// recently
-	//    deleted. For example,
-	//
-	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	//
-	//    If the service account is undeleted, this value reverts to
-	//    `serviceAccount:{emailid}` and the undeleted service account
-	// retains the
-	//    role in the binding.
-	//
-	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a Google group that has been recently
-	//    deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If
-	//    the group is recovered, this value reverts to `group:{emailid}`
-	// and the
-	//    recovered group retains the role in the binding.
-	//
 	//
 	// * `domain:{domain}`: The G Suite domain (primary) that represents all
 	// the
@@ -4535,9 +4503,9 @@ type Policy struct {
 	// existing
 	// policy is overwritten. Due to blind-set semantics of an etag-less
 	// policy,
-	// 'setIamPolicy' will not fail even if either of incoming or stored
-	// policy
-	// does not meet the version requirements.
+	// 'setIamPolicy' will not fail even if the incoming policy version does
+	// not
+	// meet the requirements for modifying the stored policy.
 	Etag string `json:"etag,omitempty"`
 
 	// Version: Specifies the format of the policy.
@@ -4550,15 +4518,16 @@ type Policy struct {
 	// This can
 	// be either setting a conditional policy, modifying a conditional
 	// binding,
-	// or removing a conditional binding from the stored conditional
-	// policy.
+	// or removing a binding (conditional or unconditional) from the
+	// stored
+	// conditional policy.
 	// Operations on non-conditional policies may specify any valid value
 	// or
 	// leave the field unset.
 	//
-	// If no etag is provided in the call to `setIamPolicy`, any
-	// version
-	// compliance checks on the incoming and/or stored policy is skipped.
+	// If no etag is provided in the call to `setIamPolicy`, version
+	// compliance
+	// checks against the stored policy is skipped.
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4828,9 +4797,10 @@ type Rollout struct {
 	// Readonly.
 	DeleteServiceStrategy *DeleteServiceStrategy `json:"deleteServiceStrategy,omitempty"`
 
-	// RolloutId: Optional. Unique identifier of this Rollout. Only lower
-	// case letters, digits
-	//  and '-' are allowed.
+	// RolloutId: Optional. Unique identifier of this Rollout. Must be no
+	// longer than 63 characters
+	// and only lower case letters, digits, '.', '_' and '-' are
+	// allowed.
 	//
 	// If not specified by client, the server will generate one. The
 	// generated id
@@ -4993,9 +4963,11 @@ type Service struct {
 
 	// Id: A unique ID for a specific instance of this message, typically
 	// assigned
-	// by the client for tracking purpose. If empty, the server may choose
-	// to
-	// generate one instead. Must be no longer than 60 characters.
+	// by the client for tracking purpose. Must be no longer than 63
+	// characters
+	// and only lower case letters, digits, '.', '_' and '-' are allowed.
+	// If
+	// empty, the server may choose to generate one instead.
 	Id string `json:"id,omitempty"`
 
 	// Logging: Logging configuration.
@@ -5912,7 +5884,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6108,7 +6080,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6276,7 +6248,7 @@ func (c *ServicesCreateCall) Header() http.Header {
 
 func (c *ServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6410,7 +6382,7 @@ func (c *ServicesDeleteCall) Header() http.Header {
 
 func (c *ServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6547,7 +6519,7 @@ func (c *ServicesDisableCall) Header() http.Header {
 
 func (c *ServicesDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6693,7 +6665,7 @@ func (c *ServicesEnableCall) Header() http.Header {
 
 func (c *ServicesEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6848,7 +6820,7 @@ func (c *ServicesGenerateConfigReportCall) Header() http.Header {
 
 func (c *ServicesGenerateConfigReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6987,7 +6959,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7157,7 +7129,7 @@ func (c *ServicesGetConfigCall) Header() http.Header {
 
 func (c *ServicesGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7311,7 +7283,7 @@ func (c *ServicesGetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7508,7 +7480,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7681,7 +7653,7 @@ func (c *ServicesSetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7832,7 +7804,7 @@ func (c *ServicesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ServicesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7981,7 +7953,7 @@ func (c *ServicesUndeleteCall) Header() http.Header {
 
 func (c *ServicesUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8125,7 +8097,7 @@ func (c *ServicesConfigsCreateCall) Header() http.Header {
 
 func (c *ServicesConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8288,7 +8260,7 @@ func (c *ServicesConfigsGetCall) Header() http.Header {
 
 func (c *ServicesConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8468,7 +8440,7 @@ func (c *ServicesConfigsListCall) Header() http.Header {
 
 func (c *ServicesConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8655,7 +8627,7 @@ func (c *ServicesConfigsSubmitCall) Header() http.Header {
 
 func (c *ServicesConfigsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8798,7 +8770,7 @@ func (c *ServicesConsumersGetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesConsumersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8946,7 +8918,7 @@ func (c *ServicesConsumersSetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesConsumersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9097,7 +9069,7 @@ func (c *ServicesConsumersTestIamPermissionsCall) Header() http.Header {
 
 func (c *ServicesConsumersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9233,24 +9205,6 @@ func (r *ServicesRolloutsService) Create(serviceName string, rollout *Rollout) *
 	return c
 }
 
-// BaseRolloutId sets the optional parameter "baseRolloutId":
-// Unimplemented. Do not use this feature until this comment is
-// removed.
-//
-// The rollout id that rollout to be created based on.
-//
-// Rollout should be constructed based on current successful rollout,
-// this
-// field indicates the current successful rollout id that new rollout
-// based on
-// to construct, if current successful rollout changed when server
-// receives
-// the request, request will be rejected for safety.
-func (c *ServicesRolloutsCreateCall) BaseRolloutId(baseRolloutId string) *ServicesRolloutsCreateCall {
-	c.urlParams_.Set("baseRolloutId", baseRolloutId)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -9278,7 +9232,7 @@ func (c *ServicesRolloutsCreateCall) Header() http.Header {
 
 func (c *ServicesRolloutsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9350,11 +9304,6 @@ func (c *ServicesRolloutsCreateCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//     "serviceName"
 	//   ],
 	//   "parameters": {
-	//     "baseRolloutId": {
-	//       "description": "Unimplemented. Do not use this feature until this comment is removed.\n\nThe rollout id that rollout to be created based on.\n\nRollout should be constructed based on current successful rollout, this\nfield indicates the current successful rollout id that new rollout based on\nto construct, if current successful rollout changed when server receives\nthe request, request will be rejected for safety.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "serviceName": {
 	//       "description": "Required. The name of the service.  See the [overview](/service-management/overview)\nfor naming requirements.  For example: `example.googleapis.com`.",
 	//       "location": "path",
@@ -9434,7 +9383,7 @@ func (c *ServicesRolloutsGetCall) Header() http.Header {
 
 func (c *ServicesRolloutsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9621,7 +9570,7 @@ func (c *ServicesRolloutsListCall) Header() http.Header {
 
 func (c *ServicesRolloutsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

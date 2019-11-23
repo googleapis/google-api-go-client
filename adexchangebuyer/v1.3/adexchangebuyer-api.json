@@ -15,7 +15,7 @@
   "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/ad-exchange/buyer-rest",
-  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/1cRmQRjiyo80bkDXVkYhfd7ewSg\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/SfJ_2QNA8p2fWGlW3-bjoNlrlZ0\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
     "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
@@ -699,7 +699,7 @@
       }
     }
   },
-  "revision": "20191018",
+  "revision": "20191108",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -1572,6 +1572,11 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "maximumQps": {
+          "description": "The maximum QPS allocated to this pretargeting configuration, used for pretargeting-level QPS limits. By default, this is not set, which indicates that there is no QPS limit at the configuration level (a global or account-level limit may still be imposed).",
+          "format": "int64",
+          "type": "string"
         },
         "mobileCarriers": {
           "description": "Requests containing any of these mobile carrier ids will match. Values are from mobile-carriers.csv in the downloadable files section.",

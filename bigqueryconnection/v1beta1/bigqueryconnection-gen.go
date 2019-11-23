@@ -361,38 +361,6 @@ type Binding struct {
 	// group.
 	//    For example, `admins@example.com`.
 	//
-	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a user that has been recently deleted.
-	// For
-	//    example,`alice@example.com?uid=123456789012345678901`. If the user
-	// is
-	//    recovered, this value reverts to `user:{emailid}` and the
-	// recovered user
-	//    retains the role in the binding.
-	//
-	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus
-	//    unique identifier) representing a service account that has been
-	// recently
-	//    deleted. For example,
-	//
-	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	//
-	//    If the service account is undeleted, this value reverts to
-	//    `serviceAccount:{emailid}` and the undeleted service account
-	// retains the
-	//    role in the binding.
-	//
-	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a Google group that has been recently
-	//    deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If
-	//    the group is recovered, this value reverts to `group:{emailid}`
-	// and the
-	//    recovered group retains the role in the binding.
-	//
 	//
 	// * `domain:{domain}`: The G Suite domain (primary) that represents all
 	// the
@@ -860,9 +828,9 @@ type Policy struct {
 	// existing
 	// policy is overwritten. Due to blind-set semantics of an etag-less
 	// policy,
-	// 'setIamPolicy' will not fail even if either of incoming or stored
-	// policy
-	// does not meet the version requirements.
+	// 'setIamPolicy' will not fail even if the incoming policy version does
+	// not
+	// meet the requirements for modifying the stored policy.
 	Etag string `json:"etag,omitempty"`
 
 	// Version: Specifies the format of the policy.
@@ -875,15 +843,16 @@ type Policy struct {
 	// This can
 	// be either setting a conditional policy, modifying a conditional
 	// binding,
-	// or removing a conditional binding from the stored conditional
-	// policy.
+	// or removing a binding (conditional or unconditional) from the
+	// stored
+	// conditional policy.
 	// Operations on non-conditional policies may specify any valid value
 	// or
 	// leave the field unset.
 	//
-	// If no etag is provided in the call to `setIamPolicy`, any
-	// version
-	// compliance checks on the incoming and/or stored policy is skipped.
+	// If no etag is provided in the call to `setIamPolicy`, version
+	// compliance
+	// checks against the stored policy is skipped.
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1078,7 +1047,7 @@ func (c *ProjectsLocationsConnectionsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1222,7 +1191,7 @@ func (c *ProjectsLocationsConnectionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1364,7 +1333,7 @@ func (c *ProjectsLocationsConnectionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1503,7 +1472,7 @@ func (c *ProjectsLocationsConnectionsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1666,7 +1635,7 @@ func (c *ProjectsLocationsConnectionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1843,7 +1812,7 @@ func (c *ProjectsLocationsConnectionsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1995,7 +1964,7 @@ func (c *ProjectsLocationsConnectionsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2146,7 +2115,7 @@ func (c *ProjectsLocationsConnectionsTestIamPermissionsCall) Header() http.Heade
 
 func (c *ProjectsLocationsConnectionsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2287,7 +2256,7 @@ func (c *ProjectsLocationsConnectionsUpdateCredentialCall) Header() http.Header 
 
 func (c *ProjectsLocationsConnectionsUpdateCredentialCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

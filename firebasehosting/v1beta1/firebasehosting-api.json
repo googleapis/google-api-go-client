@@ -489,6 +489,11 @@
                 "parent"
               ],
               "parameters": {
+                "filter": {
+                  "description": "The filter string used to return a subset of versions in the response.\nCurrently supported fields for filtering are: name, status,\nand create_time. Filter processing will be implemented in accordance\nwith go/filtering.",
+                  "location": "query",
+                  "type": "string"
+                },
                 "pageSize": {
                   "description": "The maximum number of versions to return. The service may return fewer than\nthis value.\nIf unspecified, at most 25 versions will be returned.\nThe maximum value is 100; values above 100 will be coerced to 100",
                   "format": "int32",
@@ -637,7 +642,7 @@
       }
     }
   },
-  "revision": "20191115",
+  "revision": "20191122",
   "rootUrl": "https://firebasehosting.googleapis.com/",
   "schemas": {
     "ActingUser": {

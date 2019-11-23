@@ -15,7 +15,7 @@
   "description": "API for viewing and managing your reports in DoubleClick Bid Manager.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/bid-manager/",
-  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/-6snHj80qrRp6Ytrk6WEm-XOkdA\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/8dS_oIgOQEid0uFLyNI8zZpjtOw\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -281,7 +281,7 @@
       }
     }
   },
-  "revision": "20191107",
+  "revision": "20191112",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "DownloadLineItemsRequest": {
@@ -1254,6 +1254,17 @@
               "METRIC_MEDIA_FEE5_ADVERTISER",
               "METRIC_MEDIA_FEE5_PARTNER",
               "METRIC_MEDIA_FEE5_USD",
+              "METRIC_NIELSEN_AVERAGE_FREQUENCY",
+              "METRIC_NIELSEN_GRP",
+              "METRIC_NIELSEN_IMPRESSIONS",
+              "METRIC_NIELSEN_IMPRESSIONS_SHARE",
+              "METRIC_NIELSEN_IMPRESSION_INDEX",
+              "METRIC_NIELSEN_POPULATION",
+              "METRIC_NIELSEN_POPULATION_REACH",
+              "METRIC_NIELSEN_POPULATION_SHARE",
+              "METRIC_NIELSEN_REACH_INDEX",
+              "METRIC_NIELSEN_REACH_SHARE",
+              "METRIC_NIELSEN_UNIQUE_AUDIENCE",
               "METRIC_PLATFORM_FEE_ADVERTISER",
               "METRIC_PLATFORM_FEE_PARTNER",
               "METRIC_PLATFORM_FEE_USD",
@@ -1364,6 +1375,17 @@
               "METRIC_VIEWABLE_BID_REQUESTS"
             ],
             "enumDescriptions": [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
               "",
               "",
               "",

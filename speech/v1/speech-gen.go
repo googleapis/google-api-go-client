@@ -947,9 +947,6 @@ type SpeakerDiarizationConfig struct {
 	// number of speakers. If not set, the default value is 2.
 	MinSpeakerCount int64 `json:"minSpeakerCount,omitempty"`
 
-	// SpeakerTag: Output only. Unused.
-	SpeakerTag int64 `json:"speakerTag,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
 	// "EnableSpeakerDiarization") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
@@ -1301,7 +1298,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1487,7 +1484,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1665,7 +1662,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1846,7 +1843,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2025,7 +2022,7 @@ func (c *SpeechLongrunningrecognizeCall) Header() http.Header {
 
 func (c *SpeechLongrunningrecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2152,7 +2149,7 @@ func (c *SpeechRecognizeCall) Header() http.Header {
 
 func (c *SpeechRecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

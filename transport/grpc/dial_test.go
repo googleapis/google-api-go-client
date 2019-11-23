@@ -19,7 +19,7 @@ import (
 
 // Check that user optioned grpc.WithDialer option overwrites App Engine dialer
 func TestGRPCHook(t *testing.T) {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Millisecond)
+	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
 	expected := false
 
 	appengineDialerHook = (func(ctx context.Context) grpc.DialOption {
@@ -42,15 +42,14 @@ func TestGRPCHook(t *testing.T) {
 	conn, err := Dial(ctx,
 		option.WithTokenSource(oauth2.StaticTokenSource(nil)), // No creds.
 		option.WithGRPCDialOption(expectedDialer),
-		option.WithEndpoint("example.google.com:443"))
-	if err != nil {
-		t.Errorf("DialGRPC: error %v, want nil", err)
+		option.WithGRPCDialOption(grpc.WithBlock()))
+	if err != context.Canceled {
+		t.Errorf("got %v, want %v", err, context.Canceled)
 	}
-	defer conn.Close()
-
-	// gRPC doesn't connect before the first call.
-	grpc.Invoke(ctx, "foo", nil, nil, conn)
-
+	if conn != nil {
+		conn.Close()
+		t.Error("got valid conn, want nil")
+	}
 	if !expected {
 		t.Error("expected a call to expected dialer, didn't get one")
 	}

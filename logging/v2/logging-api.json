@@ -2535,7 +2535,7 @@
       }
     }
   },
-  "revision": "20191107",
+  "revision": "20191115",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "BigQueryOptions": {
@@ -3185,9 +3185,17 @@
           "format": "google-datetime",
           "type": "string"
         },
+        "description": {
+          "description": "Optional. A description of this sink. The maximum length of the description is 8000 characters.",
+          "type": "string"
+        },
         "destination": {
           "description": "Required. The export destination:\n\"storage.googleapis.com/[GCS_BUCKET]\"\n\"bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]\"\n\"pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]\"\nThe sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Exporting Logs with Sinks.",
           "type": "string"
+        },
+        "disabled": {
+          "description": "Optional. If set to True, then this sink is disabled and it does not export any log entries.",
+          "type": "boolean"
         },
         "endTime": {
           "description": "Do not use. This field is ignored.",

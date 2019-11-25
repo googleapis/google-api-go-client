@@ -3130,7 +3130,7 @@
       }
     }
   },
-  "revision": "20191118",
+  "revision": "20191111",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -3155,7 +3155,7 @@
         },
         "publishToStackdriver": {
           "$ref": "GooglePrivacyDlpV2PublishToStackdriver",
-          "description": "Enable Stackdriver metric dlp.googleapis.com/finding_count."
+          "description": "Enable Stackdriver metric dlp.googleapis.com/finding_count"
         },
         "saveFindings": {
           "$ref": "GooglePrivacyDlpV2SaveFindings",
@@ -4178,11 +4178,11 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2DeidentifyTemplate": {
-      "description": "DeidentifyTemplates contains instructions on how to de-identify content.\nSee https://cloud.google.com/dlp/docs/concepts-templates to learn more.",
+      "description": "The DeidentifyTemplates contains instructions on how to deidentify content.\nSee https://cloud.google.com/dlp/docs/concepts-templates to learn more.",
       "id": "GooglePrivacyDlpV2DeidentifyTemplate",
       "properties": {
         "createTime": {
-          "description": "The creation timestamp of an inspectTemplate, output only field.",
+          "description": "The creation timestamp of a inspectTemplate, output only field.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -4203,7 +4203,7 @@
           "type": "string"
         },
         "updateTime": {
-          "description": "The last update timestamp of an inspectTemplate, output only field.",
+          "description": "The last update timestamp of a inspectTemplate, output only field.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -4998,7 +4998,7 @@
       "id": "GooglePrivacyDlpV2InspectTemplate",
       "properties": {
         "createTime": {
-          "description": "The creation timestamp of an inspectTemplate, output only field.",
+          "description": "The creation timestamp of a inspectTemplate, output only field.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -5019,7 +5019,7 @@
           "type": "string"
         },
         "updateTime": {
-          "description": "The last update timestamp of an inspectTemplate, output only field.",
+          "description": "The last update timestamp of a inspectTemplate, output only field.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -6308,7 +6308,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2StoredInfoTypeConfig": {
-      "description": "Configuration for stored infoT types. All fields and subfield are provided\nby the user. For more information, see\nhttps://cloud.google.com/dlp/docs/creating-custom-infotypes.",
+      "description": "Configuration for a StoredInfoType.",
       "id": "GooglePrivacyDlpV2StoredInfoTypeConfig",
       "properties": {
         "description": {

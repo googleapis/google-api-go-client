@@ -167,18 +167,21 @@ type AnalyzeCommentRequest struct {
 	// service may store comments/context for debugging purposes.
 	DoNotStore bool `json:"doNotStore,omitempty"`
 
-	// Languages: The language(s) of the comment and context (if none are
-	// specified, the
-	// language is automatically detected). If multiple languages are
-	// specified,
-	// the text is checked in all of them that are supported. Both ISO and
-	// BCP-47
-	// language codes are accepted.
-	// Current Language Restrictions:
-	//  * Only English text ("en") is supported.
-	// If none of the languages specified by the caller are supported,
-	// an
-	// `UNIMPLEMENTED` error is returned.
+	// Languages: The language(s) of the comment and context. If none are
+	// specified, we
+	// attempt to automatically detect the language. Specifying multiple
+	// languages
+	// means the text contains multiple lanugages. Both ISO and BCP-47
+	// language
+	// codes are accepted.
+	//
+	// The server returns an error if no language was specified and
+	// language
+	// detection fails. The server also returns an error if the languages
+	// (either
+	// specified by the caller, or auto-detected) are not *all* supported by
+	// the
+	// service.
 	Languages []string `json:"languages,omitempty"`
 
 	// RequestedAttributes: Specification of requested attributes. The
@@ -260,10 +263,10 @@ type AnalyzeCommentResponse struct {
 	// called
 	// "effective_languages". The logic used to make the choice is as
 	// follows:
-	//   if Request.languages.empty()
-	//     effective_languages = detected_languages
-	//   else
+	//   if !Request.languages.empty()
 	//     effective_languages = Request.languages
+	//   else
+	//     effective_languages = detected_languages[0]
 	Languages []string `json:"languages,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -643,18 +646,11 @@ type SuggestCommentScoreRequest struct {
 	// Context: The context of the comment.
 	Context *Context `json:"context,omitempty"`
 
-	// Languages: The language(s) of the comment and context (if none are
-	// specified, the
-	// language is automatically detected). If multiple languages are
-	// specified,
-	// the text is checked in all of them that are supported. Both ISO and
-	// BCP-47
-	// language codes are accepted.
-	// Current Language Restrictions:
-	//  * Only English text ("en") is supported.
-	// If none of the languages specified by the caller are supported,
-	// an
-	// `UNIMPLEMENTED` error is returned.
+	// Languages: The language(s) of the comment and context. If none are
+	// specified, we
+	// attempt to automatically detect the language. Both ISO and BCP-47
+	// language
+	// codes are accepted.
 	Languages []string `json:"languages,omitempty"`
 
 	// SessionId: Session ID. Used to join related RPCs into a single
@@ -813,7 +809,7 @@ func (c *CommentsAnalyzeCall) Header() http.Header {
 
 func (c *CommentsAnalyzeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -938,7 +934,7 @@ func (c *CommentsSuggestscoreCall) Header() http.Header {
 
 func (c *CommentsSuggestscoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

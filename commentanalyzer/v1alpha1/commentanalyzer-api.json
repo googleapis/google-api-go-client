@@ -144,7 +144,7 @@
       }
     }
   },
-  "revision": "20190922",
+  "revision": "20191124",
   "rootUrl": "https://commentanalyzer.googleapis.com/",
   "schemas": {
     "AnalyzeCommentRequest": {
@@ -172,7 +172,7 @@
           "type": "boolean"
         },
         "languages": {
-          "description": "The language(s) of the comment and context (if none are specified, the\nlanguage is automatically detected). If multiple languages are specified,\nthe text is checked in all of them that are supported. Both ISO and BCP-47\nlanguage codes are accepted.\nCurrent Language Restrictions:\n * Only English text (\"en\") is supported.\nIf none of the languages specified by the caller are supported, an\n`UNIMPLEMENTED` error is returned.",
+          "description": "The language(s) of the comment and context. If none are specified, we\nattempt to automatically detect the language. Specifying multiple languages\nmeans the text contains multiple lanugages. Both ISO and BCP-47 language\ncodes are accepted.\n\nThe server returns an error if no language was specified and language\ndetection fails. The server also returns an error if the languages (either\nspecified by the caller, or auto-detected) are not *all* supported by the\nservice.",
           "items": {
             "type": "string"
           },
@@ -219,7 +219,7 @@
           "type": "array"
         },
         "languages": {
-          "description": "The language(s) used by CommentAnalyzer service to choose which Model to\nuse when analyzing the comment. Might better be called\n\"effective_languages\". The logic used to make the choice is as follows:\n  if Request.languages.empty()\n    effective_languages = detected_languages\n  else\n    effective_languages = Request.languages",
+          "description": "The language(s) used by CommentAnalyzer service to choose which Model to\nuse when analyzing the comment. Might better be called\n\"effective_languages\". The logic used to make the choice is as follows:\n  if !Request.languages.empty()\n    effective_languages = Request.languages\n  else\n    effective_languages = detected_languages[0]",
           "items": {
             "type": "string"
           },
@@ -387,7 +387,7 @@
           "description": "The context of the comment."
         },
         "languages": {
-          "description": "The language(s) of the comment and context (if none are specified, the\nlanguage is automatically detected). If multiple languages are specified,\nthe text is checked in all of them that are supported. Both ISO and BCP-47\nlanguage codes are accepted.\nCurrent Language Restrictions:\n * Only English text (\"en\") is supported.\nIf none of the languages specified by the caller are supported, an\n`UNIMPLEMENTED` error is returned.",
+          "description": "The language(s) of the comment and context. If none are specified, we\nattempt to automatically detect the language. Both ISO and BCP-47 language\ncodes are accepted.",
           "items": {
             "type": "string"
           },

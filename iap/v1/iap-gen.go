@@ -891,7 +891,7 @@ func (c *V1GetIamPolicyCall) Header() http.Header {
 
 func (c *V1GetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1041,7 +1041,7 @@ func (c *V1GetIapSettingsCall) Header() http.Header {
 
 func (c *V1GetIapSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1182,7 +1182,7 @@ func (c *V1SetIamPolicyCall) Header() http.Header {
 
 func (c *V1SetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1328,7 +1328,7 @@ func (c *V1TestIamPermissionsCall) Header() http.Header {
 
 func (c *V1TestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1481,7 +1481,7 @@ func (c *V1UpdateIapSettingsCall) Header() http.Header {
 
 func (c *V1UpdateIapSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

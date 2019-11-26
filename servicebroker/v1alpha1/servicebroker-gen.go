@@ -1479,7 +1479,7 @@ func (c *ProjectsBrokersInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsBrokersInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1642,7 +1642,7 @@ func (c *ProjectsBrokersInstancesServiceBindingsListCall) Header() http.Header {
 
 func (c *ProjectsBrokersInstancesServiceBindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1840,7 +1840,7 @@ func (c *ProjectsBrokersServiceInstancesListCall) Header() http.Header {
 
 func (c *ProjectsBrokersServiceInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2040,7 +2040,7 @@ func (c *ProjectsBrokersV2CatalogListCall) Header() http.Header {
 
 func (c *ProjectsBrokersV2CatalogListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2246,7 +2246,7 @@ func (c *ProjectsBrokersV2ServiceInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsBrokersV2ServiceInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2428,7 +2428,7 @@ func (c *ProjectsBrokersV2ServiceInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsBrokersV2ServiceInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2598,7 +2598,7 @@ func (c *ProjectsBrokersV2ServiceInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsBrokersV2ServiceInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2768,7 +2768,7 @@ func (c *ProjectsBrokersV2ServiceInstancesGetLastOperationCall) Header() http.He
 
 func (c *ProjectsBrokersV2ServiceInstancesGetLastOperationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2939,7 +2939,7 @@ func (c *ProjectsBrokersV2ServiceInstancesPatchCall) Header() http.Header {
 
 func (c *ProjectsBrokersV2ServiceInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3109,7 +3109,7 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsCreateCall) Header() ht
 
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3303,7 +3303,7 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall) Header() ht
 
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3494,7 +3494,7 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall) Header() http.
 
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3694,7 +3694,7 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall) H
 
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3894,7 +3894,7 @@ func (c *V1alpha1GetIamPolicyCall) Header() http.Header {
 
 func (c *V1alpha1GetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4040,7 +4040,7 @@ func (c *V1alpha1SetIamPolicyCall) Header() http.Header {
 
 func (c *V1alpha1SetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4190,7 +4190,7 @@ func (c *V1alpha1TestIamPermissionsCall) Header() http.Header {
 
 func (c *V1alpha1TestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

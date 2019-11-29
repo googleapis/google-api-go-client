@@ -403,7 +403,7 @@ func (c *WebResourceDeleteCall) Header() http.Header {
 
 func (c *WebResourceDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191127")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191128")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -514,7 +514,7 @@ func (c *WebResourceGetCall) Header() http.Header {
 
 func (c *WebResourceGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191127")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191128")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -647,7 +647,7 @@ func (c *WebResourceGetTokenCall) Header() http.Header {
 
 func (c *WebResourceGetTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191127")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191128")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -773,7 +773,7 @@ func (c *WebResourceInsertCall) Header() http.Header {
 
 func (c *WebResourceInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191127")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191128")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -917,7 +917,7 @@ func (c *WebResourceListCall) Header() http.Header {
 
 func (c *WebResourceListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191127")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191128")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1038,7 +1038,7 @@ func (c *WebResourcePatchCall) Header() http.Header {
 
 func (c *WebResourcePatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191127")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191128")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1177,7 +1177,7 @@ func (c *WebResourceUpdateCall) Header() http.Header {
 
 func (c *WebResourceUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191127")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191128")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

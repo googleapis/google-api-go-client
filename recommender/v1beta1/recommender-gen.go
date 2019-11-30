@@ -873,7 +873,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsGetCall) Header() http.Head
 
 func (c *ProjectsLocationsRecommendersRecommendationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1052,7 +1052,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Header() http.Hea
 
 func (c *ProjectsLocationsRecommendersRecommendationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1242,7 +1242,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) Header() h
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1400,7 +1400,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) Header() ht
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1558,7 +1558,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) Header()
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

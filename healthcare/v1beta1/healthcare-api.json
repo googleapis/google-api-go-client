@@ -1845,6 +1845,11 @@
                               "location": "query",
                               "type": "integer"
                             },
+                            "_page_token": {
+                              "description": "Used to retrieve the next or previous page of results\nwhen using pagination. Value should be set to the value of page_token set\nin next or previous page links' urls. Next and previous page are returned\nin the response bundle's links field, where `link.relation` is \"previous\"\nor \"next\".\n\nOmit `page_token` if no previous request has been made.",
+                              "location": "query",
+                              "type": "string"
+                            },
                             "end": {
                               "description": "The response includes records prior to the end date. If no end date is\nprovided, all records subsequent to the start date are in scope.",
                               "location": "query",
@@ -1855,11 +1860,6 @@
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/Patient/[^/]+$",
                               "required": true,
-                              "type": "string"
-                            },
-                            "pageToken": {
-                              "description": "Used to retrieve the next or previous page of results\nwhen using pagination. Value should be set to the value of page_token set\nin next or previous page links' urls. Next and previous page are returned\nin the response bundle's links field, where `link.relation` is \"previous\"\nor \"next\".\n\nOmit `page_token` if no previous request has been made.",
-                              "location": "query",
                               "type": "string"
                             },
                             "start": {
@@ -2129,37 +2129,32 @@
                             "name"
                           ],
                           "parameters": {
+                            "_at": {
+                              "description": "Only include resource versions that were current at some point during the\ntime period specified in the date time value. The date parameter format is\nyyyy-mm-ddThh:mm:ss[Z|(+|-)hh:mm]\n\nClients may specify any of the following:\n\n*  An entire year: `_at=2019`\n*  An entire month: `_at=2019-01`\n*  A specific day: `_at=2019-01-20`\n*  A specific second: `_at=2018-12-31T23:59:58Z`",
+                              "location": "query",
+                              "type": "string"
+                            },
+                            "_count": {
+                              "description": "The maximum number of search results on a page. Defaults to 1000.",
+                              "format": "int32",
+                              "location": "query",
+                              "type": "integer"
+                            },
                             "_page_token": {
                               "description": "Used to retrieve the first, previous, next, or last page of resource\nversions when using pagination. Value should be set to the value of\n`_page_token` set in next or previous page links' URLs. Next and previous\npage are returned in the response bundle's links field, where\n`link.relation` is \"previous\" or \"next\".\n\nOmit `_page_token` if no previous request has been made.",
                               "location": "query",
                               "type": "string"
                             },
-                            "at": {
-                              "description": "Only include resource versions that were current at some point during the\ntime period specified in the date time value. The date parameter format is\nyyyy-mm-ddThh:mm:ss[Z|(+|-)hh:mm]\n\nClients may specify any of the following:\n\n*  An entire year: `_at=2019`\n*  An entire month: `_at=2019-01`\n*  A specific day: `_at=2019-01-20`\n*  A specific second: `_at=2018-12-31T23:59:58Z`",
+                            "_since": {
+                              "description": "Only include resource versions that were created at or after the given\ninstant in time. The instant in time uses the format\nYYYY-MM-DDThh:mm:ss.sss+zz:zz (for example 2015-02-07T13:28:17.239+02:00 or\n2017-01-01T00:00:00Z). The time must be specified to the second and\ninclude a time zone.",
                               "location": "query",
                               "type": "string"
-                            },
-                            "count": {
-                              "description": "The maximum number of search results on a page. Defaults to 1000.",
-                              "format": "int32",
-                              "location": "query",
-                              "type": "integer"
                             },
                             "name": {
                               "description": "The name of the resource to retrieve.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/[^/]+/[^/]+$",
                               "required": true,
-                              "type": "string"
-                            },
-                            "page": {
-                              "description": "DEPRECATED! Use `_page_token`.",
-                              "location": "query",
-                              "type": "string"
-                            },
-                            "since": {
-                              "description": "Only include resource versions that were created at or after the given\ninstant in time. The instant in time uses the format\nYYYY-MM-DDThh:mm:ss.sss+zz:zz (for example 2015-02-07T13:28:17.239+02:00 or\n2017-01-01T00:00:00Z). The time must be specified to the second and\ninclude a time zone.",
-                              "location": "query",
                               "type": "string"
                             }
                           },
@@ -2838,7 +2833,7 @@
       }
     }
   },
-  "revision": "20191114",
+  "revision": "20191121",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "AuditConfig": {

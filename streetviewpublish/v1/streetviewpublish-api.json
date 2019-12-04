@@ -362,7 +362,7 @@
       }
     }
   },
-  "revision": "20190918",
+  "revision": "20191202",
   "rootUrl": "https://streetviewpublish.googleapis.com/",
   "schemas": {
     "BatchDeletePhotosRequest": {
@@ -559,7 +559,7 @@
           "type": "string"
         },
         "mapsPublishStatus": {
-          "description": "Output only. Status in Google Maps, whether this photo was published or\nrejected.",
+          "description": "Output only. Status in Google Maps, whether this photo was published or\nrejected. Not currently populated.",
           "enum": [
             "UNSPECIFIED_MAPS_PUBLISH_STATUS",
             "PUBLISHED",

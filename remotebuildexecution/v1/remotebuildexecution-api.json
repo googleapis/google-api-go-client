@@ -306,7 +306,7 @@
       }
     }
   },
-  "revision": "20191119",
+  "revision": "20191203",
   "rootUrl": "https://remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -976,6 +976,37 @@
         },
         "message": {
           "description": "The error message.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleDevtoolsRemotebuildbotResourceUsage": {
+      "description": "ResourceUsage is the system resource usage of the host machine.",
+      "id": "GoogleDevtoolsRemotebuildbotResourceUsage",
+      "properties": {
+        "cpuUsedPercent": {
+          "format": "double",
+          "type": "number"
+        },
+        "diskUsage": {
+          "$ref": "GoogleDevtoolsRemotebuildbotResourceUsageStat"
+        },
+        "memoryUsage": {
+          "$ref": "GoogleDevtoolsRemotebuildbotResourceUsageStat"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleDevtoolsRemotebuildbotResourceUsageStat": {
+      "id": "GoogleDevtoolsRemotebuildbotResourceUsageStat",
+      "properties": {
+        "total": {
+          "format": "uint64",
+          "type": "string"
+        },
+        "used": {
+          "format": "uint64",
           "type": "string"
         }
       },

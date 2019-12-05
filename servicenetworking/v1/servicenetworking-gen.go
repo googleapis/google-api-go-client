@@ -1454,6 +1454,41 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EnableVpcServiceControlsRequest: Request to enable VPC service
+// controls.
+type EnableVpcServiceControlsRequest struct {
+	// ConsumerNetwork: Required. The network that the consumer is using to
+	// connect with services.
+	// Must be in the form of
+	// projects/{project}/global/networks/{network}
+	// {project} is a project number, as in '12345'
+	// {network} is network name.
+	ConsumerNetwork string `json:"consumerNetwork,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsumerNetwork") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsumerNetwork") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnableVpcServiceControlsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod EnableVpcServiceControlsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Endpoint: `Endpoint` describes a network endpoint that serves a set
 // of APIs.
 // A service may expose any number of endpoints, and all endpoints share
@@ -2703,52 +2738,24 @@ type MetricDescriptor struct {
 	//     "appengine.googleapis.com/http/server/response_latencies"
 	Type string `json:"type,omitempty"`
 
-	// Unit: The unit in which the metric value is reported. It is only
-	// applicable
-	// if the `value_type` is `INT64`, `DOUBLE`, or `DISTRIBUTION`.
-	// The
-	// supported units are a subset of [The Unified Code for Units
-	// of
-	// Measure](http://unitsofmeasure.org/ucum.html) standard:
-	//
-	// **Basic units (UNIT)**
-	//
-	// * `bit`   bit
-	// * `By`    byte
-	// * `s`     second
-	// * `min`   minute
-	// * `h`     hour
-	// * `d`     day
-	//
-	// **Prefixes (PREFIX)**
-	//
-	// * `k`     kilo    (10**3)
-	// * `M`     mega    (10**6)
-	// * `G`     giga    (10**9)
-	// * `T`     tera    (10**12)
-	// * `P`     peta    (10**15)
-	// * `E`     exa     (10**18)
-	// * `Z`     zetta   (10**21)
-	// * `Y`     yotta   (10**24)
-	// * `m`     milli   (10**-3)
-	// * `u`     micro   (10**-6)
-	// * `n`     nano    (10**-9)
-	// * `p`     pico    (10**-12)
-	// * `f`     femto   (10**-15)
-	// * `a`     atto    (10**-18)
-	// * `z`     zepto   (10**-21)
-	// * `y`     yocto   (10**-24)
-	// * `Ki`    kibi    (2**10)
-	// * `Mi`    mebi    (2**20)
-	// * `Gi`    gibi    (2**30)
-	// * `Ti`    tebi    (2**40)
+	// Unit: * `Ki`    kibi    (2^10)
+	// * `Mi`    mebi    (2^20)
+	// * `Gi`    gibi    (2^30)
+	// * `Ti`    tebi    (2^40)
+	// * `Pi`    pebi    (2^50)
 	//
 	// **Grammar**
 	//
 	// The grammar also includes these connectors:
 	//
-	// * `/`    division (as an infix operator, e.g. `1/s`).
-	// * `.`    multiplication (as an infix operator, e.g. `GBy.d`)
+	// * `/`    division or ratio (as an infix operator). For examples,
+	//          `kBy/{email}` or `MiBy/10ms` (although you should almost
+	// never
+	//          have `/s` in a metric `unit`; rates should always be
+	// computed at
+	//          query time from the underlying cumulative or delta value).
+	// * `.`    multiplication or composition (as an infix operator). For
+	//          examples, `GBy.d` or `k{watt}.h`.
 	//
 	// The grammar for a unit is as follows:
 	//
@@ -2763,15 +2770,35 @@ type MetricDescriptor struct {
 	//
 	// Notes:
 	//
-	// * `Annotation` is just a comment if it follows a `UNIT` and is
-	//    equivalent to `1` if it is used alone. For examples,
-	//    `{requests}/s == 1/s`, `By{transmitted}/s == By/s`.
+	// * `Annotation` is just a comment if it follows a `UNIT`. If the
+	// annotation
+	//    is used alone, then the unit is equivalent to `1`. For examples,
+	//    `{request}/s == 1/s`, `By{transmitted}/s == By/s`.
 	// * `NAME` is a sequence of non-blank printable ASCII characters not
-	//    containing '{' or '}'.
-	// * `1` represents dimensionless value 1, such as in `1/s`.
-	// * `%` represents dimensionless value 1/100, and annotates values
+	//    containing `{` or `}`.
+	// * `1` represents a unitary [dimensionless
+	//    unit](https://en.wikipedia.org/wiki/Dimensionless_quantity) of 1,
+	// such
+	//    as in `1/s`. It is typically used when none of the basic units
+	// are
+	//    appropriate. For example, "new users per day" can be represented
+	// as
+	//    `1/d` or `{new-users}/d` (and a metric value `5` would mean "5
+	// new
+	//    users). Alternatively, "thousands of page views per day" would be
+	//    represented as `1000/d` or `k1/d` or `k{page_views}/d` (and a
+	// metric
+	//    value of `5.3` would mean "5300 page views per day").
+	// * `%` represents dimensionless value of 1/100, and annotates values
 	// giving
-	//    a percentage.
+	//    a percentage (so the metric values are typically in the range of
+	// 0..100,
+	//    and a metric value `3` means "3 percent").
+	// * `10^2.%` indicates a metric contains a ratio, typically in the
+	// range
+	//    0..1, that will be multiplied by 100 and displayed as a
+	// percentage
+	//    (so a metric value `0.03` means "3 percent").
 	Unit string `json:"unit,omitempty"`
 
 	// ValueType: Whether the measurement is an integer, a floating-point
@@ -4786,7 +4813,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4931,7 +4958,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5077,7 +5104,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5259,7 +5286,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5448,7 +5475,7 @@ func (c *ServicesAddSubnetworkCall) Header() http.Header {
 
 func (c *ServicesAddSubnetworkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5543,6 +5570,148 @@ func (c *ServicesAddSubnetworkCall) Do(opts ...googleapi.CallOption) (*Operation
 
 }
 
+// method id "servicenetworking.services.enableVpcServiceControls":
+
+type ServicesEnableVpcServiceControlsCall struct {
+	s                               *APIService
+	parent                          string
+	enablevpcservicecontrolsrequest *EnableVpcServiceControlsRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// EnableVpcServiceControls: Enables VPC service controls for a
+// connection.
+func (r *ServicesService) EnableVpcServiceControls(parent string, enablevpcservicecontrolsrequest *EnableVpcServiceControlsRequest) *ServicesEnableVpcServiceControlsCall {
+	c := &ServicesEnableVpcServiceControlsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.enablevpcservicecontrolsrequest = enablevpcservicecontrolsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesEnableVpcServiceControlsCall) Fields(s ...googleapi.Field) *ServicesEnableVpcServiceControlsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesEnableVpcServiceControlsCall) Context(ctx context.Context) *ServicesEnableVpcServiceControlsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesEnableVpcServiceControlsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesEnableVpcServiceControlsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.enablevpcservicecontrolsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:enableVpcServiceControls")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "servicenetworking.services.enableVpcServiceControls" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesEnableVpcServiceControlsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Enables VPC service controls for a connection.",
+	//   "flatPath": "v1/services/{servicesId}:enableVpcServiceControls",
+	//   "httpMethod": "PATCH",
+	//   "id": "servicenetworking.services.enableVpcServiceControls",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The service that is managing peering connectivity for a service producer's\norganization. For Google services that support this functionality, this\nvalue is `services/servicenetworking.googleapis.com`.",
+	//       "location": "path",
+	//       "pattern": "^services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}:enableVpcServiceControls",
+	//   "request": {
+	//     "$ref": "EnableVpcServiceControlsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/service.management"
+	//   ]
+	// }
+
+}
+
 // method id "servicenetworking.services.searchRange":
 
 type ServicesSearchRangeCall struct {
@@ -5600,7 +5769,7 @@ func (c *ServicesSearchRangeCall) Header() http.Header {
 
 func (c *ServicesSearchRangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5748,7 +5917,7 @@ func (c *ServicesValidateCall) Header() http.Header {
 
 func (c *ServicesValidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5905,7 +6074,7 @@ func (c *ServicesConnectionsCreateCall) Header() http.Header {
 
 func (c *ServicesConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6074,7 +6243,7 @@ func (c *ServicesConnectionsListCall) Header() http.Header {
 
 func (c *ServicesConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6235,7 +6404,7 @@ func (c *ServicesConnectionsPatchCall) Header() http.Header {
 
 func (c *ServicesConnectionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

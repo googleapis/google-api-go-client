@@ -1104,7 +1104,7 @@
       }
     }
   },
-  "revision": "20191125",
+  "revision": "20191204",
   "rootUrl": "https://firebase.googleapis.com/",
   "schemas": {
     "AddFirebaseRequest": {
@@ -1505,8 +1505,41 @@
       "description": "A GCP resource location that can be selected for a Project.",
       "id": "Location",
       "properties": {
+        "features": {
+          "description": "Products and services that are available in the GCP resource location.",
+          "enumDescriptions": [
+            "Used internally for distinguishing unset values and is not intended for\nexternal use.",
+            "This location supports Cloud Firestore database instances.\n\u003cbr\u003e\nApp Engine is available in this location, so it can be a project's\n[default GCP resource\nlocation](//firebase.google.com/docs/projects/locations#default-cloud-location).",
+            "This location supports default Cloud Storage buckets.\n\u003cbr\u003e\nApp Engine is available in this location, so it can be a project's\n[default GCP resource\nlocation](//firebase.google.com/docs/projects/locations#default-cloud-location).",
+            "Cloud Functions for Firebase is available in this location."
+          ],
+          "items": {
+            "enum": [
+              "LOCATION_FEATURE_UNSPECIFIED",
+              "FIRESTORE",
+              "DEFAULT_STORAGE",
+              "FUNCTIONS"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
         "locationId": {
           "description": "The ID of the GCP resource location. It will be one of the available [GCP\nresource\nlocations](https://firebase.google.com/docs/projects/locations#types).",
+          "type": "string"
+        },
+        "type": {
+          "description": "Indicates whether the GCP resource location is a [regional or\nmulti-regional\nlocation](https://firebase.google.com/docs/projects/locations#types)\nfor data replication.",
+          "enum": [
+            "LOCATION_TYPE_UNSPECIFIED",
+            "REGIONAL",
+            "MULTI_REGIONAL"
+          ],
+          "enumDescriptions": [
+            "Used internally for distinguishing unset values and is not intended for\nexternal use.",
+            "The location is a regional location.\n\u003cbr\u003eData in a regional location is replicated in multiple zones within a\nregion.",
+            "The location is a multi-regional location.\n\u003cbr\u003eData in a multi-region location is replicated in multiple regions.\nWithin each region, data is replicated in multiple zones."
+          ],
           "type": "string"
         }
       },

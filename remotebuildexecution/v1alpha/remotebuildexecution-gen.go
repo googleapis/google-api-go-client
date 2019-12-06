@@ -1801,6 +1801,81 @@ func (s *GoogleDevtoolsRemotebuildbotCommandStatus) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleDevtoolsRemotebuildbotResourceUsage: ResourceUsage is the
+// system resource usage of the host machine.
+type GoogleDevtoolsRemotebuildbotResourceUsage struct {
+	CpuUsedPercent float64 `json:"cpuUsedPercent,omitempty"`
+
+	DiskUsage *GoogleDevtoolsRemotebuildbotResourceUsageStat `json:"diskUsage,omitempty"`
+
+	MemoryUsage *GoogleDevtoolsRemotebuildbotResourceUsageStat `json:"memoryUsage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CpuUsedPercent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CpuUsedPercent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsRemotebuildbotResourceUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsRemotebuildbotResourceUsage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleDevtoolsRemotebuildbotResourceUsage) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleDevtoolsRemotebuildbotResourceUsage
+	var s1 struct {
+		CpuUsedPercent gensupport.JSONFloat64 `json:"cpuUsedPercent"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.CpuUsedPercent = float64(s1.CpuUsedPercent)
+	return nil
+}
+
+type GoogleDevtoolsRemotebuildbotResourceUsageStat struct {
+	Total uint64 `json:"total,omitempty,string"`
+
+	Used uint64 `json:"used,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Total") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Total") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsRemotebuildbotResourceUsageStat) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsRemotebuildbotResourceUsageStat
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleDevtoolsRemotebuildexecutionAdminV1alphaAcceleratorConfig:
 // AcceleratorConfig defines the accelerator cards to attach to the VM.
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaAcceleratorConfig struct {
@@ -3397,7 +3472,7 @@ func (c *ProjectsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3541,7 +3616,7 @@ func (c *ProjectsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3682,7 +3757,7 @@ func (c *ProjectsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3829,7 +3904,7 @@ func (c *ProjectsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3973,7 +4048,7 @@ func (c *ProjectsInstancesWorkerpoolsCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4117,7 +4192,7 @@ func (c *ProjectsInstancesWorkerpoolsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4258,7 +4333,7 @@ func (c *ProjectsInstancesWorkerpoolsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4447,7 +4522,7 @@ func (c *ProjectsInstancesWorkerpoolsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4596,7 +4671,7 @@ func (c *ProjectsInstancesWorkerpoolsPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4749,7 +4824,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

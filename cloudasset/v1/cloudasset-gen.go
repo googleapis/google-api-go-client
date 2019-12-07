@@ -2203,7 +2203,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2412,7 +2412,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2582,7 +2582,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -3130,7 +3130,7 @@
       }
     }
   },
-  "revision": "20191118",
+  "revision": "20191202",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -6308,7 +6308,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2StoredInfoTypeConfig": {
-      "description": "Configuration for stored infoT types. All fields and subfield are provided\nby the user. For more information, see\nhttps://cloud.google.com/dlp/docs/creating-custom-infotypes.",
+      "description": "Configuration for stored infoTypes. All fields and subfield are provided\nby the user. For more information, see\nhttps://cloud.google.com/dlp/docs/creating-custom-infotypes.",
       "id": "GooglePrivacyDlpV2StoredInfoTypeConfig",
       "properties": {
         "description": {

@@ -2094,7 +2094,7 @@
       }
     }
   },
-  "revision": "20191031",
+  "revision": "20191120",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2616,6 +2616,10 @@
           "description": "Optional. The Compute Engine network to be used for machine communications. Cannot be specified with subnetwork_uri. If neither network_uri nor subnetwork_uri is specified, the \"default\" network of the project is used, if it exists. Cannot be a \"Custom Subnet Network\" (see Using Subnetworks for more information).A full URL, partial URI, or short name are valid. Examples:\nhttps://www.googleapis.com/compute/v1/projects/[project_id]/regions/global/default\nprojects/[project_id]/regions/global/default\ndefault",
           "type": "string"
         },
+        "reservationAffinity": {
+          "$ref": "ReservationAffinity",
+          "description": "Optional. Reservation Affinity for consuming Zonal reservation."
+        },
         "serviceAccount": {
           "description": "Optional. The service account of the instances. Defaults to the default Compute Engine service account. Custom service accounts need permissions equivalent to the following IAM roles:\nroles/logging.logWriter\nroles/storage.objectAdmin(see https://cloud.google.com/compute/docs/access/service-accounts#custom_service_accounts for more information). Example: [account_id]@[project_id].iam.gserviceaccount.com",
           "type": "string"
@@ -2870,12 +2874,10 @@
           "type": "string"
         },
         "hadoopJob": {
-          "$ref": "HadoopJob",
-          "description": "Job is a Hadoop job."
+          "$ref": "HadoopJob"
         },
         "hiveJob": {
-          "$ref": "HiveJob",
-          "description": "Job is a Hive job."
+          "$ref": "HiveJob"
         },
         "jobUuid": {
           "description": "Output only. A UUID that uniquely identifies a job within the project over time. This is in contrast to a user-settable reference.job_id that may be reused over time.",
@@ -2889,16 +2891,14 @@
           "type": "object"
         },
         "pigJob": {
-          "$ref": "PigJob",
-          "description": "Job is a Pig job."
+          "$ref": "PigJob"
         },
         "placement": {
           "$ref": "JobPlacement",
           "description": "Required. Job information, including how, when, and where to run the job."
         },
         "pysparkJob": {
-          "$ref": "PySparkJob",
-          "description": "Job is a Pyspark job."
+          "$ref": "PySparkJob"
         },
         "reference": {
           "$ref": "JobReference",
@@ -2909,16 +2909,13 @@
           "description": "Optional. Job scheduling configuration."
         },
         "sparkJob": {
-          "$ref": "SparkJob",
-          "description": "Job is a Spark job."
+          "$ref": "SparkJob"
         },
         "sparkRJob": {
-          "$ref": "SparkRJob",
-          "description": "Job is a SparkR job."
+          "$ref": "SparkRJob"
         },
         "sparkSqlJob": {
-          "$ref": "SparkSqlJob",
-          "description": "Job is a SparkSql job."
+          "$ref": "SparkSqlJob"
         },
         "status": {
           "$ref": "JobStatus",
@@ -3346,12 +3343,10 @@
       "id": "OrderedJob",
       "properties": {
         "hadoopJob": {
-          "$ref": "HadoopJob",
-          "description": "Job is a Hadoop job."
+          "$ref": "HadoopJob"
         },
         "hiveJob": {
-          "$ref": "HiveJob",
-          "description": "Job is a Hive job."
+          "$ref": "HiveJob"
         },
         "labels": {
           "additionalProperties": {
@@ -3361,8 +3356,7 @@
           "type": "object"
         },
         "pigJob": {
-          "$ref": "PigJob",
-          "description": "Job is a Pig job."
+          "$ref": "PigJob"
         },
         "prerequisiteStepIds": {
           "description": "Optional. The optional list of prerequisite job step_ids. If not specified, the job will start at the beginning of workflow.",
@@ -3372,20 +3366,17 @@
           "type": "array"
         },
         "pysparkJob": {
-          "$ref": "PySparkJob",
-          "description": "Job is a Pyspark job."
+          "$ref": "PySparkJob"
         },
         "scheduling": {
           "$ref": "JobScheduling",
           "description": "Optional. Job scheduling configuration."
         },
         "sparkJob": {
-          "$ref": "SparkJob",
-          "description": "Job is a Spark job."
+          "$ref": "SparkJob"
         },
         "sparkSqlJob": {
-          "$ref": "SparkSqlJob",
-          "description": "Job is a SparkSql job."
+          "$ref": "SparkSqlJob"
         },
         "stepId": {
           "description": "Required. The step id. The id must be unique among all jobs within the template.The step id is used as prefix for job id, as job goog-dataproc-workflow-step-id label, and in prerequisiteStepIds field from other steps.The id must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). Cannot begin or end with underscore or hyphen. Must consist of between 3 and 50 characters.",
@@ -3465,12 +3456,12 @@
           "type": "array"
         },
         "etag": {
-          "description": "etag is used for optimistic concurrency control as a way to help prevent simultaneous updates of a policy from overwriting each other. It is strongly suggested that systems make use of the etag in the read-modify-write cycle to perform policy updates in order to avoid race conditions: An etag is returned in the response to getIamPolicy, and systems are expected to put that etag in the request to setIamPolicy to ensure that their change will be applied to the same version of the policy.If no etag is provided in the call to setIamPolicy, then the existing policy is overwritten. Due to blind-set semantics of an etag-less policy, 'setIamPolicy' will not fail even if either of incoming or stored policy does not meet the version requirements.",
+          "description": "etag is used for optimistic concurrency control as a way to help prevent simultaneous updates of a policy from overwriting each other. It is strongly suggested that systems make use of the etag in the read-modify-write cycle to perform policy updates in order to avoid race conditions: An etag is returned in the response to getIamPolicy, and systems are expected to put that etag in the request to setIamPolicy to ensure that their change will be applied to the same version of the policy.If no etag is provided in the call to setIamPolicy, then the existing policy is overwritten. Due to blind-set semantics of an etag-less policy, 'setIamPolicy' will not fail even if the incoming policy version does not meet the requirements for modifying the stored policy.",
           "format": "byte",
           "type": "string"
         },
         "version": {
-          "description": "Specifies the format of the policy.Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected.Operations affecting conditional bindings must specify version 3. This can be either setting a conditional policy, modifying a conditional binding, or removing a conditional binding from the stored conditional policy. Operations on non-conditional policies may specify any valid value or leave the field unset.If no etag is provided in the call to setIamPolicy, any version compliance checks on the incoming and/or stored policy is skipped.",
+          "description": "Specifies the format of the policy.Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected.Operations affecting conditional bindings must specify version 3. This can be either setting a conditional policy, modifying a conditional binding, or removing a binding (conditional or unconditional) from the stored conditional policy. Operations on non-conditional policies may specify any valid value or leave the field unset.If no etag is provided in the call to setIamPolicy, version compliance checks against the stored policy is skipped.",
           "format": "int32",
           "type": "integer"
         }
@@ -3554,6 +3545,40 @@
       "properties": {
         "regexes": {
           "description": "Required. RE2 regular expressions used to validate the parameter's value. The value must match the regex in its entirety (substring matches are not sufficient).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ReservationAffinity": {
+      "description": "Reservation Affinity for consuming Zonal reservation.",
+      "id": "ReservationAffinity",
+      "properties": {
+        "consumeReservationType": {
+          "description": "Optional. Type of reservation to consume",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "NO_RESERVATION",
+            "ANY_RESERVATION",
+            "SPECIFIC_RESERVATION"
+          ],
+          "enumDescriptions": [
+            "",
+            "Do not consume from any allocated capacity.",
+            "Consume any reservation available.",
+            "Must consume from a specific reservation. Must specify key value fields for specifying the reservations."
+          ],
+          "type": "string"
+        },
+        "key": {
+          "description": "Optional. Corresponds to the label key of reservation resource.",
+          "type": "string"
+        },
+        "values": {
+          "description": "Optional. Corresponds to the label values of reservation resource.",
           "items": {
             "type": "string"
           },

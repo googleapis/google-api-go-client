@@ -295,6 +295,11 @@
                     "parent"
                   ],
                   "parameters": {
+                    "enforceSingleAdminProjectPerOrg": {
+                      "description": "If true, fail the request if another project in the organization has a\ncapacity commitment.",
+                      "location": "query",
+                      "type": "boolean"
+                    },
                     "parent": {
                       "description": "Resource name of the parent reservation. E.g.,\n   projects/myproject/locations/US",
                       "location": "path",
@@ -705,7 +710,7 @@
       }
     }
   },
-  "revision": "20191106",
+  "revision": "20191203",
   "rootUrl": "https://bigqueryreservation.googleapis.com/",
   "schemas": {
     "Assignment": {

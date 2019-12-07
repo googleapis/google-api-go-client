@@ -893,7 +893,7 @@
               "methods": {
                 "create": {
                   "description": "Creates a cluster in a project. The returned Operation.metadata will be ClusterOperationMetadata.",
-                  "flatPath": "v1beta2/projects/{projectId}/regions/{region}/clusters",
+                  "flatPath": "v1beta2/projects/{projectsId}/regions/{regionsId}/clusters",
                   "httpMethod": "POST",
                   "id": "dataproc.projects.regions.clusters.create",
                   "parameterOrder": [
@@ -904,12 +904,14 @@
                     "projectId": {
                       "description": "Required. The ID of the Google Cloud Platform project that the cluster belongs to.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
                     "region": {
                       "description": "Required. The Cloud Dataproc region in which to handle the request.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
@@ -919,7 +921,7 @@
                       "type": "string"
                     }
                   },
-                  "path": "v1beta2/projects/{projectId}/regions/{region}/clusters",
+                  "path": "v1beta2/projects/{+projectId}/regions/{+region}/clusters",
                   "request": {
                     "$ref": "Cluster"
                   },
@@ -932,7 +934,7 @@
                 },
                 "delete": {
                   "description": "Deletes a cluster in a project. The returned Operation.metadata will be ClusterOperationMetadata.",
-                  "flatPath": "v1beta2/projects/{projectId}/regions/{region}/clusters/{clusterName}",
+                  "flatPath": "v1beta2/projects/{projectsId}/regions/{regionsId}/clusters/{clustersId}",
                   "httpMethod": "DELETE",
                   "id": "dataproc.projects.regions.clusters.delete",
                   "parameterOrder": [
@@ -944,6 +946,7 @@
                     "clusterName": {
                       "description": "Required. The cluster name.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
@@ -955,12 +958,14 @@
                     "projectId": {
                       "description": "Required. The ID of the Google Cloud Platform project that the cluster belongs to.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
                     "region": {
                       "description": "Required. The Cloud Dataproc region in which to handle the request.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
@@ -970,7 +975,7 @@
                       "type": "string"
                     }
                   },
-                  "path": "v1beta2/projects/{projectId}/regions/{region}/clusters/{clusterName}",
+                  "path": "v1beta2/projects/{+projectId}/regions/{+region}/clusters/{+clusterName}",
                   "response": {
                     "$ref": "Operation"
                   },
@@ -980,7 +985,7 @@
                 },
                 "diagnose": {
                   "description": "Gets cluster diagnostic information. The returned Operation.metadata will be ClusterOperationMetadata. After the operation completes, Operation.response contains Empty.",
-                  "flatPath": "v1beta2/projects/{projectId}/regions/{region}/clusters/{clusterName}:diagnose",
+                  "flatPath": "v1beta2/projects/{projectsId}/regions/{regionsId}/clusters/{clustersId}:diagnose",
                   "httpMethod": "POST",
                   "id": "dataproc.projects.regions.clusters.diagnose",
                   "parameterOrder": [
@@ -992,23 +997,26 @@
                     "clusterName": {
                       "description": "Required. The cluster name.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
                     "projectId": {
                       "description": "Required. The ID of the Google Cloud Platform project that the cluster belongs to.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
                     "region": {
                       "description": "Required. The Cloud Dataproc region in which to handle the request.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     }
                   },
-                  "path": "v1beta2/projects/{projectId}/regions/{region}/clusters/{clusterName}:diagnose",
+                  "path": "v1beta2/projects/{+projectId}/regions/{+region}/clusters/{+clusterName}:diagnose",
                   "request": {
                     "$ref": "DiagnoseClusterRequest"
                   },
@@ -1021,7 +1029,7 @@
                 },
                 "get": {
                   "description": "Gets the resource representation for a cluster in a project.",
-                  "flatPath": "v1beta2/projects/{projectId}/regions/{region}/clusters/{clusterName}",
+                  "flatPath": "v1beta2/projects/{projectsId}/regions/{regionsId}/clusters/{clustersId}",
                   "httpMethod": "GET",
                   "id": "dataproc.projects.regions.clusters.get",
                   "parameterOrder": [
@@ -1033,23 +1041,26 @@
                     "clusterName": {
                       "description": "Required. The cluster name.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
                     "projectId": {
                       "description": "Required. The ID of the Google Cloud Platform project that the cluster belongs to.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
                     "region": {
                       "description": "Required. The Cloud Dataproc region in which to handle the request.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     }
                   },
-                  "path": "v1beta2/projects/{projectId}/regions/{region}/clusters/{clusterName}",
+                  "path": "v1beta2/projects/{+projectId}/regions/{+region}/clusters/{+clusterName}",
                   "response": {
                     "$ref": "Cluster"
                   },
@@ -1090,7 +1101,7 @@
                 },
                 "list": {
                   "description": "Lists all regions/{region}/clusters in a project.",
-                  "flatPath": "v1beta2/projects/{projectId}/regions/{region}/clusters",
+                  "flatPath": "v1beta2/projects/{projectsId}/regions/{regionsId}/clusters",
                   "httpMethod": "GET",
                   "id": "dataproc.projects.regions.clusters.list",
                   "parameterOrder": [
@@ -1117,17 +1128,19 @@
                     "projectId": {
                       "description": "Required. The ID of the Google Cloud Platform project that the cluster belongs to.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
                     "region": {
                       "description": "Required. The Cloud Dataproc region in which to handle the request.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     }
                   },
-                  "path": "v1beta2/projects/{projectId}/regions/{region}/clusters",
+                  "path": "v1beta2/projects/{+projectId}/regions/{+region}/clusters",
                   "response": {
                     "$ref": "ListClustersResponse"
                   },
@@ -1137,7 +1150,7 @@
                 },
                 "patch": {
                   "description": "Updates a cluster in a project. The returned Operation.metadata will be ClusterOperationMetadata.",
-                  "flatPath": "v1beta2/projects/{projectId}/regions/{region}/clusters/{clusterName}",
+                  "flatPath": "v1beta2/projects/{projectsId}/regions/{regionsId}/clusters/{clustersId}",
                   "httpMethod": "PATCH",
                   "id": "dataproc.projects.regions.clusters.patch",
                   "parameterOrder": [
@@ -1149,6 +1162,7 @@
                     "clusterName": {
                       "description": "Required. The cluster name.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
@@ -1161,12 +1175,14 @@
                     "projectId": {
                       "description": "Required. The ID of the Google Cloud Platform project the cluster belongs to.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
                     "region": {
                       "description": "Required. The Cloud Dataproc region in which to handle the request.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
@@ -1182,7 +1198,7 @@
                       "type": "string"
                     }
                   },
-                  "path": "v1beta2/projects/{projectId}/regions/{region}/clusters/{clusterName}",
+                  "path": "v1beta2/projects/{+projectId}/regions/{+region}/clusters/{+clusterName}",
                   "request": {
                     "$ref": "Cluster"
                   },
@@ -1255,7 +1271,7 @@
               "methods": {
                 "cancel": {
                   "description": "Starts a job cancellation request. To access the job resource after cancellation, call regions/{region}/jobs.list or regions/{region}/jobs.get.",
-                  "flatPath": "v1beta2/projects/{projectId}/regions/{region}/jobs/{jobId}:cancel",
+                  "flatPath": "v1beta2/projects/{projectsId}/regions/{regionsId}/jobs/{jobsId}:cancel",
                   "httpMethod": "POST",
                   "id": "dataproc.projects.regions.jobs.cancel",
                   "parameterOrder": [
@@ -1267,23 +1283,26 @@
                     "jobId": {
                       "description": "Required. The job ID.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
                     "projectId": {
                       "description": "Required. The ID of the Google Cloud Platform project that the job belongs to.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
                     "region": {
                       "description": "Required. The Cloud Dataproc region in which to handle the request.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     }
                   },
-                  "path": "v1beta2/projects/{projectId}/regions/{region}/jobs/{jobId}:cancel",
+                  "path": "v1beta2/projects/{+projectId}/regions/{+region}/jobs/{+jobId}:cancel",
                   "request": {
                     "$ref": "CancelJobRequest"
                   },
@@ -1296,7 +1315,7 @@
                 },
                 "delete": {
                   "description": "Deletes the job from the project. If the job is active, the delete fails, and the response returns FAILED_PRECONDITION.",
-                  "flatPath": "v1beta2/projects/{projectId}/regions/{region}/jobs/{jobId}",
+                  "flatPath": "v1beta2/projects/{projectsId}/regions/{regionsId}/jobs/{jobsId}",
                   "httpMethod": "DELETE",
                   "id": "dataproc.projects.regions.jobs.delete",
                   "parameterOrder": [
@@ -1308,23 +1327,26 @@
                     "jobId": {
                       "description": "Required. The job ID.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
                     "projectId": {
                       "description": "Required. The ID of the Google Cloud Platform project that the job belongs to.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
                     "region": {
                       "description": "Required. The Cloud Dataproc region in which to handle the request.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     }
                   },
-                  "path": "v1beta2/projects/{projectId}/regions/{region}/jobs/{jobId}",
+                  "path": "v1beta2/projects/{+projectId}/regions/{+region}/jobs/{+jobId}",
                   "response": {
                     "$ref": "Empty"
                   },
@@ -1334,7 +1356,7 @@
                 },
                 "get": {
                   "description": "Gets the resource representation for a job in a project.",
-                  "flatPath": "v1beta2/projects/{projectId}/regions/{region}/jobs/{jobId}",
+                  "flatPath": "v1beta2/projects/{projectsId}/regions/{regionsId}/jobs/{jobsId}",
                   "httpMethod": "GET",
                   "id": "dataproc.projects.regions.jobs.get",
                   "parameterOrder": [
@@ -1346,23 +1368,26 @@
                     "jobId": {
                       "description": "Required. The job ID.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
                     "projectId": {
                       "description": "Required. The ID of the Google Cloud Platform project that the job belongs to.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
                     "region": {
                       "description": "Required. The Cloud Dataproc region in which to handle the request.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     }
                   },
-                  "path": "v1beta2/projects/{projectId}/regions/{region}/jobs/{jobId}",
+                  "path": "v1beta2/projects/{+projectId}/regions/{+region}/jobs/{+jobId}",
                   "response": {
                     "$ref": "Job"
                   },
@@ -1403,7 +1428,7 @@
                 },
                 "list": {
                   "description": "Lists regions/{region}/jobs in a project.",
-                  "flatPath": "v1beta2/projects/{projectId}/regions/{region}/jobs",
+                  "flatPath": "v1beta2/projects/{projectsId}/regions/{regionsId}/jobs",
                   "httpMethod": "GET",
                   "id": "dataproc.projects.regions.jobs.list",
                   "parameterOrder": [
@@ -1445,17 +1470,19 @@
                     "projectId": {
                       "description": "Required. The ID of the Google Cloud Platform project that the job belongs to.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
                     "region": {
                       "description": "Required. The Cloud Dataproc region in which to handle the request.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     }
                   },
-                  "path": "v1beta2/projects/{projectId}/regions/{region}/jobs",
+                  "path": "v1beta2/projects/{+projectId}/regions/{+region}/jobs",
                   "response": {
                     "$ref": "ListJobsResponse"
                   },
@@ -1465,7 +1492,7 @@
                 },
                 "patch": {
                   "description": "Updates a job in a project.",
-                  "flatPath": "v1beta2/projects/{projectId}/regions/{region}/jobs/{jobId}",
+                  "flatPath": "v1beta2/projects/{projectsId}/regions/{regionsId}/jobs/{jobsId}",
                   "httpMethod": "PATCH",
                   "id": "dataproc.projects.regions.jobs.patch",
                   "parameterOrder": [
@@ -1477,18 +1504,21 @@
                     "jobId": {
                       "description": "Required. The job ID.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
                     "projectId": {
                       "description": "Required. The ID of the Google Cloud Platform project that the job belongs to.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
                     "region": {
                       "description": "Required. The Cloud Dataproc region in which to handle the request.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
@@ -1499,7 +1529,7 @@
                       "type": "string"
                     }
                   },
-                  "path": "v1beta2/projects/{projectId}/regions/{region}/jobs/{jobId}",
+                  "path": "v1beta2/projects/{+projectId}/regions/{+region}/jobs/{+jobId}",
                   "request": {
                     "$ref": "Job"
                   },
@@ -1540,7 +1570,7 @@
                 },
                 "submit": {
                   "description": "Submits a job to a cluster.",
-                  "flatPath": "v1beta2/projects/{projectId}/regions/{region}/jobs:submit",
+                  "flatPath": "v1beta2/projects/{projectsId}/regions/{regionsId}/jobs:submit",
                   "httpMethod": "POST",
                   "id": "dataproc.projects.regions.jobs.submit",
                   "parameterOrder": [
@@ -1551,17 +1581,19 @@
                     "projectId": {
                       "description": "Required. The ID of the Google Cloud Platform project that the job belongs to.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     },
                     "region": {
                       "description": "Required. The Cloud Dataproc region in which to handle the request.",
                       "location": "path",
+                      "pattern": "^[^/]+$",
                       "required": true,
                       "type": "string"
                     }
                   },
-                  "path": "v1beta2/projects/{projectId}/regions/{region}/jobs:submit",
+                  "path": "v1beta2/projects/{+projectId}/regions/{+region}/jobs:submit",
                   "request": {
                     "$ref": "SubmitJobRequest"
                   },
@@ -2125,7 +2157,7 @@
       }
     }
   },
-  "revision": "20191031",
+  "revision": "20191120",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2931,12 +2963,10 @@
           "type": "string"
         },
         "hadoopJob": {
-          "$ref": "HadoopJob",
-          "description": "Job is a Hadoop job."
+          "$ref": "HadoopJob"
         },
         "hiveJob": {
-          "$ref": "HiveJob",
-          "description": "Job is a Hive job."
+          "$ref": "HiveJob"
         },
         "jobUuid": {
           "description": "Output only. A UUID that uniquely identifies a job within the project over time. This is in contrast to a user-settable reference.job_id that may be reused over time.",
@@ -2950,20 +2980,17 @@
           "type": "object"
         },
         "pigJob": {
-          "$ref": "PigJob",
-          "description": "Job is a Pig job."
+          "$ref": "PigJob"
         },
         "placement": {
           "$ref": "JobPlacement",
           "description": "Required. Job information, including how, when, and where to run the job."
         },
         "prestoJob": {
-          "$ref": "PrestoJob",
-          "description": "Job is a Presto job"
+          "$ref": "PrestoJob"
         },
         "pysparkJob": {
-          "$ref": "PySparkJob",
-          "description": "Job is a Pyspark job."
+          "$ref": "PySparkJob"
         },
         "reference": {
           "$ref": "JobReference",
@@ -2974,16 +3001,13 @@
           "description": "Optional. Job scheduling configuration."
         },
         "sparkJob": {
-          "$ref": "SparkJob",
-          "description": "Job is a Spark job."
+          "$ref": "SparkJob"
         },
         "sparkRJob": {
-          "$ref": "SparkRJob",
-          "description": "Job is a SparkR job."
+          "$ref": "SparkRJob"
         },
         "sparkSqlJob": {
-          "$ref": "SparkSqlJob",
-          "description": "Job is a SparkSql job."
+          "$ref": "SparkSqlJob"
         },
         "status": {
           "$ref": "JobStatus",
@@ -3415,12 +3439,10 @@
       "id": "OrderedJob",
       "properties": {
         "hadoopJob": {
-          "$ref": "HadoopJob",
-          "description": "Job is a Hadoop job."
+          "$ref": "HadoopJob"
         },
         "hiveJob": {
-          "$ref": "HiveJob",
-          "description": "Job is a Hive job."
+          "$ref": "HiveJob"
         },
         "labels": {
           "additionalProperties": {
@@ -3430,8 +3452,7 @@
           "type": "object"
         },
         "pigJob": {
-          "$ref": "PigJob",
-          "description": "Job is a Pig job."
+          "$ref": "PigJob"
         },
         "prerequisiteStepIds": {
           "description": "Optional. The optional list of prerequisite job step_ids. If not specified, the job will start at the beginning of workflow.",
@@ -3441,20 +3462,17 @@
           "type": "array"
         },
         "pysparkJob": {
-          "$ref": "PySparkJob",
-          "description": "Job is a Pyspark job."
+          "$ref": "PySparkJob"
         },
         "scheduling": {
           "$ref": "JobScheduling",
           "description": "Optional. Job scheduling configuration."
         },
         "sparkJob": {
-          "$ref": "SparkJob",
-          "description": "Job is a Spark job."
+          "$ref": "SparkJob"
         },
         "sparkSqlJob": {
-          "$ref": "SparkSqlJob",
-          "description": "Job is a SparkSql job."
+          "$ref": "SparkSqlJob"
         },
         "stepId": {
           "description": "Required. The step id. The id must be unique among all jobs within the template.The step id is used as prefix for job id, as job goog-dataproc-workflow-step-id label, and in prerequisiteStepIds field from other steps.The id must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). Cannot begin or end with underscore or hyphen. Must consist of between 3 and 50 characters.",
@@ -3534,12 +3552,12 @@
           "type": "array"
         },
         "etag": {
-          "description": "etag is used for optimistic concurrency control as a way to help prevent simultaneous updates of a policy from overwriting each other. It is strongly suggested that systems make use of the etag in the read-modify-write cycle to perform policy updates in order to avoid race conditions: An etag is returned in the response to getIamPolicy, and systems are expected to put that etag in the request to setIamPolicy to ensure that their change will be applied to the same version of the policy.If no etag is provided in the call to setIamPolicy, then the existing policy is overwritten. Due to blind-set semantics of an etag-less policy, 'setIamPolicy' will not fail even if either of incoming or stored policy does not meet the version requirements.",
+          "description": "etag is used for optimistic concurrency control as a way to help prevent simultaneous updates of a policy from overwriting each other. It is strongly suggested that systems make use of the etag in the read-modify-write cycle to perform policy updates in order to avoid race conditions: An etag is returned in the response to getIamPolicy, and systems are expected to put that etag in the request to setIamPolicy to ensure that their change will be applied to the same version of the policy.If no etag is provided in the call to setIamPolicy, then the existing policy is overwritten. Due to blind-set semantics of an etag-less policy, 'setIamPolicy' will not fail even if the incoming policy version does not meet the requirements for modifying the stored policy.",
           "format": "byte",
           "type": "string"
         },
         "version": {
-          "description": "Specifies the format of the policy.Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected.Operations affecting conditional bindings must specify version 3. This can be either setting a conditional policy, modifying a conditional binding, or removing a conditional binding from the stored conditional policy. Operations on non-conditional policies may specify any valid value or leave the field unset.If no etag is provided in the call to setIamPolicy, any version compliance checks on the incoming and/or stored policy is skipped.",
+          "description": "Specifies the format of the policy.Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected.Operations affecting conditional bindings must specify version 3. This can be either setting a conditional policy, modifying a conditional binding, or removing a binding (conditional or unconditional) from the stored conditional policy. Operations on non-conditional policies may specify any valid value or leave the field unset.If no etag is provided in the call to setIamPolicy, version compliance checks against the stored policy is skipped.",
           "format": "int32",
           "type": "integer"
         }

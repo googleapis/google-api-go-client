@@ -830,21 +830,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "cloudbuild:v1alpha1",
-      "name": "cloudbuild",
-      "version": "v1alpha1",
-      "title": "Cloud Build API",
-      "description": "Creates and manages builds on Google Cloud Platform.",
-      "discoveryRestUrl": "https://cloudbuild.googleapis.com/$discovery/rest?version=v1alpha1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/cloud-build/docs/",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "cloudbuild:v1",
       "name": "cloudbuild",
       "version": "v1",

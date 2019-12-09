@@ -2550,7 +2550,7 @@ type Request struct {
 	Protocol string `json:"protocol,omitempty"`
 
 	// Query: The HTTP URL query in the format of
-	// `name1=value`&name2=value2`, as it
+	// `name1=value1&name2=value2`, as it
 	// appears in the first line of the HTTP request. No decoding is
 	// performed.
 	Query string `json:"query,omitempty"`
@@ -3028,7 +3028,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3190,7 +3190,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3349,7 +3349,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

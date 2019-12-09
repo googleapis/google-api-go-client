@@ -196,7 +196,7 @@
       }
     }
   },
-  "revision": "20191102",
+  "revision": "20191127",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -1490,7 +1490,7 @@
           "type": "string"
         },
         "query": {
-          "description": "The HTTP URL query in the format of `name1=value`\u0026name2=value2`, as it\nappears in the first line of the HTTP request. No decoding is performed.",
+          "description": "The HTTP URL query in the format of `name1=value1\u0026name2=value2`, as it\nappears in the first line of the HTTP request. No decoding is performed.",
           "type": "string"
         },
         "reason": {

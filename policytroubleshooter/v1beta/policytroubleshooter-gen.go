@@ -1128,7 +1128,7 @@ func (c *IamTroubleshootCall) Header() http.Header {
 
 func (c *IamTroubleshootCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

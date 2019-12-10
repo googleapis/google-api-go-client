@@ -430,6 +430,38 @@ type Binding struct {
 	// group.
 	//    For example, `admins@example.com`.
 	//
+	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique
+	//    identifier) representing a user that has been recently deleted.
+	// For
+	//    example, `alice@example.com?uid=123456789012345678901`. If the
+	// user is
+	//    recovered, this value reverts to `user:{emailid}` and the
+	// recovered user
+	//    retains the role in the binding.
+	//
+	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus
+	//    unique identifier) representing a service account that has been
+	// recently
+	//    deleted. For example,
+	//
+	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
+	//
+	//    If the service account is undeleted, this value reverts to
+	//    `serviceAccount:{emailid}` and the undeleted service account
+	// retains the
+	//    role in the binding.
+	//
+	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique
+	//    identifier) representing a Google group that has been recently
+	//    deleted. For example,
+	// `admins@example.com?uid=123456789012345678901`. If
+	//    the group is recovered, this value reverts to `group:{emailid}`
+	// and the
+	//    recovered group retains the role in the binding.
+	//
 	//
 	// * `domain:{domain}`: The G Suite domain (primary) that represents all
 	// the
@@ -538,9 +570,9 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// IamPolicy: Defines an Identity and Access Management (IAM) policy. It
-// is used to
-// specify access control policies for Cloud Platform resources.
+// IamPolicy: An Identity and Access Management (IAM) policy, which
+// specifies access
+// controls for Google Cloud resources.
 //
 //
 // A `Policy` is a collection of `bindings`. A `binding` binds one or
@@ -549,15 +581,19 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // accounts,
 // Google groups, and domains (such as G Suite). A `role` is a named
 // list of
-// permissions (defined by IAM or configured by users). A `binding`
-// can
-// optionally specify a `condition`, which is a logic expression that
-// further
-// constrains the role binding based on attributes about the request
-// and/or
-// target resource.
+// permissions; each `role` can be an IAM predefined role or a
+// user-created
+// custom role.
 //
-// **JSON Example**
+// Optionally, a `binding` can specify a `condition`, which is a
+// logical
+// expression that allows access to a resource only if the expression
+// evaluates
+// to `true`. A condition can add constraints based on attributes of
+// the
+// request, the resource, or both.
+//
+// **JSON example:**
 //
 //     {
 //       "bindings": [
@@ -578,13 +614,15 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 //             "title": "expirable access",
 //             "description": "Does not grant access after Sep 2020",
 //             "expression": "request.time <
-//             timestamp('2020-10-01T00:00:00.000Z')",
+// timestamp('2020-10-01T00:00:00.000Z')",
 //           }
 //         }
-//       ]
+//       ],
+//       "etag": "BwWWja0YfJA=",
+//       "version": 3
 //     }
 //
-// **YAML Example**
+// **YAML example:**
 //
 //     bindings:
 //     - members:
@@ -601,14 +639,17 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 //         description: Does not grant access after Sep 2020
 //         expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z')
+//     - etag: BwWWja0YfJA=
+//     - version: 3
 //
 // For a description of IAM and its features, see the
-// [IAM developer's guide](https://cloud.google.com/iam/docs).
+// [IAM documentation](https://cloud.google.com/iam/docs/).
 type IamPolicy struct {
-	// Bindings: Associates a list of `members` to a `role`. Optionally may
+	// Bindings: Associates a list of `members` to a `role`. Optionally, may
 	// specify a
-	// `condition` that determines when binding is in effect.
-	// `bindings` with no members will result in an error.
+	// `condition` that determines how and when the `bindings` are applied.
+	// Each
+	// of the `bindings` must contain at least one member.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
@@ -626,35 +667,43 @@ type IamPolicy struct {
 	// ensure that their change will be applied to the same version of the
 	// policy.
 	//
-	// If no `etag` is provided in the call to `setIamPolicy`, then the
-	// existing
-	// policy is overwritten. Due to blind-set semantics of an etag-less
-	// policy,
-	// 'setIamPolicy' will not fail even if the incoming policy version does
-	// not
-	// meet the requirements for modifying the stored policy.
+	// **Important:** If you use IAM Conditions, you must include the `etag`
+	// field
+	// whenever you call `setIamPolicy`. If you omit this field, then IAM
+	// allows
+	// you to overwrite a version `3` policy with a version `1` policy, and
+	// all of
+	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
 
 	// Version: Specifies the format of the policy.
 	//
-	// Valid values are 0, 1, and 3. Requests specifying an invalid value
-	// will be
-	// rejected.
+	// Valid values are `0`, `1`, and `3`. Requests that specify an invalid
+	// value
+	// are rejected.
 	//
-	// Operations affecting conditional bindings must specify version 3.
-	// This can
-	// be either setting a conditional policy, modifying a conditional
-	// binding,
-	// or removing a binding (conditional or unconditional) from the
-	// stored
-	// conditional policy.
-	// Operations on non-conditional policies may specify any valid value
-	// or
-	// leave the field unset.
+	// Any operation that affects conditional role bindings must specify
+	// version
+	// `3`. This requirement applies to the following operations:
 	//
-	// If no etag is provided in the call to `setIamPolicy`, version
-	// compliance
-	// checks against the stored policy is skipped.
+	// * Getting a policy that includes a conditional role binding
+	// * Adding a conditional role binding to a policy
+	// * Changing a conditional role binding in a policy
+	// * Removing any role binding, with or without a condition, from a
+	// policy
+	//   that includes conditions
+	//
+	// **Important:** If you use IAM Conditions, you must include the `etag`
+	// field
+	// whenever you call `setIamPolicy`. If you omit this field, then IAM
+	// allows
+	// you to overwrite a version `3` policy with a version `1` policy, and
+	// all of
+	// the conditions in the version `3` policy are lost.
+	//
+	// If a policy does not include any conditions, operations on that
+	// policy may
+	// specify any valid version or leave the field unset.
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1118,7 +1167,7 @@ func (c *ProjectsGetPolicyCall) Header() http.Header {
 
 func (c *ProjectsGetPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1261,7 +1310,7 @@ func (c *ProjectsUpdatePolicyCall) Header() http.Header {
 
 func (c *ProjectsUpdatePolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1413,7 +1462,7 @@ func (c *ProjectsAttestorsCreateCall) Header() http.Header {
 
 func (c *ProjectsAttestorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1557,7 +1606,7 @@ func (c *ProjectsAttestorsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAttestorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1699,7 +1748,7 @@ func (c *ProjectsAttestorsGetCall) Header() http.Header {
 
 func (c *ProjectsAttestorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1864,7 +1913,7 @@ func (c *ProjectsAttestorsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsAttestorsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2034,7 +2083,7 @@ func (c *ProjectsAttestorsListCall) Header() http.Header {
 
 func (c *ProjectsAttestorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2206,7 +2255,7 @@ func (c *ProjectsAttestorsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsAttestorsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2356,7 +2405,7 @@ func (c *ProjectsAttestorsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsAttestorsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2497,7 +2546,7 @@ func (c *ProjectsAttestorsUpdateCall) Header() http.Header {
 
 func (c *ProjectsAttestorsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2667,7 +2716,7 @@ func (c *ProjectsPolicyGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsPolicyGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2813,7 +2862,7 @@ func (c *ProjectsPolicySetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsPolicySetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2963,7 +3012,7 @@ func (c *ProjectsPolicyTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsPolicyTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

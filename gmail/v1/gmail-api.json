@@ -41,7 +41,7 @@
   "description": "Access Gmail mailboxes including sending user email.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/gmail/api/",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/7RBBYvccF1QJjq3iXrIdhl59wfI\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/fhikrSCDL3XzY6nCDVa6bWLsHFU\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/googlemail-16.png",
     "x32": "https://www.google.com/images/icons/product/googlemail-32.png"
@@ -2556,7 +2556,7 @@
       }
     }
   },
-  "revision": "20190602",
+  "revision": "20191113",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AutoForwarding": {
@@ -3080,7 +3080,7 @@
       "id": "ListDraftsResponse",
       "properties": {
         "drafts": {
-          "description": "List of drafts.",
+          "description": "List of drafts. Note that the Message property in each Draft resource only contains an id and a threadId. The messages.get method can fetch additional message details.",
           "items": {
             "$ref": "Draft"
           },
@@ -3152,7 +3152,7 @@
       "id": "ListLabelsResponse",
       "properties": {
         "labels": {
-          "description": "List of labels.",
+          "description": "List of labels. Note that each label resource only contains an id, name, messageListVisibility, labelListVisibility, and type. The labels.get method can fetch additional label details.",
           "items": {
             "$ref": "Label"
           },

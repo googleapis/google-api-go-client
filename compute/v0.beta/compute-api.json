@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/3gO7MONLgiuE3J8_1AoqK9PsQCI\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/hKefFaV_EHeuWl56VWtayyiw33A\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -7750,6 +7750,11 @@
               "location": "query",
               "type": "string"
             },
+            "sourceMachineImage": {
+              "description": "Specifies instance machine to create the instance.\n\nThis field is optional. It can be a full or partial URL. For example, the following are all valid URLs to an instance template:  \n- https://www.googleapis.com/compute/v1/projects/project/global/global/machineImages/machineImage \n- projects/project/global/global/machineImages/machineImage \n- global/machineImages/machineImage",
+              "location": "query",
+              "type": "string"
+            },
             "zone": {
               "description": "The name of the zone for this request.",
               "location": "path",
@@ -10219,6 +10224,282 @@
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/compute"
+          ]
+        }
+      }
+    },
+    "machineImages": {
+      "methods": {
+        "delete": {
+          "description": "Deletes the specified machine image. Deleting a machine image is permanent and cannot be undone. (== suppress_warning http-rest-shadowed ==)",
+          "httpMethod": "DELETE",
+          "id": "compute.machineImages.delete",
+          "parameterOrder": [
+            "project",
+            "machineImage"
+          ],
+          "parameters": {
+            "machineImage": {
+              "description": "The name of the machine image to delete.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/machineImages/{machineImage}",
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "get": {
+          "description": "Returns the specified machine image. Gets a list of available machine images by making a list() request. (== suppress_warning http-rest-shadowed ==)",
+          "httpMethod": "GET",
+          "id": "compute.machineImages.get",
+          "parameterOrder": [
+            "project",
+            "machineImage"
+          ],
+          "parameters": {
+            "machineImage": {
+              "description": "The name of the machine image.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/machineImages/{machineImage}",
+          "response": {
+            "$ref": "MachineImage"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "getIamPolicy": {
+          "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists. (== suppress_warning http-rest-shadowed ==)",
+          "httpMethod": "GET",
+          "id": "compute.machineImages.getIamPolicy",
+          "parameterOrder": [
+            "project",
+            "resource"
+          ],
+          "parameters": {
+            "optionsRequestedPolicyVersion": {
+              "description": "Requested IAM Policy version.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/machineImages/{resource}/getIamPolicy",
+          "response": {
+            "$ref": "Policy"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "insert": {
+          "description": "Creates a machine image in the specified project using the data that is included in the request. If you are creating a new machine image to update an existing instance, your new machine image should use the same network or, if applicable, the same subnetwork as the original instance. (== suppress_warning http-rest-shadowed ==)",
+          "httpMethod": "POST",
+          "id": "compute.machineImages.insert",
+          "parameterOrder": [
+            "project"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            },
+            "sourceInstance": {
+              "description": "Required. Source instance that is used to create the machine image from.",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/machineImages",
+          "request": {
+            "$ref": "MachineImage"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "list": {
+          "description": "Retrieves a list of machine images that are contained within the specified project. (== suppress_warning http-rest-shadowed ==)",
+          "httpMethod": "GET",
+          "id": "compute.machineImages.list",
+          "parameterOrder": [
+            "project"
+          ],
+          "parameters": {
+            "filter": {
+              "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
+              "location": "query",
+              "type": "string"
+            },
+            "maxResults": {
+              "default": "500",
+              "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+              "format": "uint32",
+              "location": "query",
+              "minimum": "0",
+              "type": "integer"
+            },
+            "orderBy": {
+              "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+              "location": "query",
+              "type": "string"
+            },
+            "pageToken": {
+              "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+              "location": "query",
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/machineImages",
+          "response": {
+            "$ref": "MachineImageList"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "setIamPolicy": {
+          "description": "Sets the access control policy on the specified resource. Replaces any existing policy. (== suppress_warning http-rest-shadowed ==)",
+          "httpMethod": "POST",
+          "id": "compute.machineImages.setIamPolicy",
+          "parameterOrder": [
+            "project",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/machineImages/{resource}/setIamPolicy",
+          "request": {
+            "$ref": "GlobalSetPolicyRequest"
+          },
+          "response": {
+            "$ref": "Policy"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource. (== suppress_warning http-rest-shadowed ==)",
+          "httpMethod": "POST",
+          "id": "compute.machineImages.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/machineImages/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
           ]
         }
       }
@@ -24690,7 +24971,7 @@
       }
     }
   },
-  "revision": "20191014",
+  "revision": "20191025",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -25968,7 +26249,7 @@
           "type": "string"
         },
         "status": {
-          "description": "[Output Only] The status of the autoscaler configuration. Current set of possible values: PENDING: Autoscaler backend hasn't read new/updated configuration DELETING: Configuration is being deleted ACTIVE: Configuration is acknowledged to be effective. Some warnings might or might not be present in the status_details field. ERROR: Configuration has errors. Actionable for users. Details are present in the status_details field. New values might be added in the future.",
+          "description": "[Output Only] The status of the autoscaler configuration. Current set of possible values:  \n- PENDING: Autoscaler backend hasn't read new/updated configuration. \n- DELETING: Configuration is being deleted. \n- ACTIVE: Configuration is acknowledged to be effective. Some warnings might be present in the statusDetails field. \n- ERROR: Configuration has errors. Actionable for users. Details are present in the statusDetails field.  New values might be added in the future.",
           "enum": [
             "ACTIVE",
             "DELETING",
@@ -26233,7 +26514,7 @@
           "type": "string"
         },
         "type": {
-          "description": "The type of error, warning or notice returned. Current set of possible values: ALL_INSTANCES_UNHEALTHY (WARNING): All instances in the instance group are unhealthy (not in RUNNING state). BACKEND_SERVICE_DOES_NOT_EXIST (ERROR): There is no backend service attached to the instance group. CAPPED_AT_MAX_NUM_REPLICAS (WARNING): Autoscaler recommends size bigger than maxNumReplicas. CUSTOM_METRIC_DATA_POINTS_TOO_SPARSE (WARNING): The custom metric samples are not exported often enough to be a credible base for autoscaling. CUSTOM_METRIC_INVALID (ERROR): The custom metric that was specified does not exist or does not have the necessary labels. MIN_EQUALS_MAX (WARNING): The minNumReplicas is equal to maxNumReplicas. This means the autoscaler cannot add or remove instances from the instance group. MISSING_CUSTOM_METRIC_DATA_POINTS (WARNING): The autoscaler did not receive any data from the custom metric configured for autoscaling. MISSING_LOAD_BALANCING_DATA_POINTS (WARNING): The autoscaler is configured to scale based on a load balancing signal but the instance group has not received any requests from the load balancer. MODE_OFF (WARNING): Autoscaling is turned off. The number of instances in the group won't change automatically. The autoscaling configuration is preserved. MODE_ONLY_UP (WARNING): Autoscaling is in the \"Autoscale only up\" mode. Instances in the group will be only added. MORE_THAN_ONE_BACKEND_SERVICE (ERROR): The instance group cannot be autoscaled because it has more than one backend service attached to it. NOT_ENOUGH_QUOTA_AVAILABLE (ERROR): Exceeded quota for necessary resources, such as CPU, number of instances and so on. REGION_RESOURCE_STOCKOUT (ERROR): Showed only for regional autoscalers: there is a resource stockout in the chosen region. SCALING_TARGET_DOES_NOT_EXIST (ERROR): The target to be scaled does not exist. UNSUPPORTED_MAX_RATE_LOAD_BALANCING_CONFIGURATION (ERROR): Autoscaling does not work with an HTTP/S load balancer that has been configured for maxRate. ZONE_RESOURCE_STOCKOUT (ERROR): For zonal autoscalers: there is a resource stockout in the chosen zone. For regional autoscalers: in at least one of the zones you're using there is a resource stockout. New values might be added in the future. Some of the values might not be available in all API versions.",
+          "description": "The type of error, warning, or notice returned. Current set of possible values:  \n- ALL_INSTANCES_UNHEALTHY (WARNING): All instances in the instance group are unhealthy (not in RUNNING state). \n- BACKEND_SERVICE_DOES_NOT_EXIST (ERROR): There is no backend service attached to the instance group. \n- CAPPED_AT_MAX_NUM_REPLICAS (WARNING): Autoscaler recommends a size greater than maxNumReplicas. \n- CUSTOM_METRIC_DATA_POINTS_TOO_SPARSE (WARNING): The custom metric samples are not exported often enough to be a credible base for autoscaling. \n- CUSTOM_METRIC_INVALID (ERROR): The custom metric that was specified does not exist or does not have the necessary labels. \n- MIN_EQUALS_MAX (WARNING): The minNumReplicas is equal to maxNumReplicas. This means the autoscaler cannot add or remove instances from the instance group. \n- MISSING_CUSTOM_METRIC_DATA_POINTS (WARNING): The autoscaler did not receive any data from the custom metric configured for autoscaling. \n- MISSING_LOAD_BALANCING_DATA_POINTS (WARNING): The autoscaler is configured to scale based on a load balancing signal but the instance group has not received any requests from the load balancer. \n- MODE_OFF (WARNING): Autoscaling is turned off. The number of instances in the group won't change automatically. The autoscaling configuration is preserved. \n- MODE_ONLY_UP (WARNING): Autoscaling is in the \"Autoscale only up\" mode. The autoscaler can add instances but not remove any. \n- MORE_THAN_ONE_BACKEND_SERVICE (ERROR): The instance group cannot be autoscaled because it has more than one backend service attached to it. \n- NOT_ENOUGH_QUOTA_AVAILABLE (ERROR): There is insufficient quota for the necessary resources, such as CPU or number of instances. \n- REGION_RESOURCE_STOCKOUT (ERROR): Shown only for regional autoscalers: there is a resource stockout in the chosen region. \n- SCALING_TARGET_DOES_NOT_EXIST (ERROR): The target to be scaled does not exist. \n- UNSUPPORTED_MAX_RATE_LOAD_BALANCING_CONFIGURATION (ERROR): Autoscaling does not work with an HTTP/S load balancer that has been configured for maxRate. \n- ZONE_RESOURCE_STOCKOUT (ERROR): For zonal autoscalers: there is a resource stockout in the chosen zone. For regional autoscalers: in at least one of the zones you're using there is a resource stockout.  New values might be added in the future. Some of the values might not be available in all API versions.",
           "enum": [
             "ALL_INSTANCES_UNHEALTHY",
             "BACKEND_SERVICE_DOES_NOT_EXIST",
@@ -28341,7 +28622,7 @@
           "type": "string"
         },
         "kmsKeyServiceAccount": {
-          "description": "The service account being used for the encryption request for the given KMS key. If absent, default GCE compute robot account will be used",
+          "description": "The service account being used for the encryption request for the given KMS key. If absent, the Compute Engine default service account is used.",
           "type": "string"
         },
         "rawKey": {
@@ -28427,6 +28708,10 @@
         "diskEncryptionKey": {
           "$ref": "CustomerEncryptionKey",
           "description": "Encrypts the disk using a customer-supplied encryption key.\n\nAfter you encrypt a disk with a customer-supplied key, you must provide the same key if you use the disk later (e.g. to create a disk snapshot, to create a disk image, to create a machine image, or to attach the disk to a virtual machine).\n\nCustomer-supplied encryption keys do not protect access to metadata of the disk.\n\nIf you do not provide an encryption key when creating the disk, then the disk will be encrypted using an automatically generated key and you do not need to provide a key to use the disk later."
+        },
+        "eraseWindowsVssSignature": {
+          "description": "Specifies whether the disk restored from a source snapshot should erase Windows specific VSS signature.",
+          "type": "boolean"
         },
         "guestOsFeatures": {
           "description": "A list of features to enable on the guest operating system. Applicable only for bootable images. Read  Enabling guest operating system features to see a list of available options.",
@@ -32468,6 +32753,10 @@
           "$ref": "DisplayDevice",
           "description": "Enables display device for the instance."
         },
+        "eraseWindowsVssSignature": {
+          "description": "Specifies whether the disks restored from source snapshots or source machine image should erase Windows specific VSS signature.",
+          "type": "boolean"
+        },
         "guestAccelerators": {
           "description": "A list of the type and count of accelerator cards attached to the instance.",
           "items": {
@@ -32565,6 +32854,14 @@
         },
         "shieldedVmIntegrityPolicy": {
           "$ref": "ShieldedVmIntegrityPolicy"
+        },
+        "sourceMachineImage": {
+          "description": "Source machine image",
+          "type": "string"
+        },
+        "sourceMachineImageEncryptionKey": {
+          "$ref": "CustomerEncryptionKey",
+          "description": "Source GMI encryption key when creating an instance from GMI."
         },
         "startRestricted": {
           "description": "[Output Only] Whether a VM has been restricted for start because Compute Engine has detected suspicious activity.",
@@ -36525,6 +36822,210 @@
       },
       "type": "object"
     },
+    "MachineImage": {
+      "description": "Machine image resource.",
+      "id": "MachineImage",
+      "properties": {
+        "creationTimestamp": {
+          "description": "[Output Only] The creation timestamp for this machine image in RFC3339 text format.",
+          "type": "string"
+        },
+        "description": {
+          "description": "An optional description of this resource. Provide this property when you create the resource.",
+          "type": "string"
+        },
+        "guestFlush": {
+          "description": "[Input Only] Specifies to create an application consistent machine image by informing the OS to prepare for the snapshot process. Currently only supported on Windows instances using the Volume Shadow Copy Service (VSS).",
+          "type": "boolean"
+        },
+        "id": {
+          "description": "[Output Only] A unique identifier for this machine image. The server defines this identifier.",
+          "format": "uint64",
+          "type": "string"
+        },
+        "kind": {
+          "default": "compute#machineImage",
+          "description": "[Output Only] The resource type, which is always compute#machineImage for machine image.",
+          "type": "string"
+        },
+        "machineImageEncryptionKey": {
+          "$ref": "CustomerEncryptionKey",
+          "description": "Encrypts the machine image using a customer-supplied encryption key.\n\nAfter you encrypt a machine image using a customer-supplied key, you must provide the same key if you use the machine image later. For example, you must provide the encryption key when you create an instance from the encrypted machine image in a future request.\n\nCustomer-supplied encryption keys do not protect access to metadata of the machine image.\n\nIf you do not provide an encryption key when creating the machine image, then the machine image will be encrypted using an automatically generated key and you do not need to provide a key to use the machine image later."
+        },
+        "name": {
+          "annotations": {
+            "required": [
+              "compute.machineImages.insert"
+            ]
+          },
+          "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+          "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+          "type": "string"
+        },
+        "selfLink": {
+          "description": "[Output Only] The URL for this machine image. The server defines this URL.",
+          "type": "string"
+        },
+        "sourceDiskEncryptionKeys": {
+          "description": "[Input Only] The customer-supplied encryption key of the disks attached to the source instance. Required if the source disk is protected by a customer-supplied encryption key.",
+          "items": {
+            "$ref": "SourceDiskEncryptionKey"
+          },
+          "type": "array"
+        },
+        "sourceInstance": {
+          "description": "The source instance used to create the machine image. You can provide this as a partial or full URL to the resource. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/instance \n- projects/project/zones/zone/instances/instance",
+          "type": "string"
+        },
+        "sourceInstanceProperties": {
+          "$ref": "SourceInstanceProperties",
+          "description": "[Output Only] Properties of source instance."
+        },
+        "status": {
+          "description": "[Output Only] The status of the machine image. One of the following values: INVALID, CREATING, READY, DELETING, and UPLOADING.",
+          "enum": [
+            "CREATING",
+            "DELETING",
+            "INVALID",
+            "READY",
+            "UPLOADING"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "storageLocations": {
+          "description": "GCS bucket storage location of the machine image (regional or multi-regional).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "totalStorageBytes": {
+          "description": "[Output Only] Total size of the storage used by the machine image.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "MachineImageList": {
+      "description": "A list of machine images.",
+      "id": "MachineImageList",
+      "properties": {
+        "id": {
+          "description": "[Output Only] Unique identifier for the resource; defined by the server.",
+          "type": "string"
+        },
+        "items": {
+          "description": "A list of MachineImage resources.",
+          "items": {
+            "$ref": "MachineImage"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "default": "compute#machineImageList",
+          "description": "[Output Only] The resource type, which is always compute#machineImagesListResponse for machine image lists.",
+          "type": "string"
+        },
+        "nextPageToken": {
+          "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.",
+          "type": "string"
+        },
+        "selfLink": {
+          "description": "[Output Only] Server-defined URL for this resource.",
+          "type": "string"
+        },
+        "warning": {
+          "description": "[Output Only] Informational warning message.",
+          "properties": {
+            "code": {
+              "description": "[Output Only] A warning code, if applicable. For example, Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in the response.",
+              "enum": [
+                "CLEANUP_FAILED",
+                "DEPRECATED_RESOURCE_USED",
+                "DEPRECATED_TYPE_USED",
+                "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
+                "EXPERIMENTAL_TYPE_USED",
+                "EXTERNAL_API_WARNING",
+                "FIELD_VALUE_OVERRIDEN",
+                "INJECTED_KERNELS_DEPRECATED",
+                "MISSING_TYPE_DEPENDENCY",
+                "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
+                "NEXT_HOP_CANNOT_IP_FORWARD",
+                "NEXT_HOP_INSTANCE_NOT_FOUND",
+                "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
+                "NEXT_HOP_NOT_RUNNING",
+                "NOT_CRITICAL_ERROR",
+                "NO_RESULTS_ON_PAGE",
+                "REQUIRED_TOS_AGREEMENT",
+                "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
+                "RESOURCE_NOT_DELETED",
+                "SCHEMA_VALIDATION_IGNORED",
+                "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
+                "UNDECLARED_PROPERTIES",
+                "UNREACHABLE"
+              ],
+              "enumDescriptions": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "type": "string"
+            },
+            "data": {
+              "description": "[Output Only] Metadata about this warning in key: value format. For example:\n\"data\": [ { \"key\": \"scope\", \"value\": \"zones/us-east1-d\" }",
+              "items": {
+                "properties": {
+                  "key": {
+                    "description": "[Output Only] A key that provides more detail on the warning being returned. For example, for warnings where there are no results in a list request for a particular zone, this key might be scope and the key value might be the zone name. Other examples might be a key indicating a deprecated resource and a suggested replacement, or a warning about invalid network settings (for example, if an instance attempts to perform IP forwarding but is not enabled for IP forwarding).",
+                    "type": "string"
+                  },
+                  "value": {
+                    "description": "[Output Only] A warning data value corresponding to the key.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "message": {
+              "description": "[Output Only] A human-readable description of the warning code.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
     "MachineType": {
       "description": "Represents a Machine Type resource.\n\nYou can use specific machine types for your VM instances based on performance and pricing requirements. For more information, read Machine Types. (== resource_for v1.machineTypes ==) (== resource_for beta.machineTypes ==)",
       "id": "MachineType",
@@ -37863,6 +38364,10 @@
         "fingerprint": {
           "description": "Fingerprint hash of contents stored in this network interface. This field will be ignored when inserting an Instance or adding a NetworkInterface. An up-to-date fingerprint must be provided in order to update the NetworkInterface, otherwise the request will fail with error 412 conditionNotMet.",
           "format": "byte",
+          "type": "string"
+        },
+        "ipv6Address": {
+          "description": "[Output Only] An IPv6 internal network address for this network interface.",
           "type": "string"
         },
         "kind": {
@@ -40037,7 +40542,7 @@
         },
         "interval": {
           "$ref": "Duration",
-          "description": "Time interval between ejection sweep analysis. This can result in both new ejections as well as hosts being returned to service. Defaults to 1 seconds."
+          "description": "Time interval between ejection analysis sweeps. This can result in both new ejections as well as hosts being returned to service. Defaults to 1 second."
         },
         "maxEjectionPercent": {
           "description": "Maximum percentage of hosts in the load balancing pool for the backend service that can be ejected. Defaults to 50%.",
@@ -40967,6 +41472,7 @@
             "IN_USE_BACKUP_SCHEDULES",
             "IN_USE_SNAPSHOT_SCHEDULES",
             "LOCAL_SSD_TOTAL_GB",
+            "MACHINE_IMAGES",
             "N2_CPUS",
             "NETWORKS",
             "NETWORK_ENDPOINT_GROUPS",
@@ -40988,6 +41494,7 @@
             "PREEMPTIBLE_NVIDIA_T4_GPUS",
             "PREEMPTIBLE_NVIDIA_T4_VWS_GPUS",
             "PREEMPTIBLE_NVIDIA_V100_GPUS",
+            "PRIVATE_V6_ACCESS_SUBNETWORKS",
             "REGIONAL_AUTOSCALERS",
             "REGIONAL_INSTANCE_GROUP_MANAGERS",
             "RESERVATIONS",
@@ -40995,6 +41502,7 @@
             "ROUTERS",
             "ROUTES",
             "SECURITY_POLICIES",
+            "SECURITY_POLICY_CEVAL_RULES",
             "SECURITY_POLICY_RULES",
             "SNAPSHOTS",
             "SSD_TOTAL_GB",
@@ -41013,6 +41521,9 @@
             "VPN_TUNNELS"
           ],
           "enumDescriptions": [
+            "",
+            "",
+            "",
             "",
             "",
             "",
@@ -44615,6 +45126,115 @@
       },
       "type": "object"
     },
+    "SavedAttachedDisk": {
+      "description": "An instance-attached disk resource.",
+      "id": "SavedAttachedDisk",
+      "properties": {
+        "autoDelete": {
+          "description": "Specifies whether the disk will be auto-deleted when the instance is deleted (but not when the disk is detached from the instance).",
+          "type": "boolean"
+        },
+        "boot": {
+          "description": "Indicates that this is a boot disk. The virtual machine will use the first partition of the disk for its root filesystem.",
+          "type": "boolean"
+        },
+        "deviceName": {
+          "description": "Specifies the name of the disk attached to the source instance.",
+          "type": "string"
+        },
+        "diskEncryptionKey": {
+          "$ref": "CustomerEncryptionKey",
+          "description": "The encryption key for the disk."
+        },
+        "diskSizeGb": {
+          "description": "The size of the disk in base-2 GB.",
+          "format": "int64",
+          "type": "string"
+        },
+        "guestOsFeatures": {
+          "description": "A list of features to enable on the guest operating system. Applicable only for bootable images. Read  Enabling guest operating system features to see a list of available options.",
+          "items": {
+            "$ref": "GuestOsFeature"
+          },
+          "type": "array"
+        },
+        "index": {
+          "description": "Specifies zero-based index of the disk that is attached to the source instance.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "interface": {
+          "description": "Specifies the disk interface to use for attaching this disk, which is either SCSI or NVME.",
+          "enum": [
+            "NVME",
+            "SCSI"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "kind": {
+          "default": "compute#savedAttachedDisk",
+          "description": "[Output Only] Type of the resource. Always compute#attachedDisk for attached disks.",
+          "type": "string"
+        },
+        "licenses": {
+          "description": "[Output Only] Any valid publicly visible licenses.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "mode": {
+          "description": "The mode in which this disk is attached to the source instance, either READ_WRITE or READ_ONLY.",
+          "enum": [
+            "READ_ONLY",
+            "READ_WRITE"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "source": {
+          "description": "Specifies a URL of the disk attached to the source instance.",
+          "type": "string"
+        },
+        "storageBytes": {
+          "description": "[Output Only] A size of the storage used by the disk's snapshot by this machine image.",
+          "format": "int64",
+          "type": "string"
+        },
+        "storageBytesStatus": {
+          "description": "[Output Only] An indicator whether storageBytes is in a stable state or it is being adjusted as a result of shared storage reallocation. This status can either be UPDATING, meaning the size of the snapshot is being updated, or UP_TO_DATE, meaning the size of the snapshot is up-to-date.",
+          "enum": [
+            "UPDATING",
+            "UP_TO_DATE"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "type": {
+          "description": "Specifies the type of the attached disk, either SCRATCH or PERSISTENT.",
+          "enum": [
+            "PERSISTENT",
+            "SCRATCH"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Scheduling": {
       "description": "Sets the scheduling options for an Instance. NextID: 9",
       "id": "Scheduling",
@@ -45162,7 +45782,7 @@
       "id": "Snapshot",
       "properties": {
         "autoCreated": {
-          "description": "[Output Only] Set to true if snapshots are automatically by applying resource policy on the target disk.",
+          "description": "[Output Only] Set to true if snapshots are automatically created by applying resource policy on the target disk.",
           "type": "boolean"
         },
         "creationTimestamp": {
@@ -45397,6 +46017,20 @@
       },
       "type": "object"
     },
+    "SourceDiskEncryptionKey": {
+      "id": "SourceDiskEncryptionKey",
+      "properties": {
+        "diskEncryptionKey": {
+          "$ref": "CustomerEncryptionKey",
+          "description": "The customer-supplied encryption key of the source disk. Required if the source disk is protected by a customer-supplied encryption key."
+        },
+        "sourceDisk": {
+          "description": "URL of the disk attached to the source instance. This can be a full or valid partial URL. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/disks/disk \n- projects/project/zones/zone/disks/disk \n- zones/zone/disks/disk",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "SourceInstanceParams": {
       "description": "A specification of the parameters to use when creating the instance template from a source instance.",
       "id": "SourceInstanceParams",
@@ -45407,6 +46041,80 @@
             "$ref": "DiskInstantiationConfig"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SourceInstanceProperties": {
+      "description": "",
+      "id": "SourceInstanceProperties",
+      "properties": {
+        "canIpForward": {
+          "description": "Enables instances created based on this machine image to send packets with source IP addresses other than their own and receive packets with destination IP addresses other than their own. If these instances will be used as an IP gateway or it will be set as the next-hop in a Route resource, specify true. If unsure, leave this set to false. See the Enable IP forwarding documentation for more information.",
+          "type": "boolean"
+        },
+        "deletionProtection": {
+          "description": "Whether the instance created from this machine image should be protected against deletion.",
+          "type": "boolean"
+        },
+        "description": {
+          "description": "An optional text description for the instances that are created from this machine image.",
+          "type": "string"
+        },
+        "disks": {
+          "description": "An array of disks that are associated with the instances that are created from this machine image.",
+          "items": {
+            "$ref": "SavedAttachedDisk"
+          },
+          "type": "array"
+        },
+        "guestAccelerators": {
+          "description": "A list of guest accelerator cards' type and count to use for instances created from this machine image.",
+          "items": {
+            "$ref": "AcceleratorConfig"
+          },
+          "type": "array"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Labels to apply to instances that are created from this machine image.",
+          "type": "object"
+        },
+        "machineType": {
+          "description": "The machine type to use for instances that are created from this machine image.",
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "Metadata",
+          "description": "The metadata key/value pairs to assign to instances that are created from this machine image. These pairs can consist of custom metadata or predefined keys. See Project and instance metadata for more information."
+        },
+        "minCpuPlatform": {
+          "description": "Minimum cpu/platform to be used by instances created from this machine image. The instance may be scheduled on the specified or newer cpu/platform. Applicable values are the friendly names of CPU platforms, such as minCpuPlatform: \"Intel Haswell\" or minCpuPlatform: \"Intel Sandy Bridge\". For more information, read Specifying a Minimum CPU Platform.",
+          "type": "string"
+        },
+        "networkInterfaces": {
+          "description": "An array of network access configurations for this interface.",
+          "items": {
+            "$ref": "NetworkInterface"
+          },
+          "type": "array"
+        },
+        "scheduling": {
+          "$ref": "Scheduling",
+          "description": "Specifies the scheduling options for the instances that are created from this machine image."
+        },
+        "serviceAccounts": {
+          "description": "A list of service accounts with specified scopes. Access tokens for these service accounts are available to the instances that are created from this machine image. Use metadata queries to obtain the access tokens for these instances.",
+          "items": {
+            "$ref": "ServiceAccount"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "$ref": "Tags",
+          "description": "A list of tags to apply to the instances that are created from this machine image. The tags identify valid sources or targets for network firewalls. The setTags method can modify this list of tags. Each tag within the list must comply with RFC1035."
         }
       },
       "type": "object"
@@ -46220,6 +46928,10 @@
           "description": "The range of internal addresses that are owned by this subnetwork. Provide this property when you create the subnetwork. For example, 10.0.0.0/8 or 192.168.0.0/16. Ranges must be unique and non-overlapping within a network. Only IPv4 is supported. This field can be set only at resource creation time.",
           "type": "string"
         },
+        "ipv6CidrRange": {
+          "description": "[Output Only] The range of internal IPv6 addresses that are owned by this subnetwork.",
+          "type": "string"
+        },
         "kind": {
           "default": "compute#subnetwork",
           "description": "[Output Only] Type of the resource. Always compute#subnetwork for Subnetwork resources.",
@@ -46241,6 +46953,29 @@
         "privateIpGoogleAccess": {
           "description": "Whether the VMs in this subnet can access Google services without assigned external IP addresses. This field can be both set at resource creation time and updated using setPrivateIpGoogleAccess.",
           "type": "boolean"
+        },
+        "privateIpv6GoogleAccess": {
+          "description": "The private IPv6 google access type for the VMs in this subnet. This is an expanded field of enablePrivateV6Access. If both fields are set, privateIpv6GoogleAccess will take priority.\n\nThis field can be both set at resource creation time and updated using patch.",
+          "enum": [
+            "DISABLE_GOOGLE_ACCESS",
+            "ENABLE_BIDIRECTIONAL_ACCESS_TO_GOOGLE",
+            "ENABLE_OUTBOUND_VM_ACCESS_TO_GOOGLE",
+            "ENABLE_OUTBOUND_VM_ACCESS_TO_GOOGLE_FOR_SERVICE_ACCOUNTS"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "privateIpv6GoogleAccessServiceAccounts": {
+          "description": "The service accounts can be used to selectively turn on Private IPv6 Google Access only on the VMs primary service account matching the value. This value only takes effect when PrivateIpv6GoogleAccess is ENABLE_OUTBOUND_VM_ACCESS_TO_GOOGLE_FOR_SERVICE_ACCOUNTS or ENABLE_BIDIRECTIONAL_ACCESS_TO_GOOGLE_FOR_SERVICE_ACCOUNTS.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "purpose": {
           "description": "The purpose of the resource. This field can be either PRIVATE_RFC_1918 or INTERNAL_HTTPS_LOAD_BALANCER. A subnetwork with purpose set to INTERNAL_HTTPS_LOAD_BALANCER is a user-created subnetwork that is reserved for Internal HTTP(S) Load Balancing. If unspecified, the purpose defaults to PRIVATE_RFC_1918.",

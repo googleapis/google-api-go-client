@@ -15,7 +15,7 @@
   "description": "Manages the deployment of apps to Android for Work users.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android/work/play/emm-api",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/L-AhGJhsmFZsxcYEJTVEcsxDLzA\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/nIj-cDXtx1hU_8az-yGj3W3cw8Y\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2919,7 +2919,7 @@
       }
     }
   },
-  "revision": "20190908",
+  "revision": "20191201",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Administrator": {
@@ -3286,7 +3286,7 @@
           "type": "integer"
         },
         "minimumVersionCode": {
-          "description": "The minimum version of the app. If a lower version of the app is installed, then the app will be auto-updated according to the auto-install constraints, instead of waiting for the regular auto-update.",
+          "description": "The minimum version of the app. If a lower version of the app is installed, then the app will be auto-updated according to the auto-install constraints, instead of waiting for the regular auto-update. You can set a minimum version code for at most 20 apps per device.",
           "format": "int32",
           "type": "integer"
         }

@@ -1942,7 +1942,7 @@ func (s *Locale) MarshalJSON() ([]byte, error) {
 type ManualSharding struct {
 	// TestTargetsForShard: Required. Group of packages, classes, and/or
 	// test methods to be run for
-	// each shard. The number of shard_test_targets must be > 1, and <= 50.
+	// each shard. The number of shard_test_targets must be >= 1 and <= 50.
 	TestTargetsForShard []*TestTargetsForShard `json:"testTargetsForShard,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TestTargetsForShard")
@@ -3230,7 +3230,7 @@ func (s *TrafficRule) UnmarshalJSON(data []byte) error {
 // specifying these sharding arguments via environment_variables is
 // invalid.
 type UniformSharding struct {
-	// NumShards: Required. Total number of shards. The number must be > 1,
+	// NumShards: Required. Total number of shards. The number must be >= 1
 	// and <= 50.
 	NumShards int64 `json:"numShards,omitempty"`
 
@@ -3335,7 +3335,7 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Header() http.Header {
 
 func (c *ApplicationDetailServiceGetApkDetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3472,7 +3472,7 @@ func (c *ProjectsTestMatricesCancelCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3635,7 +3635,7 @@ func (c *ProjectsTestMatricesCreateCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3796,7 +3796,7 @@ func (c *ProjectsTestMatricesGetCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3961,7 +3961,7 @@ func (c *TestEnvironmentCatalogGetCall) Header() http.Header {
 
 func (c *TestEnvironmentCatalogGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

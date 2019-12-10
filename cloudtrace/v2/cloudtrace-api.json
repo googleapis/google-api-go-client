@@ -180,7 +180,7 @@
       }
     }
   },
-  "revision": "20190917",
+  "revision": "20191202",
   "rootUrl": "https://cloudtrace.googleapis.com/",
   "schemas": {
     "Annotation": {
@@ -375,10 +375,10 @@
         },
         "displayName": {
           "$ref": "TruncatableString",
-          "description": "A description of the span's operation (up to 128 bytes).\nStackdriver Trace displays the description in the\nGoogle Cloud Platform Console.\nFor example, the display name can be a qualified method name or a file name\nand a line number where the operation is called. A best practice is to use\nthe same display name within an application and at the same call point.\nThis makes it easier to correlate spans in different traces."
+          "description": "Required. A description of the span's operation (up to 128 bytes).\nStackdriver Trace displays the description in the\nGoogle Cloud Platform Console.\nFor example, the display name can be a qualified method name or a file name\nand a line number where the operation is called. A best practice is to use\nthe same display name within an application and at the same call point.\nThis makes it easier to correlate spans in different traces."
         },
         "endTime": {
-          "description": "The end time of the span. On the client side, this is the time kept by\nthe local machine where the span execution ends. On the server side, this\nis the time when the server application handler stops running.",
+          "description": "Required. The end time of the span. On the client side, this is the time kept by\nthe local machine where the span execution ends. On the server side, this\nis the time when the server application handler stops running.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -399,7 +399,7 @@
           "type": "boolean"
         },
         "spanId": {
-          "description": "The [SPAN_ID] portion of the span's resource name.",
+          "description": "Required. The [SPAN_ID] portion of the span's resource name.",
           "type": "string"
         },
         "spanKind": {
@@ -427,7 +427,7 @@
           "description": "Stack trace captured at the start of the span."
         },
         "startTime": {
-          "description": "The start time of the span. On the client side, this is the time kept by\nthe local machine where the span execution starts. On the server side, this\nis the time when the server's application handler starts running.",
+          "description": "Required. The start time of the span. On the client side, this is the time kept by\nthe local machine where the span execution starts. On the server side, this\nis the time when the server's application handler starts running.",
           "format": "google-datetime",
           "type": "string"
         },

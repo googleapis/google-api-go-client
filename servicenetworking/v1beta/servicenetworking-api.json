@@ -306,7 +306,7 @@
       }
     }
   },
-  "revision": "20191203",
+  "revision": "20191206",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddSubnetworkRequest": {
@@ -520,8 +520,12 @@
           "format": "double",
           "type": "number"
         },
+        "disableAuth": {
+          "description": "When disable_auth is false,  a JWT ID token will be generated with the\nvalue from BackendRule.address as jwt_audience, overrode to the HTTP\n\"Authorization\" request header and sent to the backend.\n\nWhen disable_auth is true, a JWT ID token won't be generated and the\noriginal \"Authorization\" HTTP header will be preserved. If the header is\nused to carry the original token and is expected by the backend, this\nfield must be set to true to preserve the header.",
+          "type": "boolean"
+        },
         "jwtAudience": {
-          "description": "The JWT audience is used when generating a JWT id token for the backend.",
+          "description": "The JWT audience is used when generating a JWT ID token for the backend.\nThis ID token will be added in the HTTP \"authorization\" header, and sent\nto the backend.",
           "type": "string"
         },
         "minDeadline": {

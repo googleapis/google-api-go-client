@@ -533,8 +533,8 @@ type Span struct {
 	// spans.
 	ChildSpanCount int64 `json:"childSpanCount,omitempty"`
 
-	// DisplayName: A description of the span's operation (up to 128
-	// bytes).
+	// DisplayName: Required. A description of the span's operation (up to
+	// 128 bytes).
 	// Stackdriver Trace displays the description in the
 	// Google Cloud Platform Console.
 	// For example, the display name can be a qualified method name or a
@@ -546,8 +546,8 @@ type Span struct {
 	// This makes it easier to correlate spans in different traces.
 	DisplayName *TruncatableString `json:"displayName,omitempty"`
 
-	// EndTime: The end time of the span. On the client side, this is the
-	// time kept by
+	// EndTime: Required. The end time of the span. On the client side, this
+	// is the time kept by
 	// the local machine where the span execution ends. On the server side,
 	// this
 	// is the time when the server application handler stops running.
@@ -582,7 +582,7 @@ type Span struct {
 	// information.
 	SameProcessAsParentSpan bool `json:"sameProcessAsParentSpan,omitempty"`
 
-	// SpanId: The [SPAN_ID] portion of the span's resource name.
+	// SpanId: Required. The [SPAN_ID] portion of the span's resource name.
 	SpanId string `json:"spanId,omitempty"`
 
 	// SpanKind: Distinguishes between spans generated in a particular
@@ -622,8 +622,8 @@ type Span struct {
 	// StackTrace: Stack trace captured at the start of the span.
 	StackTrace *StackTrace `json:"stackTrace,omitempty"`
 
-	// StartTime: The start time of the span. On the client side, this is
-	// the time kept by
+	// StartTime: Required. The start time of the span. On the client side,
+	// this is the time kept by
 	// the local machine where the span execution starts. On the server
 	// side, this
 	// is the time when the server's application handler starts running.
@@ -1022,7 +1022,7 @@ func (c *ProjectsTracesBatchWriteCall) Header() http.Header {
 
 func (c *ProjectsTracesBatchWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1163,7 +1163,7 @@ func (c *ProjectsTracesSpansCreateSpanCall) Header() http.Header {
 
 func (c *ProjectsTracesSpansCreateSpanCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

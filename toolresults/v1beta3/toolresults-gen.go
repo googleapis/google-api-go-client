@@ -157,6 +157,7 @@ type ProjectsHistoriesService struct {
 func NewProjectsHistoriesExecutionsService(s *Service) *ProjectsHistoriesExecutionsService {
 	rs := &ProjectsHistoriesExecutionsService{s: s}
 	rs.Clusters = NewProjectsHistoriesExecutionsClustersService(s)
+	rs.Environments = NewProjectsHistoriesExecutionsEnvironmentsService(s)
 	rs.Steps = NewProjectsHistoriesExecutionsStepsService(s)
 	return rs
 }
@@ -165,6 +166,8 @@ type ProjectsHistoriesExecutionsService struct {
 	s *Service
 
 	Clusters *ProjectsHistoriesExecutionsClustersService
+
+	Environments *ProjectsHistoriesExecutionsEnvironmentsService
 
 	Steps *ProjectsHistoriesExecutionsStepsService
 }
@@ -175,6 +178,15 @@ func NewProjectsHistoriesExecutionsClustersService(s *Service) *ProjectsHistorie
 }
 
 type ProjectsHistoriesExecutionsClustersService struct {
+	s *Service
+}
+
+func NewProjectsHistoriesExecutionsEnvironmentsService(s *Service) *ProjectsHistoriesExecutionsEnvironmentsService {
+	rs := &ProjectsHistoriesExecutionsEnvironmentsService{s: s}
+	return rs
+}
+
+type ProjectsHistoriesExecutionsEnvironmentsService struct {
 	s *Service
 }
 
@@ -821,6 +833,116 @@ func (s *Duration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Environment: An Environment represents the set of test runs (Steps)
+// from the parent Execution that are configured with the same set of
+// dimensions (Model, Version, Locale, and Orientation). Multiple such
+// runs occur particularly because of features like sharding (splitting
+// up a test suite to run in parallel across devices) and reruns
+// (running a test multiple times to check for different outcomes).
+type Environment struct {
+	// CompletionTime: Output only. The time when the Environment status was
+	// set to complete.
+	//
+	// This value will be set automatically when state transitions to
+	// COMPLETE.
+	CompletionTime *Timestamp `json:"completionTime,omitempty"`
+
+	// CreationTime: Output only. The time when the Environment was created.
+	CreationTime *Timestamp `json:"creationTime,omitempty"`
+
+	// DimensionValue: Dimension values describing the environment.
+	// Dimension values always consist of "Model", "Version", "Locale", and
+	// "Orientation".
+	//
+	// - In response: always set - In create request: always set - In update
+	// request: never set
+	DimensionValue []*EnvironmentDimensionValueEntry `json:"dimensionValue,omitempty"`
+
+	// DisplayName: A short human-readable name to display in the UI.
+	// Maximum of 100 characters. For example: Nexus 5, API 27.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EnvironmentId: Output only. An Environment id.
+	EnvironmentId string `json:"environmentId,omitempty"`
+
+	// EnvironmentResult: Merged result of the environment.
+	EnvironmentResult *MergedResult `json:"environmentResult,omitempty"`
+
+	// ExecutionId: Output only. An Execution id.
+	ExecutionId string `json:"executionId,omitempty"`
+
+	// HistoryId: Output only. A History id.
+	HistoryId string `json:"historyId,omitempty"`
+
+	// ProjectId: Output only. A Project id.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// ResultsStorage: The location where output files are stored in the
+	// user bucket.
+	ResultsStorage *ResultsStorage `json:"resultsStorage,omitempty"`
+
+	// ShardSummaries: Output only. Summaries of shards.
+	//
+	// Only one shard will present unless sharding feature is enabled in
+	// TestExecutionService.
+	ShardSummaries []*ShardSummary `json:"shardSummaries,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CompletionTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CompletionTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Environment) MarshalJSON() ([]byte, error) {
+	type NoMethod Environment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type EnvironmentDimensionValueEntry struct {
+	Key string `json:"key,omitempty"`
+
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnvironmentDimensionValueEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod EnvironmentDimensionValueEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Execution: An Execution represents a collection of Steps. For
 // instance, it could represent: - a mobile test executed across a range
 // of device configurations - a jenkins job with a build step followed
@@ -1299,6 +1421,62 @@ func (s *IndividualOutcome) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListEnvironmentsResponse: Response message for
+// EnvironmentService.ListEnvironments.
+type ListEnvironmentsResponse struct {
+	// Environments: Environments.
+	//
+	// Always set.
+	Environments []*Environment `json:"environments,omitempty"`
+
+	// ExecutionId: A Execution id
+	//
+	// Always set.
+	ExecutionId string `json:"executionId,omitempty"`
+
+	// HistoryId: A History id.
+	//
+	// Always set.
+	HistoryId string `json:"historyId,omitempty"`
+
+	// NextPageToken: A continuation token to resume the query at the next
+	// item.
+	//
+	// Will only be set if there are more Environments to fetch.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ProjectId: A Project id.
+	//
+	// Always set.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Environments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Environments") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListEnvironmentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListEnvironmentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ListExecutionsResponse struct {
 	// Executions: Executions.
 	//
@@ -1630,6 +1808,63 @@ type MemoryInfo struct {
 
 func (s *MemoryInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod MemoryInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MergedResult: Merged test result for environment.
+//
+// If the environment has only one step (no reruns or shards), then the
+// merged result is the same as the step result. If the environment has
+// multiple shards and/or reruns, then the results of shards and reruns
+// that belong to the same environment are merged into one environment
+// result.
+type MergedResult struct {
+	// Outcome: Outcome of the resource
+	Outcome *Outcome `json:"outcome,omitempty"`
+
+	// State: State of the resource
+	//
+	// Possible values:
+	//   "complete"
+	//   "inProgress"
+	//   "pending"
+	//   "unknownState"
+	State string `json:"state,omitempty"`
+
+	// TestSuiteOverviews: The combined and rolled-up result of each test
+	// suite that was run as part of this environment.
+	//
+	// Combining: When the test cases from a suite are run in different
+	// steps (sharding), the results are added back together in one
+	// overview. (e.g., if shard1 has 2 failures and shard2 has 1 failure
+	// than the overview failure_count = 3).
+	//
+	// Rollup: When test cases from the same suite are run multiple times
+	// (flaky), the results are combined (e.g., if testcase1.run1 fails,
+	// testcase1.run2 passes, and both testcase2.run1 and testcase2.run2
+	// fail then the overview flaky_count = 1 and failure_count = 1).
+	TestSuiteOverviews []*TestSuiteOverview `json:"testSuiteOverviews,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Outcome") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Outcome") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MergedResult) MarshalJSON() ([]byte, error) {
+	type NoMethod MergedResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2055,6 +2290,38 @@ func (s *PublishXunitXmlFilesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ResultsStorage: The storage for test results.
+type ResultsStorage struct {
+	// ResultsStoragePath: The root directory for test results.
+	ResultsStoragePath *FileReference `json:"resultsStoragePath,omitempty"`
+
+	// XunitXmlFile: The path to the Xunit XML file.
+	XunitXmlFile *FileReference `json:"xunitXmlFile,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResultsStoragePath")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResultsStoragePath") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResultsStorage) MarshalJSON() ([]byte, error) {
+	type NoMethod ResultsStorage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Screen struct {
 	// FileReference: File reference of the png file. Required.
 	FileReference string `json:"fileReference,omitempty"`
@@ -2135,6 +2402,34 @@ type ScreenshotCluster struct {
 
 func (s *ScreenshotCluster) MarshalJSON() ([]byte, error) {
 	type NoMethod ScreenshotCluster
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ShardSummary: Result summary for a shard in an environment.
+type ShardSummary struct {
+	// ShardResult: Merged result of the shard.
+	ShardResult *MergedResult `json:"shardResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ShardResult") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ShardResult") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ShardSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod ShardSummary
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2565,6 +2860,7 @@ func (s *StepLabelsEntry) MarshalJSON() ([]byte, error) {
 }
 
 // SuccessDetail: Details for an outcome with a SUCCESS outcome summary.
+// LINT.IfChange
 type SuccessDetail struct {
 	// OtherNativeCrash: If a native process other than the app crashed.
 	OtherNativeCrash bool `json:"otherNativeCrash,omitempty"`
@@ -2893,6 +3189,13 @@ type TestSuiteOverview struct {
 	//
 	// - In create/response: always set - In update request: never
 	FailureCount int64 `json:"failureCount,omitempty"`
+
+	// FlakyCount: Number of flaky test cases, set by the service by rolling
+	// up flaky test attempts.
+	//
+	// Present only for rollup test suite overview at environment level. A
+	// step cannot have flaky test cases.
+	FlakyCount int64 `json:"flakyCount,omitempty"`
 
 	// Name: The name of the test suite.
 	//
@@ -3379,7 +3682,7 @@ func (c *ProjectsGetSettingsCall) Header() http.Header {
 
 func (c *ProjectsGetSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3537,7 +3840,7 @@ func (c *ProjectsInitializeSettingsCall) Header() http.Header {
 
 func (c *ProjectsInitializeSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3685,7 +3988,7 @@ func (c *ProjectsHistoriesCreateCall) Header() http.Header {
 
 func (c *ProjectsHistoriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3845,7 +4148,7 @@ func (c *ProjectsHistoriesGetCall) Header() http.Header {
 
 func (c *ProjectsHistoriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4030,7 +4333,7 @@ func (c *ProjectsHistoriesListCall) Header() http.Header {
 
 func (c *ProjectsHistoriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4220,7 +4523,7 @@ func (c *ProjectsHistoriesExecutionsCreateCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4390,7 +4693,7 @@ func (c *ProjectsHistoriesExecutionsGetCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4577,7 +4880,7 @@ func (c *ProjectsHistoriesExecutionsListCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4772,7 +5075,7 @@ func (c *ProjectsHistoriesExecutionsPatchCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4946,7 +5249,7 @@ func (c *ProjectsHistoriesExecutionsClustersGetCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsClustersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5121,7 +5424,7 @@ func (c *ProjectsHistoriesExecutionsClustersListCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsClustersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5221,6 +5524,403 @@ func (c *ProjectsHistoriesExecutionsClustersListCall) Do(opts ...googleapi.CallO
 
 }
 
+// method id "toolresults.projects.histories.executions.environments.get":
+
+type ProjectsHistoriesExecutionsEnvironmentsGetCall struct {
+	s             *Service
+	projectId     string
+	historyId     string
+	executionId   string
+	environmentId string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Get: Gets an Environment.
+//
+// May return any of the following canonical error codes:
+//
+// - PERMISSION_DENIED - if the user is not authorized to read project -
+// INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the
+// Environment does not exist
+func (r *ProjectsHistoriesExecutionsEnvironmentsService) Get(projectId string, historyId string, executionId string, environmentId string) *ProjectsHistoriesExecutionsEnvironmentsGetCall {
+	c := &ProjectsHistoriesExecutionsEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	c.executionId = executionId
+	c.environmentId = environmentId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsEnvironmentsGetCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsEnvironmentsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsHistoriesExecutionsEnvironmentsGetCall) IfNoneMatch(entityTag string) *ProjectsHistoriesExecutionsEnvironmentsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsEnvironmentsGetCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsEnvironmentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsEnvironmentsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectId}/histories/{historyId}/executions/{executionId}/environments/{environmentId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":     c.projectId,
+		"historyId":     c.historyId,
+		"executionId":   c.executionId,
+		"environmentId": c.environmentId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.environments.get" call.
+// Exactly one of *Environment or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Environment.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsHistoriesExecutionsEnvironmentsGetCall) Do(opts ...googleapi.CallOption) (*Environment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Environment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an Environment.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project - INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the Environment does not exist",
+	//   "httpMethod": "GET",
+	//   "id": "toolresults.projects.histories.executions.environments.get",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId",
+	//     "executionId",
+	//     "environmentId"
+	//   ],
+	//   "parameters": {
+	//     "environmentId": {
+	//       "description": "Required. An Environment id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "executionId": {
+	//       "description": "Required. An Execution id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "historyId": {
+	//       "description": "Required. A History id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "Required. A Project id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{projectId}/histories/{historyId}/executions/{executionId}/environments/{environmentId}",
+	//   "response": {
+	//     "$ref": "Environment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "toolresults.projects.histories.executions.environments.list":
+
+type ProjectsHistoriesExecutionsEnvironmentsListCall struct {
+	s            *Service
+	projectId    string
+	historyId    string
+	executionId  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Environments for a given Execution.
+//
+// The Environments are sorted by display name.
+//
+// May return any of the following canonical error codes:
+//
+// - PERMISSION_DENIED - if the user is not authorized to read project -
+// INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the
+// containing Execution does not exist
+func (r *ProjectsHistoriesExecutionsEnvironmentsService) List(projectId string, historyId string, executionId string) *ProjectsHistoriesExecutionsEnvironmentsListCall {
+	c := &ProjectsHistoriesExecutionsEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	c.executionId = executionId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of Environments to fetch.
+//
+// Default value: 25. The server will use this default if the field is
+// not set or has a value of 0.
+func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) PageSize(pageSize int64) *ProjectsHistoriesExecutionsEnvironmentsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token to resume the query at the next item.
+func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) PageToken(pageToken string) *ProjectsHistoriesExecutionsEnvironmentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsEnvironmentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) IfNoneMatch(entityTag string) *ProjectsHistoriesExecutionsEnvironmentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsEnvironmentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectId}/histories/{historyId}/executions/{executionId}/environments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":   c.projectId,
+		"historyId":   c.historyId,
+		"executionId": c.executionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.environments.list" call.
+// Exactly one of *ListEnvironmentsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListEnvironmentsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) Do(opts ...googleapi.CallOption) (*ListEnvironmentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListEnvironmentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Environments for a given Execution.\n\nThe Environments are sorted by display name.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project - INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the containing Execution does not exist",
+	//   "httpMethod": "GET",
+	//   "id": "toolresults.projects.histories.executions.environments.list",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId",
+	//     "executionId"
+	//   ],
+	//   "parameters": {
+	//     "executionId": {
+	//       "description": "Required. An Execution id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "historyId": {
+	//       "description": "Required. A History id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of Environments to fetch.\n\nDefault value: 25. The server will use this default if the field is not set or has a value of 0.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token to resume the query at the next item.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "Required. A Project id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{projectId}/histories/{historyId}/executions/{executionId}/environments",
+	//   "response": {
+	//     "$ref": "ListEnvironmentsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) Pages(ctx context.Context, f func(*ListEnvironmentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "toolresults.projects.histories.executions.steps.create":
 
 type ProjectsHistoriesExecutionsStepsCreateCall struct {
@@ -5290,7 +5990,7 @@ func (c *ProjectsHistoriesExecutionsStepsCreateCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsStepsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5470,7 +6170,7 @@ func (c *ProjectsHistoriesExecutionsStepsGetCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsStepsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5645,7 +6345,7 @@ func (c *ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall) Header() htt
 
 func (c *ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5844,7 +6544,7 @@ func (c *ProjectsHistoriesExecutionsStepsListCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsStepsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6051,7 +6751,7 @@ func (c *ProjectsHistoriesExecutionsStepsPatchCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsStepsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6232,7 +6932,7 @@ func (c *ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall) Header() http
 
 func (c *ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6404,7 +7104,7 @@ func (c *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall) Header() 
 
 func (c *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6576,7 +7276,7 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall) Header() ht
 
 func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6758,7 +7458,7 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall) Header() http.
 
 func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6959,7 +7659,7 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall) Header() http
 
 func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7153,7 +7853,7 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall)
 
 func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7365,7 +8065,7 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall) Header
 
 func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7586,7 +8286,7 @@ func (c *ProjectsHistoriesExecutionsStepsTestCasesGetCall) Header() http.Header 
 
 func (c *ProjectsHistoriesExecutionsStepsTestCasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7790,7 +8490,7 @@ func (c *ProjectsHistoriesExecutionsStepsTestCasesListCall) Header() http.Header
 
 func (c *ProjectsHistoriesExecutionsStepsTestCasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8017,7 +8717,7 @@ func (c *ProjectsHistoriesExecutionsStepsThumbnailsListCall) Header() http.Heade
 
 func (c *ProjectsHistoriesExecutionsStepsThumbnailsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

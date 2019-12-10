@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/xy04ood3kp7DhJc1iZopsRriYwM\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/GPmJrIrExw3FkiMrSNedoSFbGgo\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2388,7 +2388,7 @@
       }
     }
   },
-  "revision": "20191113",
+  "revision": "20191202",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -3044,26 +3044,6 @@
       },
       "type": "object"
     },
-    "MendelSampling": {
-      "id": "MendelSampling",
-      "properties": {
-        "modRanges": {
-          "items": {
-            "$ref": "ModRange"
-          },
-          "type": "array"
-        },
-        "modulus": {
-          "format": "int64",
-          "type": "string"
-        },
-        "salt": {
-          "format": "int32",
-          "type": "integer"
-        }
-      },
-      "type": "object"
-    },
     "ModRange": {
       "id": "ModRange",
       "properties": {
@@ -3271,6 +3251,26 @@
       "properties": {
         "result": {
           "$ref": "ReviewReplyResult"
+        }
+      },
+      "type": "object"
+    },
+    "Sampling": {
+      "id": "Sampling",
+      "properties": {
+        "modRanges": {
+          "items": {
+            "$ref": "ModRange"
+          },
+          "type": "array"
+        },
+        "modulus": {
+          "format": "int64",
+          "type": "string"
+        },
+        "salt": {
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -3569,7 +3569,7 @@
           "type": "array"
         },
         "sampling": {
-          "$ref": "MendelSampling"
+          "$ref": "Sampling"
         },
         "status": {
           "description": "The desired status of this release.",

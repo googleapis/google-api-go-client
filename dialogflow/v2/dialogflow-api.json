@@ -1534,7 +1534,7 @@
       }
     }
   },
-  "revision": "20191120",
+  "revision": "20191203",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -2234,7 +2234,7 @@
           "type": "array"
         },
         "mlDisabled": {
-          "description": "Optional. Indicates whether Machine Learning is disabled for the intent.\nNote: If `ml_diabled` setting is set to true, then this intent is not\ntaken into account during inference in `ML ONLY` match mode. Also,\nauto-markup in the UI is turned off.",
+          "description": "Optional. Indicates whether Machine Learning is disabled for the intent.\nNote: If `ml_disabled` setting is set to true, then this intent is not\ntaken into account during inference in `ML ONLY` match mode. Also,\nauto-markup in the UI is turned off.",
           "type": "boolean"
         },
         "name": {

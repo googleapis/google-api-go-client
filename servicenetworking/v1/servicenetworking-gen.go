@@ -660,8 +660,26 @@ type BackendRule struct {
 	// seconds.
 	Deadline float64 `json:"deadline,omitempty"`
 
-	// JwtAudience: The JWT audience is used when generating a JWT id token
+	// DisableAuth: When disable_auth is false,  a JWT ID token will be
+	// generated with the
+	// value from BackendRule.address as jwt_audience, overrode to the
+	// HTTP
+	// "Authorization" request header and sent to the backend.
+	//
+	// When disable_auth is true, a JWT ID token won't be generated and
+	// the
+	// original "Authorization" HTTP header will be preserved. If the header
+	// is
+	// used to carry the original token and is expected by the backend,
+	// this
+	// field must be set to true to preserve the header.
+	DisableAuth bool `json:"disableAuth,omitempty"`
+
+	// JwtAudience: The JWT audience is used when generating a JWT ID token
 	// for the backend.
+	// This ID token will be added in the HTTP "authorization" header, and
+	// sent
+	// to the backend.
 	JwtAudience string `json:"jwtAudience,omitempty"`
 
 	// MinDeadline: Minimum deadline in seconds needed for this method.
@@ -1248,6 +1266,41 @@ type CustomHttpPattern struct {
 
 func (s *CustomHttpPattern) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomHttpPattern
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DisableVpcServiceControlsRequest: Request to disable VPC service
+// controls.
+type DisableVpcServiceControlsRequest struct {
+	// ConsumerNetwork: Required. The network that the consumer is using to
+	// connect with services.
+	// Must be in the form of
+	// projects/{project}/global/networks/{network}
+	// {project} is a project number, as in '12345'
+	// {network} is network name.
+	ConsumerNetwork string `json:"consumerNetwork,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsumerNetwork") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsumerNetwork") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DisableVpcServiceControlsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DisableVpcServiceControlsRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4813,7 +4866,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4958,7 +5011,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5104,7 +5157,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5286,7 +5339,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5475,7 +5528,7 @@ func (c *ServicesAddSubnetworkCall) Header() http.Header {
 
 func (c *ServicesAddSubnetworkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5570,6 +5623,148 @@ func (c *ServicesAddSubnetworkCall) Do(opts ...googleapi.CallOption) (*Operation
 
 }
 
+// method id "servicenetworking.services.disableVpcServiceControls":
+
+type ServicesDisableVpcServiceControlsCall struct {
+	s                                *APIService
+	parent                           string
+	disablevpcservicecontrolsrequest *DisableVpcServiceControlsRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// DisableVpcServiceControls: Disables VPC service controls for a
+// connection.
+func (r *ServicesService) DisableVpcServiceControls(parent string, disablevpcservicecontrolsrequest *DisableVpcServiceControlsRequest) *ServicesDisableVpcServiceControlsCall {
+	c := &ServicesDisableVpcServiceControlsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.disablevpcservicecontrolsrequest = disablevpcservicecontrolsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesDisableVpcServiceControlsCall) Fields(s ...googleapi.Field) *ServicesDisableVpcServiceControlsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesDisableVpcServiceControlsCall) Context(ctx context.Context) *ServicesDisableVpcServiceControlsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesDisableVpcServiceControlsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesDisableVpcServiceControlsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.disablevpcservicecontrolsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:disableVpcServiceControls")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "servicenetworking.services.disableVpcServiceControls" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesDisableVpcServiceControlsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Disables VPC service controls for a connection.",
+	//   "flatPath": "v1/services/{servicesId}:disableVpcServiceControls",
+	//   "httpMethod": "PATCH",
+	//   "id": "servicenetworking.services.disableVpcServiceControls",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The service that is managing peering connectivity for a service producer's\norganization. For Google services that support this functionality, this\nvalue is `services/servicenetworking.googleapis.com`.",
+	//       "location": "path",
+	//       "pattern": "^services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}:disableVpcServiceControls",
+	//   "request": {
+	//     "$ref": "DisableVpcServiceControlsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/service.management"
+	//   ]
+	// }
+
+}
+
 // method id "servicenetworking.services.enableVpcServiceControls":
 
 type ServicesEnableVpcServiceControlsCall struct {
@@ -5617,7 +5812,7 @@ func (c *ServicesEnableVpcServiceControlsCall) Header() http.Header {
 
 func (c *ServicesEnableVpcServiceControlsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5769,7 +5964,7 @@ func (c *ServicesSearchRangeCall) Header() http.Header {
 
 func (c *ServicesSearchRangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5917,7 +6112,7 @@ func (c *ServicesValidateCall) Header() http.Header {
 
 func (c *ServicesValidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6074,7 +6269,7 @@ func (c *ServicesConnectionsCreateCall) Header() http.Header {
 
 func (c *ServicesConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6243,7 +6438,7 @@ func (c *ServicesConnectionsListCall) Header() http.Header {
 
 func (c *ServicesConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6404,7 +6599,7 @@ func (c *ServicesConnectionsPatchCall) Header() http.Header {
 
 func (c *ServicesConnectionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

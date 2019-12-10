@@ -422,6 +422,223 @@
             }
           },
           "resources": {
+            "backups": {
+              "methods": {
+                "getIamPolicy": {
+                  "description": "Gets the access control policy for a database resource.\nReturns an empty policy if a database exists but does\nnot have a policy set.\n\nAuthorization requires `spanner.databases.getIamPolicy` permission on\nresource.",
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}:getIamPolicy",
+                  "httpMethod": "POST",
+                  "id": "spanner.projects.instances.backups.getIamPolicy",
+                  "parameterOrder": [
+                    "resource"
+                  ],
+                  "parameters": {
+                    "resource": {
+                      "description": "REQUIRED: The Cloud Spanner resource for which the policy is being retrieved. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for database resources.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+resource}:getIamPolicy",
+                  "request": {
+                    "$ref": "GetIamPolicyRequest"
+                  },
+                  "response": {
+                    "$ref": "Policy"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ]
+                },
+                "setIamPolicy": {
+                  "description": "Sets the access control policy on a database resource.\nReplaces any existing policy.\n\nAuthorization requires `spanner.databases.setIamPolicy`\npermission on resource.",
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}:setIamPolicy",
+                  "httpMethod": "POST",
+                  "id": "spanner.projects.instances.backups.setIamPolicy",
+                  "parameterOrder": [
+                    "resource"
+                  ],
+                  "parameters": {
+                    "resource": {
+                      "description": "REQUIRED: The Cloud Spanner resource for which the policy is being set. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for databases resources.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+resource}:setIamPolicy",
+                  "request": {
+                    "$ref": "SetIamPolicyRequest"
+                  },
+                  "response": {
+                    "$ref": "Policy"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ]
+                },
+                "testIamPermissions": {
+                  "description": "Returns permissions that the caller has on the specified database resource.\n\nAttempting this RPC on a non-existent Cloud Spanner database will\nresult in a NOT_FOUND error if the user has\n`spanner.databases.list` permission on the containing Cloud\nSpanner instance. Otherwise returns an empty set of permissions.",
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}:testIamPermissions",
+                  "httpMethod": "POST",
+                  "id": "spanner.projects.instances.backups.testIamPermissions",
+                  "parameterOrder": [
+                    "resource"
+                  ],
+                  "parameters": {
+                    "resource": {
+                      "description": "REQUIRED: The Cloud Spanner resource for which permissions are being tested. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for database resources.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+resource}:testIamPermissions",
+                  "request": {
+                    "$ref": "TestIamPermissionsRequest"
+                  },
+                  "response": {
+                    "$ref": "TestIamPermissionsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ]
+                }
+              },
+              "resources": {
+                "operations": {
+                  "methods": {
+                    "cancel": {
+                      "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}/operations/{operationsId}:cancel",
+                      "httpMethod": "POST",
+                      "id": "spanner.projects.instances.backups.operations.cancel",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "The name of the operation resource to be cancelled.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+/operations/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:cancel",
+                      "response": {
+                        "$ref": "Empty"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.admin"
+                      ]
+                    },
+                    "delete": {
+                      "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}/operations/{operationsId}",
+                      "httpMethod": "DELETE",
+                      "id": "spanner.projects.instances.backups.operations.delete",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "The name of the operation resource to be deleted.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+/operations/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}",
+                      "response": {
+                        "$ref": "Empty"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.admin"
+                      ]
+                    },
+                    "get": {
+                      "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}/operations/{operationsId}",
+                      "httpMethod": "GET",
+                      "id": "spanner.projects.instances.backups.operations.get",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "The name of the operation resource.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+/operations/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}",
+                      "response": {
+                        "$ref": "Operation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.admin"
+                      ]
+                    },
+                    "list": {
+                      "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}/operations",
+                      "httpMethod": "GET",
+                      "id": "spanner.projects.instances.backups.operations.list",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "filter": {
+                          "description": "The standard list filter.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "The name of the operation's parent resource.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+/operations$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "pageSize": {
+                          "description": "The standard list page size.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "The standard list page token.",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}",
+                      "response": {
+                        "$ref": "ListOperationsResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.admin"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
             "databases": {
               "methods": {
                 "create": {
@@ -1387,7 +1604,7 @@
       }
     }
   },
-  "revision": "20191107",
+  "revision": "20191128",
   "rootUrl": "https://spanner.googleapis.com/",
   "schemas": {
     "BatchCreateSessionsRequest": {

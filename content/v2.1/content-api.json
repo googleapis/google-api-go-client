@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/akvVB_xTE_k6l5PpFf1PjSMbVzk\"",
+  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/v0t2LdM_U2ycnPJjAl_f-4DBbiA\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3164,7 +3164,7 @@
       }
     }
   },
-  "revision": "20191107",
+  "revision": "20191126",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5535,7 +5535,7 @@
           "type": "string"
         },
         "invoiceReceivingEmail": {
-          "description": "Email address for receiving merchant issued value-added tax or invoice documentation of this order.",
+          "description": "Email address for the merchant to send value-added tax or invoice documentation of the order. This documentation is made available to the customer.",
           "type": "string"
         },
         "loyaltyInfo": {
@@ -6211,7 +6211,7 @@
       "id": "OrderShipment",
       "properties": {
         "carrier": {
-          "description": "The carrier handling the shipment.\n\nAcceptable values for US are:  \n- \"gsx\" \n- \"ups\" \n- \"usps\" \n- \"fedex\" \n- \"dhl\" \n- \"ecourier\" \n- \"cxt\" \n- \"google\" \n- \"ontrac\" \n- \"emsy\" \n- \"ont\" \n- \"deliv\" \n- \"dynamex\" \n- \"lasership\" \n- \"mpx\" \n- \"uds\" \n- \"efw\" \n- \"yunexpress\" \n- \"china post\" \n- \"china ems\" \n- \"singapore post\" \n- \"pos malaysia\" \n- \"postnl\" \n- \"ptt\" \n- \"eub\" \n- \"chukou1\"  \n\nAcceptable values for FR are:  \n- \"colissimo\" \n- \"chronopost\" \n- \"gls\" \n- \"dpd\" \n- \"bpost\" \n- \"colis prive\" \n- \"boxtal\" \n- \"geodis\" \n- \"tnt\" \n- \"la poste\" \n- \"ups\"",
+          "description": "The carrier handling the shipment.\n\nFor supported carriers, Google includes the carrier name and tracking URL in emails to customers. For select supported carriers, Google also automatically updates the shipment status based on the provided shipment ID. Note: You can also use unsupported carriers, but emails to customers will not include the carrier name or tracking URL, and there will be no automatic order status updates. \nSupported carriers for US are:  \n- \"ups\" (United Parcel Service) automatic status updates \n- \"usps\" (United States Postal Service) automatic status updates \n- \"fedex\" (FedEx) automatic status updates  \n- \"dhl\" (DHL eCommerce) automatic status updates (US only) \n- \"ontrac\" (OnTrac) automatic status updates  \n- \"dhl express\" (DHL Express)\n- \"deliv\" (Deliv) \n- \"dynamex\" (TForce) \n- \"lasership\" (LaserShip) \n- \"mpx\" (Military Parcel Xpress) \n- \"uds\" (United Delivery Service) \n- \"efw\" (Estes Forwarding Worldwide) \n- \"jd logistics\" (JD Logistics) \n- \"yunexpress\" (YunExpress) \n- \"china post\" (China Post) \n- \"china ems\" (China Post Express Mail Service) \n- \"singapore post\" (Singapore Post) \n- \"pos malaysia\" (Pos Malaysia) \n- \"postnl\" (PostNL) \n- \"ptt\" (PTT Turkish Post) \n- \"eub\" (ePacket) \n- \"chukou1\" (Chukou1 Logistics)  \nSupported carriers for FR are:  \n- \"la poste\" (La Poste) automatic status updates  \n- \"colissimo\" (Colissimo by La Poste) automatic status updates \n- \"ups\" (United Parcel Service) automatic status updates  \n- \"chronopost\" (Chronopost by La Poste) \n- \"gls\" (General Logistics Systems France) \n- \"dpd\" (DPD Group by GeoPost) \n- \"bpost\" (Belgian Post Group) \n- \"colis prive\" (Colis Privé) \n- \"boxtal\" (Boxtal) \n- \"geodis\" (GEODIS) \n- \"tnt\" (TNT)",
           "type": "string"
         },
         "creationDate": {
@@ -7875,7 +7875,7 @@
           "description": "Cost of goods sold. Used for gross profit reporting."
         },
         "customAttributes": {
-          "description": "A list of custom (merchant-provided) attributes. It can also be used for submitting any attribute of the feed specification in its generic form (e.g., { \"name\": \"size type\", \"value\": \"regular\" }). This is useful for submitting attributes not explicitly exposed by the API.",
+          "description": "A list of custom (merchant-provided) attributes. It can also be used for submitting any attribute of the feed specification in its generic form (e.g., { \"name\": \"size type\", \"value\": \"regular\" }). This is useful for submitting attributes not explicitly exposed by the API, such as additional attributes used for Shopping Actions.",
           "items": {
             "$ref": "CustomAttribute"
           },

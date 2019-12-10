@@ -918,6 +918,7 @@ var pointerFields = []fieldName{
 	{api: "storage:v1beta2", schema: "BucketLifecycleRuleCondition", field: "IsLive"},
 	{api: "tasks:v1", schema: "Task", field: "Completed"},
 	{api: "youtube:v3", schema: "ChannelSectionSnippet", field: "Position"},
+	{api: "youtube:v3", schema: "MonitorStreamInfo", field: "EnableMonitorStream"},
 }
 
 // forcePointerType reports whether p should be represented as a pointer type in its parent schema struct.

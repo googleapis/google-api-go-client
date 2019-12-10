@@ -258,6 +258,29 @@ func TestBundlerErrors(t *testing.T) {
 	}
 }
 
+func TestModeError(t *testing.T) {
+	// Call Add then AddWait.
+	b := NewBundler(int(0), func(interface{}) {})
+	b.BundleByteLimit = 4
+	b.BufferedByteLimit = 4
+	if err := b.Add(0, 2); err != nil {
+		t.Fatal(err)
+	}
+	if got, want := b.AddWait(context.Background(), 0, 2), errMixedMethods; got != want {
+		t.Fatalf("got %v, want %v", got, want)
+	}
+	// Call AddWait then Add on new Bundler.
+	b1 := NewBundler(int(0), func(interface{}) {})
+	b1.BundleByteLimit = 4
+	b1.BufferedByteLimit = 4
+	if err := b1.AddWait(context.Background(), 0, 2); err != nil {
+		t.Fatal(err)
+	}
+	if got, want := b1.Add(0, 2), errMixedMethods; got != want {
+		t.Fatalf("got %v, want %v", got, want)
+	}
+}
+
 // Check that no more than HandlerLimit handlers are active at once.
 func TestConcurrentHandlersMax(t *testing.T) {
 	const handlerLimit = 10

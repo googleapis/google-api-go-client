@@ -297,7 +297,7 @@
                   "type": "string"
                 },
                 "updateMask": {
-                  "description": "Required. The field paths to be updated.\n\nCurrently supported field paths: \"text\", \"cards\".",
+                  "description": "Required. The field paths to be updated, comma separated if there are\nmultiple.\n\nCurrently supported field paths:\n* text\n* cards",
                   "format": "google-fieldmask",
                   "location": "query",
                   "type": "string"
@@ -316,7 +316,7 @@
       }
     }
   },
-  "revision": "20180713",
+  "revision": "20191205",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {

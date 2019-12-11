@@ -918,7 +918,7 @@
       }
     }
   },
-  "revision": "20191119",
+  "revision": "20191210",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -1815,7 +1815,7 @@
           "type": "string"
         },
         "signinDetails": {
-          "description": "Sign-in details of the enterprise. Maximum of 1 SigninDetail is supported.",
+          "description": "Sign-in details of the enterprise.",
           "items": {
             "$ref": "SigninDetail"
           },
@@ -3016,7 +3016,7 @@
         },
         "shortSupportMessage": {
           "$ref": "UserFacingMessage",
-          "description": "A message displayed to the user in the settings screen wherever functionality has been disabled by the admin."
+          "description": "A message displayed to the user in the settings screen wherever functionality has been disabled by the admin. If the message is longer than 200 characters it may be truncated."
         },
         "skipFirstUseHintsEnabled": {
           "description": "Flag to skip hints on the first use. Enterprise admin can enable the system recommendation for apps to skip their user tutorial and other introductory hints on first start-up.",
@@ -3388,11 +3388,11 @@
           "type": "boolean"
         },
         "displayInfoEnabled": {
-          "description": "Whether displays reporting is enabled.",
+          "description": "Whether displays reporting is enabled. Report data is not available for personally owned devices with work profiles.",
           "type": "boolean"
         },
         "hardwareStatusEnabled": {
-          "description": "Whether hardware status reporting is enabled.",
+          "description": "Whether hardware status reporting is enabled. Report data is not available for personally owned devices with work profiles.",
           "type": "boolean"
         },
         "memoryInfoEnabled": {
@@ -3404,7 +3404,7 @@
           "type": "boolean"
         },
         "powerManagementEventsEnabled": {
-          "description": "Whether power management event reporting is enabled.",
+          "description": "Whether power management event reporting is enabled. Report data is not available for personally owned devices with work profiles.",
           "type": "boolean"
         },
         "softwareInfoEnabled": {

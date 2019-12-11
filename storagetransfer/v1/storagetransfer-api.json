@@ -214,7 +214,7 @@
           ]
         },
         "patch": {
-          "description": "Updates a transfer job. Updating a job's transfer spec does not affect\ntransfer operations that are running already. Updating the scheduling\nof a job is not allowed.",
+          "description": "Updates a transfer job. Updating a job's transfer spec does not affect\ntransfer operations that are running already. Updating a job's schedule\nis not allowed.\n\nNote: The job's `status` field can be modified using this RPC (for example,\nto set a job's status to `DELETED`, `DISABLED`, or `ENABLED`).",
           "flatPath": "v1/transferJobs/{transferJobsId}",
           "httpMethod": "PATCH",
           "id": "storagetransfer.transferJobs.patch",
@@ -420,7 +420,7 @@
       }
     }
   },
-  "revision": "20191118",
+  "revision": "20191206",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AwsAccessKey": {

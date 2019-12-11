@@ -1411,7 +1411,7 @@
       }
     }
   },
-  "revision": "20191105",
+  "revision": "20191201",
   "rootUrl": "https://bigquery.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
@@ -3662,7 +3662,7 @@
         },
         "encryptionConfiguration": {
           "$ref": "EncryptionConfiguration",
-          "description": "Custom encryption configuration (e.g., Cloud KMS keys). This shows the\nencryption configuration of the model data while stored in BigQuery\nstorage."
+          "description": "Custom encryption configuration (e.g., Cloud KMS keys). This shows the\nencryption configuration of the model data while stored in BigQuery\nstorage. This field can be used with PatchModel to update encryption key\nfor an already encrypted model."
         },
         "etag": {
           "description": "Output only. A hash of this resource.",

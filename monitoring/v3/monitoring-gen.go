@@ -97,8 +97,8 @@ const (
 	MonitoringWriteScope = "https://www.googleapis.com/auth/monitoring.write"
 )
 
-// NewService creates a new APIService.
-func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, error) {
+// NewService creates a new Service.
+func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/monitoring",
@@ -121,23 +121,23 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, 
 	return s, nil
 }
 
-// New creates a new APIService. It uses the provided http.Client for requests.
+// New creates a new Service. It uses the provided http.Client for requests.
 //
 // Deprecated: please use NewService instead.
 // To provide a custom HTTP client, use option.WithHTTPClient.
 // If you are using google.golang.org/api/googleapis/transport.APIKey, use option.WithAPIKey with NewService instead.
-func New(client *http.Client) (*APIService, error) {
+func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &APIService{client: client, BasePath: basePath}
+	s := &Service{client: client, BasePath: basePath}
 	s.Projects = NewProjectsService(s)
 	s.Services = NewServicesService(s)
 	s.UptimeCheckIps = NewUptimeCheckIpsService(s)
 	return s, nil
 }
 
-type APIService struct {
+type Service struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
@@ -149,14 +149,14 @@ type APIService struct {
 	UptimeCheckIps *UptimeCheckIpsService
 }
 
-func (s *APIService) userAgent() string {
+func (s *Service) userAgent() string {
 	if s.UserAgent == "" {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
-func NewProjectsService(s *APIService) *ProjectsService {
+func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.AlertPolicies = NewProjectsAlertPoliciesService(s)
 	rs.CollectdTimeSeries = NewProjectsCollectdTimeSeriesService(s)
@@ -171,7 +171,7 @@ func NewProjectsService(s *APIService) *ProjectsService {
 }
 
 type ProjectsService struct {
-	s *APIService
+	s *Service
 
 	AlertPolicies *ProjectsAlertPoliciesService
 
@@ -192,127 +192,127 @@ type ProjectsService struct {
 	UptimeCheckConfigs *ProjectsUptimeCheckConfigsService
 }
 
-func NewProjectsAlertPoliciesService(s *APIService) *ProjectsAlertPoliciesService {
+func NewProjectsAlertPoliciesService(s *Service) *ProjectsAlertPoliciesService {
 	rs := &ProjectsAlertPoliciesService{s: s}
 	return rs
 }
 
 type ProjectsAlertPoliciesService struct {
-	s *APIService
+	s *Service
 }
 
-func NewProjectsCollectdTimeSeriesService(s *APIService) *ProjectsCollectdTimeSeriesService {
+func NewProjectsCollectdTimeSeriesService(s *Service) *ProjectsCollectdTimeSeriesService {
 	rs := &ProjectsCollectdTimeSeriesService{s: s}
 	return rs
 }
 
 type ProjectsCollectdTimeSeriesService struct {
-	s *APIService
+	s *Service
 }
 
-func NewProjectsGroupsService(s *APIService) *ProjectsGroupsService {
+func NewProjectsGroupsService(s *Service) *ProjectsGroupsService {
 	rs := &ProjectsGroupsService{s: s}
 	rs.Members = NewProjectsGroupsMembersService(s)
 	return rs
 }
 
 type ProjectsGroupsService struct {
-	s *APIService
+	s *Service
 
 	Members *ProjectsGroupsMembersService
 }
 
-func NewProjectsGroupsMembersService(s *APIService) *ProjectsGroupsMembersService {
+func NewProjectsGroupsMembersService(s *Service) *ProjectsGroupsMembersService {
 	rs := &ProjectsGroupsMembersService{s: s}
 	return rs
 }
 
 type ProjectsGroupsMembersService struct {
-	s *APIService
+	s *Service
 }
 
-func NewProjectsMetricDescriptorsService(s *APIService) *ProjectsMetricDescriptorsService {
+func NewProjectsMetricDescriptorsService(s *Service) *ProjectsMetricDescriptorsService {
 	rs := &ProjectsMetricDescriptorsService{s: s}
 	return rs
 }
 
 type ProjectsMetricDescriptorsService struct {
-	s *APIService
+	s *Service
 }
 
-func NewProjectsMonitoredResourceDescriptorsService(s *APIService) *ProjectsMonitoredResourceDescriptorsService {
+func NewProjectsMonitoredResourceDescriptorsService(s *Service) *ProjectsMonitoredResourceDescriptorsService {
 	rs := &ProjectsMonitoredResourceDescriptorsService{s: s}
 	return rs
 }
 
 type ProjectsMonitoredResourceDescriptorsService struct {
-	s *APIService
+	s *Service
 }
 
-func NewProjectsNotificationChannelDescriptorsService(s *APIService) *ProjectsNotificationChannelDescriptorsService {
+func NewProjectsNotificationChannelDescriptorsService(s *Service) *ProjectsNotificationChannelDescriptorsService {
 	rs := &ProjectsNotificationChannelDescriptorsService{s: s}
 	return rs
 }
 
 type ProjectsNotificationChannelDescriptorsService struct {
-	s *APIService
+	s *Service
 }
 
-func NewProjectsNotificationChannelsService(s *APIService) *ProjectsNotificationChannelsService {
+func NewProjectsNotificationChannelsService(s *Service) *ProjectsNotificationChannelsService {
 	rs := &ProjectsNotificationChannelsService{s: s}
 	return rs
 }
 
 type ProjectsNotificationChannelsService struct {
-	s *APIService
+	s *Service
 }
 
-func NewProjectsTimeSeriesService(s *APIService) *ProjectsTimeSeriesService {
+func NewProjectsTimeSeriesService(s *Service) *ProjectsTimeSeriesService {
 	rs := &ProjectsTimeSeriesService{s: s}
 	return rs
 }
 
 type ProjectsTimeSeriesService struct {
-	s *APIService
+	s *Service
 }
 
-func NewProjectsUptimeCheckConfigsService(s *APIService) *ProjectsUptimeCheckConfigsService {
+func NewProjectsUptimeCheckConfigsService(s *Service) *ProjectsUptimeCheckConfigsService {
 	rs := &ProjectsUptimeCheckConfigsService{s: s}
 	return rs
 }
 
 type ProjectsUptimeCheckConfigsService struct {
-	s *APIService
+	s *Service
 }
 
-func NewServicesService(s *APIService) *ServicesService {
+func NewServicesService(s *Service) *ServicesService {
 	rs := &ServicesService{s: s}
 	rs.ServiceLevelObjectives = NewServicesServiceLevelObjectivesService(s)
 	return rs
 }
 
 type ServicesService struct {
-	s *APIService
+	s *Service
 
 	ServiceLevelObjectives *ServicesServiceLevelObjectivesService
 }
 
-func NewServicesServiceLevelObjectivesService(s *APIService) *ServicesServiceLevelObjectivesService {
+func NewServicesServiceLevelObjectivesService(s *Service) *ServicesServiceLevelObjectivesService {
 	rs := &ServicesServiceLevelObjectivesService{s: s}
 	return rs
 }
 
 type ServicesServiceLevelObjectivesService struct {
-	s *APIService
+	s *Service
 }
 
-func NewUptimeCheckIpsService(s *APIService) *UptimeCheckIpsService {
+func NewUptimeCheckIpsService(s *Service) *UptimeCheckIpsService {
 	rs := &UptimeCheckIpsService{s: s}
 	return rs
 }
 
 type UptimeCheckIpsService struct {
-	s *APIService
+	s *Service
 }
 
 // Aggregation: Describes how to combine multiple time series to provide
@@ -2680,7 +2680,7 @@ type ListServicesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Services: The Services matching the specified filter.
-	Services []*Service `json:"services,omitempty"`
+	Services []*MService `json:"services,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -3996,12 +3996,12 @@ func (s *ResourceGroup) MarshalJSON() ([]byte, error) {
 type SendNotificationChannelVerificationCodeRequest struct {
 }
 
-// Service: A Service is a discrete, autonomous, and network-accessible
+// MService: A Service is a discrete, autonomous, and network-accessible
 // unit, designed to solve an individual concern (Wikipedia
 // (https://en.wikipedia.org/wiki/Service-orientation)). In Stackdriver
 // Monitoring, a Service acts as the root resource under which
 // operational aspects of the service are accessible.
-type Service struct {
+type MService struct {
 	// AppEngine: Type used for App Engine services.
 	AppEngine *AppEngine `json:"appEngine,omitempty"`
 
@@ -4046,8 +4046,8 @@ type Service struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Service) MarshalJSON() ([]byte, error) {
-	type NoMethod Service
+func (s *MService) MarshalJSON() ([]byte, error) {
+	type NoMethod MService
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4972,7 +4972,7 @@ func (s *WindowsBasedSli) MarshalJSON() ([]byte, error) {
 // method id "monitoring.projects.alertPolicies.create":
 
 type ProjectsAlertPoliciesCreateCall struct {
-	s           *APIService
+	s           *Service
 	name        string
 	alertpolicy *AlertPolicy
 	urlParams_  gensupport.URLParams
@@ -5015,7 +5015,7 @@ func (c *ProjectsAlertPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5113,7 +5113,7 @@ func (c *ProjectsAlertPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*Ale
 // method id "monitoring.projects.alertPolicies.delete":
 
 type ProjectsAlertPoliciesDeleteCall struct {
-	s          *APIService
+	s          *Service
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -5154,7 +5154,7 @@ func (c *ProjectsAlertPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5244,7 +5244,7 @@ func (c *ProjectsAlertPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 // method id "monitoring.projects.alertPolicies.get":
 
 type ProjectsAlertPoliciesGetCall struct {
-	s            *APIService
+	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -5296,7 +5296,7 @@ func (c *ProjectsAlertPoliciesGetCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5390,7 +5390,7 @@ func (c *ProjectsAlertPoliciesGetCall) Do(opts ...googleapi.CallOption) (*AlertP
 // method id "monitoring.projects.alertPolicies.list":
 
 type ProjectsAlertPoliciesListCall struct {
-	s            *APIService
+	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -5476,7 +5476,7 @@ func (c *ProjectsAlertPoliciesListCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5612,7 +5612,7 @@ func (c *ProjectsAlertPoliciesListCall) Pages(ctx context.Context, f func(*ListA
 // method id "monitoring.projects.alertPolicies.patch":
 
 type ProjectsAlertPoliciesPatchCall struct {
-	s           *APIService
+	s           *Service
 	name        string
 	alertpolicy *AlertPolicy
 	urlParams_  gensupport.URLParams
@@ -5682,7 +5682,7 @@ func (c *ProjectsAlertPoliciesPatchCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5786,7 +5786,7 @@ func (c *ProjectsAlertPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Aler
 // method id "monitoring.projects.collectdTimeSeries.create":
 
 type ProjectsCollectdTimeSeriesCreateCall struct {
-	s                               *APIService
+	s                               *Service
 	name                            string
 	createcollectdtimeseriesrequest *CreateCollectdTimeSeriesRequest
 	urlParams_                      gensupport.URLParams
@@ -5832,7 +5832,7 @@ func (c *ProjectsCollectdTimeSeriesCreateCall) Header() http.Header {
 
 func (c *ProjectsCollectdTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5931,7 +5931,7 @@ func (c *ProjectsCollectdTimeSeriesCreateCall) Do(opts ...googleapi.CallOption) 
 // method id "monitoring.projects.groups.create":
 
 type ProjectsGroupsCreateCall struct {
-	s          *APIService
+	s          *Service
 	name       string
 	group      *Group
 	urlParams_ gensupport.URLParams
@@ -5981,7 +5981,7 @@ func (c *ProjectsGroupsCreateCall) Header() http.Header {
 
 func (c *ProjectsGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6084,7 +6084,7 @@ func (c *ProjectsGroupsCreateCall) Do(opts ...googleapi.CallOption) (*Group, err
 // method id "monitoring.projects.groups.delete":
 
 type ProjectsGroupsDeleteCall struct {
-	s          *APIService
+	s          *Service
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -6134,7 +6134,7 @@ func (c *ProjectsGroupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6229,7 +6229,7 @@ func (c *ProjectsGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 // method id "monitoring.projects.groups.get":
 
 type ProjectsGroupsGetCall struct {
-	s            *APIService
+	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -6281,7 +6281,7 @@ func (c *ProjectsGroupsGetCall) Header() http.Header {
 
 func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6375,7 +6375,7 @@ func (c *ProjectsGroupsGetCall) Do(opts ...googleapi.CallOption) (*Group, error)
 // method id "monitoring.projects.groups.list":
 
 type ProjectsGroupsListCall struct {
-	s            *APIService
+	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -6473,7 +6473,7 @@ func (c *ProjectsGroupsListCall) Header() http.Header {
 
 func (c *ProjectsGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6614,7 +6614,7 @@ func (c *ProjectsGroupsListCall) Pages(ctx context.Context, f func(*ListGroupsRe
 // method id "monitoring.projects.groups.update":
 
 type ProjectsGroupsUpdateCall struct {
-	s          *APIService
+	s          *Service
 	name       string
 	group      *Group
 	urlParams_ gensupport.URLParams
@@ -6665,7 +6665,7 @@ func (c *ProjectsGroupsUpdateCall) Header() http.Header {
 
 func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6768,7 +6768,7 @@ func (c *ProjectsGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Group, err
 // method id "monitoring.projects.groups.members.list":
 
 type ProjectsGroupsMembersListCall struct {
-	s            *APIService
+	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -6863,7 +6863,7 @@ func (c *ProjectsGroupsMembersListCall) Header() http.Header {
 
 func (c *ProjectsGroupsMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7006,7 +7006,7 @@ func (c *ProjectsGroupsMembersListCall) Pages(ctx context.Context, f func(*ListG
 // method id "monitoring.projects.metricDescriptors.create":
 
 type ProjectsMetricDescriptorsCreateCall struct {
-	s                *APIService
+	s                *Service
 	name             string
 	metricdescriptor *MetricDescriptor
 	urlParams_       gensupport.URLParams
@@ -7050,7 +7050,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7149,7 +7149,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Do(opts ...googleapi.CallOption) (
 // method id "monitoring.projects.metricDescriptors.delete":
 
 type ProjectsMetricDescriptorsDeleteCall struct {
-	s          *APIService
+	s          *Service
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -7191,7 +7191,7 @@ func (c *ProjectsMetricDescriptorsDeleteCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7281,7 +7281,7 @@ func (c *ProjectsMetricDescriptorsDeleteCall) Do(opts ...googleapi.CallOption) (
 // method id "monitoring.projects.metricDescriptors.get":
 
 type ProjectsMetricDescriptorsGetCall struct {
-	s            *APIService
+	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -7334,7 +7334,7 @@ func (c *ProjectsMetricDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7429,7 +7429,7 @@ func (c *ProjectsMetricDescriptorsGetCall) Do(opts ...googleapi.CallOption) (*Me
 // method id "monitoring.projects.metricDescriptors.list":
 
 type ProjectsMetricDescriptorsListCall struct {
-	s            *APIService
+	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -7509,7 +7509,7 @@ func (c *ProjectsMetricDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7641,7 +7641,7 @@ func (c *ProjectsMetricDescriptorsListCall) Pages(ctx context.Context, f func(*L
 // method id "monitoring.projects.monitoredResourceDescriptors.get":
 
 type ProjectsMonitoredResourceDescriptorsGetCall struct {
-	s            *APIService
+	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -7694,7 +7694,7 @@ func (c *ProjectsMonitoredResourceDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsMonitoredResourceDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7789,7 +7789,7 @@ func (c *ProjectsMonitoredResourceDescriptorsGetCall) Do(opts ...googleapi.CallO
 // method id "monitoring.projects.monitoredResourceDescriptors.list":
 
 type ProjectsMonitoredResourceDescriptorsListCall struct {
-	s            *APIService
+	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -7869,7 +7869,7 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsMonitoredResourceDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8003,7 +8003,7 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Pages(ctx context.Context
 // method id "monitoring.projects.notificationChannelDescriptors.get":
 
 type ProjectsNotificationChannelDescriptorsGetCall struct {
-	s            *APIService
+	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -8057,7 +8057,7 @@ func (c *ProjectsNotificationChannelDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8151,7 +8151,7 @@ func (c *ProjectsNotificationChannelDescriptorsGetCall) Do(opts ...googleapi.Cal
 // method id "monitoring.projects.notificationChannelDescriptors.list":
 
 type ProjectsNotificationChannelDescriptorsListCall struct {
-	s            *APIService
+	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -8221,7 +8221,7 @@ func (c *ProjectsNotificationChannelDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8349,7 +8349,7 @@ func (c *ProjectsNotificationChannelDescriptorsListCall) Pages(ctx context.Conte
 // method id "monitoring.projects.notificationChannels.create":
 
 type ProjectsNotificationChannelsCreateCall struct {
-	s                   *APIService
+	s                   *Service
 	name                string
 	notificationchannel *NotificationChannel
 	urlParams_          gensupport.URLParams
@@ -8394,7 +8394,7 @@ func (c *ProjectsNotificationChannelsCreateCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8492,7 +8492,7 @@ func (c *ProjectsNotificationChannelsCreateCall) Do(opts ...googleapi.CallOption
 // method id "monitoring.projects.notificationChannels.delete":
 
 type ProjectsNotificationChannelsDeleteCall struct {
-	s          *APIService
+	s          *Service
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -8543,7 +8543,7 @@ func (c *ProjectsNotificationChannelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8638,7 +8638,7 @@ func (c *ProjectsNotificationChannelsDeleteCall) Do(opts ...googleapi.CallOption
 // method id "monitoring.projects.notificationChannels.get":
 
 type ProjectsNotificationChannelsGetCall struct {
-	s            *APIService
+	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -8695,7 +8695,7 @@ func (c *ProjectsNotificationChannelsGetCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8789,7 +8789,7 @@ func (c *ProjectsNotificationChannelsGetCall) Do(opts ...googleapi.CallOption) (
 // method id "monitoring.projects.notificationChannels.getVerificationCode":
 
 type ProjectsNotificationChannelsGetVerificationCodeCall struct {
-	s                                             *APIService
+	s                                             *Service
 	name                                          string
 	getnotificationchannelverificationcoderequest *GetNotificationChannelVerificationCodeRequest
 	urlParams_                                    gensupport.URLParams
@@ -8852,7 +8852,7 @@ func (c *ProjectsNotificationChannelsGetVerificationCodeCall) Header() http.Head
 
 func (c *ProjectsNotificationChannelsGetVerificationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8952,7 +8952,7 @@ func (c *ProjectsNotificationChannelsGetVerificationCodeCall) Do(opts ...googlea
 // method id "monitoring.projects.notificationChannels.list":
 
 type ProjectsNotificationChannelsListCall struct {
-	s            *APIService
+	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -9040,7 +9040,7 @@ func (c *ProjectsNotificationChannelsListCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9176,7 +9176,7 @@ func (c *ProjectsNotificationChannelsListCall) Pages(ctx context.Context, f func
 // method id "monitoring.projects.notificationChannels.patch":
 
 type ProjectsNotificationChannelsPatchCall struct {
-	s                   *APIService
+	s                   *Service
 	name                string
 	notificationchannel *NotificationChannel
 	urlParams_          gensupport.URLParams
@@ -9227,7 +9227,7 @@ func (c *ProjectsNotificationChannelsPatchCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9331,7 +9331,7 @@ func (c *ProjectsNotificationChannelsPatchCall) Do(opts ...googleapi.CallOption)
 // method id "monitoring.projects.notificationChannels.sendVerificationCode":
 
 type ProjectsNotificationChannelsSendVerificationCodeCall struct {
-	s                                              *APIService
+	s                                              *Service
 	name                                           string
 	sendnotificationchannelverificationcoderequest *SendNotificationChannelVerificationCodeRequest
 	urlParams_                                     gensupport.URLParams
@@ -9376,7 +9376,7 @@ func (c *ProjectsNotificationChannelsSendVerificationCodeCall) Header() http.Hea
 
 func (c *ProjectsNotificationChannelsSendVerificationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9474,7 +9474,7 @@ func (c *ProjectsNotificationChannelsSendVerificationCodeCall) Do(opts ...google
 // method id "monitoring.projects.notificationChannels.verify":
 
 type ProjectsNotificationChannelsVerifyCall struct {
-	s                                *APIService
+	s                                *Service
 	name                             string
 	verifynotificationchannelrequest *VerifyNotificationChannelRequest
 	urlParams_                       gensupport.URLParams
@@ -9519,7 +9519,7 @@ func (c *ProjectsNotificationChannelsVerifyCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsVerifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9617,7 +9617,7 @@ func (c *ProjectsNotificationChannelsVerifyCall) Do(opts ...googleapi.CallOption
 // method id "monitoring.projects.timeSeries.create":
 
 type ProjectsTimeSeriesCreateCall struct {
-	s                       *APIService
+	s                       *Service
 	name                    string
 	createtimeseriesrequest *CreateTimeSeriesRequest
 	urlParams_              gensupport.URLParams
@@ -9663,7 +9663,7 @@ func (c *ProjectsTimeSeriesCreateCall) Header() http.Header {
 
 func (c *ProjectsTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9762,7 +9762,7 @@ func (c *ProjectsTimeSeriesCreateCall) Do(opts ...googleapi.CallOption) (*Empty,
 // method id "monitoring.projects.timeSeries.list":
 
 type ProjectsTimeSeriesListCall struct {
-	s            *APIService
+	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -9981,7 +9981,7 @@ func (c *ProjectsTimeSeriesListCall) Header() http.Header {
 
 func (c *ProjectsTimeSeriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10197,7 +10197,7 @@ func (c *ProjectsTimeSeriesListCall) Pages(ctx context.Context, f func(*ListTime
 // method id "monitoring.projects.uptimeCheckConfigs.create":
 
 type ProjectsUptimeCheckConfigsCreateCall struct {
-	s                 *APIService
+	s                 *Service
 	parent            string
 	uptimecheckconfig *UptimeCheckConfig
 	urlParams_        gensupport.URLParams
@@ -10240,7 +10240,7 @@ func (c *ProjectsUptimeCheckConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10338,7 +10338,7 @@ func (c *ProjectsUptimeCheckConfigsCreateCall) Do(opts ...googleapi.CallOption) 
 // method id "monitoring.projects.uptimeCheckConfigs.delete":
 
 type ProjectsUptimeCheckConfigsDeleteCall struct {
-	s          *APIService
+	s          *Service
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -10382,7 +10382,7 @@ func (c *ProjectsUptimeCheckConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10472,7 +10472,7 @@ func (c *ProjectsUptimeCheckConfigsDeleteCall) Do(opts ...googleapi.CallOption) 
 // method id "monitoring.projects.uptimeCheckConfigs.get":
 
 type ProjectsUptimeCheckConfigsGetCall struct {
-	s            *APIService
+	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -10524,7 +10524,7 @@ func (c *ProjectsUptimeCheckConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10618,7 +10618,7 @@ func (c *ProjectsUptimeCheckConfigsGetCall) Do(opts ...googleapi.CallOption) (*U
 // method id "monitoring.projects.uptimeCheckConfigs.list":
 
 type ProjectsUptimeCheckConfigsListCall struct {
-	s            *APIService
+	s            *Service
 	parent       string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -10690,7 +10690,7 @@ func (c *ProjectsUptimeCheckConfigsListCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10816,7 +10816,7 @@ func (c *ProjectsUptimeCheckConfigsListCall) Pages(ctx context.Context, f func(*
 // method id "monitoring.projects.uptimeCheckConfigs.patch":
 
 type ProjectsUptimeCheckConfigsPatchCall struct {
-	s                 *APIService
+	s                 *Service
 	name              string
 	uptimecheckconfig *UptimeCheckConfig
 	urlParams_        gensupport.URLParams
@@ -10872,7 +10872,7 @@ func (c *ProjectsUptimeCheckConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10976,16 +10976,16 @@ func (c *ProjectsUptimeCheckConfigsPatchCall) Do(opts ...googleapi.CallOption) (
 // method id "monitoring.services.create":
 
 type ServicesCreateCall struct {
-	s          *APIService
+	s          *Service
 	parent     string
-	service    *Service
+	service    *MService
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
 	header_    http.Header
 }
 
 // Create: Create a Service.
-func (r *ServicesService) Create(parent string, service *Service) *ServicesCreateCall {
+func (r *ServicesService) Create(parent string, service *MService) *ServicesCreateCall {
 	c := &ServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.service = service
@@ -11027,7 +11027,7 @@ func (c *ServicesCreateCall) Header() http.Header {
 
 func (c *ServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11054,13 +11054,13 @@ func (c *ServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "monitoring.services.create" call.
-// Exactly one of *Service or error will be non-nil. Any non-2xx status
+// Exactly one of *MService or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
-// *Service.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ServicesCreateCall) Do(opts ...googleapi.CallOption) (*Service, error) {
+// *MService.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesCreateCall) Do(opts ...googleapi.CallOption) (*MService, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -11079,7 +11079,7 @@ func (c *ServicesCreateCall) Do(opts ...googleapi.CallOption) (*Service, error) 
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &Service{
+	ret := &MService{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -11130,7 +11130,7 @@ func (c *ServicesCreateCall) Do(opts ...googleapi.CallOption) (*Service, error) 
 // method id "monitoring.services.delete":
 
 type ServicesDeleteCall struct {
-	s          *APIService
+	s          *Service
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -11171,7 +11171,7 @@ func (c *ServicesDeleteCall) Header() http.Header {
 
 func (c *ServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11261,7 +11261,7 @@ func (c *ServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 // method id "monitoring.services.get":
 
 type ServicesGetCall struct {
-	s            *APIService
+	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -11313,7 +11313,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11338,13 +11338,13 @@ func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "monitoring.services.get" call.
-// Exactly one of *Service or error will be non-nil. Any non-2xx status
+// Exactly one of *MService or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
-// *Service.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ServicesGetCall) Do(opts ...googleapi.CallOption) (*Service, error) {
+// *MService.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesGetCall) Do(opts ...googleapi.CallOption) (*MService, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -11363,7 +11363,7 @@ func (c *ServicesGetCall) Do(opts ...googleapi.CallOption) (*Service, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &Service{
+	ret := &MService{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -11407,7 +11407,7 @@ func (c *ServicesGetCall) Do(opts ...googleapi.CallOption) (*Service, error) {
 // method id "monitoring.services.list":
 
 type ServicesListCall struct {
-	s            *APIService
+	s            *Service
 	parent       string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -11495,7 +11495,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11626,16 +11626,16 @@ func (c *ServicesListCall) Pages(ctx context.Context, f func(*ListServicesRespon
 // method id "monitoring.services.patch":
 
 type ServicesPatchCall struct {
-	s          *APIService
+	s          *Service
 	name       string
-	service    *Service
+	service    *MService
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
 	header_    http.Header
 }
 
 // Patch: Update this Service.
-func (r *ServicesService) Patch(name string, service *Service) *ServicesPatchCall {
+func (r *ServicesService) Patch(name string, service *MService) *ServicesPatchCall {
 	c := &ServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.service = service
@@ -11676,7 +11676,7 @@ func (c *ServicesPatchCall) Header() http.Header {
 
 func (c *ServicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11703,13 +11703,13 @@ func (c *ServicesPatchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "monitoring.services.patch" call.
-// Exactly one of *Service or error will be non-nil. Any non-2xx status
+// Exactly one of *MService or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
-// *Service.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ServicesPatchCall) Do(opts ...googleapi.CallOption) (*Service, error) {
+// *MService.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesPatchCall) Do(opts ...googleapi.CallOption) (*MService, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -11728,7 +11728,7 @@ func (c *ServicesPatchCall) Do(opts ...googleapi.CallOption) (*Service, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &Service{
+	ret := &MService{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -11780,7 +11780,7 @@ func (c *ServicesPatchCall) Do(opts ...googleapi.CallOption) (*Service, error) {
 // method id "monitoring.services.serviceLevelObjectives.create":
 
 type ServicesServiceLevelObjectivesCreateCall struct {
-	s                     *APIService
+	s                     *Service
 	parent                string
 	servicelevelobjective *ServiceLevelObjective
 	urlParams_            gensupport.URLParams
@@ -11832,7 +11832,7 @@ func (c *ServicesServiceLevelObjectivesCreateCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11935,7 +11935,7 @@ func (c *ServicesServiceLevelObjectivesCreateCall) Do(opts ...googleapi.CallOpti
 // method id "monitoring.services.serviceLevelObjectives.delete":
 
 type ServicesServiceLevelObjectivesDeleteCall struct {
-	s          *APIService
+	s          *Service
 	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -11976,7 +11976,7 @@ func (c *ServicesServiceLevelObjectivesDeleteCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12066,7 +12066,7 @@ func (c *ServicesServiceLevelObjectivesDeleteCall) Do(opts ...googleapi.CallOpti
 // method id "monitoring.services.serviceLevelObjectives.get":
 
 type ServicesServiceLevelObjectivesGetCall struct {
-	s            *APIService
+	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -12133,7 +12133,7 @@ func (c *ServicesServiceLevelObjectivesGetCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12237,7 +12237,7 @@ func (c *ServicesServiceLevelObjectivesGetCall) Do(opts ...googleapi.CallOption)
 // method id "monitoring.services.serviceLevelObjectives.list":
 
 type ServicesServiceLevelObjectivesListCall struct {
-	s            *APIService
+	s            *Service
 	parent       string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -12328,7 +12328,7 @@ func (c *ServicesServiceLevelObjectivesListCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12470,7 +12470,7 @@ func (c *ServicesServiceLevelObjectivesListCall) Pages(ctx context.Context, f fu
 // method id "monitoring.services.serviceLevelObjectives.patch":
 
 type ServicesServiceLevelObjectivesPatchCall struct {
-	s                     *APIService
+	s                     *Service
 	name                  string
 	servicelevelobjective *ServiceLevelObjective
 	urlParams_            gensupport.URLParams
@@ -12520,7 +12520,7 @@ func (c *ServicesServiceLevelObjectivesPatchCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12624,7 +12624,7 @@ func (c *ServicesServiceLevelObjectivesPatchCall) Do(opts ...googleapi.CallOptio
 // method id "monitoring.uptimeCheckIps.list":
 
 type UptimeCheckIpsListCall struct {
-	s            *APIService
+	s            *Service
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -12694,7 +12694,7 @@ func (c *UptimeCheckIpsListCall) Header() http.Header {
 
 func (c *UptimeCheckIpsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.1 gdcl/20191217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

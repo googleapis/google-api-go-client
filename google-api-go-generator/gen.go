@@ -407,6 +407,12 @@ func (a *API) Target() string {
 // ServiceType returns the name of the type to use for the root API struct
 // (typically "Service").
 func (a *API) ServiceType() string {
+	if a.Name == "monitoring" && a.Version == "v3" {
+		// HACK(deklerk) monitoring:v3 should always use call its overall
+		// service struct "Service", even though there is a "Service" in its
+		// schema (we re-map it to MService later).
+		return "Service"
+	}
 	switch a.Name {
 	case "appengine", "content": // retained for historical compatibility.
 		return "APIService"
@@ -1175,6 +1181,15 @@ func (s *Schema) GoName() string {
 			s.goName = s.api.typeAsGo(s.typ, false)
 		} else {
 			base := initialCap(s.apiName)
+
+			// HACK(deklerk) Re-maps monitoring's Service field to MService so
+			// that the overall struct for this API can keep its name "Service".
+			// This takes care of "Service" the initial "goName" for "Service"
+			// refs.
+			if s.api.Name == "monitoring" && base == "Service" {
+				base = "MService"
+			}
+
 			s.goName = s.api.GetName(base)
 			if base == "Service" && s.goName != "Service" {
 				// Detect the case where a resource is going to clash with the

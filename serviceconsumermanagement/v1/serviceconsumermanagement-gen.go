@@ -5082,6 +5082,46 @@ func (s *V1Beta1ServiceIdentity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// V1DefaultIdentity: A default identity in the Identity and Access
+// Management API.
+type V1DefaultIdentity struct {
+	// Email: The email address of the default identity.
+	Email string `json:"email,omitempty"`
+
+	// Name: Default identity resource name.
+	//
+	// An example name would
+	// be:
+	// `services/serviceconsumermanagement.googleapis.com/projects/123/de
+	// faultIdentity`
+	Name string `json:"name,omitempty"`
+
+	// UniqueId: The unique and stable id of the default identity.
+	UniqueId string `json:"uniqueId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1DefaultIdentity) MarshalJSON() ([]byte, error) {
+	type NoMethod V1DefaultIdentity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // V1DisableConsumerResponse: Response message for the `DisableConsumer`
 // method.
 // This response message is assigned to the `response` field of the
@@ -5096,6 +5136,69 @@ type V1DisableConsumerResponse struct {
 // returned
 // Operation when that operation is done.
 type V1EnableConsumerResponse struct {
+}
+
+// V1GenerateDefaultIdentityResponse: Response message for the
+// `GenerateDefaultIdentity` method.
+//
+// This response message is assigned to the `response` field of the
+// returned
+// Operation when that operation is done.
+type V1GenerateDefaultIdentityResponse struct {
+	// AttachStatus: Status of the role attachment. Under development
+	// (go/si-attach-role),
+	// currently always return ATTACH_STATUS_UNSPECIFIED)
+	//
+	// Possible values:
+	//   "ATTACH_STATUS_UNSPECIFIED" - Indicates that the AttachStatus was
+	// not set.
+	//   "ATTACHED" - The default identity was attached to a role
+	// successfully in this request.
+	//   "ATTACH_SKIPPED" - The request specified that no attempt should be
+	// made to attach the role.
+	//   "PREVIOUSLY_ATTACHED" - Role was attached to the consumer project
+	// at some point in time. Tenant
+	// manager doesn't make assertion about the current state of the
+	// identity
+	// with respect to the consumer.
+	//
+	// Role attachment should happen only once after activation and cannot
+	// be
+	// reattached after customer removes it. (go/si-attach-role)
+	//   "ATTACH_DENIED_BY_ORG_POLICY" - Role attachment was denied in this
+	// request by customer set org policy.
+	// (go/si-attach-role)
+	AttachStatus string `json:"attachStatus,omitempty"`
+
+	// Identity: DefaultIdentity that was created or retrieved.
+	Identity *V1DefaultIdentity `json:"identity,omitempty"`
+
+	// Role: Role attached to consumer project. Empty if not attached in
+	// this
+	// request. (Under development, currently always return empty.)
+	Role string `json:"role,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttachStatus") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttachStatus") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1GenerateDefaultIdentityResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod V1GenerateDefaultIdentityResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // V1GenerateServiceAccountResponse: Response message for the
@@ -5284,7 +5387,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5428,7 +5531,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5573,7 +5676,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5754,7 +5857,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5985,7 +6088,7 @@ func (c *ServicesSearchCall) Header() http.Header {
 
 func (c *ServicesSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6165,7 +6268,7 @@ func (c *ServicesTenancyUnitsAddProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsAddProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6331,7 +6434,7 @@ func (c *ServicesTenancyUnitsApplyProjectConfigCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsApplyProjectConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6488,7 +6591,7 @@ func (c *ServicesTenancyUnitsAttachProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsAttachProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6634,7 +6737,7 @@ func (c *ServicesTenancyUnitsCreateCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6776,7 +6879,7 @@ func (c *ServicesTenancyUnitsDeleteCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6923,7 +7026,7 @@ func (c *ServicesTenancyUnitsDeleteProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsDeleteProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7104,7 +7207,7 @@ func (c *ServicesTenancyUnitsListCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7289,7 +7392,7 @@ func (c *ServicesTenancyUnitsRemoveProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsRemoveProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7438,7 +7541,7 @@ func (c *ServicesTenancyUnitsUndeleteProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsUndeleteProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

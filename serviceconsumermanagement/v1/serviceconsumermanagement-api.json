@@ -541,7 +541,7 @@
       }
     }
   },
-  "revision": "20191206",
+  "revision": "20191210",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "AddTenantProjectRequest": {
@@ -2576,6 +2576,25 @@
       },
       "type": "object"
     },
+    "V1DefaultIdentity": {
+      "description": "A default identity in the Identity and Access Management API.",
+      "id": "V1DefaultIdentity",
+      "properties": {
+        "email": {
+          "description": "The email address of the default identity.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Default identity resource name.\n\nAn example name would be:\n`services/serviceconsumermanagement.googleapis.com/projects/123/defaultIdentity`",
+          "type": "string"
+        },
+        "uniqueId": {
+          "description": "The unique and stable id of the default identity.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "V1DisableConsumerResponse": {
       "description": "Response message for the `DisableConsumer` method.\nThis response message is assigned to the `response` field of the returned\nOperation when that operation is done.",
       "id": "V1DisableConsumerResponse",
@@ -2586,6 +2605,39 @@
       "description": "Response message for the `EnableConsumer` method.\nThis response message is assigned to the `response` field of the returned\nOperation when that operation is done.",
       "id": "V1EnableConsumerResponse",
       "properties": {},
+      "type": "object"
+    },
+    "V1GenerateDefaultIdentityResponse": {
+      "description": "Response message for the `GenerateDefaultIdentity` method.\n\nThis response message is assigned to the `response` field of the returned\nOperation when that operation is done.",
+      "id": "V1GenerateDefaultIdentityResponse",
+      "properties": {
+        "attachStatus": {
+          "description": "Status of the role attachment. Under development (go/si-attach-role),\ncurrently always return ATTACH_STATUS_UNSPECIFIED)",
+          "enum": [
+            "ATTACH_STATUS_UNSPECIFIED",
+            "ATTACHED",
+            "ATTACH_SKIPPED",
+            "PREVIOUSLY_ATTACHED",
+            "ATTACH_DENIED_BY_ORG_POLICY"
+          ],
+          "enumDescriptions": [
+            "Indicates that the AttachStatus was not set.",
+            "The default identity was attached to a role successfully in this request.",
+            "The request specified that no attempt should be made to attach the role.",
+            "Role was attached to the consumer project at some point in time. Tenant\nmanager doesn't make assertion about the current state of the identity\nwith respect to the consumer.\n\nRole attachment should happen only once after activation and cannot be\nreattached after customer removes it. (go/si-attach-role)",
+            "Role attachment was denied in this request by customer set org policy.\n(go/si-attach-role)"
+          ],
+          "type": "string"
+        },
+        "identity": {
+          "$ref": "V1DefaultIdentity",
+          "description": "DefaultIdentity that was created or retrieved."
+        },
+        "role": {
+          "description": "Role attached to consumer project. Empty if not attached in this\nrequest. (Under development, currently always return empty.)",
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "V1GenerateServiceAccountResponse": {

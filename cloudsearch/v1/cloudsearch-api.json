@@ -1804,7 +1804,7 @@
       }
     }
   },
-  "revision": "20191112",
+  "revision": "20191202",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -3795,7 +3795,7 @@
           "type": "string"
         },
         "interpretedQuery": {
-          "description": "The interpretation of the query used in search. For example, queries with\nnatural language intent like \"email from john\" will be interpreted as\n\"from:john source:mail\". This field will not be filled when the reason is\nNO_RESULTS_FOUND_FOR_USER_QUERY.",
+          "description": "The interpretation of the query used in search. For example, queries with\nnatural language intent like \"email from john\" will be interpreted as\n\"from:john source:mail\". This field will not be filled when the reason is\nNOT_ENOUGH_RESULTS_FOUND_FOR_USER_QUERY.",
           "type": "string"
         },
         "reason": {
@@ -3803,14 +3803,12 @@
           "enum": [
             "UNSPECIFIED",
             "QUERY_HAS_NATURAL_LANGUAGE_INTENT",
-            "NOT_ENOUGH_RESULTS_FOUND_FOR_USER_QUERY",
-            "NO_RESULTS_FOUND_FOR_USER_QUERY"
+            "NOT_ENOUGH_RESULTS_FOUND_FOR_USER_QUERY"
           ],
           "enumDescriptions": [
             "",
             "Natural language interpretation of the query is used to fetch the search\nresults.",
-            "A much broader version of the query is used to retrieve the search\nresults since enough results were not found for the user query.\nInterpreted query will be empty for this case.",
-            ""
+            "A much broader version of the query is used to retrieve the search\nresults since enough results were not found for the user query.\nInterpreted query will be empty for this case."
           ],
           "type": "string"
         }
@@ -4952,7 +4950,7 @@
           "description": "The new schema for the source."
         },
         "validateOnly": {
-          "description": "If true, the request will be validated without side effects.",
+          "description": "If true, the schema will be checked for validity,\nbut will not be registered with the data source, even if valid.",
           "type": "boolean"
         }
       },

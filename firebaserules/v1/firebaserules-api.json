@@ -471,7 +471,7 @@
       }
     }
   },
-  "revision": "20191115",
+  "revision": "20191209",
   "rootUrl": "https://firebaserules.googleapis.com/",
   "schemas": {
     "Arg": {
@@ -493,6 +493,31 @@
       "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
       "id": "Empty",
       "properties": {},
+      "type": "object"
+    },
+    "ExpressionReport": {
+      "description": "Describes where in a file an expression is found and what it was\nevaluated to over the course of its use.",
+      "id": "ExpressionReport",
+      "properties": {
+        "children": {
+          "description": "Subexpressions",
+          "items": {
+            "$ref": "ExpressionReport"
+          },
+          "type": "array"
+        },
+        "sourcePosition": {
+          "$ref": "SourcePosition",
+          "description": "Position of expression in original rules source."
+        },
+        "values": {
+          "description": "Values that this expression evaluated to when encountered.",
+          "items": {
+            "$ref": "ValueCount"
+          },
+          "type": "array"
+        }
+      },
       "type": "object"
     },
     "File": {
@@ -807,6 +832,20 @@
           ],
           "type": "string"
         },
+        "expressionReportLevel": {
+          "description": "Specifies what should be included in the response.",
+          "enum": [
+            "LEVEL_UNSPECIFIED",
+            "NONE",
+            "FULL"
+          ],
+          "enumDescriptions": [
+            "No level has been specified. Defaults to \"NONE\" behavior.",
+            "Do not include any additional information.",
+            "Include detailed reporting on expressions evaluated."
+          ],
+          "type": "string"
+        },
         "functionMocks": {
           "description": "Optional function mocks for service-defined functions. If not set, any\nservice defined function is expected to return an error, which may or may\nnot influence the test outcome.",
           "items": {
@@ -853,6 +892,13 @@
         "errorPosition": {
           "$ref": "SourcePosition",
           "description": "Position in the `Source` or `Ruleset` where the principle runtime error\noccurs.\n\nEvaluation of an expression may result in an error. Rules are deny by\ndefault, so a `DENY` expectation when an error is generated is valid.\nWhen there is a `DENY` with an error, the `SourcePosition` is returned.\n\nE.g. `error_position { line: 19 column: 37 }`"
+        },
+        "expressionReports": {
+          "description": "The mapping from expression in the ruleset AST to the values they were\nevaluated to. Partially-nested to mirror AST structure. Note that this\nfield is actually tracking expressions and not permission statements in\ncontrast to the \"visited_expressions\" field above. Literal expressions\nare omitted.",
+          "items": {
+            "$ref": "ExpressionReport"
+          },
+          "type": "array"
         },
         "functionCalls": {
           "description": "The set of function calls made to service-defined methods.\n\nFunction calls are included in the order in which they are encountered\nduring evaluation, are provided for both mocked and unmocked functions,\nand included on the response regardless of the test `state`.",
@@ -947,6 +993,22 @@
           "description": "Specifies which fields to update.",
           "format": "google-fieldmask",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ValueCount": {
+      "description": "Tuple for how many times an Expression was evaluated to a particular\nExpressionValue.",
+      "id": "ValueCount",
+      "properties": {
+        "count": {
+          "description": "The amount of times that expression returned.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "value": {
+          "description": "The return value of the expression",
+          "type": "any"
         }
       },
       "type": "object"

@@ -117,7 +117,7 @@
           ],
           "parameters": {
             "projectId": {
-              "description": "The ID of the project against which to make the request.",
+              "description": "Required. The ID of the project against which to make the request.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -145,7 +145,7 @@
           ],
           "parameters": {
             "projectId": {
-              "description": "The ID of the project against which to make the request.",
+              "description": "Required. The ID of the project against which to make the request.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -173,7 +173,7 @@
           ],
           "parameters": {
             "projectId": {
-              "description": "The ID of the project against which to make the request.",
+              "description": "Required. The ID of the project against which to make the request.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -201,7 +201,7 @@
           ],
           "parameters": {
             "projectId": {
-              "description": "The ID of the project against which to make the request.",
+              "description": "Required. The ID of the project against which to make the request.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -220,7 +220,7 @@
           ]
         },
         "reserveIds": {
-          "description": "Prevents the supplied keys' IDs from being auto-allocated by Cloud\nDatastore. Used for imports only; other workloads are not supported.",
+          "description": "Prevents the supplied keys' IDs from being auto-allocated by Cloud\nDatastore.",
           "flatPath": "v1beta3/projects/{projectId}:reserveIds",
           "httpMethod": "POST",
           "id": "datastore.projects.reserveIds",
@@ -229,7 +229,7 @@
           ],
           "parameters": {
             "projectId": {
-              "description": "The ID of the project against which to make the request.",
+              "description": "Required. The ID of the project against which to make the request.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -257,7 +257,7 @@
           ],
           "parameters": {
             "projectId": {
-              "description": "The ID of the project against which to make the request.",
+              "description": "Required. The ID of the project against which to make the request.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -285,7 +285,7 @@
           ],
           "parameters": {
             "projectId": {
-              "description": "The ID of the project against which to make the request.",
+              "description": "Required. The ID of the project against which to make the request.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -306,7 +306,7 @@
       }
     }
   },
-  "revision": "20191020",
+  "revision": "20191201",
   "rootUrl": "https://datastore.googleapis.com/",
   "schemas": {
     "AllocateIdsRequest": {
@@ -314,7 +314,7 @@
       "id": "AllocateIdsRequest",
       "properties": {
         "keys": {
-          "description": "A list of keys with incomplete key paths for which to allocate IDs.\nNo key may be reserved/read-only.",
+          "description": "Required. A list of keys with incomplete key paths for which to allocate IDs.\nNo key may be reserved/read-only.",
           "items": {
             "$ref": "Key"
           },
@@ -955,7 +955,7 @@
       "id": "LookupRequest",
       "properties": {
         "keys": {
-          "description": "Keys of entities to look up.",
+          "description": "Required. Keys of entities to look up.",
           "items": {
             "$ref": "Key"
           },
@@ -1343,7 +1343,7 @@
           "type": "string"
         },
         "keys": {
-          "description": "A list of keys with complete key paths whose numeric IDs should not be\nauto-allocated.",
+          "description": "Required. A list of keys with complete key paths whose numeric IDs should not be\nauto-allocated.",
           "items": {
             "$ref": "Key"
           },
@@ -1363,7 +1363,7 @@
       "id": "RollbackRequest",
       "properties": {
         "transaction": {
-          "description": "The transaction identifier, returned by a call to\nDatastore.BeginTransaction.",
+          "description": "Required. The transaction identifier, returned by a call to\nDatastore.BeginTransaction.",
           "format": "byte",
           "type": "string"
         }

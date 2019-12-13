@@ -151,8 +151,8 @@ type ProjectsService struct {
 
 // AllocateIdsRequest: The request for Datastore.AllocateIds.
 type AllocateIdsRequest struct {
-	// Keys: A list of keys with incomplete key paths for which to allocate
-	// IDs.
+	// Keys: Required. A list of keys with incomplete key paths for which to
+	// allocate IDs.
 	// No key may be reserved/read-only.
 	Keys []*Key `json:"keys,omitempty"`
 
@@ -1438,7 +1438,7 @@ func (s *LatLng) UnmarshalJSON(data []byte) error {
 
 // LookupRequest: The request for Datastore.Lookup.
 type LookupRequest struct {
-	// Keys: Keys of entities to look up.
+	// Keys: Required. Keys of entities to look up.
 	Keys []*Key `json:"keys,omitempty"`
 
 	// ReadOptions: The options for this lookup request.
@@ -2096,8 +2096,8 @@ type ReserveIdsRequest struct {
 	// make the request.
 	DatabaseId string `json:"databaseId,omitempty"`
 
-	// Keys: A list of keys with complete key paths whose numeric IDs should
-	// not be
+	// Keys: Required. A list of keys with complete key paths whose numeric
+	// IDs should not be
 	// auto-allocated.
 	Keys []*Key `json:"keys,omitempty"`
 
@@ -2133,7 +2133,7 @@ type ReserveIdsResponse struct {
 
 // RollbackRequest: The request for Datastore.Rollback.
 type RollbackRequest struct {
-	// Transaction: The transaction identifier, returned by a call
+	// Transaction: Required. The transaction identifier, returned by a call
 	// to
 	// Datastore.BeginTransaction.
 	Transaction string `json:"transaction,omitempty"`
@@ -2438,7 +2438,7 @@ func (c *ProjectsAllocateIdsCall) Header() http.Header {
 
 func (c *ProjectsAllocateIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2511,7 +2511,7 @@ func (c *ProjectsAllocateIdsCall) Do(opts ...googleapi.CallOption) (*AllocateIds
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "The ID of the project against which to make the request.",
+	//       "description": "Required. The ID of the project against which to make the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2578,7 +2578,7 @@ func (c *ProjectsBeginTransactionCall) Header() http.Header {
 
 func (c *ProjectsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2651,7 +2651,7 @@ func (c *ProjectsBeginTransactionCall) Do(opts ...googleapi.CallOption) (*BeginT
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "The ID of the project against which to make the request.",
+	//       "description": "Required. The ID of the project against which to make the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2720,7 +2720,7 @@ func (c *ProjectsCommitCall) Header() http.Header {
 
 func (c *ProjectsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2793,7 +2793,7 @@ func (c *ProjectsCommitCall) Do(opts ...googleapi.CallOption) (*CommitResponse, 
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "The ID of the project against which to make the request.",
+	//       "description": "Required. The ID of the project against which to make the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2860,7 +2860,7 @@ func (c *ProjectsLookupCall) Header() http.Header {
 
 func (c *ProjectsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2933,7 +2933,7 @@ func (c *ProjectsLookupCall) Do(opts ...googleapi.CallOption) (*LookupResponse, 
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "The ID of the project against which to make the request.",
+	//       "description": "Required. The ID of the project against which to make the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2967,7 +2967,7 @@ type ProjectsReserveIdsCall struct {
 
 // ReserveIds: Prevents the supplied keys' IDs from being auto-allocated
 // by Cloud
-// Datastore. Used for imports only; other workloads are not supported.
+// Datastore.
 func (r *ProjectsService) ReserveIds(projectId string, reserveidsrequest *ReserveIdsRequest) *ProjectsReserveIdsCall {
 	c := &ProjectsReserveIdsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3002,7 +3002,7 @@ func (c *ProjectsReserveIdsCall) Header() http.Header {
 
 func (c *ProjectsReserveIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3066,7 +3066,7 @@ func (c *ProjectsReserveIdsCall) Do(opts ...googleapi.CallOption) (*ReserveIdsRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Prevents the supplied keys' IDs from being auto-allocated by Cloud\nDatastore. Used for imports only; other workloads are not supported.",
+	//   "description": "Prevents the supplied keys' IDs from being auto-allocated by Cloud\nDatastore.",
 	//   "flatPath": "v1beta3/projects/{projectId}:reserveIds",
 	//   "httpMethod": "POST",
 	//   "id": "datastore.projects.reserveIds",
@@ -3075,7 +3075,7 @@ func (c *ProjectsReserveIdsCall) Do(opts ...googleapi.CallOption) (*ReserveIdsRe
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "The ID of the project against which to make the request.",
+	//       "description": "Required. The ID of the project against which to make the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3142,7 +3142,7 @@ func (c *ProjectsRollbackCall) Header() http.Header {
 
 func (c *ProjectsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3215,7 +3215,7 @@ func (c *ProjectsRollbackCall) Do(opts ...googleapi.CallOption) (*RollbackRespon
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "The ID of the project against which to make the request.",
+	//       "description": "Required. The ID of the project against which to make the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3282,7 +3282,7 @@ func (c *ProjectsRunQueryCall) Header() http.Header {
 
 func (c *ProjectsRunQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3355,7 +3355,7 @@ func (c *ProjectsRunQueryCall) Do(opts ...googleapi.CallOption) (*RunQueryRespon
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "The ID of the project against which to make the request.",
+	//       "description": "Required. The ID of the project against which to make the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

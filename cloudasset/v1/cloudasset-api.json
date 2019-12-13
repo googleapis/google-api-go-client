@@ -104,6 +104,141 @@
   },
   "protocol": "rest",
   "resources": {
+    "feeds": {
+      "methods": {
+        "create": {
+          "description": "Creates a feed in a parent project/folder/organization to listen to its\nasset updates.",
+          "flatPath": "v1/{v1Id}/{v1Id1}/feeds",
+          "httpMethod": "POST",
+          "id": "cloudasset.feeds.create",
+          "parameterOrder": [
+            "parent"
+          ],
+          "parameters": {
+            "parent": {
+              "description": "Required. The name of the project/folder/organization where this feed\nshould be created in. It can only be an organization number (such as\n\"organizations/123\"), a folder number (such as \"folders/123\"), a project ID\n(such as \"projects/my-project-id\")\", or a project number (such as\n\"projects/12345\").",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+parent}/feeds",
+          "request": {
+            "$ref": "CreateFeedRequest"
+          },
+          "response": {
+            "$ref": "Feed"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
+        "delete": {
+          "description": "Deletes an asset feed.",
+          "flatPath": "v1/{v1Id}/{v1Id1}/feeds/{feedsId}",
+          "httpMethod": "DELETE",
+          "id": "cloudasset.feeds.delete",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The name of the feed and it must be in the format of:\nprojects/project_number/feeds/feed_id\nfolders/folder_number/feeds/feed_id\norganizations/organization_number/feeds/feed_id",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+/feeds/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+name}",
+          "response": {
+            "$ref": "Empty"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
+        "get": {
+          "description": "Gets details about an asset feed.",
+          "flatPath": "v1/{v1Id}/{v1Id1}/feeds/{feedsId}",
+          "httpMethod": "GET",
+          "id": "cloudasset.feeds.get",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The name of the Feed and it must be in the format of:\nprojects/project_number/feeds/feed_id\nfolders/folder_number/feeds/feed_id\norganizations/organization_number/feeds/feed_id",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+/feeds/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+name}",
+          "response": {
+            "$ref": "Feed"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
+        "list": {
+          "description": "Lists all asset feeds in a parent project/folder/organization.",
+          "flatPath": "v1/{v1Id}/{v1Id1}/feeds",
+          "httpMethod": "GET",
+          "id": "cloudasset.feeds.list",
+          "parameterOrder": [
+            "parent"
+          ],
+          "parameters": {
+            "parent": {
+              "description": "Required. The parent project/folder/organization whose feeds are to be\nlisted. It can only be using project/folder/organization number (such as\n\"folders/12345\")\", or a project ID (such as \"projects/my-project-id\").",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+parent}/feeds",
+          "response": {
+            "$ref": "ListFeedsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
+        "patch": {
+          "description": "Updates an asset feed configuration.",
+          "flatPath": "v1/{v1Id}/{v1Id1}/feeds/{feedsId}",
+          "httpMethod": "PATCH",
+          "id": "cloudasset.feeds.patch",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The format will be\nprojects/{project_number}/feeds/{client-assigned_feed_identifier} or\nfolders/{folder_number}/feeds/{client-assigned_feed_identifier} or\norganizations/{organization_number}/feeds/{client-assigned_feed_identifier}\n\nThe client-assigned feed identifier must be unique within the parent\nproject/folder/organization.",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+/feeds/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+name}",
+          "request": {
+            "$ref": "UpdateFeedRequest"
+          },
+          "response": {
+            "$ref": "Feed"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        }
+      }
+    },
     "operations": {
       "methods": {
         "get": {
@@ -221,7 +356,7 @@
       }
     }
   },
-  "revision": "20191130",
+  "revision": "20191207",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -373,6 +508,27 @@
       },
       "type": "object"
     },
+    "CreateFeedRequest": {
+      "description": "Create asset feed request.",
+      "id": "CreateFeedRequest",
+      "properties": {
+        "feed": {
+          "$ref": "Feed",
+          "description": "Required. The feed details. The field `name` must be empty and it will be generated\nin the format of:\nprojects/project_number/feeds/feed_id\nfolders/folder_number/feeds/feed_id\norganizations/organization_number/feeds/feed_id"
+        },
+        "feedId": {
+          "description": "Required. This is the client-assigned asset feed identifier and it needs to\nbe unique under a specific parent project/folder/organization.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Empty": {
+      "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
+      "id": "Empty",
+      "properties": {},
+      "type": "object"
+    },
     "ExportAssetsRequest": {
       "description": "Export asset request.",
       "id": "ExportAssetsRequest",
@@ -433,6 +589,64 @@
         "title": {
           "description": "An optional title for the expression, i.e. a short string describing\nits purpose. This can be used e.g. in UIs which allow to enter the\nexpression.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Feed": {
+      "description": "An asset feed used to export asset updates to a destinations.\nAn asset feed filter controls what updates are exported.\nThe asset feed must be created within a project, organization, or\nfolder. Supported destinations are:\nCloud Pub/Sub topics.",
+      "id": "Feed",
+      "properties": {
+        "assetNames": {
+          "description": "A list of the full names of the assets to receive updates. You must specify\neither or both of asset_names and asset_types. Only asset updates matching\nspecified asset_names and asset_types are exported to the feed. For\nexample:\n`//compute.googleapis.com/projects/my_project_123/zones/zone1/instances/instance1`.\nSee [Resource\nNames](https://cloud.google.com/apis/design/resource_names#full_resource_name)\nfor more info.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "assetTypes": {
+          "description": "A list of types of the assets to receive updates. You must specify either\nor both of asset_names and asset_types. Only asset updates matching\nspecified asset_names and asset_types are exported to the feed.\nFor example:\n\"compute.googleapis.com/Disk\" See [Introduction to Cloud Asset\nInventory](https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview)\nfor all supported asset types.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "contentType": {
+          "description": "Asset content type. If not specified, no content but the asset name and\ntype will be returned.",
+          "enum": [
+            "CONTENT_TYPE_UNSPECIFIED",
+            "RESOURCE",
+            "IAM_POLICY",
+            "ORG_POLICY",
+            "ACCESS_POLICY"
+          ],
+          "enumDescriptions": [
+            "Unspecified content type.",
+            "Resource metadata.",
+            "The actual IAM policy set on a resource.",
+            "The Cloud Organization Policy set on an asset.",
+            "The Cloud Access context mananger Policy set on an asset."
+          ],
+          "type": "string"
+        },
+        "feedOutputConfig": {
+          "$ref": "FeedOutputConfig",
+          "description": "Required. Feed output configuration defining where the asset updates are\npublished to."
+        },
+        "name": {
+          "description": "Required. The format will be\nprojects/{project_number}/feeds/{client-assigned_feed_identifier} or\nfolders/{folder_number}/feeds/{client-assigned_feed_identifier} or\norganizations/{organization_number}/feeds/{client-assigned_feed_identifier}\n\nThe client-assigned feed identifier must be unique within the parent\nproject/folder/organization.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "FeedOutputConfig": {
+      "description": "Output configuration for asset feed destination.",
+      "id": "FeedOutputConfig",
+      "properties": {
+        "pubsubDestination": {
+          "$ref": "PubsubDestination",
+          "description": "Destination on Cloud Pubsub."
         }
       },
       "type": "object"
@@ -851,6 +1065,19 @@
       },
       "type": "object"
     },
+    "ListFeedsResponse": {
+      "id": "ListFeedsResponse",
+      "properties": {
+        "feeds": {
+          "description": "A list of feeds.",
+          "items": {
+            "$ref": "Feed"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "Operation": {
       "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
       "id": "Operation",
@@ -928,6 +1155,17 @@
           "description": "Specifies the format of the policy.\n\nValid values are `0`, `1`, and `3`. Requests that specify an invalid value\nare rejected.\n\nAny operation that affects conditional role bindings must specify version\n`3`. This requirement applies to the following operations:\n\n* Getting a policy that includes a conditional role binding\n* Adding a conditional role binding to a policy\n* Changing a conditional role binding in a policy\n* Removing any role binding, with or without a condition, from a policy\n  that includes conditions\n\n**Important:** If you use IAM Conditions, you must include the `etag` field\nwhenever you call `setIamPolicy`. If you omit this field, then IAM allows\nyou to overwrite a version `3` policy with a version `1` policy, and all of\nthe conditions in the version `3` policy are lost.\n\nIf a policy does not include any conditions, operations on that policy may\nspecify any valid version or leave the field unset.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "PubsubDestination": {
+      "description": "A Cloud Pubsub destination.",
+      "id": "PubsubDestination",
+      "properties": {
+        "topic": {
+          "description": "The name of the Cloud Pub/Sub topic to publish to.\nFor example: `projects/PROJECT_ID/topics/TOPIC_ID`.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1025,6 +1263,22 @@
         "startTime": {
           "description": "Start time of the time window (exclusive).",
           "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UpdateFeedRequest": {
+      "description": "Update asset feed request.",
+      "id": "UpdateFeedRequest",
+      "properties": {
+        "feed": {
+          "$ref": "Feed",
+          "description": "Required. The new values of feed details. It must match an existing feed and the\nfield `name` must be in the format of:\nprojects/project_number/feeds/feed_id or\nfolders/folder_number/feeds/feed_id or\norganizations/organization_number/feeds/feed_id."
+        },
+        "updateMask": {
+          "description": "Required. Only updates the `feed` fields indicated by this mask.\nThe field mask must not be empty, and it must not contain fields that\nare immutable or only set by the server.",
+          "format": "google-fieldmask",
           "type": "string"
         }
       },

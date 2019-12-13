@@ -224,6 +224,42 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// ExpressionReport: Describes where in a file an expression is found
+// and what it was
+// evaluated to over the course of its use.
+type ExpressionReport struct {
+	// Children: Subexpressions
+	Children []*ExpressionReport `json:"children,omitempty"`
+
+	// SourcePosition: Position of expression in original rules source.
+	SourcePosition *SourcePosition `json:"sourcePosition,omitempty"`
+
+	// Values: Values that this expression evaluated to when encountered.
+	Values []*ValueCount `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Children") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Children") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExpressionReport) MarshalJSON() ([]byte, error) {
+	type NoMethod ExpressionReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // File: `File` containing source content.
 type File struct {
 	// Content: Textual Content.
@@ -815,6 +851,16 @@ type TestCase struct {
 	//   "DENY" - Expect a denied result.
 	Expectation string `json:"expectation,omitempty"`
 
+	// ExpressionReportLevel: Specifies what should be included in the
+	// response.
+	//
+	// Possible values:
+	//   "LEVEL_UNSPECIFIED" - No level has been specified. Defaults to
+	// "NONE" behavior.
+	//   "NONE" - Do not include any additional information.
+	//   "FULL" - Include detailed reporting on expressions evaluated.
+	ExpressionReportLevel string `json:"expressionReportLevel,omitempty"`
+
 	// FunctionMocks: Optional function mocks for service-defined functions.
 	// If not set, any
 	// service defined function is expected to return an error, which may or
@@ -918,6 +964,17 @@ type TestResult struct {
 	//
 	// E.g. `error_position { line: 19 column: 37 }`
 	ErrorPosition *SourcePosition `json:"errorPosition,omitempty"`
+
+	// ExpressionReports: The mapping from expression in the ruleset AST to
+	// the values they were
+	// evaluated to. Partially-nested to mirror AST structure. Note that
+	// this
+	// field is actually tracking expressions and not permission statements
+	// in
+	// contrast to the "visited_expressions" field above. Literal
+	// expressions
+	// are omitted.
+	ExpressionReports []*ExpressionReport `json:"expressionReports,omitempty"`
 
 	// FunctionCalls: The set of function calls made to service-defined
 	// methods.
@@ -1117,6 +1174,39 @@ func (s *UpdateReleaseRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ValueCount: Tuple for how many times an Expression was evaluated to a
+// particular
+// ExpressionValue.
+type ValueCount struct {
+	// Count: The amount of times that expression returned.
+	Count int64 `json:"count,omitempty"`
+
+	// Value: The return value of the expression
+	Value interface{} `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ValueCount) MarshalJSON() ([]byte, error) {
+	type NoMethod ValueCount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // VisitedExpression: Store the position and access outcome for an
 // expression visited in rules.
 type VisitedExpression struct {
@@ -1225,7 +1315,7 @@ func (c *ProjectsTestCall) Header() http.Header {
 
 func (c *ProjectsTestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1401,7 +1491,7 @@ func (c *ProjectsReleasesCreateCall) Header() http.Header {
 
 func (c *ProjectsReleasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1540,7 +1630,7 @@ func (c *ProjectsReleasesDeleteCall) Header() http.Header {
 
 func (c *ProjectsReleasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1682,7 +1772,7 @@ func (c *ProjectsReleasesGetCall) Header() http.Header {
 
 func (c *ProjectsReleasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1842,7 +1932,7 @@ func (c *ProjectsReleasesGetExecutableCall) Header() http.Header {
 
 func (c *ProjectsReleasesGetExecutableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2066,7 +2156,7 @@ func (c *ProjectsReleasesListCall) Header() http.Header {
 
 func (c *ProjectsReleasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2246,7 +2336,7 @@ func (c *ProjectsReleasesPatchCall) Header() http.Header {
 
 func (c *ProjectsReleasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2395,7 +2485,7 @@ func (c *ProjectsRulesetsCreateCall) Header() http.Header {
 
 func (c *ProjectsRulesetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2537,7 +2627,7 @@ func (c *ProjectsRulesetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsRulesetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2679,7 +2769,7 @@ func (c *ProjectsRulesetsGetCall) Header() http.Header {
 
 func (c *ProjectsRulesetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2866,7 +2956,7 @@ func (c *ProjectsRulesetsListCall) Header() http.Header {
 
 func (c *ProjectsRulesetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -454,10 +454,13 @@ type ChartOptions struct {
 	// Possible values:
 	//   "MODE_UNSPECIFIED" - Mode is unspecified. The view will default to
 	// COLOR.
-	//   "COLOR" - The chart distinguishes data series using color.
+	//   "COLOR" - The chart distinguishes data series using different
+	// color. Line colors may get reused when there are many lines in the
+	// chart.
 	//   "X_RAY" - The chart uses the Stackdriver x-ray mode, in which each
 	// data set is plotted using the same semi-transparent color.
-	//   "STATS" - The chart displays the Stackdriver stats mode.
+	//   "STATS" - The chart displays statistics such as average, median,
+	// 95th percentile, and more.
 	Mode string `json:"mode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Mode") to
@@ -486,8 +489,9 @@ func (s *ChartOptions) MarshalJSON() ([]byte, error) {
 // Column: Defines the layout properties and content for a column.
 type Column struct {
 	// Weight: The relative weight of this column. The column weight is used
-	// to adjust the height of rows on the screen (relative to peers). If
-	// omitted, a value of 1 is used.
+	// to adjust the width of columns on the screen (relative to peers).
+	// Greater the weight, greater the width of the column on the screen. If
+	// omitted, a value of 1 is used while rendering.
 	Weight int64 `json:"weight,omitempty,string"`
 
 	// Widgets: The display widgets arranged vertically in this column.
@@ -566,7 +570,7 @@ type Dashboard struct {
 	Etag string `json:"etag,omitempty"`
 
 	// GridLayout: Content is arranged with a basic layout that re-flows a
-	// simple list of informational elements.
+	// simple list of informational elements like widgets or tiles.
 	GridLayout *GridLayout `json:"gridLayout,omitempty"`
 
 	// Name: The resource name of the dashboard.
@@ -611,10 +615,11 @@ type DataSet struct {
 	LegendTemplate string `json:"legendTemplate,omitempty"`
 
 	// MinAlignmentPeriod: Optional. The lower bound on data point frequency
-	// for this data set implemented by specifying the minimum alignment
-	// period to use in a time series query. For example, if the data is
-	// published once every 10 minutes it would not make sense to fetch and
-	// align data at one minute intervals.
+	// for this data set, implemented by specifying the minimum alignment
+	// period to use in a time series query For example, if the data is
+	// published once every 10 minutes, the min_alignment_period should be
+	// at least 10 minutes. It would not make sense to fetch and align data
+	// at one minute intervals.
 	MinAlignmentPeriod string `json:"minAlignmentPeriod,omitempty"`
 
 	// PlotType: How this data should be plotted on the chart.
@@ -627,13 +632,13 @@ type DataSet struct {
 	//   "STACKED_AREA" - The data is plotted as a set of filled areas (one
 	// area per series), with the areas stacked vertically (the base of each
 	// area is the top of its predecessor, and the base of the first area is
-	// the X axis). Since the areas do not overlap, each is filled with an
-	// opaque color.
+	// the X axis). Since the areas do not overlap, each is filled with a
+	// different opaque color.
 	//   "STACKED_BAR" - The data is plotted as a set of rectangular boxes
 	// (one box per series), with the boxes stacked vertically (the base of
 	// each box is the top of its predecessor, and the base of the first box
-	// is the X axis). Since the boxes do not overlap, each is filled with
-	// an opaque color.
+	// is the X axis). Since the boxes do not overlap, each is filled with a
+	// different opaque color.
 	//   "HEATMAP" - The data is plotted as a heatmap. The series being
 	// plotted must have a DISTRIBUTION value type. The value of each bucket
 	// in the distribution is displayed as a color. This type is not
@@ -868,7 +873,8 @@ func (s *GaugeView) UnmarshalJSON(data []byte) error {
 // row-first strategy.
 type GridLayout struct {
 	// Columns: The number of columns into which the view's width is
-	// divided. If omitted or set to zero, a system default will be used.
+	// divided. If omitted or set to zero, a system default will be used
+	// while rendering.
 	Columns int64 `json:"columns,omitempty,string"`
 
 	// Widgets: The informational elements that are arranged into the
@@ -1065,8 +1071,9 @@ func (s *RatioPart) MarshalJSON() ([]byte, error) {
 // Row: Defines the layout properties and content for a row.
 type Row struct {
 	// Weight: The relative weight of this row. The row weight is used to
-	// adjust the height of rows on the screen (relative to peers). If
-	// omitted, a value of 1 is used.
+	// adjust the height of rows on the screen (relative to peers). Greater
+	// the weight, greater the height of the row on the screen. If omitted,
+	// a value of 1 is used while rendering.
 	Weight int64 `json:"weight,omitempty,string"`
 
 	// Widgets: The display widgets arranged horizontally in this row.
@@ -1266,8 +1273,9 @@ type SparkChartView struct {
 	// Possible values:
 	//   "SPARK_CHART_TYPE_UNSPECIFIED" - Not allowed in well-formed
 	// requests.
-	//   "SPARK_LINE" - The sparkline is a small, line chart.
-	//   "SPARK_BAR" - The sparkbar is a small, bar chart.
+	//   "SPARK_LINE" - The sparkline will be rendered as a small line
+	// chart.
+	//   "SPARK_BAR" - The sparkbar will be rendered as a small bar chart.
 	SparkChartType string `json:"sparkChartType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MinAlignmentPeriod")
@@ -1377,9 +1385,10 @@ type Threshold struct {
 	// XyChart.
 	//
 	// Possible values:
-	//   "COLOR_UNSPECIFIED" - Not allowed in well-formed requests.
-	//   "YELLOW" - Crossing the threshold is concerning behavior.
-	//   "RED" - Crossing the threshold is an emergency behavior.
+	//   "COLOR_UNSPECIFIED" - Color is unspecified. Not allowed in
+	// well-formed requests.
+	//   "YELLOW" - Crossing the threshold is "concerning" behavior.
+	//   "RED" - Crossing the threshold is "emergency" behavior.
 	Color string `json:"color,omitempty"`
 
 	// Direction: The direction for the current threshold. Direction is not
@@ -1664,15 +1673,16 @@ type XyChart struct {
 	Thresholds []*Threshold `json:"thresholds,omitempty"`
 
 	// TimeshiftDuration: The duration used to display a comparison chart. A
-	// comparison chart shows values from two time periods simultaneously
-	// (e.g., week-over-week metrics). The duration must be positive, and it
-	// can only be applied to charts with data sets of LINE plot type.
+	// comparison chart simultaneously shows values from two similar-length
+	// time periods (e.g., week-over-week metrics). The duration must be
+	// positive, and it can only be applied to charts with data sets of LINE
+	// plot type.
 	TimeshiftDuration string `json:"timeshiftDuration,omitempty"`
 
-	// XAxis: The X axis properties.
+	// XAxis: The properties applied to the X axis.
 	XAxis *Axis `json:"xAxis,omitempty"`
 
-	// YAxis: The primary Y axis properties.
+	// YAxis: The properties applied to the Y axis.
 	YAxis *Axis `json:"yAxis,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ChartOptions") to
@@ -1747,7 +1757,7 @@ func (c *ProjectsDashboardsCreateCall) Header() http.Header {
 
 func (c *ProjectsDashboardsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1890,7 +1900,7 @@ func (c *ProjectsDashboardsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDashboardsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2036,7 +2046,7 @@ func (c *ProjectsDashboardsGetCall) Header() http.Header {
 
 func (c *ProjectsDashboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2202,7 +2212,7 @@ func (c *ProjectsDashboardsListCall) Header() http.Header {
 
 func (c *ProjectsDashboardsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2374,7 +2384,7 @@ func (c *ProjectsDashboardsPatchCall) Header() http.Header {
 
 func (c *ProjectsDashboardsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -3614,49 +3614,6 @@ func (s *Color) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// ColorStyle: A color value.
-type ColorStyle struct {
-	// RgbColor: RGB color.
-	RgbColor *Color `json:"rgbColor,omitempty"`
-
-	// ThemeColor: Theme color.
-	//
-	// Possible values:
-	//   "THEME_COLOR_TYPE_UNSPECIFIED" - Unspecified theme color
-	//   "TEXT" - Represents the primary text color
-	//   "BACKGROUND" - Represents the primary background color
-	//   "ACCENT1" - Represents the first accent color
-	//   "ACCENT2" - Represents the second accent color
-	//   "ACCENT3" - Represents the third accent color
-	//   "ACCENT4" - Represents the fourth accent color
-	//   "ACCENT5" - Represents the fifth accent color
-	//   "ACCENT6" - Represents the sixth accent color
-	//   "LINK" - Represents the color to use for hyperlinks
-	ThemeColor string `json:"themeColor,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "RgbColor") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RgbColor") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ColorStyle) MarshalJSON() ([]byte, error) {
-	type NoMethod ColorStyle
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ConditionValue: The value of the condition.
 type ConditionValue struct {
 	// RelativeDate: A relative date (based on the current date).
@@ -8713,9 +8670,6 @@ type SpreadsheetProperties struct {
 	// supported.
 	Locale string `json:"locale,omitempty"`
 
-	// SpreadsheetTheme: Theme applied to the spreadsheet.
-	SpreadsheetTheme *SpreadsheetTheme `json:"spreadsheetTheme,omitempty"`
-
 	// TimeZone: The time zone of the spreadsheet, in CLDR format such
 	// as
 	// `America/New_York`. If the time zone isn't recognized, this may
@@ -8744,40 +8698,6 @@ type SpreadsheetProperties struct {
 
 func (s *SpreadsheetProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod SpreadsheetProperties
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SpreadsheetTheme: Represents spreadsheet theme
-type SpreadsheetTheme struct {
-	// PrimaryFontFamily: / Name of the primary font family.
-	PrimaryFontFamily string `json:"primaryFontFamily,omitempty"`
-
-	// ThemeColors: The spreadsheet theme color pairs. For update users need
-	// to give all pairs
-	// of theme colors.
-	ThemeColors []*ThemeColorPair `json:"themeColors,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "PrimaryFontFamily")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PrimaryFontFamily") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SpreadsheetTheme) MarshalJSON() ([]byte, error) {
-	type NoMethod SpreadsheetTheme
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8999,51 +8919,6 @@ type TextToColumnsRequest struct {
 
 func (s *TextToColumnsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TextToColumnsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ThemeColorPair: A pair mapping a spreadsheet theme color type to the
-// concrete color it
-// represents.
-type ThemeColorPair struct {
-	// Color: The concrete color corresponding to the theme color type.
-	Color *ColorStyle `json:"color,omitempty"`
-
-	// ColorType: The type of the spreadsheet theme color.
-	//
-	// Possible values:
-	//   "THEME_COLOR_TYPE_UNSPECIFIED" - Unspecified theme color
-	//   "TEXT" - Represents the primary text color
-	//   "BACKGROUND" - Represents the primary background color
-	//   "ACCENT1" - Represents the first accent color
-	//   "ACCENT2" - Represents the second accent color
-	//   "ACCENT3" - Represents the third accent color
-	//   "ACCENT4" - Represents the fourth accent color
-	//   "ACCENT5" - Represents the fifth accent color
-	//   "ACCENT6" - Represents the sixth accent color
-	//   "LINK" - Represents the color to use for hyperlinks
-	ColorType string `json:"colorType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Color") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Color") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ThemeColorPair) MarshalJSON() ([]byte, error) {
-	type NoMethod ThemeColorPair
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9959,7 +9834,7 @@ func (s *UpdateSheetPropertiesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UpdateSlicerSpecRequest: Updates a slicer's specifications.
+// UpdateSlicerSpecRequest: Updates a slicer’s specifications.
 // (This does not move or resize a slicer. To move or resize a slicer
 // use
 // UpdateEmbeddedObjectPositionRequest.
@@ -10513,7 +10388,7 @@ func (c *SpreadsheetsBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10653,7 +10528,7 @@ func (c *SpreadsheetsCreateCall) Header() http.Header {
 
 func (c *SpreadsheetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10830,7 +10705,7 @@ func (c *SpreadsheetsGetCall) Header() http.Header {
 
 func (c *SpreadsheetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11006,7 +10881,7 @@ func (c *SpreadsheetsGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11161,7 +11036,7 @@ func (c *SpreadsheetsDeveloperMetadataGetCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11315,7 +11190,7 @@ func (c *SpreadsheetsDeveloperMetadataSearchCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11460,7 +11335,7 @@ func (c *SpreadsheetsSheetsCopyToCall) Header() http.Header {
 
 func (c *SpreadsheetsSheetsCopyToCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11696,7 +11571,7 @@ func (c *SpreadsheetsValuesAppendCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesAppendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11894,7 +11769,7 @@ func (c *SpreadsheetsValuesBatchClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12042,7 +11917,7 @@ func (c *SpreadsheetsValuesBatchClearByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12251,7 +12126,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12429,7 +12304,7 @@ func (c *SpreadsheetsValuesBatchGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12574,7 +12449,7 @@ func (c *SpreadsheetsValuesBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12719,7 +12594,7 @@ func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12867,7 +12742,7 @@ func (c *SpreadsheetsValuesClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13077,7 +12952,7 @@ func (c *SpreadsheetsValuesGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13315,7 +13190,7 @@ func (c *SpreadsheetsValuesUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

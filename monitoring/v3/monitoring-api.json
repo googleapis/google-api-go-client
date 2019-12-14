@@ -1817,7 +1817,7 @@
       }
     }
   },
-  "revision": "20191202",
+  "revision": "20191207",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -1926,7 +1926,7 @@
       "id": "AlertPolicy",
       "properties": {
         "combiner": {
-          "description": "How to combine the results of multiple conditions to determine if an incident should be opened.",
+          "description": "How to combine the results of multiple conditions to determine if an incident should be opened. If condition_time_series_query_language is present, this must be COMBINE_UNSPECIFIED.",
           "enum": [
             "COMBINE_UNSPECIFIED",
             "AND",
@@ -1942,7 +1942,7 @@
           "type": "string"
         },
         "conditions": {
-          "description": "A list of conditions for the policy. The conditions are combined by AND or OR according to the combiner field. If the combined conditions evaluate to true, then an incident is created. A policy can have from one to six conditions.",
+          "description": "A list of conditions for the policy. The conditions are combined by AND or OR according to the combiner field. If the combined conditions evaluate to true, then an incident is created. A policy can have from one to six conditions. If |condition_time_series_uery_language| is present, it must be the only |condition|.",
           "items": {
             "$ref": "Condition"
           },
@@ -3548,23 +3548,6 @@
           "description": "The full REST resource name for this descriptor. The syntax is:\nprojects/[PROJECT_ID]/notificationChannelDescriptors/[TYPE]\nIn the above, [TYPE] is the value of the type field.",
           "type": "string"
         },
-        "supportedTiers": {
-          "description": "The tiers that support this notification channel; the project service tier must be one of the supported_tiers.",
-          "enumDescriptions": [
-            "An invalid sentinel value, used to indicate that a tier has not been provided explicitly.",
-            "A free tier of service that provided access to basic features.",
-            "A paid tier of service that provided access to all features."
-          ],
-          "items": {
-            "enum": [
-              "SERVICE_TIER_UNSPECIFIED",
-              "SERVICE_TIER_BASIC",
-              "SERVICE_TIER_PREMIUM"
-            ],
-            "type": "string"
-          },
-          "type": "array"
-        },
         "type": {
           "description": "The type of notification channel, such as \"email\", \"sms\", etc. Notification channel types are globally unique.",
           "type": "string"
@@ -3776,7 +3759,7 @@
           "type": "string"
         },
         "goal": {
-          "description": "The fraction of service that must be good in order for this objective to be met. 0 \u003c goal \u003c= 1.",
+          "description": "The fraction of service that must be good in order for this objective to be met. 0 \u003c goal \u003c= 0.999.",
           "format": "double",
           "type": "number"
         },

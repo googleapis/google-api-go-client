@@ -3130,7 +3130,7 @@
       }
     }
   },
-  "revision": "20191202",
+  "revision": "20191206",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -4127,6 +4127,10 @@
         "recordTransformations": {
           "$ref": "GooglePrivacyDlpV2RecordTransformations",
           "description": "Treat the dataset as structured. Transformations can be applied to\nspecific locations within structured datasets, such as transforming\na column within a table."
+        },
+        "transformationErrorHandling": {
+          "$ref": "GooglePrivacyDlpV2TransformationErrorHandling",
+          "description": "Mode for handling transformation errors. If left unspecified, the default\nmode is `TransformationErrorHandling.ThrowError`."
         }
       },
       "type": "object"
@@ -5483,6 +5487,12 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2LeaveUntransformed": {
+      "description": "Skips the data without modifying it if the requested transformation would\ncause an error. For example, if a `DateShift` transformation were applied\nan an IP address, this mode would leave the IP address unchanged in the\nresponse.",
+      "id": "GooglePrivacyDlpV2LeaveUntransformed",
+      "properties": {},
+      "type": "object"
+    },
     "GooglePrivacyDlpV2LikelihoodAdjustment": {
       "description": "Message for specifying an adjustment to the likelihood of a finding as\npart of a detection rule.",
       "id": "GooglePrivacyDlpV2LikelihoodAdjustment",
@@ -6485,6 +6495,12 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2ThrowError": {
+      "description": "Throw an error and fail the request when a transformation error occurs.",
+      "id": "GooglePrivacyDlpV2ThrowError",
+      "properties": {},
+      "type": "object"
+    },
     "GooglePrivacyDlpV2TimePartConfig": {
       "description": "For use with `Date`, `Timestamp`, and `TimeOfDay`, extract or preserve a\nportion of the value.",
       "id": "GooglePrivacyDlpV2TimePartConfig",
@@ -6545,6 +6561,19 @@
         "timestampField": {
           "$ref": "GooglePrivacyDlpV2FieldId",
           "description": "Specification of the field containing the timestamp of scanned items.\nUsed for data sources like Datastore and BigQuery.\n\nFor BigQuery:\nRequired to filter out rows based on the given start and\nend times. If not specified and the table was modified between the given\nstart and end times, the entire table will be scanned.\nThe valid data types of the timestamp field are: `INTEGER`, `DATE`,\n`TIMESTAMP`, or `DATETIME` BigQuery column.\n\nFor Datastore.\nValid data types of the timestamp field are: `TIMESTAMP`.\nDatastore entity will be scanned if the timestamp property does not\nexist or its value is empty or invalid."
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2TransformationErrorHandling": {
+      "description": "How to handle transformation errors during de-identification. A\ntransformation error occurs when the requested transformation is incompatible\nwith the data. For example, trying to de-identify an IP address using a\n`DateShift` transformation would result in a transformation error, since date\ninfo cannot be extracted from an IP address.\nInformation about any incompatible transformations, and how they were\nhandled, is returned in the response as part of the\n`TransformationOverviews`.",
+      "id": "GooglePrivacyDlpV2TransformationErrorHandling",
+      "properties": {
+        "leaveUntransformed": {
+          "$ref": "GooglePrivacyDlpV2LeaveUntransformed"
+        },
+        "throwError": {
+          "$ref": "GooglePrivacyDlpV2ThrowError"
         }
       },
       "type": "object"

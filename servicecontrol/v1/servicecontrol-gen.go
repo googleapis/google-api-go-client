@@ -1672,6 +1672,7 @@ type MetricValue struct {
 	// Labels: The labels describing the metric value.
 	// See comments on google.api.servicecontrol.v1.Operation.labels for
 	// the overriding relationship.
+	// Note that this map must not contain monitored resource labels.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MoneyValue: A money value.
@@ -2396,11 +2397,11 @@ type ReportRequest struct {
 	// time
 	// of the report.
 	//
-	// If multiple operations are in a single request, the total request
-	// size
-	// should be no larger than 1MB. See ReportResponse.report_errors
-	// for
-	// partial failure behavior.
+	// There is no limit on the number of operations in the same
+	// ReportRequest,
+	// however the ReportRequest size should be no larger than 1MB.
+	// See
+	// ReportResponse.report_errors for partial failure behavior.
 	Operations []*Operation `json:"operations,omitempty"`
 
 	// ServiceConfigId: Specifies which version of service config should be
@@ -3028,7 +3029,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191214")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3190,7 +3191,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191214")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3309,7 +3310,9 @@ type ServicesReportCall struct {
 // 0.01%
 // for business and compliance reasons.
 //
-// NOTE: the ReportRequest has the size limit of 1MB.
+// NOTE: the ReportRequest has the size limit (wire-format byte size)
+// of
+// 1MB.
 //
 // This method requires the `servicemanagement.services.report`
 // permission
@@ -3349,7 +3352,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191214")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3413,7 +3416,7 @@ func (c *ServicesReportCall) Do(opts ...googleapi.CallOption) (*ReportResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Reports operation results to Google Service Control, such as logs and\nmetrics. It should be called after an operation is completed.\n\nIf feasible, the client should aggregate reporting data for up to 5\nseconds to reduce API traffic. Limiting aggregation to 5 seconds is to\nreduce data loss during client crashes. Clients should carefully choose\nthe aggregation time window to avoid data loss risk more than 0.01%\nfor business and compliance reasons.\n\nNOTE: the ReportRequest has the size limit of 1MB.\n\nThis method requires the `servicemanagement.services.report` permission\non the specified service. For more information, see\n[Google Cloud IAM](https://cloud.google.com/iam).",
+	//   "description": "Reports operation results to Google Service Control, such as logs and\nmetrics. It should be called after an operation is completed.\n\nIf feasible, the client should aggregate reporting data for up to 5\nseconds to reduce API traffic. Limiting aggregation to 5 seconds is to\nreduce data loss during client crashes. Clients should carefully choose\nthe aggregation time window to avoid data loss risk more than 0.01%\nfor business and compliance reasons.\n\nNOTE: the ReportRequest has the size limit (wire-format byte size) of\n1MB.\n\nThis method requires the `servicemanagement.services.report` permission\non the specified service. For more information, see\n[Google Cloud IAM](https://cloud.google.com/iam).",
 	//   "flatPath": "v1/services/{serviceName}:report",
 	//   "httpMethod": "POST",
 	//   "id": "servicecontrol.services.report",

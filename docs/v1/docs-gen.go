@@ -1466,6 +1466,16 @@ type DocumentStyle struct {
 	// page margin on all section styles.
 	MarginBottom *Dimension `json:"marginBottom,omitempty"`
 
+	// MarginFooter: The amount of space between the bottom of the page and
+	// the contents of the
+	// footer.
+	MarginFooter *Dimension `json:"marginFooter,omitempty"`
+
+	// MarginHeader: The amount of space between the top of the page and the
+	// contents of the
+	// header.
+	MarginHeader *Dimension `json:"marginHeader,omitempty"`
+
 	// MarginLeft: The left page margin.
 	//
 	// Updating the left page margin on the document style clears the left
@@ -1497,6 +1507,23 @@ type DocumentStyle struct {
 
 	// PageSize: The size of a page in the document.
 	PageSize *Size `json:"pageSize,omitempty"`
+
+	// UseCustomHeaderFooterMargins: Indicates whether
+	// DocumentStyle
+	// margin_header,
+	// SectionStyle
+	// margin_header
+	// and
+	// DocumentStyle
+	// margin_footer,
+	// SectionStyle
+	// margin_footer are
+	// respected. When false, the default values in the Docs editor for
+	// header and
+	// footer margin are used.
+	//
+	// This property is read-only.
+	UseCustomHeaderFooterMargins bool `json:"useCustomHeaderFooterMargins,omitempty"`
 
 	// UseEvenPageHeaderFooter: Indicates whether to use the even page
 	// header / footer IDs for the even
@@ -2662,6 +2689,76 @@ type InsertPageBreakRequest struct {
 
 func (s *InsertPageBreakRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InsertPageBreakRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InsertSectionBreakRequest: Inserts a section break at the given
+// location.
+//
+// A newline character will be inserted before the section break.
+type InsertSectionBreakRequest struct {
+	// EndOfSegmentLocation: Inserts a newline and a section break at the
+	// end of the document body.
+	//
+	// Section breaks cannot be inserted inside a footnote, header or
+	// footer.
+	// Because section breaks can only be inserted inside the body, the
+	// segment
+	// ID field must be
+	// empty.
+	EndOfSegmentLocation *EndOfSegmentLocation `json:"endOfSegmentLocation,omitempty"`
+
+	// Location: Inserts a newline and a section break at a specific index
+	// in the
+	// document.
+	//
+	// The section break must be inserted inside the bounds of an
+	// existing
+	// Paragraph. For instance, it cannot be
+	// inserted at a table's start index (i.e. between the table and
+	// its
+	// preceding paragraph).
+	//
+	// Section breaks cannot be inserted inside a table, equation,
+	// footnote,
+	// header, or footer. Since section breaks can only be inserted inside
+	// the
+	// body, the segment ID field
+	// must be empty.
+	Location *Location `json:"location,omitempty"`
+
+	// SectionType: The type of section to insert.
+	//
+	// Possible values:
+	//   "SECTION_TYPE_UNSPECIFIED" - The section type is unspecified.
+	//   "CONTINUOUS" - The section starts immediately after the last
+	// paragraph of the previous
+	// section.
+	//   "NEXT_PAGE" - The section starts on the next page.
+	SectionType string `json:"sectionType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EndOfSegmentLocation") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndOfSegmentLocation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InsertSectionBreakRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InsertSectionBreakRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4824,6 +4921,10 @@ type Request struct {
 	// InsertPageBreak: Inserts a page break at the specified location.
 	InsertPageBreak *InsertPageBreakRequest `json:"insertPageBreak,omitempty"`
 
+	// InsertSectionBreak: Inserts a section break at the specified
+	// location.
+	InsertSectionBreak *InsertSectionBreakRequest `json:"insertSectionBreak,omitempty"`
+
 	// InsertTable: Inserts a table at the specified location.
 	InsertTable *InsertTableRequest `json:"insertTable,omitempty"`
 
@@ -4857,6 +4958,9 @@ type Request struct {
 	// UpdateParagraphStyle: Updates the paragraph style at the specified
 	// range.
 	UpdateParagraphStyle *UpdateParagraphStyleRequest `json:"updateParagraphStyle,omitempty"`
+
+	// UpdateSectionStyle: Updates the section style of the specified range.
+	UpdateSectionStyle *UpdateSectionStyleRequest `json:"updateSectionStyle,omitempty"`
 
 	// UpdateTableCellStyle: Updates the style of table cells.
 	UpdateTableCellStyle *UpdateTableCellStyleRequest `json:"updateTableCellStyle,omitempty"`
@@ -5100,6 +5204,84 @@ type SectionStyle struct {
 	//   "LEFT_TO_RIGHT" - The content goes from left to right.
 	//   "RIGHT_TO_LEFT" - The content goes from right to left.
 	ContentDirection string `json:"contentDirection,omitempty"`
+
+	// MarginBottom: The bottom page margin of the section. If unset, uses
+	// margin_bottom from DocumentStyle.
+	//
+	// When updating this property, setting a concrete value is
+	// required.
+	// Unsetting this property results in a 400 bad request error.
+	MarginBottom *Dimension `json:"marginBottom,omitempty"`
+
+	// MarginFooter: The footer margin of the section. If unset, uses
+	// margin_footer from DocumentStyle. If
+	// updated, use_custom_header_footer_margins is set
+	// to true on DocumentStyle. The value of
+	// use_custom_header_footer_margins on
+	// DocumentStyle indicates if a footer margin is being respected for
+	// this
+	// section
+	//
+	// When updating this property, setting a concrete value is
+	// required.
+	// Unsetting this property results in a 400 bad request error.
+	MarginFooter *Dimension `json:"marginFooter,omitempty"`
+
+	// MarginHeader: The header margin of the section. If unset, uses
+	// margin_header from DocumentStyle. If
+	// updated, use_custom_header_footer_margins is set
+	// to true on DocumentStyle. The value of
+	// use_custom_header_footer_margins on
+	// DocumentStyle indicates if a header margin is being respected for
+	// this
+	// section.
+	//
+	// When updating this property, setting a concrete value is
+	// required.
+	// Unsetting this property results in a 400 bad request error.
+	MarginHeader *Dimension `json:"marginHeader,omitempty"`
+
+	// MarginLeft: The left page margin of the section. If unset, uses
+	// margin_left from DocumentStyle.
+	// Updating left margin causes columns in this section to resize.
+	// Since
+	// the margin affects column width, it is applied before column
+	// properties.
+	//
+	// When updating this property, setting a concrete value is
+	// required.
+	// Unsetting this property results in a 400 bad request error.
+	MarginLeft *Dimension `json:"marginLeft,omitempty"`
+
+	// MarginRight: The right page margin of the section. If unset, uses
+	// margin_right from DocumentStyle.
+	// Updating right margin causes columns in this section to resize.
+	// Since
+	// the margin affects column width, it is applied before column
+	// properties.
+	//
+	// When updating this property, setting a concrete value is
+	// required.
+	// Unsetting this property results in a 400 bad request error.
+	MarginRight *Dimension `json:"marginRight,omitempty"`
+
+	// MarginTop: The top page margin of the section. If unset, uses
+	// margin_top from DocumentStyle.
+	//
+	// When updating this property, setting a concrete value is
+	// required.
+	// Unsetting this property results in a 400 bad request error.
+	MarginTop *Dimension `json:"marginTop,omitempty"`
+
+	// SectionType: Output only. The type of section.
+	//
+	// Possible values:
+	//   "SECTION_TYPE_UNSPECIFIED" - The section type is unspecified.
+	//   "CONTINUOUS" - The section starts immediately after the last
+	// paragraph of the previous
+	// section.
+	//   "NEXT_PAGE" - The section starts on the next page.
+	SectionType string `json:"sectionType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ColumnProperties") to
 	// unconditionally include in API requests. By default, fields with
@@ -6903,6 +7085,58 @@ func (s *UpdateParagraphStyleRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UpdateSectionStyleRequest: Updates the SectionStyle.
+type UpdateSectionStyleRequest struct {
+	// Fields: The fields that should be updated.
+	//
+	// At least one field must be specified. The root `section_style`
+	// is
+	// implied and must not be specified. A single "*" can be used
+	// as
+	// short-hand for listing every field.
+	//
+	// For example to update the left margin, set `fields` to
+	// "margin_left".
+	Fields string `json:"fields,omitempty"`
+
+	// Range: The range overlapping the sections to style.
+	//
+	// Because section breaks can only be inserted inside the body, the
+	// segment
+	// ID field must be empty.
+	Range *Range `json:"range,omitempty"`
+
+	// SectionStyle: The styles to  be set on the section.
+	//
+	// Certain section style changes may cause other changes in order to
+	// mirror
+	// the behavior of the Docs editor. See the documentation of
+	// SectionStyle for more information.
+	SectionStyle *SectionStyle `json:"sectionStyle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Fields") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateSectionStyleRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateSectionStyleRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UpdateTableCellStyleRequest: Updates the style of a range of table
 // cells.
 type UpdateTableCellStyleRequest struct {
@@ -7356,7 +7590,7 @@ func (c *DocumentsBatchUpdateCall) Header() http.Header {
 
 func (c *DocumentsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7499,7 +7733,7 @@ func (c *DocumentsCreateCall) Header() http.Header {
 
 func (c *DocumentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7655,7 +7889,7 @@ func (c *DocumentsGetCall) Header() http.Header {
 
 func (c *DocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

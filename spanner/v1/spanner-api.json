@@ -245,6 +245,12 @@
                 "name"
               ],
               "parameters": {
+                "fieldMask": {
+                  "description": "If field_mask is present, specifies the subset of [][google.spanner.admin.instance.v1.Instance] fields that\nshould be returned.\nIf absent, all [][google.spanner.admin.instance.v1.Instance] fields are returned.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                },
                 "name": {
                   "description": "Required. The name of the requested instance. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
                   "location": "path",
@@ -1604,7 +1610,7 @@
       }
     }
   },
-  "revision": "20191128",
+  "revision": "20191203",
   "rootUrl": "https://spanner.googleapis.com/",
   "schemas": {
     "BatchCreateSessionsRequest": {
@@ -1857,12 +1863,12 @@
       "id": "ExecuteBatchDmlRequest",
       "properties": {
         "seqno": {
-          "description": "A per-transaction sequence number used to identify this request. This field\nmakes each request idempotent such that if the request is received multiple\ntimes, at most one will succeed.\n\nThe sequence number must be monotonically increasing within the\ntransaction. If a request arrives for the first time with an out-of-order\nsequence number, the transaction may be aborted. Replays of previously\nhandled requests will yield the same response as the first execution.",
+          "description": "Required. A per-transaction sequence number used to identify this request. This field\nmakes each request idempotent such that if the request is received multiple\ntimes, at most one will succeed.\n\nThe sequence number must be monotonically increasing within the\ntransaction. If a request arrives for the first time with an out-of-order\nsequence number, the transaction may be aborted. Replays of previously\nhandled requests will yield the same response as the first execution.",
           "format": "int64",
           "type": "string"
         },
         "statements": {
-          "description": "The list of statements to execute in this batch. Statements are executed\nserially, such that the effects of statement `i` are visible to statement\n`i+1`. Each statement must be a DML statement. Execution stops at the\nfirst failed statement; the remaining statements are not executed.\n\nCallers must provide at least one statement.",
+          "description": "Required. The list of statements to execute in this batch. Statements are executed\nserially, such that the effects of statement `i` are visible to statement\n`i+1`. Each statement must be a DML statement. Execution stops at the\nfirst failed statement; the remaining statements are not executed.\n\nCallers must provide at least one statement.",
           "items": {
             "$ref": "Statement"
           },
@@ -1870,7 +1876,7 @@
         },
         "transaction": {
           "$ref": "TransactionSelector",
-          "description": "The transaction to use. Must be a read-write transaction.\n\nTo protect against replays, single-use transactions are not supported. The\ncaller must either supply an existing transaction ID or begin a new\ntransaction."
+          "description": "Required. The transaction to use. Must be a read-write transaction.\n\nTo protect against replays, single-use transactions are not supported. The\ncaller must either supply an existing transaction ID or begin a new\ntransaction."
         }
       },
       "type": "object"
@@ -2039,6 +2045,13 @@
           "description": "Required. The descriptive name for this instance as it appears in UIs.\nMust be unique per project and between 4 and 30 characters in length.",
           "type": "string"
         },
+        "endpointUris": {
+          "description": "Output only. The endpoint URIs based on the instance config.\nFor example, instances located in a specific cloud region (or multi region)\nsuch as nam3, would have a nam3 specific endpoint URI.\nThis URI is to be used implictly by SDK clients, with fallback to default\nURI. These endpoints are intended to optimize the network routing between\nthe client and the instance's serving resources.\nIf multiple endpoints are present, client may establish connections using\nany of the given URIs.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "labels": {
           "additionalProperties": {
             "type": "string"
@@ -2051,7 +2064,7 @@
           "type": "string"
         },
         "nodeCount": {
-          "description": "Required. The number of nodes allocated to this instance. This may be zero\nin API responses for instances that are not yet in state `READY`.\n\nSee [the\ndocumentation](https://cloud.google.com/spanner/docs/instances#node_count)\nfor more information about nodes.",
+          "description": "The number of nodes allocated to this instance. This\nmay be zero in API responses for instances that are not yet in state\n`READY`.\n\nSee [the\ndocumentation](https://cloud.google.com/spanner/docs/instances#node_count)\nfor more information about nodes.",
           "format": "int32",
           "type": "integer"
         },
@@ -2393,7 +2406,7 @@
           "description": "Additional options that affect how many partitions are created."
         },
         "sql": {
-          "description": "The query request to generate partitions for. The request will fail if\nthe query is not root partitionable. The query plan of a root\npartitionable query has a single distributed union operator. A distributed\nunion operator conceptually divides one or more tables into multiple\nsplits, remotely evaluates a subquery independently on each split, and\nthen unions all results.\n\nThis must not contain DML commands, such as INSERT, UPDATE, or\nDELETE. Use ExecuteStreamingSql with a\nPartitionedDml transaction for large, partition-friendly DML operations.",
+          "description": "Required. The query request to generate partitions for. The request will fail if\nthe query is not root partitionable. The query plan of a root\npartitionable query has a single distributed union operator. A distributed\nunion operator conceptually divides one or more tables into multiple\nsplits, remotely evaluates a subquery independently on each split, and\nthen unions all results.\n\nThis must not contain DML commands, such as INSERT, UPDATE, or\nDELETE. Use ExecuteStreamingSql with a\nPartitionedDml transaction for large, partition-friendly DML operations.",
           "type": "string"
         },
         "transaction": {
@@ -2530,12 +2543,12 @@
           "type": "array"
         },
         "etag": {
-          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a policy from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform policy updates in order to avoid race\nconditions: An `etag` is returned in the response to `getIamPolicy`, and\nsystems are expected to put that etag in the request to `setIamPolicy` to\nensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing\npolicy is overwritten. Due to blind-set semantics of an etag-less policy,\n'setIamPolicy' will not fail even if either of incoming or stored policy\ndoes not meet the version requirements.",
+          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a policy from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform policy updates in order to avoid race\nconditions: An `etag` is returned in the response to `getIamPolicy`, and\nsystems are expected to put that etag in the request to `setIamPolicy` to\nensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing\npolicy is overwritten. Due to blind-set semantics of an etag-less policy,\n'setIamPolicy' will not fail even if the incoming policy version does not\nmeet the requirements for modifying the stored policy.",
           "format": "byte",
           "type": "string"
         },
         "version": {
-          "description": "Specifies the format of the policy.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nOperations affecting conditional bindings must specify version 3. This can\nbe either setting a conditional policy, modifying a conditional binding,\nor removing a conditional binding from the stored conditional policy.\nOperations on non-conditional policies may specify any valid value or\nleave the field unset.\n\nIf no etag is provided in the call to `setIamPolicy`, any version\ncompliance checks on the incoming and/or stored policy is skipped.",
+          "description": "Specifies the format of the policy.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nOperations affecting conditional bindings must specify version 3. This can\nbe either setting a conditional policy, modifying a conditional binding,\nor removing a binding (conditional or unconditional) from the stored\nconditional policy.\nOperations on non-conditional policies may specify any valid value or\nleave the field unset.\n\nIf no etag is provided in the call to `setIamPolicy`, version compliance\nchecks against the stored policy is skipped.",
           "format": "int32",
           "type": "integer"
         }
@@ -2596,7 +2609,7 @@
       "id": "ReadRequest",
       "properties": {
         "columns": {
-          "description": "The columns of table to be returned for each row matching\nthis request.",
+          "description": "Required. The columns of table to be returned for each row matching\nthis request.",
           "items": {
             "type": "string"
           },
@@ -3040,7 +3053,7 @@
           "type": "string"
         },
         "statements": {
-          "description": "DDL statements to be applied to the database.",
+          "description": "Required. DDL statements to be applied to the database.",
           "items": {
             "type": "string"
           },

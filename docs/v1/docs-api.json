@@ -209,7 +209,7 @@
       }
     }
   },
-  "revision": "20191021",
+  "revision": "20191216",
   "rootUrl": "https://docs.googleapis.com/",
   "schemas": {
     "AutoText": {
@@ -852,6 +852,14 @@
           "$ref": "Dimension",
           "description": "The bottom page margin.\n\nUpdating the bottom page margin on the document style clears the bottom\npage margin on all section styles."
         },
+        "marginFooter": {
+          "$ref": "Dimension",
+          "description": "The amount of space between the bottom of the page and the contents of the\nfooter."
+        },
+        "marginHeader": {
+          "$ref": "Dimension",
+          "description": "The amount of space between the top of the page and the contents of the\nheader."
+        },
         "marginLeft": {
           "$ref": "Dimension",
           "description": "The left page margin.\n\nUpdating the left page margin on the document style clears the left page\nmargin on all section styles. It may also cause columns to resize in all\nsections."
@@ -872,6 +880,10 @@
         "pageSize": {
           "$ref": "Size",
           "description": "The size of a page in the document."
+        },
+        "useCustomHeaderFooterMargins": {
+          "description": "Indicates whether DocumentStyle\nmargin_header,\nSectionStyle\nmargin_header and\nDocumentStyle\nmargin_footer,\nSectionStyle\nmargin_footer are\nrespected. When false, the default values in the Docs editor for header and\nfooter margin are used.\n\nThis property is read-only.",
+          "type": "boolean"
         },
         "useEvenPageHeaderFooter": {
           "description": "Indicates whether to use the even page header / footer IDs for the even\npages.\n\nThis property is read-only.",
@@ -1510,6 +1522,35 @@
         "location": {
           "$ref": "Location",
           "description": "Inserts the page break at a specific index in the document.\n\nThe page break must be inserted inside the bounds of an existing\nParagraph. For instance, it cannot be\ninserted at a table's start index (i.e. between the table and its\npreceding paragraph).\n\nPage breaks cannot be inserted inside a table, equation, footnote, header\nor footer. Since page breaks can only be inserted inside the body, the\nsegment ID field must be\nempty."
+        }
+      },
+      "type": "object"
+    },
+    "InsertSectionBreakRequest": {
+      "description": "Inserts a section break at the given location.\n\nA newline character will be inserted before the section break.",
+      "id": "InsertSectionBreakRequest",
+      "properties": {
+        "endOfSegmentLocation": {
+          "$ref": "EndOfSegmentLocation",
+          "description": "Inserts a newline and a section break at the end of the document body.\n\nSection breaks cannot be inserted inside a footnote, header or footer.\nBecause section breaks can only be inserted inside the body, the segment\nID field must be\nempty."
+        },
+        "location": {
+          "$ref": "Location",
+          "description": "Inserts a newline and a section break at a specific index in the\ndocument.\n\nThe section break must be inserted inside the bounds of an existing\nParagraph. For instance, it cannot be\ninserted at a table's start index (i.e. between the table and its\npreceding paragraph).\n\nSection breaks cannot be inserted inside a table, equation, footnote,\nheader, or footer. Since section breaks can only be inserted inside the\nbody, the segment ID field\nmust be empty."
+        },
+        "sectionType": {
+          "description": "The type of section to insert.",
+          "enum": [
+            "SECTION_TYPE_UNSPECIFIED",
+            "CONTINUOUS",
+            "NEXT_PAGE"
+          ],
+          "enumDescriptions": [
+            "The section type is unspecified.",
+            "The section starts immediately after the last paragraph of the previous\nsection.",
+            "The section starts on the next page."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -2672,6 +2713,10 @@
           "$ref": "InsertPageBreakRequest",
           "description": "Inserts a page break at the specified location."
         },
+        "insertSectionBreak": {
+          "$ref": "InsertSectionBreakRequest",
+          "description": "Inserts a section break at the specified location."
+        },
         "insertTable": {
           "$ref": "InsertTableRequest",
           "description": "Inserts a table at the specified location."
@@ -2715,6 +2760,10 @@
         "updateParagraphStyle": {
           "$ref": "UpdateParagraphStyleRequest",
           "description": "Updates the paragraph style at the specified range."
+        },
+        "updateSectionStyle": {
+          "$ref": "UpdateSectionStyleRequest",
+          "description": "Updates the section style of the specified range."
         },
         "updateTableCellStyle": {
           "$ref": "UpdateTableCellStyleRequest",
@@ -2864,6 +2913,44 @@
             "The content direction is unspecified.",
             "The content goes from left to right.",
             "The content goes from right to left."
+          ],
+          "type": "string"
+        },
+        "marginBottom": {
+          "$ref": "Dimension",
+          "description": "The bottom page margin of the section. If unset, uses margin_bottom from DocumentStyle.\n\nWhen updating this property, setting a concrete value is required.\nUnsetting this property results in a 400 bad request error."
+        },
+        "marginFooter": {
+          "$ref": "Dimension",
+          "description": "The footer margin of the section. If unset, uses margin_footer from DocumentStyle. If\nupdated, use_custom_header_footer_margins is set\nto true on DocumentStyle. The value of use_custom_header_footer_margins on\nDocumentStyle indicates if a footer margin is being respected for this\nsection\n\nWhen updating this property, setting a concrete value is required.\nUnsetting this property results in a 400 bad request error."
+        },
+        "marginHeader": {
+          "$ref": "Dimension",
+          "description": "The header margin of the section. If unset, uses margin_header from DocumentStyle. If\nupdated, use_custom_header_footer_margins is set\nto true on DocumentStyle. The value of use_custom_header_footer_margins on\nDocumentStyle indicates if a header margin is being respected for this\nsection.\n\nWhen updating this property, setting a concrete value is required.\nUnsetting this property results in a 400 bad request error."
+        },
+        "marginLeft": {
+          "$ref": "Dimension",
+          "description": "The left page margin of the section. If unset, uses margin_left from DocumentStyle.\nUpdating left margin causes columns in this section to resize. Since\nthe margin affects column width, it is applied before column properties.\n\nWhen updating this property, setting a concrete value is required.\nUnsetting this property results in a 400 bad request error."
+        },
+        "marginRight": {
+          "$ref": "Dimension",
+          "description": "The right page margin of the section. If unset, uses margin_right from DocumentStyle.\nUpdating right margin causes columns in this section to resize. Since\nthe margin affects column width, it is applied before column properties.\n\nWhen updating this property, setting a concrete value is required.\nUnsetting this property results in a 400 bad request error."
+        },
+        "marginTop": {
+          "$ref": "Dimension",
+          "description": "The top page margin of the section. If unset, uses margin_top from DocumentStyle.\n\nWhen updating this property, setting a concrete value is required.\nUnsetting this property results in a 400 bad request error."
+        },
+        "sectionType": {
+          "description": "Output only. The type of section.",
+          "enum": [
+            "SECTION_TYPE_UNSPECIFIED",
+            "CONTINUOUS",
+            "NEXT_PAGE"
+          ],
+          "enumDescriptions": [
+            "The section type is unspecified.",
+            "The section starts immediately after the last paragraph of the previous\nsection.",
+            "The section starts on the next page."
           ],
           "type": "string"
         }
@@ -3799,6 +3886,26 @@
         "range": {
           "$ref": "Range",
           "description": "The range overlapping the paragraphs to style."
+        }
+      },
+      "type": "object"
+    },
+    "UpdateSectionStyleRequest": {
+      "description": "Updates the SectionStyle.",
+      "id": "UpdateSectionStyleRequest",
+      "properties": {
+        "fields": {
+          "description": "The fields that should be updated.\n\nAt least one field must be specified. The root `section_style` is\nimplied and must not be specified. A single `\"*\"` can be used as\nshort-hand for listing every field.\n\nFor example to update the left margin, set `fields` to `\"margin_left\"`.",
+          "format": "google-fieldmask",
+          "type": "string"
+        },
+        "range": {
+          "$ref": "Range",
+          "description": "The range overlapping the sections to style.\n\nBecause section breaks can only be inserted inside the body, the segment\nID field must be empty."
+        },
+        "sectionStyle": {
+          "$ref": "SectionStyle",
+          "description": "The styles to  be set on the section.\n\nCertain section style changes may cause other changes in order to mirror\nthe behavior of the Docs editor. See the documentation of SectionStyle for more information."
         }
       },
       "type": "object"

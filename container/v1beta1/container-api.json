@@ -2483,7 +2483,7 @@
       }
     }
   },
-  "revision": "20191024",
+  "revision": "20191115",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2585,6 +2585,21 @@
         "upgradeSettings": {
           "$ref": "UpgradeSettings",
           "description": "Specifies the upgrade settings for NAP created node pools"
+        }
+      },
+      "type": "object"
+    },
+    "AvailableVersion": {
+      "description": "AvailableVersion is an additional Kubernetes versions offered\nto users who subscribed to the release channel.",
+      "id": "AvailableVersion",
+      "properties": {
+        "reason": {
+          "description": "Reason for availability.",
+          "type": "string"
+        },
+        "version": {
+          "description": "Kubernetes version.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -4333,6 +4348,13 @@
       "description": "ReleaseChannelConfig exposes configuration for a release channel.",
       "id": "ReleaseChannelConfig",
       "properties": {
+        "availableVersions": {
+          "description": "List of available versions for the release channel.",
+          "items": {
+            "$ref": "AvailableVersion"
+          },
+          "type": "array"
+        },
         "channel": {
           "description": "The release channel this configuration applies to.",
           "enum": [

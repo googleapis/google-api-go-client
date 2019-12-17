@@ -387,7 +387,7 @@
       }
     }
   },
-  "revision": "20191203",
+  "revision": "20191211",
   "rootUrl": "https://admin-remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -1315,7 +1315,7 @@
           "type": "string"
         },
         "diskType": {
-          "description": "Required. Disk Type to use for the worker.\nSee [Storage\noptions](https://cloud.google.com/compute/docs/disks/#introduction).\nCurrently only `pd-standard` is supported.",
+          "description": "Required. Disk Type to use for the worker.\nSee [Storage\noptions](https://cloud.google.com/compute/docs/disks/#introduction).\nCurrently only `pd-standard` and `pd-ssd` are supported.",
           "type": "string"
         },
         "labels": {

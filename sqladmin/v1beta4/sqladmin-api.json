@@ -1468,6 +1468,93 @@
         }
       }
     },
+    "projects": {
+      "resources": {
+        "instances": {
+          "methods": {
+            "rescheduleMaintenance": {
+              "description": "Reschedules the maintenance on the given instance.",
+              "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/rescheduleMaintenance",
+              "httpMethod": "POST",
+              "id": "sql.projects.instances.rescheduleMaintenance",
+              "parameterOrder": [
+                "project",
+                "instance"
+              ],
+              "parameters": {
+                "instance": {
+                  "description": "Cloud SQL instance ID. This does not include the project ID.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "The parent resource where Cloud SQL reshedule this database instance's\nmaintenance. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
+                  "location": "query",
+                  "type": "string"
+                },
+                "project": {
+                  "description": "ID of the project that contains the instance.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "sql/v1beta4/projects/{project}/instances/{instance}/rescheduleMaintenance",
+              "request": {
+                "$ref": "SqlInstancesRescheduleMaintenanceRequestBody"
+              },
+              "response": {
+                "$ref": "Operation"
+              }
+            }
+          }
+        },
+        "locations": {
+          "resources": {
+            "instances": {
+              "methods": {
+                "rescheduleMaintenance": {
+                  "description": "Reschedules the maintenance on the given instance.",
+                  "flatPath": "sql/v1beta4/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/rescheduleMaintenance",
+                  "httpMethod": "POST",
+                  "id": "sql.projects.locations.instances.rescheduleMaintenance",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "instance": {
+                      "description": "Cloud SQL instance ID. This does not include the project ID.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "The parent resource where Cloud SQL reshedule this database instance's\nmaintenance. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "project": {
+                      "description": "ID of the project that contains the instance.",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "sql/v1beta4/{+parent}/rescheduleMaintenance",
+                  "request": {
+                    "$ref": "SqlInstancesRescheduleMaintenanceRequestBody"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "sslCerts": {
       "methods": {
         "createEphemeral": {
@@ -1843,7 +1930,7 @@
           ],
           "parameters": {
             "host": {
-              "description": "Host of the user in the instance. For a MySQL instance, it's required; For\na PostgreSQL instance, it's optional.",
+              "description": "Optional. Host of the user in the instance.",
               "location": "query",
               "type": "string"
             },
@@ -1885,7 +1972,7 @@
       }
     }
   },
-  "revision": "20191029",
+  "revision": "20191205",
   "rootUrl": "https://sqladmin.googleapis.com/",
   "schemas": {
     "AclEntry": {
@@ -1902,7 +1989,7 @@
           "type": "string"
         },
         "name": {
-          "description": "An optional label to identify this entry.",
+          "description": "Optional. A label to identify this entry.",
           "type": "string"
         },
         "value": {
@@ -2196,7 +2283,7 @@
       "type": "object"
     },
     "DatabaseInstance": {
-      "description": "A Cloud SQL instance resource.\nIf you change this, also change SqlDatabaseInstance",
+      "description": "A Cloud SQL instance resource.",
       "id": "DatabaseInstance",
       "properties": {
         "backendType": {
@@ -3149,6 +3236,18 @@
       "description": "On-premises instance configuration.",
       "id": "OnPremisesConfiguration",
       "properties": {
+        "caCertificate": {
+          "description": "PEM representation of the trusted CA's x509 certificate.",
+          "type": "string"
+        },
+        "clientCertificate": {
+          "description": "PEM representation of the slave's x509 certificate.",
+          "type": "string"
+        },
+        "clientKey": {
+          "description": "PEM representation of the slave's private key. The corresponsing public key\nis encoded in the client's certificate.",
+          "type": "string"
+        },
         "hostPort": {
           "description": "The host and port of the on-premises instance in host:port format",
           "type": "string"
@@ -3229,7 +3328,8 @@
             "MAINTENANCE",
             "ENABLE_PRIVATE_IP",
             "DEFER_MAINTENANCE",
-            "CREATE_CLONE"
+            "CREATE_CLONE",
+            "RESCHEDULE_MAINTENANCE"
           ],
           "enumDescriptions": [
             "Unknown operation type.",
@@ -3263,8 +3363,9 @@
             "Demotes the stand-alone instance to be a Cloud SQL\nread replica for an external database server.",
             "Indicates that the instance is currently in maintenance. Maintenance\ntypically causes the instance to be unavailable for 1-3 minutes.",
             "This field is deprecated, and will be removed in future version of API.",
-            "Defer scheduled maintenance to another time.",
-            "Creates clone instance."
+            "",
+            "Creates clone instance.",
+            "Reschedule maintenance to another time."
           ],
           "type": "string"
         },
@@ -3278,7 +3379,7 @@
           "type": "string"
         },
         "status": {
-          "description": "The status of an operation. Valid values are \u003ccode\u003ePENDING\u003c/code\u003e,\n\u003ccode\u003eRUNNING\u003c/code\u003e, \u003ccode\u003eDONE\u003c/code\u003e, \u003ccode\u003eUNKNOWN\u003c/code\u003e.",
+          "description": "The status of an operation. Valid values are \u003ccode\u003ePENDING\u003c/code\u003e,\n\u003ccode\u003eRUNNING\u003c/code\u003e, \u003ccode\u003eDONE\u003c/code\u003e,\n\u003ccode\u003eSQL_OPERATION_STATUS_UNSPECIFIED\u003c/code\u003e.",
           "enum": [
             "SQL_OPERATION_STATUS_UNSPECIFIED",
             "PENDING",
@@ -3385,6 +3486,33 @@
         "mysqlReplicaConfiguration": {
           "$ref": "MySqlReplicaConfiguration",
           "description": "MySQL specific configuration when replicating from a MySQL on-premises\nmaster. Replication configuration information such as the username,\npassword, certificates, and keys are not stored in the instance metadata.\nThe configuration information is used only to set up the replication\nconnection and is stored by MySQL in a file named \u003ccode\u003emaster.info\u003c/code\u003e\nin the data directory."
+        }
+      },
+      "type": "object"
+    },
+    "Reschedule": {
+      "id": "Reschedule",
+      "properties": {
+        "rescheduleType": {
+          "description": "Required. The type of the reschedule.",
+          "enum": [
+            "RESCHEDULE_TYPE_UNSPECIFIED",
+            "IMMEDIATE",
+            "NEXT_AVAILABLE_WINDOW",
+            "SPECIFIC_TIME"
+          ],
+          "enumDescriptions": [
+            "",
+            "If the user wants to schedule the maintenance to happen now.",
+            "If the user wants to use the existing maintenance policy to find the\nnext available window.",
+            "If the user wants to reschedule the maintenance to a specific time."
+          ],
+          "type": "string"
+        },
+        "scheduleTime": {
+          "description": "Optional. Timestamp when the maintenance shall be rescheduled to if\nreschedule_type=SPECIFIC_TIME.",
+          "format": "google-datetime",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3581,12 +3709,26 @@
       },
       "type": "object"
     },
+    "SqlInstancesRescheduleMaintenanceRequestBody": {
+      "description": "Reschedule options for maintenance windows.",
+      "id": "SqlInstancesRescheduleMaintenanceRequestBody",
+      "properties": {
+        "reschedule": {
+          "$ref": "Reschedule",
+          "description": "Required. The type of the reschedule the user wants."
+        }
+      },
+      "type": "object"
+    },
     "SqlScheduledMaintenance": {
       "description": "Any scheduled maintenancce for this instance.",
       "id": "SqlScheduledMaintenance",
       "properties": {
         "canDefer": {
-          "description": "If the scheduled maintenance can be deferred.",
+          "type": "boolean"
+        },
+        "canReschedule": {
+          "description": "If the scheduled maintenance can be rescheduled.",
           "type": "boolean"
         },
         "startTime": {

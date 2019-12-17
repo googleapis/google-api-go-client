@@ -219,12 +219,12 @@
                   "type": "string"
                 },
                 "filter": {
-                  "description": "Expression that defines the filter to apply across assets.\nThe expression is a list of zero or more restrictions combined via logical\noperators `AND` and `OR`.\nParentheses are supported, and `OR` has higher precedence than `AND`.\n\nRestrictions have the form `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e` and may have a `-`\ncharacter in front of them to indicate negation. The fields map to those\ndefined in the Asset resource. Examples include:\n\n* name\n* security_center_properties.resource_name\n* resource_properties.a_property\n* security_marks.marks.marka\n\nThe supported operators are:\n\n* `=` for all value types.\n* `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values.\n* `:`, meaning substring matching, for strings.\n\nThe supported value types are:\n\n* string literals in quotes.\n* integer literals without quotes.\n* boolean literals `true` and `false` without quotes.\n\nThe following are the allowed field and operator combinations:\n\n* name: `=`\n* update_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=`\n\n  Usage: This should be milliseconds since epoch or an RFC3339 string.\n  Examples:\n    \"update_time = \\\"2019-06-10T16:07:18-07:00\\\"\"\n    \"update_time = 1560208038000\"\n\n* create_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=`\n\n  Usage: This should be milliseconds since epoch or an RFC3339 string.\n  Examples:\n    \"create_time = \\\"2019-06-10T16:07:18-07:00\\\"\"\n    \"create_time = 1560208038000\"\n\n* iam_policy.policy_blob: `=`, `:`\n* resource_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=`\n* security_marks.marks: `=`, `:`\n* security_center_properties.resource_name: `=`, `:`\n* security_center_properties.resource_type: `=`, `:`\n* security_center_properties.resource_parent: `=`, `:`\n* security_center_properties.resource_project: `=`, `:`\n* security_center_properties.resource_owners: `=`, `:`\n\nFor example, `resource_properties.size = 100` is a valid filter string.",
+                  "description": "Expression that defines the filter to apply across assets.\nThe expression is a list of zero or more restrictions combined via logical\noperators `AND` and `OR`.\nParentheses are supported, and `OR` has higher precedence than `AND`.\n\nRestrictions have the form `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e` and may have a `-`\ncharacter in front of them to indicate negation. The fields map to those\ndefined in the Asset resource. Examples include:\n\n* name\n* security_center_properties.resource_name\n* resource_properties.a_property\n* security_marks.marks.marka\n\nThe supported operators are:\n\n* `=` for all value types.\n* `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values.\n* `:`, meaning substring matching, for strings.\n\nThe supported value types are:\n\n* string literals in quotes.\n* integer literals without quotes.\n* boolean literals `true` and `false` without quotes.\n\nThe following are the allowed field and operator combinations:\n\n* name: `=`\n* update_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=`\n\n  Usage: This should be milliseconds since epoch or an RFC3339 string.\n  Examples:\n    \"update_time = \\\"2019-06-10T16:07:18-07:00\\\"\"\n    \"update_time = 1560208038000\"\n\n* create_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=`\n\n  Usage: This should be milliseconds since epoch or an RFC3339 string.\n  Examples:\n    \"create_time = \\\"2019-06-10T16:07:18-07:00\\\"\"\n    \"create_time = 1560208038000\"\n\n* iam_policy.policy_blob: `=`, `:`\n* resource_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=`\n* security_marks.marks: `=`, `:`\n* security_center_properties.resource_name: `=`, `:`\n* security_center_properties.resource_display_name: `=`, `:`\n* security_center_properties.resource_type: `=`, `:`\n* security_center_properties.resource_parent: `=`, `:`\n* security_center_properties.resource_parent_display_name: `=`, `:`\n* security_center_properties.resource_project: `=`, `:`\n* security_center_properties.resource_project_display_name: `=`, `:`\n* security_center_properties.resource_owners: `=`, `:`\n\nFor example, `resource_properties.size = 100` is a valid filter string.",
                   "location": "query",
                   "type": "string"
                 },
                 "orderBy": {
-                  "description": "Expression that defines what fields and order to use for sorting. The\nstring value should follow SQL syntax: comma separated list of fields. For\nexample: \"name,resource_properties.a_property\". The default sorting order\nis ascending. To specify descending order for a field, a suffix \" desc\"\nshould be appended to the field name. For example: \"name\ndesc,resource_properties.a_property\". Redundant space characters in the\nsyntax are insignificant. \"name desc,resource_properties.a_property\" and \"\nname     desc  ,   resource_properties.a_property  \" are equivalent.\n\nThe following fields are supported:\nname\nupdate_time\nresource_properties\nsecurity_marks.marks\nsecurity_center_properties.resource_name\nsecurity_center_properties.resource_parent\nsecurity_center_properties.resource_project\nsecurity_center_properties.resource_type",
+                  "description": "Expression that defines what fields and order to use for sorting. The\nstring value should follow SQL syntax: comma separated list of fields. For\nexample: \"name,resource_properties.a_property\". The default sorting order\nis ascending. To specify descending order for a field, a suffix \" desc\"\nshould be appended to the field name. For example: \"name\ndesc,resource_properties.a_property\". Redundant space characters in the\nsyntax are insignificant. \"name desc,resource_properties.a_property\" and \"\nname     desc  ,   resource_properties.a_property  \" are equivalent.\n\nThe following fields are supported:\nname\nupdate_time\nresource_properties\nsecurity_marks.marks\nsecurity_center_properties.resource_name\nsecurity_center_properties.resource_display_name\nsecurity_center_properties.resource_parent\nsecurity_center_properties.resource_parent_display_name\nsecurity_center_properties.resource_project\nsecurity_center_properties.resource_project_display_name\nsecurity_center_properties.resource_type",
                   "location": "query",
                   "type": "string"
                 },
@@ -898,7 +898,7 @@
       }
     }
   },
-  "revision": "20191204",
+  "revision": "20191213",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -1637,6 +1637,10 @@
       "description": "Cloud SCC managed properties. These properties are managed by Cloud SCC and\ncannot be modified by the user.",
       "id": "SecurityCenterProperties",
       "properties": {
+        "resourceDisplayName": {
+          "description": "The user defined display name for this resource.",
+          "type": "string"
+        },
         "resourceName": {
           "description": "The full resource name of the GCP resource this asset\nrepresents. This field is immutable after create time. See:\nhttps://cloud.google.com/apis/design/resource_names#full_resource_name",
           "type": "string"
@@ -1652,8 +1656,16 @@
           "description": "The full resource name of the immediate parent of the resource. See:\nhttps://cloud.google.com/apis/design/resource_names#full_resource_name",
           "type": "string"
         },
+        "resourceParentDisplayName": {
+          "description": "The user defined display name for the parent of this resource.",
+          "type": "string"
+        },
         "resourceProject": {
           "description": "The full resource name of the project the resource belongs to. See:\nhttps://cloud.google.com/apis/design/resource_names#full_resource_name",
+          "type": "string"
+        },
+        "resourceProjectDisplayName": {
+          "description": "The user defined display name for the project of this resource.",
           "type": "string"
         },
         "resourceType": {

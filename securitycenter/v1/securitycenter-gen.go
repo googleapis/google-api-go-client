@@ -1997,6 +1997,9 @@ type RunAssetDiscoveryRequest struct {
 // properties are managed by Cloud SCC and
 // cannot be modified by the user.
 type SecurityCenterProperties struct {
+	// ResourceDisplayName: The user defined display name for this resource.
+	ResourceDisplayName string `json:"resourceDisplayName,omitempty"`
+
 	// ResourceName: The full resource name of the GCP resource this
 	// asset
 	// represents. This field is immutable after create time.
@@ -2015,12 +2018,20 @@ type SecurityCenterProperties struct {
 	// _name
 	ResourceParent string `json:"resourceParent,omitempty"`
 
+	// ResourceParentDisplayName: The user defined display name for the
+	// parent of this resource.
+	ResourceParentDisplayName string `json:"resourceParentDisplayName,omitempty"`
+
 	// ResourceProject: The full resource name of the project the resource
 	// belongs to.
 	// See:
 	// https://cloud.google.com/apis/design/resource_names#full_resource
 	// _name
 	ResourceProject string `json:"resourceProject,omitempty"`
+
+	// ResourceProjectDisplayName: The user defined display name for the
+	// project of this resource.
+	ResourceProjectDisplayName string `json:"resourceProjectDisplayName,omitempty"`
 
 	// ResourceType: The type of the GCP resource. Examples include:
 	// APPLICATION,
@@ -2030,20 +2041,21 @@ type SecurityCenterProperties struct {
 	// after create time.
 	ResourceType string `json:"resourceType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ResourceName") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ResourceDisplayName")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ResourceName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ResourceDisplayName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2436,7 +2448,7 @@ func (c *OrganizationsGetOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2580,7 +2592,7 @@ func (c *OrganizationsUpdateOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsUpdateOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2728,7 +2740,7 @@ func (c *OrganizationsAssetsGroupCall) Header() http.Header {
 
 func (c *OrganizationsAssetsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2964,9 +2976,13 @@ func (c *OrganizationsAssetsListCall) FieldMask(fieldMask string) *Organizations
 // * resource_properties: `=`, `:`, `>`, `<`, `>=`, `<=`
 // * security_marks.marks: `=`, `:`
 // * security_center_properties.resource_name: `=`, `:`
+// * security_center_properties.resource_display_name: `=`, `:`
 // * security_center_properties.resource_type: `=`, `:`
 // * security_center_properties.resource_parent: `=`, `:`
+// * security_center_properties.resource_parent_display_name: `=`, `:`
 // * security_center_properties.resource_project: `=`, `:`
+// * security_center_properties.resource_project_display_name: `=`,
+// `:`
 // * security_center_properties.resource_owners: `=`, `:`
 //
 // For example, `resource_properties.size = 100` is a valid filter
@@ -3002,10 +3018,15 @@ func (c *OrganizationsAssetsListCall) Filter(filter string) *OrganizationsAssets
 // s
 // ecurity_center_properties.resource_name
 // security_center_properties.res
-// ource_parent
-// security_center_properties.resource_project
-// security_cent
-// er_properties.resource_type
+// ource_display_name
+// security_center_properties.resource_parent
+// security
+// _center_properties.resource_parent_display_name
+// security_center_proper
+// ties.resource_project
+// security_center_properties.resource_project_disp
+// lay_name
+// security_center_properties.resource_type
 func (c *OrganizationsAssetsListCall) OrderBy(orderBy string) *OrganizationsAssetsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -3077,7 +3098,7 @@ func (c *OrganizationsAssetsListCall) Header() http.Header {
 
 func (c *OrganizationsAssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3160,12 +3181,12 @@ func (c *OrganizationsAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAss
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Expression that defines the filter to apply across assets.\nThe expression is a list of zero or more restrictions combined via logical\noperators `AND` and `OR`.\nParentheses are supported, and `OR` has higher precedence than `AND`.\n\nRestrictions have the form `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e` and may have a `-`\ncharacter in front of them to indicate negation. The fields map to those\ndefined in the Asset resource. Examples include:\n\n* name\n* security_center_properties.resource_name\n* resource_properties.a_property\n* security_marks.marks.marka\n\nThe supported operators are:\n\n* `=` for all value types.\n* `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values.\n* `:`, meaning substring matching, for strings.\n\nThe supported value types are:\n\n* string literals in quotes.\n* integer literals without quotes.\n* boolean literals `true` and `false` without quotes.\n\nThe following are the allowed field and operator combinations:\n\n* name: `=`\n* update_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=`\n\n  Usage: This should be milliseconds since epoch or an RFC3339 string.\n  Examples:\n    \"update_time = \\\"2019-06-10T16:07:18-07:00\\\"\"\n    \"update_time = 1560208038000\"\n\n* create_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=`\n\n  Usage: This should be milliseconds since epoch or an RFC3339 string.\n  Examples:\n    \"create_time = \\\"2019-06-10T16:07:18-07:00\\\"\"\n    \"create_time = 1560208038000\"\n\n* iam_policy.policy_blob: `=`, `:`\n* resource_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=`\n* security_marks.marks: `=`, `:`\n* security_center_properties.resource_name: `=`, `:`\n* security_center_properties.resource_type: `=`, `:`\n* security_center_properties.resource_parent: `=`, `:`\n* security_center_properties.resource_project: `=`, `:`\n* security_center_properties.resource_owners: `=`, `:`\n\nFor example, `resource_properties.size = 100` is a valid filter string.",
+	//       "description": "Expression that defines the filter to apply across assets.\nThe expression is a list of zero or more restrictions combined via logical\noperators `AND` and `OR`.\nParentheses are supported, and `OR` has higher precedence than `AND`.\n\nRestrictions have the form `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e` and may have a `-`\ncharacter in front of them to indicate negation. The fields map to those\ndefined in the Asset resource. Examples include:\n\n* name\n* security_center_properties.resource_name\n* resource_properties.a_property\n* security_marks.marks.marka\n\nThe supported operators are:\n\n* `=` for all value types.\n* `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values.\n* `:`, meaning substring matching, for strings.\n\nThe supported value types are:\n\n* string literals in quotes.\n* integer literals without quotes.\n* boolean literals `true` and `false` without quotes.\n\nThe following are the allowed field and operator combinations:\n\n* name: `=`\n* update_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=`\n\n  Usage: This should be milliseconds since epoch or an RFC3339 string.\n  Examples:\n    \"update_time = \\\"2019-06-10T16:07:18-07:00\\\"\"\n    \"update_time = 1560208038000\"\n\n* create_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=`\n\n  Usage: This should be milliseconds since epoch or an RFC3339 string.\n  Examples:\n    \"create_time = \\\"2019-06-10T16:07:18-07:00\\\"\"\n    \"create_time = 1560208038000\"\n\n* iam_policy.policy_blob: `=`, `:`\n* resource_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=`\n* security_marks.marks: `=`, `:`\n* security_center_properties.resource_name: `=`, `:`\n* security_center_properties.resource_display_name: `=`, `:`\n* security_center_properties.resource_type: `=`, `:`\n* security_center_properties.resource_parent: `=`, `:`\n* security_center_properties.resource_parent_display_name: `=`, `:`\n* security_center_properties.resource_project: `=`, `:`\n* security_center_properties.resource_project_display_name: `=`, `:`\n* security_center_properties.resource_owners: `=`, `:`\n\nFor example, `resource_properties.size = 100` is a valid filter string.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Expression that defines what fields and order to use for sorting. The\nstring value should follow SQL syntax: comma separated list of fields. For\nexample: \"name,resource_properties.a_property\". The default sorting order\nis ascending. To specify descending order for a field, a suffix \" desc\"\nshould be appended to the field name. For example: \"name\ndesc,resource_properties.a_property\". Redundant space characters in the\nsyntax are insignificant. \"name desc,resource_properties.a_property\" and \"\nname     desc  ,   resource_properties.a_property  \" are equivalent.\n\nThe following fields are supported:\nname\nupdate_time\nresource_properties\nsecurity_marks.marks\nsecurity_center_properties.resource_name\nsecurity_center_properties.resource_parent\nsecurity_center_properties.resource_project\nsecurity_center_properties.resource_type",
+	//       "description": "Expression that defines what fields and order to use for sorting. The\nstring value should follow SQL syntax: comma separated list of fields. For\nexample: \"name,resource_properties.a_property\". The default sorting order\nis ascending. To specify descending order for a field, a suffix \" desc\"\nshould be appended to the field name. For example: \"name\ndesc,resource_properties.a_property\". Redundant space characters in the\nsyntax are insignificant. \"name desc,resource_properties.a_property\" and \"\nname     desc  ,   resource_properties.a_property  \" are equivalent.\n\nThe following fields are supported:\nname\nupdate_time\nresource_properties\nsecurity_marks.marks\nsecurity_center_properties.resource_name\nsecurity_center_properties.resource_display_name\nsecurity_center_properties.resource_parent\nsecurity_center_properties.resource_parent_display_name\nsecurity_center_properties.resource_project\nsecurity_center_properties.resource_project_display_name\nsecurity_center_properties.resource_type",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3280,7 +3301,7 @@ func (c *OrganizationsAssetsRunDiscoveryCall) Header() http.Header {
 
 func (c *OrganizationsAssetsRunDiscoveryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3442,7 +3463,7 @@ func (c *OrganizationsAssetsUpdateSecurityMarksCall) Header() http.Header {
 
 func (c *OrganizationsAssetsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3609,7 +3630,7 @@ func (c *OrganizationsOperationsCancelCall) Header() http.Header {
 
 func (c *OrganizationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3745,7 +3766,7 @@ func (c *OrganizationsOperationsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3890,7 +3911,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4071,7 +4092,7 @@ func (c *OrganizationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4243,7 +4264,7 @@ func (c *OrganizationsSourcesCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4392,7 +4413,7 @@ func (c *OrganizationsSourcesGetCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4527,7 +4548,7 @@ func (c *OrganizationsSourcesGetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4693,7 +4714,7 @@ func (c *OrganizationsSourcesListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4869,7 +4890,7 @@ func (c *OrganizationsSourcesPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5015,7 +5036,7 @@ func (c *OrganizationsSourcesSetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5156,7 +5177,7 @@ func (c *OrganizationsSourcesTestIamPermissionsCall) Header() http.Header {
 
 func (c *OrganizationsSourcesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5308,7 +5329,7 @@ func (c *OrganizationsSourcesFindingsCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5458,7 +5479,7 @@ func (c *OrganizationsSourcesFindingsGroupCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5800,7 +5821,7 @@ func (c *OrganizationsSourcesFindingsListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6013,7 +6034,7 @@ func (c *OrganizationsSourcesFindingsPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6159,7 +6180,7 @@ func (c *OrganizationsSourcesFindingsSetStateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsSetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6321,7 +6342,7 @@ func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) Header() http.Head
 
 func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

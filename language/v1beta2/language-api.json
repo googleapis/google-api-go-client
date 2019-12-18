@@ -226,7 +226,7 @@
       }
     }
   },
-  "revision": "20190704",
+  "revision": "20191214",
   "rootUrl": "https://language.googleapis.com/",
   "schemas": {
     "AnalyzeEntitiesRequest": {
@@ -725,6 +725,20 @@
       "description": "################################################################ #\n\nRepresents the input to API methods.",
       "id": "Document",
       "properties": {
+        "boilerplateHandling": {
+          "description": "Indicates how detected boilerplate(e.g. advertisements, copyright\ndeclarations, banners) should be handled for this document. If not\nspecified, boilerplate will be treated the same as content.",
+          "enum": [
+            "BOILERPLATE_HANDLING_UNSPECIFIED",
+            "SKIP_BOILERPLATE",
+            "KEEP_BOILERPLATE"
+          ],
+          "enumDescriptions": [
+            "The boilerplate handling is not specified.",
+            "Do not analyze detected boilerplate. Reference web URI is required for\ndetecting boilerplate.",
+            "Treat boilerplate the same as content."
+          ],
+          "type": "string"
+        },
         "content": {
           "description": "The content of the input in string format.\nCloud audit logging exempt since it is based on user data.",
           "type": "string"
@@ -735,6 +749,10 @@
         },
         "language": {
           "description": "The language of the document (if not specified, the language is\nautomatically detected). Both ISO and BCP-47 language codes are\naccepted.\u003cbr\u003e\n[Language Support](/natural-language/docs/languages)\nlists currently supported languages for each API method.\nIf the language (either specified by the caller or automatically detected)\nis not supported by the called API method, an `INVALID_ARGUMENT` error\nis returned.",
+          "type": "string"
+        },
+        "referenceWebUri": {
+          "description": "The web URI where the document comes from. This URI is not used for\nfetching the content, but as a hint for analyzing the document.",
           "type": "string"
         },
         "type": {

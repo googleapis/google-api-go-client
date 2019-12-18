@@ -271,7 +271,7 @@
       }
     }
   },
-  "revision": "20191118",
+  "revision": "20191216",
   "rootUrl": "https://recommender.googleapis.com/",
   "schemas": {
     "GoogleCloudRecommenderV1beta1CostProjection": {
@@ -349,7 +349,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "State properties to include with this state. Overwrites any existing\n`state_metadata`.",
+          "description": "State properties to include with this state. Overwrites any existing\n`state_metadata`.\nKeys must match the regex /^a-z0-9{0,62}$/.\nValues must match the regex /^[a-zA-Z0-9_./-]{0,255}$/.",
           "type": "object"
         }
       },
@@ -367,7 +367,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "State properties to include with this state. Overwrites any existing\n`state_metadata`.",
+          "description": "State properties to include with this state. Overwrites any existing\n`state_metadata`.\nKeys must match the regex /^a-z0-9{0,62}$/.\nValues must match the regex /^[a-zA-Z0-9_./-]{0,255}$/.",
           "type": "object"
         }
       },
@@ -385,7 +385,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "State properties to include with this state. Overwrites any existing\n`state_metadata`.",
+          "description": "State properties to include with this state. Overwrites any existing\n`state_metadata`.\nKeys must match the regex /^a-z0-9{0,62}$/.\nValues must match the regex /^[a-zA-Z0-9_./-]{0,255}$/.",
           "type": "object"
         }
       },

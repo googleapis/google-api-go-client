@@ -413,7 +413,8 @@
             "$ref": "Empty"
           },
           "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/firebase"
           ]
         },
         "searchApps": {
@@ -1114,7 +1115,7 @@
       }
     }
   },
-  "revision": "20191213",
+  "revision": "20191217",
   "rootUrl": "https://firebase.googleapis.com/",
   "schemas": {
     "AddFirebaseRequest": {

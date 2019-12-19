@@ -493,7 +493,7 @@
       }
     }
   },
-  "revision": "20191206",
+  "revision": "20191213",
   "rootUrl": "https://binaryauthorization.googleapis.com/",
   "schemas": {
     "AdmissionRule": {
@@ -570,7 +570,7 @@
         },
         "userOwnedGrafeasNote": {
           "$ref": "UserOwnedGrafeasNote",
-          "description": "A Grafeas Attestation.Authority Note, created by the user."
+          "description": "This specifies how an attestation will be read, and how it will be used\nduring policy enforcement."
         }
       },
       "type": "object"

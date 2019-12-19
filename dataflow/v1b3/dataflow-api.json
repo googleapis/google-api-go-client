@@ -1604,7 +1604,7 @@
       }
     }
   },
-  "revision": "20190927",
+  "revision": "20191204",
   "rootUrl": "https://dataflow.googleapis.com/",
   "schemas": {
     "ApproximateProgress": {
@@ -2669,9 +2669,27 @@
           "$ref": "TemplateMetadata",
           "description": "The template metadata describing the template name, available\nparameters, etc."
         },
+        "runtimeMetadata": {
+          "$ref": "RuntimeMetadata",
+          "description": "Describes the runtime metadata with SDKInfo and available parameters."
+        },
         "status": {
           "$ref": "Status",
           "description": "The status of the get template request. Any problems with the\nrequest will be indicated in the error_details."
+        },
+        "templateType": {
+          "description": "Template Type.",
+          "enum": [
+            "UNKNOWN",
+            "LEGACY",
+            "FLEX"
+          ],
+          "enumDescriptions": [
+            "Unknown Template Type.",
+            "Legacy Template.",
+            "Flex Template."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -3661,6 +3679,34 @@
           "description": "Required. The name of the parameter.",
           "type": "string"
         },
+        "paramType": {
+          "description": "Optional. The type of the parameter.\nUsed for selecting input picker.",
+          "enum": [
+            "DEFAULT",
+            "TEXT",
+            "GCS_READ_BUCKET",
+            "GCS_WRITE_BUCKET",
+            "GCS_READ_FILE",
+            "GCS_WRITE_FILE",
+            "GCS_READ_FOLDER",
+            "GCS_WRITE_FOLDER",
+            "PUBSUB_TOPIC",
+            "PUBSUB_SUBSCRIPTION"
+          ],
+          "enumDescriptions": [
+            "Default input type.",
+            "The parameter specifies generic text input.",
+            "The parameter specifies a GCS Bucket to read from.",
+            "The parameter specifies a GCS Bucket to write to.",
+            "The parameter specifies a GCS file path to read from.",
+            "The parameter specifies a GCS file path to write to.",
+            "The parameter specifies a GCS folder path to read from.",
+            "The parameter specifies a GCS folder to write to.",
+            "The parameter specifies a Pub/Sub Topic.",
+            "The parameter specifies a Pub/Sub Subscription."
+          ],
+          "type": "string"
+        },
         "regexes": {
           "description": "Optional. Regexes that the parameter must match.",
           "items": {
@@ -4008,6 +4054,49 @@
         },
         "zone": {
           "description": "The Compute Engine [availability\nzone](https://cloud.google.com/compute/docs/regions-zones/regions-zones)\nfor launching worker instances to run your pipeline.\nIn the future, worker_zone will take precedence.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RuntimeMetadata": {
+      "description": "RuntimeMetadata describing a runtime environment.",
+      "id": "RuntimeMetadata",
+      "properties": {
+        "parameters": {
+          "description": "The parameters for the template.",
+          "items": {
+            "$ref": "ParameterMetadata"
+          },
+          "type": "array"
+        },
+        "sdkInfo": {
+          "$ref": "SDKInfo",
+          "description": "SDK Info for the template."
+        }
+      },
+      "type": "object"
+    },
+    "SDKInfo": {
+      "description": "SDK Information.",
+      "id": "SDKInfo",
+      "properties": {
+        "language": {
+          "description": "Required. The SDK Language.",
+          "enum": [
+            "UNKNOWN",
+            "JAVA",
+            "PYTHON"
+          ],
+          "enumDescriptions": [
+            "UNKNOWN Language.",
+            "Java.",
+            "Python."
+          ],
+          "type": "string"
+        },
+        "version": {
+          "description": "Optional. The SDK version.",
           "type": "string"
         }
       },

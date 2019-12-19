@@ -226,12 +226,6 @@
                   "pattern": "^projects/[^/]+/workerPools/[^/]+$",
                   "required": true,
                   "type": "string"
-                },
-                "updateMask": {
-                  "description": "A mask specifying which fields in `WorkerPool` should be updated.",
-                  "format": "google-fieldmask",
-                  "location": "query",
-                  "type": "string"
                 }
               },
               "path": "v1alpha1/{+name}",
@@ -250,7 +244,7 @@
       }
     }
   },
-  "revision": "20191120",
+  "revision": "20191212",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -573,7 +567,7 @@
           "type": "array"
         },
         "workerPool": {
-          "description": "Option to specify a `WorkerPool` for the build. User specifies the pool\nwith the format \"[WORKERPOOL_PROJECT_ID]/[WORKERPOOL_NAME]\".\nThis is an experimental field.",
+          "description": "Option to specify a `WorkerPool` for the build.\nFormat: projects/{project}/workerPools/{workerPool}\n\nThis field is experimental.",
           "type": "string"
         }
       },
@@ -1044,7 +1038,7 @@
             "Status of the `WorkerPool` is unknown.",
             "`WorkerPool` is being created.",
             "`WorkerPool` is running.",
-            "`WorkerPool` is being deleting: cancelling builds and draining workers.",
+            "`WorkerPool` is being deleted: cancelling builds and draining workers.",
             "`WorkerPool` is deleted."
           ],
           "type": "string"

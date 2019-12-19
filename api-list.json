@@ -830,6 +830,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "cloudbuild:v1alpha1",
+      "name": "cloudbuild",
+      "version": "v1alpha1",
+      "title": "Cloud Build API",
+      "description": "Creates and manages builds on Google Cloud Platform.",
+      "discoveryRestUrl": "https://cloudbuild.googleapis.com/$discovery/rest?version=v1alpha1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/cloud-build/docs/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "cloudbuild:v1",
       "name": "cloudbuild",
       "version": "v1",
@@ -2888,6 +2903,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "prod_tt_sasportal:v1alpha1",
+      "name": "prod_tt_sasportal",
+      "version": "v1alpha1",
+      "title": "SAS Portal API (Testing)",
+      "description": "",
+      "discoveryRestUrl": "https://prod-tt-sasportal.googleapis.com/$discovery/rest?version=v1alpha1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/spectrum-access-system/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "proximitybeacon:v1beta1",
       "name": "proximitybeacon",
       "version": "v1beta1",
@@ -3162,6 +3192,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/safe-browsing/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "sasportal:v1alpha1",
+      "name": "sasportal",
+      "version": "v1alpha1",
+      "title": "SAS Portal API",
+      "description": "",
+      "discoveryRestUrl": "https://sasportal.googleapis.com/$discovery/rest?version=v1alpha1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/spectrum-access-system/",
       "preferred": true
     },
     {
@@ -3626,21 +3671,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "surveys:v2",
-      "name": "surveys",
-      "version": "v2",
-      "title": "Surveys API",
-      "description": "Creates and conducts surveys, lists the surveys that an authenticated user owns, and retrieves survey results and information about specified surveys.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/surveys/v2/rest",
-      "discoveryLink": "./apis/surveys/v2/rest",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "tagmanager:v1",
       "name": "tagmanager",
       "version": "v1",
@@ -3734,6 +3764,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "toolresults:v1",
+      "name": "toolresults",
+      "version": "v1",
+      "title": "Cloud Tool Results API",
+      "description": "API to publish and access results from developer tools.",
+      "discoveryRestUrl": "https://toolresults.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://firebase.google.com/docs/test-lab/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "toolresults:v1beta3",
       "name": "toolresults",
       "version": "v1beta3",
@@ -3746,7 +3791,7 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://firebase.google.com/docs/test-lab/",
-      "preferred": true
+      "preferred": false
     },
     {
       "kind": "discovery#directoryItem",

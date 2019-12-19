@@ -602,10 +602,10 @@ type BuildOptions struct {
 	// it is indicative of a build request with an incorrect configuration.
 	Volumes []*Volume `json:"volumes,omitempty"`
 
-	// WorkerPool: Option to specify a `WorkerPool` for the build. User
-	// specifies the pool
-	// with the format "[WORKERPOOL_PROJECT_ID]/[WORKERPOOL_NAME]".
-	// This is an experimental field.
+	// WorkerPool: Option to specify a `WorkerPool` for the build.
+	// Format: projects/{project}/workerPools/{workerPool}
+	//
+	// This field is experimental.
 	WorkerPool string `json:"workerPool,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
@@ -1495,7 +1495,7 @@ type WorkerPool struct {
 	//   "STATUS_UNSPECIFIED" - Status of the `WorkerPool` is unknown.
 	//   "CREATING" - `WorkerPool` is being created.
 	//   "RUNNING" - `WorkerPool` is running.
-	//   "DELETING" - `WorkerPool` is being deleting: cancelling builds and
+	//   "DELETING" - `WorkerPool` is being deleted: cancelling builds and
 	// draining workers.
 	//   "DELETED" - `WorkerPool` is deleted.
 	Status string `json:"status,omitempty"`
@@ -1589,7 +1589,7 @@ func (c *ProjectsWorkerPoolsCreateCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1730,7 +1730,7 @@ func (c *ProjectsWorkerPoolsDeleteCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1873,7 +1873,7 @@ func (c *ProjectsWorkerPoolsGetCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2019,7 +2019,7 @@ func (c *ProjectsWorkerPoolsListCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2129,13 +2129,6 @@ func (r *ProjectsWorkerPoolsService) Patch(name string, workerpool *WorkerPool) 
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": A mask
-// specifying which fields in `WorkerPool` should be updated.
-func (c *ProjectsWorkerPoolsPatchCall) UpdateMask(updateMask string) *ProjectsWorkerPoolsPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2163,7 +2156,7 @@ func (c *ProjectsWorkerPoolsPatchCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2240,12 +2233,6 @@ func (c *ProjectsWorkerPoolsPatchCall) Do(opts ...googleapi.CallOption) (*Worker
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/workerPools/[^/]+$",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "A mask specifying which fields in `WorkerPool` should be updated.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

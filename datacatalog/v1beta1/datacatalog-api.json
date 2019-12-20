@@ -204,6 +204,11 @@
                     "name"
                   ],
                   "parameters": {
+                    "force": {
+                      "description": "Optional. If true, deletes all entries in the entry group.",
+                      "location": "query",
+                      "type": "boolean"
+                    },
                     "name": {
                       "description": "Required. The name of the entry group. For example,\n`projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}`.",
                       "location": "path",
@@ -965,7 +970,7 @@
                           "type": "string"
                         },
                         "updateMask": {
-                          "description": "The field mask specifies the parts of the template to be updated.\nAllowed fields:\n\n  * `display_name`\n  * `type.enum_type`\n\nIf `update_mask` is not set or empty, all of the allowed fields above will\nbe updated.\n\nWhen updating an enum type, the provided values will be merged with the\nexisting values. Therefore, enum values can only be added, existing enum\nvalues cannot be deleted nor renamed.",
+                          "description": "Optional. The field mask specifies the parts of the template to be updated.\nAllowed fields:\n\n  * `display_name`\n  * `type.enum_type`\n  * `is_required`\n\nIf `update_mask` is not set or empty, all of the allowed fields above will\nbe updated.\n\nWhen updating an enum type, the provided values will be merged with the\nexisting values. Therefore, enum values can only be added, existing enum\nvalues cannot be deleted nor renamed. Updating a template field from\noptional to required is NOT allowed.",
                           "format": "google-fieldmask",
                           "location": "query",
                           "type": "string"
@@ -1557,7 +1562,7 @@
       }
     }
   },
-  "revision": "20191211",
+  "revision": "20191217",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -2334,6 +2339,10 @@
         "displayName": {
           "description": "The display name for this field. Defaults to an empty string.",
           "type": "string"
+        },
+        "isRequired": {
+          "description": "Whether this is a required field. Defaults to false.",
+          "type": "boolean"
         },
         "name": {
           "description": "Output only. The resource name of the tag template field in URL format. Example:\n\n* projects/{project_id}/locations/{location}/tagTemplates/{tag_template}/fields/{field}\n\nNote that this TagTemplateField may not actually be stored in the location\nin this name.",

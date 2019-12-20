@@ -341,6 +341,9 @@ func (s *ApplicationReference) MarshalJSON() ([]byte, error) {
 
 // Assignment: A comment with an assignment.
 type Assignment struct {
+	// AssignedUser: The user to whom the comment was assigned.
+	AssignedUser *User `json:"assignedUser,omitempty"`
+
 	// Subtype: The sub-type of this event.
 	//
 	// Possible values:
@@ -354,7 +357,7 @@ type Assignment struct {
 	//   "REASSIGNED" - An assignment was reassigned.
 	Subtype string `json:"subtype,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Subtype") to
+	// ForceSendFields is a list of field names (e.g. "AssignedUser") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -362,10 +365,10 @@ type Assignment struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Subtype") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "AssignedUser") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1923,7 +1926,7 @@ func (c *ActivityQueryCall) Header() http.Header {
 
 func (c *ActivityQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191218")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191219")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

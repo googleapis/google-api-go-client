@@ -131,7 +131,7 @@
       }
     }
   },
-  "revision": "20190910",
+  "revision": "20191218",
   "rootUrl": "https://driveactivity.googleapis.com/",
   "schemas": {
     "Action": {
@@ -283,6 +283,10 @@
       "description": "A comment with an assignment.",
       "id": "Assignment",
       "properties": {
+        "assignedUser": {
+          "$ref": "User",
+          "description": "The user to whom the comment was assigned."
+        },
         "subtype": {
           "description": "The sub-type of this event.",
           "enum": [

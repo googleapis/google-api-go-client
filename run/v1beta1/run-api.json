@@ -274,7 +274,7 @@
       }
     }
   },
-  "revision": "20190930",
+  "revision": "20191216",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "CustomResourceColumnDefinition": {
@@ -318,7 +318,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "The kind of resource, one example is \"Storage\".",
+          "description": "The kind of resource, in this case always \"CustomResourceDefinition\".",
           "type": "string"
         },
         "metadata": {

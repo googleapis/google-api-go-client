@@ -1534,7 +1534,7 @@
       }
     }
   },
-  "revision": "20191203",
+  "revision": "20191216",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -2256,7 +2256,7 @@
           "type": "array"
         },
         "parentFollowupIntentName": {
-          "description": "Read-only after creation. The unique identifier of the parent intent in the\nchain of followup intents. You can set this field when creating an intent,\nfor example with CreateIntent or BatchUpdateIntents, in order to\nmake this intent a followup intent.\n\nIt identifies the parent followup intent.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
+          "description": "Read-only after creation. The unique identifier of the parent intent in the\nchain of followup intents. You can set this field when creating an intent,\nfor example with CreateIntent or\nBatchUpdateIntents, in order to make this\nintent a followup intent.\n\nIt identifies the parent followup intent.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
           "type": "string"
         },
         "priority": {
@@ -3346,7 +3346,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The free-form diagnostic info. For example, this field could contain\nwebhook call latency. The string keys of the Struct's fields map can change\nwithout notice.",
+          "description": "Free-form diagnostic information for the associated detect intent request.\nThe fields of this data can change without notice, so you should not write\ncode that depends on its structure.\nThe data may contain:\n\n- webhook call latency\n- webhook errors",
           "type": "object"
         },
         "fulfillmentMessages": {
@@ -3626,7 +3626,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2WebhookResponse": {
-      "description": "The response message for a webhook call.",
+      "description": "The response message for a webhook call.\n\nThis response is validated by the Dialogflow server. If validation fails,\nan error will be returned in the QueryResult.diagnostic_info field.\nSetting JSON fields to an empty value with the wrong type is a common error.\nTo avoid this error:\n\n- Use `\"\"` for empty strings\n- Use `{}` or `null` for empty objects\n- Use `[]` or `null` for empty arrays\n\nFor more information, see the\n[Protocol Buffers Language\nGuide](https://developers.google.com/protocol-buffers/docs/proto3#json).",
       "id": "GoogleCloudDialogflowV2WebhookResponse",
       "properties": {
         "followupEventInput": {
@@ -3749,7 +3749,7 @@
           "type": "integer"
         },
         "name": {
-          "description": "Required. The unique identifier of the context. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e/contexts/\u003cContext ID\u003e`,\nor `projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e/contexts/\u003cContext ID\u003e`.\n\nThe `Context ID` is always converted to lowercase, may only contain\ncharacters in a-zA-Z0-9_-% and may be at most 250 bytes long.\n\nIf `Environment ID` is not specified, we assume default 'draft'\nenvironment. If `User ID` is not specified, we assume default '-' user.",
+          "description": "Required. The unique identifier of the context. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e/contexts/\u003cContext ID\u003e`,\nor `projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e/contexts/\u003cContext ID\u003e`.\n\nThe `Context ID` is always converted to lowercase, may only contain\ncharacters in a-zA-Z0-9_-% and may be at most 250 bytes long.\n\nIf `Environment ID` is not specified, we assume default 'draft'\nenvironment. If `User ID` is not specified, we assume default '-' user.\n\nThe following context names are reserved for internal use by Dialogflow.\nYou should not use these contexts or create contexts with these names:\n\n* `__system_counters__`\n* `*_id_dialog_context`\n* `*_dialog_params_size`",
           "type": "string"
         },
         "parameters": {
@@ -3982,7 +3982,7 @@
           "type": "array"
         },
         "parentFollowupIntentName": {
-          "description": "Read-only after creation. The unique identifier of the parent intent in the\nchain of followup intents. You can set this field when creating an intent,\nfor example with CreateIntent or BatchUpdateIntents, in order to\nmake this intent a followup intent.\n\nIt identifies the parent followup intent.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
+          "description": "Read-only after creation. The unique identifier of the parent intent in the\nchain of followup intents. You can set this field when creating an intent,\nfor example with CreateIntent or\nBatchUpdateIntents, in order to make this\nintent a followup intent.\n\nIt identifies the parent followup intent.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
           "type": "string"
         },
         "priority": {
@@ -5152,7 +5152,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2beta1LabelConversationResponse": {
-      "description": "The response for\nConversationDatasets.LabelConversation",
+      "description": "The response for\nConversationDatasets.LabelConversation.",
       "id": "GoogleCloudDialogflowV2beta1LabelConversationResponse",
       "properties": {
         "annotatedConversationDataset": {
@@ -5202,7 +5202,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The free-form diagnostic info. For example, this field could contain\nwebhook call latency. The string keys of the Struct's fields map can change\nwithout notice.",
+          "description": "Free-form diagnostic information for the associated detect intent request.\nThe fields of this data can change without notice, so you should not write\ncode that depends on its structure.\nThe data may contain:\n\n- webhook call latency\n- webhook errors",
           "type": "object"
         },
         "fulfillmentMessages": {
@@ -5367,7 +5367,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2beta1WebhookResponse": {
-      "description": "The response message for a webhook call.",
+      "description": "The response message for a webhook call.\n\nThis response is validated by the Dialogflow server. If validation fails,\nan error will be returned in the QueryResult.diagnostic_info field.\nSetting JSON fields to an empty value with the wrong type is a common error.\nTo avoid this error:\n\n- Use `\"\"` for empty strings\n- Use `{}` or `null` for empty objects\n- Use `[]` or `null` for empty arrays\n\nFor more information, see the\n[Protocol Buffers Language\nGuide](https://developers.google.com/protocol-buffers/docs/proto3#json).",
       "id": "GoogleCloudDialogflowV2beta1WebhookResponse",
       "properties": {
         "endInteraction": {

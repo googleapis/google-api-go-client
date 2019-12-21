@@ -1022,7 +1022,7 @@ func (c *ProjectsTracesBatchWriteCall) Header() http.Header {
 
 func (c *ProjectsTracesBatchWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1163,7 +1163,7 @@ func (c *ProjectsTracesSpansCreateSpanCall) Header() http.Header {
 
 func (c *ProjectsTracesSpansCreateSpanCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

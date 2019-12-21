@@ -146,6 +146,192 @@
             }
           }
         },
+        "cloudauditlogs": {
+          "methods": {
+            "create": {
+              "description": "Creates a new cloudauditlog.",
+              "flatPath": "apis/events.cloud.google.com/v1alpha1/namespaces/{namespacesId}/cloudauditlogs",
+              "httpMethod": "POST",
+              "id": "run.namespaces.cloudauditlogs.create",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "The project ID or project number in which this cloudauditlog should\nbe created.",
+                  "location": "path",
+                  "pattern": "^namespaces/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "apis/events.cloud.google.com/v1alpha1/{+parent}/cloudauditlogs",
+              "request": {
+                "$ref": "CloudAuditLog"
+              },
+              "response": {
+                "$ref": "CloudAuditLog"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "delete": {
+              "description": "Rpc to delete a cloudauditlog.",
+              "flatPath": "apis/events.cloud.google.com/v1alpha1/namespaces/{namespacesId}/cloudauditlogs/{cloudauditlogsId}",
+              "httpMethod": "DELETE",
+              "id": "run.namespaces.cloudauditlogs.delete",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "apiVersion": {
+                  "description": "Cloud Run currently ignores this parameter.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "kind": {
+                  "description": "Cloud Run currently ignores this parameter.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "The name of the cloudauditlog being deleted. If needed, replace\n{namespace_id} with the project ID.",
+                  "location": "path",
+                  "pattern": "^namespaces/[^/]+/cloudauditlogs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "propagationPolicy": {
+                  "description": "Specifies the propagation policy of delete. Cloud Run currently ignores\nthis setting, and deletes in the background. Please see\nkubernetes.io/docs/concepts/workloads/controllers/garbage-collection/ for\nmore information.",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "apis/events.cloud.google.com/v1alpha1/{+name}",
+              "response": {
+                "$ref": "Empty"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "get": {
+              "description": "Rpc to get information about a cloudauditlog.",
+              "flatPath": "apis/events.cloud.google.com/v1alpha1/namespaces/{namespacesId}/cloudauditlogs/{cloudauditlogsId}",
+              "httpMethod": "GET",
+              "id": "run.namespaces.cloudauditlogs.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "The name of the cloudauditlog being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+                  "location": "path",
+                  "pattern": "^namespaces/[^/]+/cloudauditlogs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "apis/events.cloud.google.com/v1alpha1/{+name}",
+              "response": {
+                "$ref": "CloudAuditLog"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "list": {
+              "description": "Rpc to list cloudauditlogs.",
+              "flatPath": "apis/events.cloud.google.com/v1alpha1/namespaces/{namespacesId}/cloudauditlogs",
+              "httpMethod": "GET",
+              "id": "run.namespaces.cloudauditlogs.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "continue": {
+                  "description": "Optional encoded string to continue paging.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "fieldSelector": {
+                  "description": "Allows to filter resources based on a specific value for a field name.\nSend this in a query string format. i.e. 'metadata.name%3Dlorem'.\nNot currently used by Cloud Run.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "includeUninitialized": {
+                  "description": "Not currently used by Cloud Run.",
+                  "location": "query",
+                  "type": "boolean"
+                },
+                "labelSelector": {
+                  "description": "Allows to filter resources based on a label. Supported operations are\n=, !=, exists, in, and notIn.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "limit": {
+                  "description": "The maximum number of records that should be returned.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "parent": {
+                  "description": "The project ID or project number from which the cloudauditlogs should\nbe listed.",
+                  "location": "path",
+                  "pattern": "^namespaces/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "resourceVersion": {
+                  "description": "The baseline resource version from which the list or watch operation should\nstart. Not currently used by Cloud Run.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "watch": {
+                  "description": "Flag that indicates that the client expects to watch this resource as well.\nNot currently used by Cloud Run.",
+                  "location": "query",
+                  "type": "boolean"
+                }
+              },
+              "path": "apis/events.cloud.google.com/v1alpha1/{+parent}/cloudauditlogs",
+              "response": {
+                "$ref": "ListCloudAuditLogsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "replaceCloudAuditLog": {
+              "description": "Rpc to replace a cloudauditlog.\n\nOnly the spec and metadata labels and annotations are modifiable. After\nthe Update request, Cloud Run will work to make the 'status'\nmatch the requested 'spec'.\n\nMay provide metadata.resourceVersion to enforce update from last read for\noptimistic concurrency control.",
+              "flatPath": "apis/events.cloud.google.com/v1alpha1/namespaces/{namespacesId}/cloudauditlogs/{cloudauditlogsId}",
+              "httpMethod": "PUT",
+              "id": "run.namespaces.cloudauditlogs.replaceCloudAuditLog",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "The name of the cloudauditlog being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+                  "location": "path",
+                  "pattern": "^namespaces/[^/]+/cloudauditlogs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "apis/events.cloud.google.com/v1alpha1/{+name}",
+              "request": {
+                "$ref": "CloudAuditLog"
+              },
+              "response": {
+                "$ref": "CloudAuditLog"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            }
+          }
+        },
         "configurations": {
           "methods": {
             "get": {
@@ -1091,6 +1277,192 @@
             }
           }
         },
+        "storages": {
+          "methods": {
+            "create": {
+              "description": "Creates a new storage.",
+              "flatPath": "apis/events.cloud.google.com/v1alpha1/namespaces/{namespacesId}/storages",
+              "httpMethod": "POST",
+              "id": "run.namespaces.storages.create",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "The project ID or project number in which this storage should\nbe created.",
+                  "location": "path",
+                  "pattern": "^namespaces/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "apis/events.cloud.google.com/v1alpha1/{+parent}/storages",
+              "request": {
+                "$ref": "Storage"
+              },
+              "response": {
+                "$ref": "Storage"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "delete": {
+              "description": "Rpc to delete a storage.",
+              "flatPath": "apis/events.cloud.google.com/v1alpha1/namespaces/{namespacesId}/storages/{storagesId}",
+              "httpMethod": "DELETE",
+              "id": "run.namespaces.storages.delete",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "apiVersion": {
+                  "description": "Cloud Run currently ignores this parameter.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "kind": {
+                  "description": "Cloud Run currently ignores this parameter.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "The name of the storage being deleted. If needed, replace\n{namespace_id} with the project ID.",
+                  "location": "path",
+                  "pattern": "^namespaces/[^/]+/storages/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "propagationPolicy": {
+                  "description": "Specifies the propagation policy of delete. Cloud Run currently ignores\nthis setting, and deletes in the background. Please see\nkubernetes.io/docs/concepts/workloads/controllers/garbage-collection/ for\nmore information.",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "apis/events.cloud.google.com/v1alpha1/{+name}",
+              "response": {
+                "$ref": "Empty"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "get": {
+              "description": "Rpc to get information about a storage.",
+              "flatPath": "apis/events.cloud.google.com/v1alpha1/namespaces/{namespacesId}/storages/{storagesId}",
+              "httpMethod": "GET",
+              "id": "run.namespaces.storages.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "The name of the storage being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+                  "location": "path",
+                  "pattern": "^namespaces/[^/]+/storages/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "apis/events.cloud.google.com/v1alpha1/{+name}",
+              "response": {
+                "$ref": "Storage"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "list": {
+              "description": "Rpc to list storages.",
+              "flatPath": "apis/events.cloud.google.com/v1alpha1/namespaces/{namespacesId}/storages",
+              "httpMethod": "GET",
+              "id": "run.namespaces.storages.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "continue": {
+                  "description": "Optional encoded string to continue paging.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "fieldSelector": {
+                  "description": "Allows to filter resources based on a specific value for a field name.\nSend this in a query string format. i.e. 'metadata.name%3Dlorem'.\nNot currently used by Cloud Run.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "includeUninitialized": {
+                  "description": "Not currently used by Cloud Run.",
+                  "location": "query",
+                  "type": "boolean"
+                },
+                "labelSelector": {
+                  "description": "Allows to filter resources based on a label. Supported operations are\n=, !=, exists, in, and notIn.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "limit": {
+                  "description": "The maximum number of records that should be returned.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "parent": {
+                  "description": "The project ID or project number from which the storages should\nbe listed.",
+                  "location": "path",
+                  "pattern": "^namespaces/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "resourceVersion": {
+                  "description": "The baseline resource version from which the list or watch operation should\nstart. Not currently used by Cloud Run.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "watch": {
+                  "description": "Flag that indicates that the client expects to watch this resource as well.\nNot currently used by Cloud Run.",
+                  "location": "query",
+                  "type": "boolean"
+                }
+              },
+              "path": "apis/events.cloud.google.com/v1alpha1/{+parent}/storages",
+              "response": {
+                "$ref": "ListStoragesResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "replaceStorage": {
+              "description": "Rpc to replace a storage.\n\nOnly the spec and metadata labels and annotations are modifiable. After\nthe Update request, Cloud Run will work to make the 'status'\nmatch the requested 'spec'.\n\nMay provide metadata.resourceVersion to enforce update from last read for\noptimistic concurrency control.",
+              "flatPath": "apis/events.cloud.google.com/v1alpha1/namespaces/{namespacesId}/storages/{storagesId}",
+              "httpMethod": "PUT",
+              "id": "run.namespaces.storages.replaceStorage",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "The name of the storage being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+                  "location": "path",
+                  "pattern": "^namespaces/[^/]+/storages/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "apis/events.cloud.google.com/v1alpha1/{+name}",
+              "request": {
+                "$ref": "Storage"
+              },
+              "response": {
+                "$ref": "Storage"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            }
+          }
+        },
         "triggers": {
           "methods": {
             "create": {
@@ -1359,6 +1731,192 @@
                   "path": "v1alpha1/{+parent}/authorizeddomains",
                   "response": {
                     "$ref": "ListAuthorizedDomainsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
+            "cloudauditlogs": {
+              "methods": {
+                "create": {
+                  "description": "Creates a new cloudauditlog.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/cloudauditlogs",
+                  "httpMethod": "POST",
+                  "id": "run.projects.locations.cloudauditlogs.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "The project ID or project number in which this cloudauditlog should\nbe created.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+parent}/cloudauditlogs",
+                  "request": {
+                    "$ref": "CloudAuditLog"
+                  },
+                  "response": {
+                    "$ref": "CloudAuditLog"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "delete": {
+                  "description": "Rpc to delete a cloudauditlog.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/cloudauditlogs/{cloudauditlogsId}",
+                  "httpMethod": "DELETE",
+                  "id": "run.projects.locations.cloudauditlogs.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "apiVersion": {
+                      "description": "Cloud Run currently ignores this parameter.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "kind": {
+                      "description": "Cloud Run currently ignores this parameter.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "The name of the cloudauditlog being deleted. If needed, replace\n{namespace_id} with the project ID.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/cloudauditlogs/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "propagationPolicy": {
+                      "description": "Specifies the propagation policy of delete. Cloud Run currently ignores\nthis setting, and deletes in the background. Please see\nkubernetes.io/docs/concepts/workloads/controllers/garbage-collection/ for\nmore information.",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+name}",
+                  "response": {
+                    "$ref": "Empty"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Rpc to get information about a cloudauditlog.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/cloudauditlogs/{cloudauditlogsId}",
+                  "httpMethod": "GET",
+                  "id": "run.projects.locations.cloudauditlogs.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "The name of the cloudauditlog being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/cloudauditlogs/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+name}",
+                  "response": {
+                    "$ref": "CloudAuditLog"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Rpc to list cloudauditlogs.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/cloudauditlogs",
+                  "httpMethod": "GET",
+                  "id": "run.projects.locations.cloudauditlogs.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "continue": {
+                      "description": "Optional encoded string to continue paging.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "fieldSelector": {
+                      "description": "Allows to filter resources based on a specific value for a field name.\nSend this in a query string format. i.e. 'metadata.name%3Dlorem'.\nNot currently used by Cloud Run.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "includeUninitialized": {
+                      "description": "Not currently used by Cloud Run.",
+                      "location": "query",
+                      "type": "boolean"
+                    },
+                    "labelSelector": {
+                      "description": "Allows to filter resources based on a label. Supported operations are\n=, !=, exists, in, and notIn.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "limit": {
+                      "description": "The maximum number of records that should be returned.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "parent": {
+                      "description": "The project ID or project number from which the cloudauditlogs should\nbe listed.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "resourceVersion": {
+                      "description": "The baseline resource version from which the list or watch operation should\nstart. Not currently used by Cloud Run.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "watch": {
+                      "description": "Flag that indicates that the client expects to watch this resource as well.\nNot currently used by Cloud Run.",
+                      "location": "query",
+                      "type": "boolean"
+                    }
+                  },
+                  "path": "v1alpha1/{+parent}/cloudauditlogs",
+                  "response": {
+                    "$ref": "ListCloudAuditLogsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "replaceCloudAuditLog": {
+                  "description": "Rpc to replace a cloudauditlog.\n\nOnly the spec and metadata labels and annotations are modifiable. After\nthe Update request, Cloud Run will work to make the 'status'\nmatch the requested 'spec'.\n\nMay provide metadata.resourceVersion to enforce update from last read for\noptimistic concurrency control.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/cloudauditlogs/{cloudauditlogsId}",
+                  "httpMethod": "PUT",
+                  "id": "run.projects.locations.cloudauditlogs.replaceCloudAuditLog",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "The name of the cloudauditlog being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/cloudauditlogs/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+name}",
+                  "request": {
+                    "$ref": "CloudAuditLog"
+                  },
+                  "response": {
+                    "$ref": "CloudAuditLog"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -2398,6 +2956,192 @@
                 }
               }
             },
+            "storages": {
+              "methods": {
+                "create": {
+                  "description": "Creates a new storage.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/storages",
+                  "httpMethod": "POST",
+                  "id": "run.projects.locations.storages.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "The project ID or project number in which this storage should\nbe created.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+parent}/storages",
+                  "request": {
+                    "$ref": "Storage"
+                  },
+                  "response": {
+                    "$ref": "Storage"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "delete": {
+                  "description": "Rpc to delete a storage.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/storages/{storagesId}",
+                  "httpMethod": "DELETE",
+                  "id": "run.projects.locations.storages.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "apiVersion": {
+                      "description": "Cloud Run currently ignores this parameter.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "kind": {
+                      "description": "Cloud Run currently ignores this parameter.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "The name of the storage being deleted. If needed, replace\n{namespace_id} with the project ID.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/storages/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "propagationPolicy": {
+                      "description": "Specifies the propagation policy of delete. Cloud Run currently ignores\nthis setting, and deletes in the background. Please see\nkubernetes.io/docs/concepts/workloads/controllers/garbage-collection/ for\nmore information.",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+name}",
+                  "response": {
+                    "$ref": "Empty"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Rpc to get information about a storage.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/storages/{storagesId}",
+                  "httpMethod": "GET",
+                  "id": "run.projects.locations.storages.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "The name of the storage being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/storages/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+name}",
+                  "response": {
+                    "$ref": "Storage"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Rpc to list storages.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/storages",
+                  "httpMethod": "GET",
+                  "id": "run.projects.locations.storages.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "continue": {
+                      "description": "Optional encoded string to continue paging.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "fieldSelector": {
+                      "description": "Allows to filter resources based on a specific value for a field name.\nSend this in a query string format. i.e. 'metadata.name%3Dlorem'.\nNot currently used by Cloud Run.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "includeUninitialized": {
+                      "description": "Not currently used by Cloud Run.",
+                      "location": "query",
+                      "type": "boolean"
+                    },
+                    "labelSelector": {
+                      "description": "Allows to filter resources based on a label. Supported operations are\n=, !=, exists, in, and notIn.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "limit": {
+                      "description": "The maximum number of records that should be returned.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "parent": {
+                      "description": "The project ID or project number from which the storages should\nbe listed.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "resourceVersion": {
+                      "description": "The baseline resource version from which the list or watch operation should\nstart. Not currently used by Cloud Run.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "watch": {
+                      "description": "Flag that indicates that the client expects to watch this resource as well.\nNot currently used by Cloud Run.",
+                      "location": "query",
+                      "type": "boolean"
+                    }
+                  },
+                  "path": "v1alpha1/{+parent}/storages",
+                  "response": {
+                    "$ref": "ListStoragesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "replaceStorage": {
+                  "description": "Rpc to replace a storage.\n\nOnly the spec and metadata labels and annotations are modifiable. After\nthe Update request, Cloud Run will work to make the 'status'\nmatch the requested 'spec'.\n\nMay provide metadata.resourceVersion to enforce update from last read for\noptimistic concurrency control.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/storages/{storagesId}",
+                  "httpMethod": "PUT",
+                  "id": "run.projects.locations.storages.replaceStorage",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "The name of the storage being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/storages/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+name}",
+                  "request": {
+                    "$ref": "Storage"
+                  },
+                  "response": {
+                    "$ref": "Storage"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
             "triggers": {
               "methods": {
                 "create": {
@@ -2589,7 +3333,7 @@
       }
     }
   },
-  "revision": "20191204",
+  "revision": "20191216",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -2708,6 +3452,98 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "CloudAuditLog": {
+      "id": "CloudAuditLog",
+      "properties": {
+        "apiVersion": {
+          "description": "The API version for this call such as \"events.cloud.google.com/v1alpha1\".",
+          "type": "string"
+        },
+        "kind": {
+          "description": "The kind of resource, in this case \"CloudAuditLog\".",
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "ObjectMeta",
+          "description": "Metadata associated with this CloudAuditLog."
+        },
+        "spec": {
+          "$ref": "CloudAuditLogSpec",
+          "description": "Spec defines the desired state of the CloudAuditLog."
+        },
+        "status": {
+          "$ref": "CloudAuditLogStatus",
+          "description": "Status represents the current state of the CloudAuditLog. This data may be\nout of date. +optional"
+        }
+      },
+      "type": "object"
+    },
+    "CloudAuditLogSpec": {
+      "description": "The desired state of the CloudAuditLog.",
+      "id": "CloudAuditLogSpec",
+      "properties": {
+        "ceOverrides": {
+          "$ref": "CloudEventOverrides",
+          "description": "CloudEventOverrides defines overrides to control the output format and\nmodifications of the event sent to the sink.\n+optional"
+        },
+        "methodName": {
+          "description": "Required. The method name at the service API. This must match \"methodName\" in Cloud\nAudit Logs. Regex or Wildcards (*) are not supported.\nExample: \"google.cloud.bigquery.job.create\".",
+          "type": "string"
+        },
+        "project": {
+          "description": "Project is the ID of the Google Cloud Project that the PubSub Topic exists\nin. If omitted, defaults to same as the cluster. +optional",
+          "type": "string"
+        },
+        "pubsubSecret": {
+          "$ref": "SecretKeySelector",
+          "description": "PubSubSecret is the credential to use to create\nTopic / PullSubscription resources. If omitted, uses Secret."
+        },
+        "resourceName": {
+          "description": "Optional. The resource specification. This must match \"methodName\"\nin Cloud Audit Logs. Regex or Wildcards (*) are not supported.\nExample: \"projects/my-project/jobs/foo\".",
+          "type": "string"
+        },
+        "secret": {
+          "$ref": "SecretKeySelector",
+          "description": "Secret is the credential to use to create the Scheduler Job.\nIf not specified, defaults to:\nName: google-cloud-key\nKey: key.json\n+optional"
+        },
+        "serviceAccountName": {
+          "description": "Email address of the IAM service account associated with the source. The\nservice account represents the identity of the source, and determines what\npermissions the source has. If not provided, the source will use the\nproject's default service account.\n+optional",
+          "type": "string"
+        },
+        "serviceName": {
+          "description": "Required. The GCP service name. This must match \"serviceName\" in Cloud Audit Logs.\nRegex or Wildcards (*) are not supported.\nExample: \"bigquery.googleapis.com\".",
+          "type": "string"
+        },
+        "sink": {
+          "$ref": "Destination",
+          "description": "Sink is a reference to an object that will resolve to a domain name or a\nURI directly to use as the sink."
+        }
+      },
+      "type": "object"
+    },
+    "CloudAuditLogStatus": {
+      "description": "CloudAuditLogStatus represents the current state of a CloudAuditLog.",
+      "id": "CloudAuditLogStatus",
+      "properties": {
+        "conditions": {
+          "description": "Array of observed CloudAuditLogConditions, indicating the current state\nof the CloudAuditLog.",
+          "items": {
+            "$ref": "Condition"
+          },
+          "type": "array"
+        },
+        "observedGeneration": {
+          "description": "ObservedGeneration is the 'Generation' of the CloudAuditLog that\nwas last processed by the controller.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "sinkUri": {
+          "description": "SinkURI is the current active sink URI that has been configured for the\nSource.\n+optional",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3549,6 +4385,39 @@
       },
       "type": "object"
     },
+    "ListCloudAuditLogsResponse": {
+      "description": "ListCloudAuditLogsResponse is a list of CloudAuditLog resources.",
+      "id": "ListCloudAuditLogsResponse",
+      "properties": {
+        "apiVersion": {
+          "description": "The API version for this call such as \"events.cloud.google.com/v1alpha1\".",
+          "type": "string"
+        },
+        "items": {
+          "description": "List of CloudAuditLogs.",
+          "items": {
+            "$ref": "CloudAuditLog"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "description": "The kind of this resource, in this case \"CloudAuditLogList\".",
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "ListMeta",
+          "description": "Metadata associated with this CloudAuditLog list."
+        },
+        "unreachable": {
+          "description": "Locations that could not be reached.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "ListConfigurationsResponse": {
       "description": "ListConfigurationsResponse is a list of Configuration resources.",
       "id": "ListConfigurationsResponse",
@@ -3806,6 +4675,39 @@
         "metadata": {
           "$ref": "ListMeta",
           "description": "Metadata associated with this Service list."
+        },
+        "unreachable": {
+          "description": "Locations that could not be reached.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ListStoragesResponse": {
+      "description": "ListStoragesResponse is a list of Storage resources.",
+      "id": "ListStoragesResponse",
+      "properties": {
+        "apiVersion": {
+          "description": "The API version for this call such as \"events.cloud.google.com/v1alpha1\".",
+          "type": "string"
+        },
+        "items": {
+          "description": "List of Storages.",
+          "items": {
+            "$ref": "Storage"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "description": "The kind of this resource, in this case \"StorageList\".",
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "ListMeta",
+          "description": "Metadata associated with this Storage list."
         },
         "unreachable": {
           "description": "Locations that could not be reached.",
@@ -4172,6 +5074,10 @@
         "secret": {
           "$ref": "SecretKeySelector",
           "description": "Secret is the credential to use to create the Scheduler Job.\nIf not specified, defaults to:\nName: google-cloud-key\nKey: key.json\n+optional"
+        },
+        "serviceAccountName": {
+          "description": "Email address of the IAM service account associated with the source. The\nservice account represents the identity of the source, and determines what\npermissions the source has. If not provided, the source will use the\nproject's Compute Engine default service account.\n+optional",
+          "type": "string"
         },
         "sink": {
           "$ref": "Destination",
@@ -4916,6 +5822,101 @@
           "description": "OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only\nthe fields in the mask will be modified. If no mask is provided, the\nfollowing default mask is used:\npaths: \"bindings, etag\"\nThis field is only used by Cloud IAM.",
           "format": "google-fieldmask",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Storage": {
+      "id": "Storage",
+      "properties": {
+        "apiVersion": {
+          "description": "The API version for this call such as \"events.cloud.google.com/v1alpha1\".",
+          "type": "string"
+        },
+        "kind": {
+          "description": "The kind of resource, in this case \"Storage\".",
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "ObjectMeta",
+          "description": "Metadata associated with this Storage."
+        },
+        "spec": {
+          "$ref": "StorageSpec",
+          "description": "Spec defines the desired state of the Storage."
+        },
+        "status": {
+          "$ref": "StorageStatus",
+          "description": "Status represents the current state of the Storage. This data may be\nout of date. +optional"
+        }
+      },
+      "type": "object"
+    },
+    "StorageSpec": {
+      "description": "The desired state of the Storage.",
+      "id": "StorageSpec",
+      "properties": {
+        "bucket": {
+          "description": "Bucket to subscribe to.",
+          "type": "string"
+        },
+        "ceOverrides": {
+          "$ref": "CloudEventOverrides",
+          "description": "CloudEventOverrides defines overrides to control the output format and\nmodifications of the event sent to the sink.\n+optional"
+        },
+        "eventTypes": {
+          "description": "EventTypes to subscribe to. If unspecified, then subscribe to all events.\n+optional",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "objectNamePrefix": {
+          "description": "ObjectNamePrefix limits the notifications to objects with this prefix\n+optional",
+          "type": "string"
+        },
+        "payloadFormat": {
+          "description": "PayloadFormat specifies the contents of the message payload.\nSee https://cloud.google.com/storage/docs/pubsub-notifications#payload.\n+optional",
+          "type": "string"
+        },
+        "project": {
+          "description": "Project is the ID of the Google Cloud Project that the PubSub Topic exists\nin. If omitted, defaults to same as the cluster. +optional",
+          "type": "string"
+        },
+        "pubsubSecret": {
+          "$ref": "SecretKeySelector",
+          "description": "PubSubSecret is the credential to use to create\nTopic / PullSubscription resources. If omitted, uses Secret."
+        },
+        "secret": {
+          "$ref": "SecretKeySelector",
+          "description": "Secret is the credential to use to create the Scheduler Job.\nIf not specified, defaults to:\nName: google-cloud-key\nKey: key.json\n+optional"
+        },
+        "serviceAccountName": {
+          "description": "ServiceAccountName holds the name of the Kubernetes service account\nas which the underlying K8s resources should be run. If unspecified\nthis will default to the \"default\" service account for the namespace\nin which the GCS exists.\n+optional",
+          "type": "string"
+        },
+        "sink": {
+          "$ref": "Destination",
+          "description": "Sink is a reference to an object that will resolve to a domain name or a\nURI directly to use as the sink."
+        }
+      },
+      "type": "object"
+    },
+    "StorageStatus": {
+      "description": "StorageStatus represents the current state of a Storage.",
+      "id": "StorageStatus",
+      "properties": {
+        "conditions": {
+          "description": "Array of observed StorageConditions, indicating the current state\nof the Storage.",
+          "items": {
+            "$ref": "Condition"
+          },
+          "type": "array"
+        },
+        "observedGeneration": {
+          "description": "ObservedGeneration is the 'Generation' of the Storage that\nwas last processed by the controller.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"

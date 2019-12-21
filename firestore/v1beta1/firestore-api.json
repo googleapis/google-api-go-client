@@ -183,7 +183,7 @@
                   ],
                   "parameters": {
                     "database": {
-                      "description": "The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
+                      "description": "Required. The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/databases/[^/]+$",
                       "required": true,
@@ -212,7 +212,7 @@
                   ],
                   "parameters": {
                     "database": {
-                      "description": "The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
+                      "description": "Required. The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/databases/[^/]+$",
                       "required": true,
@@ -241,7 +241,7 @@
                   ],
                   "parameters": {
                     "database": {
-                      "description": "The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
+                      "description": "Required. The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/databases/[^/]+$",
                       "required": true,
@@ -271,7 +271,7 @@
                   ],
                   "parameters": {
                     "collectionId": {
-                      "description": "The collection ID, relative to `parent`, to list. For example: `chatrooms`.",
+                      "description": "Required. The collection ID, relative to `parent`, to list. For example: `chatrooms`.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -288,7 +288,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "The parent resource. For example:\n`projects/{project_id}/databases/{database_id}/documents` or\n`projects/{project_id}/databases/{database_id}/documents/chatrooms/{chatroom_id}`",
+                      "description": "Required. The parent resource. For example:\n`projects/{project_id}/databases/{database_id}/documents` or\n`projects/{project_id}/databases/{database_id}/documents/chatrooms/{chatroom_id}`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/databases/[^/]+/documents/.+$",
                       "required": true,
@@ -328,7 +328,7 @@
                       "type": "string"
                     },
                     "name": {
-                      "description": "The resource name of the Document to delete. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
+                      "description": "Required. The resource name of the Document to delete. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$",
                       "required": true,
@@ -360,7 +360,7 @@
                       "type": "string"
                     },
                     "name": {
-                      "description": "The resource name of the Document to get. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
+                      "description": "Required. The resource name of the Document to get. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$",
                       "required": true,
@@ -399,7 +399,7 @@
                   ],
                   "parameters": {
                     "collectionId": {
-                      "description": "The collection ID, relative to `parent`, to list. For example: `chatrooms`\nor `messages`.",
+                      "description": "Required. The collection ID, relative to `parent`, to list. For example: `chatrooms`\nor `messages`.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -427,7 +427,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "The parent resource name. In the format:\n`projects/{project_id}/databases/{database_id}/documents` or\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nFor example:\n`projects/my-project/databases/my-database/documents` or\n`projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
+                      "description": "Required. The parent resource name. In the format:\n`projects/{project_id}/databases/{database_id}/documents` or\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nFor example:\n`projects/my-project/databases/my-database/documents` or\n`projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$",
                       "required": true,
@@ -470,7 +470,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "The parent document. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nFor example:\n`projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
+                      "description": "Required. The parent document. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nFor example:\n`projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$",
                       "required": true,
@@ -499,7 +499,7 @@
                   ],
                   "parameters": {
                     "database": {
-                      "description": "The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
+                      "description": "Required. The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/databases/[^/]+$",
                       "required": true,
@@ -580,7 +580,7 @@
                   ],
                   "parameters": {
                     "database": {
-                      "description": "The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
+                      "description": "Required. The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/databases/[^/]+$",
                       "required": true,
@@ -609,7 +609,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "The parent resource name. In the format:\n`projects/{project_id}/databases/{database_id}/documents` or\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nFor example:\n`projects/my-project/databases/my-database/documents` or\n`projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
+                      "description": "Required. The parent resource name. In the format:\n`projects/{project_id}/databases/{database_id}/documents` or\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nFor example:\n`projects/my-project/databases/my-database/documents` or\n`projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$",
                       "required": true,
@@ -638,7 +638,7 @@
                   ],
                   "parameters": {
                     "database": {
-                      "description": "The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.\nThis is only required in the first message.",
+                      "description": "Required. The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.\nThis is only required in the first message.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/databases/[^/]+$",
                       "required": true,
@@ -790,7 +790,7 @@
       }
     }
   },
-  "revision": "20191019",
+  "revision": "20191206",
   "rootUrl": "https://firestore.googleapis.com/",
   "schemas": {
     "ArrayValue": {
@@ -1850,7 +1850,7 @@
       "id": "RollbackRequest",
       "properties": {
         "transaction": {
-          "description": "The transaction to roll back.",
+          "description": "Required. The transaction to roll back.",
           "format": "byte",
           "type": "string"
         }

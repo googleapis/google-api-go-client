@@ -9,16 +9,16 @@
           "description": "See and add to your Google Fit physical activity data"
         },
         "https://www.googleapis.com/auth/fitness.blood_glucose.read": {
-          "description": "See info about your blood glucose in Google Fit"
+          "description": "See info about your blood glucose in Google Fit. I consent to Google sharing my blood glucose information with this app."
         },
         "https://www.googleapis.com/auth/fitness.blood_glucose.write": {
-          "description": "See and add info about your blood glucose to Google Fit"
+          "description": "See and add info about your blood glucose to Google Fit. I consent to Google sharing my blood glucose information with this app."
         },
         "https://www.googleapis.com/auth/fitness.blood_pressure.read": {
-          "description": "See info about your blood pressure in Google Fit"
+          "description": "See info about your blood pressure in Google Fit. I consent to Google sharing my blood pressure information with this app."
         },
         "https://www.googleapis.com/auth/fitness.blood_pressure.write": {
-          "description": "See and add info about your blood pressure in Google Fit"
+          "description": "See and add info about your blood pressure in Google Fit. I consent to Google sharing my blood pressure information with this app."
         },
         "https://www.googleapis.com/auth/fitness.body.read": {
           "description": "See info about your body measurements and heart rate in Google Fit"
@@ -27,10 +27,10 @@
           "description": "See and add info about your body measurements and heart rate to Google Fit"
         },
         "https://www.googleapis.com/auth/fitness.body_temperature.read": {
-          "description": "See info about your body temperature in Google Fit"
+          "description": "See info about your body temperature in Google Fit. I consent to Google sharing my body temperature information with this app."
         },
         "https://www.googleapis.com/auth/fitness.body_temperature.write": {
-          "description": "See and add to info about your body temperature in Google Fit"
+          "description": "See and add to info about your body temperature in Google Fit. I consent to Google sharing my body temperature information with this app."
         },
         "https://www.googleapis.com/auth/fitness.location.read": {
           "description": "See your Google Fit speed and distance data"
@@ -45,16 +45,16 @@
           "description": "See and add to info about your nutrition in Google Fit"
         },
         "https://www.googleapis.com/auth/fitness.oxygen_saturation.read": {
-          "description": "See info about your oxygen saturation in Google Fit"
+          "description": "See info about your oxygen saturation in Google Fit. I consent to Google sharing my oxygen saturation information with this app."
         },
         "https://www.googleapis.com/auth/fitness.oxygen_saturation.write": {
-          "description": "See and add info about your oxygen saturation in Google Fit"
+          "description": "See and add info about your oxygen saturation in Google Fit. I consent to Google sharing my oxygen saturation information with this app."
         },
         "https://www.googleapis.com/auth/fitness.reproductive_health.read": {
-          "description": "See info about your reproductive health in Google Fit"
+          "description": "See info about your reproductive health in Google Fit. I consent to Google sharing my reporductive health information with this app."
         },
         "https://www.googleapis.com/auth/fitness.reproductive_health.write": {
-          "description": "See and add info about your reproductive health in Google Fit"
+          "description": "See and add info about your reproductive health in Google Fit. I consent to Google sharing my reporductive health information with this app."
         }
       }
     }
@@ -65,7 +65,7 @@
   "description": "Stores and accesses user data in the fitness store from apps on any platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/fit/rest/",
-  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/Soxy876ekH_sXwnArF197wS9-Dk\"",
+  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/HdVUB55O-RusRqU6Fzd7lXU3z-s\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -761,7 +761,7 @@
       }
     }
   },
-  "revision": "20191014",
+  "revision": "20191129",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AggregateBucket": {

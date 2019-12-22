@@ -1478,7 +1478,7 @@ func (c *CustomresourcedefinitionsListCall) Header() http.Header {
 
 func (c *CustomresourcedefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1648,7 +1648,7 @@ func (c *NamespacesCustomresourcedefinitionsGetCall) Header() http.Header {
 
 func (c *NamespacesCustomresourcedefinitionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1789,7 +1789,7 @@ func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) Header() http.Header
 
 func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1984,7 +1984,7 @@ func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Header() http.Heade
 
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

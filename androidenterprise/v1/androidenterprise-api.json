@@ -15,7 +15,7 @@
   "description": "Manages the deployment of apps to Android for Work users.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android/work/play/emm-api",
-  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/nIj-cDXtx1hU_8az-yGj3W3cw8Y\"",
+  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/GyRe0AEoUkCQbMaOCH4kg8ftTBc\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2919,7 +2919,7 @@
       }
     }
   },
-  "revision": "20191201",
+  "revision": "20191211",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Administrator": {
@@ -2939,7 +2939,6 @@
       "properties": {
         "kind": {
           "default": "androidenterprise#administratorWebToken",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#administratorWebToken\".",
           "type": "string"
         },
         "token": {
@@ -2955,7 +2954,6 @@
       "properties": {
         "kind": {
           "default": "androidenterprise#administratorWebTokenSpec",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#administratorWebTokenSpec\".",
           "type": "string"
         },
         "managedConfigurations": {
@@ -3052,7 +3050,6 @@
       "properties": {
         "kind": {
           "default": "androidenterprise#appRestrictionsSchema",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#appRestrictionsSchema\".",
           "type": "string"
         },
         "restrictions": {
@@ -3225,7 +3222,6 @@
         },
         "kind": {
           "default": "androidenterprise#approvalUrlInfo",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#approvalUrlInfo\".",
           "type": "string"
         }
       },
@@ -3237,7 +3233,6 @@
       "properties": {
         "kind": {
           "default": "androidenterprise#authenticationToken",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#authenticationToken\".",
           "type": "string"
         },
         "token": {
@@ -3299,7 +3294,6 @@
       "properties": {
         "kind": {
           "default": "androidenterprise#configurationVariables",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#configurationVariables\".",
           "type": "string"
         },
         "mcmId": {
@@ -3326,7 +3320,6 @@
         },
         "kind": {
           "default": "androidenterprise#device",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#device\".",
           "type": "string"
         },
         "managementType": {
@@ -3392,7 +3385,6 @@
         },
         "kind": {
           "default": "androidenterprise#deviceState",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#deviceState\".",
           "type": "string"
         }
       },
@@ -3434,7 +3426,6 @@
         },
         "kind": {
           "default": "androidenterprise#enterprise",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#enterprise\".",
           "type": "string"
         },
         "name": {
@@ -3458,7 +3449,6 @@
         },
         "kind": {
           "default": "androidenterprise#enterpriseAccount",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#enterpriseAccount\".",
           "type": "string"
         }
       },
@@ -3503,7 +3493,6 @@
       "properties": {
         "kind": {
           "default": "androidenterprise#entitlement",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#entitlement\".",
           "type": "string"
         },
         "productId": {
@@ -3550,7 +3539,6 @@
         },
         "kind": {
           "default": "androidenterprise#groupLicense",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#groupLicense\".",
           "type": "string"
         },
         "numProvisioned": {
@@ -3622,7 +3610,6 @@
         },
         "kind": {
           "default": "androidenterprise#install",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#install\".",
           "type": "string"
         },
         "productId": {
@@ -3753,7 +3740,6 @@
         },
         "kind": {
           "default": "androidenterprise#managedConfiguration",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#managedConfiguration\".",
           "type": "string"
         },
         "managedProperty": {
@@ -3814,7 +3800,6 @@
       "properties": {
         "kind": {
           "default": "androidenterprise#managedConfigurationsSettings",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#managedConfigurationsSettings\".",
           "type": "string"
         },
         "lastUpdatedTimestampMillis": {
@@ -4014,7 +3999,6 @@
       "properties": {
         "kind": {
           "default": "androidenterprise#notificationSet",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#notificationSet\".",
           "type": "string"
         },
         "notification": {
@@ -4059,7 +4043,6 @@
         },
         "kind": {
           "default": "androidenterprise#permission",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#permission\".",
           "type": "string"
         },
         "name": {
@@ -4165,7 +4148,6 @@
         },
         "kind": {
           "default": "androidenterprise#product",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#product\".",
           "type": "string"
         },
         "lastUpdatedTimestampMillis": {
@@ -4278,7 +4260,6 @@
       "properties": {
         "kind": {
           "default": "androidenterprise#productPermissions",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#productPermissions\".",
           "type": "string"
         },
         "permission": {
@@ -4334,7 +4315,6 @@
       "properties": {
         "kind": {
           "default": "androidenterprise#productSet",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#productSet\".",
           "type": "string"
         },
         "productId": {
@@ -4458,7 +4438,6 @@
         },
         "kind": {
           "default": "androidenterprise#serviceAccount",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#serviceAccount\".",
           "type": "string"
         },
         "name": {
@@ -4482,7 +4461,6 @@
         },
         "kind": {
           "default": "androidenterprise#serviceAccountKey",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#serviceAccountKey\".",
           "type": "string"
         },
         "publicData": {
@@ -4524,7 +4502,6 @@
         },
         "kind": {
           "default": "androidenterprise#signupInfo",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#signupInfo\".",
           "type": "string"
         },
         "url": {
@@ -4544,7 +4521,6 @@
         },
         "kind": {
           "default": "androidenterprise#storeCluster",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#storeCluster\".",
           "type": "string"
         },
         "name": {
@@ -4578,7 +4554,6 @@
         },
         "kind": {
           "default": "androidenterprise#storeLayout",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#storeLayout\".",
           "type": "string"
         },
         "storeLayoutType": {
@@ -4636,7 +4611,6 @@
         },
         "kind": {
           "default": "androidenterprise#storePage",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#storePage\".",
           "type": "string"
         },
         "link": {
@@ -4715,7 +4689,6 @@
         },
         "kind": {
           "default": "androidenterprise#user",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#user\".",
           "type": "string"
         },
         "managementType": {
@@ -4735,7 +4708,6 @@
       "properties": {
         "kind": {
           "default": "androidenterprise#userToken",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#userToken\".",
           "type": "string"
         },
         "token": {
@@ -4774,7 +4746,6 @@
       "properties": {
         "kind": {
           "default": "androidenterprise#variableSet",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#variableSet\".",
           "type": "string"
         },
         "placeholder": {

@@ -15,7 +15,7 @@
   "description": "API for viewing and managing your reports in DoubleClick Bid Manager.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/bid-manager/",
-  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/8dS_oIgOQEid0uFLyNI8zZpjtOw\"",
+  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/i8C-m_eGmIDWwsnjuh-N5cApoaY\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -281,7 +281,7 @@
       }
     }
   },
-  "revision": "20191112",
+  "revision": "20191210",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "DownloadLineItemsRequest": {
@@ -568,14 +568,11 @@
             "FILTER_USER_LIST_THIRD_PARTY",
             "FILTER_USER_LIST_THIRD_PARTY_NAME",
             "FILTER_VIDEO_AD_POSITION_IN_STREAM",
-            "FILTER_VIDEO_COMPANION_SIZE",
-            "FILTER_VIDEO_COMPANION_TYPE",
             "FILTER_VIDEO_CREATIVE_DURATION",
             "FILTER_VIDEO_CREATIVE_DURATION_SKIPPABLE",
             "FILTER_VIDEO_DURATION_SECONDS",
             "FILTER_VIDEO_DURATION_SECONDS_RANGE",
             "FILTER_VIDEO_FORMAT_SUPPORT",
-            "FILTER_VIDEO_INVENTORY_TYPE",
             "FILTER_VIDEO_PLAYER_SIZE",
             "FILTER_VIDEO_RATING_TIER",
             "FILTER_VIDEO_SKIPPABLE_SUPPORT",
@@ -585,9 +582,6 @@
             "FILTER_ZIP_CODE"
           ],
           "enumDescriptions": [
-            "",
-            "",
-            "",
             "",
             "",
             "",
@@ -921,14 +915,11 @@
               "FILTER_USER_LIST_THIRD_PARTY",
               "FILTER_USER_LIST_THIRD_PARTY_NAME",
               "FILTER_VIDEO_AD_POSITION_IN_STREAM",
-              "FILTER_VIDEO_COMPANION_SIZE",
-              "FILTER_VIDEO_COMPANION_TYPE",
               "FILTER_VIDEO_CREATIVE_DURATION",
               "FILTER_VIDEO_CREATIVE_DURATION_SKIPPABLE",
               "FILTER_VIDEO_DURATION_SECONDS",
               "FILTER_VIDEO_DURATION_SECONDS_RANGE",
               "FILTER_VIDEO_FORMAT_SUPPORT",
-              "FILTER_VIDEO_INVENTORY_TYPE",
               "FILTER_VIDEO_PLAYER_SIZE",
               "FILTER_VIDEO_RATING_TIER",
               "FILTER_VIDEO_SKIPPABLE_SUPPORT",
@@ -938,9 +929,6 @@
               "FILTER_ZIP_CODE"
             ],
             "enumDescriptions": [
-              "",
-              "",
-              "",
               "",
               "",
               "",

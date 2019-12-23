@@ -856,7 +856,7 @@ func (c *AchievementsResetCall) Header() http.Header {
 
 func (c *AchievementsResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -984,7 +984,7 @@ func (c *AchievementsResetAllCall) Header() http.Header {
 
 func (c *AchievementsResetAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1098,7 +1098,7 @@ func (c *AchievementsResetAllForAllPlayersCall) Header() http.Header {
 
 func (c *AchievementsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1186,7 +1186,7 @@ func (c *AchievementsResetForAllPlayersCall) Header() http.Header {
 
 func (c *AchievementsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1288,7 +1288,7 @@ func (c *AchievementsResetMultipleForAllPlayersCall) Header() http.Header {
 
 func (c *AchievementsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1411,7 +1411,7 @@ func (c *ApplicationsListHiddenCall) Header() http.Header {
 
 func (c *ApplicationsListHiddenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1544,8 +1544,7 @@ type EventsResetCall struct {
 
 // Reset: Resets all player progress on the event with the given ID for
 // the currently authenticated player. This method is only accessible to
-// whitelisted tester accounts for your application. All quests for this
-// player that use the event will also be reset.
+// whitelisted tester accounts for your application.
 func (r *EventsService) Reset(eventId string) *EventsResetCall {
 	c := &EventsResetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.eventId = eventId
@@ -1579,7 +1578,7 @@ func (c *EventsResetCall) Header() http.Header {
 
 func (c *EventsResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1613,7 +1612,7 @@ func (c *EventsResetCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Resets all player progress on the event with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application. All quests for this player that use the event will also be reset.",
+	//   "description": "Resets all player progress on the event with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.events.reset",
 	//   "parameterOrder": [
@@ -1646,8 +1645,7 @@ type EventsResetAllCall struct {
 
 // ResetAll: Resets all player progress on all events for the currently
 // authenticated player. This method is only accessible to whitelisted
-// tester accounts for your application. All quests for this player will
-// also be reset.
+// tester accounts for your application.
 func (r *EventsService) ResetAll() *EventsResetAllCall {
 	c := &EventsResetAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1680,7 +1678,7 @@ func (c *EventsResetAllCall) Header() http.Header {
 
 func (c *EventsResetAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1711,7 +1709,7 @@ func (c *EventsResetAllCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Resets all player progress on all events for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application. All quests for this player will also be reset.",
+	//   "description": "Resets all player progress on all events for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.events.resetAll",
 	//   "path": "events/reset",
@@ -1733,7 +1731,6 @@ type EventsResetAllForAllPlayersCall struct {
 
 // ResetAllForAllPlayers: Resets all draft events for all players. This
 // method is only available to user accounts for your developer console.
-// All quests that use any of these events will also be reset.
 func (r *EventsService) ResetAllForAllPlayers() *EventsResetAllForAllPlayersCall {
 	c := &EventsResetAllForAllPlayersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1766,7 +1763,7 @@ func (c *EventsResetAllForAllPlayersCall) Header() http.Header {
 
 func (c *EventsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1797,7 +1794,7 @@ func (c *EventsResetAllForAllPlayersCall) Do(opts ...googleapi.CallOption) error
 	}
 	return nil
 	// {
-	//   "description": "Resets all draft events for all players. This method is only available to user accounts for your developer console. All quests that use any of these events will also be reset.",
+	//   "description": "Resets all draft events for all players. This method is only available to user accounts for your developer console.",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.events.resetAllForAllPlayers",
 	//   "path": "events/resetAllForAllPlayers",
@@ -1820,8 +1817,7 @@ type EventsResetForAllPlayersCall struct {
 
 // ResetForAllPlayers: Resets the event with the given ID for all
 // players. This method is only available to user accounts for your
-// developer console. Only draft events can be reset. All quests that
-// use the event will also be reset.
+// developer console. Only draft events can be reset.
 func (r *EventsService) ResetForAllPlayers(eventId string) *EventsResetForAllPlayersCall {
 	c := &EventsResetForAllPlayersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.eventId = eventId
@@ -1855,7 +1851,7 @@ func (c *EventsResetForAllPlayersCall) Header() http.Header {
 
 func (c *EventsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1889,7 +1885,7 @@ func (c *EventsResetForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Resets the event with the given ID for all players. This method is only available to user accounts for your developer console. Only draft events can be reset. All quests that use the event will also be reset.",
+	//   "description": "Resets the event with the given ID for all players. This method is only available to user accounts for your developer console. Only draft events can be reset.",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.events.resetForAllPlayers",
 	//   "parameterOrder": [
@@ -1923,8 +1919,7 @@ type EventsResetMultipleForAllPlayersCall struct {
 
 // ResetMultipleForAllPlayers: Resets events with the given IDs for all
 // players. This method is only available to user accounts for your
-// developer console. Only draft events may be reset. All quests that
-// use any of the events will also be reset.
+// developer console. Only draft events may be reset.
 func (r *EventsService) ResetMultipleForAllPlayers(eventsresetmultipleforallrequest *EventsResetMultipleForAllRequest) *EventsResetMultipleForAllPlayersCall {
 	c := &EventsResetMultipleForAllPlayersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.eventsresetmultipleforallrequest = eventsresetmultipleforallrequest
@@ -1958,7 +1953,7 @@ func (c *EventsResetMultipleForAllPlayersCall) Header() http.Header {
 
 func (c *EventsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1994,7 +1989,7 @@ func (c *EventsResetMultipleForAllPlayersCall) Do(opts ...googleapi.CallOption) 
 	}
 	return nil
 	// {
-	//   "description": "Resets events with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft events may be reset. All quests that use any of the events will also be reset.",
+	//   "description": "Resets events with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft events may be reset.",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.events.resetMultipleForAllPlayers",
 	//   "path": "events/resetMultipleForAllPlayers",
@@ -2056,7 +2051,7 @@ func (c *PlayersHideCall) Header() http.Header {
 
 func (c *PlayersHideCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2168,7 +2163,7 @@ func (c *PlayersUnhideCall) Header() http.Header {
 
 func (c *PlayersUnhideCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2276,7 +2271,7 @@ func (c *RoomsResetCall) Header() http.Header {
 
 func (c *RoomsResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2362,7 +2357,7 @@ func (c *RoomsResetForAllPlayersCall) Header() http.Header {
 
 func (c *RoomsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2450,7 +2445,7 @@ func (c *ScoresResetCall) Header() http.Header {
 
 func (c *ScoresResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2578,7 +2573,7 @@ func (c *ScoresResetAllCall) Header() http.Header {
 
 func (c *ScoresResetAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2692,7 +2687,7 @@ func (c *ScoresResetAllForAllPlayersCall) Header() http.Header {
 
 func (c *ScoresResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2780,7 +2775,7 @@ func (c *ScoresResetForAllPlayersCall) Header() http.Header {
 
 func (c *ScoresResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2883,7 +2878,7 @@ func (c *ScoresResetMultipleForAllPlayersCall) Header() http.Header {
 
 func (c *ScoresResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2976,7 +2971,7 @@ func (c *TurnBasedMatchesResetCall) Header() http.Header {
 
 func (c *TurnBasedMatchesResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3063,7 +3058,7 @@ func (c *TurnBasedMatchesResetForAllPlayersCall) Header() http.Header {
 
 func (c *TurnBasedMatchesResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

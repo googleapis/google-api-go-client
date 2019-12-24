@@ -922,7 +922,7 @@
           ]
         },
         "list": {
-          "description": "Lists instances under a given project in the alphabetical order of the\ninstance name.",
+          "description": "Lists instances under a given project.",
           "flatPath": "sql/v1beta4/projects/{project}/instances",
           "httpMethod": "GET",
           "id": "sql.instances.list",
@@ -1409,6 +1409,11 @@
               "location": "path",
               "required": true,
               "type": "string"
+            },
+            "resourceName": {
+              "description": "The name of the operation for Cloud SQL to get.\nFormat: projects/{project}/locations/{location}/operations/{operation}",
+              "location": "query",
+              "type": "string"
             }
           },
           "path": "sql/v1beta4/projects/{project}/operations/{operation}",
@@ -1506,7 +1511,11 @@
               },
               "response": {
                 "$ref": "Operation"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/sqlservice.admin"
+              ]
             }
           }
         },
@@ -1547,7 +1556,11 @@
                   },
                   "response": {
                     "$ref": "Operation"
-                  }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/sqlservice.admin"
+                  ]
                 }
               }
             }
@@ -1972,7 +1985,7 @@
       }
     }
   },
-  "revision": "20191205",
+  "revision": "20191214",
   "rootUrl": "https://sqladmin.googleapis.com/",
   "schemas": {
     "AclEntry": {
@@ -2328,7 +2341,8 @@
             "SQLSERVER_2017_STANDARD",
             "SQLSERVER_2017_ENTERPRISE",
             "SQLSERVER_2017_EXPRESS",
-            "SQLSERVER_2017_WEB"
+            "SQLSERVER_2017_WEB",
+            "POSTGRES_10"
           ],
           "enumDescriptions": [
             "This is an unknown database version.",
@@ -2345,7 +2359,8 @@
             "The database version is SQL Server 2017.",
             "",
             "",
-            ""
+            "",
+            "The database version is PostgreSQL 10."
           ],
           "type": "string"
         },
@@ -2753,7 +2768,8 @@
             "The database version is SQL Server 2017.",
             "",
             "",
-            ""
+            "",
+            "The database version is PostgreSQL 10."
           ],
           "items": {
             "enum": [
@@ -2771,7 +2787,8 @@
               "SQLSERVER_2017_STANDARD",
               "SQLSERVER_2017_ENTERPRISE",
               "SQLSERVER_2017_EXPRESS",
-              "SQLSERVER_2017_WEB"
+              "SQLSERVER_2017_WEB",
+              "POSTGRES_10"
             ],
             "type": "string"
           },

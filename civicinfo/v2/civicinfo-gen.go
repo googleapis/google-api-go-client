@@ -1863,7 +1863,7 @@ func (c *DivisionsSearchCall) Header() http.Header {
 
 func (c *DivisionsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191225")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191226")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1998,7 +1998,7 @@ func (c *ElectionsElectionQueryCall) Header() http.Header {
 
 func (c *ElectionsElectionQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191225")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191226")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2156,7 +2156,7 @@ func (c *ElectionsVoterInfoQueryCall) Header() http.Header {
 
 func (c *ElectionsVoterInfoQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191225")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191226")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2372,7 +2372,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Header() http.Header {
 
 func (c *RepresentativesRepresentativeInfoByAddressCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191225")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191226")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2628,7 +2628,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Header() http.Header {
 
 func (c *RepresentativesRepresentativeInfoByDivisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191225")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191226")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

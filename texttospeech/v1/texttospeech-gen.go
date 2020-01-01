@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC.
+// Copyright 2020 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -606,7 +606,7 @@ func (c *TextSynthesizeCall) Header() http.Header {
 
 func (c *TextSynthesizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191230")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191231")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -760,7 +760,7 @@ func (c *VoicesListCall) Header() http.Header {
 
 func (c *VoicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191230")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191231")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

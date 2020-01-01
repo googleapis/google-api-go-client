@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC.
+// Copyright 2020 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1589,7 +1589,7 @@ func (c *ProjectsWorkerPoolsCreateCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191230")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191231")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1730,7 +1730,7 @@ func (c *ProjectsWorkerPoolsDeleteCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191230")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191231")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1873,7 +1873,7 @@ func (c *ProjectsWorkerPoolsGetCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191230")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191231")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2019,7 +2019,7 @@ func (c *ProjectsWorkerPoolsListCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191230")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191231")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2156,7 +2156,7 @@ func (c *ProjectsWorkerPoolsPatchCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191230")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20191231")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

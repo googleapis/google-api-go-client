@@ -917,7 +917,7 @@ func (c *ProjectsDeleteEventsCall) Header() http.Header {
 
 func (c *ProjectsDeleteEventsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -985,7 +985,7 @@ func (c *ProjectsDeleteEventsCall) Do(opts ...googleapi.CallOption) (*DeleteEven
 	//   ],
 	//   "parameters": {
 	//     "projectName": {
-	//       "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
+	//       "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/{projectID}`, where `{projectID}` is the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\n\nExample: `projects/my-project-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1124,7 +1124,7 @@ func (c *ProjectsEventsListCall) Header() http.Header {
 
 func (c *ProjectsEventsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1211,7 +1211,7 @@ func (c *ProjectsEventsListCall) Do(opts ...googleapi.CallOption) (*ListEventsRe
 	//       "type": "string"
 	//     },
 	//     "projectName": {
-	//       "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
+	//       "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/{projectID}`, where `{projectID}` is the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\n\nExample: `projects/my-project-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1300,8 +1300,8 @@ type ProjectsEventsReportCall struct {
 // example:
 //
 // `POST
-// https://clouderrorreporting.googleapis.com/v1beta1/pro
-// jects/example-project/events:report?key=123ABC456`
+// https://clouderrorreporting.googleapis.com/v1beta1/{pr
+// ojectName}/events:report?key=123ABC456`
 func (r *ProjectsEventsService) Report(projectName string, reportederrorevent *ReportedErrorEvent) *ProjectsEventsReportCall {
 	c := &ProjectsEventsReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectName = projectName
@@ -1336,7 +1336,7 @@ func (c *ProjectsEventsReportCall) Header() http.Header {
 
 func (c *ProjectsEventsReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1400,7 +1400,7 @@ func (c *ProjectsEventsReportCall) Do(opts ...googleapi.CallOption) (*ReportErro
 	}
 	return ret, nil
 	// {
-	//   "description": "Report an individual error event.\n\nThis endpoint accepts **either** an OAuth token,\n**or** an [API key](https://support.google.com/cloud/answer/6158862)\nfor authentication. To use an API key, append it to the URL as the value of\na `key` parameter. For example:\n\n`POST\nhttps://clouderrorreporting.googleapis.com/v1beta1/projects/example-project/events:report?key=123ABC456`",
+	//   "description": "Report an individual error event.\n\nThis endpoint accepts **either** an OAuth token,\n**or** an [API key](https://support.google.com/cloud/answer/6158862)\nfor authentication. To use an API key, append it to the URL as the value of\na `key` parameter. For example:\n\n`POST\nhttps://clouderrorreporting.googleapis.com/v1beta1/{projectName}/events:report?key=123ABC456`",
 	//   "flatPath": "v1beta1/projects/{projectsId}/events:report",
 	//   "httpMethod": "POST",
 	//   "id": "clouderrorreporting.projects.events.report",
@@ -1409,7 +1409,7 @@ func (c *ProjectsEventsReportCall) Do(opts ...googleapi.CallOption) (*ReportErro
 	//   ],
 	//   "parameters": {
 	//     "projectName": {
-	//       "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840). Example:\n`projects/my-project-123`.",
+	//       "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/{projectId}`, where `{projectId}` is the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\n\nExample: // `projects/my-project-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1599,7 +1599,7 @@ func (c *ProjectsGroupStatsListCall) Header() http.Header {
 
 func (c *ProjectsGroupStatsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1715,7 +1715,7 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//       "type": "string"
 	//     },
 	//     "projectName": {
-	//       "description": "Required. The resource name of the Google Cloud Platform project. Written\nas \u003ccode\u003eprojects/\u003c/code\u003e plus the\n\u003ca href=\"https://support.google.com/cloud/answer/6158840\"\u003eGoogle Cloud\nPlatform project ID\u003c/a\u003e.\n\nExample: \u003ccode\u003eprojects/my-project-123\u003c/code\u003e.",
+	//       "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/{projectID}`, where `{projectID}` is the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\n\nExample: `projects/my-project-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1843,7 +1843,7 @@ func (c *ProjectsGroupsGetCall) Header() http.Header {
 
 func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1979,7 +1979,7 @@ func (c *ProjectsGroupsUpdateCall) Header() http.Header {
 
 func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

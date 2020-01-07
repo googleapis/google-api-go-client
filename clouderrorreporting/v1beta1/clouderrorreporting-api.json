@@ -115,7 +115,7 @@
           ],
           "parameters": {
             "projectName": {
-              "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
+              "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/{projectID}`, where `{projectID}` is the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\n\nExample: `projects/my-project-123`.",
               "location": "path",
               "pattern": "^projects/[^/]+$",
               "required": true,
@@ -160,7 +160,7 @@
                   "type": "string"
                 },
                 "projectName": {
-                  "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
+                  "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/{projectID}`, where `{projectID}` is the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\n\nExample: `projects/my-project-123`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -204,7 +204,7 @@
               ]
             },
             "report": {
-              "description": "Report an individual error event.\n\nThis endpoint accepts **either** an OAuth token,\n**or** an [API key](https://support.google.com/cloud/answer/6158862)\nfor authentication. To use an API key, append it to the URL as the value of\na `key` parameter. For example:\n\n`POST\nhttps://clouderrorreporting.googleapis.com/v1beta1/projects/example-project/events:report?key=123ABC456`",
+              "description": "Report an individual error event.\n\nThis endpoint accepts **either** an OAuth token,\n**or** an [API key](https://support.google.com/cloud/answer/6158862)\nfor authentication. To use an API key, append it to the URL as the value of\na `key` parameter. For example:\n\n`POST\nhttps://clouderrorreporting.googleapis.com/v1beta1/{projectName}/events:report?key=123ABC456`",
               "flatPath": "v1beta1/projects/{projectsId}/events:report",
               "httpMethod": "POST",
               "id": "clouderrorreporting.projects.events.report",
@@ -213,7 +213,7 @@
               ],
               "parameters": {
                 "projectName": {
-                  "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840). Example:\n`projects/my-project-123`.",
+                  "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/{projectId}`, where `{projectId}` is the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\n\nExample: // `projects/my-project-123`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -290,7 +290,7 @@
                   "type": "string"
                 },
                 "projectName": {
-                  "description": "Required. The resource name of the Google Cloud Platform project. Written\nas \u003ccode\u003eprojects/\u003c/code\u003e plus the\n\u003ca href=\"https://support.google.com/cloud/answer/6158840\"\u003eGoogle Cloud\nPlatform project ID\u003c/a\u003e.\n\nExample: \u003ccode\u003eprojects/my-project-123\u003c/code\u003e.",
+                  "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/{projectID}`, where `{projectID}` is the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\n\nExample: `projects/my-project-123`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -401,7 +401,7 @@
       }
     }
   },
-  "revision": "20190925",
+  "revision": "20191230",
   "rootUrl": "https://clouderrorreporting.googleapis.com/",
   "schemas": {
     "DeleteEventsResponse": {

@@ -414,8 +414,8 @@ type BillingAccount struct {
 	// billing account `012345-567890-ABCDEF`.
 	Name string `json:"name,omitempty"`
 
-	// Open: True if the billing account is open, and will therefore be
-	// charged for any
+	// Open: Output only. True if the billing account is open, and will
+	// therefore be charged for any
 	// usage on associated projects. False if the billing account is closed,
 	// and
 	// therefore projects associated with it will be unable to use paid
@@ -1589,7 +1589,7 @@ func (c *BillingAccountsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1730,7 +1730,7 @@ func (c *BillingAccountsGetCall) Header() http.Header {
 
 func (c *BillingAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1801,7 +1801,7 @@ func (c *BillingAccountsGetCall) Do(opts ...googleapi.CallOption) (*BillingAccou
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the billing account to retrieve. For example,\n`billingAccounts/012345-567890-ABCDEF`.",
+	//       "description": "Required. The resource name of the billing account to retrieve. For example,\n`billingAccounts/012345-567890-ABCDEF`.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
@@ -1899,7 +1899,7 @@ func (c *BillingAccountsGetIamPolicyCall) Header() http.Header {
 
 func (c *BillingAccountsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2087,7 +2087,7 @@ func (c *BillingAccountsListCall) Header() http.Header {
 
 func (c *BillingAccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2263,7 +2263,7 @@ func (c *BillingAccountsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2336,7 +2336,7 @@ func (c *BillingAccountsPatchCall) Do(opts ...googleapi.CallOption) (*BillingAcc
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the billing account resource to be updated.",
+	//       "description": "Required. The name of the billing account resource to be updated.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
@@ -2417,7 +2417,7 @@ func (c *BillingAccountsSetIamPolicyCall) Header() http.Header {
 
 func (c *BillingAccountsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2561,7 +2561,7 @@ func (c *BillingAccountsTestIamPermissionsCall) Header() http.Header {
 
 func (c *BillingAccountsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2736,7 +2736,7 @@ func (c *BillingAccountsProjectsListCall) Header() http.Header {
 
 func (c *BillingAccountsProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2807,7 +2807,7 @@ func (c *BillingAccountsProjectsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the billing account associated with the projects that\nyou want to list. For example, `billingAccounts/012345-567890-ABCDEF`.",
+	//       "description": "Required. The resource name of the billing account associated with the projects that\nyou want to list. For example, `billingAccounts/012345-567890-ABCDEF`.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
@@ -2918,7 +2918,7 @@ func (c *ProjectsGetBillingInfoCall) Header() http.Header {
 
 func (c *ProjectsGetBillingInfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2989,7 +2989,7 @@ func (c *ProjectsGetBillingInfoCall) Do(opts ...googleapi.CallOption) (*ProjectB
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the project for which billing information is\nretrieved. For example, `projects/tokyo-rain-123`.",
+	//       "description": "Required. The resource name of the project for which billing information is\nretrieved. For example, `projects/tokyo-rain-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -3108,7 +3108,7 @@ func (c *ProjectsUpdateBillingInfoCall) Header() http.Header {
 
 func (c *ProjectsUpdateBillingInfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3181,7 +3181,7 @@ func (c *ProjectsUpdateBillingInfoCall) Do(opts ...googleapi.CallOption) (*Proje
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the project associated with the billing information\nthat you want to update. For example, `projects/tokyo-rain-123`.",
+	//       "description": "Required. The resource name of the project associated with the billing information\nthat you want to update. For example, `projects/tokyo-rain-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -3272,7 +3272,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3494,7 +3494,7 @@ func (c *ServicesSkusListCall) Header() http.Header {
 
 func (c *ServicesSkusListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

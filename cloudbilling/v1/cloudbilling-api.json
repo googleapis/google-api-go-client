@@ -134,7 +134,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "The resource name of the billing account to retrieve. For example,\n`billingAccounts/012345-567890-ABCDEF`.",
+              "description": "Required. The resource name of the billing account to retrieve. For example,\n`billingAccounts/012345-567890-ABCDEF`.",
               "location": "path",
               "pattern": "^billingAccounts/[^/]+$",
               "required": true,
@@ -222,7 +222,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "The name of the billing account resource to be updated.",
+              "description": "Required. The name of the billing account resource to be updated.",
               "location": "path",
               "pattern": "^billingAccounts/[^/]+$",
               "required": true,
@@ -316,7 +316,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The resource name of the billing account associated with the projects that\nyou want to list. For example, `billingAccounts/012345-567890-ABCDEF`.",
+                  "description": "Required. The resource name of the billing account associated with the projects that\nyou want to list. For example, `billingAccounts/012345-567890-ABCDEF`.",
                   "location": "path",
                   "pattern": "^billingAccounts/[^/]+$",
                   "required": true,
@@ -358,7 +358,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "The resource name of the project for which billing information is\nretrieved. For example, `projects/tokyo-rain-123`.",
+              "description": "Required. The resource name of the project for which billing information is\nretrieved. For example, `projects/tokyo-rain-123`.",
               "location": "path",
               "pattern": "^projects/[^/]+$",
               "required": true,
@@ -383,7 +383,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "The resource name of the project associated with the billing information\nthat you want to update. For example, `projects/tokyo-rain-123`.",
+              "description": "Required. The resource name of the project associated with the billing information\nthat you want to update. For example, `projects/tokyo-rain-123`.",
               "location": "path",
               "pattern": "^projects/[^/]+$",
               "required": true,
@@ -494,7 +494,7 @@
       }
     }
   },
-  "revision": "20191206",
+  "revision": "20200106",
   "rootUrl": "https://cloudbilling.googleapis.com/",
   "schemas": {
     "AggregationInfo": {
@@ -600,7 +600,7 @@
           "type": "string"
         },
         "open": {
-          "description": "True if the billing account is open, and will therefore be charged for any\nusage on associated projects. False if the billing account is closed, and\ntherefore projects associated with it will be unable to use paid services.",
+          "description": "Output only. True if the billing account is open, and will therefore be charged for any\nusage on associated projects. False if the billing account is closed, and\ntherefore projects associated with it will be unable to use paid services.",
           "type": "boolean"
         }
       },

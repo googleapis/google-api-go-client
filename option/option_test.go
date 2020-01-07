@@ -7,12 +7,40 @@ package option
 import (
 	"testing"
 
+	"crypto/tls"
+	"math/big"
+
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/internal"
 	"google.golang.org/grpc"
 )
+
+// Below is a dummy certificate/key pair taken from
+// https://golang.org/src/crypto/tls/tls_test.go
+const certPEM = `-----BEGIN CERTIFICATE-----
+MIIB0zCCAX2gAwIBAgIJAI/M7BYjwB+uMA0GCSqGSIb3DQEBBQUAMEUxCzAJBgNV
+BAYTAkFVMRMwEQYDVQQIDApTb21lLVN0YXRlMSEwHwYDVQQKDBhJbnRlcm5ldCBX
+aWRnaXRzIFB0eSBMdGQwHhcNMTIwOTEyMjE1MjAyWhcNMTUwOTEyMjE1MjAyWjBF
+MQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UECgwYSW50
+ZXJuZXQgV2lkZ2l0cyBQdHkgTHRkMFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBANLJ
+hPHhITqQbPklG3ibCVxwGMRfp/v4XqhfdQHdcVfHap6NQ5Wok/4xIA+ui35/MmNa
+rtNuC+BdZ1tMuVCPFZcCAwEAAaNQME4wHQYDVR0OBBYEFJvKs8RfJaXTH08W+SGv
+zQyKn0H8MB8GA1UdIwQYMBaAFJvKs8RfJaXTH08W+SGvzQyKn0H8MAwGA1UdEwQF
+MAMBAf8wDQYJKoZIhvcNAQEFBQADQQBJlffJHybjDGxRMqaRmDhX0+6v02TUKZsW
+r5QuVbpQhH6u+0UgcW0jp9QwpxoPTLTWGXEWBBBurxFwiCBhkQ+V
+-----END CERTIFICATE-----
+-----BEGIN PRIVATE KEY-----
+MIIBOwIBAAJBANLJhPHhITqQbPklG3ibCVxwGMRfp/v4XqhfdQHdcVfHap6NQ5Wo
+k/4xIA+ui35/MmNartNuC+BdZ1tMuVCPFZcCAwEAAQJAEJ2N+zsR0Xn8/Q6twa4G
+6OB1M1WO+k+ztnX/1SvNeWu8D6GImtupLTYgjZcHufykj09jiHmjHx8u8ZZB/o1N
+MQIhAPW+eyZo7ay3lMz1V01WVjNKK9QSn1MJlb06h/LuYv9FAiEA25WPedKgVyCW
+SmUwbPw8fnTcpqDWE3yTO3vKcebqMSsCIBF3UmVue8YU3jybC3NxuXq3wNm34R8T
+xVLHwDXh/6NJAiEAl2oHGGLz64BuAfjKrqwz7qMYr9HCLIe/YsoWq/olzScCIQDi
+D2lWusoe2/nEqfDVVWGWlyJ7yOmqaVm/iNUN9B2N2g==
+-----END PRIVATE KEY-----
+`
 
 // Check that the slice passed into WithScopes is copied.
 func TestCopyScopes(t *testing.T) {
@@ -66,5 +94,36 @@ func TestApply(t *testing.T) {
 	}
 	if !cmp.Equal(got, want, cmpopts.IgnoreUnexported(grpc.ClientConn{})) {
 		t.Errorf(cmp.Diff(got, want, cmpopts.IgnoreUnexported(grpc.ClientConn{})))
+	}
+}
+
+func mockGetClientCertificate(info *tls.CertificateRequestInfo) (*tls.Certificate, error) {
+	cert, _ := tls.X509KeyPair([]byte(certPEM), []byte(certPEM))
+	return &cert, nil
+}
+
+func TestApplyGetClientCertificate(t *testing.T) {
+	opts := []ClientOption{
+		WithGetClientCertificate(mockGetClientCertificate),
+	}
+	var got internal.DialSettings
+	for _, opt := range opts {
+		opt.Apply(&got)
+	}
+	want := internal.DialSettings{
+		GetClientCertificate: mockGetClientCertificate,
+	}
+
+	// Functions cannot be compared in Golang for equality, so we will compare the output of the functions instead.
+	certGot, err := got.GetClientCertificate(nil)
+	if err != nil {
+		t.Error(err)
+	}
+	certWant, err := want.GetClientCertificate(nil)
+	if err != nil {
+		t.Error(err)
+	}
+	if !cmp.Equal(certGot, certWant, cmpopts.IgnoreUnexported(big.Int{}), cmpopts.IgnoreFields(tls.Certificate{}, "Leaf")) {
+		t.Errorf(cmp.Diff(certGot, certWant, cmpopts.IgnoreUnexported(big.Int{}), cmpopts.IgnoreFields(tls.Certificate{}, "Leaf")))
 	}
 }

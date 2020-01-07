@@ -9,6 +9,7 @@ package http
 
 import (
 	"context"
+	"crypto/tls"
 	"errors"
 	"net/http"
 	"net/url"
@@ -38,7 +39,7 @@ func NewClient(ctx context.Context, opts ...option.ClientOption) (*http.Client, 
 	if settings.HTTPClient != nil {
 		return settings.HTTPClient, endpoint, nil
 	}
-	trans, err := newTransport(ctx, defaultBaseTransport(ctx), settings)
+	trans, err := newTransport(ctx, defaultBaseTransport(ctx, settings), settings)
 	if err != nil {
 		return nil, "", err
 	}
@@ -143,12 +144,18 @@ func (t *parameterTransport) RoundTrip(req *http.Request) (*http.Response, error
 var appengineUrlfetchHook func(context.Context) http.RoundTripper
 
 // defaultBaseTransport returns the base HTTP transport.
-// On App Engine, this is urlfetch.Transport, otherwise it's http.DefaultTransport.
-func defaultBaseTransport(ctx context.Context) http.RoundTripper {
+// On App Engine, this is urlfetch.Transport.
+// If TLSCertificate is available, return a custom Transport with TLSClientConfig.
+// Otherwise, return http.DefaultTransport.
+func defaultBaseTransport(ctx context.Context, settings *internal.DialSettings) http.RoundTripper {
 	if appengineUrlfetchHook != nil {
 		return appengineUrlfetchHook(ctx)
+	} else if settings.GetClientCertificate != nil {
+		tlsConfig := tls.Config{GetClientCertificate: settings.GetClientCertificate}
+		return &http.Transport{TLSClientConfig: &tlsConfig}
+	} else {
+		return http.DefaultTransport
 	}
-	return http.DefaultTransport
 }
 
 func addOCTransport(trans http.RoundTripper, settings *internal.DialSettings) http.RoundTripper {

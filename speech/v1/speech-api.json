@@ -289,7 +289,7 @@
       }
     }
   },
-  "revision": "20191203",
+  "revision": "20200102",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "ListOperationsResponse": {
@@ -556,11 +556,6 @@
           ],
           "type": "string"
         },
-        "obfuscatedId": {
-          "description": "Obfuscated (privacy-protected) ID of the user, to identify number of\nunique users using the service.",
-          "format": "int64",
-          "type": "string"
-        },
         "originalMediaType": {
           "description": "The original media the speech was recorded on.",
           "enum": [
@@ -756,7 +751,7 @@
           "type": "string"
         },
         "speakerTag": {
-          "description": "A distinct integer value is assigned for every speaker within\nthe audio. This field specifies which one of those speakers was detected to\nhave spoken this word. Value ranges from '1' to diarization_speaker_count.\nspeaker_tag is set if enable_speaker_diarization = 'true' and only in the\ntop alternative.",
+          "description": "Output only. A distinct integer value is assigned for every speaker within\nthe audio. This field specifies which one of those speakers was detected to\nhave spoken this word. Value ranges from '1' to diarization_speaker_count.\nspeaker_tag is set if enable_speaker_diarization = 'true' and only in the\ntop alternative.",
           "format": "int32",
           "type": "integer"
         },

@@ -289,7 +289,7 @@
       }
     }
   },
-  "revision": "20191203",
+  "revision": "20200102",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "ListOperationsResponse": {
@@ -641,10 +641,6 @@
         "config": {
           "$ref": "RecognitionConfig",
           "description": "Required. Provides information to the recognizer that specifies how to\nprocess the request."
-        },
-        "name": {
-          "description": "Use `model` field in RecognitionConfig instead.",
-          "type": "string"
         }
       },
       "type": "object"
@@ -748,7 +744,7 @@
           "type": "integer"
         },
         "languageCode": {
-          "description": "The [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag\nof the language in this result. This language code was detected to have\nthe most likelihood of being spoken in the audio.",
+          "description": "Output only. The [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag\nof the language in this result. This language code was detected to have\nthe most likelihood of being spoken in the audio.",
           "type": "string"
         }
       },
@@ -796,7 +792,7 @@
           "type": "string"
         },
         "speakerTag": {
-          "description": "A distinct integer value is assigned for every speaker within\nthe audio. This field specifies which one of those speakers was detected to\nhave spoken this word. Value ranges from '1' to diarization_speaker_count.\nspeaker_tag is set if enable_speaker_diarization = 'true' and only in the\ntop alternative.",
+          "description": "Output only. A distinct integer value is assigned for every speaker within\nthe audio. This field specifies which one of those speakers was detected to\nhave spoken this word. Value ranges from '1' to diarization_speaker_count.\nspeaker_tag is set if enable_speaker_diarization = 'true' and only in the\ntop alternative.",
           "format": "int32",
           "type": "integer"
         },

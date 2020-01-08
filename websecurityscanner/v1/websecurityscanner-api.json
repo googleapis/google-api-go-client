@@ -525,7 +525,7 @@
       }
     }
   },
-  "revision": "20190919",
+  "revision": "20200104",
   "rootUrl": "https://websecurityscanner.googleapis.com/",
   "schemas": {
     "Authentication": {
@@ -539,6 +539,10 @@
         "googleAccount": {
           "$ref": "GoogleAccount",
           "description": "Authentication using a Google account."
+        },
+        "iapCredential": {
+          "$ref": "IapCredential",
+          "description": "Authentication using Identity-Aware-Proxy (IAP)."
         }
       },
       "type": "object"
@@ -722,6 +726,28 @@
       },
       "type": "object"
     },
+    "IapCredential": {
+      "description": "Describes authentication configuration for Identity-Aware-Proxy (IAP).",
+      "id": "IapCredential",
+      "properties": {
+        "iapTestServiceAccountInfo": {
+          "$ref": "IapTestServiceAccountInfo",
+          "description": "Authentication configuration when Web-Security-Scanner service\naccount is added in Identity-Aware-Proxy (IAP) access policies."
+        }
+      },
+      "type": "object"
+    },
+    "IapTestServiceAccountInfo": {
+      "description": "Describes authentication configuration when Web-Security-Scanner\nservice account is added in Identity-Aware-Proxy (IAP) access policies.",
+      "id": "IapTestServiceAccountInfo",
+      "properties": {
+        "targetAudienceClientId": {
+          "description": "Required. Describes OAuth2 client id of resources protected by\nIdentity-Aware-Proxy (IAP).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ListCrawledUrlsResponse": {
       "description": "Response for the `ListCrawledUrls` method.",
       "id": "ListCrawledUrlsResponse",
@@ -863,6 +889,10 @@
           ],
           "type": "string"
         },
+        "managedScan": {
+          "description": "Whether the scan config is managed by Cloud Web Security Scanner, output\nonly.",
+          "type": "boolean"
+        },
         "maxQps": {
           "description": "The maximum QPS during scanning. A valid value ranges from 5 to 20\ninclusively. If the field is unspecified or its value is set 0, server will\ndefault to 15. Other values outside of [5, 20] range will be rejected with\nINVALID_ARGUMENT error.",
           "format": "int32",
@@ -896,6 +926,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "staticIpScan": {
+          "description": "Whether the scan configuration has enabled static IP address scan feature.\nIf enabled, the scanner will access applications from static IP addresses.",
+          "type": "boolean"
         },
         "userAgent": {
           "description": "The user agent used during scanning.",

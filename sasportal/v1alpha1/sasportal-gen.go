@@ -262,6 +262,71 @@ func (s *SasPortalAssignment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SasPortalBulkCreateDeviceRequest: Request for BulkCreateDevice
+// method.
+type SasPortalBulkCreateDeviceRequest struct {
+	// Csv: Required. A csv with each row representing a [device]. Each row
+	// must
+	// conform to the regulations described on CreateDeviceRequest's device
+	// field.
+	Csv string `json:"csv,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Csv") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Csv") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SasPortalBulkCreateDeviceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SasPortalBulkCreateDeviceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SasPortalBulkCreateDeviceResponse: Response for BulkCreateDevice
+// method.
+type SasPortalBulkCreateDeviceResponse struct {
+	// Devices: Required. The devices that were imported.
+	Devices []*SasPortalDevice `json:"devices,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Devices") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Devices") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SasPortalBulkCreateDeviceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SasPortalBulkCreateDeviceResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SasPortalCreateSignedDeviceRequest: Request for CreateSignedDevice
 // method.
 type SasPortalCreateSignedDeviceRequest struct {
@@ -1621,7 +1686,7 @@ func (c *CustomersGetCall) Header() http.Header {
 
 func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1780,7 +1845,7 @@ func (c *CustomersListCall) Header() http.Header {
 
 func (c *CustomersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1942,7 +2007,7 @@ func (c *CustomersPatchCall) Header() http.Header {
 
 func (c *CustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2042,6 +2107,148 @@ func (c *CustomersPatchCall) Do(opts ...googleapi.CallOption) (*SasPortalCustome
 
 }
 
+// method id "sasportal.customers.devices.bulk":
+
+type CustomersDevicesBulkCall struct {
+	s                                *Service
+	parent                           string
+	sasportalbulkcreatedevicerequest *SasPortalBulkCreateDeviceRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Bulk: Creates a device under a node or customer. Returned devices are
+// unordered.
+func (r *CustomersDevicesService) Bulk(parent string, sasportalbulkcreatedevicerequest *SasPortalBulkCreateDeviceRequest) *CustomersDevicesBulkCall {
+	c := &CustomersDevicesBulkCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.sasportalbulkcreatedevicerequest = sasportalbulkcreatedevicerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersDevicesBulkCall) Fields(s ...googleapi.Field) *CustomersDevicesBulkCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersDevicesBulkCall) Context(ctx context.Context) *CustomersDevicesBulkCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersDevicesBulkCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersDevicesBulkCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.sasportalbulkcreatedevicerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}/devices:bulk")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "sasportal.customers.devices.bulk" call.
+// Exactly one of *SasPortalBulkCreateDeviceResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *SasPortalBulkCreateDeviceResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CustomersDevicesBulkCall) Do(opts ...googleapi.CallOption) (*SasPortalBulkCreateDeviceResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SasPortalBulkCreateDeviceResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a device under a node or customer. Returned devices are unordered.",
+	//   "flatPath": "v1alpha1/customers/{customersId}/devices:bulk",
+	//   "httpMethod": "POST",
+	//   "id": "sasportal.customers.devices.bulk",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the parent resource.",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+parent}/devices:bulk",
+	//   "request": {
+	//     "$ref": "SasPortalBulkCreateDeviceRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SasPortalBulkCreateDeviceResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/userinfo.email"
+	//   ]
+	// }
+
+}
+
 // method id "sasportal.customers.devices.create":
 
 type CustomersDevicesCreateCall struct {
@@ -2088,7 +2295,7 @@ func (c *CustomersDevicesCreateCall) Header() http.Header {
 
 func (c *CustomersDevicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2229,7 +2436,7 @@ func (c *CustomersDevicesCreateSignedCall) Header() http.Header {
 
 func (c *CustomersDevicesCreateSignedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2367,7 +2574,7 @@ func (c *CustomersDevicesDeleteCall) Header() http.Header {
 
 func (c *CustomersDevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2508,7 +2715,7 @@ func (c *CustomersDevicesGetCall) Header() http.Header {
 
 func (c *CustomersDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2677,7 +2884,7 @@ func (c *CustomersDevicesListCall) Header() http.Header {
 
 func (c *CustomersDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2849,7 +3056,7 @@ func (c *CustomersDevicesMoveCall) Header() http.Header {
 
 func (c *CustomersDevicesMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2996,7 +3203,7 @@ func (c *CustomersDevicesPatchCall) Header() http.Header {
 
 func (c *CustomersDevicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3142,7 +3349,7 @@ func (c *CustomersDevicesSignDeviceCall) Header() http.Header {
 
 func (c *CustomersDevicesSignDeviceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3282,7 +3489,7 @@ func (c *CustomersDevicesUpdateSignedCall) Header() http.Header {
 
 func (c *CustomersDevicesUpdateSignedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3422,7 +3629,7 @@ func (c *CustomersNodesCreateCall) Header() http.Header {
 
 func (c *CustomersNodesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3560,7 +3767,7 @@ func (c *CustomersNodesDeleteCall) Header() http.Header {
 
 func (c *CustomersNodesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3701,7 +3908,7 @@ func (c *CustomersNodesGetCall) Header() http.Header {
 
 func (c *CustomersNodesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3860,7 +4067,7 @@ func (c *CustomersNodesListCall) Header() http.Header {
 
 func (c *CustomersNodesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4027,7 +4234,7 @@ func (c *CustomersNodesMoveCall) Header() http.Header {
 
 func (c *CustomersNodesMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4174,7 +4381,7 @@ func (c *CustomersNodesPatchCall) Header() http.Header {
 
 func (c *CustomersNodesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4319,7 +4526,7 @@ func (c *InstallerGenerateSecretCall) Header() http.Header {
 
 func (c *InstallerGenerateSecretCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4445,7 +4652,7 @@ func (c *InstallerValidateCall) Header() http.Header {
 
 func (c *InstallerValidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4527,6 +4734,148 @@ func (c *InstallerValidateCall) Do(opts ...googleapi.CallOption) (*SasPortalVali
 
 }
 
+// method id "sasportal.nodes.devices.bulk":
+
+type NodesDevicesBulkCall struct {
+	s                                *Service
+	parent                           string
+	sasportalbulkcreatedevicerequest *SasPortalBulkCreateDeviceRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Bulk: Creates a device under a node or customer. Returned devices are
+// unordered.
+func (r *NodesDevicesService) Bulk(parent string, sasportalbulkcreatedevicerequest *SasPortalBulkCreateDeviceRequest) *NodesDevicesBulkCall {
+	c := &NodesDevicesBulkCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.sasportalbulkcreatedevicerequest = sasportalbulkcreatedevicerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *NodesDevicesBulkCall) Fields(s ...googleapi.Field) *NodesDevicesBulkCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *NodesDevicesBulkCall) Context(ctx context.Context) *NodesDevicesBulkCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *NodesDevicesBulkCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *NodesDevicesBulkCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.sasportalbulkcreatedevicerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}/devices:bulk")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "sasportal.nodes.devices.bulk" call.
+// Exactly one of *SasPortalBulkCreateDeviceResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *SasPortalBulkCreateDeviceResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *NodesDevicesBulkCall) Do(opts ...googleapi.CallOption) (*SasPortalBulkCreateDeviceResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SasPortalBulkCreateDeviceResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a device under a node or customer. Returned devices are unordered.",
+	//   "flatPath": "v1alpha1/nodes/{nodesId}/devices:bulk",
+	//   "httpMethod": "POST",
+	//   "id": "sasportal.nodes.devices.bulk",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the parent resource.",
+	//       "location": "path",
+	//       "pattern": "^nodes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+parent}/devices:bulk",
+	//   "request": {
+	//     "$ref": "SasPortalBulkCreateDeviceRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SasPortalBulkCreateDeviceResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/userinfo.email"
+	//   ]
+	// }
+
+}
+
 // method id "sasportal.nodes.devices.create":
 
 type NodesDevicesCreateCall struct {
@@ -4573,7 +4922,7 @@ func (c *NodesDevicesCreateCall) Header() http.Header {
 
 func (c *NodesDevicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4714,7 +5063,7 @@ func (c *NodesDevicesCreateSignedCall) Header() http.Header {
 
 func (c *NodesDevicesCreateSignedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4852,7 +5201,7 @@ func (c *NodesDevicesDeleteCall) Header() http.Header {
 
 func (c *NodesDevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4993,7 +5342,7 @@ func (c *NodesDevicesGetCall) Header() http.Header {
 
 func (c *NodesDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5162,7 +5511,7 @@ func (c *NodesDevicesListCall) Header() http.Header {
 
 func (c *NodesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5334,7 +5683,7 @@ func (c *NodesDevicesMoveCall) Header() http.Header {
 
 func (c *NodesDevicesMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5481,7 +5830,7 @@ func (c *NodesDevicesPatchCall) Header() http.Header {
 
 func (c *NodesDevicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5627,7 +5976,7 @@ func (c *NodesDevicesSignDeviceCall) Header() http.Header {
 
 func (c *NodesDevicesSignDeviceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5767,7 +6116,7 @@ func (c *NodesDevicesUpdateSignedCall) Header() http.Header {
 
 func (c *NodesDevicesUpdateSignedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5907,7 +6256,7 @@ func (c *NodesNodesCreateCall) Header() http.Header {
 
 func (c *NodesNodesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6045,7 +6394,7 @@ func (c *NodesNodesDeleteCall) Header() http.Header {
 
 func (c *NodesNodesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6186,7 +6535,7 @@ func (c *NodesNodesGetCall) Header() http.Header {
 
 func (c *NodesNodesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6345,7 +6694,7 @@ func (c *NodesNodesListCall) Header() http.Header {
 
 func (c *NodesNodesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6512,7 +6861,7 @@ func (c *NodesNodesMoveCall) Header() http.Header {
 
 func (c *NodesNodesMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6659,7 +7008,7 @@ func (c *NodesNodesPatchCall) Header() http.Header {
 
 func (c *NodesNodesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6806,7 +7155,7 @@ func (c *PoliciesGetCall) Header() http.Header {
 
 func (c *PoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6933,7 +7282,7 @@ func (c *PoliciesSetCall) Header() http.Header {
 
 func (c *PoliciesSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7059,7 +7408,7 @@ func (c *PoliciesTestCall) Header() http.Header {
 
 func (c *PoliciesTestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

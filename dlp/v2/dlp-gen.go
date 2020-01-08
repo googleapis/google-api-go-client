@@ -457,7 +457,7 @@ type ProjectsStoredInfoTypesService struct {
 // job.
 // See https://cloud.google.com/dlp/docs/concepts-actions to learn more.
 type GooglePrivacyDlpV2Action struct {
-	// JobNotificationEmails: Enable email notification for project owners
+	// JobNotificationEmails: Enable email notification to project owners
 	// and editors on job's
 	// completion/failure.
 	JobNotificationEmails *GooglePrivacyDlpV2JobNotificationEmails `json:"jobNotificationEmails,omitempty"`
@@ -512,22 +512,16 @@ type GooglePrivacyDlpV2ActivateJobTriggerRequest struct {
 // GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails: Result of a risk
 // analysis operation request.
 type GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails struct {
-	// CategoricalStatsResult: Categorical stats result
 	CategoricalStatsResult *GooglePrivacyDlpV2CategoricalStatsResult `json:"categoricalStatsResult,omitempty"`
 
-	// DeltaPresenceEstimationResult: Delta-presence result
 	DeltaPresenceEstimationResult *GooglePrivacyDlpV2DeltaPresenceEstimationResult `json:"deltaPresenceEstimationResult,omitempty"`
 
-	// KAnonymityResult: K-anonymity result
 	KAnonymityResult *GooglePrivacyDlpV2KAnonymityResult `json:"kAnonymityResult,omitempty"`
 
-	// KMapEstimationResult: K-map result
 	KMapEstimationResult *GooglePrivacyDlpV2KMapEstimationResult `json:"kMapEstimationResult,omitempty"`
 
-	// LDiversityResult: L-divesity result
 	LDiversityResult *GooglePrivacyDlpV2LDiversityResult `json:"lDiversityResult,omitempty"`
 
-	// NumericalStatsResult: Numerical stats result
 	NumericalStatsResult *GooglePrivacyDlpV2NumericalStatsResult `json:"numericalStatsResult,omitempty"`
 
 	// RequestedPrivacyMetric: Privacy metric to compute.
@@ -574,15 +568,17 @@ func (s *GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails) MarshalJSON() ([]byte, 
 // the
 // tuple is highly reidentifiable).
 type GooglePrivacyDlpV2AuxiliaryTable struct {
-	// QuasiIds: Required. Quasi-identifier columns.
+	// QuasiIds: Quasi-identifier columns. [required]
 	QuasiIds []*GooglePrivacyDlpV2QuasiIdField `json:"quasiIds,omitempty"`
 
-	// RelativeFrequency: Required. The relative frequency column must
-	// contain a floating-point number
-	// between 0 and 1 (inclusive). Null values are assumed to be zero.
+	// RelativeFrequency: The relative frequency column must contain a
+	// floating-point number
+	// between 0 and 1 (inclusive). Null values are assumed to be
+	// zero.
+	// [required]
 	RelativeFrequency *GooglePrivacyDlpV2FieldId `json:"relativeFrequency,omitempty"`
 
-	// Table: Required. Auxiliary table location.
+	// Table: Auxiliary table location. [required]
 	Table *GooglePrivacyDlpV2BigQueryTable `json:"table,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "QuasiIds") to
@@ -914,14 +910,14 @@ type GooglePrivacyDlpV2ByteContentItem struct {
 	// TEXT_UTF8.
 	//
 	// Possible values:
-	//   "BYTES_TYPE_UNSPECIFIED" - Unused
-	//   "IMAGE" - Any image type.
-	//   "IMAGE_JPEG" - jpeg
-	//   "IMAGE_BMP" - bmp
-	//   "IMAGE_PNG" - png
-	//   "IMAGE_SVG" - svg
-	//   "TEXT_UTF8" - plain text
-	//   "AVRO" - avro
+	//   "BYTES_TYPE_UNSPECIFIED"
+	//   "IMAGE"
+	//   "IMAGE_JPEG"
+	//   "IMAGE_BMP"
+	//   "IMAGE_PNG"
+	//   "IMAGE_SVG"
+	//   "TEXT_UTF8"
+	//   "AVRO"
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Data") to
@@ -988,8 +984,6 @@ func (s *GooglePrivacyDlpV2CategoricalStatsConfig) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2CategoricalStatsHistogramBucket: Histogram of value
-// frequencies in the column.
 type GooglePrivacyDlpV2CategoricalStatsHistogramBucket struct {
 	// BucketSize: Total number of values in this bucket.
 	BucketSize int64 `json:"bucketSize,omitempty,string"`
@@ -1139,15 +1133,10 @@ func (s *GooglePrivacyDlpV2CharacterMaskConfig) MarshalJSON() ([]byte, error) {
 // deidentification of a value. These will be left
 // alone and skipped.
 type GooglePrivacyDlpV2CharsToIgnore struct {
-	// CharactersToSkip: Characters to not transform when masking.
 	CharactersToSkip string `json:"charactersToSkip,omitempty"`
 
-	// CommonCharactersToIgnore: Common characters to not transform when
-	// masking. Useful to avoid removing
-	// punctuation.
-	//
 	// Possible values:
-	//   "COMMON_CHARS_TO_IGNORE_UNSPECIFIED" - Unused.
+	//   "COMMON_CHARS_TO_IGNORE_UNSPECIFIED"
 	//   "NUMERIC" - 0-9
 	//   "ALPHA_UPPER_CASE" - A-Z
 	//   "ALPHA_LOWER_CASE" - a-z
@@ -1517,15 +1506,15 @@ func (s *GooglePrivacyDlpV2Color) UnmarshalJSON(data []byte) error {
 // and
 // the condition will evaluate to false.
 type GooglePrivacyDlpV2Condition struct {
-	// Field: Required. Field within the record this condition is evaluated
-	// against.
+	// Field: Field within the record this condition is evaluated against.
+	// [required]
 	Field *GooglePrivacyDlpV2FieldId `json:"field,omitempty"`
 
-	// Operator: Required. Operator used to compare the field or infoType to
-	// the value.
+	// Operator: Operator used to compare the field or infoType to the
+	// value. [required]
 	//
 	// Possible values:
-	//   "RELATIONAL_OPERATOR_UNSPECIFIED" - Unused
+	//   "RELATIONAL_OPERATOR_UNSPECIFIED"
 	//   "EQUAL_TO" - Equal. Attempts to match even with incompatible types.
 	//   "NOT_EQUAL_TO" - Not equal to. Attempts to match even with
 	// incompatible types.
@@ -1536,7 +1525,7 @@ type GooglePrivacyDlpV2Condition struct {
 	//   "EXISTS" - Exists
 	Operator string `json:"operator,omitempty"`
 
-	// Value: Value to compare against. [Mandatory, except for `EXISTS`
+	// Value: Value to compare against. [Required, except for `EXISTS`
 	// tests.]
 	Value *GooglePrivacyDlpV2Value `json:"value,omitempty"`
 
@@ -1565,7 +1554,6 @@ func (s *GooglePrivacyDlpV2Condition) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2Conditions: A collection of conditions.
 type GooglePrivacyDlpV2Conditions struct {
-	// Conditions: A collection of conditions.
 	Conditions []*GooglePrivacyDlpV2Condition `json:"conditions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Conditions") to
@@ -1639,9 +1627,9 @@ type GooglePrivacyDlpV2ContentLocation struct {
 	// some
 	// common storage containers are formatted as follows:
 	//
-	// * BigQuery tables:  `{project_id}:{dataset_id}.{table_id}`
-	// * Cloud Storage files: `gs://{bucket}/{path}`
-	// * Datastore namespace: {namespace}
+	// * BigQuery tables:  `<project_id>:<dataset_id>.<table_id>`
+	// * Cloud Storage files: `gs://<bucket>/<path>`
+	// * Datastore namespace: <namespace>
 	//
 	// Nested names could be absent if the embedded object has no
 	// string
@@ -1696,7 +1684,7 @@ func (s *GooglePrivacyDlpV2ContentLocation) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2CreateDeidentifyTemplateRequest: Request message
 // for CreateDeidentifyTemplate.
 type GooglePrivacyDlpV2CreateDeidentifyTemplateRequest struct {
-	// DeidentifyTemplate: Required. The DeidentifyTemplate to create.
+	// DeidentifyTemplate: The DeidentifyTemplate to create.
 	DeidentifyTemplate *GooglePrivacyDlpV2DeidentifyTemplate `json:"deidentifyTemplate,omitempty"`
 
 	// LocationId: The geographic location to store the deidentification
@@ -1741,7 +1729,6 @@ func (s *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest) MarshalJSON() ([]byt
 // Cloud
 // Storage.
 type GooglePrivacyDlpV2CreateDlpJobRequest struct {
-	// InspectJob: Set to control what and how to inspect.
 	InspectJob *GooglePrivacyDlpV2InspectJobConfig `json:"inspectJob,omitempty"`
 
 	// JobId: The job id can contain uppercase and lowercase
@@ -1756,7 +1743,6 @@ type GooglePrivacyDlpV2CreateDlpJobRequest struct {
 	// future extensions.
 	LocationId string `json:"locationId,omitempty"`
 
-	// RiskJob: Set to choose what metric to calculate.
 	RiskJob *GooglePrivacyDlpV2RiskAnalysisJobConfig `json:"riskJob,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InspectJob") to
@@ -1785,7 +1771,7 @@ func (s *GooglePrivacyDlpV2CreateDlpJobRequest) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2CreateInspectTemplateRequest: Request message for
 // CreateInspectTemplate.
 type GooglePrivacyDlpV2CreateInspectTemplateRequest struct {
-	// InspectTemplate: Required. The InspectTemplate to create.
+	// InspectTemplate: The InspectTemplate to create.
 	InspectTemplate *GooglePrivacyDlpV2InspectTemplate `json:"inspectTemplate,omitempty"`
 
 	// LocationId: The geographic location to store the inspection template.
@@ -1827,7 +1813,7 @@ func (s *GooglePrivacyDlpV2CreateInspectTemplateRequest) MarshalJSON() ([]byte, 
 // GooglePrivacyDlpV2CreateJobTriggerRequest: Request message for
 // CreateJobTrigger.
 type GooglePrivacyDlpV2CreateJobTriggerRequest struct {
-	// JobTrigger: Required. The JobTrigger to create.
+	// JobTrigger: The JobTrigger to create.
 	JobTrigger *GooglePrivacyDlpV2JobTrigger `json:"jobTrigger,omitempty"`
 
 	// LocationId: The geographic location to store the job trigger.
@@ -1868,7 +1854,7 @@ func (s *GooglePrivacyDlpV2CreateJobTriggerRequest) MarshalJSON() ([]byte, error
 // GooglePrivacyDlpV2CreateStoredInfoTypeRequest: Request message for
 // CreateStoredInfoType.
 type GooglePrivacyDlpV2CreateStoredInfoTypeRequest struct {
-	// Config: Required. Configuration of the storedInfoType to create.
+	// Config: Configuration of the storedInfoType to create.
 	Config *GooglePrivacyDlpV2StoredInfoTypeConfig `json:"config,omitempty"`
 
 	// LocationId: The geographic location to store the stored infoType.
@@ -1912,7 +1898,7 @@ func (s *GooglePrivacyDlpV2CreateStoredInfoTypeRequest) MarshalJSON() ([]byte, e
 // output.
 // Uses AES-SIV based on the RFC https://tools.ietf.org/html/rfc5297.
 type GooglePrivacyDlpV2CryptoDeterministicConfig struct {
-	// Context: A context may be used for higher security and
+	// Context: Optional. A context may be used for higher security and
 	// maintaining
 	// referential integrity such that the same identifier in two
 	// different
@@ -1951,8 +1937,8 @@ type GooglePrivacyDlpV2CryptoDeterministicConfig struct {
 	// the name of the custom info type followed by the number of
 	// characters comprising the surrogate. The following scheme defines
 	// the
-	// format: {info type name}({surrogate character
-	// count}):{surrogate}
+	// format: <info type name>(<surrogate character
+	// count>):<surrogate>
 	//
 	// For example, if the name of custom info type is 'MY_TOKEN_INFO_TYPE'
 	// and
@@ -1967,7 +1953,7 @@ type GooglePrivacyDlpV2CryptoDeterministicConfig struct {
 	//
 	// Note: For record transformations where the entire cell in a table is
 	// being
-	// transformed, surrogates are not mandatory. Surrogates are used to
+	// transformed, surrogates are optional to use. Surrogates are used to
 	// denote
 	// the location of the token and are necessary for re-identification in
 	// free
@@ -2063,13 +2049,10 @@ func (s *GooglePrivacyDlpV2CryptoHashConfig) MarshalJSON() ([]byte, error) {
 // cannot
 // unwrap the data crypto key.
 type GooglePrivacyDlpV2CryptoKey struct {
-	// KmsWrapped: Kms wrapped key
 	KmsWrapped *GooglePrivacyDlpV2KmsWrappedCryptoKey `json:"kmsWrapped,omitempty"`
 
-	// Transient: Transient crypto key
 	Transient *GooglePrivacyDlpV2TransientCryptoKey `json:"transient,omitempty"`
 
-	// Unwrapped: Unwrapped crypto key
 	Unwrapped *GooglePrivacyDlpV2UnwrappedCryptoKey `json:"unwrapped,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "KmsWrapped") to
@@ -2119,10 +2102,8 @@ func (s *GooglePrivacyDlpV2CryptoKey) MarshalJSON() ([]byte, error) {
 // warrant
 // referential integrity.
 type GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig struct {
-	// CommonAlphabet: Common alphabets.
-	//
 	// Possible values:
-	//   "FFX_COMMON_NATIVE_ALPHABET_UNSPECIFIED" - Unused.
+	//   "FFX_COMMON_NATIVE_ALPHABET_UNSPECIFIED"
 	//   "NUMERIC" - [0-9] (radix of 10)
 	//   "HEXADECIMAL" - [0-9A-F] (radix of 16)
 	//   "UPPER_CASE_ALPHA_NUMERIC" - [0-9A-Z] (radix of 36)
@@ -2158,7 +2139,7 @@ type GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig struct {
 	// value 2
 	Context *GooglePrivacyDlpV2FieldId `json:"context,omitempty"`
 
-	// CryptoKey: Required. The key used by the encryption algorithm.
+	// CryptoKey: The key used by the encryption algorithm. [required]
 	CryptoKey *GooglePrivacyDlpV2CryptoKey `json:"cryptoKey,omitempty"`
 
 	// CustomAlphabet: This is supported by mapping these to the
@@ -2417,17 +2398,20 @@ type GooglePrivacyDlpV2DateShiftConfig struct {
 	// set, must also set context. Can only be applied to table items.
 	CryptoKey *GooglePrivacyDlpV2CryptoKey `json:"cryptoKey,omitempty"`
 
-	// LowerBoundDays: Required. For example, -5 means shift date to at most
-	// 5 days back in the past.
+	// LowerBoundDays: For example, -5 means shift date to at most 5 days
+	// back in the past.
+	// [Required]
 	LowerBoundDays int64 `json:"lowerBoundDays,omitempty"`
 
-	// UpperBoundDays: Required. Range of shift in days. Actual shift will
-	// be selected at random within this
+	// UpperBoundDays: Range of shift in days. Actual shift will be selected
+	// at random within this
 	// range (inclusive ends). Negative means shift to earlier in time. Must
 	// not
 	// be more than 365250 days (1000 years) each direction.
 	//
-	// For example, 3 means shift date to at most 3 days into the future.
+	// For example, 3 means shift date to at most 3 days into the
+	// future.
+	// [Required]
 	UpperBoundDays int64 `json:"upperBoundDays,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Context") to
@@ -2456,12 +2440,11 @@ func (s *GooglePrivacyDlpV2DateShiftConfig) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2DateTime: Message for a date time object.
 // e.g. 2018-01-01, 5th August.
 type GooglePrivacyDlpV2DateTime struct {
-	// Date: One or more of the following must be set.
-	// Must be a valid date or time value.
+	// Date: One or more of the following must be set. All fields are
+	// optional, but
+	// when set must be valid date or time values.
 	Date *GoogleTypeDate `json:"date,omitempty"`
 
-	// DayOfWeek: Day of week
-	//
 	// Possible values:
 	//   "DAY_OF_WEEK_UNSPECIFIED" - The unspecified day-of-week.
 	//   "MONDAY" - The day-of-week of Monday.
@@ -2473,10 +2456,8 @@ type GooglePrivacyDlpV2DateTime struct {
 	//   "SUNDAY" - The day-of-week of Sunday.
 	DayOfWeek string `json:"dayOfWeek,omitempty"`
 
-	// Time: Time of day
 	Time *GoogleTypeTimeOfDay `json:"time,omitempty"`
 
-	// TimeZone: Time zone
 	TimeZone *GooglePrivacyDlpV2TimeZone `json:"timeZone,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Date") to
@@ -2556,8 +2537,8 @@ type GooglePrivacyDlpV2DeidentifyContentRequest struct {
 	// deidentify_template_name argument.
 	DeidentifyConfig *GooglePrivacyDlpV2DeidentifyConfig `json:"deidentifyConfig,omitempty"`
 
-	// DeidentifyTemplateName: Template to use. Any configuration directly
-	// specified in
+	// DeidentifyTemplateName: Optional template to use. Any configuration
+	// directly specified in
 	// deidentify_config will override those set in the template. Singular
 	// fields
 	// that are set in this request will replace their corresponding fields
@@ -2573,8 +2554,8 @@ type GooglePrivacyDlpV2DeidentifyContentRequest struct {
 	// inspect_template_name argument.
 	InspectConfig *GooglePrivacyDlpV2InspectConfig `json:"inspectConfig,omitempty"`
 
-	// InspectTemplateName: Template to use. Any configuration directly
-	// specified in
+	// InspectTemplateName: Optional template to use. Any configuration
+	// directly specified in
 	// inspect_config will override those set in the template. Singular
 	// fields
 	// that are set in this request will replace their corresponding fields
@@ -2657,8 +2638,8 @@ func (s *GooglePrivacyDlpV2DeidentifyContentResponse) MarshalJSON() ([]byte, err
 // See https://cloud.google.com/dlp/docs/concepts-templates to learn
 // more.
 type GooglePrivacyDlpV2DeidentifyTemplate struct {
-	// CreateTime: Output only. The creation timestamp of an
-	// inspectTemplate.
+	// CreateTime: The creation timestamp of an inspectTemplate, output only
+	// field.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// DeidentifyConfig: ///////////// // The core content of the template
@@ -2671,7 +2652,7 @@ type GooglePrivacyDlpV2DeidentifyTemplate struct {
 	// DisplayName: Display name (max 256 chars).
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Output only. The template name.
+	// Name: The template name. Output only.
 	//
 	// The template will have one of the following
 	// formats:
@@ -2680,8 +2661,8 @@ type GooglePrivacyDlpV2DeidentifyTemplate struct {
 	// `organizations/ORGANIZATION_ID/deidentifyTemplates/TEMPLATE_ID`
 	Name string `json:"name,omitempty"`
 
-	// UpdateTime: Output only. The last update timestamp of an
-	// inspectTemplate.
+	// UpdateTime: The last update timestamp of an inspectTemplate, output
+	// only field.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2726,14 +2707,14 @@ type GooglePrivacyDlpV2DeltaPresenceEstimationConfig struct {
 	// field of one auxiliary table.
 	AuxiliaryTables []*GooglePrivacyDlpV2StatisticalTable `json:"auxiliaryTables,omitempty"`
 
-	// QuasiIds: Required. Fields considered to be quasi-identifiers. No two
-	// fields can have the
-	// same tag.
+	// QuasiIds: Fields considered to be quasi-identifiers. No two fields
+	// can have the
+	// same tag. [required]
 	QuasiIds []*GooglePrivacyDlpV2QuasiId `json:"quasiIds,omitempty"`
 
 	// RegionCode: ISO 3166-1 alpha-2 region code to use in the statistical
 	// modeling.
-	// Set if no column is tagged with a region-specific InfoType
+	// Required if no column is tagged with a region-specific InfoType
 	// (like
 	// US_ZIP_5) or a region code.
 	RegionCode string `json:"regionCode,omitempty"`
@@ -3077,7 +3058,7 @@ type GooglePrivacyDlpV2DlpJob struct {
 	// State: State of a job.
 	//
 	// Possible values:
-	//   "JOB_STATE_UNSPECIFIED" - Unused.
+	//   "JOB_STATE_UNSPECIFIED"
 	//   "PENDING" - The job has not yet started.
 	//   "RUNNING" - The job is currently running.
 	//   "DONE" - The job is no longer running.
@@ -3088,7 +3069,7 @@ type GooglePrivacyDlpV2DlpJob struct {
 	// Type: The type of job.
 	//
 	// Possible values:
-	//   "DLP_JOB_TYPE_UNSPECIFIED" - Unused
+	//   "DLP_JOB_TYPE_UNSPECIFIED"
 	//   "INSPECT_JOB" - The job inspected Google Cloud for sensitive data.
 	//   "RISK_ANALYSIS_JOB" - The job executed a Risk Analysis computation.
 	Type string `json:"type,omitempty"`
@@ -3191,8 +3172,8 @@ func (s *GooglePrivacyDlpV2EntityId) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2Error: Details information about an error
 // encountered during job execution or
 // the results of an unsuccessful activation of the JobTrigger.
+// Output only field.
 type GooglePrivacyDlpV2Error struct {
-	// Details: Detailed error codes and messages.
 	Details *GoogleRpcStatus `json:"details,omitempty"`
 
 	// Timestamps: The times the error occurred.
@@ -3326,7 +3307,6 @@ func (s *GooglePrivacyDlpV2ExclusionRule) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2Expressions: An expression, consisting or an
 // operator and conditions.
 type GooglePrivacyDlpV2Expressions struct {
-	// Conditions: Conditions to apply to the expression.
 	Conditions *GooglePrivacyDlpV2Conditions `json:"conditions,omitempty"`
 
 	// LogicalOperator: The operator to apply to the result of conditions.
@@ -3334,8 +3314,8 @@ type GooglePrivacyDlpV2Expressions struct {
 	// only supported value is `AND`.
 	//
 	// Possible values:
-	//   "LOGICAL_OPERATOR_UNSPECIFIED" - Unused
-	//   "AND" - Conditional AND
+	//   "LOGICAL_OPERATOR_UNSPECIFIED"
+	//   "AND"
 	LogicalOperator string `json:"logicalOperator,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Conditions") to
@@ -3397,7 +3377,7 @@ type GooglePrivacyDlpV2FieldTransformation struct {
 	// to true for the
 	// given `RecordCondition`. The conditions are allowed to reference
 	// fields
-	// that are not used in the actual transformation.
+	// that are not used in the actual transformation. [optional]
 	//
 	// Example Use Cases:
 	//
@@ -3407,7 +3387,7 @@ type GooglePrivacyDlpV2FieldTransformation struct {
 	// - Redact a field if the date of birth field is greater than 85.
 	Condition *GooglePrivacyDlpV2RecordCondition `json:"condition,omitempty"`
 
-	// Fields: Required. Input field(s) to apply the transformation to.
+	// Fields: Input field(s) to apply the transformation to. [required]
 	Fields []*GooglePrivacyDlpV2FieldId `json:"fields,omitempty"`
 
 	// InfoTypeTransformations: Treat the contents of the field as free
@@ -3553,8 +3533,6 @@ func (s *GooglePrivacyDlpV2Finding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2FindingLimits: Configuration to control the number
-// of findings returned.
 type GooglePrivacyDlpV2FindingLimits struct {
 	// MaxFindingsPerInfoType: Configuration of findings limit given for
 	// specified infoTypes.
@@ -3608,7 +3586,7 @@ func (s *GooglePrivacyDlpV2FindingLimits) MarshalJSON() ([]byte, error) {
 //
 // The transformed value will be a hyphenated string
 // of
-// {lower_bound}-{upper_bound}, i.e if lower_bound = 10 and upper_bound
+// <lower_bound>-<upper_bound>, i.e if lower_bound = 10 and upper_bound
 // = 20
 // all values that are within this bucket will be replaced with
 // "10-20".
@@ -3623,28 +3601,31 @@ func (s *GooglePrivacyDlpV2FindingLimits) MarshalJSON() ([]byte, error) {
 // See https://cloud.google.com/dlp/docs/concepts-bucketing to learn
 // more.
 type GooglePrivacyDlpV2FixedSizeBucketingConfig struct {
-	// BucketSize: Required. Size of each bucket (except for minimum and
-	// maximum buckets). So if
+	// BucketSize: Size of each bucket (except for minimum and maximum
+	// buckets). So if
 	// `lower_bound` = 10, `upper_bound` = 89, and `bucket_size` = 10, then
 	// the
 	// following buckets would be used: -10, 10-20, 20-30, 30-40, 40-50,
 	// 50-60,
 	// 60-70, 70-80, 80-89, 89+. Precision up to 2 decimals works.
+	// [Required].
 	BucketSize float64 `json:"bucketSize,omitempty"`
 
-	// LowerBound: Required. Lower bound value of buckets. All values less
-	// than `lower_bound` are
+	// LowerBound: Lower bound value of buckets. All values less than
+	// `lower_bound` are
 	// grouped together into a single bucket; for example if `lower_bound` =
 	// 10,
 	// then all values less than 10 are replaced with the value “-10”.
+	// [Required].
 	LowerBound *GooglePrivacyDlpV2Value `json:"lowerBound,omitempty"`
 
-	// UpperBound: Required. Upper bound value of buckets. All values
-	// greater than upper_bound are
+	// UpperBound: Upper bound value of buckets. All values greater than
+	// upper_bound are
 	// grouped together into a single bucket; for example if `upper_bound` =
 	// 89,
 	// then all values greater than 89 are replaced with the value
 	// “89+”.
+	// [Required].
 	UpperBound *GooglePrivacyDlpV2Value `json:"upperBound,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BucketSize") to
@@ -3861,7 +3842,7 @@ type GooglePrivacyDlpV2InfoTypeDescription struct {
 	// SupportedBy: Which parts of the API supports this InfoType.
 	//
 	// Possible values:
-	//   "ENUM_TYPE_UNSPECIFIED" - Unused.
+	//   "ENUM_TYPE_UNSPECIFIED"
 	//   "INSPECT" - Supported by the inspect operations.
 	//   "RISK_ANALYSIS" - Supported by the risk analysis operations.
 	SupportedBy []string `json:"supportedBy,omitempty"`
@@ -3971,8 +3952,8 @@ type GooglePrivacyDlpV2InfoTypeTransformation struct {
 	// infoTypes that were requested in `InspectConfig`.
 	InfoTypes []*GooglePrivacyDlpV2InfoType `json:"infoTypes,omitempty"`
 
-	// PrimitiveTransformation: Required. Primitive transformation to apply
-	// to the infoType.
+	// PrimitiveTransformation: Primitive transformation to apply to the
+	// infoType. [required]
 	PrimitiveTransformation *GooglePrivacyDlpV2PrimitiveTransformation `json:"primitiveTransformation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InfoTypes") to
@@ -4006,9 +3987,9 @@ func (s *GooglePrivacyDlpV2InfoTypeTransformation) MarshalJSON() ([]byte, error)
 // specific
 // info_type.
 type GooglePrivacyDlpV2InfoTypeTransformations struct {
-	// Transformations: Required. Transformation for each infoType. Cannot
-	// specify more than one
-	// for a given infoType.
+	// Transformations: Transformation for each infoType. Cannot specify
+	// more than one
+	// for a given infoType. [required]
 	Transformations []*GooglePrivacyDlpV2InfoTypeTransformation `json:"transformations,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Transformations") to
@@ -4086,7 +4067,6 @@ type GooglePrivacyDlpV2InspectConfig struct {
 	// otherwise a default list will be used, which may change over time.
 	InfoTypes []*GooglePrivacyDlpV2InfoType `json:"infoTypes,omitempty"`
 
-	// Limits: Configuration to control the number of findings returned.
 	Limits *GooglePrivacyDlpV2FindingLimits `json:"limits,omitempty"`
 
 	// MinLikelihood: Only returns findings equal or above this threshold.
@@ -4143,8 +4123,8 @@ type GooglePrivacyDlpV2InspectContentRequest struct {
 	// the template referenced by the inspect_template_name argument.
 	InspectConfig *GooglePrivacyDlpV2InspectConfig `json:"inspectConfig,omitempty"`
 
-	// InspectTemplateName: Template to use. Any configuration directly
-	// specified in
+	// InspectTemplateName: Optional template to use. Any configuration
+	// directly specified in
 	// inspect_config will override those set in the template. Singular
 	// fields
 	// that are set in this request will replace their corresponding fields
@@ -4251,8 +4231,6 @@ func (s *GooglePrivacyDlpV2InspectDataSourceDetails) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2InspectJobConfig: Controls what and how to inspect
-// for findings.
 type GooglePrivacyDlpV2InspectJobConfig struct {
 	// Actions: Actions to execute at the completion of the job.
 	Actions []*GooglePrivacyDlpV2Action `json:"actions,omitempty"`
@@ -4343,8 +4321,8 @@ func (s *GooglePrivacyDlpV2InspectResult) MarshalJSON() ([]byte, error) {
 // https://cloud.google.com/dlp/docs/concepts-templates
 // to learn more.
 type GooglePrivacyDlpV2InspectTemplate struct {
-	// CreateTime: Output only. The creation timestamp of an
-	// inspectTemplate.
+	// CreateTime: The creation timestamp of an inspectTemplate, output only
+	// field.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: Short description (max 256 chars).
@@ -4357,17 +4335,17 @@ type GooglePrivacyDlpV2InspectTemplate struct {
 	// scanning process.
 	InspectConfig *GooglePrivacyDlpV2InspectConfig `json:"inspectConfig,omitempty"`
 
-	// Name: Output only. The template name.
+	// Name: The template name. Output only.
 	//
 	// The template will have one of the following
 	// formats:
 	// `projects/PROJECT_ID/inspectTemplates/TEMPLATE_ID`
 	// OR
-	// `organizations/ORGANIZATION_ID/inspectTemplates/TEMPLATE_ID`;
+	// `organizations/ORGANIZATION_ID/inspectTemplates/TEMPLATE_ID`
 	Name string `json:"name,omitempty"`
 
-	// UpdateTime: Output only. The last update timestamp of an
-	// inspectTemplate.
+	// UpdateTime: The last update timestamp of an inspectTemplate, output
+	// only field.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4476,7 +4454,8 @@ type GooglePrivacyDlpV2JobNotificationEmails struct {
 // See https://cloud.google.com/dlp/docs/concepts-job-triggers to learn
 // more.
 type GooglePrivacyDlpV2JobTrigger struct {
-	// CreateTime: Output only. The creation timestamp of a triggeredJob.
+	// CreateTime: The creation timestamp of a triggeredJob, output only
+	// field.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: User provided description (max 256 chars)
@@ -4485,19 +4464,18 @@ type GooglePrivacyDlpV2JobTrigger struct {
 	// DisplayName: Display name (max 100 chars)
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Errors: Output only. A stream of errors encountered when the trigger
-	// was activated. Repeated
+	// Errors: A stream of errors encountered when the trigger was
+	// activated. Repeated
 	// errors may result in the JobTrigger automatically being paused.
 	// Will return the last 100 errors. Whenever the JobTrigger is
 	// modified
-	// this list will be cleared.
+	// this list will be cleared. Output only field.
 	Errors []*GooglePrivacyDlpV2Error `json:"errors,omitempty"`
 
-	// InspectJob: For inspect jobs, a snapshot of the configuration.
 	InspectJob *GooglePrivacyDlpV2InspectJobConfig `json:"inspectJob,omitempty"`
 
-	// LastRunTime: Output only. The timestamp of the last time this trigger
-	// executed.
+	// LastRunTime: The timestamp of the last time this trigger executed,
+	// output only field.
 	LastRunTime string `json:"lastRunTime,omitempty"`
 
 	// Name: Unique resource name for the triggeredJob, assigned by the
@@ -4507,10 +4485,10 @@ type GooglePrivacyDlpV2JobTrigger struct {
 	// `projects/dlp-test-project/jobTriggers/53234423`.
 	Name string `json:"name,omitempty"`
 
-	// Status: Required. A status for this trigger.
+	// Status: A status for this trigger. [required]
 	//
 	// Possible values:
-	//   "STATUS_UNSPECIFIED" - Unused.
+	//   "STATUS_UNSPECIFIED"
 	//   "HEALTHY" - Trigger is healthy.
 	//   "PAUSED" - Trigger is temporarily paused.
 	//   "CANCELLED" - Trigger is cancelled and can not be resumed.
@@ -4522,7 +4500,8 @@ type GooglePrivacyDlpV2JobTrigger struct {
 	// a single Schedule trigger and must have at least one object.
 	Triggers []*GooglePrivacyDlpV2Trigger `json:"triggers,omitempty"`
 
-	// UpdateTime: Output only. The last update timestamp of a triggeredJob.
+	// UpdateTime: The last update timestamp of a triggeredJob, output only
+	// field.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4555,8 +4534,8 @@ func (s *GooglePrivacyDlpV2JobTrigger) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2KAnonymityConfig: k-anonymity metric, used for
 // analysis of reidentification risk.
 type GooglePrivacyDlpV2KAnonymityConfig struct {
-	// EntityId: Message indicating that multiple rows might be associated
-	// to a
+	// EntityId: Optional message indicating that multiple rows might be
+	// associated to a
 	// single individual. If the same entity_id is associated to
 	// multiple
 	// quasi-identifier tuples over distinct rows, we consider the
@@ -4649,8 +4628,6 @@ func (s *GooglePrivacyDlpV2KAnonymityEquivalenceClass) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2KAnonymityHistogramBucket: Histogram of k-anonymity
-// equivalence classes.
 type GooglePrivacyDlpV2KAnonymityHistogramBucket struct {
 	// BucketSize: Total number of equivalence classes in this bucket.
 	BucketSize int64 `json:"bucketSize,omitempty,string"`
@@ -4738,6 +4715,7 @@ func (s *GooglePrivacyDlpV2KAnonymityResult) MarshalJSON() ([]byte, error) {
 // statistical model (indicated as one or several BigQuery tables), or
 // by
 // extrapolating from the distribution of values in the input dataset.
+// A column with a semantic tag attached.
 type GooglePrivacyDlpV2KMapEstimationConfig struct {
 	// AuxiliaryTables: Several auxiliary tables can be used in the
 	// analysis. Each custom_tag
@@ -4746,14 +4724,14 @@ type GooglePrivacyDlpV2KMapEstimationConfig struct {
 	// of one auxiliary table.
 	AuxiliaryTables []*GooglePrivacyDlpV2AuxiliaryTable `json:"auxiliaryTables,omitempty"`
 
-	// QuasiIds: Required. Fields considered to be quasi-identifiers. No two
-	// columns can have the
-	// same tag.
+	// QuasiIds: Fields considered to be quasi-identifiers. No two columns
+	// can have the
+	// same tag. [required]
 	QuasiIds []*GooglePrivacyDlpV2TaggedField `json:"quasiIds,omitempty"`
 
 	// RegionCode: ISO 3166-1 alpha-2 region code to use in the statistical
 	// modeling.
-	// Set if no column is tagged with a region-specific InfoType
+	// Required if no column is tagged with a region-specific InfoType
 	// (like
 	// US_ZIP_5) or a region code.
 	RegionCode string `json:"regionCode,omitempty"`
@@ -5001,11 +4979,11 @@ func (s *GooglePrivacyDlpV2KindExpression) MarshalJSON() ([]byte, error) {
 // key:
 // dlp.kms.encrypt
 type GooglePrivacyDlpV2KmsWrappedCryptoKey struct {
-	// CryptoKeyName: Required. The resource name of the KMS CryptoKey to
-	// use for unwrapping.
+	// CryptoKeyName: The resource name of the KMS CryptoKey to use for
+	// unwrapping. [required]
 	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
 
-	// WrappedKey: Required. The wrapped data crypto key.
+	// WrappedKey: The wrapped data crypto key. [required]
 	WrappedKey string `json:"wrappedKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CryptoKeyName") to
@@ -5110,8 +5088,6 @@ func (s *GooglePrivacyDlpV2LDiversityEquivalenceClass) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2LDiversityHistogramBucket: Histogram of l-diversity
-// equivalence class sensitive value frequencies.
 type GooglePrivacyDlpV2LDiversityHistogramBucket struct {
 	// BucketSize: Total number of equivalence classes in this bucket.
 	BucketSize int64 `json:"bucketSize,omitempty,string"`
@@ -5700,7 +5676,7 @@ type GooglePrivacyDlpV2OutputStorageConfig struct {
 	// existing table that has a schema.
 	//
 	// Possible values:
-	//   "OUTPUT_SCHEMA_UNSPECIFIED" - Unused.
+	//   "OUTPUT_SCHEMA_UNSPECIFIED"
 	//   "BASIC_COLUMNS" - Basic schema including only `info_type`, `quote`,
 	// `certainty`, and
 	// `timestamp`.
@@ -5849,37 +5825,26 @@ func (s *GooglePrivacyDlpV2PathElement) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2PrimitiveTransformation: A rule for transforming a
 // value.
 type GooglePrivacyDlpV2PrimitiveTransformation struct {
-	// BucketingConfig: Bucketing
 	BucketingConfig *GooglePrivacyDlpV2BucketingConfig `json:"bucketingConfig,omitempty"`
 
-	// CharacterMaskConfig: Mask
 	CharacterMaskConfig *GooglePrivacyDlpV2CharacterMaskConfig `json:"characterMaskConfig,omitempty"`
 
-	// CryptoDeterministicConfig: Deterministic Crypto
 	CryptoDeterministicConfig *GooglePrivacyDlpV2CryptoDeterministicConfig `json:"cryptoDeterministicConfig,omitempty"`
 
-	// CryptoHashConfig: Crypto
 	CryptoHashConfig *GooglePrivacyDlpV2CryptoHashConfig `json:"cryptoHashConfig,omitempty"`
 
-	// CryptoReplaceFfxFpeConfig: Ffx-Fpe
 	CryptoReplaceFfxFpeConfig *GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig `json:"cryptoReplaceFfxFpeConfig,omitempty"`
 
-	// DateShiftConfig: Date Shift
 	DateShiftConfig *GooglePrivacyDlpV2DateShiftConfig `json:"dateShiftConfig,omitempty"`
 
-	// FixedSizeBucketingConfig: Fixed size bucketing
 	FixedSizeBucketingConfig *GooglePrivacyDlpV2FixedSizeBucketingConfig `json:"fixedSizeBucketingConfig,omitempty"`
 
-	// RedactConfig: Redact
 	RedactConfig *GooglePrivacyDlpV2RedactConfig `json:"redactConfig,omitempty"`
 
-	// ReplaceConfig: Replace
 	ReplaceConfig *GooglePrivacyDlpV2ReplaceValueConfig `json:"replaceConfig,omitempty"`
 
-	// ReplaceWithInfoTypeConfig: Replace with infotype
 	ReplaceWithInfoTypeConfig *GooglePrivacyDlpV2ReplaceWithInfoTypeConfig `json:"replaceWithInfoTypeConfig,omitempty"`
 
-	// TimePartConfig: Time extraction
 	TimePartConfig *GooglePrivacyDlpV2TimePartConfig `json:"timePartConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BucketingConfig") to
@@ -5909,22 +5874,16 @@ func (s *GooglePrivacyDlpV2PrimitiveTransformation) MarshalJSON() ([]byte, error
 // GooglePrivacyDlpV2PrivacyMetric: Privacy metric to compute for
 // reidentification risk analysis.
 type GooglePrivacyDlpV2PrivacyMetric struct {
-	// CategoricalStatsConfig: Categorical stats
 	CategoricalStatsConfig *GooglePrivacyDlpV2CategoricalStatsConfig `json:"categoricalStatsConfig,omitempty"`
 
-	// DeltaPresenceEstimationConfig: delta-presence
 	DeltaPresenceEstimationConfig *GooglePrivacyDlpV2DeltaPresenceEstimationConfig `json:"deltaPresenceEstimationConfig,omitempty"`
 
-	// KAnonymityConfig: K-anonymity
 	KAnonymityConfig *GooglePrivacyDlpV2KAnonymityConfig `json:"kAnonymityConfig,omitempty"`
 
-	// KMapEstimationConfig: k-map
 	KMapEstimationConfig *GooglePrivacyDlpV2KMapEstimationConfig `json:"kMapEstimationConfig,omitempty"`
 
-	// LDiversityConfig: l-diversity
 	LDiversityConfig *GooglePrivacyDlpV2LDiversityConfig `json:"lDiversityConfig,omitempty"`
 
-	// NumericalStatsConfig: Numerical stats
 	NumericalStatsConfig *GooglePrivacyDlpV2NumericalStatsConfig `json:"numericalStatsConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -6082,7 +6041,7 @@ type GooglePrivacyDlpV2QuasiId struct {
 	// the possible values of this column (below).
 	CustomTag string `json:"customTag,omitempty"`
 
-	// Field: Required. Identifies the column.
+	// Field: Identifies the column. [required]
 	Field *GooglePrivacyDlpV2FieldId `json:"field,omitempty"`
 
 	// Inferred: If no semantic tag is indicated, we infer the statistical
@@ -6127,10 +6086,8 @@ func (s *GooglePrivacyDlpV2QuasiId) MarshalJSON() ([]byte, error) {
 // custom_tag, used to know which column
 // in the data corresponds to which column in the statistical model.
 type GooglePrivacyDlpV2QuasiIdField struct {
-	// CustomTag: A auxiliary field.
 	CustomTag string `json:"customTag,omitempty"`
 
-	// Field: Identifies the column.
 	Field *GooglePrivacyDlpV2FieldId `json:"field,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomTag") to
@@ -6160,14 +6117,8 @@ func (s *GooglePrivacyDlpV2QuasiIdField) MarshalJSON() ([]byte, error) {
 // a custom_tag, used to know which column
 // in the data corresponds to which column in the statistical model.
 type GooglePrivacyDlpV2QuasiIdentifierField struct {
-	// CustomTag: A column can be tagged with a custom tag. In this case,
-	// the user must
-	// indicate an auxiliary table that contains statistical information
-	// on
-	// the possible values of this column (below).
 	CustomTag string `json:"customTag,omitempty"`
 
-	// Field: Identifies the column.
 	Field *GooglePrivacyDlpV2FieldId `json:"field,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomTag") to
@@ -6395,7 +6346,7 @@ type GooglePrivacyDlpV2RecordTransformations struct {
 
 	// RecordSuppressions: Configuration defining which records get
 	// suppressed entirely. Records that
-	// match any suppression rule are omitted from the output.
+	// match any suppression rule are omitted from the output [optional].
 	RecordSuppressions []*GooglePrivacyDlpV2RecordSuppression `json:"recordSuppressions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -6567,8 +6518,8 @@ type GooglePrivacyDlpV2ReidentifyContentRequest struct {
 	// InspectConfig: Configuration for the inspector.
 	InspectConfig *GooglePrivacyDlpV2InspectConfig `json:"inspectConfig,omitempty"`
 
-	// InspectTemplateName: Template to use. Any configuration directly
-	// specified in
+	// InspectTemplateName: Optional template to use. Any configuration
+	// directly specified in
 	// `inspect_config` will override those set in the template. Singular
 	// fields
 	// that are set in this request will replace their corresponding fields
@@ -6603,8 +6554,8 @@ type GooglePrivacyDlpV2ReidentifyContentRequest struct {
 	//  - `CryptoReplaceFfxFpeConfig`
 	ReidentifyConfig *GooglePrivacyDlpV2DeidentifyConfig `json:"reidentifyConfig,omitempty"`
 
-	// ReidentifyTemplateName: Template to use. References an instance of
-	// `DeidentifyTemplate`.
+	// ReidentifyTemplateName: Optional template to use. References an
+	// instance of `DeidentifyTemplate`.
 	// Any configuration directly specified in `reidentify_config`
 	// or
 	// `inspect_config` will override those set in the template. Singular
@@ -6709,10 +6660,7 @@ func (s *GooglePrivacyDlpV2ReplaceValueConfig) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2ReplaceWithInfoTypeConfig struct {
 }
 
-// GooglePrivacyDlpV2RequestedOptions: Snapshot of the inspection
-// configuration.
 type GooglePrivacyDlpV2RequestedOptions struct {
-	// JobConfig: Inspect config.
 	JobConfig *GooglePrivacyDlpV2InspectJobConfig `json:"jobConfig,omitempty"`
 
 	// SnapshotInspectTemplate: If run with an InspectTemplate, a snapshot
@@ -6820,9 +6768,7 @@ func (s *GooglePrivacyDlpV2RiskAnalysisJobConfig) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2Row: Values of the row.
 type GooglePrivacyDlpV2Row struct {
-	// Values: Individual cells.
 	Values []*GooglePrivacyDlpV2Value `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
@@ -6855,7 +6801,6 @@ func (s *GooglePrivacyDlpV2Row) MarshalJSON() ([]byte, error) {
 // specified.
 // Compatible with: Inspect, Risk
 type GooglePrivacyDlpV2SaveFindings struct {
-	// OutputConfig: Location to store findings outside of DLP.
 	OutputConfig *GooglePrivacyDlpV2OutputStorageConfig `json:"outputConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OutputConfig") to
@@ -6932,15 +6877,17 @@ func (s *GooglePrivacyDlpV2Schedule) MarshalJSON() ([]byte, error) {
 // the
 // tuple is highly reidentifiable).
 type GooglePrivacyDlpV2StatisticalTable struct {
-	// QuasiIds: Required. Quasi-identifier columns.
+	// QuasiIds: Quasi-identifier columns. [required]
 	QuasiIds []*GooglePrivacyDlpV2QuasiIdentifierField `json:"quasiIds,omitempty"`
 
-	// RelativeFrequency: Required. The relative frequency column must
-	// contain a floating-point number
-	// between 0 and 1 (inclusive). Null values are assumed to be zero.
+	// RelativeFrequency: The relative frequency column must contain a
+	// floating-point number
+	// between 0 and 1 (inclusive). Null values are assumed to be
+	// zero.
+	// [required]
 	RelativeFrequency *GooglePrivacyDlpV2FieldId `json:"relativeFrequency,omitempty"`
 
-	// Table: Required. Auxiliary table location.
+	// Table: Auxiliary table location. [required]
 	Table *GooglePrivacyDlpV2BigQueryTable `json:"table,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "QuasiIds") to
@@ -7137,16 +7084,14 @@ type GooglePrivacyDlpV2StoredInfoTypeVersion struct {
 	// the five most recent errors will be displayed, with the most recent
 	// error
 	// appearing first.
-	//
-	// For example, some of the data for stored custom dictionaries is put
-	// in
+	// <p>For example, some of the data for stored custom dictionaries is
+	// put in
 	// the user's Google Cloud Storage bucket, and if this data is modified
 	// or
 	// deleted by the user or another system, the dictionary becomes
 	// invalid.
-	//
-	// If any errors occur, fix the problem indicated by the error message
-	// and
+	// <p>If any errors occur, fix the problem indicated by the error
+	// message and
 	// use the UpdateStoredInfoType API method to create another version of
 	// the
 	// storedInfoType to continue using it, reusing the same `config` if it
@@ -7159,7 +7104,7 @@ type GooglePrivacyDlpV2StoredInfoTypeVersion struct {
 	// during dictionary creation.
 	//
 	// Possible values:
-	//   "STORED_INFO_TYPE_STATE_UNSPECIFIED" - Unused
+	//   "STORED_INFO_TYPE_STATE_UNSPECIFIED"
 	//   "PENDING" - StoredInfoType version is being created.
 	//   "READY" - StoredInfoType version is ready for use.
 	//   "FAILED" - StoredInfoType creation failed. All relevant error
@@ -7240,15 +7185,12 @@ func (s *GooglePrivacyDlpV2StoredType) MarshalJSON() ([]byte, error) {
 // the number of times a particular
 // `TransformationResultCode` and error details occurred.
 type GooglePrivacyDlpV2SummaryResult struct {
-	// Code: Outcome of the transformation.
-	//
 	// Possible values:
-	//   "TRANSFORMATION_RESULT_CODE_UNSPECIFIED" - Unused
-	//   "SUCCESS" - Transformation completed without an error.
-	//   "ERROR" - Transformation had an error.
+	//   "TRANSFORMATION_RESULT_CODE_UNSPECIFIED"
+	//   "SUCCESS"
+	//   "ERROR"
 	Code string `json:"code,omitempty"`
 
-	// Count: Number of transformations counted by this result.
 	Count int64 `json:"count,omitempty,string"`
 
 	// Details: A place for warnings or errors to show up if a
@@ -7303,10 +7245,8 @@ type GooglePrivacyDlpV2SurrogateType struct {
 // to
 // learn more.
 type GooglePrivacyDlpV2Table struct {
-	// Headers: Headers of the table.
 	Headers []*GooglePrivacyDlpV2FieldId `json:"headers,omitempty"`
 
-	// Rows: Rows of the table.
 	Rows []*GooglePrivacyDlpV2Row `json:"rows,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Headers") to
@@ -7362,7 +7302,6 @@ func (s *GooglePrivacyDlpV2TableLocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2TaggedField: A column with a semantic tag attached.
 type GooglePrivacyDlpV2TaggedField struct {
 	// CustomTag: A column can be tagged with a custom tag. In this case,
 	// the user must
@@ -7371,7 +7310,7 @@ type GooglePrivacyDlpV2TaggedField struct {
 	// the possible values of this column (below).
 	CustomTag string `json:"customTag,omitempty"`
 
-	// Field: Required. Identifies the column.
+	// Field: Identifies the column. [required]
 	Field *GooglePrivacyDlpV2FieldId `json:"field,omitempty"`
 
 	// Inferred: If no semantic tag is indicated, we infer the statistical
@@ -7421,10 +7360,8 @@ type GooglePrivacyDlpV2ThrowError struct {
 // and `TimeOfDay`, extract or preserve a
 // portion of the value.
 type GooglePrivacyDlpV2TimePartConfig struct {
-	// PartToExtract: The part of the time to keep.
-	//
 	// Possible values:
-	//   "TIME_PART_UNSPECIFIED" - Unused
+	//   "TIME_PART_UNSPECIFIED"
 	//   "YEAR" - [0-9999]
 	//   "MONTH" - [1-12]
 	//   "DAY_OF_MONTH" - [1-31]
@@ -7456,7 +7393,6 @@ func (s *GooglePrivacyDlpV2TimePartConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2TimeZone: Time zone of the date time object.
 type GooglePrivacyDlpV2TimeZone struct {
 	// OffsetMinutes: Set only if the offset can be determined. Positive for
 	// time ahead of UTC.
@@ -7567,10 +7503,8 @@ func (s *GooglePrivacyDlpV2TimespanConfig) MarshalJSON() ([]byte, error) {
 // the
 // `TransformationOverviews`.
 type GooglePrivacyDlpV2TransformationErrorHandling struct {
-	// LeaveUntransformed: Ignore errors
 	LeaveUntransformed *GooglePrivacyDlpV2LeaveUntransformed `json:"leaveUntransformed,omitempty"`
 
-	// ThrowError: Throw an error
 	ThrowError *GooglePrivacyDlpV2ThrowError `json:"throwError,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LeaveUntransformed")
@@ -7654,8 +7588,6 @@ type GooglePrivacyDlpV2TransformationSummary struct {
 	// RecordSuppress: The specific suppression option these stats apply to.
 	RecordSuppress *GooglePrivacyDlpV2RecordSuppression `json:"recordSuppress,omitempty"`
 
-	// Results: Collection of all transformations that took place or had an
-	// error.
 	Results []*GooglePrivacyDlpV2SummaryResult `json:"results,omitempty"`
 
 	// Transformation: The specific transformation these stats apply to.
@@ -7692,7 +7624,7 @@ func (s *GooglePrivacyDlpV2TransformationSummary) MarshalJSON() ([]byte, error) 
 // crypto key generated.
 // It will be discarded after the request finishes.
 type GooglePrivacyDlpV2TransientCryptoKey struct {
-	// Name: Required. Name of the key.
+	// Name: Name of the key. [required]
 	// This is an arbitrary string used to differentiate different keys.
 	// A unique key is generated per name: two separate
 	// `TransientCryptoKey`
@@ -7760,7 +7692,7 @@ func (s *GooglePrivacyDlpV2Trigger) MarshalJSON() ([]byte, error) {
 // security risks due to accidentally
 // leaking the key. Choose another type of key if possible.
 type GooglePrivacyDlpV2UnwrappedCryptoKey struct {
-	// Key: Required. A 128/192/256 bit key.
+	// Key: A 128/192/256 bit key. [required]
 	Key string `json:"key,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -7932,14 +7864,10 @@ func (s *GooglePrivacyDlpV2UpdateStoredInfoTypeRequest) MarshalJSON() ([]byte, e
 // an
 // int64 only holds up to 8 bytes of data.
 type GooglePrivacyDlpV2Value struct {
-	// BooleanValue: boolean
 	BooleanValue bool `json:"booleanValue,omitempty"`
 
-	// DateValue: date
 	DateValue *GoogleTypeDate `json:"dateValue,omitempty"`
 
-	// DayOfWeekValue: day of week
-	//
 	// Possible values:
 	//   "DAY_OF_WEEK_UNSPECIFIED" - The unspecified day-of-week.
 	//   "MONDAY" - The day-of-week of Monday.
@@ -7951,19 +7879,14 @@ type GooglePrivacyDlpV2Value struct {
 	//   "SUNDAY" - The day-of-week of Sunday.
 	DayOfWeekValue string `json:"dayOfWeekValue,omitempty"`
 
-	// FloatValue: float
 	FloatValue float64 `json:"floatValue,omitempty"`
 
-	// IntegerValue: integer
 	IntegerValue int64 `json:"integerValue,omitempty,string"`
 
-	// StringValue: string
 	StringValue string `json:"stringValue,omitempty"`
 
-	// TimeValue: time of day
 	TimeValue *GoogleTypeTimeOfDay `json:"timeValue,omitempty"`
 
-	// TimestampValue: timestamp
 	TimestampValue string `json:"timestampValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BooleanValue") to
@@ -8261,16 +8184,16 @@ func (r *InfoTypesService) List() *InfoTypesListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": filter to only return
-// infoTypes supported by certain parts of the
+// Filter sets the optional parameter "filter": Optional filter to only
+// return infoTypes supported by certain parts of the
 // API. Defaults to supported_by=INSPECT.
 func (c *InfoTypesListCall) Filter(filter string) *InfoTypesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// LanguageCode sets the optional parameter "languageCode": BCP-47
-// language code for localized infoType friendly
+// LanguageCode sets the optional parameter "languageCode": Optional
+// BCP-47 language code for localized infoType friendly
 // names. If omitted, or if localized strings are not available,
 // en-US strings will be returned.
 func (c *InfoTypesListCall) LanguageCode(languageCode string) *InfoTypesListCall {
@@ -8323,7 +8246,7 @@ func (c *InfoTypesListCall) Header() http.Header {
 
 func (c *InfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8390,12 +8313,12 @@ func (c *InfoTypesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "filter to only return infoTypes supported by certain parts of the\nAPI. Defaults to supported_by=INSPECT.",
+	//       "description": "Optional filter to only return infoTypes supported by certain parts of the\nAPI. Defaults to supported_by=INSPECT.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "BCP-47 language code for localized infoType friendly\nnames. If omitted, or if localized strings are not available,\nen-US strings will be returned.",
+	//       "description": "Optional BCP-47 language code for localized infoType friendly\nnames. If omitted, or if localized strings are not available,\nen-US strings will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8438,16 +8361,16 @@ func (r *LocationsInfoTypesService) List(locationId string) *LocationsInfoTypesL
 	return c
 }
 
-// Filter sets the optional parameter "filter": filter to only return
-// infoTypes supported by certain parts of the
+// Filter sets the optional parameter "filter": Optional filter to only
+// return infoTypes supported by certain parts of the
 // API. Defaults to supported_by=INSPECT.
 func (c *LocationsInfoTypesListCall) Filter(filter string) *LocationsInfoTypesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// LanguageCode sets the optional parameter "languageCode": BCP-47
-// language code for localized infoType friendly
+// LanguageCode sets the optional parameter "languageCode": Optional
+// BCP-47 language code for localized infoType friendly
 // names. If omitted, or if localized strings are not available,
 // en-US strings will be returned.
 func (c *LocationsInfoTypesListCall) LanguageCode(languageCode string) *LocationsInfoTypesListCall {
@@ -8492,7 +8415,7 @@ func (c *LocationsInfoTypesListCall) Header() http.Header {
 
 func (c *LocationsInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8564,12 +8487,12 @@ func (c *LocationsInfoTypesListCall) Do(opts ...googleapi.CallOption) (*GooglePr
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "filter to only return infoTypes supported by certain parts of the\nAPI. Defaults to supported_by=INSPECT.",
+	//       "description": "Optional filter to only return infoTypes supported by certain parts of the\nAPI. Defaults to supported_by=INSPECT.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "BCP-47 language code for localized infoType friendly\nnames. If omitted, or if localized strings are not available,\nen-US strings will be returned.",
+	//       "description": "Optional BCP-47 language code for localized infoType friendly\nnames. If omitted, or if localized strings are not available,\nen-US strings will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8642,7 +8565,7 @@ func (c *OrganizationsDeidentifyTemplatesCreateCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8784,7 +8707,7 @@ func (c *OrganizationsDeidentifyTemplatesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8928,7 +8851,7 @@ func (c *OrganizationsDeidentifyTemplatesGetCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9047,8 +8970,8 @@ func (c *OrganizationsDeidentifyTemplatesListCall) LocationId(locationId string)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by,
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
 // followed by `asc` or `desc` postfix. This list is
 // case-insensitive,
 // default sorting order is ascending, redundant space characters
@@ -9068,16 +8991,16 @@ func (c *OrganizationsDeidentifyTemplatesListCall) OrderBy(orderBy string) *Orga
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns
+// PageSize sets the optional parameter "pageSize": Optional size of the
+// page, can be limited by server. If zero server returns
 // a page of max size 100.
 func (c *OrganizationsDeidentifyTemplatesListCall) PageSize(pageSize int64) *OrganizationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call
+// PageToken sets the optional parameter "pageToken": Optional page
+// token to continue retrieval. Comes from previous call
 // to `ListDeidentifyTemplates`.
 func (c *OrganizationsDeidentifyTemplatesListCall) PageToken(pageToken string) *OrganizationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -9121,7 +9044,7 @@ func (c *OrganizationsDeidentifyTemplatesListCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9199,18 +9122,18 @@ func (c *OrganizationsDeidentifyTemplatesListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call\nto `ListDeidentifyTemplates`.",
+	//       "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListDeidentifyTemplates`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9303,7 +9226,7 @@ func (c *OrganizationsDeidentifyTemplatesPatchCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9448,7 +9371,7 @@ func (c *OrganizationsInspectTemplatesCreateCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9589,7 +9512,7 @@ func (c *OrganizationsInspectTemplatesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9732,7 +9655,7 @@ func (c *OrganizationsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9850,8 +9773,8 @@ func (c *OrganizationsInspectTemplatesListCall) LocationId(locationId string) *O
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by,
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
 // followed by `asc` or `desc` postfix. This list is
 // case-insensitive,
 // default sorting order is ascending, redundant space characters
@@ -9871,16 +9794,16 @@ func (c *OrganizationsInspectTemplatesListCall) OrderBy(orderBy string) *Organiz
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns
+// PageSize sets the optional parameter "pageSize": Optional size of the
+// page, can be limited by server. If zero server returns
 // a page of max size 100.
 func (c *OrganizationsInspectTemplatesListCall) PageSize(pageSize int64) *OrganizationsInspectTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call
+// PageToken sets the optional parameter "pageToken": Optional page
+// token to continue retrieval. Comes from previous call
 // to `ListInspectTemplates`.
 func (c *OrganizationsInspectTemplatesListCall) PageToken(pageToken string) *OrganizationsInspectTemplatesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -9924,7 +9847,7 @@ func (c *OrganizationsInspectTemplatesListCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10002,18 +9925,18 @@ func (c *OrganizationsInspectTemplatesListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call\nto `ListInspectTemplates`.",
+	//       "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListInspectTemplates`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10105,7 +10028,7 @@ func (c *OrganizationsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10253,7 +10176,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesCreateCall) Header() http.Head
 
 func (c *OrganizationsLocationsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10403,7 +10326,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesDeleteCall) Header() http.Head
 
 func (c *OrganizationsLocationsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10547,7 +10470,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesGetCall) Header() http.Header 
 
 func (c *OrganizationsLocationsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10660,8 +10583,8 @@ func (r *OrganizationsLocationsDeidentifyTemplatesService) List(parent string, l
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by,
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
 // followed by `asc` or `desc` postfix. This list is
 // case-insensitive,
 // default sorting order is ascending, redundant space characters
@@ -10681,16 +10604,16 @@ func (c *OrganizationsLocationsDeidentifyTemplatesListCall) OrderBy(orderBy stri
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns
+// PageSize sets the optional parameter "pageSize": Optional size of the
+// page, can be limited by server. If zero server returns
 // a page of max size 100.
 func (c *OrganizationsLocationsDeidentifyTemplatesListCall) PageSize(pageSize int64) *OrganizationsLocationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call
+// PageToken sets the optional parameter "pageToken": Optional page
+// token to continue retrieval. Comes from previous call
 // to `ListDeidentifyTemplates`.
 func (c *OrganizationsLocationsDeidentifyTemplatesListCall) PageToken(pageToken string) *OrganizationsLocationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -10734,7 +10657,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesListCall) Header() http.Header
 
 func (c *OrganizationsLocationsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10815,18 +10738,18 @@ func (c *OrganizationsLocationsDeidentifyTemplatesListCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call\nto `ListDeidentifyTemplates`.",
+	//       "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListDeidentifyTemplates`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10919,7 +10842,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesPatchCall) Header() http.Heade
 
 func (c *OrganizationsLocationsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11066,7 +10989,7 @@ func (c *OrganizationsLocationsInspectTemplatesCreateCall) Header() http.Header 
 
 func (c *OrganizationsLocationsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11215,7 +11138,7 @@ func (c *OrganizationsLocationsInspectTemplatesDeleteCall) Header() http.Header 
 
 func (c *OrganizationsLocationsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11358,7 +11281,7 @@ func (c *OrganizationsLocationsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11470,8 +11393,8 @@ func (r *OrganizationsLocationsInspectTemplatesService) List(parent string, loca
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by,
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
 // followed by `asc` or `desc` postfix. This list is
 // case-insensitive,
 // default sorting order is ascending, redundant space characters
@@ -11491,16 +11414,16 @@ func (c *OrganizationsLocationsInspectTemplatesListCall) OrderBy(orderBy string)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns
+// PageSize sets the optional parameter "pageSize": Optional size of the
+// page, can be limited by server. If zero server returns
 // a page of max size 100.
 func (c *OrganizationsLocationsInspectTemplatesListCall) PageSize(pageSize int64) *OrganizationsLocationsInspectTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call
+// PageToken sets the optional parameter "pageToken": Optional page
+// token to continue retrieval. Comes from previous call
 // to `ListInspectTemplates`.
 func (c *OrganizationsLocationsInspectTemplatesListCall) PageToken(pageToken string) *OrganizationsLocationsInspectTemplatesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -11544,7 +11467,7 @@ func (c *OrganizationsLocationsInspectTemplatesListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11625,18 +11548,18 @@ func (c *OrganizationsLocationsInspectTemplatesListCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call\nto `ListInspectTemplates`.",
+	//       "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListInspectTemplates`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11728,7 +11651,7 @@ func (c *OrganizationsLocationsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11875,7 +11798,7 @@ func (c *OrganizationsLocationsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12024,7 +11947,7 @@ func (c *OrganizationsLocationsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12168,7 +12091,7 @@ func (c *OrganizationsLocationsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12280,8 +12203,8 @@ func (r *OrganizationsLocationsStoredInfoTypesService) List(parent string, locat
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by,
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
 // followed by `asc` or `desc` postfix. This list is
 // case-insensitive,
 // default sorting order is ascending, redundant space characters
@@ -12303,16 +12226,16 @@ func (c *OrganizationsLocationsStoredInfoTypesListCall) OrderBy(orderBy string) 
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns
+// PageSize sets the optional parameter "pageSize": Optional size of the
+// page, can be limited by server. If zero server returns
 // a page of max size 100.
 func (c *OrganizationsLocationsStoredInfoTypesListCall) PageSize(pageSize int64) *OrganizationsLocationsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call
+// PageToken sets the optional parameter "pageToken": Optional page
+// token to continue retrieval. Comes from previous call
 // to `ListStoredInfoTypes`.
 func (c *OrganizationsLocationsStoredInfoTypesListCall) PageToken(pageToken string) *OrganizationsLocationsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -12356,7 +12279,7 @@ func (c *OrganizationsLocationsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12437,18 +12360,18 @@ func (c *OrganizationsLocationsStoredInfoTypesListCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call\nto `ListStoredInfoTypes`.",
+	//       "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListStoredInfoTypes`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12543,7 +12466,7 @@ func (c *OrganizationsLocationsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12687,7 +12610,7 @@ func (c *OrganizationsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12828,7 +12751,7 @@ func (c *OrganizationsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12972,7 +12895,7 @@ func (c *OrganizationsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13090,8 +13013,8 @@ func (c *OrganizationsStoredInfoTypesListCall) LocationId(locationId string) *Or
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by,
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
 // followed by `asc` or `desc` postfix. This list is
 // case-insensitive,
 // default sorting order is ascending, redundant space characters
@@ -13113,16 +13036,16 @@ func (c *OrganizationsStoredInfoTypesListCall) OrderBy(orderBy string) *Organiza
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns
+// PageSize sets the optional parameter "pageSize": Optional size of the
+// page, can be limited by server. If zero server returns
 // a page of max size 100.
 func (c *OrganizationsStoredInfoTypesListCall) PageSize(pageSize int64) *OrganizationsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call
+// PageToken sets the optional parameter "pageToken": Optional page
+// token to continue retrieval. Comes from previous call
 // to `ListStoredInfoTypes`.
 func (c *OrganizationsStoredInfoTypesListCall) PageToken(pageToken string) *OrganizationsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -13166,7 +13089,7 @@ func (c *OrganizationsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13244,18 +13167,18 @@ func (c *OrganizationsStoredInfoTypesListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call\nto `ListStoredInfoTypes`.",
+	//       "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListStoredInfoTypes`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13350,7 +13273,7 @@ func (c *OrganizationsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13501,7 +13424,7 @@ func (c *ProjectsContentDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsContentDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13655,7 +13578,7 @@ func (c *ProjectsContentInspectCall) Header() http.Header {
 
 func (c *ProjectsContentInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13802,7 +13725,7 @@ func (c *ProjectsContentReidentifyCall) Header() http.Header {
 
 func (c *ProjectsContentReidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13949,7 +13872,7 @@ func (c *ProjectsDeidentifyTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14091,7 +14014,7 @@ func (c *ProjectsDeidentifyTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14235,7 +14158,7 @@ func (c *ProjectsDeidentifyTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14354,8 +14277,8 @@ func (c *ProjectsDeidentifyTemplatesListCall) LocationId(locationId string) *Pro
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by,
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
 // followed by `asc` or `desc` postfix. This list is
 // case-insensitive,
 // default sorting order is ascending, redundant space characters
@@ -14375,16 +14298,16 @@ func (c *ProjectsDeidentifyTemplatesListCall) OrderBy(orderBy string) *ProjectsD
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns
+// PageSize sets the optional parameter "pageSize": Optional size of the
+// page, can be limited by server. If zero server returns
 // a page of max size 100.
 func (c *ProjectsDeidentifyTemplatesListCall) PageSize(pageSize int64) *ProjectsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call
+// PageToken sets the optional parameter "pageToken": Optional page
+// token to continue retrieval. Comes from previous call
 // to `ListDeidentifyTemplates`.
 func (c *ProjectsDeidentifyTemplatesListCall) PageToken(pageToken string) *ProjectsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -14428,7 +14351,7 @@ func (c *ProjectsDeidentifyTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14506,18 +14429,18 @@ func (c *ProjectsDeidentifyTemplatesListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call\nto `ListDeidentifyTemplates`.",
+	//       "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListDeidentifyTemplates`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14610,7 +14533,7 @@ func (c *ProjectsDeidentifyTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14759,7 +14682,7 @@ func (c *ProjectsDlpJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14910,7 +14833,7 @@ func (c *ProjectsDlpJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15056,7 +14979,7 @@ func (c *ProjectsDlpJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15201,7 +15124,7 @@ func (c *ProjectsDlpJobsGetCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15322,7 +15245,7 @@ func (r *ProjectsDlpJobsService) List(parent string) *ProjectsDlpJobsListCall {
 // * Restrictions can be combined by `AND` or `OR` logical operators.
 // A
 // sequence of restrictions implicitly uses `AND`.
-// * A restriction has the form of `{field} {operator} {value}`.
+// * A restriction has the form of `<field> <operator> <value>`.
 // * Supported fields/values for inspect jobs:
 //     - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED
 //     - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY
@@ -15358,8 +15281,8 @@ func (c *ProjectsDlpJobsListCall) LocationId(locationId string) *ProjectsDlpJobs
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by,
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
 // followed by `asc` or `desc` postfix. This list is
 // case-insensitive,
 // default sorting order is ascending, redundant space characters
@@ -15442,7 +15365,7 @@ func (c *ProjectsDlpJobsListCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15514,7 +15437,7 @@ func (c *ProjectsDlpJobsListCall) Do(opts ...googleapi.CallOption) (*GooglePriva
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* Supported fields/values for inspect jobs:\n    - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - `trigger_name` - The resource name of the trigger that created job.\n    - 'end_time` - Corresponds to time the job finished.\n    - 'start_time` - Corresponds to time the job finished.\n* Supported fields for risk analysis jobs:\n    - `state` - RUNNING|CANCELED|FINISHED|FAILED\n    - 'end_time` - Corresponds to time the job finished.\n    - 'start_time` - Corresponds to time the job finished.\n* The operator must be `=` or `!=`.\n\nExamples:\n\n* inspected_storage = cloud_storage AND state = done\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = done OR state = canceled)\n* end_time \u003e \\\"2017-12-12T00:00:00+00:00\\\"\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Optional. Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e`.\n* Supported fields/values for inspect jobs:\n    - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - `trigger_name` - The resource name of the trigger that created job.\n    - 'end_time` - Corresponds to time the job finished.\n    - 'start_time` - Corresponds to time the job finished.\n* Supported fields for risk analysis jobs:\n    - `state` - RUNNING|CANCELED|FINISHED|FAILED\n    - 'end_time` - Corresponds to time the job finished.\n    - 'start_time` - Corresponds to time the job finished.\n* The operator must be `=` or `!=`.\n\nExamples:\n\n* inspected_storage = cloud_storage AND state = done\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = done OR state = canceled)\n* end_time \u003e \\\"2017-12-12T00:00:00+00:00\\\"\n\nThe length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15524,7 +15447,7 @@ func (c *ProjectsDlpJobsListCall) Do(opts ...googleapi.CallOption) (*GooglePriva
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, end_time asc, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the job was created.\n- `end_time`: corresponds to time the job ended.\n- `name`: corresponds to job's name.\n- `state`: corresponds to `state`",
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, end_time asc, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the job was created.\n- `end_time`: corresponds to time the job ended.\n- `name`: corresponds to job's name.\n- `state`: corresponds to `state`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15646,7 +15569,7 @@ func (c *ProjectsImageRedactCall) Header() http.Header {
 
 func (c *ProjectsImageRedactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15791,7 +15714,7 @@ func (c *ProjectsInspectTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15932,7 +15855,7 @@ func (c *ProjectsInspectTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16075,7 +15998,7 @@ func (c *ProjectsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16193,8 +16116,8 @@ func (c *ProjectsInspectTemplatesListCall) LocationId(locationId string) *Projec
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by,
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
 // followed by `asc` or `desc` postfix. This list is
 // case-insensitive,
 // default sorting order is ascending, redundant space characters
@@ -16214,16 +16137,16 @@ func (c *ProjectsInspectTemplatesListCall) OrderBy(orderBy string) *ProjectsInsp
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns
+// PageSize sets the optional parameter "pageSize": Optional size of the
+// page, can be limited by server. If zero server returns
 // a page of max size 100.
 func (c *ProjectsInspectTemplatesListCall) PageSize(pageSize int64) *ProjectsInspectTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call
+// PageToken sets the optional parameter "pageToken": Optional page
+// token to continue retrieval. Comes from previous call
 // to `ListInspectTemplates`.
 func (c *ProjectsInspectTemplatesListCall) PageToken(pageToken string) *ProjectsInspectTemplatesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -16267,7 +16190,7 @@ func (c *ProjectsInspectTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16345,18 +16268,18 @@ func (c *ProjectsInspectTemplatesListCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call\nto `ListInspectTemplates`.",
+	//       "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListInspectTemplates`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16448,7 +16371,7 @@ func (c *ProjectsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16591,7 +16514,7 @@ func (c *ProjectsJobTriggersActivateCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16735,7 +16658,7 @@ func (c *ProjectsJobTriggersCreateCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16875,7 +16798,7 @@ func (c *ProjectsJobTriggersDeleteCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17018,7 +16941,7 @@ func (c *ProjectsJobTriggersGetCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17136,7 +17059,7 @@ func (r *ProjectsJobTriggersService) List(parent string) *ProjectsJobTriggersLis
 // * Restrictions can be combined by `AND` or `OR` logical operators.
 // A
 // sequence of restrictions implicitly uses `AND`.
-// * A restriction has the form of `{field} {operator} {value}`.
+// * A restriction has the form of `<field> <operator> <value>`.
 // * Supported fields/values for inspect jobs:
 //     - `status` - HEALTHY|PAUSED|CANCELLED
 //     - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY
@@ -17169,8 +17092,8 @@ func (c *ProjectsJobTriggersListCall) LocationId(locationId string) *ProjectsJob
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of triggeredJob fields to order by,
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of triggeredJob fields to order by,
 // followed by `asc` or `desc` postfix. This list is
 // case-insensitive,
 // default sorting order is ascending, redundant space characters
@@ -17193,15 +17116,15 @@ func (c *ProjectsJobTriggersListCall) OrderBy(orderBy string) *ProjectsJobTrigge
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by a server.
+// PageSize sets the optional parameter "pageSize": Optional size of the
+// page, can be limited by a server.
 func (c *ProjectsJobTriggersListCall) PageSize(pageSize int64) *ProjectsJobTriggersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call
+// PageToken sets the optional parameter "pageToken": Optional page
+// token to continue retrieval. Comes from previous call
 // to ListJobTriggers. `order_by` field must not
 // change for subsequent calls.
 func (c *ProjectsJobTriggersListCall) PageToken(pageToken string) *ProjectsJobTriggersListCall {
@@ -17246,7 +17169,7 @@ func (c *ProjectsJobTriggersListCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17319,7 +17242,7 @@ func (c *ProjectsJobTriggersListCall) Do(opts ...googleapi.CallOption) (*GoogleP
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* Supported fields/values for inspect jobs:\n    - `status` - HEALTHY|PAUSED|CANCELLED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - 'last_run_time` - RFC 3339 formatted timestamp, surrounded by\n    quotation marks. Nanoseconds are ignored.\n    - 'error_count' - Number of errors that have occurred while running.\n* The operator must be `=` or `!=` for status and inspected_storage.\n\nExamples:\n\n* inspected_storage = cloud_storage AND status = HEALTHY\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = PAUSED OR state = HEALTHY)\n* last_run_time \u003e \\\"2017-12-12T00:00:00+00:00\\\"\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Optional. Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e`.\n* Supported fields/values for inspect jobs:\n    - `status` - HEALTHY|PAUSED|CANCELLED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - 'last_run_time` - RFC 3339 formatted timestamp, surrounded by\n    quotation marks. Nanoseconds are ignored.\n    - 'error_count' - Number of errors that have occurred while running.\n* The operator must be `=` or `!=` for status and inspected_storage.\n\nExamples:\n\n* inspected_storage = cloud_storage AND status = HEALTHY\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = PAUSED OR state = HEALTHY)\n* last_run_time \u003e \\\"2017-12-12T00:00:00+00:00\\\"\n\nThe length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17329,18 +17252,18 @@ func (c *ProjectsJobTriggersListCall) Do(opts ...googleapi.CallOption) (*GoogleP
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of triggeredJob fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the JobTrigger was created.\n- `update_time`: corresponds to time the JobTrigger was last updated.\n- `last_run_time`: corresponds to the last time the JobTrigger ran.\n- `name`: corresponds to JobTrigger's name.\n- `display_name`: corresponds to JobTrigger's display name.\n- `status`: corresponds to JobTrigger's status.",
+	//       "description": "Optional comma separated list of triggeredJob fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the JobTrigger was created.\n- `update_time`: corresponds to time the JobTrigger was last updated.\n- `last_run_time`: corresponds to the last time the JobTrigger ran.\n- `name`: corresponds to JobTrigger's name.\n- `display_name`: corresponds to JobTrigger's display name.\n- `status`: corresponds to JobTrigger's status.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by a server.",
+	//       "description": "Optional size of the page, can be limited by a server.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call\nto ListJobTriggers. `order_by` field must not\nchange for subsequent calls.",
+	//       "description": "Optional page token to continue retrieval. Comes from previous call\nto ListJobTriggers. `order_by` field must not\nchange for subsequent calls.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17432,7 +17355,7 @@ func (c *ProjectsJobTriggersPatchCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17585,7 +17508,7 @@ func (c *ProjectsLocationsContentDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17749,7 +17672,7 @@ func (c *ProjectsLocationsContentInspectCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17906,7 +17829,7 @@ func (c *ProjectsLocationsContentReidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentReidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18063,7 +17986,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18213,7 +18136,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18357,7 +18280,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18470,8 +18393,8 @@ func (r *ProjectsLocationsDeidentifyTemplatesService) List(parent string, locati
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by,
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
 // followed by `asc` or `desc` postfix. This list is
 // case-insensitive,
 // default sorting order is ascending, redundant space characters
@@ -18491,16 +18414,16 @@ func (c *ProjectsLocationsDeidentifyTemplatesListCall) OrderBy(orderBy string) *
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns
+// PageSize sets the optional parameter "pageSize": Optional size of the
+// page, can be limited by server. If zero server returns
 // a page of max size 100.
 func (c *ProjectsLocationsDeidentifyTemplatesListCall) PageSize(pageSize int64) *ProjectsLocationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call
+// PageToken sets the optional parameter "pageToken": Optional page
+// token to continue retrieval. Comes from previous call
 // to `ListDeidentifyTemplates`.
 func (c *ProjectsLocationsDeidentifyTemplatesListCall) PageToken(pageToken string) *ProjectsLocationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -18544,7 +18467,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18625,18 +18548,18 @@ func (c *ProjectsLocationsDeidentifyTemplatesListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call\nto `ListDeidentifyTemplates`.",
+	//       "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListDeidentifyTemplates`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18729,7 +18652,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18878,7 +18801,7 @@ func (c *ProjectsLocationsDlpJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19031,7 +18954,7 @@ func (c *ProjectsLocationsDlpJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19185,7 +19108,7 @@ func (c *ProjectsLocationsDlpJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19330,7 +19253,7 @@ func (c *ProjectsLocationsDlpJobsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19453,7 +19376,7 @@ func (r *ProjectsLocationsDlpJobsService) List(parent string, locationId string)
 // * Restrictions can be combined by `AND` or `OR` logical operators.
 // A
 // sequence of restrictions implicitly uses `AND`.
-// * A restriction has the form of `{field} {operator} {value}`.
+// * A restriction has the form of `<field> <operator> <value>`.
 // * Supported fields/values for inspect jobs:
 //     - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED
 //     - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY
@@ -19481,8 +19404,8 @@ func (c *ProjectsLocationsDlpJobsListCall) Filter(filter string) *ProjectsLocati
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by,
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
 // followed by `asc` or `desc` postfix. This list is
 // case-insensitive,
 // default sorting order is ascending, redundant space characters
@@ -19565,7 +19488,7 @@ func (c *ProjectsLocationsDlpJobsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19639,7 +19562,7 @@ func (c *ProjectsLocationsDlpJobsListCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* Supported fields/values for inspect jobs:\n    - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - `trigger_name` - The resource name of the trigger that created job.\n    - 'end_time` - Corresponds to time the job finished.\n    - 'start_time` - Corresponds to time the job finished.\n* Supported fields for risk analysis jobs:\n    - `state` - RUNNING|CANCELED|FINISHED|FAILED\n    - 'end_time` - Corresponds to time the job finished.\n    - 'start_time` - Corresponds to time the job finished.\n* The operator must be `=` or `!=`.\n\nExamples:\n\n* inspected_storage = cloud_storage AND state = done\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = done OR state = canceled)\n* end_time \u003e \\\"2017-12-12T00:00:00+00:00\\\"\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Optional. Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e`.\n* Supported fields/values for inspect jobs:\n    - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - `trigger_name` - The resource name of the trigger that created job.\n    - 'end_time` - Corresponds to time the job finished.\n    - 'start_time` - Corresponds to time the job finished.\n* Supported fields for risk analysis jobs:\n    - `state` - RUNNING|CANCELED|FINISHED|FAILED\n    - 'end_time` - Corresponds to time the job finished.\n    - 'start_time` - Corresponds to time the job finished.\n* The operator must be `=` or `!=`.\n\nExamples:\n\n* inspected_storage = cloud_storage AND state = done\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = done OR state = canceled)\n* end_time \u003e \\\"2017-12-12T00:00:00+00:00\\\"\n\nThe length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19650,7 +19573,7 @@ func (c *ProjectsLocationsDlpJobsListCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, end_time asc, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the job was created.\n- `end_time`: corresponds to time the job ended.\n- `name`: corresponds to job's name.\n- `state`: corresponds to `state`",
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, end_time asc, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the job was created.\n- `end_time`: corresponds to time the job ended.\n- `name`: corresponds to job's name.\n- `state`: corresponds to `state`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19774,7 +19697,7 @@ func (c *ProjectsLocationsImageRedactCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageRedactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19929,7 +19852,7 @@ func (c *ProjectsLocationsInspectTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20078,7 +20001,7 @@ func (c *ProjectsLocationsInspectTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20221,7 +20144,7 @@ func (c *ProjectsLocationsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20333,8 +20256,8 @@ func (r *ProjectsLocationsInspectTemplatesService) List(parent string, locationI
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by,
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
 // followed by `asc` or `desc` postfix. This list is
 // case-insensitive,
 // default sorting order is ascending, redundant space characters
@@ -20354,16 +20277,16 @@ func (c *ProjectsLocationsInspectTemplatesListCall) OrderBy(orderBy string) *Pro
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns
+// PageSize sets the optional parameter "pageSize": Optional size of the
+// page, can be limited by server. If zero server returns
 // a page of max size 100.
 func (c *ProjectsLocationsInspectTemplatesListCall) PageSize(pageSize int64) *ProjectsLocationsInspectTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call
+// PageToken sets the optional parameter "pageToken": Optional page
+// token to continue retrieval. Comes from previous call
 // to `ListInspectTemplates`.
 func (c *ProjectsLocationsInspectTemplatesListCall) PageToken(pageToken string) *ProjectsLocationsInspectTemplatesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -20407,7 +20330,7 @@ func (c *ProjectsLocationsInspectTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20488,18 +20411,18 @@ func (c *ProjectsLocationsInspectTemplatesListCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call\nto `ListInspectTemplates`.",
+	//       "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListInspectTemplates`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -20591,7 +20514,7 @@ func (c *ProjectsLocationsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20734,7 +20657,7 @@ func (c *ProjectsLocationsJobTriggersActivateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20880,7 +20803,7 @@ func (c *ProjectsLocationsJobTriggersCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21028,7 +20951,7 @@ func (c *ProjectsLocationsJobTriggersDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21171,7 +21094,7 @@ func (c *ProjectsLocationsJobTriggersGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21291,7 +21214,7 @@ func (r *ProjectsLocationsJobTriggersService) List(parent string, locationId str
 // * Restrictions can be combined by `AND` or `OR` logical operators.
 // A
 // sequence of restrictions implicitly uses `AND`.
-// * A restriction has the form of `{field} {operator} {value}`.
+// * A restriction has the form of `<field> <operator> <value>`.
 // * Supported fields/values for inspect jobs:
 //     - `status` - HEALTHY|PAUSED|CANCELLED
 //     - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY
@@ -21316,8 +21239,8 @@ func (c *ProjectsLocationsJobTriggersListCall) Filter(filter string) *ProjectsLo
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of triggeredJob fields to order by,
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of triggeredJob fields to order by,
 // followed by `asc` or `desc` postfix. This list is
 // case-insensitive,
 // default sorting order is ascending, redundant space characters
@@ -21340,15 +21263,15 @@ func (c *ProjectsLocationsJobTriggersListCall) OrderBy(orderBy string) *Projects
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by a server.
+// PageSize sets the optional parameter "pageSize": Optional size of the
+// page, can be limited by a server.
 func (c *ProjectsLocationsJobTriggersListCall) PageSize(pageSize int64) *ProjectsLocationsJobTriggersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call
+// PageToken sets the optional parameter "pageToken": Optional page
+// token to continue retrieval. Comes from previous call
 // to ListJobTriggers. `order_by` field must not
 // change for subsequent calls.
 func (c *ProjectsLocationsJobTriggersListCall) PageToken(pageToken string) *ProjectsLocationsJobTriggersListCall {
@@ -21393,7 +21316,7 @@ func (c *ProjectsLocationsJobTriggersListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21468,7 +21391,7 @@ func (c *ProjectsLocationsJobTriggersListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* Supported fields/values for inspect jobs:\n    - `status` - HEALTHY|PAUSED|CANCELLED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - 'last_run_time` - RFC 3339 formatted timestamp, surrounded by\n    quotation marks. Nanoseconds are ignored.\n    - 'error_count' - Number of errors that have occurred while running.\n* The operator must be `=` or `!=` for status and inspected_storage.\n\nExamples:\n\n* inspected_storage = cloud_storage AND status = HEALTHY\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = PAUSED OR state = HEALTHY)\n* last_run_time \u003e \\\"2017-12-12T00:00:00+00:00\\\"\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Optional. Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e`.\n* Supported fields/values for inspect jobs:\n    - `status` - HEALTHY|PAUSED|CANCELLED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - 'last_run_time` - RFC 3339 formatted timestamp, surrounded by\n    quotation marks. Nanoseconds are ignored.\n    - 'error_count' - Number of errors that have occurred while running.\n* The operator must be `=` or `!=` for status and inspected_storage.\n\nExamples:\n\n* inspected_storage = cloud_storage AND status = HEALTHY\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = PAUSED OR state = HEALTHY)\n* last_run_time \u003e \\\"2017-12-12T00:00:00+00:00\\\"\n\nThe length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -21479,18 +21402,18 @@ func (c *ProjectsLocationsJobTriggersListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of triggeredJob fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the JobTrigger was created.\n- `update_time`: corresponds to time the JobTrigger was last updated.\n- `last_run_time`: corresponds to the last time the JobTrigger ran.\n- `name`: corresponds to JobTrigger's name.\n- `display_name`: corresponds to JobTrigger's display name.\n- `status`: corresponds to JobTrigger's status.",
+	//       "description": "Optional comma separated list of triggeredJob fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the JobTrigger was created.\n- `update_time`: corresponds to time the JobTrigger was last updated.\n- `last_run_time`: corresponds to the last time the JobTrigger ran.\n- `name`: corresponds to JobTrigger's name.\n- `display_name`: corresponds to JobTrigger's display name.\n- `status`: corresponds to JobTrigger's status.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by a server.",
+	//       "description": "Optional size of the page, can be limited by a server.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call\nto ListJobTriggers. `order_by` field must not\nchange for subsequent calls.",
+	//       "description": "Optional page token to continue retrieval. Comes from previous call\nto ListJobTriggers. `order_by` field must not\nchange for subsequent calls.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -21582,7 +21505,7 @@ func (c *ProjectsLocationsJobTriggersPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21728,7 +21651,7 @@ func (c *ProjectsLocationsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21877,7 +21800,7 @@ func (c *ProjectsLocationsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22021,7 +21944,7 @@ func (c *ProjectsLocationsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22133,8 +22056,8 @@ func (r *ProjectsLocationsStoredInfoTypesService) List(parent string, locationId
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by,
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
 // followed by `asc` or `desc` postfix. This list is
 // case-insensitive,
 // default sorting order is ascending, redundant space characters
@@ -22156,16 +22079,16 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) OrderBy(orderBy string) *Proj
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns
+// PageSize sets the optional parameter "pageSize": Optional size of the
+// page, can be limited by server. If zero server returns
 // a page of max size 100.
 func (c *ProjectsLocationsStoredInfoTypesListCall) PageSize(pageSize int64) *ProjectsLocationsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call
+// PageToken sets the optional parameter "pageToken": Optional page
+// token to continue retrieval. Comes from previous call
 // to `ListStoredInfoTypes`.
 func (c *ProjectsLocationsStoredInfoTypesListCall) PageToken(pageToken string) *ProjectsLocationsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -22209,7 +22132,7 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22290,18 +22213,18 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call\nto `ListStoredInfoTypes`.",
+	//       "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListStoredInfoTypes`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -22396,7 +22319,7 @@ func (c *ProjectsLocationsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22540,7 +22463,7 @@ func (c *ProjectsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22681,7 +22604,7 @@ func (c *ProjectsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22825,7 +22748,7 @@ func (c *ProjectsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22943,8 +22866,8 @@ func (c *ProjectsStoredInfoTypesListCall) LocationId(locationId string) *Project
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by,
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
 // followed by `asc` or `desc` postfix. This list is
 // case-insensitive,
 // default sorting order is ascending, redundant space characters
@@ -22966,16 +22889,16 @@ func (c *ProjectsStoredInfoTypesListCall) OrderBy(orderBy string) *ProjectsStore
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns
+// PageSize sets the optional parameter "pageSize": Optional size of the
+// page, can be limited by server. If zero server returns
 // a page of max size 100.
 func (c *ProjectsStoredInfoTypesListCall) PageSize(pageSize int64) *ProjectsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call
+// PageToken sets the optional parameter "pageToken": Optional page
+// token to continue retrieval. Comes from previous call
 // to `ListStoredInfoTypes`.
 func (c *ProjectsStoredInfoTypesListCall) PageToken(pageToken string) *ProjectsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -23019,7 +22942,7 @@ func (c *ProjectsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23097,18 +23020,18 @@ func (c *ProjectsStoredInfoTypesListCall) Do(opts ...googleapi.CallOption) (*Goo
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call\nto `ListStoredInfoTypes`.",
+	//       "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListStoredInfoTypes`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -23203,7 +23126,7 @@ func (c *ProjectsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

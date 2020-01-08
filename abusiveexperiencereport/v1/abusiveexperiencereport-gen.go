@@ -74,19 +74,8 @@ const apiName = "abusiveexperiencereport"
 const apiVersion = "v1"
 const basePath = "https://abusiveexperiencereport.googleapis.com/"
 
-// OAuth2 scopes used by this API.
-const (
-	// Test scope for access to the Zoo service
-	XapiZooScope = "https://www.googleapis.com/auth/xapi.zoo"
-)
-
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
-		"https://www.googleapis.com/auth/xapi.zoo",
-	)
-	// NOTE: prepend, so we don't override user-specified scopes.
-	opts = append([]option.ClientOption{scopesOption}, opts...)
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -322,7 +311,7 @@ func (c *SitesGetCall) Header() http.Header {
 
 func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -403,10 +392,7 @@ func (c *SitesGetCall) Do(opts ...googleapi.CallOption) (*SiteSummaryResponse, e
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "SiteSummaryResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/xapi.zoo"
-	//   ]
+	//   }
 	// }
 
 }
@@ -464,7 +450,7 @@ func (c *ViolatingSitesListCall) Header() http.Header {
 
 func (c *ViolatingSitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -532,10 +518,7 @@ func (c *ViolatingSitesListCall) Do(opts ...googleapi.CallOption) (*ViolatingSit
 	//   "path": "v1/violatingSites",
 	//   "response": {
 	//     "$ref": "ViolatingSitesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/xapi.zoo"
-	//   ]
+	//   }
 	// }
 
 }

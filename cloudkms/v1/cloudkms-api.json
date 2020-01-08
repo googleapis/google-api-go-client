@@ -1250,7 +1250,7 @@
       }
     }
   },
-  "revision": "20191210",
+  "revision": "20200104",
   "rootUrl": "https://cloudkms.googleapis.com/",
   "schemas": {
     "AsymmetricDecryptRequest": {
@@ -1494,7 +1494,7 @@
         },
         "externalProtectionLevelOptions": {
           "$ref": "ExternalProtectionLevelOptions",
-          "description": "[ExternalProtectionLevelOptions] stores a group of additional fields for\nconfiguring a [CryptoKeyVersion] that are specific to the [EXTERNAL]\nprotection level."
+          "description": "ExternalProtectionLevelOptions stores a group of additional fields for\nconfiguring a CryptoKeyVersion that are specific to the\nEXTERNAL protection level."
         },
         "generateTime": {
           "description": "Output only. The time this CryptoKeyVersion's key material was\ngenerated.",
@@ -1740,7 +1740,7 @@
       "type": "object"
     },
     "ExternalProtectionLevelOptions": {
-      "description": "[ExternalProtectionLevelOptions] stores a group of additional fields for\nconfiguring a [CryptoKeyVersion] that are specific to the [EXTERNAL]\nprotection level.",
+      "description": "ExternalProtectionLevelOptions stores a group of additional fields for\nconfiguring a CryptoKeyVersion that are specific to the\nEXTERNAL protection level.",
       "id": "ExternalProtectionLevelOptions",
       "properties": {
         "externalKeyUri": {

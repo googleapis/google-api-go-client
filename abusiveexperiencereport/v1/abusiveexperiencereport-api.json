@@ -1,13 +1,4 @@
 {
-  "auth": {
-    "oauth2": {
-      "scopes": {
-        "https://www.googleapis.com/auth/xapi.zoo": {
-          "description": "Test scope for access to the Zoo service"
-        }
-      }
-    }
-  },
   "basePath": "",
   "baseUrl": "https://abusiveexperiencereport.googleapis.com/",
   "batchPath": "batch",
@@ -126,10 +117,7 @@
           "path": "v1/{+name}",
           "response": {
             "$ref": "SiteSummaryResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/xapi.zoo"
-          ]
+          }
         }
       }
     },
@@ -145,15 +133,12 @@
           "path": "v1/violatingSites",
           "response": {
             "$ref": "ViolatingSitesResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/xapi.zoo"
-          ]
+          }
         }
       }
     }
   },
-  "revision": "20190902",
+  "revision": "20200106",
   "rootUrl": "https://abusiveexperiencereport.googleapis.com/",
   "schemas": {
     "SiteSummaryResponse": {

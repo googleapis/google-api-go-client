@@ -196,6 +196,34 @@
       "resources": {
         "devices": {
           "methods": {
+            "bulk": {
+              "description": "Creates a device under a node or customer. Returned devices are unordered.",
+              "flatPath": "v1alpha1/customers/{customersId}/devices:bulk",
+              "httpMethod": "POST",
+              "id": "prod_tt_sasportal.customers.devices.bulk",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. The name of the parent resource.",
+                  "location": "path",
+                  "pattern": "^customers/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha1/{+parent}/devices:bulk",
+              "request": {
+                "$ref": "SasPortalBulkCreateDeviceRequest"
+              },
+              "response": {
+                "$ref": "SasPortalBulkCreateDeviceResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/userinfo.email"
+              ]
+            },
             "create": {
               "description": "Creates a device under a node or customer.",
               "flatPath": "v1alpha1/customers/{customersId}/devices",
@@ -689,6 +717,34 @@
       "resources": {
         "devices": {
           "methods": {
+            "bulk": {
+              "description": "Creates a device under a node or customer. Returned devices are unordered.",
+              "flatPath": "v1alpha1/nodes/{nodesId}/devices:bulk",
+              "httpMethod": "POST",
+              "id": "prod_tt_sasportal.nodes.devices.bulk",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. The name of the parent resource.",
+                  "location": "path",
+                  "pattern": "^nodes/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha1/{+parent}/devices:bulk",
+              "request": {
+                "$ref": "SasPortalBulkCreateDeviceRequest"
+              },
+              "response": {
+                "$ref": "SasPortalBulkCreateDeviceResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/userinfo.email"
+              ]
+            },
             "create": {
               "description": "Creates a device under a node or customer.",
               "flatPath": "v1alpha1/nodes/{nodesId}/devices",
@@ -1197,7 +1253,7 @@
       }
     }
   },
-  "revision": "20191217",
+  "revision": "20200107",
   "rootUrl": "https://prod-tt-sasportal.googleapis.com/",
   "schemas": {
     "SasPortalAssignment": {
@@ -1214,6 +1270,31 @@
         "role": {
           "description": "Required. Role that is assigned to `members`.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SasPortalBulkCreateDeviceRequest": {
+      "description": "Request for BulkCreateDevice method.",
+      "id": "SasPortalBulkCreateDeviceRequest",
+      "properties": {
+        "csv": {
+          "description": "Required. A csv with each row representing a [device]. Each row must\nconform to the regulations described on CreateDeviceRequest's device field.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SasPortalBulkCreateDeviceResponse": {
+      "description": "Response for BulkCreateDevice method.",
+      "id": "SasPortalBulkCreateDeviceResponse",
+      "properties": {
+        "devices": {
+          "description": "Required. The devices that were imported.",
+          "items": {
+            "$ref": "SasPortalDevice"
+          },
+          "type": "array"
         }
       },
       "type": "object"

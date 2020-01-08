@@ -18,6 +18,7 @@ import (
 // Google API service.
 type DialSettings struct {
 	Endpoint          string
+	DefaultEndpoint   string
 	Scopes            []string
 	TokenSource       oauth2.TokenSource
 	Credentials       *google.Credentials

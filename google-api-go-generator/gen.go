@@ -51,10 +51,11 @@ var (
 	baseURL        = flag.String("base_url", "", "(optional) Override the default service API URL. If empty, the service's root URL will be used.")
 	headerPath     = flag.String("header_path", "", "If non-empty, prepend the contents of this file to generated services.")
 
-	gensupportPkg = flag.String("gensupport_pkg", "google.golang.org/api/internal/gensupport", "Go package path of the 'api/internal/gensupport' support package.")
-	googleapiPkg  = flag.String("googleapi_pkg", "google.golang.org/api/googleapi", "Go package path of the 'api/googleapi' support package.")
-	optionPkg     = flag.String("option_pkg", "google.golang.org/api/option", "Go package path of the 'api/option' support package.")
-	htransportPkg = flag.String("htransport_pkg", "google.golang.org/api/transport/http", "Go package path of the 'api/transport/http' support package.")
+	gensupportPkg     = flag.String("gensupport_pkg", "google.golang.org/api/internal/gensupport", "Go package path of the 'api/internal/gensupport' support package.")
+	googleapiPkg      = flag.String("googleapi_pkg", "google.golang.org/api/googleapi", "Go package path of the 'api/googleapi' support package.")
+	optionPkg         = flag.String("option_pkg", "google.golang.org/api/option", "Go package path of the 'api/option' support package.")
+	internalOptionPkg = flag.String("internaloption_pkg", "google.golang.org/api/option/internaloption", "Go package path of the 'api/option/internaloption' support package.")
+	htransportPkg     = flag.String("htransport_pkg", "google.golang.org/api/transport/http", "Go package path of the 'api/transport/http' support package.")
 
 	copyrightYear = flag.String("copyright_year", fmt.Sprintf("%d", time.Now().Year()), "Year for copyright.")
 
@@ -645,6 +646,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 		{*gensupportPkg, "gensupport"},
 		{*googleapiPkg, "googleapi"},
 		{*optionPkg, "option"},
+		{*internalOptionPkg, "internaloption"},
 		{*htransportPkg, "htransport"},
 	} {
 		pn("  %s %q", imp.lname, imp.pkg)
@@ -663,6 +665,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("var _ = errors.New")
 	pn("var _ = strings.Replace")
 	pn("var _ = context.Canceled")
+	pn("var _ = internaloption.WithDefaultEndpoint")
 	pn("")
 	pn("const apiId = %q", a.doc.ID)
 	pn("const apiName = %q", a.doc.Name)
@@ -689,6 +692,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 		pn("// NOTE: prepend, so we don't override user-specified scopes.")
 		pn("opts = append([]option.ClientOption{scopesOption}, opts...)")
 	}
+	pn("opts = append(opts, internaloption.WithDefaultEndpoint(basePath))")
 	pn("client, endpoint, err := htransport.NewClient(ctx, opts...)")
 	pn("if err != nil { return nil, err }")
 	pn("s, err := New(client)")

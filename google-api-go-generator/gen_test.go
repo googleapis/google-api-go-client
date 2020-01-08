@@ -59,7 +59,9 @@ func TestAPIs(t *testing.T) {
 			}
 			goldenFile := filepath.Join("testdata", name+".want")
 			if *updateGolden {
-				if err := ioutil.WriteFile(goldenFile, clean, 0644); err != nil {
+				clean := strings.Replace(string(clean), fmt.Sprintf("gl-go/%s", version.Go()), "gl-go/1.12.5", -1)
+				clean = strings.Replace(clean, fmt.Sprintf("gdcl/%s", version.Repo), "gdcl/00000000", -1)
+				if err := ioutil.WriteFile(goldenFile, []byte(clean), 0644); err != nil {
 					t.Fatal(err)
 				}
 			}

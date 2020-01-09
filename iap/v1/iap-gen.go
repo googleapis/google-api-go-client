@@ -1131,16 +1131,18 @@ type OauthProjectsBrandsCreateCall struct {
 }
 
 // Create: Constructs a new OAuth brand for the project if one does not
-// exists.
-// The created brand is 'internal only', meaning that OAuth clients
+// exist.
+// The created brand is "internal only", meaning that OAuth clients
 // created
-// under it only accept requests from users who belong to the same
-// GSuites
-// account as the project. The brand is created in un-reviewed
+// under it only accept requests from users who belong to the same G
+// Suite
+// organization as the project. The brand is created in an un-reviewed
 // status.
-// NOTE: the 'internal_only' can be manually changed in Pantheon
-// UI.
-// Requires that brand does not already exists for the project.
+// NOTE: The "internal only" status can be manually changed in the
+// Google
+// Cloud console. Requires that a brand does not already exist for
+// the
+// project, and that the specified support email is owned by the caller.
 func (r *OauthProjectsBrandsService) Create(parent string, brand *Brand) *OauthProjectsBrandsCreateCall {
 	c := &OauthProjectsBrandsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1175,7 +1177,7 @@ func (c *OauthProjectsBrandsCreateCall) Header() http.Header {
 
 func (c *OauthProjectsBrandsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1239,7 +1241,7 @@ func (c *OauthProjectsBrandsCreateCall) Do(opts ...googleapi.CallOption) (*Brand
 	}
 	return ret, nil
 	// {
-	//   "description": "Constructs a new OAuth brand for the project if one does not exists.\nThe created brand is 'internal only', meaning that OAuth clients created\nunder it only accept requests from users who belong to the same GSuites\naccount as the project. The brand is created in un-reviewed status.\nNOTE: the 'internal_only' can be manually changed in Pantheon UI.\nRequires that brand does not already exists for the project.",
+	//   "description": "Constructs a new OAuth brand for the project if one does not exist.\nThe created brand is \"internal only\", meaning that OAuth clients created\nunder it only accept requests from users who belong to the same G Suite\norganization as the project. The brand is created in an un-reviewed status.\nNOTE: The \"internal only\" status can be manually changed in the Google\nCloud console. Requires that a brand does not already exist for the\nproject, and that the specified support email is owned by the caller.",
 	//   "flatPath": "v1/oauth/projects/{projectsId}/brands",
 	//   "httpMethod": "POST",
 	//   "id": "iap.oauth.projects.brands.create",
@@ -1324,7 +1326,7 @@ func (c *OauthProjectsBrandsGetCall) Header() http.Header {
 
 func (c *OauthProjectsBrandsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1468,7 +1470,7 @@ func (c *OauthProjectsBrandsListCall) Header() http.Header {
 
 func (c *OauthProjectsBrandsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1568,12 +1570,11 @@ type OauthProjectsBrandsIdentityAwareProxyClientsCreateCall struct {
 	header_                  http.Header
 }
 
-// Create: Creates an Identity Aware Proxy (IAP) OAuth client, the
+// Create: Creates an Identity Aware Proxy (IAP) OAuth client. The
 // client is owned
-// by IAP.
-// Requires that the brand for the project exists and that it is set
-// for
-// internal only use.
+// by IAP. Requires that the brand for the project exists and that it
+// is
+// set for internal-only use.
 func (r *OauthProjectsBrandsIdentityAwareProxyClientsService) Create(parent string, identityawareproxyclient *IdentityAwareProxyClient) *OauthProjectsBrandsIdentityAwareProxyClientsCreateCall {
 	c := &OauthProjectsBrandsIdentityAwareProxyClientsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1608,7 +1609,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsCreateCall) Header() http.H
 
 func (c *OauthProjectsBrandsIdentityAwareProxyClientsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1672,7 +1673,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsCreateCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an Identity Aware Proxy (IAP) OAuth client, the client is owned\nby IAP.\nRequires that the brand for the project exists and that it is set for\ninternal only use.",
+	//   "description": "Creates an Identity Aware Proxy (IAP) OAuth client. The client is owned\nby IAP. Requires that the brand for the project exists and that it is\nset for internal-only use.",
 	//   "flatPath": "v1/oauth/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients",
 	//   "httpMethod": "POST",
 	//   "id": "iap.oauth.projects.brands.identityAwareProxyClients.create",
@@ -1712,10 +1713,11 @@ type OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an Identity Aware Proxy (IAP) OAuth client. Useful if
-// the secret
-// was compromised.
-// Requires that the client is owned by IAP.
+// Delete: Deletes an Identity Aware Proxy (IAP) OAuth client. Useful
+// for removing
+// obsolete clients, managing the number of clients in a given project,
+// and
+// cleaning up after tests. Requires that the client is owned by IAP.
 func (r *OauthProjectsBrandsIdentityAwareProxyClientsService) Delete(name string) *OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall {
 	c := &OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1749,7 +1751,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall) Header() http.H
 
 func (c *OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1808,7 +1810,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an Identity Aware Proxy (IAP) OAuth client. Useful if the secret\nwas compromised.\nRequires that the client is owned by IAP.",
+	//   "description": "Deletes an Identity Aware Proxy (IAP) OAuth client. Useful for removing\nobsolete clients, managing the number of clients in a given project, and\ncleaning up after tests. Requires that the client is owned by IAP.",
 	//   "flatPath": "v1/oauth/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients/{identityAwareProxyClientsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "iap.oauth.projects.brands.identityAwareProxyClients.delete",
@@ -1891,7 +1893,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsGetCall) Header() http.Head
 
 func (c *OauthProjectsBrandsIdentityAwareProxyClientsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2059,7 +2061,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) Header() http.Hea
 
 func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2193,11 +2195,8 @@ type OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall struct {
 }
 
 // ResetSecret: Resets an Identity Aware Proxy (IAP) OAuth client
-// secret. Useful for
-// removing obsolete clients, managing the number of clients in a
-// given
-// project, and cleaning up after tests.
-// Requires that the client is owned by IAP.
+// secret. Useful if the
+// secret was compromised. Requires that the client is owned by IAP.
 func (r *OauthProjectsBrandsIdentityAwareProxyClientsService) ResetSecret(name string, resetidentityawareproxyclientsecretrequest *ResetIdentityAwareProxyClientSecretRequest) *OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall {
 	c := &OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2232,7 +2231,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Header() h
 
 func (c *OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2296,7 +2295,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Do(opts ..
 	}
 	return ret, nil
 	// {
-	//   "description": "Resets an Identity Aware Proxy (IAP) OAuth client secret. Useful for\nremoving obsolete clients, managing the number of clients in a given\nproject, and cleaning up after tests.\nRequires that the client is owned by IAP.",
+	//   "description": "Resets an Identity Aware Proxy (IAP) OAuth client secret. Useful if the\nsecret was compromised. Requires that the client is owned by IAP.",
 	//   "flatPath": "v1/oauth/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients/{identityAwareProxyClientsId}:resetSecret",
 	//   "httpMethod": "POST",
 	//   "id": "iap.oauth.projects.brands.identityAwareProxyClients.resetSecret",
@@ -2378,7 +2377,7 @@ func (c *V1GetIamPolicyCall) Header() http.Header {
 
 func (c *V1GetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2528,7 +2527,7 @@ func (c *V1GetIapSettingsCall) Header() http.Header {
 
 func (c *V1GetIapSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2669,7 +2668,7 @@ func (c *V1SetIamPolicyCall) Header() http.Header {
 
 func (c *V1SetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2815,7 +2814,7 @@ func (c *V1TestIamPermissionsCall) Header() http.Header {
 
 func (c *V1TestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2968,7 +2967,7 @@ func (c *V1UpdateIapSettingsCall) Header() http.Header {
 
 func (c *V1UpdateIapSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

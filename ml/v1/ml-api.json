@@ -4,6 +4,9 @@
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
           "description": "View and manage your data across Google Cloud Platform services"
+        },
+        "https://www.googleapis.com/auth/cloud-platform.read-only": {
+          "description": "View your data across Google Cloud Platform services"
         }
       }
     }
@@ -107,7 +110,7 @@
     "projects": {
       "methods": {
         "explain": {
-          "description": "Performs explanation on the data in the request.\nAI Platform implements a custom `explain` verb on top of an HTTP POST\nmethod.\n\nFor details of the request and response format, see the **guide\nto the [explain request format](/ml-engine/docs/v1/explain-request)**.",
+          "description": "Performs explanation on the data in the request.\nAI Platform implements a custom `explain` verb on top of an HTTP POST\nmethod.",
           "flatPath": "v1/projects/{projectsId}:explain",
           "httpMethod": "POST",
           "id": "ml.projects.explain",
@@ -160,7 +163,7 @@
           ]
         },
         "predict": {
-          "description": "Performs prediction on the data in the request.\nAI Platform implements a custom `predict` verb on top of an HTTP POST\nmethod.\n\nFor details of the request and response format, see the **guide\nto the [predict request format](/ml-engine/docs/v1/predict-request)**.",
+          "description": "Performs online prediction on the data in the request.\n\n\u003cdiv\u003e{% dynamic include \"/ai-platform/includes/___predict-request\" %}\u003c/div\u003e",
           "flatPath": "v1/projects/{projectsId}:predict",
           "httpMethod": "POST",
           "id": "ml.projects.predict",
@@ -269,7 +272,8 @@
                 "$ref": "GoogleCloudMlV1__Job"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only"
               ]
             },
             "getIamPolicy": {
@@ -341,7 +345,8 @@
                 "$ref": "GoogleCloudMlV1__ListJobsResponse"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only"
               ]
             },
             "patch": {
@@ -460,7 +465,8 @@
                 "$ref": "GoogleCloudMlV1__Location"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only"
               ]
             },
             "list": {
@@ -496,7 +502,8 @@
                 "$ref": "GoogleCloudMlV1__ListLocationsResponse"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only"
               ]
             }
           }
@@ -578,7 +585,8 @@
                 "$ref": "GoogleCloudMlV1__Model"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only"
               ]
             },
             "getIamPolicy": {
@@ -650,7 +658,8 @@
                 "$ref": "GoogleCloudMlV1__ListModelsResponse"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only"
               ]
             },
             "patch": {
@@ -863,7 +872,8 @@
                     "$ref": "GoogleCloudMlV1__ListVersionsResponse"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only"
                   ]
                 },
                 "patch": {
@@ -1030,7 +1040,7 @@
       }
     }
   },
-  "revision": "20191214",
+  "revision": "20200103",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1778,7 +1788,7 @@
       "properties": {
         "httpBody": {
           "$ref": "GoogleApi__HttpBody",
-          "description": "\nRequired. The prediction request body."
+          "description": "\nRequired. The prediction request body. Refer to the [request body details\nsection](#request-body-details) for more information on how to structure\nyour request."
         }
       },
       "type": "object"
@@ -1941,7 +1951,7 @@
       "id": "GoogleCloudMlV1__SampledShapleyAttribution",
       "properties": {
         "numPaths": {
-          "description": "The number of feature permutations to consider when approximating the\nshapley values.",
+          "description": "The number of feature permutations to consider when approximating the\nShapley values.",
           "format": "int32",
           "type": "integer"
         }
@@ -2006,7 +2016,7 @@
           "type": "string"
         },
         "pythonVersion": {
-          "description": "Optional. The version of Python used in training. If not set, the default\nversion is '2.7'. Python '3.5' is available when `runtime_version` is set\nto '1.4' and above. Python '2.7' works with all supported\n\u003ca href=\"/ml-engine/docs/runtime-version-list\"\u003eruntime versions\u003c/a\u003e.",
+          "description": "Optional. The version of Python used in training. If not set, the default\nversion is '2.7'. Starting [January 13,\n2020](/ml-engine/docs/release-notes#december_10_2019), this field is\nrequired.\n\nThe following Python versions are available:\n\n* Python '3.7' is available when `runtime_version` is set to '1.15' or\n  later.\n* Python '3.5' is available when `runtime_version` is set to a version\n  from '1.4' to '1.14'.\n* Python '2.7' is available when `runtime_version` is set to '1.15' or\n  earlier. (Runtime versions released [after January 1,\n  2020](/ml-engine/docs/release-notes#december_10_2019) do not support\n  Python 2.7.)\n\nRead more about the Python versions available for [each runtime\nversion](/ml-engine/docs/runtime-version-list).",
           "type": "string"
         },
         "region": {
@@ -2014,7 +2024,7 @@
           "type": "string"
         },
         "runtimeVersion": {
-          "description": "Optional. The AI Platform runtime version to use for training. If not\nset, AI Platform uses the default stable version, 1.0. For more\ninformation, see the\n\u003ca href=\"/ml-engine/docs/runtime-version-list\"\u003eruntime version list\u003c/a\u003e\nand\n\u003ca href=\"/ml-engine/docs/versioning\"\u003ehow to manage runtime versions\u003c/a\u003e.",
+          "description": "Optional. The AI Platform runtime version to use for training. If not\nset, AI Platform uses the default stable version, 1.0. Starting [January\n13, 2020](/ml-engine/docs/release-notes#december_10_2019), this field is\nrequired.\n\nFor more information, see the\n\u003ca href=\"/ml-engine/docs/runtime-version-list\"\u003eruntime version list\u003c/a\u003e\nand\n\u003ca href=\"/ml-engine/docs/versioning\"\u003ehow to manage runtime versions\u003c/a\u003e.",
           "type": "string"
         },
         "scaleTier": {
@@ -2191,7 +2201,7 @@
           "type": "string"
         },
         "pythonVersion": {
-          "description": "Optional. The version of Python used in prediction. If not set, the default\nversion is '2.7'. Python '3.5' is available when `runtime_version` is set\nto '1.4' and above. Python '2.7' works with all supported runtime versions.",
+          "description": "Optional. The version of Python used in prediction. If not set, the default\nversion is '2.7'. Starting [January 13,\n2020](/ml-engine/docs/release-notes#december_10_2019), this field is\nrequired.\n\nThe following Python versions are available:\n\n* Python '3.7' is available when `runtime_version` is set to '1.15' or\n  later.\n* Python '3.5' is available when `runtime_version` is set to a version\n  from '1.4' to '1.14'.\n* Python '2.7' is available when `runtime_version` is set to '1.15' or\n  earlier. (Runtime versions released [after January 1,\n  2020](/ml-engine/docs/release-notes#december_10_2019) do not support\n  Python 2.7.)\n\nRead more about the Python versions available for [each runtime\nversion](/ml-engine/docs/runtime-version-list).",
           "type": "string"
         },
         "requestLoggingConfig": {
@@ -2199,7 +2209,7 @@
           "description": "Optional. *Only* specify this field in a\nprojects.models.versions.patch\nrequest. Specifying it in a\nprojects.models.versions.create\nrequest has no effect.\n\nConfigures the request-response pair logging on predictions from this\nVersion."
         },
         "runtimeVersion": {
-          "description": "Optional. The AI Platform runtime version to use for this deployment.\nIf not set, AI Platform uses the default stable version, 1.0. For more\ninformation, see the\n[runtime version list](/ml-engine/docs/runtime-version-list) and\n[how to manage runtime versions](/ml-engine/docs/versioning).",
+          "description": "Optional. The AI Platform runtime version to use for this deployment.\nIf not set, AI Platform uses the default stable version, 1.0. Starting\n[January 13, 2020](/ml-engine/docs/release-notes#december_10_2019), this\nfield is required.\n\nFor more information, see the\n[runtime version list](/ml-engine/docs/runtime-version-list) and\n[how to manage runtime versions](/ml-engine/docs/versioning).",
           "type": "string"
         },
         "serviceAccount": {

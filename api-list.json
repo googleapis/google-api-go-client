@@ -2519,7 +2519,7 @@
       "name": "logging",
       "version": "v2",
       "title": "Stackdriver Logging API",
-      "description": "Writes log entries and manages your Stackdriver Logging configuration. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the [Stackdriver Logging documentation](/logging/docs).",
+      "description": "Writes log entries and manages your Stackdriver Logging configuration. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the Stackdriver Logging documentation \u003chttps://cloud.google.com/logging/docs\u003e.",
       "discoveryRestUrl": "https://logging.googleapis.com/$discovery/rest?version=v2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3232,6 +3232,21 @@
       "title": "Cloud Security Command Center API",
       "description": "Cloud Security Command Center API provides access to temporal views of assets and findings within an organization.",
       "discoveryRestUrl": "https://securitycenter.googleapis.com/$discovery/rest?version=v1p1alpha1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://console.cloud.google.com/apis/api/securitycenter.googleapis.com/overview",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "securitycenter:v1p1beta1",
+      "name": "securitycenter",
+      "version": "v1p1beta1",
+      "title": "Cloud Security Command Center API",
+      "description": "Cloud Security Command Center API provides access to temporal views of assets and findings within an organization.",
+      "discoveryRestUrl": "https://securitycenter.googleapis.com/$discovery/rest?version=v1p1beta1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"

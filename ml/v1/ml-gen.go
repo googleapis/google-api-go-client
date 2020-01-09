@@ -23,6 +23,10 @@
 //
 // Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+//
+//   mlService, err := ml.NewService(ctx, option.WithScopes(ml.CloudPlatformReadOnlyScope))
+//
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
 //   mlService, err := ml.NewService(ctx, option.WithAPIKey("AIza..."))
@@ -78,12 +82,16 @@ const basePath = "https://ml.googleapis.com/"
 const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// View your data across Google Cloud Platform services
+	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/cloud-platform.read-only",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -1569,7 +1577,11 @@ func (s *GoogleCloudMlV1__ParameterSpec) UnmarshalJSON(data []byte) error {
 // against a trained model.
 type GoogleCloudMlV1__PredictRequest struct {
 	// HttpBody:
-	// Required. The prediction request body.
+	// Required. The prediction request body. Refer to the [request body
+	// details
+	// section](#request-body-details) for more information on how to
+	// structure
+	// your request.
 	HttpBody *GoogleApi__HttpBody `json:"httpBody,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HttpBody") to
@@ -1959,7 +1971,7 @@ func (s *GoogleCloudMlV1__RequestLoggingConfig) UnmarshalJSON(data []byte) error
 type GoogleCloudMlV1__SampledShapleyAttribution struct {
 	// NumPaths: The number of feature permutations to consider when
 	// approximating the
-	// shapley values.
+	// Shapley values.
 	NumPaths int64 `json:"numPaths,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NumPaths") to
@@ -2167,10 +2179,30 @@ type GoogleCloudMlV1__TrainingInput struct {
 
 	// PythonVersion: Optional. The version of Python used in training. If
 	// not set, the default
-	// version is '2.7'. Python '3.5' is available when `runtime_version` is
-	// set
-	// to '1.4' and above. Python '2.7' works with all supported
-	// <a href="/ml-engine/docs/runtime-version-list">runtime versions</a>.
+	// version is '2.7'. Starting [January
+	// 13,
+	// 2020](/ml-engine/docs/release-notes#december_10_2019), this field
+	// is
+	// required.
+	//
+	// The following Python versions are available:
+	//
+	// * Python '3.7' is available when `runtime_version` is set to '1.15'
+	// or
+	//   later.
+	// * Python '3.5' is available when `runtime_version` is set to a
+	// version
+	//   from '1.4' to '1.14'.
+	// * Python '2.7' is available when `runtime_version` is set to '1.15'
+	// or
+	//   earlier. (Runtime versions released [after January 1,
+	//   2020](/ml-engine/docs/release-notes#december_10_2019) do not
+	// support
+	//   Python 2.7.)
+	//
+	// Read more about the Python versions available for [each
+	// runtime
+	// version](/ml-engine/docs/runtime-version-list).
 	PythonVersion string `json:"pythonVersion,omitempty"`
 
 	// Region: Required. The Google Compute Engine region to run the
@@ -2182,9 +2214,13 @@ type GoogleCloudMlV1__TrainingInput struct {
 
 	// RuntimeVersion: Optional. The AI Platform runtime version to use for
 	// training. If not
-	// set, AI Platform uses the default stable version, 1.0. For
-	// more
-	// information, see the
+	// set, AI Platform uses the default stable version, 1.0. Starting
+	// [January
+	// 13, 2020](/ml-engine/docs/release-notes#december_10_2019), this field
+	// is
+	// required.
+	//
+	// For more information, see the
 	// <a href="/ml-engine/docs/runtime-version-list">runtime version
 	// list</a>
 	// and
@@ -2701,10 +2737,30 @@ type GoogleCloudMlV1__Version struct {
 
 	// PythonVersion: Optional. The version of Python used in prediction. If
 	// not set, the default
-	// version is '2.7'. Python '3.5' is available when `runtime_version` is
-	// set
-	// to '1.4' and above. Python '2.7' works with all supported runtime
-	// versions.
+	// version is '2.7'. Starting [January
+	// 13,
+	// 2020](/ml-engine/docs/release-notes#december_10_2019), this field
+	// is
+	// required.
+	//
+	// The following Python versions are available:
+	//
+	// * Python '3.7' is available when `runtime_version` is set to '1.15'
+	// or
+	//   later.
+	// * Python '3.5' is available when `runtime_version` is set to a
+	// version
+	//   from '1.4' to '1.14'.
+	// * Python '2.7' is available when `runtime_version` is set to '1.15'
+	// or
+	//   earlier. (Runtime versions released [after January 1,
+	//   2020](/ml-engine/docs/release-notes#december_10_2019) do not
+	// support
+	//   Python 2.7.)
+	//
+	// Read more about the Python versions available for [each
+	// runtime
+	// version](/ml-engine/docs/runtime-version-list).
 	PythonVersion string `json:"pythonVersion,omitempty"`
 
 	// RequestLoggingConfig: Optional. *Only* specify this field in
@@ -2721,9 +2777,13 @@ type GoogleCloudMlV1__Version struct {
 
 	// RuntimeVersion: Optional. The AI Platform runtime version to use for
 	// this deployment.
-	// If not set, AI Platform uses the default stable version, 1.0. For
-	// more
-	// information, see the
+	// If not set, AI Platform uses the default stable version, 1.0.
+	// Starting
+	// [January 13, 2020](/ml-engine/docs/release-notes#december_10_2019),
+	// this
+	// field is required.
+	//
+	// For more information, see the
 	// [runtime version list](/ml-engine/docs/runtime-version-list) and
 	// [how to manage runtime versions](/ml-engine/docs/versioning).
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
@@ -3570,10 +3630,6 @@ type ProjectsExplainCall struct {
 // AI Platform implements a custom `explain` verb on top of an HTTP
 // POST
 // method.
-//
-// For details of the request and response format, see the **guide
-// to the [explain request
-// format](/ml-engine/docs/v1/explain-request)**.
 func (r *ProjectsService) Explain(name string, googlecloudmlv1__explainrequest *GoogleCloudMlV1__ExplainRequest) *ProjectsExplainCall {
 	c := &ProjectsExplainCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3608,7 +3664,7 @@ func (c *ProjectsExplainCall) Header() http.Header {
 
 func (c *ProjectsExplainCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3672,7 +3728,7 @@ func (c *ProjectsExplainCall) Do(opts ...googleapi.CallOption) (*GoogleApi__Http
 	}
 	return ret, nil
 	// {
-	//   "description": "Performs explanation on the data in the request.\nAI Platform implements a custom `explain` verb on top of an HTTP POST\nmethod.\n\nFor details of the request and response format, see the **guide\nto the [explain request format](/ml-engine/docs/v1/explain-request)**.",
+	//   "description": "Performs explanation on the data in the request.\nAI Platform implements a custom `explain` verb on top of an HTTP POST\nmethod.",
 	//   "flatPath": "v1/projects/{projectsId}:explain",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.explain",
@@ -3763,7 +3819,7 @@ func (c *ProjectsGetConfigCall) Header() http.Header {
 
 func (c *ProjectsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3864,14 +3920,11 @@ type ProjectsPredictCall struct {
 	header_                         http.Header
 }
 
-// Predict: Performs prediction on the data in the request.
-// AI Platform implements a custom `predict` verb on top of an HTTP
-// POST
-// method.
+// Predict: Performs online prediction on the data in the
+// request.
 //
-// For details of the request and response format, see the **guide
-// to the [predict request
-// format](/ml-engine/docs/v1/predict-request)**.
+// <div>{% dynamic include "/ai-platform/includes/___predict-request"
+// %}</div>
 func (r *ProjectsService) Predict(name string, googlecloudmlv1__predictrequest *GoogleCloudMlV1__PredictRequest) *ProjectsPredictCall {
 	c := &ProjectsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3906,7 +3959,7 @@ func (c *ProjectsPredictCall) Header() http.Header {
 
 func (c *ProjectsPredictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3975,7 +4028,7 @@ func (c *ProjectsPredictCall) Do(opts ...googleapi.CallOption) (*GoogleApi__Http
 	ret.Data = b.String()
 	return ret, nil
 	// {
-	//   "description": "Performs prediction on the data in the request.\nAI Platform implements a custom `predict` verb on top of an HTTP POST\nmethod.\n\nFor details of the request and response format, see the **guide\nto the [predict request format](/ml-engine/docs/v1/predict-request)**.",
+	//   "description": "Performs online prediction on the data in the request.\n\n\u003cdiv\u003e{% dynamic include \"/ai-platform/includes/___predict-request\" %}\u003c/div\u003e",
 	//   "flatPath": "v1/projects/{projectsId}:predict",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.predict",
@@ -4051,7 +4104,7 @@ func (c *ProjectsJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4191,7 +4244,7 @@ func (c *ProjectsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4340,7 +4393,7 @@ func (c *ProjectsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4423,7 +4476,8 @@ func (c *ProjectsJobsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV1
 	//     "$ref": "GoogleCloudMlV1__Job"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -4505,7 +4559,7 @@ func (c *ProjectsJobsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4702,7 +4756,7 @@ func (c *ProjectsJobsListCall) Header() http.Header {
 
 func (c *ProjectsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4802,7 +4856,8 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV
 	//     "$ref": "GoogleCloudMlV1__ListJobsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -4906,7 +4961,7 @@ func (c *ProjectsJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5057,7 +5112,7 @@ func (c *ProjectsJobsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5207,7 +5262,7 @@ func (c *ProjectsJobsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsJobsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5359,7 +5414,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5442,7 +5497,8 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//     "$ref": "GoogleCloudMlV1__Location"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -5527,7 +5583,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5622,7 +5678,8 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//     "$ref": "GoogleCloudMlV1__ListLocationsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -5701,7 +5758,7 @@ func (c *ProjectsModelsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5844,7 +5901,7 @@ func (c *ProjectsModelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5989,7 +6046,7 @@ func (c *ProjectsModelsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6072,7 +6129,8 @@ func (c *ProjectsModelsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMl
 	//     "$ref": "GoogleCloudMlV1__Model"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -6154,7 +6212,7 @@ func (c *ProjectsModelsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6342,7 +6400,7 @@ func (c *ProjectsModelsListCall) Header() http.Header {
 
 func (c *ProjectsModelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6442,7 +6500,8 @@ func (c *ProjectsModelsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudM
 	//     "$ref": "GoogleCloudMlV1__ListModelsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -6544,7 +6603,7 @@ func (c *ProjectsModelsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6695,7 +6754,7 @@ func (c *ProjectsModelsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6845,7 +6904,7 @@ func (c *ProjectsModelsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsModelsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6999,7 +7058,7 @@ func (c *ProjectsModelsVersionsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7145,7 +7204,7 @@ func (c *ProjectsModelsVersionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7293,7 +7352,7 @@ func (c *ProjectsModelsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7477,7 +7536,7 @@ func (c *ProjectsModelsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7577,7 +7636,8 @@ func (c *ProjectsModelsVersionsListCall) Do(opts ...googleapi.CallOption) (*Goog
 	//     "$ref": "GoogleCloudMlV1__ListVersionsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -7684,7 +7744,7 @@ func (c *ProjectsModelsVersionsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7841,7 +7901,7 @@ func (c *ProjectsModelsVersionsSetDefaultCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsSetDefaultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7996,7 +8056,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8141,7 +8201,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8322,7 +8382,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

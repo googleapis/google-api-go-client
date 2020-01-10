@@ -613,7 +613,7 @@
       }
     }
   },
-  "revision": "20191029",
+  "revision": "20191230",
   "rootUrl": "https://bigqueryreservation.googleapis.com/",
   "schemas": {
     "CreateSlotPoolMetadata": {
@@ -781,6 +781,20 @@
         },
         "reservation": {
           "description": "Resource name of the reservation.\nE.g., projects/myproject/locations/eu/reservations/my_reservation.\nThis reservation must be in the same location as the grant.\nThis reservation should belong to the same parent project.",
+          "type": "string"
+        },
+        "state": {
+          "description": "Output only. State of the ReservationGrant.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "PENDING",
+            "ACTIVE"
+          ],
+          "enumDescriptions": [
+            "Invalid state value.",
+            "Queries from grantee will be executed as on-demand, if related\nReservationGrant is pending.",
+            "ReservationGrant is ready."
+          ],
           "type": "string"
         }
       },

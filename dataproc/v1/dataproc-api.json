@@ -894,7 +894,7 @@
                       "type": "string"
                     },
                     "region": {
-                      "description": "Required. The Cloud Dataproc region in which to handle the request.",
+                      "description": "Required. The Dataproc region in which to handle the request.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -945,7 +945,7 @@
                       "type": "string"
                     },
                     "region": {
-                      "description": "Required. The Cloud Dataproc region in which to handle the request.",
+                      "description": "Required. The Dataproc region in which to handle the request.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -988,7 +988,7 @@
                       "type": "string"
                     },
                     "region": {
-                      "description": "Required. The Cloud Dataproc region in which to handle the request.",
+                      "description": "Required. The Dataproc region in which to handle the request.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1029,7 +1029,7 @@
                       "type": "string"
                     },
                     "region": {
-                      "description": "Required. The Cloud Dataproc region in which to handle the request.",
+                      "description": "Required. The Dataproc region in which to handle the request.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1104,7 +1104,7 @@
                       "type": "string"
                     },
                     "region": {
-                      "description": "Required. The Cloud Dataproc region in which to handle the request.",
+                      "description": "Required. The Dataproc region in which to handle the request.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1136,7 +1136,7 @@
                       "type": "string"
                     },
                     "gracefulDecommissionTimeout": {
-                      "description": "Optional. Timeout for graceful YARN decomissioning. Graceful decommissioning allows removing nodes from the cluster without interrupting jobs in progress. Timeout specifies how long to wait for jobs in progress to finish before forcefully removing nodes (and potentially interrupting jobs). Default timeout is 0 (for forceful decommission), and the maximum allowed timeout is 1 day.Only supported on Dataproc image versions 1.2 and higher.",
+                      "description": "Optional. Timeout for graceful YARN decomissioning. Graceful decommissioning allows removing nodes from the cluster without interrupting jobs in progress. Timeout specifies how long to wait for jobs in progress to finish before forcefully removing nodes (and potentially interrupting jobs). Default timeout is 0 (for forceful decommission), and the maximum allowed timeout is 1 day. (see JSON representation of Duration (https://developers.google.com/protocol-buffers/docs/proto3#json)).Only supported on Dataproc image versions 1.2 and higher.",
                       "format": "google-duration",
                       "location": "query",
                       "type": "string"
@@ -1148,7 +1148,7 @@
                       "type": "string"
                     },
                     "region": {
-                      "description": "Required. The Cloud Dataproc region in which to handle the request.",
+                      "description": "Required. The Dataproc region in which to handle the request.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1260,7 +1260,7 @@
                       "type": "string"
                     },
                     "region": {
-                      "description": "Required. The Cloud Dataproc region in which to handle the request.",
+                      "description": "Required. The Dataproc region in which to handle the request.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1301,7 +1301,7 @@
                       "type": "string"
                     },
                     "region": {
-                      "description": "Required. The Cloud Dataproc region in which to handle the request.",
+                      "description": "Required. The Dataproc region in which to handle the request.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1339,7 +1339,7 @@
                       "type": "string"
                     },
                     "region": {
-                      "description": "Required. The Cloud Dataproc region in which to handle the request.",
+                      "description": "Required. The Dataproc region in which to handle the request.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1429,7 +1429,7 @@
                       "type": "string"
                     },
                     "region": {
-                      "description": "Required. The Cloud Dataproc region in which to handle the request.",
+                      "description": "Required. The Dataproc region in which to handle the request.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1467,7 +1467,7 @@
                       "type": "string"
                     },
                     "region": {
-                      "description": "Required. The Cloud Dataproc region in which to handle the request.",
+                      "description": "Required. The Dataproc region in which to handle the request.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -1535,7 +1535,7 @@
                       "type": "string"
                     },
                     "region": {
-                      "description": "Required. The Cloud Dataproc region in which to handle the request.",
+                      "description": "Required. The Dataproc region in which to handle the request.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -2094,7 +2094,7 @@
       }
     }
   },
-  "revision": "20191210",
+  "revision": "20191219",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2107,7 +2107,7 @@
           "type": "integer"
         },
         "acceleratorTypeUri": {
-          "description": "Full URL, partial URI, or short name of the accelerator type resource to expose to this instance. See Compute Engine AcceleratorTypes.Examples:\nhttps://www.googleapis.com/compute/beta/projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80\nprojects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80\nnvidia-tesla-k80Auto Zone Exception: If you are using the Cloud Dataproc Auto Zone Placement feature, you must use the short name of the accelerator type resource, for example, nvidia-tesla-k80.",
+          "description": "Full URL, partial URI, or short name of the accelerator type resource to expose to this instance. See Compute Engine AcceleratorTypes.Examples:\nhttps://www.googleapis.com/compute/beta/projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80\nprojects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80\nnvidia-tesla-k80Auto Zone Exception: If you are using the Dataproc Auto Zone Placement feature, you must use the short name of the accelerator type resource, for example, nvidia-tesla-k80.",
           "type": "string"
         }
       },
@@ -2118,7 +2118,7 @@
       "id": "AutoscalingConfig",
       "properties": {
         "policyUri": {
-          "description": "Optional. The autoscaling policy used by the cluster.Only resource names including projectid and location (region) are valid. Examples:\nhttps://www.googleapis.com/compute/v1/projects/[project_id]/locations/[dataproc_region]/autoscalingPolicies/[policy_id]\nprojects/[project_id]/locations/[dataproc_region]/autoscalingPolicies/[policy_id]Note that the policy must be in the same project and Cloud Dataproc region.",
+          "description": "Optional. The autoscaling policy used by the cluster.Only resource names including projectid and location (region) are valid. Examples:\nhttps://www.googleapis.com/compute/v1/projects/[project_id]/locations/[dataproc_region]/autoscalingPolicies/[policy_id]\nprojects/[project_id]/locations/[dataproc_region]/autoscalingPolicies/[policy_id]Note that the policy must be in the same project and Dataproc region.",
           "type": "string"
         }
       },
@@ -2235,12 +2235,12 @@
           "type": "string"
         },
         "clusterUuid": {
-          "description": "Output only. A cluster UUID (Unique Universal Identifier). Cloud Dataproc generates this value when it creates the cluster.",
+          "description": "Output only. A cluster UUID (Unique Universal Identifier). Dataproc generates this value when it creates the cluster.",
           "type": "string"
         },
         "config": {
           "$ref": "ClusterConfig",
-          "description": "Required. The cluster config. Note that Cloud Dataproc may set default values, and values may change when clusters are updated."
+          "description": "Required. The cluster config. Note that Dataproc may set default values, and values may change when clusters are updated."
         },
         "labels": {
           "additionalProperties": {
@@ -2280,7 +2280,7 @@
           "description": "Optional. Autoscaling config for the policy associated with the cluster. Cluster does not autoscale if this field is unset."
         },
         "configBucket": {
-          "description": "Optional. A Google Cloud Storage bucket used to stage job dependencies, config files, and job driver console output. If you do not specify a staging bucket, Cloud Dataproc will determine a Cloud Storage location (US, ASIA, or EU) for your cluster's staging bucket according to the Google Compute Engine zone where your cluster is deployed, and then create and manage this project-level, per-location bucket (see Cloud Dataproc staging bucket).",
+          "description": "Optional. A Cloud Storage bucket used to stage job dependencies, config files, and job driver console output. If you do not specify a staging bucket, Cloud Dataproc will determine a Cloud Storage location (US, ASIA, or EU) for your cluster's staging bucket according to the Compute Engine zone where your cluster is deployed, and then create and manage this project-level, per-location bucket (see Dataproc staging bucket).",
           "type": "string"
         },
         "encryptionConfig": {
@@ -2498,7 +2498,7 @@
           "type": "string"
         },
         "stateStartTime": {
-          "description": "Output only. Time when this state was entered.",
+          "description": "Output only. Time when this state was entered (see JSON representation of Timestamp (https://developers.google.com/protocol-buffers/docs/proto3#json)).",
           "format": "google-datetime",
           "type": "string"
         },
@@ -2512,7 +2512,7 @@
           "enumDescriptions": [
             "The cluster substate is unknown.",
             "The cluster is known to be in an unhealthy state (for example, critical daemons are not running or HDFS capacity is exhausted).Applies to RUNNING state.",
-            "The agent-reported status is out of date (may occur if Cloud Dataproc loses communication with Agent).Applies to RUNNING state."
+            "The agent-reported status is out of date (may occur if Dataproc loses communication with Agent).Applies to RUNNING state."
           ],
           "type": "string"
         }
@@ -2621,7 +2621,7 @@
           "description": "Optional. Reservation Affinity for consuming Zonal reservation."
         },
         "serviceAccount": {
-          "description": "Optional. The service account of the instances. Defaults to the default Compute Engine service account. Custom service accounts need permissions equivalent to the following IAM roles:\nroles/logging.logWriter\nroles/storage.objectAdmin(see https://cloud.google.com/compute/docs/access/service-accounts#custom_service_accounts for more information). Example: [account_id]@[project_id].iam.gserviceaccount.com",
+          "description": "Optional. The Dataproc service account (also see VM Data Plane identity) used by Dataproc cluster VM instances to access Google Cloud Platform services.If not specified, the Compute Engine default service account is used.",
           "type": "string"
         },
         "serviceAccountScopes": {
@@ -2643,7 +2643,7 @@
           "type": "array"
         },
         "zoneUri": {
-          "description": "Optional. The zone where the Compute Engine cluster will be located. On a create request, it is required in the \"global\" region. If omitted in a non-global Cloud Dataproc region, the service will pick a zone in the corresponding Compute Engine region. On a get request, zone will always be present.A full URL, partial URI, or short name are valid. Examples:\nhttps://www.googleapis.com/compute/v1/projects/[project_id]/zones/[zone]\nprojects/[project_id]/zones/[zone]\nus-central1-f",
+          "description": "Optional. The zone where the Compute Engine cluster will be located. On a create request, it is required in the \"global\" region. If omitted in a non-global Dataproc region, the service will pick a zone in the corresponding Compute Engine region. On a get request, zone will always be present.A full URL, partial URI, or short name are valid. Examples:\nhttps://www.googleapis.com/compute/v1/projects/[project_id]/zones/[zone]\nprojects/[project_id]/zones/[zone]\nus-central1-f",
           "type": "string"
         }
       },
@@ -2673,7 +2673,7 @@
       "type": "object"
     },
     "HadoopJob": {
-      "description": "A Cloud Dataproc job for running Apache Hadoop MapReduce (https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html) jobs on Apache Hadoop YARN (https://hadoop.apache.org/docs/r2.7.1/hadoop-yarn/hadoop-yarn-site/YARN.html).",
+      "description": "A Dataproc job for running Apache Hadoop MapReduce (https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html) jobs on Apache Hadoop YARN (https://hadoop.apache.org/docs/r2.7.1/hadoop-yarn/hadoop-yarn-site/YARN.html).",
       "id": "HadoopJob",
       "properties": {
         "archiveUris": {
@@ -2720,14 +2720,14 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. A mapping of property names to values, used to configure Hadoop. Properties that conflict with values set by the Cloud Dataproc API may be overwritten. Can include properties set in /etc/hadoop/conf/*-site and classes in user code.",
+          "description": "Optional. A mapping of property names to values, used to configure Hadoop. Properties that conflict with values set by the Dataproc API may be overwritten. Can include properties set in /etc/hadoop/conf/*-site and classes in user code.",
           "type": "object"
         }
       },
       "type": "object"
     },
     "HiveJob": {
-      "description": "A Cloud Dataproc job for running Apache Hive (https://hive.apache.org/) queries on YARN.",
+      "description": "A Dataproc job for running Apache Hive (https://hive.apache.org/) queries on YARN.",
       "id": "HiveJob",
       "properties": {
         "continueOnFailure": {
@@ -2745,7 +2745,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. A mapping of property names and values, used to configure Hive. Properties that conflict with values set by the Cloud Dataproc API may be overwritten. Can include properties set in /etc/hadoop/conf/*-site.xml, /etc/hive/conf/hive-site.xml, and classes in user code.",
+          "description": "Optional. A mapping of property names and values, used to configure Hive. Properties that conflict with values set by the Dataproc API may be overwritten. Can include properties set in /etc/hadoop/conf/*-site.xml, /etc/hive/conf/hive-site.xml, and classes in user code.",
           "type": "object"
         },
         "queryFileUri": {
@@ -2808,7 +2808,7 @@
           "type": "string"
         },
         "instanceNames": {
-          "description": "Output only. The list of instance names. Cloud Dataproc derives the names from cluster_name, num_instances, and the instance group.",
+          "description": "Output only. The list of instance names. Dataproc derives the names from cluster_name, num_instances, and the instance group.",
           "items": {
             "type": "string"
           },
@@ -2819,7 +2819,7 @@
           "type": "boolean"
         },
         "machineTypeUri": {
-          "description": "Optional. The Compute Engine machine type used for cluster instances.A full URL, partial URI, or short name are valid. Examples:\nhttps://www.googleapis.com/compute/v1/projects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2\nprojects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2\nn1-standard-2Auto Zone Exception: If you are using the Cloud Dataproc Auto Zone Placement feature, you must use the short name of the machine type resource, for example, n1-standard-2.",
+          "description": "Optional. The Compute Engine machine type used for cluster instances.A full URL, partial URI, or short name are valid. Examples:\nhttps://www.googleapis.com/compute/v1/projects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2\nprojects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2\nn1-standard-2Auto Zone Exception: If you are using the Dataproc Auto Zone Placement feature, you must use the short name of the machine type resource, for example, n1-standard-2.",
           "type": "string"
         },
         "managedGroupConfig": {
@@ -2827,7 +2827,7 @@
           "description": "Output only. The config for Compute Engine Instance Group Manager that manages this group. This is only used for preemptible instance groups."
         },
         "minCpuPlatform": {
-          "description": "Optional. Specifies the minimum cpu platform for the Instance Group. See Cloud Dataproc\u0026rarr;Minimum CPU Platform.",
+          "description": "Optional. Specifies the minimum cpu platform for the Instance Group. See Dataproc\u0026rarr;Minimum CPU Platform.",
           "type": "string"
         },
         "numInstances": {
@@ -2862,7 +2862,7 @@
       "type": "object"
     },
     "Job": {
-      "description": "A Cloud Dataproc job resource.",
+      "description": "A Dataproc job resource.",
       "id": "Job",
       "properties": {
         "driverControlFilesUri": {
@@ -2939,7 +2939,7 @@
       "type": "object"
     },
     "JobPlacement": {
-      "description": "Cloud Dataproc job config.",
+      "description": "Dataproc job config.",
       "id": "JobPlacement",
       "properties": {
         "clusterName": {
@@ -2947,7 +2947,7 @@
           "type": "string"
         },
         "clusterUuid": {
-          "description": "Output only. A cluster UUID generated by the Cloud Dataproc service when the job is submitted.",
+          "description": "Output only. A cluster UUID generated by the Dataproc service when the job is submitted.",
           "type": "string"
         }
       },
@@ -2981,7 +2981,7 @@
       "type": "object"
     },
     "JobStatus": {
-      "description": "Cloud Dataproc job status.",
+      "description": "Dataproc job status.",
       "id": "JobStatus",
       "properties": {
         "details": {
@@ -3033,7 +3033,7 @@
             "The job substate is unknown.",
             "The Job is submitted to the agent.Applies to RUNNING state.",
             "The Job has been received and is awaiting execution (it may be waiting for a condition to be met). See the \"details\" field for the reason for the delay.Applies to RUNNING state.",
-            "The agent-reported status is out of date, which may be caused by a loss of communication between the agent and Cloud Dataproc. If the agent does not send a timely update, the job will fail.Applies to RUNNING state."
+            "The agent-reported status is out of date, which may be caused by a loss of communication between the agent and Dataproc. If the agent does not send a timely update, the job will fail.Applies to RUNNING state."
           ],
           "type": "string"
         }
@@ -3113,22 +3113,22 @@
       "id": "LifecycleConfig",
       "properties": {
         "autoDeleteTime": {
-          "description": "Optional. The time when cluster will be auto-deleted.",
+          "description": "Optional. The time when cluster will be auto-deleted (see JSON representation of Timestamp (https://developers.google.com/protocol-buffers/docs/proto3#json)).",
           "format": "google-datetime",
           "type": "string"
         },
         "autoDeleteTtl": {
-          "description": "Optional. The lifetime duration of cluster. The cluster will be auto-deleted at the end of this period. Valid range: 10m, 14d.Example: \"1d\", to delete the cluster 1 day after its creation..",
+          "description": "Optional. The lifetime duration of cluster. The cluster will be auto-deleted at the end of this period. Minimum value is 10 minutes; maximum value is 14 days (see JSON representation of Duration (https://developers.google.com/protocol-buffers/docs/proto3#json)).",
           "format": "google-duration",
           "type": "string"
         },
         "idleDeleteTtl": {
-          "description": "Optional. The duration to keep the cluster alive while idling. Passing this threshold will cause the cluster to be deleted. Valid range: 10m, 14d.Example: \"10m\", the minimum value, to delete the cluster when it has had no jobs running for 10 minutes.",
+          "description": "Optional. The duration to keep the cluster alive while idling (when no jobs are running). Passing this threshold will cause the cluster to be deleted. Minimum value is 10 minutes; maximum value is 14 days (see JSON representation of Duration (https://developers.google.com/protocol-buffers/docs/proto3#json).",
           "format": "google-duration",
           "type": "string"
         },
         "idleStartTime": {
-          "description": "Output only. The time when cluster became idle (most recent job finished) and became eligible for deletion due to idleness.",
+          "description": "Output only. The time when cluster became idle (most recent job finished) and became eligible for deletion due to idleness (see JSON representation of Timestamp (https://developers.google.com/protocol-buffers/docs/proto3#json)).",
           "format": "google-datetime",
           "type": "string"
         }
@@ -3296,7 +3296,7 @@
           "type": "string"
         },
         "executionTimeout": {
-          "description": "Optional. Amount of time executable has to complete. Default is 10 minutes. Cluster creation fails with an explanatory error message (the name of the executable that caused the error and the exceeded timeout period) if the executable is not completed at end of the timeout period.",
+          "description": "Optional. Amount of time executable has to complete. Default is 10 minutes (see JSON representation of Duration (https://developers.google.com/protocol-buffers/docs/proto3#json)).Cluster creation fails with an explanatory error message (the name of the executable that caused the error and the exceeded timeout period) if the executable is not completed at end of the timeout period.",
           "format": "google-duration",
           "type": "string"
         }
@@ -3401,7 +3401,7 @@
       "type": "object"
     },
     "PigJob": {
-      "description": "A Cloud Dataproc job for running Apache Pig (https://pig.apache.org/) queries on YARN.",
+      "description": "A Dataproc job for running Apache Pig (https://pig.apache.org/) queries on YARN.",
       "id": "PigJob",
       "properties": {
         "continueOnFailure": {
@@ -3423,7 +3423,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. A mapping of property names to values, used to configure Pig. Properties that conflict with values set by the Cloud Dataproc API may be overwritten. Can include properties set in /etc/hadoop/conf/*-site.xml, /etc/pig/conf/pig.properties, and classes in user code.",
+          "description": "Optional. A mapping of property names to values, used to configure Pig. Properties that conflict with values set by the Dataproc API may be overwritten. Can include properties set in /etc/hadoop/conf/*-site.xml, /etc/pig/conf/pig.properties, and classes in user code.",
           "type": "object"
         },
         "queryFileUri": {
@@ -3469,7 +3469,7 @@
       "type": "object"
     },
     "PySparkJob": {
-      "description": "A Cloud Dataproc job for running Apache PySpark (https://spark.apache.org/docs/0.9.0/python-programming-guide.html) applications on YARN.",
+      "description": "A Dataproc job for running Apache PySpark (https://spark.apache.org/docs/0.9.0/python-programming-guide.html) applications on YARN.",
       "id": "PySparkJob",
       "properties": {
         "archiveUris": {
@@ -3512,7 +3512,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. A mapping of property names to values, used to configure PySpark. Properties that conflict with values set by the Cloud Dataproc API may be overwritten. Can include properties set in /etc/spark/conf/spark-defaults.conf and classes in user code.",
+          "description": "Optional. A mapping of property names to values, used to configure PySpark. Properties that conflict with values set by the Dataproc API may be overwritten. Can include properties set in /etc/spark/conf/spark-defaults.conf and classes in user code.",
           "type": "object"
         },
         "pythonFileUris": {
@@ -3614,7 +3614,7 @@
       "id": "SoftwareConfig",
       "properties": {
         "imageVersion": {
-          "description": "Optional. The version of software inside the cluster. It must be one of the supported Cloud Dataproc Versions, such as \"1.2\" (including a subminor version, such as \"1.2.29\"), or the \"preview\" version. If unspecified, it defaults to the latest Debian version.",
+          "description": "Optional. The version of software inside the cluster. It must be one of the supported Dataproc Versions, such as \"1.2\" (including a subminor version, such as \"1.2.29\"), or the \"preview\" version. If unspecified, it defaults to the latest Debian version.",
           "type": "string"
         },
         "optionalComponents": {
@@ -3649,7 +3649,7 @@
       "type": "object"
     },
     "SparkJob": {
-      "description": "A Cloud Dataproc job for running Apache Spark (http://spark.apache.org/) applications on YARN.",
+      "description": "A Dataproc job for running Apache Spark (http://spark.apache.org/) applications on YARN.",
       "id": "SparkJob",
       "properties": {
         "archiveUris": {
@@ -3696,14 +3696,14 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. A mapping of property names to values, used to configure Spark. Properties that conflict with values set by the Cloud Dataproc API may be overwritten. Can include properties set in /etc/spark/conf/spark-defaults.conf and classes in user code.",
+          "description": "Optional. A mapping of property names to values, used to configure Spark. Properties that conflict with values set by the Dataproc API may be overwritten. Can include properties set in /etc/spark/conf/spark-defaults.conf and classes in user code.",
           "type": "object"
         }
       },
       "type": "object"
     },
     "SparkRJob": {
-      "description": "A Cloud Dataproc job for running Apache SparkR (https://spark.apache.org/docs/latest/sparkr.html) applications on YARN.",
+      "description": "A Dataproc job for running Apache SparkR (https://spark.apache.org/docs/latest/sparkr.html) applications on YARN.",
       "id": "SparkRJob",
       "properties": {
         "archiveUris": {
@@ -3739,14 +3739,14 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. A mapping of property names to values, used to configure SparkR. Properties that conflict with values set by the Cloud Dataproc API may be overwritten. Can include properties set in /etc/spark/conf/spark-defaults.conf and classes in user code.",
+          "description": "Optional. A mapping of property names to values, used to configure SparkR. Properties that conflict with values set by the Dataproc API may be overwritten. Can include properties set in /etc/spark/conf/spark-defaults.conf and classes in user code.",
           "type": "object"
         }
       },
       "type": "object"
     },
     "SparkSqlJob": {
-      "description": "A Cloud Dataproc job for running Apache Spark SQL (http://spark.apache.org/sql/) queries.",
+      "description": "A Dataproc job for running Apache Spark SQL (http://spark.apache.org/sql/) queries.",
       "id": "SparkSqlJob",
       "properties": {
         "jarFileUris": {
@@ -3764,7 +3764,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. A mapping of property names to values, used to configure Spark SQL's SparkConf. Properties that conflict with values set by the Cloud Dataproc API may be overwritten.",
+          "description": "Optional. A mapping of property names to values, used to configure Spark SQL's SparkConf. Properties that conflict with values set by the Dataproc API may be overwritten.",
           "type": "object"
         },
         "queryFileUri": {
@@ -3910,7 +3910,7 @@
       "type": "object"
     },
     "WorkflowMetadata": {
-      "description": "A Cloud Dataproc workflow template resource.",
+      "description": "A Dataproc workflow template resource.",
       "id": "WorkflowMetadata",
       "properties": {
         "clusterName": {
@@ -4025,7 +4025,7 @@
       "type": "object"
     },
     "WorkflowTemplate": {
-      "description": "A Cloud Dataproc workflow template resource.",
+      "description": "A Dataproc workflow template resource.",
       "id": "WorkflowTemplate",
       "properties": {
         "createTime": {

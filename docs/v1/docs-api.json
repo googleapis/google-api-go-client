@@ -209,7 +209,7 @@
       }
     }
   },
-  "revision": "20191216",
+  "revision": "20200107",
   "rootUrl": "https://docs.googleapis.com/",
   "schemas": {
     "AutoText": {
@@ -417,7 +417,7 @@
       "type": "object"
     },
     "CreateFooterRequest": {
-      "description": "Creates a Footer. The new footer will be\napplied to the DocumentStyle.\n\nIf a footer of the specified type already exists then a 400 bad request error\nwill be returned.",
+      "description": "Creates a Footer. The new footer is applied to\nthe DocumentStyle.\n\nIf a footer of the specified type already exists, a 400 bad request error\nis returned.",
       "id": "CreateFooterRequest",
       "properties": {
         "type": {
@@ -446,8 +446,34 @@
       },
       "type": "object"
     },
+    "CreateFootnoteRequest": {
+      "description": "Creates a Footnote segment\nand inserts a new FootnoteReference\nto it at the given location.\n\nThe new Footnote segment will contain a\nspace followed by a newline character.",
+      "id": "CreateFootnoteRequest",
+      "properties": {
+        "endOfSegmentLocation": {
+          "$ref": "EndOfSegmentLocation",
+          "description": "Inserts the footnote reference at the end of the document body.\n\nFootnote references cannot be inserted inside a header, footer or\nfootnote. Since footnote references can only be inserted in the body, the\nsegment ID field\nmust be empty."
+        },
+        "location": {
+          "$ref": "Location",
+          "description": "Inserts the footnote reference at a specific index in the document.\n\nThe footnote reference must be inserted inside the bounds of an existing\nParagraph. For instance, it cannot be\ninserted at a table's start index (i.e. between the table and its\npreceding paragraph).\n\nFootnote references cannot be inserted inside an equation,\nheader, footer or footnote. Since footnote references can only be\ninserted in the body, the segment ID field must be empty."
+        }
+      },
+      "type": "object"
+    },
+    "CreateFootnoteResponse": {
+      "description": "The result of creating a footnote.",
+      "id": "CreateFootnoteResponse",
+      "properties": {
+        "footnoteId": {
+          "description": "The ID of the created footnote.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "CreateHeaderRequest": {
-      "description": "Creates a Header. The new header will be\napplied to the DocumentStyle.\n\nIf a header of the specified type already exists then a 400 bad request error\nwill be returned.",
+      "description": "Creates a Header. The new header is applied to\nthe DocumentStyle.\n\nIf a header of the specified type already exists, a 400 bad request error\nis returned.",
       "id": "CreateHeaderRequest",
       "properties": {
         "type": {
@@ -2669,6 +2695,10 @@
           "$ref": "CreateFooterRequest",
           "description": "Creates a footer."
         },
+        "createFootnote": {
+          "$ref": "CreateFootnoteRequest",
+          "description": "Creates a footnote."
+        },
         "createHeader": {
           "$ref": "CreateHeaderRequest",
           "description": "Creates a header."
@@ -2791,6 +2821,10 @@
         "createFooter": {
           "$ref": "CreateFooterResponse",
           "description": "The result of creating a footer."
+        },
+        "createFootnote": {
+          "$ref": "CreateFootnoteResponse",
+          "description": "The result of creating a footnote."
         },
         "createHeader": {
           "$ref": "CreateHeaderResponse",

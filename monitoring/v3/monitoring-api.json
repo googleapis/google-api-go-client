@@ -708,7 +708,7 @@
                 "name": {
                   "description": "The monitored resource descriptor to get. The format is \"projects/{project_id_or_number}/monitoredResourceDescriptors/{resource_type}\". The {resource_type} is a predefined type, such as cloudsql_database.",
                   "location": "path",
-                  "pattern": "^projects/[^/]+/monitoredResourceDescriptors/[^/]+$",
+                  "pattern": "^projects/[^/]+/monitoredResourceDescriptors/.+$",
                   "required": true,
                   "type": "string"
                 }
@@ -1469,7 +1469,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "Resource name of the Service to delete. Of the form projects/{project_id}/service/{service_id}.",
+              "description": "Resource name of the Service to delete. Of the form projects/{project_id}/services/{service_id}.",
               "location": "path",
               "pattern": "^[^/]+/[^/]+/services/[^/]+$",
               "required": true,
@@ -1817,7 +1817,7 @@
       }
     }
   },
-  "revision": "20191207",
+  "revision": "20200104",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -3219,7 +3219,7 @@
           "type": "string"
         },
         "unit": {
-          "description": "Ki kibi (2^10)\nMi mebi (2^20)\nGi gibi (2^30)\nTi tebi (2^40)\nPi pebi (2^50)GrammarThe grammar also includes these connectors:\n/ division or ratio (as an infix operator). For examples,  kBy/{email} or MiBy/10ms (although you should almost never  have /s in a metric unit; rates should always be computed at  query time from the underlying cumulative or delta value).\n. multiplication or composition (as an infix operator). For  examples, GBy.d or k{watt}.h.The grammar for a unit is as follows:\nExpression = Component { \".\" Component } { \"/\" Component } ;\n\nComponent = ( [ PREFIX ] UNIT | \"%\" ) [ Annotation ]\n          | Annotation\n          | \"1\"\n          ;\n\nAnnotation = \"{\" NAME \"}\" ;\nNotes:\nAnnotation is just a comment if it follows a UNIT. If the annotation  is used alone, then the unit is equivalent to 1. For examples,  {request}/s == 1/s, By{transmitted}/s == By/s.\nNAME is a sequence of non-blank printable ASCII characters not  containing { or }.\n1 represents a unitary dimensionless  unit (https://en.wikipedia.org/wiki/Dimensionless_quantity) of 1, such  as in 1/s. It is typically used when none of the basic units are  appropriate. For example, \"new users per day\" can be represented as  1/d or {new-users}/d (and a metric value 5 would mean \"5 new  users). Alternatively, \"thousands of page views per day\" would be  represented as 1000/d or k1/d or k{page_views}/d (and a metric  value of 5.3 would mean \"5300 page views per day\").\n% represents dimensionless value of 1/100, and annotates values giving  a percentage (so the metric values are typically in the range of 0..100,  and a metric value 3 means \"3 percent\").\n10^2.% indicates a metric contains a ratio, typically in the range  0..1, that will be multiplied by 100 and displayed as a percentage  (so a metric value 0.03 means \"3 percent\").",
+          "description": "The units in which the metric value is reported. It is only applicable if the value_type is INT64, DOUBLE, or DISTRIBUTION. The unit defines the representation of the stored metric values.Different systems may scale the values to be more easily displayed (so a value of 0.02KBy might be displayed as 20By, and a value of 3523KBy might be displayed as 3.5MBy). However, if the unit is KBy, then the value of the metric is always in thousands of bytes, no matter how it may be displayed..If you want a custom metric to record the exact number of CPU-seconds used by a job, you can create an INT64 CUMULATIVE metric whose unit is s{CPU} (or equivalently 1s{CPU} or just s). If the job uses 12,005 CPU-seconds, then the value is written as 12005.Alternatively, if you want a custom metric to record data in a more granular way, you can create a DOUBLE CUMULATIVE metric whose unit is ks{CPU}, and then write the value 12.005 (which is 12005/1000), or use Kis{CPU} and write 11.723 (which is 12005/1024).The supported units are a subset of The Unified Code for Units of Measure (http://unitsofmeasure.org/ucum.html) standard:Basic units (UNIT)\nbit bit\nBy byte\ns second\nmin minute\nh hour\nd dayPrefixes (PREFIX)\nk kilo (10^3)\nM mega (10^6)\nG giga (10^9)\nT tera (10^12)\nP peta (10^15)\nE exa (10^18)\nZ zetta (10^21)\nY yotta (10^24)\nm milli (10^-3)\nu micro (10^-6)\nn nano (10^-9)\np pico (10^-12)\nf femto (10^-15)\na atto (10^-18)\nz zepto (10^-21)\ny yocto (10^-24)\nKi kibi (2^10)\nMi mebi (2^20)\nGi gibi (2^30)\nTi tebi (2^40)\nPi pebi (2^50)GrammarThe grammar also includes these connectors:\n/ division or ratio (as an infix operator). For examples,  kBy/{email} or MiBy/10ms (although you should almost never  have /s in a metric unit; rates should always be computed at  query time from the underlying cumulative or delta value).\n. multiplication or composition (as an infix operator). For  examples, GBy.d or k{watt}.h.The grammar for a unit is as follows:\nExpression = Component { \".\" Component } { \"/\" Component } ;\n\nComponent = ( [ PREFIX ] UNIT | \"%\" ) [ Annotation ]\n          | Annotation\n          | \"1\"\n          ;\n\nAnnotation = \"{\" NAME \"}\" ;\nNotes:\nAnnotation is just a comment if it follows a UNIT. If the annotation  is used alone, then the unit is equivalent to 1. For examples,  {request}/s == 1/s, By{transmitted}/s == By/s.\nNAME is a sequence of non-blank printable ASCII characters not  containing { or }.\n1 represents a unitary dimensionless  unit (https://en.wikipedia.org/wiki/Dimensionless_quantity) of 1, such  as in 1/s. It is typically used when none of the basic units are  appropriate. For example, \"new users per day\" can be represented as  1/d or {new-users}/d (and a metric value 5 would mean \"5 new  users). Alternatively, \"thousands of page views per day\" would be  represented as 1000/d or k1/d or k{page_views}/d (and a metric  value of 5.3 would mean \"5300 page views per day\").\n% represents dimensionless value of 1/100, and annotates values giving  a percentage (so the metric values are typically in the range of 0..100,  and a metric value 3 means \"3 percent\").\n10^2.% indicates a metric contains a ratio, typically in the range  0..1, that will be multiplied by 100 and displayed as a percentage  (so a metric value 0.03 means \"3 percent\").",
           "type": "string"
         },
         "valueType": {

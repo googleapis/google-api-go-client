@@ -1757,7 +1757,7 @@ func (c *ProjectsDashboardsCreateCall) Header() http.Header {
 
 func (c *ProjectsDashboardsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1830,7 +1830,7 @@ func (c *ProjectsDashboardsCreateCall) Do(opts ...googleapi.CallOption) (*Dashbo
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The project on which to execute the request. The format is \"projects/{project_id_or_number}\". The {project_id_or_number} must match the dashboard resource name.",
+	//       "description": "Required. The project on which to execute the request. The format is \"projects/{project_id_or_number}\". The {project_id_or_number} must match the dashboard resource name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1900,7 +1900,7 @@ func (c *ProjectsDashboardsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDashboardsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1968,7 +1968,7 @@ func (c *ProjectsDashboardsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the Dashboard. The format is \"projects/{project_id_or_number}/dashboards/{dashboard_id}\".",
+	//       "description": "Required. The resource name of the Dashboard. The format is \"projects/{project_id_or_number}/dashboards/{dashboard_id}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/dashboards/[^/]+$",
 	//       "required": true,
@@ -2046,7 +2046,7 @@ func (c *ProjectsDashboardsGetCall) Header() http.Header {
 
 func (c *ProjectsDashboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2117,7 +2117,7 @@ func (c *ProjectsDashboardsGetCall) Do(opts ...googleapi.CallOption) (*Dashboard
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the Dashboard. The format is one of \"dashboards/{dashboard_id}\" (for system dashboards) or \"projects/{project_id_or_number}/dashboards/{dashboard_id}\" (for custom dashboards).",
+	//       "description": "Required. The resource name of the Dashboard. The format is one of \"dashboards/{dashboard_id}\" (for system dashboards) or \"projects/{project_id_or_number}/dashboards/{dashboard_id}\" (for custom dashboards).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/dashboards/[^/]+$",
 	//       "required": true,
@@ -2212,7 +2212,7 @@ func (c *ProjectsDashboardsListCall) Header() http.Header {
 
 func (c *ProjectsDashboardsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2294,7 +2294,7 @@ func (c *ProjectsDashboardsListCall) Do(opts ...googleapi.CallOption) (*ListDash
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The scope of the dashboards to list. A project scope must be specified in the form of \"projects/{project_id_or_number}\".",
+	//       "description": "Required. The scope of the dashboards to list. A project scope must be specified in the form of \"projects/{project_id_or_number}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2384,7 +2384,7 @@ func (c *ProjectsDashboardsPatchCall) Header() http.Header {
 
 func (c *ProjectsDashboardsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

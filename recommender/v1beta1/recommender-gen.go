@@ -296,7 +296,8 @@ func (s *GoogleCloudRecommenderV1beta1ListRecommendationsResponse) MarshalJSON()
 // GoogleCloudRecommenderV1beta1MarkRecommendationClaimedRequest:
 // Request for the `MarkRecommendationClaimed` Method.
 type GoogleCloudRecommenderV1beta1MarkRecommendationClaimedRequest struct {
-	// Etag: Fingerprint of the Recommendation. Provides optimistic locking.
+	// Etag: Required. Fingerprint of the Recommendation. Provides
+	// optimistic locking.
 	Etag string `json:"etag,omitempty"`
 
 	// StateMetadata: State properties to include with this state.
@@ -332,7 +333,8 @@ func (s *GoogleCloudRecommenderV1beta1MarkRecommendationClaimedRequest) MarshalJ
 // GoogleCloudRecommenderV1beta1MarkRecommendationFailedRequest: Request
 // for the `MarkRecommendationFailed` Method.
 type GoogleCloudRecommenderV1beta1MarkRecommendationFailedRequest struct {
-	// Etag: Fingerprint of the Recommendation. Provides optimistic locking.
+	// Etag: Required. Fingerprint of the Recommendation. Provides
+	// optimistic locking.
 	Etag string `json:"etag,omitempty"`
 
 	// StateMetadata: State properties to include with this state.
@@ -368,7 +370,8 @@ func (s *GoogleCloudRecommenderV1beta1MarkRecommendationFailedRequest) MarshalJS
 // GoogleCloudRecommenderV1beta1MarkRecommendationSucceededRequest:
 // Request for the `MarkRecommendationSucceeded` Method.
 type GoogleCloudRecommenderV1beta1MarkRecommendationSucceededRequest struct {
-	// Etag: Fingerprint of the Recommendation. Provides optimistic locking.
+	// Etag: Required. Fingerprint of the Recommendation. Provides
+	// optimistic locking.
 	Etag string `json:"etag,omitempty"`
 
 	// StateMetadata: State properties to include with this state.
@@ -590,11 +593,6 @@ type GoogleCloudRecommenderV1beta1Recommendation struct {
 	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
 
 	// Name: Name of recommendation.
-	//
-	// A project recommendation is represented as
-	//
-	// projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMEND
-	// ER_ID]/recommendations/[RECOMMENDATION_ID]
 	Name string `json:"name,omitempty"`
 
 	// PrimaryImpact: The primary impact that this recommendation can have
@@ -879,7 +877,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsGetCall) Header() http.Head
 
 func (c *ProjectsLocationsRecommendersRecommendationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -952,7 +950,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsGetCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the recommendation.",
+	//       "description": "Required. Name of the recommendation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/recommenders/[^/]+/recommendations/[^/]+$",
 	//       "required": true,
@@ -1000,22 +998,22 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Filter(filter str
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return from this request.
-// Non-positive values are ignored. If not specified, the server
-// will
-// determine the number of results to return.
+// of results to return from this request.  Non-positive
+// values are ignored. If not specified, the server will determine the
+// number
+// of results to return.
 func (c *ProjectsLocationsRecommendersRecommendationsListCall) PageSize(pageSize int64) *ProjectsLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": If present,
-// retrieves the next batch of results from the
-// preceding call to this method. `page_token` must be the value
-// of
-// `next_page_token` from the previous response. The values of other
-// method
-// parameters must be identical to those in the previous call.
+// retrieves the next batch of results from the preceding call to
+// this method. `page_token` must be the value of `next_page_token` from
+// the
+// previous response. The values of other method parameters must be
+// identical
+// to those in the previous call.
 func (c *ProjectsLocationsRecommendersRecommendationsListCall) PageToken(pageToken string) *ProjectsLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1058,7 +1056,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Header() http.Hea
 
 func (c *ProjectsLocationsRecommendersRecommendationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1137,13 +1135,13 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Do(opts ...google
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of results to return from this request.\nNon-positive values are ignored. If not specified, the server will\ndetermine the number of results to return.",
+	//       "description": "Optional. The maximum number of results to return from this request.  Non-positive\nvalues are ignored. If not specified, the server will determine the number\nof results to return.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. If present, retrieves the next batch of results from the\npreceding call to this method. `page_token` must be the value of\n`next_page_token` from the previous response. The values of other method\nparameters must be identical to those in the previous call.",
+	//       "description": "Optional. If present, retrieves the next batch of results from the preceding call to\nthis method. `page_token` must be the value of `next_page_token` from the\nprevious response. The values of other method parameters must be identical\nto those in the previous call.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1248,7 +1246,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) Header() h
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1323,7 +1321,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the recommendation.",
+	//       "description": "Required. Name of the recommendation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/recommenders/[^/]+/recommendations/[^/]+$",
 	//       "required": true,
@@ -1406,7 +1404,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) Header() ht
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1481,7 +1479,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the recommendation.",
+	//       "description": "Required. Name of the recommendation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/recommenders/[^/]+/recommendations/[^/]+$",
 	//       "required": true,
@@ -1564,7 +1562,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) Header()
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1639,7 +1637,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the recommendation.",
+	//       "description": "Required. Name of the recommendation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/recommenders/[^/]+/recommendations/[^/]+$",
 	//       "required": true,

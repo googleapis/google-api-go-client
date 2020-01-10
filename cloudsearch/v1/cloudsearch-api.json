@@ -1804,7 +1804,7 @@
       }
     }
   },
-  "revision": "20191202",
+  "revision": "20200107",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -1964,7 +1964,7 @@
           "type": "array"
         },
         "itemsVisibility": {
-          "description": "This field restricts visibility to items at the datasource level. Items\nwithin the datasource are restricted to the union of users and groups\nincluded in this field. Note that, this does not ensure access to a\nspecific item, as users need to have ACL permissions on the contained\nitems. This ensures a high level access on the entire datasource, and\nthat the individual items are not shared outside this visibility.",
+          "description": "This field restricts visibility to items at the datasource level. Items\nwithin the datasource are restricted to the union of users and groups\nincluded in this field. Note that, this does not ensure access to a\nspecific item, as users need to have ACL permissions on the contained\nitems. This ensures a high level access on the entire datasource, and\nthat the individual items are not shared outside this visibility.\nThis should not be set if anonymous search is enabled for the data source.",
           "items": {
             "$ref": "GSuitePrincipal"
           },
@@ -3882,6 +3882,10 @@
         },
         "lessThanOperatorName": {
           "description": "Indicates the operator name that can be used to  isolate the property using\nthe less-than operator.",
+          "type": "string"
+        },
+        "objectType": {
+          "description": "Name of the object corresponding to the operator. This field is only filled\nfor schema-specific operators, and is unset for common operators.",
           "type": "string"
         },
         "operatorName": {

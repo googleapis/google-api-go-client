@@ -387,7 +387,7 @@
       }
     }
   },
-  "revision": "20191211",
+  "revision": "20200107",
   "rootUrl": "https://admin-remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -1018,7 +1018,10 @@
             "DOCKER_IMAGE_NOT_FOUND",
             "WORKING_DIR_NOT_FOUND",
             "WORKING_DIR_NOT_IN_BASE_DIR",
-            "DOCKER_UNAVAILABLE"
+            "DOCKER_UNAVAILABLE",
+            "NO_CUDA_CAPABLE_DEVICE",
+            "REMOTE_CAS_DOWNLOAD_ERROR",
+            "REMOTE_CAS_UPLOAD_ERROR"
           ],
           "enumDescriptions": [
             "The command succeeded.",
@@ -1040,7 +1043,10 @@
             "The docker image cannot be found.",
             "Working directory is not found.",
             "Working directory is not under the base directory",
-            "There are issues with docker service/runtime."
+            "There are issues with docker service/runtime.",
+            "The command failed with \"no cuda-capable device is detected\" error.",
+            "The bot encountered errors from remote CAS when downloading blobs.",
+            "The bot encountered errors from remote CAS when uploading blobs."
           ],
           "type": "string"
         },

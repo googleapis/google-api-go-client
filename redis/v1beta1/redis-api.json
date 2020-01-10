@@ -542,7 +542,7 @@
       }
     }
   },
-  "revision": "20200107",
+  "revision": "20191210",
   "rootUrl": "https://redis.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -750,7 +750,7 @@
           "type": "object"
         },
         "redisVersion": {
-          "description": "Optional. The version of Redis software.\nIf not provided, latest supported version will be used. Currently, the\nsupported values are:\n\n *   `REDIS_4_0` for Redis 4.0 compatibility (default)\n *   `REDIS_3_2` for Redis 3.2 compatibility",
+          "description": "Optional. The version of Redis software.\nIf not provided, latest supported version will be used. Updating the\nversion will perform an upgrade/downgrade to the new version. Currently,\nthe supported values are:\n\n *   `REDIS_4_0` for Redis 4.0 compatibility (default)\n *   `REDIS_3_2` for Redis 3.2 compatibility",
           "type": "string"
         },
         "reservedIpRange": {

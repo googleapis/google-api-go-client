@@ -710,7 +710,7 @@
       }
     }
   },
-  "revision": "20191203",
+  "revision": "20191230",
   "rootUrl": "https://bigqueryreservation.googleapis.com/",
   "schemas": {
     "Assignment": {
@@ -737,6 +737,20 @@
         },
         "name": {
           "description": "Output only. Name of the resource. E.g.:\nprojects/myproject/locations/US/reservations/team1-prod/assignments/123.",
+          "type": "string"
+        },
+        "state": {
+          "description": "Output only. State of the assignment.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "PENDING",
+            "ACTIVE"
+          ],
+          "enumDescriptions": [
+            "Invalid state value.",
+            "Queries from assignee will be executed as on-demand, if related\nassignment is pending.",
+            "Assignment is ready."
+          ],
           "type": "string"
         }
       },

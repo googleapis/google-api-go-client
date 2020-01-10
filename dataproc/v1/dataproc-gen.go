@@ -265,9 +265,9 @@ type AcceleratorConfig struct {
 	//
 	// projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k
 	// 80
-	// nvidia-tesla-k80Auto Zone Exception: If you are using the Cloud
-	// Dataproc Auto Zone Placement feature, you must use the short name of
-	// the accelerator type resource, for example, nvidia-tesla-k80.
+	// nvidia-tesla-k80Auto Zone Exception: If you are using the Dataproc
+	// Auto Zone Placement feature, you must use the short name of the
+	// accelerator type resource, for example, nvidia-tesla-k80.
 	AcceleratorTypeUri string `json:"acceleratorTypeUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AcceleratorCount") to
@@ -304,7 +304,7 @@ type AutoscalingConfig struct {
 	// locations/[dataproc_region]/autoscalingPolicies/[policy_id]
 	// projects/[
 	// project_id]/locations/[dataproc_region]/autoscalingPolicies/[policy_id
-	// ]Note that the policy must be in the same project and Cloud Dataproc
+	// ]Note that the policy must be in the same project and Dataproc
 	// region.
 	PolicyUri string `json:"policyUri,omitempty"`
 
@@ -596,12 +596,12 @@ type Cluster struct {
 	ClusterName string `json:"clusterName,omitempty"`
 
 	// ClusterUuid: Output only. A cluster UUID (Unique Universal
-	// Identifier). Cloud Dataproc generates this value when it creates the
+	// Identifier). Dataproc generates this value when it creates the
 	// cluster.
 	ClusterUuid string `json:"clusterUuid,omitempty"`
 
-	// Config: Required. The cluster config. Note that Cloud Dataproc may
-	// set default values, and values may change when clusters are updated.
+	// Config: Required. The cluster config. Note that Dataproc may set
+	// default values, and values may change when clusters are updated.
 	Config *ClusterConfig `json:"config,omitempty"`
 
 	// Labels: Optional. The labels to associate with this cluster. Label
@@ -661,13 +661,13 @@ type ClusterConfig struct {
 	// is unset.
 	AutoscalingConfig *AutoscalingConfig `json:"autoscalingConfig,omitempty"`
 
-	// ConfigBucket: Optional. A Google Cloud Storage bucket used to stage
-	// job dependencies, config files, and job driver console output. If you
-	// do not specify a staging bucket, Cloud Dataproc will determine a
-	// Cloud Storage location (US, ASIA, or EU) for your cluster's staging
-	// bucket according to the Google Compute Engine zone where your cluster
-	// is deployed, and then create and manage this project-level,
-	// per-location bucket (see Cloud Dataproc staging bucket).
+	// ConfigBucket: Optional. A Cloud Storage bucket used to stage job
+	// dependencies, config files, and job driver console output. If you do
+	// not specify a staging bucket, Cloud Dataproc will determine a Cloud
+	// Storage location (US, ASIA, or EU) for your cluster's staging bucket
+	// according to the Compute Engine zone where your cluster is deployed,
+	// and then create and manage this project-level, per-location bucket
+	// (see Dataproc staging bucket).
 	ConfigBucket string `json:"configBucket,omitempty"`
 
 	// EncryptionConfig: Optional. Encryption settings for the cluster.
@@ -957,7 +957,9 @@ type ClusterStatus struct {
 	// and process jobs.
 	State string `json:"state,omitempty"`
 
-	// StateStartTime: Output only. Time when this state was entered.
+	// StateStartTime: Output only. Time when this state was entered (see
+	// JSON representation of Timestamp
+	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).
 	StateStartTime string `json:"stateStartTime,omitempty"`
 
 	// Substate: Output only. Additional state information that includes
@@ -969,8 +971,8 @@ type ClusterStatus struct {
 	// example, critical daemons are not running or HDFS capacity is
 	// exhausted).Applies to RUNNING state.
 	//   "STALE_STATUS" - The agent-reported status is out of date (may
-	// occur if Cloud Dataproc loses communication with Agent).Applies to
-	// RUNNING state.
+	// occur if Dataproc loses communication with Agent).Applies to RUNNING
+	// state.
 	Substate string `json:"substate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Detail") to
@@ -1207,14 +1209,10 @@ type GceClusterConfig struct {
 	// Zonal reservation.
 	ReservationAffinity *ReservationAffinity `json:"reservationAffinity,omitempty"`
 
-	// ServiceAccount: Optional. The service account of the instances.
-	// Defaults to the default Compute Engine service account. Custom
-	// service accounts need permissions equivalent to the following IAM
-	// roles:
-	// roles/logging.logWriter
-	// roles/storage.objectAdmin(see
-	// https://cloud.google.com/compute/docs/access/service-accounts#custom_service_accounts for more information). Example:
-	// [account_id]@[project_id].iam.gserviceaccount.com
+	// ServiceAccount: Optional. The Dataproc service account (also see VM
+	// Data Plane identity) used by Dataproc cluster VM instances to access
+	// Google Cloud Platform services.If not specified, the Compute Engine
+	// default service account is used.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// ServiceAccountScopes: Optional. The URIs of service account scopes to
@@ -1253,10 +1251,10 @@ type GceClusterConfig struct {
 
 	// ZoneUri: Optional. The zone where the Compute Engine cluster will be
 	// located. On a create request, it is required in the "global" region.
-	// If omitted in a non-global Cloud Dataproc region, the service will
-	// pick a zone in the corresponding Compute Engine region. On a get
-	// request, zone will always be present.A full URL, partial URI, or
-	// short name are valid.
+	// If omitted in a non-global Dataproc region, the service will pick a
+	// zone in the corresponding Compute Engine region. On a get request,
+	// zone will always be present.A full URL, partial URI, or short name
+	// are valid.
 	// Examples:
 	// https://www.googleapis.com/compute/v1/projects/[project_id]/
 	// zones/[zone]
@@ -1351,7 +1349,7 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HadoopJob: A Cloud Dataproc job for running Apache Hadoop MapReduce
+// HadoopJob: A Dataproc job for running Apache Hadoop MapReduce
 // (https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop
 // -mapreduce-client-core/MapReduceTutorial.html) jobs on Apache Hadoop
 // YARN
@@ -1395,7 +1393,7 @@ type HadoopJob struct {
 
 	// Properties: Optional. A mapping of property names to values, used to
 	// configure Hadoop. Properties that conflict with values set by the
-	// Cloud Dataproc API may be overwritten. Can include properties set in
+	// Dataproc API may be overwritten. Can include properties set in
 	// /etc/hadoop/conf/*-site and classes in user code.
 	Properties map[string]string `json:"properties,omitempty"`
 
@@ -1422,7 +1420,7 @@ func (s *HadoopJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HiveJob: A Cloud Dataproc job for running Apache Hive
+// HiveJob: A Dataproc job for running Apache Hive
 // (https://hive.apache.org/) queries on YARN.
 type HiveJob struct {
 	// ContinueOnFailure: Optional. Whether to continue executing queries if
@@ -1436,7 +1434,7 @@ type HiveJob struct {
 	JarFileUris []string `json:"jarFileUris,omitempty"`
 
 	// Properties: Optional. A mapping of property names and values, used to
-	// configure Hive. Properties that conflict with values set by the Cloud
+	// configure Hive. Properties that conflict with values set by the
 	// Dataproc API may be overwritten. Can include properties set in
 	// /etc/hadoop/conf/*-site.xml, /etc/hive/conf/hive-site.xml, and
 	// classes in user code.
@@ -1548,9 +1546,9 @@ type InstanceGroupConfig struct {
 	// SoftwareConfig.image_version.
 	ImageUri string `json:"imageUri,omitempty"`
 
-	// InstanceNames: Output only. The list of instance names. Cloud
-	// Dataproc derives the names from cluster_name, num_instances, and the
-	// instance group.
+	// InstanceNames: Output only. The list of instance names. Dataproc
+	// derives the names from cluster_name, num_instances, and the instance
+	// group.
 	InstanceNames []string `json:"instanceNames,omitempty"`
 
 	// IsPreemptible: Optional. Specifies that this instance group contains
@@ -1564,9 +1562,9 @@ type InstanceGroupConfig struct {
 	// zones/us-east1-a/machineTypes/n1-standard-2
 	// projects/[project_id]/zone
 	// s/us-east1-a/machineTypes/n1-standard-2
-	// n1-standard-2Auto Zone Exception: If you are using the Cloud Dataproc
-	// Auto Zone Placement feature, you must use the short name of the
-	// machine type resource, for example, n1-standard-2.
+	// n1-standard-2Auto Zone Exception: If you are using the Dataproc Auto
+	// Zone Placement feature, you must use the short name of the machine
+	// type resource, for example, n1-standard-2.
 	MachineTypeUri string `json:"machineTypeUri,omitempty"`
 
 	// ManagedGroupConfig: Output only. The config for Compute Engine
@@ -1575,7 +1573,7 @@ type InstanceGroupConfig struct {
 	ManagedGroupConfig *ManagedGroupConfig `json:"managedGroupConfig,omitempty"`
 
 	// MinCpuPlatform: Optional. Specifies the minimum cpu platform for the
-	// Instance Group. See Cloud Dataproc&rarr;Minimum CPU Platform.
+	// Instance Group. See Dataproc&rarr;Minimum CPU Platform.
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
 	// NumInstances: Optional. The number of VM instances in the instance
@@ -1651,7 +1649,7 @@ func (s *InstantiateWorkflowTemplateRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Job: A Cloud Dataproc job resource.
+// Job: A Dataproc job resource.
 type Job struct {
 	// DriverControlFilesUri: Output only. If present, the location of
 	// miscellaneous control files which may be used as part of job setup
@@ -1745,14 +1743,14 @@ func (s *Job) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// JobPlacement: Cloud Dataproc job config.
+// JobPlacement: Dataproc job config.
 type JobPlacement struct {
 	// ClusterName: Required. The name of the cluster where the job will be
 	// submitted.
 	ClusterName string `json:"clusterName,omitempty"`
 
-	// ClusterUuid: Output only. A cluster UUID generated by the Cloud
-	// Dataproc service when the job is submitted.
+	// ClusterUuid: Output only. A cluster UUID generated by the Dataproc
+	// service when the job is submitted.
 	ClusterUuid string `json:"clusterUuid,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClusterName") to
@@ -1847,7 +1845,7 @@ func (s *JobScheduling) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// JobStatus: Cloud Dataproc job status.
+// JobStatus: Dataproc job status.
 type JobStatus struct {
 	// Details: Optional. Output only. Job state details, such as an error
 	// description if the state is <code>ERROR</code>.
@@ -1889,7 +1887,7 @@ type JobStatus struct {
 	// may be waiting for a condition to be met). See the "details" field
 	// for the reason for the delay.Applies to RUNNING state.
 	//   "STALE_STATUS" - The agent-reported status is out of date, which
-	// may be caused by a loss of communication between the agent and Cloud
+	// may be caused by a loss of communication between the agent and
 	// Dataproc. If the agent does not send a timely update, the job will
 	// fail.Applies to RUNNING state.
 	Substate string `json:"substate,omitempty"`
@@ -2018,24 +2016,29 @@ func (s *KerberosConfig) MarshalJSON() ([]byte, error) {
 // LifecycleConfig: Specifies the cluster auto-delete schedule
 // configuration.
 type LifecycleConfig struct {
-	// AutoDeleteTime: Optional. The time when cluster will be auto-deleted.
+	// AutoDeleteTime: Optional. The time when cluster will be auto-deleted
+	// (see JSON representation of Timestamp
+	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).
 	AutoDeleteTime string `json:"autoDeleteTime,omitempty"`
 
 	// AutoDeleteTtl: Optional. The lifetime duration of cluster. The
-	// cluster will be auto-deleted at the end of this period. Valid range:
-	// 10m, 14d.Example: "1d", to delete the cluster 1 day after its
-	// creation..
+	// cluster will be auto-deleted at the end of this period. Minimum value
+	// is 10 minutes; maximum value is 14 days (see JSON representation of
+	// Duration
+	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).
 	AutoDeleteTtl string `json:"autoDeleteTtl,omitempty"`
 
 	// IdleDeleteTtl: Optional. The duration to keep the cluster alive while
-	// idling. Passing this threshold will cause the cluster to be deleted.
-	// Valid range: 10m, 14d.Example: "10m", the minimum value, to delete
-	// the cluster when it has had no jobs running for 10 minutes.
+	// idling (when no jobs are running). Passing this threshold will cause
+	// the cluster to be deleted. Minimum value is 10 minutes; maximum value
+	// is 14 days (see JSON representation of Duration
+	// (https://developers.google.com/protocol-buffers/docs/proto3#json).
 	IdleDeleteTtl string `json:"idleDeleteTtl,omitempty"`
 
 	// IdleStartTime: Output only. The time when cluster became idle (most
-	// recent job finished) and became eligible for deletion due to
-	// idleness.
+	// recent job finished) and became eligible for deletion due to idleness
+	// (see JSON representation of Timestamp
+	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).
 	IdleStartTime string `json:"idleStartTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AutoDeleteTime") to
@@ -2367,10 +2370,11 @@ type NodeInitializationAction struct {
 	ExecutableFile string `json:"executableFile,omitempty"`
 
 	// ExecutionTimeout: Optional. Amount of time executable has to
-	// complete. Default is 10 minutes. Cluster creation fails with an
-	// explanatory error message (the name of the executable that caused the
-	// error and the exceeded timeout period) if the executable is not
-	// completed at end of the timeout period.
+	// complete. Default is 10 minutes (see JSON representation of Duration
+	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).Clu
+	// ster creation fails with an explanatory error message (the name of
+	// the executable that caused the error and the exceeded timeout period)
+	// if the executable is not completed at end of the timeout period.
 	ExecutionTimeout string `json:"executionTimeout,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExecutableFile") to
@@ -2551,7 +2555,7 @@ func (s *ParameterValidation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PigJob: A Cloud Dataproc job for running Apache Pig
+// PigJob: A Dataproc job for running Apache Pig
 // (https://pig.apache.org/) queries on YARN.
 type PigJob struct {
 	// ContinueOnFailure: Optional. Whether to continue executing queries if
@@ -2568,7 +2572,7 @@ type PigJob struct {
 	LoggingConfig *LoggingConfig `json:"loggingConfig,omitempty"`
 
 	// Properties: Optional. A mapping of property names to values, used to
-	// configure Pig. Properties that conflict with values set by the Cloud
+	// configure Pig. Properties that conflict with values set by the
 	// Dataproc API may be overwritten. Can include properties set in
 	// /etc/hadoop/conf/*-site.xml, /etc/pig/conf/pig.properties, and
 	// classes in user code.
@@ -2729,7 +2733,7 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PySparkJob: A Cloud Dataproc job for running Apache PySpark
+// PySparkJob: A Dataproc job for running Apache PySpark
 // (https://spark.apache.org/docs/0.9.0/python-programming-guide.html)
 // applications on YARN.
 type PySparkJob struct {
@@ -2760,7 +2764,7 @@ type PySparkJob struct {
 
 	// Properties: Optional. A mapping of property names to values, used to
 	// configure PySpark. Properties that conflict with values set by the
-	// Cloud Dataproc API may be overwritten. Can include properties set in
+	// Dataproc API may be overwritten. Can include properties set in
 	// /etc/spark/conf/spark-defaults.conf and classes in user code.
 	Properties map[string]string `json:"properties,omitempty"`
 
@@ -2972,10 +2976,9 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // the cluster.
 type SoftwareConfig struct {
 	// ImageVersion: Optional. The version of software inside the cluster.
-	// It must be one of the supported Cloud Dataproc Versions, such as
-	// "1.2" (including a subminor version, such as "1.2.29"), or the
-	// "preview" version. If unspecified, it defaults to the latest Debian
-	// version.
+	// It must be one of the supported Dataproc Versions, such as "1.2"
+	// (including a subminor version, such as "1.2.29"), or the "preview"
+	// version. If unspecified, it defaults to the latest Debian version.
 	ImageVersion string `json:"imageVersion,omitempty"`
 
 	// OptionalComponents: Optional. The set of components to activate on
@@ -3028,7 +3031,7 @@ func (s *SoftwareConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SparkJob: A Cloud Dataproc job for running Apache Spark
+// SparkJob: A Dataproc job for running Apache Spark
 // (http://spark.apache.org/) applications on YARN.
 type SparkJob struct {
 	// ArchiveUris: Optional. HCFS URIs of archives to be extracted in the
@@ -3064,7 +3067,7 @@ type SparkJob struct {
 
 	// Properties: Optional. A mapping of property names to values, used to
 	// configure Spark. Properties that conflict with values set by the
-	// Cloud Dataproc API may be overwritten. Can include properties set in
+	// Dataproc API may be overwritten. Can include properties set in
 	// /etc/spark/conf/spark-defaults.conf and classes in user code.
 	Properties map[string]string `json:"properties,omitempty"`
 
@@ -3091,7 +3094,7 @@ func (s *SparkJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SparkRJob: A Cloud Dataproc job for running Apache SparkR
+// SparkRJob: A Dataproc job for running Apache SparkR
 // (https://spark.apache.org/docs/latest/sparkr.html) applications on
 // YARN.
 type SparkRJob struct {
@@ -3119,7 +3122,7 @@ type SparkRJob struct {
 
 	// Properties: Optional. A mapping of property names to values, used to
 	// configure SparkR. Properties that conflict with values set by the
-	// Cloud Dataproc API may be overwritten. Can include properties set in
+	// Dataproc API may be overwritten. Can include properties set in
 	// /etc/spark/conf/spark-defaults.conf and classes in user code.
 	Properties map[string]string `json:"properties,omitempty"`
 
@@ -3146,7 +3149,7 @@ func (s *SparkRJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SparkSqlJob: A Cloud Dataproc job for running Apache Spark SQL
+// SparkSqlJob: A Dataproc job for running Apache Spark SQL
 // (http://spark.apache.org/sql/) queries.
 type SparkSqlJob struct {
 	// JarFileUris: Optional. HCFS URIs of jar files to be added to the
@@ -3158,7 +3161,7 @@ type SparkSqlJob struct {
 
 	// Properties: Optional. A mapping of property names to values, used to
 	// configure Spark SQL's SparkConf. Properties that conflict with values
-	// set by the Cloud Dataproc API may be overwritten.
+	// set by the Dataproc API may be overwritten.
 	Properties map[string]string `json:"properties,omitempty"`
 
 	// QueryFileUri: The HCFS URI of the script that contains SQL queries.
@@ -3491,7 +3494,7 @@ func (s *WorkflowGraph) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// WorkflowMetadata: A Cloud Dataproc workflow template resource.
+// WorkflowMetadata: A Dataproc workflow template resource.
 type WorkflowMetadata struct {
 	// ClusterName: Output only. The name of the target cluster.
 	ClusterName string `json:"clusterName,omitempty"`
@@ -3616,7 +3619,7 @@ func (s *WorkflowNode) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// WorkflowTemplate: A Cloud Dataproc workflow template resource.
+// WorkflowTemplate: A Dataproc workflow template resource.
 type WorkflowTemplate struct {
 	// CreateTime: Output only. The time template was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3848,7 +3851,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutoscalingPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3987,7 +3990,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutoscalingPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4128,7 +4131,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutoscalingPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4265,7 +4268,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesGetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsAutoscalingPoliciesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4429,7 +4432,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutoscalingPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4598,7 +4601,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesSetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsAutoscalingPoliciesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4743,7 +4746,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesTestIamPermissionsCall) Header() ht
 
 func (c *ProjectsLocationsAutoscalingPoliciesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4884,7 +4887,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesUpdateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutoscalingPoliciesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5024,7 +5027,7 @@ func (c *ProjectsLocationsWorkflowTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5171,7 +5174,7 @@ func (c *ProjectsLocationsWorkflowTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5327,7 +5330,7 @@ func (c *ProjectsLocationsWorkflowTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5470,7 +5473,7 @@ func (c *ProjectsLocationsWorkflowTemplatesGetIamPolicyCall) Header() http.Heade
 
 func (c *ProjectsLocationsWorkflowTemplatesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5617,7 +5620,7 @@ func (c *ProjectsLocationsWorkflowTemplatesInstantiateCall) Header() http.Header
 
 func (c *ProjectsLocationsWorkflowTemplatesInstantiateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5779,7 +5782,7 @@ func (c *ProjectsLocationsWorkflowTemplatesInstantiateInlineCall) Header() http.
 
 func (c *ProjectsLocationsWorkflowTemplatesInstantiateInlineCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5947,7 +5950,7 @@ func (c *ProjectsLocationsWorkflowTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6116,7 +6119,7 @@ func (c *ProjectsLocationsWorkflowTemplatesSetIamPolicyCall) Header() http.Heade
 
 func (c *ProjectsLocationsWorkflowTemplatesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6261,7 +6264,7 @@ func (c *ProjectsLocationsWorkflowTemplatesTestIamPermissionsCall) Header() http
 
 func (c *ProjectsLocationsWorkflowTemplatesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6402,7 +6405,7 @@ func (c *ProjectsLocationsWorkflowTemplatesUpdateCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowTemplatesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6542,7 +6545,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsRegionsAutoscalingPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6681,7 +6684,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsRegionsAutoscalingPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6822,7 +6825,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesGetCall) Header() http.Header {
 
 func (c *ProjectsRegionsAutoscalingPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6959,7 +6962,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesGetIamPolicyCall) Header() http.Heade
 
 func (c *ProjectsRegionsAutoscalingPoliciesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7123,7 +7126,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesListCall) Header() http.Header {
 
 func (c *ProjectsRegionsAutoscalingPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7292,7 +7295,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesSetIamPolicyCall) Header() http.Heade
 
 func (c *ProjectsRegionsAutoscalingPoliciesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7437,7 +7440,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesTestIamPermissionsCall) Header() http
 
 func (c *ProjectsRegionsAutoscalingPoliciesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7578,7 +7581,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesUpdateCall) Header() http.Header {
 
 func (c *ProjectsRegionsAutoscalingPoliciesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7735,7 +7738,7 @@ func (c *ProjectsRegionsClustersCreateCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7816,7 +7819,7 @@ func (c *ProjectsRegionsClustersCreateCall) Do(opts ...googleapi.CallOption) (*O
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7912,7 +7915,7 @@ func (c *ProjectsRegionsClustersDeleteCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8001,7 +8004,7 @@ func (c *ProjectsRegionsClustersDeleteCall) Do(opts ...googleapi.CallOption) (*O
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -8076,7 +8079,7 @@ func (c *ProjectsRegionsClustersDiagnoseCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersDiagnoseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8165,7 +8168,7 @@ func (c *ProjectsRegionsClustersDiagnoseCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -8244,7 +8247,7 @@ func (c *ProjectsRegionsClustersGetCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8331,7 +8334,7 @@ func (c *ProjectsRegionsClustersGetCall) Do(opts ...googleapi.CallOption) (*Clus
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -8396,7 +8399,7 @@ func (c *ProjectsRegionsClustersGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8579,7 +8582,7 @@ func (c *ProjectsRegionsClustersListCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8674,7 +8677,7 @@ func (c *ProjectsRegionsClustersListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -8743,7 +8746,9 @@ func (r *ProjectsRegionsClustersService) Patch(projectId string, region string, 
 // how long to wait for jobs in progress to finish before forcefully
 // removing nodes (and potentially interrupting jobs). Default timeout
 // is 0 (for forceful decommission), and the maximum allowed timeout is
-// 1 day.Only supported on Dataproc image versions 1.2 and higher.
+// 1 day. (see JSON representation of Duration
+// (https://developers.google.com/protocol-buffers/docs/proto3#json)).Onl
+// y supported on Dataproc image versions 1.2 and higher.
 func (c *ProjectsRegionsClustersPatchCall) GracefulDecommissionTimeout(gracefulDecommissionTimeout string) *ProjectsRegionsClustersPatchCall {
 	c.urlParams_.Set("gracefulDecommissionTimeout", gracefulDecommissionTimeout)
 	return c
@@ -8830,7 +8835,7 @@ func (c *ProjectsRegionsClustersPatchCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8913,7 +8918,7 @@ func (c *ProjectsRegionsClustersPatchCall) Do(opts ...googleapi.CallOption) (*Op
 	//       "type": "string"
 	//     },
 	//     "gracefulDecommissionTimeout": {
-	//       "description": "Optional. Timeout for graceful YARN decomissioning. Graceful decommissioning allows removing nodes from the cluster without interrupting jobs in progress. Timeout specifies how long to wait for jobs in progress to finish before forcefully removing nodes (and potentially interrupting jobs). Default timeout is 0 (for forceful decommission), and the maximum allowed timeout is 1 day.Only supported on Dataproc image versions 1.2 and higher.",
+	//       "description": "Optional. Timeout for graceful YARN decomissioning. Graceful decommissioning allows removing nodes from the cluster without interrupting jobs in progress. Timeout specifies how long to wait for jobs in progress to finish before forcefully removing nodes (and potentially interrupting jobs). Default timeout is 0 (for forceful decommission), and the maximum allowed timeout is 1 day. (see JSON representation of Duration (https://developers.google.com/protocol-buffers/docs/proto3#json)).Only supported on Dataproc image versions 1.2 and higher.",
 	//       "format": "google-duration",
 	//       "location": "query",
 	//       "type": "string"
@@ -8925,7 +8930,7 @@ func (c *ProjectsRegionsClustersPatchCall) Do(opts ...googleapi.CallOption) (*Op
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -9004,7 +9009,7 @@ func (c *ProjectsRegionsClustersSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9149,7 +9154,7 @@ func (c *ProjectsRegionsClustersTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9295,7 +9300,7 @@ func (c *ProjectsRegionsJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsRegionsJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9384,7 +9389,7 @@ func (c *ProjectsRegionsJobsCancelCall) Do(opts ...googleapi.CallOption) (*Job, 
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -9453,7 +9458,7 @@ func (c *ProjectsRegionsJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsRegionsJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9537,7 +9542,7 @@ func (c *ProjectsRegionsJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -9613,7 +9618,7 @@ func (c *ProjectsRegionsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsRegionsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9700,7 +9705,7 @@ func (c *ProjectsRegionsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, err
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -9765,7 +9770,7 @@ func (c *ProjectsRegionsJobsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsRegionsJobsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9964,7 +9969,7 @@ func (c *ProjectsRegionsJobsListCall) Header() http.Header {
 
 func (c *ProjectsRegionsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10074,7 +10079,7 @@ func (c *ProjectsRegionsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJob
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -10174,7 +10179,7 @@ func (c *ProjectsRegionsJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsRegionsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10263,7 +10268,7 @@ func (c *ProjectsRegionsJobsPatchCall) Do(opts ...googleapi.CallOption) (*Job, e
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -10337,7 +10342,7 @@ func (c *ProjectsRegionsJobsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsRegionsJobsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10479,7 +10484,7 @@ func (c *ProjectsRegionsJobsSubmitCall) Header() http.Header {
 
 func (c *ProjectsRegionsJobsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10560,7 +10565,7 @@ func (c *ProjectsRegionsJobsSubmitCall) Do(opts ...googleapi.CallOption) (*Job, 
 	//       "type": "string"
 	//     },
 	//     "region": {
-	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
+	//       "description": "Required. The Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -10631,7 +10636,7 @@ func (c *ProjectsRegionsJobsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsRegionsJobsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10778,7 +10783,7 @@ func (c *ProjectsRegionsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsRegionsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10911,7 +10916,7 @@ func (c *ProjectsRegionsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsRegionsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11054,7 +11059,7 @@ func (c *ProjectsRegionsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsRegionsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11191,7 +11196,7 @@ func (c *ProjectsRegionsOperationsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsRegionsOperationsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11370,7 +11375,7 @@ func (c *ProjectsRegionsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsRegionsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11544,7 +11549,7 @@ func (c *ProjectsRegionsOperationsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsRegionsOperationsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11689,7 +11694,7 @@ func (c *ProjectsRegionsOperationsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsRegionsOperationsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11829,7 +11834,7 @@ func (c *ProjectsRegionsWorkflowTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsRegionsWorkflowTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11976,7 +11981,7 @@ func (c *ProjectsRegionsWorkflowTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsRegionsWorkflowTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12132,7 +12137,7 @@ func (c *ProjectsRegionsWorkflowTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsRegionsWorkflowTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12275,7 +12280,7 @@ func (c *ProjectsRegionsWorkflowTemplatesGetIamPolicyCall) Header() http.Header 
 
 func (c *ProjectsRegionsWorkflowTemplatesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12422,7 +12427,7 @@ func (c *ProjectsRegionsWorkflowTemplatesInstantiateCall) Header() http.Header {
 
 func (c *ProjectsRegionsWorkflowTemplatesInstantiateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12584,7 +12589,7 @@ func (c *ProjectsRegionsWorkflowTemplatesInstantiateInlineCall) Header() http.He
 
 func (c *ProjectsRegionsWorkflowTemplatesInstantiateInlineCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12752,7 +12757,7 @@ func (c *ProjectsRegionsWorkflowTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsRegionsWorkflowTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12921,7 +12926,7 @@ func (c *ProjectsRegionsWorkflowTemplatesSetIamPolicyCall) Header() http.Header 
 
 func (c *ProjectsRegionsWorkflowTemplatesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13066,7 +13071,7 @@ func (c *ProjectsRegionsWorkflowTemplatesTestIamPermissionsCall) Header() http.H
 
 func (c *ProjectsRegionsWorkflowTemplatesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13207,7 +13212,7 @@ func (c *ProjectsRegionsWorkflowTemplatesUpdateCall) Header() http.Header {
 
 func (c *ProjectsRegionsWorkflowTemplatesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

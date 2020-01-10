@@ -551,12 +551,13 @@ func (s *ColumnBreak) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CreateFooterRequest: Creates a Footer. The new footer will be
-// applied to the DocumentStyle.
+// CreateFooterRequest: Creates a Footer. The new footer is applied
+// to
+// the DocumentStyle.
 //
-// If a footer of the specified type already exists then a 400 bad
-// request error
-// will be returned.
+// If a footer of the specified type already exists, a 400 bad request
+// error
+// is returned.
 type CreateFooterRequest struct {
 	// Type: The type of footer to create.
 	//
@@ -617,12 +618,100 @@ func (s *CreateFooterResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CreateHeaderRequest: Creates a Header. The new header will be
-// applied to the DocumentStyle.
+// CreateFootnoteRequest: Creates a Footnote segment
+// and inserts a new FootnoteReference
+// to it at the given location.
 //
-// If a header of the specified type already exists then a 400 bad
-// request error
-// will be returned.
+// The new Footnote segment will contain a
+// space followed by a newline character.
+type CreateFootnoteRequest struct {
+	// EndOfSegmentLocation: Inserts the footnote reference at the end of
+	// the document body.
+	//
+	// Footnote references cannot be inserted inside a header, footer
+	// or
+	// footnote. Since footnote references can only be inserted in the body,
+	// the
+	// segment ID field
+	// must be empty.
+	EndOfSegmentLocation *EndOfSegmentLocation `json:"endOfSegmentLocation,omitempty"`
+
+	// Location: Inserts the footnote reference at a specific index in the
+	// document.
+	//
+	// The footnote reference must be inserted inside the bounds of an
+	// existing
+	// Paragraph. For instance, it cannot be
+	// inserted at a table's start index (i.e. between the table and
+	// its
+	// preceding paragraph).
+	//
+	// Footnote references cannot be inserted inside an equation,
+	// header, footer or footnote. Since footnote references can only
+	// be
+	// inserted in the body, the segment ID field must be empty.
+	Location *Location `json:"location,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EndOfSegmentLocation") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndOfSegmentLocation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateFootnoteRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateFootnoteRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateFootnoteResponse: The result of creating a footnote.
+type CreateFootnoteResponse struct {
+	// FootnoteId: The ID of the created footnote.
+	FootnoteId string `json:"footnoteId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FootnoteId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FootnoteId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateFootnoteResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateFootnoteResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateHeaderRequest: Creates a Header. The new header is applied
+// to
+// the DocumentStyle.
+//
+// If a header of the specified type already exists, a 400 bad request
+// error
+// is returned.
 type CreateHeaderRequest struct {
 	// Type: The type of header to create.
 	//
@@ -4887,6 +4976,9 @@ type Request struct {
 	// CreateFooter: Creates a footer.
 	CreateFooter *CreateFooterRequest `json:"createFooter,omitempty"`
 
+	// CreateFootnote: Creates a footnote.
+	CreateFootnote *CreateFootnoteRequest `json:"createFootnote,omitempty"`
+
 	// CreateHeader: Creates a header.
 	CreateHeader *CreateHeaderRequest `json:"createHeader,omitempty"`
 
@@ -5002,6 +5094,9 @@ func (s *Request) MarshalJSON() ([]byte, error) {
 type Response struct {
 	// CreateFooter: The result of creating a footer.
 	CreateFooter *CreateFooterResponse `json:"createFooter,omitempty"`
+
+	// CreateFootnote: The result of creating a footnote.
+	CreateFootnote *CreateFootnoteResponse `json:"createFootnote,omitempty"`
 
 	// CreateHeader: The result of creating a header.
 	CreateHeader *CreateHeaderResponse `json:"createHeader,omitempty"`
@@ -7590,7 +7685,7 @@ func (c *DocumentsBatchUpdateCall) Header() http.Header {
 
 func (c *DocumentsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7733,7 +7828,7 @@ func (c *DocumentsCreateCall) Header() http.Header {
 
 func (c *DocumentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7889,7 +7984,7 @@ func (c *DocumentsGetCall) Header() http.Header {
 
 func (c *DocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

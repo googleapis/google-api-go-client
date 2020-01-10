@@ -127,7 +127,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "The project on which to execute the request. The format is \"projects/{project_id_or_number}\". The {project_id_or_number} must match the dashboard resource name.",
+                  "description": "Required. The project on which to execute the request. The format is \"projects/{project_id_or_number}\". The {project_id_or_number} must match the dashboard resource name.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -157,7 +157,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The resource name of the Dashboard. The format is \"projects/{project_id_or_number}/dashboards/{dashboard_id}\".",
+                  "description": "Required. The resource name of the Dashboard. The format is \"projects/{project_id_or_number}/dashboards/{dashboard_id}\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+/dashboards/[^/]+$",
                   "required": true,
@@ -184,7 +184,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The resource name of the Dashboard. The format is one of \"dashboards/{dashboard_id}\" (for system dashboards) or \"projects/{project_id_or_number}/dashboards/{dashboard_id}\" (for custom dashboards).",
+                  "description": "Required. The resource name of the Dashboard. The format is one of \"dashboards/{dashboard_id}\" (for system dashboards) or \"projects/{project_id_or_number}/dashboards/{dashboard_id}\" (for custom dashboards).",
                   "location": "path",
                   "pattern": "^projects/[^/]+/dashboards/[^/]+$",
                   "required": true,
@@ -222,7 +222,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "The scope of the dashboards to list. A project scope must be specified in the form of \"projects/{project_id_or_number}\".",
+                  "description": "Required. The scope of the dashboards to list. A project scope must be specified in the form of \"projects/{project_id_or_number}\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -274,7 +274,7 @@
       }
     }
   },
-  "revision": "20191207",
+  "revision": "20200104",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {

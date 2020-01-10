@@ -114,12 +114,12 @@
           "parameterOrder": [],
           "parameters": {
             "filter": {
-              "description": "Optional filter to only return infoTypes supported by certain parts of the\nAPI. Defaults to supported_by=INSPECT.",
+              "description": "filter to only return infoTypes supported by certain parts of the\nAPI. Defaults to supported_by=INSPECT.",
               "location": "query",
               "type": "string"
             },
             "languageCode": {
-              "description": "Optional BCP-47 language code for localized infoType friendly\nnames. If omitted, or if localized strings are not available,\nen-US strings will be returned.",
+              "description": "BCP-47 language code for localized infoType friendly\nnames. If omitted, or if localized strings are not available,\nen-US strings will be returned.",
               "location": "query",
               "type": "string"
             },
@@ -153,12 +153,12 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "Optional filter to only return infoTypes supported by certain parts of the\nAPI. Defaults to supported_by=INSPECT.",
+                  "description": "filter to only return infoTypes supported by certain parts of the\nAPI. Defaults to supported_by=INSPECT.",
                   "location": "query",
                   "type": "string"
                 },
                 "languageCode": {
-                  "description": "Optional BCP-47 language code for localized infoType friendly\nnames. If omitted, or if localized strings are not available,\nen-US strings will be returned.",
+                  "description": "BCP-47 language code for localized infoType friendly\nnames. If omitted, or if localized strings are not available,\nen-US strings will be returned.",
                   "location": "query",
                   "type": "string"
                 },
@@ -278,18 +278,18 @@
                   "type": "string"
                 },
                 "orderBy": {
-                  "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+                  "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
                   "location": "query",
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+                  "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListDeidentifyTemplates`.",
+                  "description": "Page token to continue retrieval. Comes from previous call\nto `ListDeidentifyTemplates`.",
                   "location": "query",
                   "type": "string"
                 },
@@ -434,18 +434,18 @@
                   "type": "string"
                 },
                 "orderBy": {
-                  "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+                  "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
                   "location": "query",
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+                  "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListInspectTemplates`.",
+                  "description": "Page token to continue retrieval. Comes from previous call\nto `ListInspectTemplates`.",
                   "location": "query",
                   "type": "string"
                 },
@@ -601,18 +601,18 @@
                       "type": "string"
                     },
                     "orderBy": {
-                      "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+                      "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
                       "location": "query",
                       "type": "string"
                     },
                     "pageSize": {
-                      "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+                      "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListDeidentifyTemplates`.",
+                      "description": "Page token to continue retrieval. Comes from previous call\nto `ListDeidentifyTemplates`.",
                       "location": "query",
                       "type": "string"
                     },
@@ -766,18 +766,18 @@
                       "type": "string"
                     },
                     "orderBy": {
-                      "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+                      "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
                       "location": "query",
                       "type": "string"
                     },
                     "pageSize": {
-                      "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+                      "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListInspectTemplates`.",
+                      "description": "Page token to continue retrieval. Comes from previous call\nto `ListInspectTemplates`.",
                       "location": "query",
                       "type": "string"
                     },
@@ -931,18 +931,18 @@
                       "type": "string"
                     },
                     "orderBy": {
-                      "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
+                      "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
                       "location": "query",
                       "type": "string"
                     },
                     "pageSize": {
-                      "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+                      "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListStoredInfoTypes`.",
+                      "description": "Page token to continue retrieval. Comes from previous call\nto `ListStoredInfoTypes`.",
                       "location": "query",
                       "type": "string"
                     },
@@ -1089,18 +1089,18 @@
                   "type": "string"
                 },
                 "orderBy": {
-                  "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
+                  "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
                   "location": "query",
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+                  "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListStoredInfoTypes`.",
+                  "description": "Page token to continue retrieval. Comes from previous call\nto `ListStoredInfoTypes`.",
                   "location": "query",
                   "type": "string"
                 },
@@ -1337,18 +1337,18 @@
                   "type": "string"
                 },
                 "orderBy": {
-                  "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+                  "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
                   "location": "query",
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+                  "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListDeidentifyTemplates`.",
+                  "description": "Page token to continue retrieval. Comes from previous call\nto `ListDeidentifyTemplates`.",
                   "location": "query",
                   "type": "string"
                 },
@@ -1516,7 +1516,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "Optional. Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e`.\n* Supported fields/values for inspect jobs:\n    - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - `trigger_name` - The resource name of the trigger that created job.\n    - 'end_time` - Corresponds to time the job finished.\n    - 'start_time` - Corresponds to time the job finished.\n* Supported fields for risk analysis jobs:\n    - `state` - RUNNING|CANCELED|FINISHED|FAILED\n    - 'end_time` - Corresponds to time the job finished.\n    - 'start_time` - Corresponds to time the job finished.\n* The operator must be `=` or `!=`.\n\nExamples:\n\n* inspected_storage = cloud_storage AND state = done\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = done OR state = canceled)\n* end_time \u003e \\\"2017-12-12T00:00:00+00:00\\\"\n\nThe length of this field should be no more than 500 characters.",
+                  "description": "Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* Supported fields/values for inspect jobs:\n    - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - `trigger_name` - The resource name of the trigger that created job.\n    - 'end_time` - Corresponds to time the job finished.\n    - 'start_time` - Corresponds to time the job finished.\n* Supported fields for risk analysis jobs:\n    - `state` - RUNNING|CANCELED|FINISHED|FAILED\n    - 'end_time` - Corresponds to time the job finished.\n    - 'start_time` - Corresponds to time the job finished.\n* The operator must be `=` or `!=`.\n\nExamples:\n\n* inspected_storage = cloud_storage AND state = done\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = done OR state = canceled)\n* end_time \u003e \\\"2017-12-12T00:00:00+00:00\\\"\n\nThe length of this field should be no more than 500 characters.",
                   "location": "query",
                   "type": "string"
                 },
@@ -1526,7 +1526,7 @@
                   "type": "string"
                 },
                 "orderBy": {
-                  "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, end_time asc, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the job was created.\n- `end_time`: corresponds to time the job ended.\n- `name`: corresponds to job's name.\n- `state`: corresponds to `state`",
+                  "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, end_time asc, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the job was created.\n- `end_time`: corresponds to time the job ended.\n- `name`: corresponds to job's name.\n- `state`: corresponds to `state`",
                   "location": "query",
                   "type": "string"
                 },
@@ -1696,18 +1696,18 @@
                   "type": "string"
                 },
                 "orderBy": {
-                  "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+                  "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
                   "location": "query",
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+                  "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListInspectTemplates`.",
+                  "description": "Page token to continue retrieval. Comes from previous call\nto `ListInspectTemplates`.",
                   "location": "query",
                   "type": "string"
                 },
@@ -1875,7 +1875,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "Optional. Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e`.\n* Supported fields/values for inspect jobs:\n    - `status` - HEALTHY|PAUSED|CANCELLED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - 'last_run_time` - RFC 3339 formatted timestamp, surrounded by\n    quotation marks. Nanoseconds are ignored.\n    - 'error_count' - Number of errors that have occurred while running.\n* The operator must be `=` or `!=` for status and inspected_storage.\n\nExamples:\n\n* inspected_storage = cloud_storage AND status = HEALTHY\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = PAUSED OR state = HEALTHY)\n* last_run_time \u003e \\\"2017-12-12T00:00:00+00:00\\\"\n\nThe length of this field should be no more than 500 characters.",
+                  "description": "Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* Supported fields/values for inspect jobs:\n    - `status` - HEALTHY|PAUSED|CANCELLED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - 'last_run_time` - RFC 3339 formatted timestamp, surrounded by\n    quotation marks. Nanoseconds are ignored.\n    - 'error_count' - Number of errors that have occurred while running.\n* The operator must be `=` or `!=` for status and inspected_storage.\n\nExamples:\n\n* inspected_storage = cloud_storage AND status = HEALTHY\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = PAUSED OR state = HEALTHY)\n* last_run_time \u003e \\\"2017-12-12T00:00:00+00:00\\\"\n\nThe length of this field should be no more than 500 characters.",
                   "location": "query",
                   "type": "string"
                 },
@@ -1885,18 +1885,18 @@
                   "type": "string"
                 },
                 "orderBy": {
-                  "description": "Optional comma separated list of triggeredJob fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the JobTrigger was created.\n- `update_time`: corresponds to time the JobTrigger was last updated.\n- `last_run_time`: corresponds to the last time the JobTrigger ran.\n- `name`: corresponds to JobTrigger's name.\n- `display_name`: corresponds to JobTrigger's display name.\n- `status`: corresponds to JobTrigger's status.",
+                  "description": "Comma separated list of triggeredJob fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the JobTrigger was created.\n- `update_time`: corresponds to time the JobTrigger was last updated.\n- `last_run_time`: corresponds to the last time the JobTrigger ran.\n- `name`: corresponds to JobTrigger's name.\n- `display_name`: corresponds to JobTrigger's display name.\n- `status`: corresponds to JobTrigger's status.",
                   "location": "query",
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "Optional size of the page, can be limited by a server.",
+                  "description": "Size of the page, can be limited by a server.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "Optional page token to continue retrieval. Comes from previous call\nto ListJobTriggers. `order_by` field must not\nchange for subsequent calls.",
+                  "description": "Page token to continue retrieval. Comes from previous call\nto ListJobTriggers. `order_by` field must not\nchange for subsequent calls.",
                   "location": "query",
                   "type": "string"
                 },
@@ -2161,18 +2161,18 @@
                       "type": "string"
                     },
                     "orderBy": {
-                      "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+                      "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
                       "location": "query",
                       "type": "string"
                     },
                     "pageSize": {
-                      "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+                      "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListDeidentifyTemplates`.",
+                      "description": "Page token to continue retrieval. Comes from previous call\nto `ListDeidentifyTemplates`.",
                       "location": "query",
                       "type": "string"
                     },
@@ -2348,7 +2348,7 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "description": "Optional. Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e`.\n* Supported fields/values for inspect jobs:\n    - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - `trigger_name` - The resource name of the trigger that created job.\n    - 'end_time` - Corresponds to time the job finished.\n    - 'start_time` - Corresponds to time the job finished.\n* Supported fields for risk analysis jobs:\n    - `state` - RUNNING|CANCELED|FINISHED|FAILED\n    - 'end_time` - Corresponds to time the job finished.\n    - 'start_time` - Corresponds to time the job finished.\n* The operator must be `=` or `!=`.\n\nExamples:\n\n* inspected_storage = cloud_storage AND state = done\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = done OR state = canceled)\n* end_time \u003e \\\"2017-12-12T00:00:00+00:00\\\"\n\nThe length of this field should be no more than 500 characters.",
+                      "description": "Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* Supported fields/values for inspect jobs:\n    - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - `trigger_name` - The resource name of the trigger that created job.\n    - 'end_time` - Corresponds to time the job finished.\n    - 'start_time` - Corresponds to time the job finished.\n* Supported fields for risk analysis jobs:\n    - `state` - RUNNING|CANCELED|FINISHED|FAILED\n    - 'end_time` - Corresponds to time the job finished.\n    - 'start_time` - Corresponds to time the job finished.\n* The operator must be `=` or `!=`.\n\nExamples:\n\n* inspected_storage = cloud_storage AND state = done\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = done OR state = canceled)\n* end_time \u003e \\\"2017-12-12T00:00:00+00:00\\\"\n\nThe length of this field should be no more than 500 characters.",
                       "location": "query",
                       "type": "string"
                     },
@@ -2359,7 +2359,7 @@
                       "type": "string"
                     },
                     "orderBy": {
-                      "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, end_time asc, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the job was created.\n- `end_time`: corresponds to time the job ended.\n- `name`: corresponds to job's name.\n- `state`: corresponds to `state`",
+                      "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, end_time asc, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the job was created.\n- `end_time`: corresponds to time the job ended.\n- `name`: corresponds to job's name.\n- `state`: corresponds to `state`",
                       "location": "query",
                       "type": "string"
                     },
@@ -2545,18 +2545,18 @@
                       "type": "string"
                     },
                     "orderBy": {
-                      "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+                      "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
                       "location": "query",
                       "type": "string"
                     },
                     "pageSize": {
-                      "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+                      "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListInspectTemplates`.",
+                      "description": "Page token to continue retrieval. Comes from previous call\nto `ListInspectTemplates`.",
                       "location": "query",
                       "type": "string"
                     },
@@ -2732,7 +2732,7 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "description": "Optional. Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e`.\n* Supported fields/values for inspect jobs:\n    - `status` - HEALTHY|PAUSED|CANCELLED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - 'last_run_time` - RFC 3339 formatted timestamp, surrounded by\n    quotation marks. Nanoseconds are ignored.\n    - 'error_count' - Number of errors that have occurred while running.\n* The operator must be `=` or `!=` for status and inspected_storage.\n\nExamples:\n\n* inspected_storage = cloud_storage AND status = HEALTHY\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = PAUSED OR state = HEALTHY)\n* last_run_time \u003e \\\"2017-12-12T00:00:00+00:00\\\"\n\nThe length of this field should be no more than 500 characters.",
+                      "description": "Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* Supported fields/values for inspect jobs:\n    - `status` - HEALTHY|PAUSED|CANCELLED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - 'last_run_time` - RFC 3339 formatted timestamp, surrounded by\n    quotation marks. Nanoseconds are ignored.\n    - 'error_count' - Number of errors that have occurred while running.\n* The operator must be `=` or `!=` for status and inspected_storage.\n\nExamples:\n\n* inspected_storage = cloud_storage AND status = HEALTHY\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = PAUSED OR state = HEALTHY)\n* last_run_time \u003e \\\"2017-12-12T00:00:00+00:00\\\"\n\nThe length of this field should be no more than 500 characters.",
                       "location": "query",
                       "type": "string"
                     },
@@ -2743,18 +2743,18 @@
                       "type": "string"
                     },
                     "orderBy": {
-                      "description": "Optional comma separated list of triggeredJob fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the JobTrigger was created.\n- `update_time`: corresponds to time the JobTrigger was last updated.\n- `last_run_time`: corresponds to the last time the JobTrigger ran.\n- `name`: corresponds to JobTrigger's name.\n- `display_name`: corresponds to JobTrigger's display name.\n- `status`: corresponds to JobTrigger's status.",
+                      "description": "Comma separated list of triggeredJob fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the JobTrigger was created.\n- `update_time`: corresponds to time the JobTrigger was last updated.\n- `last_run_time`: corresponds to the last time the JobTrigger ran.\n- `name`: corresponds to JobTrigger's name.\n- `display_name`: corresponds to JobTrigger's display name.\n- `status`: corresponds to JobTrigger's status.",
                       "location": "query",
                       "type": "string"
                     },
                     "pageSize": {
-                      "description": "Optional size of the page, can be limited by a server.",
+                      "description": "Size of the page, can be limited by a server.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "Optional page token to continue retrieval. Comes from previous call\nto ListJobTriggers. `order_by` field must not\nchange for subsequent calls.",
+                      "description": "Page token to continue retrieval. Comes from previous call\nto ListJobTriggers. `order_by` field must not\nchange for subsequent calls.",
                       "location": "query",
                       "type": "string"
                     },
@@ -2908,18 +2908,18 @@
                       "type": "string"
                     },
                     "orderBy": {
-                      "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
+                      "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
                       "location": "query",
                       "type": "string"
                     },
                     "pageSize": {
-                      "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+                      "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListStoredInfoTypes`.",
+                      "description": "Page token to continue retrieval. Comes from previous call\nto `ListStoredInfoTypes`.",
                       "location": "query",
                       "type": "string"
                     },
@@ -3066,18 +3066,18 @@
                   "type": "string"
                 },
                 "orderBy": {
-                  "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
+                  "description": "Comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
                   "location": "query",
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+                  "description": "Size of the page, can be limited by server. If zero server returns\na page of max size 100.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListStoredInfoTypes`.",
+                  "description": "Page token to continue retrieval. Comes from previous call\nto `ListStoredInfoTypes`.",
                   "location": "query",
                   "type": "string"
                 },
@@ -3130,7 +3130,7 @@
       }
     }
   },
-  "revision": "20191214",
+  "revision": "20200104",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -3139,7 +3139,7 @@
       "properties": {
         "jobNotificationEmails": {
           "$ref": "GooglePrivacyDlpV2JobNotificationEmails",
-          "description": "Enable email notification to project owners and editors on job's\ncompletion/failure."
+          "description": "Enable email notification for project owners and editors on job's\ncompletion/failure."
         },
         "pubSub": {
           "$ref": "GooglePrivacyDlpV2PublishToPubSub",
@@ -3175,22 +3175,28 @@
       "id": "GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails",
       "properties": {
         "categoricalStatsResult": {
-          "$ref": "GooglePrivacyDlpV2CategoricalStatsResult"
+          "$ref": "GooglePrivacyDlpV2CategoricalStatsResult",
+          "description": "Categorical stats result"
         },
         "deltaPresenceEstimationResult": {
-          "$ref": "GooglePrivacyDlpV2DeltaPresenceEstimationResult"
+          "$ref": "GooglePrivacyDlpV2DeltaPresenceEstimationResult",
+          "description": "Delta-presence result"
         },
         "kAnonymityResult": {
-          "$ref": "GooglePrivacyDlpV2KAnonymityResult"
+          "$ref": "GooglePrivacyDlpV2KAnonymityResult",
+          "description": "K-anonymity result"
         },
         "kMapEstimationResult": {
-          "$ref": "GooglePrivacyDlpV2KMapEstimationResult"
+          "$ref": "GooglePrivacyDlpV2KMapEstimationResult",
+          "description": "K-map result"
         },
         "lDiversityResult": {
-          "$ref": "GooglePrivacyDlpV2LDiversityResult"
+          "$ref": "GooglePrivacyDlpV2LDiversityResult",
+          "description": "L-divesity result"
         },
         "numericalStatsResult": {
-          "$ref": "GooglePrivacyDlpV2NumericalStatsResult"
+          "$ref": "GooglePrivacyDlpV2NumericalStatsResult",
+          "description": "Numerical stats result"
         },
         "requestedPrivacyMetric": {
           "$ref": "GooglePrivacyDlpV2PrivacyMetric",
@@ -3208,7 +3214,7 @@
       "id": "GooglePrivacyDlpV2AuxiliaryTable",
       "properties": {
         "quasiIds": {
-          "description": "Quasi-identifier columns. [required]",
+          "description": "Required. Quasi-identifier columns.",
           "items": {
             "$ref": "GooglePrivacyDlpV2QuasiIdField"
           },
@@ -3216,11 +3222,11 @@
         },
         "relativeFrequency": {
           "$ref": "GooglePrivacyDlpV2FieldId",
-          "description": "The relative frequency column must contain a floating-point number\nbetween 0 and 1 (inclusive). Null values are assumed to be zero.\n[required]"
+          "description": "Required. The relative frequency column must contain a floating-point number\nbetween 0 and 1 (inclusive). Null values are assumed to be zero."
         },
         "table": {
           "$ref": "GooglePrivacyDlpV2BigQueryTable",
-          "description": "Auxiliary table location. [required]"
+          "description": "Required. Auxiliary table location."
         }
       },
       "type": "object"
@@ -3405,14 +3411,14 @@
             "AVRO"
           ],
           "enumDescriptions": [
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
+            "Unused",
+            "Any image type.",
+            "jpeg",
+            "bmp",
+            "png",
+            "svg",
+            "plain text",
+            "avro"
           ],
           "type": "string"
         }
@@ -3437,6 +3443,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2CategoricalStatsHistogramBucket": {
+      "description": "Histogram of value frequencies in the column.",
       "id": "GooglePrivacyDlpV2CategoricalStatsHistogramBucket",
       "properties": {
         "bucketSize": {
@@ -3515,9 +3522,11 @@
       "id": "GooglePrivacyDlpV2CharsToIgnore",
       "properties": {
         "charactersToSkip": {
+          "description": "Characters to not transform when masking.",
           "type": "string"
         },
         "commonCharactersToIgnore": {
+          "description": "Common characters to not transform when masking. Useful to avoid removing\npunctuation.",
           "enum": [
             "COMMON_CHARS_TO_IGNORE_UNSPECIFIED",
             "NUMERIC",
@@ -3527,7 +3536,7 @@
             "WHITESPACE"
           ],
           "enumDescriptions": [
-            "",
+            "Unused.",
             "0-9",
             "A-Z",
             "a-z",
@@ -3674,10 +3683,10 @@
       "properties": {
         "field": {
           "$ref": "GooglePrivacyDlpV2FieldId",
-          "description": "Field within the record this condition is evaluated against. [required]"
+          "description": "Required. Field within the record this condition is evaluated against."
         },
         "operator": {
-          "description": "Operator used to compare the field or infoType to the value. [required]",
+          "description": "Required. Operator used to compare the field or infoType to the value.",
           "enum": [
             "RELATIONAL_OPERATOR_UNSPECIFIED",
             "EQUAL_TO",
@@ -3689,7 +3698,7 @@
             "EXISTS"
           ],
           "enumDescriptions": [
-            "",
+            "Unused",
             "Equal. Attempts to match even with incompatible types.",
             "Not equal to. Attempts to match even with incompatible types.",
             "Greater than.",
@@ -3702,7 +3711,7 @@
         },
         "value": {
           "$ref": "GooglePrivacyDlpV2Value",
-          "description": "Value to compare against. [Required, except for `EXISTS` tests.]"
+          "description": "Value to compare against. [Mandatory, except for `EXISTS` tests.]"
         }
       },
       "type": "object"
@@ -3712,6 +3721,7 @@
       "id": "GooglePrivacyDlpV2Conditions",
       "properties": {
         "conditions": {
+          "description": "A collection of conditions.",
           "items": {
             "$ref": "GooglePrivacyDlpV2Condition"
           },
@@ -3744,7 +3754,7 @@
       "id": "GooglePrivacyDlpV2ContentLocation",
       "properties": {
         "containerName": {
-          "description": "Name of the container where the finding is located.\nThe top level name is the source file name or table name. Names of some\ncommon storage containers are formatted as follows:\n\n* BigQuery tables:  `\u003cproject_id\u003e:\u003cdataset_id\u003e.\u003ctable_id\u003e`\n* Cloud Storage files: `gs://\u003cbucket\u003e/\u003cpath\u003e`\n* Datastore namespace: \u003cnamespace\u003e\n\nNested names could be absent if the embedded object has no string\nidentifier (for an example an image contained within a document).",
+          "description": "Name of the container where the finding is located.\nThe top level name is the source file name or table name. Names of some\ncommon storage containers are formatted as follows:\n\n* BigQuery tables:  `{project_id}:{dataset_id}.{table_id}`\n* Cloud Storage files: `gs://{bucket}/{path}`\n* Datastore namespace: {namespace}\n\nNested names could be absent if the embedded object has no string\nidentifier (for an example an image contained within a document).",
           "type": "string"
         },
         "containerTimestamp": {
@@ -3777,7 +3787,7 @@
       "properties": {
         "deidentifyTemplate": {
           "$ref": "GooglePrivacyDlpV2DeidentifyTemplate",
-          "description": "The DeidentifyTemplate to create."
+          "description": "Required. The DeidentifyTemplate to create."
         },
         "locationId": {
           "description": "The geographic location to store the deidentification template. Reserved\nfor future extensions.",
@@ -3795,7 +3805,8 @@
       "id": "GooglePrivacyDlpV2CreateDlpJobRequest",
       "properties": {
         "inspectJob": {
-          "$ref": "GooglePrivacyDlpV2InspectJobConfig"
+          "$ref": "GooglePrivacyDlpV2InspectJobConfig",
+          "description": "Set to control what and how to inspect."
         },
         "jobId": {
           "description": "The job id can contain uppercase and lowercase letters,\nnumbers, and hyphens; that is, it must match the regular\nexpression: `[a-zA-Z\\\\d-_]+`. The maximum length is 100\ncharacters. Can be empty to allow the system to generate one.",
@@ -3806,7 +3817,8 @@
           "type": "string"
         },
         "riskJob": {
-          "$ref": "GooglePrivacyDlpV2RiskAnalysisJobConfig"
+          "$ref": "GooglePrivacyDlpV2RiskAnalysisJobConfig",
+          "description": "Set to choose what metric to calculate."
         }
       },
       "type": "object"
@@ -3817,7 +3829,7 @@
       "properties": {
         "inspectTemplate": {
           "$ref": "GooglePrivacyDlpV2InspectTemplate",
-          "description": "The InspectTemplate to create."
+          "description": "Required. The InspectTemplate to create."
         },
         "locationId": {
           "description": "The geographic location to store the inspection template. Reserved for\nfuture extensions.",
@@ -3836,7 +3848,7 @@
       "properties": {
         "jobTrigger": {
           "$ref": "GooglePrivacyDlpV2JobTrigger",
-          "description": "The JobTrigger to create."
+          "description": "Required. The JobTrigger to create."
         },
         "locationId": {
           "description": "The geographic location to store the job trigger. Reserved for\nfuture extensions.",
@@ -3855,7 +3867,7 @@
       "properties": {
         "config": {
           "$ref": "GooglePrivacyDlpV2StoredInfoTypeConfig",
-          "description": "Configuration of the storedInfoType to create."
+          "description": "Required. Configuration of the storedInfoType to create."
         },
         "locationId": {
           "description": "The geographic location to store the stored infoType. Reserved for\nfuture extensions.",
@@ -3874,7 +3886,7 @@
       "properties": {
         "context": {
           "$ref": "GooglePrivacyDlpV2FieldId",
-          "description": "Optional. A context may be used for higher security and maintaining\nreferential integrity such that the same identifier in two different\ncontexts will be given a distinct surrogate. The context is appended to\nplaintext value being encrypted. On decryption the provided context is\nvalidated against the value used during encryption. If a context was\nprovided during encryption, same context must be provided during decryption\nas well.\n\nIf the context is not set, plaintext would be used as is for encryption.\nIf the context is set but:\n\n1. there is no record present when transforming a given value or\n2. the field is not present when transforming a given value,\n\nplaintext would be used as is for encryption.\n\nNote that case (1) is expected when an `InfoTypeTransformation` is\napplied to both structured and non-structured `ContentItem`s."
+          "description": "A context may be used for higher security and maintaining\nreferential integrity such that the same identifier in two different\ncontexts will be given a distinct surrogate. The context is appended to\nplaintext value being encrypted. On decryption the provided context is\nvalidated against the value used during encryption. If a context was\nprovided during encryption, same context must be provided during decryption\nas well.\n\nIf the context is not set, plaintext would be used as is for encryption.\nIf the context is set but:\n\n1. there is no record present when transforming a given value or\n2. the field is not present when transforming a given value,\n\nplaintext would be used as is for encryption.\n\nNote that case (1) is expected when an `InfoTypeTransformation` is\napplied to both structured and non-structured `ContentItem`s."
         },
         "cryptoKey": {
           "$ref": "GooglePrivacyDlpV2CryptoKey",
@@ -3882,7 +3894,7 @@
         },
         "surrogateInfoType": {
           "$ref": "GooglePrivacyDlpV2InfoType",
-          "description": "The custom info type to annotate the surrogate with.\nThis annotation will be applied to the surrogate by prefixing it with\nthe name of the custom info type followed by the number of\ncharacters comprising the surrogate. The following scheme defines the\nformat: \u003cinfo type name\u003e(\u003csurrogate character count\u003e):\u003csurrogate\u003e\n\nFor example, if the name of custom info type is 'MY_TOKEN_INFO_TYPE' and\nthe surrogate is 'abc', the full replacement value\nwill be: 'MY_TOKEN_INFO_TYPE(3):abc'\n\nThis annotation identifies the surrogate when inspecting content using the\ncustom info type 'Surrogate'. This facilitates reversal of the\nsurrogate when it occurs in free text.\n\nNote: For record transformations where the entire cell in a table is being\ntransformed, surrogates are optional to use. Surrogates are used to denote\nthe location of the token and are necessary for re-identification in free\nform text.\n\nIn order for inspection to work properly, the name of this info type must\nnot occur naturally anywhere in your data; otherwise, inspection may either\n\n- reverse a surrogate that does not correspond to an actual identifier\n- be unable to parse the surrogate and result in an error\n\nTherefore, choose your custom info type name carefully after considering\nwhat your data looks like. One way to select a name that has a high chance\nof yielding reliable detection is to include one or more unicode characters\nthat are highly improbable to exist in your data.\nFor example, assuming your data is entered from a regular ASCII keyboard,\nthe symbol with the hex code point 29DD might be used like so:\n⧝MY_TOKEN_TYPE."
+          "description": "The custom info type to annotate the surrogate with.\nThis annotation will be applied to the surrogate by prefixing it with\nthe name of the custom info type followed by the number of\ncharacters comprising the surrogate. The following scheme defines the\nformat: {info type name}({surrogate character count}):{surrogate}\n\nFor example, if the name of custom info type is 'MY_TOKEN_INFO_TYPE' and\nthe surrogate is 'abc', the full replacement value\nwill be: 'MY_TOKEN_INFO_TYPE(3):abc'\n\nThis annotation identifies the surrogate when inspecting content using the\ncustom info type 'Surrogate'. This facilitates reversal of the\nsurrogate when it occurs in free text.\n\nNote: For record transformations where the entire cell in a table is being\ntransformed, surrogates are not mandatory. Surrogates are used to denote\nthe location of the token and are necessary for re-identification in free\nform text.\n\nIn order for inspection to work properly, the name of this info type must\nnot occur naturally anywhere in your data; otherwise, inspection may either\n\n- reverse a surrogate that does not correspond to an actual identifier\n- be unable to parse the surrogate and result in an error\n\nTherefore, choose your custom info type name carefully after considering\nwhat your data looks like. One way to select a name that has a high chance\nof yielding reliable detection is to include one or more unicode characters\nthat are highly improbable to exist in your data.\nFor example, assuming your data is entered from a regular ASCII keyboard,\nthe symbol with the hex code point 29DD might be used like so:\n⧝MY_TOKEN_TYPE."
         }
       },
       "type": "object"
@@ -3903,13 +3915,16 @@
       "id": "GooglePrivacyDlpV2CryptoKey",
       "properties": {
         "kmsWrapped": {
-          "$ref": "GooglePrivacyDlpV2KmsWrappedCryptoKey"
+          "$ref": "GooglePrivacyDlpV2KmsWrappedCryptoKey",
+          "description": "Kms wrapped key"
         },
         "transient": {
-          "$ref": "GooglePrivacyDlpV2TransientCryptoKey"
+          "$ref": "GooglePrivacyDlpV2TransientCryptoKey",
+          "description": "Transient crypto key"
         },
         "unwrapped": {
-          "$ref": "GooglePrivacyDlpV2UnwrappedCryptoKey"
+          "$ref": "GooglePrivacyDlpV2UnwrappedCryptoKey",
+          "description": "Unwrapped crypto key"
         }
       },
       "type": "object"
@@ -3919,6 +3934,7 @@
       "id": "GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig",
       "properties": {
         "commonAlphabet": {
+          "description": "Common alphabets.",
           "enum": [
             "FFX_COMMON_NATIVE_ALPHABET_UNSPECIFIED",
             "NUMERIC",
@@ -3927,7 +3943,7 @@
             "ALPHA_NUMERIC"
           ],
           "enumDescriptions": [
-            "",
+            "Unused.",
             "[0-9] (radix of 10)",
             "[0-9A-F] (radix of 16)",
             "[0-9A-Z] (radix of 36)",
@@ -3941,7 +3957,7 @@
         },
         "cryptoKey": {
           "$ref": "GooglePrivacyDlpV2CryptoKey",
-          "description": "The key used by the encryption algorithm. [required]"
+          "description": "Required. The key used by the encryption algorithm."
         },
         "customAlphabet": {
           "description": "This is supported by mapping these to the alphanumeric characters\nthat the FFX mode natively supports. This happens before/after\nencryption/decryption.\nEach character listed must appear only once.\nNumber of characters must be in the range [2, 95].\nThis must be encoded as ASCII.\nThe order of characters does not matter.",
@@ -4064,12 +4080,12 @@
           "description": "Causes the shift to be computed based on this key and the context. This\nresults in the same shift for the same context and crypto_key. If\nset, must also set context. Can only be applied to table items."
         },
         "lowerBoundDays": {
-          "description": "For example, -5 means shift date to at most 5 days back in the past.\n[Required]",
+          "description": "Required. For example, -5 means shift date to at most 5 days back in the past.",
           "format": "int32",
           "type": "integer"
         },
         "upperBoundDays": {
-          "description": "Range of shift in days. Actual shift will be selected at random within this\nrange (inclusive ends). Negative means shift to earlier in time. Must not\nbe more than 365250 days (1000 years) each direction.\n\nFor example, 3 means shift date to at most 3 days into the future.\n[Required]",
+          "description": "Required. Range of shift in days. Actual shift will be selected at random within this\nrange (inclusive ends). Negative means shift to earlier in time. Must not\nbe more than 365250 days (1000 years) each direction.\n\nFor example, 3 means shift date to at most 3 days into the future.",
           "format": "int32",
           "type": "integer"
         }
@@ -4082,9 +4098,10 @@
       "properties": {
         "date": {
           "$ref": "GoogleTypeDate",
-          "description": "One or more of the following must be set. All fields are optional, but\nwhen set must be valid date or time values."
+          "description": "One or more of the following must be set.\nMust be a valid date or time value."
         },
         "dayOfWeek": {
+          "description": "Day of week",
           "enum": [
             "DAY_OF_WEEK_UNSPECIFIED",
             "MONDAY",
@@ -4108,10 +4125,12 @@
           "type": "string"
         },
         "time": {
-          "$ref": "GoogleTypeTimeOfDay"
+          "$ref": "GoogleTypeTimeOfDay",
+          "description": "Time of day"
         },
         "timeZone": {
-          "$ref": "GooglePrivacyDlpV2TimeZone"
+          "$ref": "GooglePrivacyDlpV2TimeZone",
+          "description": "Time zone"
         }
       },
       "type": "object"
@@ -4144,7 +4163,7 @@
           "description": "Configuration for the de-identification of the content item.\nItems specified here will override the template referenced by the\ndeidentify_template_name argument."
         },
         "deidentifyTemplateName": {
-          "description": "Optional template to use. Any configuration directly specified in\ndeidentify_config will override those set in the template. Singular fields\nthat are set in this request will replace their corresponding fields in the\ntemplate. Repeated fields are appended. Singular sub-messages and groups\nare recursively merged.",
+          "description": "Template to use. Any configuration directly specified in\ndeidentify_config will override those set in the template. Singular fields\nthat are set in this request will replace their corresponding fields in the\ntemplate. Repeated fields are appended. Singular sub-messages and groups\nare recursively merged.",
           "type": "string"
         },
         "inspectConfig": {
@@ -4152,7 +4171,7 @@
           "description": "Configuration for the inspector.\nItems specified here will override the template referenced by the\ninspect_template_name argument."
         },
         "inspectTemplateName": {
-          "description": "Optional template to use. Any configuration directly specified in\ninspect_config will override those set in the template. Singular fields\nthat are set in this request will replace their corresponding fields in the\ntemplate. Repeated fields are appended. Singular sub-messages and groups\nare recursively merged.",
+          "description": "Template to use. Any configuration directly specified in\ninspect_config will override those set in the template. Singular fields\nthat are set in this request will replace their corresponding fields in the\ntemplate. Repeated fields are appended. Singular sub-messages and groups\nare recursively merged.",
           "type": "string"
         },
         "item": {
@@ -4186,7 +4205,7 @@
       "id": "GooglePrivacyDlpV2DeidentifyTemplate",
       "properties": {
         "createTime": {
-          "description": "The creation timestamp of an inspectTemplate, output only field.",
+          "description": "Output only. The creation timestamp of an inspectTemplate.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -4203,11 +4222,11 @@
           "type": "string"
         },
         "name": {
-          "description": "The template name. Output only.\n\nThe template will have one of the following formats:\n`projects/PROJECT_ID/deidentifyTemplates/TEMPLATE_ID` OR\n`organizations/ORGANIZATION_ID/deidentifyTemplates/TEMPLATE_ID`",
+          "description": "Output only. The template name.\n\nThe template will have one of the following formats:\n`projects/PROJECT_ID/deidentifyTemplates/TEMPLATE_ID` OR\n`organizations/ORGANIZATION_ID/deidentifyTemplates/TEMPLATE_ID`",
           "type": "string"
         },
         "updateTime": {
-          "description": "The last update timestamp of an inspectTemplate, output only field.",
+          "description": "Output only. The last update timestamp of an inspectTemplate.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -4226,14 +4245,14 @@
           "type": "array"
         },
         "quasiIds": {
-          "description": "Fields considered to be quasi-identifiers. No two fields can have the\nsame tag. [required]",
+          "description": "Required. Fields considered to be quasi-identifiers. No two fields can have the\nsame tag.",
           "items": {
             "$ref": "GooglePrivacyDlpV2QuasiId"
           },
           "type": "array"
         },
         "regionCode": {
-          "description": "ISO 3166-1 alpha-2 region code to use in the statistical modeling.\nRequired if no column is tagged with a region-specific InfoType (like\nUS_ZIP_5) or a region code.",
+          "description": "ISO 3166-1 alpha-2 region code to use in the statistical modeling.\nSet if no column is tagged with a region-specific InfoType (like\nUS_ZIP_5) or a region code.",
           "type": "string"
         }
       },
@@ -4385,7 +4404,7 @@
             "FAILED"
           ],
           "enumDescriptions": [
-            "",
+            "Unused.",
             "The job has not yet started.",
             "The job is currently running.",
             "The job is no longer running.",
@@ -4402,7 +4421,7 @@
             "RISK_ANALYSIS_JOB"
           ],
           "enumDescriptions": [
-            "",
+            "Unused",
             "The job inspected Google Cloud for sensitive data.",
             "The job executed a Risk Analysis computation."
           ],
@@ -4435,11 +4454,12 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2Error": {
-      "description": "Details information about an error encountered during job execution or\nthe results of an unsuccessful activation of the JobTrigger.\nOutput only field.",
+      "description": "Details information about an error encountered during job execution or\nthe results of an unsuccessful activation of the JobTrigger.",
       "id": "GooglePrivacyDlpV2Error",
       "properties": {
         "details": {
-          "$ref": "GoogleRpcStatus"
+          "$ref": "GoogleRpcStatus",
+          "description": "Detailed error codes and messages."
         },
         "timestamps": {
           "description": "The times the error occurred.",
@@ -4506,7 +4526,8 @@
       "id": "GooglePrivacyDlpV2Expressions",
       "properties": {
         "conditions": {
-          "$ref": "GooglePrivacyDlpV2Conditions"
+          "$ref": "GooglePrivacyDlpV2Conditions",
+          "description": "Conditions to apply to the expression."
         },
         "logicalOperator": {
           "description": "The operator to apply to the result of conditions. Default and currently\nonly supported value is `AND`.",
@@ -4515,8 +4536,8 @@
             "AND"
           ],
           "enumDescriptions": [
-            "",
-            ""
+            "Unused",
+            "Conditional AND"
           ],
           "type": "string"
         }
@@ -4540,10 +4561,10 @@
       "properties": {
         "condition": {
           "$ref": "GooglePrivacyDlpV2RecordCondition",
-          "description": "Only apply the transformation if the condition evaluates to true for the\ngiven `RecordCondition`. The conditions are allowed to reference fields\nthat are not used in the actual transformation. [optional]\n\nExample Use Cases:\n\n- Apply a different bucket transformation to an age column if the zip code\ncolumn for the same record is within a specific range.\n- Redact a field if the date of birth field is greater than 85."
+          "description": "Only apply the transformation if the condition evaluates to true for the\ngiven `RecordCondition`. The conditions are allowed to reference fields\nthat are not used in the actual transformation.\n\nExample Use Cases:\n\n- Apply a different bucket transformation to an age column if the zip code\ncolumn for the same record is within a specific range.\n- Redact a field if the date of birth field is greater than 85."
         },
         "fields": {
-          "description": "Input field(s) to apply the transformation to. [required]",
+          "description": "Required. Input field(s) to apply the transformation to.",
           "items": {
             "$ref": "GooglePrivacyDlpV2FieldId"
           },
@@ -4624,6 +4645,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2FindingLimits": {
+      "description": "Configuration to control the number of findings returned.",
       "id": "GooglePrivacyDlpV2FindingLimits",
       "properties": {
         "maxFindingsPerInfoType": {
@@ -4647,21 +4669,21 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2FixedSizeBucketingConfig": {
-      "description": "Buckets values based on fixed size ranges. The\nBucketing transformation can provide all of this functionality,\nbut requires more configuration. This message is provided as a convenience to\nthe user for simple bucketing strategies.\n\nThe transformed value will be a hyphenated string of\n\u003clower_bound\u003e-\u003cupper_bound\u003e, i.e if lower_bound = 10 and upper_bound = 20\nall values that are within this bucket will be replaced with \"10-20\".\n\nThis can be used on data of type: double, long.\n\nIf the bound Value type differs from the type of data\nbeing transformed, we will first attempt converting the type of the data to\nbe transformed to match the type of the bound before comparing.\n\nSee https://cloud.google.com/dlp/docs/concepts-bucketing to learn more.",
+      "description": "Buckets values based on fixed size ranges. The\nBucketing transformation can provide all of this functionality,\nbut requires more configuration. This message is provided as a convenience to\nthe user for simple bucketing strategies.\n\nThe transformed value will be a hyphenated string of\n{lower_bound}-{upper_bound}, i.e if lower_bound = 10 and upper_bound = 20\nall values that are within this bucket will be replaced with \"10-20\".\n\nThis can be used on data of type: double, long.\n\nIf the bound Value type differs from the type of data\nbeing transformed, we will first attempt converting the type of the data to\nbe transformed to match the type of the bound before comparing.\n\nSee https://cloud.google.com/dlp/docs/concepts-bucketing to learn more.",
       "id": "GooglePrivacyDlpV2FixedSizeBucketingConfig",
       "properties": {
         "bucketSize": {
-          "description": "Size of each bucket (except for minimum and maximum buckets). So if\n`lower_bound` = 10, `upper_bound` = 89, and `bucket_size` = 10, then the\nfollowing buckets would be used: -10, 10-20, 20-30, 30-40, 40-50, 50-60,\n60-70, 70-80, 80-89, 89+. Precision up to 2 decimals works. [Required].",
+          "description": "Required. Size of each bucket (except for minimum and maximum buckets). So if\n`lower_bound` = 10, `upper_bound` = 89, and `bucket_size` = 10, then the\nfollowing buckets would be used: -10, 10-20, 20-30, 30-40, 40-50, 50-60,\n60-70, 70-80, 80-89, 89+. Precision up to 2 decimals works.",
           "format": "double",
           "type": "number"
         },
         "lowerBound": {
           "$ref": "GooglePrivacyDlpV2Value",
-          "description": "Lower bound value of buckets. All values less than `lower_bound` are\ngrouped together into a single bucket; for example if `lower_bound` = 10,\nthen all values less than 10 are replaced with the value “-10”. [Required]."
+          "description": "Required. Lower bound value of buckets. All values less than `lower_bound` are\ngrouped together into a single bucket; for example if `lower_bound` = 10,\nthen all values less than 10 are replaced with the value “-10”."
         },
         "upperBound": {
           "$ref": "GooglePrivacyDlpV2Value",
-          "description": "Upper bound value of buckets. All values greater than upper_bound are\ngrouped together into a single bucket; for example if `upper_bound` = 89,\nthen all values greater than 89 are replaced with the value “89+”.\n[Required]."
+          "description": "Required. Upper bound value of buckets. All values greater than upper_bound are\ngrouped together into a single bucket; for example if `upper_bound` = 89,\nthen all values greater than 89 are replaced with the value “89+”."
         }
       },
       "type": "object"
@@ -4748,7 +4770,7 @@
         "supportedBy": {
           "description": "Which parts of the API supports this InfoType.",
           "enumDescriptions": [
-            "",
+            "Unused.",
             "Supported by the inspect operations.",
             "Supported by the risk analysis operations."
           ],
@@ -4810,7 +4832,7 @@
         },
         "primitiveTransformation": {
           "$ref": "GooglePrivacyDlpV2PrimitiveTransformation",
-          "description": "Primitive transformation to apply to the infoType. [required]"
+          "description": "Required. Primitive transformation to apply to the infoType."
         }
       },
       "type": "object"
@@ -4820,7 +4842,7 @@
       "id": "GooglePrivacyDlpV2InfoTypeTransformations",
       "properties": {
         "transformations": {
-          "description": "Transformation for each infoType. Cannot specify more than one\nfor a given infoType. [required]",
+          "description": "Required. Transformation for each infoType. Cannot specify more than one\nfor a given infoType.",
           "items": {
             "$ref": "GooglePrivacyDlpV2InfoTypeTransformation"
           },
@@ -4873,7 +4895,8 @@
           "type": "array"
         },
         "limits": {
-          "$ref": "GooglePrivacyDlpV2FindingLimits"
+          "$ref": "GooglePrivacyDlpV2FindingLimits",
+          "description": "Configuration to control the number of findings returned."
         },
         "minLikelihood": {
           "description": "Only returns findings equal or above this threshold. The default is\nPOSSIBLE.\nSee https://cloud.google.com/dlp/docs/likelihood to learn more.",
@@ -4914,7 +4937,7 @@
           "description": "Configuration for the inspector. What specified here will override\nthe template referenced by the inspect_template_name argument."
         },
         "inspectTemplateName": {
-          "description": "Optional template to use. Any configuration directly specified in\ninspect_config will override those set in the template. Singular fields\nthat are set in this request will replace their corresponding fields in the\ntemplate. Repeated fields are appended. Singular sub-messages and groups\nare recursively merged.",
+          "description": "Template to use. Any configuration directly specified in\ninspect_config will override those set in the template. Singular fields\nthat are set in this request will replace their corresponding fields in the\ntemplate. Repeated fields are appended. Singular sub-messages and groups\nare recursively merged.",
           "type": "string"
         },
         "item": {
@@ -4955,6 +4978,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2InspectJobConfig": {
+      "description": "Controls what and how to inspect for findings.",
       "id": "GooglePrivacyDlpV2InspectJobConfig",
       "properties": {
         "actions": {
@@ -5002,7 +5026,7 @@
       "id": "GooglePrivacyDlpV2InspectTemplate",
       "properties": {
         "createTime": {
-          "description": "The creation timestamp of an inspectTemplate, output only field.",
+          "description": "Output only. The creation timestamp of an inspectTemplate.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -5019,11 +5043,11 @@
           "description": "The core content of the template. Configuration of the scanning process."
         },
         "name": {
-          "description": "The template name. Output only.\n\nThe template will have one of the following formats:\n`projects/PROJECT_ID/inspectTemplates/TEMPLATE_ID` OR\n`organizations/ORGANIZATION_ID/inspectTemplates/TEMPLATE_ID`",
+          "description": "Output only. The template name.\n\nThe template will have one of the following formats:\n`projects/PROJECT_ID/inspectTemplates/TEMPLATE_ID` OR\n`organizations/ORGANIZATION_ID/inspectTemplates/TEMPLATE_ID`;",
           "type": "string"
         },
         "updateTime": {
-          "description": "The last update timestamp of an inspectTemplate, output only field.",
+          "description": "Output only. The last update timestamp of an inspectTemplate.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -5077,7 +5101,7 @@
       "id": "GooglePrivacyDlpV2JobTrigger",
       "properties": {
         "createTime": {
-          "description": "The creation timestamp of a triggeredJob, output only field.",
+          "description": "Output only. The creation timestamp of a triggeredJob.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -5090,17 +5114,18 @@
           "type": "string"
         },
         "errors": {
-          "description": "A stream of errors encountered when the trigger was activated. Repeated\nerrors may result in the JobTrigger automatically being paused.\nWill return the last 100 errors. Whenever the JobTrigger is modified\nthis list will be cleared. Output only field.",
+          "description": "Output only. A stream of errors encountered when the trigger was activated. Repeated\nerrors may result in the JobTrigger automatically being paused.\nWill return the last 100 errors. Whenever the JobTrigger is modified\nthis list will be cleared.",
           "items": {
             "$ref": "GooglePrivacyDlpV2Error"
           },
           "type": "array"
         },
         "inspectJob": {
-          "$ref": "GooglePrivacyDlpV2InspectJobConfig"
+          "$ref": "GooglePrivacyDlpV2InspectJobConfig",
+          "description": "For inspect jobs, a snapshot of the configuration."
         },
         "lastRunTime": {
-          "description": "The timestamp of the last time this trigger executed, output only field.",
+          "description": "Output only. The timestamp of the last time this trigger executed.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -5109,7 +5134,7 @@
           "type": "string"
         },
         "status": {
-          "description": "A status for this trigger. [required]",
+          "description": "Required. A status for this trigger.",
           "enum": [
             "STATUS_UNSPECIFIED",
             "HEALTHY",
@@ -5117,7 +5142,7 @@
             "CANCELLED"
           ],
           "enumDescriptions": [
-            "",
+            "Unused.",
             "Trigger is healthy.",
             "Trigger is temporarily paused.",
             "Trigger is cancelled and can not be resumed."
@@ -5132,7 +5157,7 @@
           "type": "array"
         },
         "updateTime": {
-          "description": "The last update timestamp of a triggeredJob, output only field.",
+          "description": "Output only. The last update timestamp of a triggeredJob.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -5145,7 +5170,7 @@
       "properties": {
         "entityId": {
           "$ref": "GooglePrivacyDlpV2EntityId",
-          "description": "Optional message indicating that multiple rows might be associated to a\nsingle individual. If the same entity_id is associated to multiple\nquasi-identifier tuples over distinct rows, we consider the entire\ncollection of tuples as the composite quasi-identifier. This collection\nis a multiset: the order in which the different tuples appear in the\ndataset is ignored, but their frequency is taken into account.\n\nImportant note: a maximum of 1000 rows can be associated to a single\nentity ID. If more rows are associated with the same entity ID, some\nmight be ignored."
+          "description": "Message indicating that multiple rows might be associated to a\nsingle individual. If the same entity_id is associated to multiple\nquasi-identifier tuples over distinct rows, we consider the entire\ncollection of tuples as the composite quasi-identifier. This collection\nis a multiset: the order in which the different tuples appear in the\ndataset is ignored, but their frequency is taken into account.\n\nImportant note: a maximum of 1000 rows can be associated to a single\nentity ID. If more rows are associated with the same entity ID, some\nmight be ignored."
         },
         "quasiIds": {
           "description": "Set of fields to compute k-anonymity over. When multiple fields are\nspecified, they are considered a single composite key. Structs and\nrepeated data types are not supported; however, nested fields are\nsupported so long as they are not structs themselves or nested within\na repeated field.",
@@ -5177,6 +5202,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2KAnonymityHistogramBucket": {
+      "description": "Histogram of k-anonymity equivalence classes.",
       "id": "GooglePrivacyDlpV2KAnonymityHistogramBucket",
       "properties": {
         "bucketSize": {
@@ -5224,7 +5250,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2KMapEstimationConfig": {
-      "description": "Reidentifiability metric. This corresponds to a risk model similar to what\nis called \"journalist risk\" in the literature, except the attack dataset is\nstatistically modeled instead of being perfectly known. This can be done\nusing publicly available data (like the US Census), or using a custom\nstatistical model (indicated as one or several BigQuery tables), or by\nextrapolating from the distribution of values in the input dataset.\nA column with a semantic tag attached.",
+      "description": "Reidentifiability metric. This corresponds to a risk model similar to what\nis called \"journalist risk\" in the literature, except the attack dataset is\nstatistically modeled instead of being perfectly known. This can be done\nusing publicly available data (like the US Census), or using a custom\nstatistical model (indicated as one or several BigQuery tables), or by\nextrapolating from the distribution of values in the input dataset.",
       "id": "GooglePrivacyDlpV2KMapEstimationConfig",
       "properties": {
         "auxiliaryTables": {
@@ -5235,14 +5261,14 @@
           "type": "array"
         },
         "quasiIds": {
-          "description": "Fields considered to be quasi-identifiers. No two columns can have the\nsame tag. [required]",
+          "description": "Required. Fields considered to be quasi-identifiers. No two columns can have the\nsame tag.",
           "items": {
             "$ref": "GooglePrivacyDlpV2TaggedField"
           },
           "type": "array"
         },
         "regionCode": {
-          "description": "ISO 3166-1 alpha-2 region code to use in the statistical modeling.\nRequired if no column is tagged with a region-specific InfoType (like\nUS_ZIP_5) or a region code.",
+          "description": "ISO 3166-1 alpha-2 region code to use in the statistical modeling.\nSet if no column is tagged with a region-specific InfoType (like\nUS_ZIP_5) or a region code.",
           "type": "string"
         }
       },
@@ -5349,11 +5375,11 @@
       "id": "GooglePrivacyDlpV2KmsWrappedCryptoKey",
       "properties": {
         "cryptoKeyName": {
-          "description": "The resource name of the KMS CryptoKey to use for unwrapping. [required]",
+          "description": "Required. The resource name of the KMS CryptoKey to use for unwrapping.",
           "type": "string"
         },
         "wrappedKey": {
-          "description": "The wrapped data crypto key. [required]",
+          "description": "Required. The wrapped data crypto key.",
           "format": "byte",
           "type": "string"
         }
@@ -5410,6 +5436,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2LDiversityHistogramBucket": {
+      "description": "Histogram of l-diversity equivalence class sensitive value frequencies.",
       "id": "GooglePrivacyDlpV2LDiversityHistogramBucket",
       "properties": {
         "bucketSize": {
@@ -5699,7 +5726,7 @@
             "ALL_COLUMNS"
           ],
           "enumDescriptions": [
-            "",
+            "Unused.",
             "Basic schema including only `info_type`, `quote`, `certainty`, and\n`timestamp`.",
             "Schema tailored to findings from scanning Google Cloud Storage.",
             "Schema tailored to findings from scanning Google Datastore.",
@@ -5755,37 +5782,48 @@
       "id": "GooglePrivacyDlpV2PrimitiveTransformation",
       "properties": {
         "bucketingConfig": {
-          "$ref": "GooglePrivacyDlpV2BucketingConfig"
+          "$ref": "GooglePrivacyDlpV2BucketingConfig",
+          "description": "Bucketing"
         },
         "characterMaskConfig": {
-          "$ref": "GooglePrivacyDlpV2CharacterMaskConfig"
+          "$ref": "GooglePrivacyDlpV2CharacterMaskConfig",
+          "description": "Mask"
         },
         "cryptoDeterministicConfig": {
-          "$ref": "GooglePrivacyDlpV2CryptoDeterministicConfig"
+          "$ref": "GooglePrivacyDlpV2CryptoDeterministicConfig",
+          "description": "Deterministic Crypto"
         },
         "cryptoHashConfig": {
-          "$ref": "GooglePrivacyDlpV2CryptoHashConfig"
+          "$ref": "GooglePrivacyDlpV2CryptoHashConfig",
+          "description": "Crypto"
         },
         "cryptoReplaceFfxFpeConfig": {
-          "$ref": "GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig"
+          "$ref": "GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig",
+          "description": "Ffx-Fpe"
         },
         "dateShiftConfig": {
-          "$ref": "GooglePrivacyDlpV2DateShiftConfig"
+          "$ref": "GooglePrivacyDlpV2DateShiftConfig",
+          "description": "Date Shift"
         },
         "fixedSizeBucketingConfig": {
-          "$ref": "GooglePrivacyDlpV2FixedSizeBucketingConfig"
+          "$ref": "GooglePrivacyDlpV2FixedSizeBucketingConfig",
+          "description": "Fixed size bucketing"
         },
         "redactConfig": {
-          "$ref": "GooglePrivacyDlpV2RedactConfig"
+          "$ref": "GooglePrivacyDlpV2RedactConfig",
+          "description": "Redact"
         },
         "replaceConfig": {
-          "$ref": "GooglePrivacyDlpV2ReplaceValueConfig"
+          "$ref": "GooglePrivacyDlpV2ReplaceValueConfig",
+          "description": "Replace"
         },
         "replaceWithInfoTypeConfig": {
-          "$ref": "GooglePrivacyDlpV2ReplaceWithInfoTypeConfig"
+          "$ref": "GooglePrivacyDlpV2ReplaceWithInfoTypeConfig",
+          "description": "Replace with infotype"
         },
         "timePartConfig": {
-          "$ref": "GooglePrivacyDlpV2TimePartConfig"
+          "$ref": "GooglePrivacyDlpV2TimePartConfig",
+          "description": "Time extraction"
         }
       },
       "type": "object"
@@ -5795,22 +5833,28 @@
       "id": "GooglePrivacyDlpV2PrivacyMetric",
       "properties": {
         "categoricalStatsConfig": {
-          "$ref": "GooglePrivacyDlpV2CategoricalStatsConfig"
+          "$ref": "GooglePrivacyDlpV2CategoricalStatsConfig",
+          "description": "Categorical stats"
         },
         "deltaPresenceEstimationConfig": {
-          "$ref": "GooglePrivacyDlpV2DeltaPresenceEstimationConfig"
+          "$ref": "GooglePrivacyDlpV2DeltaPresenceEstimationConfig",
+          "description": "delta-presence"
         },
         "kAnonymityConfig": {
-          "$ref": "GooglePrivacyDlpV2KAnonymityConfig"
+          "$ref": "GooglePrivacyDlpV2KAnonymityConfig",
+          "description": "K-anonymity"
         },
         "kMapEstimationConfig": {
-          "$ref": "GooglePrivacyDlpV2KMapEstimationConfig"
+          "$ref": "GooglePrivacyDlpV2KMapEstimationConfig",
+          "description": "k-map"
         },
         "lDiversityConfig": {
-          "$ref": "GooglePrivacyDlpV2LDiversityConfig"
+          "$ref": "GooglePrivacyDlpV2LDiversityConfig",
+          "description": "l-diversity"
         },
         "numericalStatsConfig": {
-          "$ref": "GooglePrivacyDlpV2NumericalStatsConfig"
+          "$ref": "GooglePrivacyDlpV2NumericalStatsConfig",
+          "description": "Numerical stats"
         }
       },
       "type": "object"
@@ -5871,7 +5915,7 @@
         },
         "field": {
           "$ref": "GooglePrivacyDlpV2FieldId",
-          "description": "Identifies the column. [required]"
+          "description": "Required. Identifies the column."
         },
         "inferred": {
           "$ref": "GoogleProtobufEmpty",
@@ -5889,10 +5933,12 @@
       "id": "GooglePrivacyDlpV2QuasiIdField",
       "properties": {
         "customTag": {
+          "description": "A auxiliary field.",
           "type": "string"
         },
         "field": {
-          "$ref": "GooglePrivacyDlpV2FieldId"
+          "$ref": "GooglePrivacyDlpV2FieldId",
+          "description": "Identifies the column."
         }
       },
       "type": "object"
@@ -5902,10 +5948,12 @@
       "id": "GooglePrivacyDlpV2QuasiIdentifierField",
       "properties": {
         "customTag": {
+          "description": "A column can be tagged with a custom tag. In this case, the user must\nindicate an auxiliary table that contains statistical information on\nthe possible values of this column (below).",
           "type": "string"
         },
         "field": {
-          "$ref": "GooglePrivacyDlpV2FieldId"
+          "$ref": "GooglePrivacyDlpV2FieldId",
+          "description": "Identifies the column."
         }
       },
       "type": "object"
@@ -6011,7 +6059,7 @@
           "type": "array"
         },
         "recordSuppressions": {
-          "description": "Configuration defining which records get suppressed entirely. Records that\nmatch any suppression rule are omitted from the output [optional].",
+          "description": "Configuration defining which records get suppressed entirely. Records that\nmatch any suppression rule are omitted from the output.",
           "items": {
             "$ref": "GooglePrivacyDlpV2RecordSuppression"
           },
@@ -6104,7 +6152,7 @@
           "description": "Configuration for the inspector."
         },
         "inspectTemplateName": {
-          "description": "Optional template to use. Any configuration directly specified in\n`inspect_config` will override those set in the template. Singular fields\nthat are set in this request will replace their corresponding fields in the\ntemplate. Repeated fields are appended. Singular sub-messages and groups\nare recursively merged.",
+          "description": "Template to use. Any configuration directly specified in\n`inspect_config` will override those set in the template. Singular fields\nthat are set in this request will replace their corresponding fields in the\ntemplate. Repeated fields are appended. Singular sub-messages and groups\nare recursively merged.",
           "type": "string"
         },
         "item": {
@@ -6120,7 +6168,7 @@
           "description": "Configuration for the re-identification of the content item.\nThis field shares the same proto message type that is used for\nde-identification, however its usage here is for the reversal of the\nprevious de-identification. Re-identification is performed by examining\nthe transformations used to de-identify the items and executing the\nreverse. This requires that only reversible transformations\nbe provided here. The reversible transformations are:\n\n - `CryptoDeterministicConfig`\n - `CryptoReplaceFfxFpeConfig`"
         },
         "reidentifyTemplateName": {
-          "description": "Optional template to use. References an instance of `DeidentifyTemplate`.\nAny configuration directly specified in `reidentify_config` or\n`inspect_config` will override those set in the template. Singular fields\nthat are set in this request will replace their corresponding fields in the\ntemplate. Repeated fields are appended. Singular sub-messages and groups\nare recursively merged.",
+          "description": "Template to use. References an instance of `DeidentifyTemplate`.\nAny configuration directly specified in `reidentify_config` or\n`inspect_config` will override those set in the template. Singular fields\nthat are set in this request will replace their corresponding fields in the\ntemplate. Repeated fields are appended. Singular sub-messages and groups\nare recursively merged.",
           "type": "string"
         }
       },
@@ -6159,10 +6207,12 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2RequestedOptions": {
+      "description": "Snapshot of the inspection configuration.",
       "id": "GooglePrivacyDlpV2RequestedOptions",
       "properties": {
         "jobConfig": {
-          "$ref": "GooglePrivacyDlpV2InspectJobConfig"
+          "$ref": "GooglePrivacyDlpV2InspectJobConfig",
+          "description": "Inspect config."
         },
         "snapshotInspectTemplate": {
           "$ref": "GooglePrivacyDlpV2InspectTemplate",
@@ -6218,9 +6268,11 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2Row": {
+      "description": "Values of the row.",
       "id": "GooglePrivacyDlpV2Row",
       "properties": {
         "values": {
+          "description": "Individual cells.",
           "items": {
             "$ref": "GooglePrivacyDlpV2Value"
           },
@@ -6234,7 +6286,8 @@
       "id": "GooglePrivacyDlpV2SaveFindings",
       "properties": {
         "outputConfig": {
-          "$ref": "GooglePrivacyDlpV2OutputStorageConfig"
+          "$ref": "GooglePrivacyDlpV2OutputStorageConfig",
+          "description": "Location to store findings outside of DLP."
         }
       },
       "type": "object"
@@ -6256,7 +6309,7 @@
       "id": "GooglePrivacyDlpV2StatisticalTable",
       "properties": {
         "quasiIds": {
-          "description": "Quasi-identifier columns. [required]",
+          "description": "Required. Quasi-identifier columns.",
           "items": {
             "$ref": "GooglePrivacyDlpV2QuasiIdentifierField"
           },
@@ -6264,11 +6317,11 @@
         },
         "relativeFrequency": {
           "$ref": "GooglePrivacyDlpV2FieldId",
-          "description": "The relative frequency column must contain a floating-point number\nbetween 0 and 1 (inclusive). Null values are assumed to be zero.\n[required]"
+          "description": "Required. The relative frequency column must contain a floating-point number\nbetween 0 and 1 (inclusive). Null values are assumed to be zero."
         },
         "table": {
           "$ref": "GooglePrivacyDlpV2BigQueryTable",
-          "description": "Auxiliary table location. [required]"
+          "description": "Required. Auxiliary table location."
         }
       },
       "type": "object"
@@ -6361,7 +6414,7 @@
           "type": "string"
         },
         "errors": {
-          "description": "Errors that occurred when creating this storedInfoType version, or\nanomalies detected in the storedInfoType data that render it unusable. Only\nthe five most recent errors will be displayed, with the most recent error\nappearing first.\n\u003cp\u003eFor example, some of the data for stored custom dictionaries is put in\nthe user's Google Cloud Storage bucket, and if this data is modified or\ndeleted by the user or another system, the dictionary becomes invalid.\n\u003cp\u003eIf any errors occur, fix the problem indicated by the error message and\nuse the UpdateStoredInfoType API method to create another version of the\nstoredInfoType to continue using it, reusing the same `config` if it was\nnot the source of the error.",
+          "description": "Errors that occurred when creating this storedInfoType version, or\nanomalies detected in the storedInfoType data that render it unusable. Only\nthe five most recent errors will be displayed, with the most recent error\nappearing first.\n\nFor example, some of the data for stored custom dictionaries is put in\nthe user's Google Cloud Storage bucket, and if this data is modified or\ndeleted by the user or another system, the dictionary becomes invalid.\n\nIf any errors occur, fix the problem indicated by the error message and\nuse the UpdateStoredInfoType API method to create another version of the\nstoredInfoType to continue using it, reusing the same `config` if it was\nnot the source of the error.",
           "items": {
             "$ref": "GooglePrivacyDlpV2Error"
           },
@@ -6377,7 +6430,7 @@
             "INVALID"
           ],
           "enumDescriptions": [
-            "",
+            "Unused",
             "StoredInfoType version is being created.",
             "StoredInfoType version is ready for use.",
             "StoredInfoType creation failed. All relevant error messages are returned in\nthe `StoredInfoTypeVersion` message.",
@@ -6413,19 +6466,21 @@
       "id": "GooglePrivacyDlpV2SummaryResult",
       "properties": {
         "code": {
+          "description": "Outcome of the transformation.",
           "enum": [
             "TRANSFORMATION_RESULT_CODE_UNSPECIFIED",
             "SUCCESS",
             "ERROR"
           ],
           "enumDescriptions": [
-            "",
-            "",
-            ""
+            "Unused",
+            "Transformation completed without an error.",
+            "Transformation had an error."
           ],
           "type": "string"
         },
         "count": {
+          "description": "Number of transformations counted by this result.",
           "format": "int64",
           "type": "string"
         },
@@ -6447,12 +6502,14 @@
       "id": "GooglePrivacyDlpV2Table",
       "properties": {
         "headers": {
+          "description": "Headers of the table.",
           "items": {
             "$ref": "GooglePrivacyDlpV2FieldId"
           },
           "type": "array"
         },
         "rows": {
+          "description": "Rows of the table.",
           "items": {
             "$ref": "GooglePrivacyDlpV2Row"
           },
@@ -6474,6 +6531,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2TaggedField": {
+      "description": "A column with a semantic tag attached.",
       "id": "GooglePrivacyDlpV2TaggedField",
       "properties": {
         "customTag": {
@@ -6482,7 +6540,7 @@
         },
         "field": {
           "$ref": "GooglePrivacyDlpV2FieldId",
-          "description": "Identifies the column. [required]"
+          "description": "Required. Identifies the column."
         },
         "inferred": {
           "$ref": "GoogleProtobufEmpty",
@@ -6506,6 +6564,7 @@
       "id": "GooglePrivacyDlpV2TimePartConfig",
       "properties": {
         "partToExtract": {
+          "description": "The part of the time to keep.",
           "enum": [
             "TIME_PART_UNSPECIFIED",
             "YEAR",
@@ -6516,7 +6575,7 @@
             "HOUR_OF_DAY"
           ],
           "enumDescriptions": [
-            "",
+            "Unused",
             "[0-9999]",
             "[1-12]",
             "[1-31]",
@@ -6530,6 +6589,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2TimeZone": {
+      "description": "Time zone of the date time object.",
       "id": "GooglePrivacyDlpV2TimeZone",
       "properties": {
         "offsetMinutes": {
@@ -6570,10 +6630,12 @@
       "id": "GooglePrivacyDlpV2TransformationErrorHandling",
       "properties": {
         "leaveUntransformed": {
-          "$ref": "GooglePrivacyDlpV2LeaveUntransformed"
+          "$ref": "GooglePrivacyDlpV2LeaveUntransformed",
+          "description": "Ignore errors"
         },
         "throwError": {
-          "$ref": "GooglePrivacyDlpV2ThrowError"
+          "$ref": "GooglePrivacyDlpV2ThrowError",
+          "description": "Throw an error"
         }
       },
       "type": "object"
@@ -6621,6 +6683,7 @@
           "description": "The specific suppression option these stats apply to."
         },
         "results": {
+          "description": "Collection of all transformations that took place or had an error.",
           "items": {
             "$ref": "GooglePrivacyDlpV2SummaryResult"
           },
@@ -6643,7 +6706,7 @@
       "id": "GooglePrivacyDlpV2TransientCryptoKey",
       "properties": {
         "name": {
-          "description": "Name of the key. [required]\nThis is an arbitrary string used to differentiate different keys.\nA unique key is generated per name: two separate `TransientCryptoKey`\nprotos share the same generated key if their names are the same.\nWhen the data crypto key is generated, this name is not used in any way\n(repeating the api call will result in a different key being generated).",
+          "description": "Required. Name of the key.\nThis is an arbitrary string used to differentiate different keys.\nA unique key is generated per name: two separate `TransientCryptoKey`\nprotos share the same generated key if their names are the same.\nWhen the data crypto key is generated, this name is not used in any way\n(repeating the api call will result in a different key being generated).",
           "type": "string"
         }
       },
@@ -6665,7 +6728,7 @@
       "id": "GooglePrivacyDlpV2UnwrappedCryptoKey",
       "properties": {
         "key": {
-          "description": "A 128/192/256 bit key. [required]",
+          "description": "Required. A 128/192/256 bit key.",
           "format": "byte",
           "type": "string"
         }
@@ -6741,12 +6804,15 @@
       "id": "GooglePrivacyDlpV2Value",
       "properties": {
         "booleanValue": {
+          "description": "boolean",
           "type": "boolean"
         },
         "dateValue": {
-          "$ref": "GoogleTypeDate"
+          "$ref": "GoogleTypeDate",
+          "description": "date"
         },
         "dayOfWeekValue": {
+          "description": "day of week",
           "enum": [
             "DAY_OF_WEEK_UNSPECIFIED",
             "MONDAY",
@@ -6770,20 +6836,25 @@
           "type": "string"
         },
         "floatValue": {
+          "description": "float",
           "format": "double",
           "type": "number"
         },
         "integerValue": {
+          "description": "integer",
           "format": "int64",
           "type": "string"
         },
         "stringValue": {
+          "description": "string",
           "type": "string"
         },
         "timeValue": {
-          "$ref": "GoogleTypeTimeOfDay"
+          "$ref": "GoogleTypeTimeOfDay",
+          "description": "time of day"
         },
         "timestampValue": {
+          "description": "timestamp",
           "format": "google-datetime",
           "type": "string"
         }

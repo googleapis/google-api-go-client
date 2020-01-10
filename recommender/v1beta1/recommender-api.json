@@ -122,7 +122,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Name of the recommendation.",
+                          "description": "Required. Name of the recommendation.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/recommenders/[^/]+/recommendations/[^/]+$",
                           "required": true,
@@ -152,13 +152,13 @@
                           "type": "string"
                         },
                         "pageSize": {
-                          "description": "Optional. The maximum number of results to return from this request.\nNon-positive values are ignored. If not specified, the server will\ndetermine the number of results to return.",
+                          "description": "Optional. The maximum number of results to return from this request.  Non-positive\nvalues are ignored. If not specified, the server will determine the number\nof results to return.",
                           "format": "int32",
                           "location": "query",
                           "type": "integer"
                         },
                         "pageToken": {
-                          "description": "Optional. If present, retrieves the next batch of results from the\npreceding call to this method. `page_token` must be the value of\n`next_page_token` from the previous response. The values of other method\nparameters must be identical to those in the previous call.",
+                          "description": "Optional. If present, retrieves the next batch of results from the preceding call to\nthis method. `page_token` must be the value of `next_page_token` from the\nprevious response. The values of other method parameters must be identical\nto those in the previous call.",
                           "location": "query",
                           "type": "string"
                         },
@@ -188,7 +188,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Name of the recommendation.",
+                          "description": "Required. Name of the recommendation.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/recommenders/[^/]+/recommendations/[^/]+$",
                           "required": true,
@@ -216,7 +216,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Name of the recommendation.",
+                          "description": "Required. Name of the recommendation.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/recommenders/[^/]+/recommendations/[^/]+$",
                           "required": true,
@@ -244,7 +244,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Name of the recommendation.",
+                          "description": "Required. Name of the recommendation.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/recommenders/[^/]+/recommendations/[^/]+$",
                           "required": true,
@@ -271,7 +271,7 @@
       }
     }
   },
-  "revision": "20191216",
+  "revision": "20200108",
   "rootUrl": "https://recommender.googleapis.com/",
   "schemas": {
     "GoogleCloudRecommenderV1beta1CostProjection": {
@@ -342,7 +342,7 @@
       "id": "GoogleCloudRecommenderV1beta1MarkRecommendationClaimedRequest",
       "properties": {
         "etag": {
-          "description": "Fingerprint of the Recommendation. Provides optimistic locking.",
+          "description": "Required. Fingerprint of the Recommendation. Provides optimistic locking.",
           "type": "string"
         },
         "stateMetadata": {
@@ -360,7 +360,7 @@
       "id": "GoogleCloudRecommenderV1beta1MarkRecommendationFailedRequest",
       "properties": {
         "etag": {
-          "description": "Fingerprint of the Recommendation. Provides optimistic locking.",
+          "description": "Required. Fingerprint of the Recommendation. Provides optimistic locking.",
           "type": "string"
         },
         "stateMetadata": {
@@ -378,7 +378,7 @@
       "id": "GoogleCloudRecommenderV1beta1MarkRecommendationSucceededRequest",
       "properties": {
         "etag": {
-          "description": "Fingerprint of the Recommendation. Provides optimistic locking.",
+          "description": "Required. Fingerprint of the Recommendation. Provides optimistic locking.",
           "type": "string"
         },
         "stateMetadata": {
@@ -487,7 +487,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Name of recommendation.\n\nA project recommendation is represented as\n  projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/recommendations/[RECOMMENDATION_ID]",
+          "description": "Name of recommendation.",
           "type": "string"
         },
         "primaryImpact": {

@@ -140,20 +140,6 @@ func (w withGRPCDialOption) Apply(o *internal.DialSettings) {
 	o.GRPCDialOpts = append(o.GRPCDialOpts, w.opt)
 }
 
-// WithGRPCConnectionPool returns a ClientOption that creates a pool of gRPC
-// connections that requests will be balanced between.
-// This is an EXPERIMENTAL API and may be changed or removed in the future.
-func WithGRPCConnectionPool(size int) ClientOption {
-	return withGRPCConnectionPool(size)
-}
-
-type withGRPCConnectionPool int
-
-func (w withGRPCConnectionPool) Apply(o *internal.DialSettings) {
-	balancer := grpc.RoundRobin(internal.NewPoolResolver(int(w), o))
-	o.GRPCDialOpts = append(o.GRPCDialOpts, grpc.WithBalancer(balancer))
-}
-
 // WithAPIKey returns a ClientOption that specifies an API key to be used
 // as the basis for authentication.
 //

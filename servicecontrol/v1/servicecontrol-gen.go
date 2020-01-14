@@ -2887,6 +2887,47 @@ func (s *ServiceAccountDelegationInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SpanContext: The context of a span, attached to
+// google.api.Distribution.Exemplars
+// in google.api.Distribution values during aggregation.
+//
+// It contains the name of a span with format:
+//     projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]
+type SpanContext struct {
+	// SpanName: The resource name of the span in the following format:
+	//
+	//     projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a unique
+	// identifier for a trace within a project;
+	// it is a 32-character hexadecimal encoding of a 16-byte
+	// array.
+	//
+	// [SPAN_ID] is a unique identifier for a span within a trace; it
+	// is a 16-character hexadecimal encoding of an 8-byte array.
+	SpanName string `json:"spanName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SpanName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SpanName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpanContext) MarshalJSON() ([]byte, error) {
+	type NoMethod SpanContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for
 // different programming environments, including REST APIs and RPC APIs.
@@ -3029,7 +3070,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3191,7 +3232,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3352,7 +3393,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

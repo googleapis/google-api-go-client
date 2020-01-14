@@ -18,6 +18,7 @@
   "description": "Examines the call stack and variables of a running application without stopping or slowing it down.\n",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/debugger",
+  "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -422,7 +423,7 @@
       }
     }
   },
-  "revision": "20191003",
+  "revision": "20200102",
   "rootUrl": "https://clouddebugger.googleapis.com/",
   "schemas": {
     "AliasContext": {
@@ -878,7 +879,7 @@
       "properties": {
         "breakpoint": {
           "$ref": "Breakpoint",
-          "description": "Breakpoint resource.\nThe field `id` is guaranteed to be set (in addition to the echoed fileds)."
+          "description": "Breakpoint resource.\nThe field `id` is guaranteed to be set (in addition to the echoed fields)."
         }
       },
       "type": "object"

@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/GPmJrIrExw3FkiMrSNedoSFbGgo\"",
+  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/8XfZBAQ0kwCvrb_d9N7zmFuWHME\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2386,9 +2386,158 @@
           ]
         }
       }
+    },
+    "systemapks": {
+      "resources": {
+        "variants": {
+          "methods": {
+            "create": {
+              "description": "Creates a new variant of APK which is suitable for inclusion in a system image.",
+              "httpMethod": "POST",
+              "id": "androidpublisher.systemapks.variants.create",
+              "parameterOrder": [
+                "packageName",
+                "versionCode"
+              ],
+              "parameters": {
+                "packageName": {
+                  "description": "Unique identifier for the Android app; for example, \"com.spiffygame\".",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "versionCode": {
+                  "description": "The version code of the App Bundle.",
+                  "format": "int64",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "{packageName}/systemApks/{versionCode}/variants",
+              "request": {
+                "$ref": "SystemApkVariantsCreateRequest"
+              },
+              "response": {
+                "$ref": "Variant"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/androidpublisher"
+              ]
+            },
+            "download": {
+              "description": "Download a previously created APK which is suitable for inclusion in a system image.",
+              "httpMethod": "GET",
+              "id": "androidpublisher.systemapks.variants.download",
+              "parameterOrder": [
+                "packageName",
+                "versionCode",
+                "variantId"
+              ],
+              "parameters": {
+                "packageName": {
+                  "description": "Unique identifier for the Android app; for example, \"com.spiffygame\".",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "variantId": {
+                  "format": "uint32",
+                  "location": "path",
+                  "required": true,
+                  "type": "integer"
+                },
+                "versionCode": {
+                  "description": "The version code of the App Bundle.",
+                  "format": "int64",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "{packageName}/systemApks/{versionCode}/variants/{variantId}:download",
+              "scopes": [
+                "https://www.googleapis.com/auth/androidpublisher"
+              ],
+              "supportsMediaDownload": true,
+              "useMediaDownloadService": true
+            },
+            "get": {
+              "description": "Returns a previously created system APK variant.",
+              "httpMethod": "GET",
+              "id": "androidpublisher.systemapks.variants.get",
+              "parameterOrder": [
+                "packageName",
+                "versionCode",
+                "variantId"
+              ],
+              "parameters": {
+                "packageName": {
+                  "description": "Unique identifier for the Android app; for example, \"com.spiffygame\".",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "variantId": {
+                  "description": "Unique identifier for this variant.",
+                  "format": "uint32",
+                  "location": "path",
+                  "required": true,
+                  "type": "integer"
+                },
+                "versionCode": {
+                  "description": "The version code of the App Bundle.",
+                  "format": "int64",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "{packageName}/systemApks/{versionCode}/variants/{variantId}",
+              "response": {
+                "$ref": "Variant"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/androidpublisher"
+              ]
+            },
+            "list": {
+              "description": "Returns the list of previously created system APK variants.",
+              "httpMethod": "GET",
+              "id": "androidpublisher.systemapks.variants.list",
+              "parameterOrder": [
+                "packageName",
+                "versionCode"
+              ],
+              "parameters": {
+                "packageName": {
+                  "description": "Unique identifier for the Android app; for example, \"com.spiffygame\".",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "versionCode": {
+                  "description": "The version code of the App Bundle.",
+                  "format": "int64",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "{packageName}/systemApks/{versionCode}/variants",
+              "response": {
+                "$ref": "SystemApkVariantsListResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/androidpublisher"
+              ]
+            }
+          }
+        }
+      }
     }
   },
-  "revision": "20191202",
+  "revision": "20191215",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -2664,6 +2813,28 @@
           "description": "Screen width in pixels",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "DeviceSpec": {
+      "id": "DeviceSpec",
+      "properties": {
+        "screenDensity": {
+          "format": "uint32",
+          "type": "integer"
+        },
+        "supportedAbis": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "supportedLocales": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -3155,6 +3326,11 @@
           "description": "The type of purchase of the inapp product. This field is only set if this purchase was not made using the standard in-app billing flow. Possible values are:  \n- Test (i.e. purchased from a license testing account) \n- Promo (i.e. purchased using a promo code) \n- Rewarded (i.e. from watching a video ad instead of paying)",
           "format": "int32",
           "type": "integer"
+        },
+        "quantity": {
+          "description": "The quantity associated with the purchase of the inapp product.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -3489,6 +3665,27 @@
       },
       "type": "object"
     },
+    "SystemApkVariantsCreateRequest": {
+      "id": "SystemApkVariantsCreateRequest",
+      "properties": {
+        "deviceSpec": {
+          "$ref": "DeviceSpec"
+        }
+      },
+      "type": "object"
+    },
+    "SystemApkVariantsListResponse": {
+      "id": "SystemApkVariantsListResponse",
+      "properties": {
+        "variants": {
+          "items": {
+            "$ref": "Variant"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "Testers": {
       "id": "Testers",
       "properties": {
@@ -3662,6 +3859,20 @@
         "thumbsUpCount": {
           "description": "Number of users who have given this review a thumbs up",
           "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "Variant": {
+      "description": "Represents the variant of a generated system APK from an uploaded App Bundle.",
+      "id": "Variant",
+      "properties": {
+        "deviceSpec": {
+          "$ref": "DeviceSpec"
+        },
+        "variantId": {
+          "format": "uint32",
           "type": "integer"
         }
       },

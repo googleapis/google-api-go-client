@@ -30,7 +30,7 @@
   "description": "Supports core YouTube features, such as uploading videos, creating and managing playlists, searching for content, and much more.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/youtube/v3",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/yXw94x0FfH9hsuVdo84XOMLmCno\"",
+  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/FvGCP4PWblWUASImsiM0Esh60RM\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/youtube-16.png",
     "x32": "https://www.google.com/images/icons/product/youtube-32.png"
@@ -2053,6 +2053,11 @@
             "part"
           ],
           "parameters": {
+            "filterByMemberChannelId": {
+              "description": "The filterByMemberChannelId parameter represents a comma separated list of channel IDs. Only data about members that are part of this list will be included in the response. It can be used to efficiently check whether specific users are entitled to perks offered via third parties.",
+              "location": "query",
+              "type": "string"
+            },
             "hasAccessToLevel": {
               "description": "The hasAccessToLevel parameter specifies, when set, the ID of a pricing level that members from the results set should have access to. When not set, all members will be considered, regardless of their active pricing level.",
               "location": "query",
@@ -2087,7 +2092,7 @@
               "type": "string"
             },
             "part": {
-              "description": "The part parameter specifies the member resource parts that the API response will include. Supported values are id and snippet.",
+              "description": "The part parameter specifies the member resource parts that the API response will include. Set the parameter value to snippet.",
               "location": "query",
               "required": true,
               "type": "string"
@@ -3586,7 +3591,7 @@
       }
     }
   },
-  "revision": "20190827",
+  "revision": "20200109",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AccessPolicy": {
@@ -4959,6 +4964,9 @@
           ],
           "type": "string"
         },
+        "madeForKids": {
+          "type": "boolean"
+        },
         "privacyStatus": {
           "description": "Privacy status of the channel.",
           "enum": [
@@ -4972,6 +4980,9 @@
             ""
           ],
           "type": "string"
+        },
+        "selfDeclaredMadeForKids": {
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -7717,6 +7728,9 @@
           ],
           "type": "string"
         },
+        "madeForKids": {
+          "type": "boolean"
+        },
         "privacyStatus": {
           "annotations": {
             "required": [
@@ -7750,6 +7764,9 @@
             ""
           ],
           "type": "string"
+        },
+        "selfDeclaredMadeForKids": {
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -8655,10 +8672,6 @@
           "description": "Etag of this resource.",
           "type": "string"
         },
-        "id": {
-          "description": "The ID that YouTube assigns to uniquely identify the member.",
-          "type": "string"
-        },
         "kind": {
           "default": "youtube#member",
           "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#member\".",
@@ -8733,11 +8746,19 @@
       "id": "MembershipsDetails",
       "properties": {
         "accessibleLevels": {
-          "description": "All levels that the user has access to. This includes the purchased level and all other levels that are included because of a higher purchase.",
+          "description": "All levels that the user has access to. This includes the currently active level and all other levels that are included because of a higher purchase.",
           "items": {
             "type": "string"
           },
           "type": "array"
+        },
+        "highestAccessibleLevel": {
+          "description": "The highest level that the user has access to at the moment.",
+          "type": "string"
+        },
+        "highestAccessibleLevelDisplayName": {
+          "description": "Display name for the highest level that the user has access to at the moment.",
+          "type": "string"
         },
         "memberSince": {
           "description": "The date and time when the user became a continuous member across all levels.",
@@ -8758,7 +8779,7 @@
           "type": "integer"
         },
         "purchasedLevel": {
-          "description": "The highest level the user has access to at the moment.",
+          "description": "The highest level that the user has access to at the moment. DEPRECATED - highest_accessible_level should be used instead. This will be removed after we make sure there are no 3rd parties relying on it.",
           "type": "string"
         }
       },
@@ -10969,6 +10990,9 @@
           ],
           "type": "string"
         },
+        "madeForKids": {
+          "type": "boolean"
+        },
         "privacyStatus": {
           "description": "The video's privacy status.",
           "enum": [
@@ -11019,6 +11043,10 @@
             ""
           ],
           "type": "string"
+        },
+        "selfDeclaredMadeForKids": {
+          "description": "Allows clients to set the Crosswalk self_declared state for a Video. This maps to VAPI.Video.creator_flags.is_crosswalk_self_declared() and VAPI.Video.creator_flags.is_not_crosswalk_self_declared().",
+          "type": "boolean"
         },
         "uploadStatus": {
           "description": "The status of the uploaded video.",

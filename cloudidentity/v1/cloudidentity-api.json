@@ -185,7 +185,7 @@
           ]
         },
         "list": {
-          "description": "List groups within a customer or a domain.",
+          "description": "Lists groups within a customer or a domain.",
           "flatPath": "v1/groups",
           "httpMethod": "GET",
           "id": "cloudidentity.groups.list",
@@ -422,7 +422,7 @@
               ]
             },
             "list": {
-              "description": "List Memberships within a Group.",
+              "description": "Lists Memberships within a Group.",
               "flatPath": "v1/groups/{groupsId}/memberships",
               "httpMethod": "GET",
               "id": "cloudidentity.groups.memberships.list",
@@ -511,7 +511,7 @@
       }
     }
   },
-  "revision": "20191015",
+  "revision": "20200110",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "EntityKey": {

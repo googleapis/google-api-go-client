@@ -739,7 +739,7 @@ func (c *GroupsCreateCall) Header() http.Header {
 
 func (c *GroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -865,7 +865,7 @@ func (c *GroupsDeleteCall) Header() http.Header {
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1007,7 +1007,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1108,7 +1108,7 @@ type GroupsListCall struct {
 	header_      http.Header
 }
 
-// List: List groups within a customer or a domain.
+// List: Lists groups within a customer or a domain.
 func (r *GroupsService) List() *GroupsListCall {
 	c := &GroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1186,7 +1186,7 @@ func (c *GroupsListCall) Header() http.Header {
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1245,7 +1245,7 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "List groups within a customer or a domain.",
+	//   "description": "Lists groups within a customer or a domain.",
 	//   "flatPath": "v1/groups",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.groups.list",
@@ -1392,7 +1392,7 @@ func (c *GroupsLookupCall) Header() http.Header {
 
 func (c *GroupsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1534,7 +1534,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1727,7 +1727,7 @@ func (c *GroupsSearchCall) Header() http.Header {
 
 func (c *GroupsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1899,7 +1899,7 @@ func (c *GroupsMembershipsCreateCall) Header() http.Header {
 
 func (c *GroupsMembershipsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2038,7 +2038,7 @@ func (c *GroupsMembershipsDeleteCall) Header() http.Header {
 
 func (c *GroupsMembershipsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2180,7 +2180,7 @@ func (c *GroupsMembershipsGetCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2282,7 +2282,7 @@ type GroupsMembershipsListCall struct {
 	header_      http.Header
 }
 
-// List: List Memberships within a Group.
+// List: Lists Memberships within a Group.
 func (r *GroupsMembershipsService) List(parent string) *GroupsMembershipsListCall {
 	c := &GroupsMembershipsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2353,7 +2353,7 @@ func (c *GroupsMembershipsListCall) Header() http.Header {
 
 func (c *GroupsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2415,7 +2415,7 @@ func (c *GroupsMembershipsListCall) Do(opts ...googleapi.CallOption) (*ListMembe
 	}
 	return ret, nil
 	// {
-	//   "description": "List Memberships within a Group.",
+	//   "description": "Lists Memberships within a Group.",
 	//   "flatPath": "v1/groups/{groupsId}/memberships",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.groups.memberships.list",
@@ -2568,7 +2568,7 @@ func (c *GroupsMembershipsLookupCall) Header() http.Header {
 
 func (c *GroupsMembershipsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

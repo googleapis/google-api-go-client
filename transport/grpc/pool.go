@@ -18,7 +18,12 @@ type ConnPool interface {
 	// Conns aren't returned to the pool.
 	Conn() *grpc.ClientConn
 
-	// Close closes every ClientConn in the group.
+	// Num returns the number of connections in the pool.
+	//
+	// It will always return the same value.
+	Num() int
+
+	// Close closes every ClientConn in the pool.
 	//
 	// The error returned by Close may be a single error or multiple errors.
 	Close() error
@@ -36,6 +41,10 @@ func (p *singleConnPool) Conn() *grpc.ClientConn {
 	return p.conn
 }
 
+func (p *singleConnPool) Num() int {
+	return 1
+}
+
 func (p *singleConnPool) Close() error {
 	return p.conn.Close()
 }
@@ -44,6 +53,10 @@ type roundRobinConnPool struct {
 	conns []*grpc.ClientConn
 
 	idx uint32 // access via sync/atomic
+}
+
+func (p *roundRobinConnPool) Num() int {
+	return len(p.conns)
 }
 
 func (p *roundRobinConnPool) Conn() *grpc.ClientConn {

@@ -306,7 +306,7 @@
       }
     }
   },
-  "revision": "20191230",
+  "revision": "20200114",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddSubnetworkRequest": {
@@ -1041,6 +1041,10 @@
             "$ref": "HttpRule"
           },
           "type": "array"
+        },
+        "allowHalfDuplex": {
+          "description": "When this flag is set to true, HTTP requests will be allowed to invoke a\nhalf-duplex streaming method.",
+          "type": "boolean"
         },
         "body": {
           "description": "The name of the request field whose value is mapped to the HTTP request\nbody, or `*` for mapping all request fields not captured by the path\npattern to the HTTP body, or omitted for not having any HTTP request body.\n\nNOTE: the referred field must be present at the top-level of the request\nmessage type.",
@@ -1831,6 +1835,25 @@
       },
       "type": "object"
     },
+    "ServiceIdentity": {
+      "description": "The per-product per-project service identity for a service.\n\n\nUse this field to configure per-product per-project service identity.\nExample of a service identity configuration.\n\n    usage:\n      service_identity:\n      - service_account_parent: \"projects/123456789\"\n        display_name: \"Cloud XXX Service Agent\"\n        description: \"Used as the identity of Cloud XXX to access resources\"",
+      "id": "ServiceIdentity",
+      "properties": {
+        "description": {
+          "description": "Optional. A user-specified opaque description of the service account.\nMust be less than or equal to 256 UTF-8 bytes.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Optional. A user-specified name for the service account.\nMust be less than or equal to 100 UTF-8 bytes.",
+          "type": "string"
+        },
+        "serviceAccountParent": {
+          "description": "A service account project that hosts the service accounts.\n\nAn example name would be:\n`projects/123456789`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "SourceContext": {
       "description": "`SourceContext` represents information about the source of a\nprotobuf element, like the file in which it is defined.",
       "id": "SourceContext",
@@ -2030,6 +2053,10 @@
             "$ref": "UsageRule"
           },
           "type": "array"
+        },
+        "serviceIdentity": {
+          "$ref": "ServiceIdentity",
+          "description": "The configuration of a per-product per-project service identity."
         }
       },
       "type": "object"

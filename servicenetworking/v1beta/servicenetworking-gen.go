@@ -2123,6 +2123,11 @@ type HttpRule struct {
 	// the nesting may only be one level deep).
 	AdditionalBindings []*HttpRule `json:"additionalBindings,omitempty"`
 
+	// AllowHalfDuplex: When this flag is set to true, HTTP requests will be
+	// allowed to invoke a
+	// half-duplex streaming method.
+	AllowHalfDuplex bool `json:"allowHalfDuplex,omitempty"`
+
 	// Body: The name of the request field whose value is mapped to the HTTP
 	// request
 	// body, or `*` for mapping all request fields not captured by the
@@ -4052,6 +4057,61 @@ func (s *Service) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ServiceIdentity: The per-product per-project service identity for a
+// service.
+//
+//
+// Use this field to configure per-product per-project service
+// identity.
+// Example of a service identity configuration.
+//
+//     usage:
+//       service_identity:
+//       - service_account_parent: "projects/123456789"
+//         display_name: "Cloud XXX Service Agent"
+//         description: "Used as the identity of Cloud XXX to access
+// resources"
+type ServiceIdentity struct {
+	// Description: Optional. A user-specified opaque description of the
+	// service account.
+	// Must be less than or equal to 256 UTF-8 bytes.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Optional. A user-specified name for the service
+	// account.
+	// Must be less than or equal to 100 UTF-8 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ServiceAccountParent: A service account project that hosts the
+	// service accounts.
+	//
+	// An example name would be:
+	// `projects/123456789`
+	ServiceAccountParent string `json:"serviceAccountParent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceIdentity) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceIdentity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SourceContext: `SourceContext` represents information about the
 // source of a
 // protobuf element, like the file in which it is defined.
@@ -4444,6 +4504,10 @@ type Usage struct {
 	// order.
 	Rules []*UsageRule `json:"rules,omitempty"`
 
+	// ServiceIdentity: The configuration of a per-product per-project
+	// service identity.
+	ServiceIdentity *ServiceIdentity `json:"serviceIdentity,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "ProducerNotificationChannel") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
@@ -4606,7 +4670,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4758,7 +4822,7 @@ func (c *ServicesAddSubnetworkCall) Header() http.Header {
 
 func (c *ServicesAddSubnetworkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4910,7 +4974,7 @@ func (c *ServicesSearchRangeCall) Header() http.Header {
 
 func (c *ServicesSearchRangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5071,7 +5135,7 @@ func (c *ServicesUpdateConnectionsCall) Header() http.Header {
 
 func (c *ServicesUpdateConnectionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5239,7 +5303,7 @@ func (c *ServicesConnectionsCreateCall) Header() http.Header {
 
 func (c *ServicesConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5408,7 +5472,7 @@ func (c *ServicesConnectionsListCall) Header() http.Header {
 
 func (c *ServicesConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

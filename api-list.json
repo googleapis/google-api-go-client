@@ -34,6 +34,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "accessapproval:v1",
+      "name": "accessapproval",
+      "version": "v1",
+      "title": "Access Approval API",
+      "description": "An API for controlling access to data by Google personnel.",
+      "discoveryRestUrl": "https://accessapproval.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/access-approval/docs",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "accessapproval:v1beta1",
       "name": "accessapproval",
       "version": "v1beta1",
@@ -45,7 +60,7 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/access-approval/docs",
-      "preferred": true
+      "preferred": false
     },
     {
       "kind": "discovery#directoryItem",
@@ -836,6 +851,21 @@
       "title": "Cloud Build API",
       "description": "Creates and manages builds on Google Cloud Platform.",
       "discoveryRestUrl": "https://cloudbuild.googleapis.com/$discovery/rest?version=v1alpha1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/cloud-build/docs/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "cloudbuild:v1alpha2",
+      "name": "cloudbuild",
+      "version": "v1alpha2",
+      "title": "Cloud Build API",
+      "description": "Creates and manages builds on Google Cloud Platform.",
+      "discoveryRestUrl": "https://cloudbuild.googleapis.com/$discovery/rest?version=v1alpha2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3816,6 +3846,21 @@
       "title": "Cloud Translation API",
       "description": "Integrates text translation into your website or application.",
       "discoveryRestUrl": "https://translation.googleapis.com/$discovery/rest?version=v2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/translate/docs/quickstarts",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "translate:v3",
+      "name": "translate",
+      "version": "v3",
+      "title": "Cloud Translation API",
+      "description": "Integrates text translation into your website or application.",
+      "discoveryRestUrl": "https://translation.googleapis.com/$discovery/rest?version=v3",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"

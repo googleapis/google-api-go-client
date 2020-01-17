@@ -74,8 +74,19 @@ const apiName = "run"
 const apiVersion = "v1beta1"
 const basePath = "https://run.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// View and manage your data across Google Cloud Platform services
+	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+)
+
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := option.WithScopes(
+		"https://www.googleapis.com/auth/cloud-platform",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -1478,7 +1489,7 @@ func (c *CustomresourcedefinitionsListCall) Header() http.Header {
 
 func (c *CustomresourcedefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200116")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1588,7 +1599,10 @@ func (c *CustomresourcedefinitionsListCall) Do(opts ...googleapi.CallOption) (*L
 	//   "path": "apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions",
 	//   "response": {
 	//     "$ref": "ListCustomResourceDefinitionsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
 	// }
 
 }
@@ -1648,7 +1662,7 @@ func (c *NamespacesCustomresourcedefinitionsGetCall) Header() http.Header {
 
 func (c *NamespacesCustomresourcedefinitionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200116")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1729,7 +1743,10 @@ func (c *NamespacesCustomresourcedefinitionsGetCall) Do(opts ...googleapi.CallOp
 	//   "path": "apis/apiextensions.k8s.io/v1beta1/{+name}",
 	//   "response": {
 	//     "$ref": "CustomResourceDefinition"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
 	// }
 
 }
@@ -1789,7 +1806,7 @@ func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) Header() http.Header
 
 func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200116")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1870,7 +1887,10 @@ func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) Do(opts ...googleapi
 	//   "path": "v1beta1/{+name}",
 	//   "response": {
 	//     "$ref": "CustomResourceDefinition"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
 	// }
 
 }
@@ -1984,7 +2004,7 @@ func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Header() http.Heade
 
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200116")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2101,7 +2121,10 @@ func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Do(opts ...googleap
 	//   "path": "v1beta1/{+parent}/customresourcedefinitions",
 	//   "response": {
 	//     "$ref": "ListCustomResourceDefinitionsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
 	// }
 
 }

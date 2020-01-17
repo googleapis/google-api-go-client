@@ -14,7 +14,7 @@
   "canonicalName": "Cloud Asset",
   "description": "The cloud asset API manages the history and inventory of cloud resources.",
   "discoveryVersion": "v1",
-  "documentationLink": "https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/quickstart-cloud-asset-inventory",
+  "documentationLink": "https://cloud.google.com/asset-inventory/docs/quickstart",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -356,7 +356,7 @@
       }
     }
   },
-  "revision": "20191207",
+  "revision": "20200110",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -605,7 +605,7 @@
           "type": "array"
         },
         "assetTypes": {
-          "description": "A list of types of the assets to receive updates. You must specify either\nor both of asset_names and asset_types. Only asset updates matching\nspecified asset_names and asset_types are exported to the feed.\nFor example:\n\"compute.googleapis.com/Disk\" See [Introduction to Cloud Asset\nInventory](https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview)\nfor all supported asset types.",
+          "description": "A list of types of the assets to receive updates. You must specify either\nor both of asset_names and asset_types. Only asset updates matching\nspecified asset_names and asset_types are exported to the feed.\nFor example: `\"compute.googleapis.com/Disk\"`\n\nSee [this\ntopic](https://cloud.google.com/asset-inventory/docs/supported-asset-types)\nfor a list of all supported asset types.",
           "items": {
             "type": "string"
           },
@@ -777,6 +777,10 @@
           "format": "google-datetime",
           "type": "string"
         },
+        "custom": {
+          "$ref": "GoogleIdentityAccesscontextmanagerV1CustomLevel",
+          "description": "A `CustomLevel` written in the Common Expression Language."
+        },
         "description": {
           "description": "Description of the `AccessLevel` and its use. Does not affect behavior.",
           "type": "string"
@@ -891,6 +895,17 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleIdentityAccesscontextmanagerV1CustomLevel": {
+      "description": "`CustomLevel` is an `AccessLevel` using the Cloud Common Expression Language\nto represent the necessary conditions for the level to apply to a request.\nSee CEL spec at: https://github.com/google/cel-spec",
+      "id": "GoogleIdentityAccesscontextmanagerV1CustomLevel",
+      "properties": {
+        "expr": {
+          "$ref": "Expr",
+          "description": "Required. A Cloud CEL expression evaluating to a boolean."
         }
       },
       "type": "object"

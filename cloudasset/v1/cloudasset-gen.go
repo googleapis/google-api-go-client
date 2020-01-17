@@ -6,7 +6,7 @@
 
 // Package cloudasset provides access to the Cloud Asset API.
 //
-// For product documentation, see: https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/quickstart-cloud-asset-inventory
+// For product documentation, see: https://cloud.google.com/asset-inventory/docs/quickstart
 //
 // Creating a client
 //
@@ -783,12 +783,13 @@ type Feed struct {
 	// or both of asset_names and asset_types. Only asset updates
 	// matching
 	// specified asset_names and asset_types are exported to the feed.
-	// For example:
-	// "compute.googleapis.com/Disk" See [Introduction to Cloud
-	// Asset
-	// Inventory](https://cloud.google.com/resource-manager/docs/cloud-
-	// asset-inventory/overview)
-	// for all supported asset types.
+	// For example: "compute.googleapis.com/Disk"
+	//
+	// See
+	// [this
+	// topic](https://cloud.google.com/asset-inventory/docs/supported-a
+	// sset-types)
+	// for a list of all supported asset types.
 	AssetTypes []string `json:"assetTypes,omitempty"`
 
 	// ContentType: Asset content type. If not specified, no content but the
@@ -1345,6 +1346,9 @@ type GoogleIdentityAccesscontextmanagerV1AccessLevel struct {
 	// CreateTime: Output only. Time the `AccessLevel` was created in UTC.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// Custom: A `CustomLevel` written in the Common Expression Language.
+	Custom *GoogleIdentityAccesscontextmanagerV1CustomLevel `json:"custom,omitempty"`
+
 	// Description: Description of the `AccessLevel` and its use. Does not
 	// affect behavior.
 	Description string `json:"description,omitempty"`
@@ -1570,6 +1574,38 @@ type GoogleIdentityAccesscontextmanagerV1Condition struct {
 
 func (s *GoogleIdentityAccesscontextmanagerV1Condition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1Condition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1CustomLevel: `CustomLevel` is an
+// `AccessLevel` using the Cloud Common Expression Language
+// to represent the necessary conditions for the level to apply to a
+// request.
+// See CEL spec at: https://github.com/google/cel-spec
+type GoogleIdentityAccesscontextmanagerV1CustomLevel struct {
+	// Expr: Required. A Cloud CEL expression evaluating to a boolean.
+	Expr *Expr `json:"expr,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Expr") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Expr") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1CustomLevel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1CustomLevel
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2490,7 +2526,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200116")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2628,7 +2664,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200116")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2769,7 +2805,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200116")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2913,7 +2949,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200116")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3048,7 +3084,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200116")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3201,7 +3237,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200116")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3410,7 +3446,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200116")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3580,7 +3616,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200116")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

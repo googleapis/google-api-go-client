@@ -135,6 +135,11 @@ func dial(ctx context.Context, insecure bool, o internal.DialSettings) (*grpc.Cl
 				grpc.WithCredentialsBundle(
 					grpcgoogle.NewComputeEngineCredentials(),
 				),
+				// For now all DirectPath go clients will be using the following lb config, but in future
+				// when different services need different configs, then we should change this to a
+				// per-service config.
+				grpc.WithDisableServiceConfig(),
+				grpc.WithDefaultServiceConfig(`{"loadBalancingConfig":[{"grpclb":{"childPolicy":[{"pick_first":{}}]}}]}`),
 			}
 			// TODO(cbro): add support for system parameters (quota project, request reason) via chained interceptor.
 		} else {

@@ -279,6 +279,85 @@ func (s *AllocateQuotaResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AttributeValue: The allowed types for [VALUE] in a `[KEY]:[VALUE]`
+// attribute.
+type AttributeValue struct {
+	// BoolValue: A Boolean value represented by `true` or `false`.
+	BoolValue bool `json:"boolValue,omitempty"`
+
+	// IntValue: A 64-bit signed integer.
+	IntValue int64 `json:"intValue,omitempty,string"`
+
+	// StringValue: A string up to 256 bytes long.
+	StringValue *TruncatableString `json:"stringValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BoolValue") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AttributeValue) MarshalJSON() ([]byte, error) {
+	type NoMethod AttributeValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Attributes: A set of attributes, each in the format `[KEY]:[VALUE]`.
+type Attributes struct {
+	// AttributeMap: The set of attributes. Each attribute's key can be up
+	// to 128 bytes
+	// long. The value can be a string up to 256 bytes, a signed 64-bit
+	// integer,
+	// or the Boolean values `true` and `false`. For example:
+	//
+	//     "/instance_id": "my-instance"
+	//     "/http/user_agent": ""
+	//     "/http/request_bytes": 300
+	//     "abc.com/myattribute": true
+	AttributeMap map[string]AttributeValue `json:"attributeMap,omitempty"`
+
+	// DroppedAttributesCount: The number of attributes that were discarded.
+	// Attributes can be discarded
+	// because their keys are too long or because there are too many
+	// attributes.
+	// If this value is 0 then all attributes are valid.
+	DroppedAttributesCount int64 `json:"droppedAttributesCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttributeMap") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttributeMap") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Attributes) MarshalJSON() ([]byte, error) {
+	type NoMethod Attributes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AuditLog: Common audit log format for Google Cloud Platform API
 // operations.
 //
@@ -1925,6 +2004,13 @@ type Operation struct {
 	// StartTime: Required. Start time of the operation.
 	StartTime string `json:"startTime,omitempty"`
 
+	// TraceSpans: Unimplemented. A list of Cloud Trace spans. The span
+	// names shall contain
+	// the id of the destination project which can be either the produce or
+	// the
+	// consumer project.
+	TraceSpans []*TraceSpan `json:"traceSpans,omitempty"`
+
 	// UserLabels: User defined labels for the resource that this operation
 	// is associated
 	// with. Only a combination of 1000 user labels per consumer project
@@ -3009,6 +3095,186 @@ func (s *ThirdPartyPrincipal) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TraceSpan: A span represents a single operation within a trace. Spans
+// can be
+// nested to form a trace tree. Often, a trace contains a root span
+// that describes the end-to-end latency, and one or more subspans
+// for
+// its sub-operations. A trace can also contain multiple root spans,
+// or none at all. Spans do not need to be contiguous&mdash;there may
+// be
+// gaps or overlaps between spans in a trace.
+type TraceSpan struct {
+	// Attributes: A set of attributes on the span. You can have up to 32
+	// attributes per
+	// span.
+	Attributes *Attributes `json:"attributes,omitempty"`
+
+	// ChildSpanCount: An optional number of child spans that were generated
+	// while this span
+	// was active. If set, allows implementation to detect missing child
+	// spans.
+	ChildSpanCount int64 `json:"childSpanCount,omitempty"`
+
+	// DisplayName: A description of the span's operation (up to 128
+	// bytes).
+	// Stackdriver Trace displays the description in the
+	// Google Cloud Platform Console.
+	// For example, the display name can be a qualified method name or a
+	// file name
+	// and a line number where the operation is called. A best practice is
+	// to use
+	// the same display name within an application and at the same call
+	// point.
+	// This makes it easier to correlate spans in different traces.
+	DisplayName *TruncatableString `json:"displayName,omitempty"`
+
+	// EndTime: The end time of the span. On the client side, this is the
+	// time kept by
+	// the local machine where the span execution ends. On the server side,
+	// this
+	// is the time when the server application handler stops running.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Name: The resource name of the span in the following format:
+	//
+	//     projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a unique
+	// identifier for a trace within a project;
+	// it is a 32-character hexadecimal encoding of a 16-byte
+	// array.
+	//
+	// [SPAN_ID] is a unique identifier for a span within a trace; it
+	// is a 16-character hexadecimal encoding of an 8-byte array.
+	Name string `json:"name,omitempty"`
+
+	// ParentSpanId: The [SPAN_ID] of this span's parent span. If this is a
+	// root span,
+	// then this field must be empty.
+	ParentSpanId string `json:"parentSpanId,omitempty"`
+
+	// SameProcessAsParentSpan: (Optional) Set this parameter to indicate
+	// whether this span is in
+	// the same process as its parent. If you do not set this
+	// parameter,
+	// Stackdriver Trace is unable to take advantage of this
+	// helpful
+	// information.
+	SameProcessAsParentSpan bool `json:"sameProcessAsParentSpan,omitempty"`
+
+	// SpanId: The [SPAN_ID] portion of the span's resource name.
+	SpanId string `json:"spanId,omitempty"`
+
+	// SpanKind: Distinguishes between spans generated in a particular
+	// context. For example,
+	// two spans with the same name may be distinguished using `CLIENT`
+	// (caller)
+	// and `SERVER` (callee) to identify an RPC call.
+	//
+	// Possible values:
+	//   "SPAN_KIND_UNSPECIFIED" - Unspecified. Do NOT use as
+	// default.
+	// Implementations MAY assume SpanKind.INTERNAL to be default.
+	//   "INTERNAL" - Indicates that the span is used internally. Default
+	// value.
+	//   "SERVER" - Indicates that the span covers server-side handling of
+	// an RPC or other
+	// remote network request.
+	//   "CLIENT" - Indicates that the span covers the client-side wrapper
+	// around an RPC or
+	// other remote request.
+	//   "PRODUCER" - Indicates that the span describes producer sending a
+	// message to a broker.
+	// Unlike client and  server, there is no direct critical path
+	// latency
+	// relationship between producer and consumer spans (e.g. publishing
+	// a
+	// message to a pubsub service).
+	//   "CONSUMER" - Indicates that the span describes consumer receiving a
+	// message from a
+	// broker. Unlike client and  server, there is no direct critical
+	// path
+	// latency relationship between producer and consumer spans (e.g.
+	// receiving
+	// a message from a pubsub service subscription).
+	SpanKind string `json:"spanKind,omitempty"`
+
+	// StartTime: The start time of the span. On the client side, this is
+	// the time kept by
+	// the local machine where the span execution starts. On the server
+	// side, this
+	// is the time when the server's application handler starts running.
+	StartTime string `json:"startTime,omitempty"`
+
+	// Status: An optional final status for this span.
+	Status *Status `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Attributes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TraceSpan) MarshalJSON() ([]byte, error) {
+	type NoMethod TraceSpan
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TruncatableString: Represents a string that might be shortened to a
+// specified length.
+type TruncatableString struct {
+	// TruncatedByteCount: The number of bytes removed from the original
+	// string. If this
+	// value is 0, then the string was not shortened.
+	TruncatedByteCount int64 `json:"truncatedByteCount,omitempty"`
+
+	// Value: The shortened string. For example, if the original string is
+	// 500
+	// bytes long and the limit of the string is 128 bytes, then
+	// `value` contains the first 128 bytes of the 500-byte
+	// string.
+	//
+	// Truncation always happens on a UTF8 character boundary. If there
+	// are multi-byte characters in the string, then the length of
+	// the
+	// shortened string might be less than the size limit.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TruncatedByteCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TruncatedByteCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TruncatableString) MarshalJSON() ([]byte, error) {
+	type NoMethod TruncatableString
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "servicecontrol.services.allocateQuota":
 
 type ServicesAllocateQuotaCall struct {
@@ -3070,7 +3336,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200116")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200117")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3232,7 +3498,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200116")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200117")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3393,7 +3659,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200116")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200117")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

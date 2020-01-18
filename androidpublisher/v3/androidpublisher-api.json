@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/8XfZBAQ0kwCvrb_d9N7zmFuWHME\"",
+  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/C2YPFJyw1IBZNaWTd0o7oJq6_wY\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2537,7 +2537,7 @@
       }
     }
   },
-  "revision": "20191215",
+  "revision": "20200112",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -3057,10 +3057,6 @@
           "description": "Purchase type enum value. Unmodifiable after creation.",
           "type": "string"
         },
-        "season": {
-          "$ref": "Season",
-          "description": "Definition of a season for a seasonal subscription. Can be defined only for yearly subscriptions."
-        },
         "sku": {
           "description": "The stock-keeping-unit (SKU) of the product, unique within an app.",
           "type": "string"
@@ -3229,22 +3225,6 @@
       },
       "type": "object"
     },
-    "MonthDay": {
-      "id": "MonthDay",
-      "properties": {
-        "day": {
-          "description": "Day of a month, value in [1, 31] range. Valid range depends on the specified month.",
-          "format": "uint32",
-          "type": "integer"
-        },
-        "month": {
-          "description": "Month of a year. e.g. 1 = JAN, 2 = FEB etc.",
-          "format": "uint32",
-          "type": "integer"
-        }
-      },
-      "type": "object"
-    },
     "PageInfo": {
       "id": "PageInfo",
       "properties": {
@@ -3345,20 +3325,6 @@
       },
       "type": "object"
     },
-    "Prorate": {
-      "id": "Prorate",
-      "properties": {
-        "defaultPrice": {
-          "$ref": "Price",
-          "description": "Default price cannot be zero and must be less than the full subscription price. Default price is always in the developer's Checkout merchant currency. Targeted countries have their prices set automatically based on the default_price."
-        },
-        "start": {
-          "$ref": "MonthDay",
-          "description": "Defines the first day on which the price takes effect."
-        }
-      },
-      "type": "object"
-    },
     "Review": {
       "id": "Review",
       "properties": {
@@ -3447,27 +3413,6 @@
         "salt": {
           "format": "int32",
           "type": "integer"
-        }
-      },
-      "type": "object"
-    },
-    "Season": {
-      "id": "Season",
-      "properties": {
-        "end": {
-          "$ref": "MonthDay",
-          "description": "Inclusive end date of the recurrence period."
-        },
-        "prorations": {
-          "description": "Optionally present list of prorations for the season. Each proration is a one-off discounted entry into a subscription. Each proration contains the first date on which the discount is available and the new pricing information.",
-          "items": {
-            "$ref": "Prorate"
-          },
-          "type": "array"
-        },
-        "start": {
-          "$ref": "MonthDay",
-          "description": "Inclusive start date of the recurrence period."
         }
       },
       "type": "object"

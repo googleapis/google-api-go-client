@@ -191,7 +191,7 @@
       }
     }
   },
-  "revision": "20191120",
+  "revision": "20200115",
   "rootUrl": "https://homegraph.googleapis.com/",
   "schemas": {
     "AgentDeviceId": {
@@ -464,7 +464,7 @@
         },
         "payload": {
           "$ref": "StateAndNotificationPayload",
-          "description": "State of devices to update and notification metadata for devices. For\nexample, if a user turns a light on manually, a state update should be\nsent so that the information is always the current status of the device.\nNotifications are independent from the state and its piece of the payload\nshould contain everything necessary to notify the user. Although it may be\nrelated to a state change, it does not need to be. For example, if a\ndevice can turn on/off and change temperature, the states reported would\ninclude both \"on\" and \"70 degrees\" but the 3p may choose not to send any\nnotification for that, or to only say that the \"the room is heating up\",\nkeeping state and notification independent."
+          "description": "Required. State of devices to update and notification metadata for devices. For\nexample, if a user turns a light on manually, a state update should be\nsent so that the information is always the current status of the device.\nNotifications are independent from the state and its piece of the payload\nshould contain everything necessary to notify the user. Although it may be\nrelated to a state change, it does not need to be. For example, if a\ndevice can turn on/off and change temperature, the states reported would\ninclude both \"on\" and \"70 degrees\" but the 3p may choose not to send any\nnotification for that, or to only say that the \"the room is heating up\",\nkeeping state and notification independent."
         },
         "requestId": {
           "description": "Request ID used for debugging.",

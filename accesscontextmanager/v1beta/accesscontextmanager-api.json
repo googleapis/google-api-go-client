@@ -598,7 +598,7 @@
       }
     }
   },
-  "revision": "20191018",
+  "revision": "20200110",
   "rootUrl": "https://accesscontextmanager.googleapis.com/",
   "schemas": {
     "AccessLevel": {
@@ -613,6 +613,10 @@
           "description": "Output only. Time the `AccessLevel` was created in UTC.",
           "format": "google-datetime",
           "type": "string"
+        },
+        "custom": {
+          "$ref": "CustomLevel",
+          "description": "A `CustomLevel` written in the Common Expression Language."
         },
         "description": {
           "description": "Description of the `AccessLevel` and its use. Does not affect behavior.",
@@ -732,6 +736,17 @@
       },
       "type": "object"
     },
+    "CustomLevel": {
+      "description": "`CustomLevel` is an `AccessLevel` using the Cloud Common Expression Language\nto represent the necessary conditions for the level to apply to a request.\nSee CEL spec at: https://github.com/google/cel-spec",
+      "id": "CustomLevel",
+      "properties": {
+        "expr": {
+          "$ref": "Expr",
+          "description": "Required. A Cloud CEL expression evaluating to a boolean."
+        }
+      },
+      "type": "object"
+    },
     "DevicePolicy": {
       "description": "`DevicePolicy` specifies device specific restrictions necessary to acquire a\ngiven access level. A `DevicePolicy` specifies requirements for requests from\ndevices to be granted access levels, it does not do any enforcement on the\ndevice. `DevicePolicy` acts as an AND over all specified fields, and each\nrepeated field is an OR over its elements. Any unset fields are ignored. For\nexample, if the proto is { os_type : DESKTOP_WINDOWS, os_type :\nDESKTOP_LINUX, encryption_status: ENCRYPTED}, then the DevicePolicy will be\ntrue for requests originating from encrypted Linux desktops and encrypted\nWindows desktops.",
       "id": "DevicePolicy",
@@ -792,6 +807,29 @@
         "requireScreenlock": {
           "description": "Whether or not screenlock is required for the DevicePolicy to be true.\nDefaults to `false`.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "Expr": {
+      "description": "Represents an expression text. Example:\n\n    title: \"User account presence\"\n    description: \"Determines whether the request has a user account\"\n    expression: \"size(request.user) \u003e 0\"",
+      "id": "Expr",
+      "properties": {
+        "description": {
+          "description": "An optional description of the expression. This is a longer text which\ndescribes the expression, e.g. when hovered over it in a UI.",
+          "type": "string"
+        },
+        "expression": {
+          "description": "Textual representation of an expression in\nCommon Expression Language syntax.\n\nThe application context of the containing message determines which\nwell-known feature set of CEL is supported.",
+          "type": "string"
+        },
+        "location": {
+          "description": "An optional string indicating the location of the expression for error\nreporting, e.g. a file name and a position in the file.",
+          "type": "string"
+        },
+        "title": {
+          "description": "An optional title for the expression, i.e. a short string describing\nits purpose. This can be used e.g. in UIs which allow to enter the\nexpression.",
+          "type": "string"
         }
       },
       "type": "object"

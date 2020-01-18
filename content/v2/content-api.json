@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/Bd72AVRBiGsKglc3O5zvxRpgHWM\"",
+  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/MOD2emMoRZyg-9pb89hsJxmViI4\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1965,9 +1965,11 @@
                 "template1",
                 "template1a",
                 "template1b",
-                "template2"
+                "template2",
+                "template3"
               ],
               "enumDescriptions": [
+                "",
                 "",
                 "",
                 "",
@@ -3058,6 +3060,30 @@
             "https://www.googleapis.com/auth/content"
           ]
         },
+        "getsupportedpickupservices": {
+          "description": "Retrieves supported pickup services for an account.",
+          "httpMethod": "GET",
+          "id": "content.shippingsettings.getsupportedpickupservices",
+          "parameterOrder": [
+            "merchantId"
+          ],
+          "parameters": {
+            "merchantId": {
+              "description": "The ID of the account for which to retrieve the supported pickup services.",
+              "format": "uint64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{merchantId}/supportedPickupServices",
+          "response": {
+            "$ref": "ShippingsettingsGetSupportedPickupServicesResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        },
         "list": {
           "description": "Lists the shipping settings of the sub-accounts in your Merchant Center account.",
           "httpMethod": "GET",
@@ -3136,7 +3162,7 @@
       }
     }
   },
-  "revision": "20191126",
+  "revision": "20200110",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -6517,7 +6543,7 @@
       "id": "OrderShipment",
       "properties": {
         "carrier": {
-          "description": "The carrier handling the shipment.\n\nFor supported carriers, Google includes the carrier name and tracking URL in emails to customers. For select supported carriers, Google also automatically updates the shipment status based on the provided shipment ID. Note: You can also use unsupported carriers, but emails to customers will not include the carrier name or tracking URL, and there will be no automatic order status updates. \nSupported carriers for US are:  \n- \"ups\" (United Parcel Service) automatic status updates \n- \"usps\" (United States Postal Service) automatic status updates \n- \"fedex\" (FedEx) automatic status updates  \n- \"dhl\" (DHL eCommerce) automatic status updates (US only) \n- \"ontrac\" (OnTrac) automatic status updates  \n- \"dhl express\" (DHL Express)\n- \"deliv\" (Deliv) \n- \"dynamex\" (TForce) \n- \"lasership\" (LaserShip) \n- \"mpx\" (Military Parcel Xpress) \n- \"uds\" (United Delivery Service) \n- \"efw\" (Estes Forwarding Worldwide) \n- \"jd logistics\" (JD Logistics) \n- \"yunexpress\" (YunExpress) \n- \"china post\" (China Post) \n- \"china ems\" (China Post Express Mail Service) \n- \"singapore post\" (Singapore Post) \n- \"pos malaysia\" (Pos Malaysia) \n- \"postnl\" (PostNL) \n- \"ptt\" (PTT Turkish Post) \n- \"eub\" (ePacket) \n- \"chukou1\" (Chukou1 Logistics)  \nSupported carriers for FR are:  \n- \"la poste\" (La Poste) automatic status updates  \n- \"colissimo\" (Colissimo by La Poste) automatic status updates \n- \"ups\" (United Parcel Service) automatic status updates  \n- \"chronopost\" (Chronopost by La Poste) \n- \"gls\" (General Logistics Systems France) \n- \"dpd\" (DPD Group by GeoPost) \n- \"bpost\" (Belgian Post Group) \n- \"colis prive\" (Colis Privé) \n- \"boxtal\" (Boxtal) \n- \"geodis\" (GEODIS) \n- \"tnt\" (TNT)",
+          "description": "The carrier handling the shipment.\n\nFor supported carriers, Google includes the carrier name and tracking URL in emails to customers. For select supported carriers, Google also automatically updates the shipment status based on the provided shipment ID. Note: You can also use unsupported carriers, but emails to customers will not include the carrier name or tracking URL, and there will be no automatic order status updates. \nSupported carriers for US are:  \n- \"ups\" (United Parcel Service) automatic status updates \n- \"usps\" (United States Postal Service) automatic status updates \n- \"fedex\" (FedEx) automatic status updates  \n- \"dhl\" (DHL eCommerce) automatic status updates (US only) \n- \"ontrac\" (OnTrac) automatic status updates  \n- \"dhl express\" (DHL Express)\n- \"deliv\" (Deliv) \n- \"dynamex\" (TForce) \n- \"lasership\" (LaserShip) \n- \"mpx\" (Military Parcel Xpress) \n- \"uds\" (United Delivery Service) \n- \"efw\" (Estes Forwarding Worldwide) \n- \"jd logistics\" (JD Logistics) \n- \"yunexpress\" (YunExpress) \n- \"china post\" (China Post) \n- \"china ems\" (China Post Express Mail Service) \n- \"singapore post\" (Singapore Post) \n- \"pos malaysia\" (Pos Malaysia) \n- \"postnl\" (PostNL) \n- \"ptt\" (PTT Turkish Post) \n- \"eub\" (ePacket) \n- \"chukou1\" (Chukou1 Logistics)  \nSupported carriers for FR are:  \n- \"la poste\" (La Poste) automatic status updates  \n- \"colissimo\" (Colissimo by La Poste) automatic status updates \n- \"ups\" (United Parcel Service) automatic status updates  \n- \"chronopost\" (Chronopost by La Poste) \n- \"gls\" (General Logistics Systems France) \n- \"dpd\" (DPD Group by GeoPost) \n- \"bpost\" (Belgian Post Group) \n- \"colis prive\" (Colis Privé) \n- \"boxtal\" (Boxtal) \n- \"geodis\" (GEODIS) \n- \"tnt\" (TNT) \n- \"db schenker\" (DB Schenker)",
           "type": "string"
         },
         "creationDate": {
@@ -7939,6 +7965,38 @@
         "kind": {
           "default": "content#ordersUpdateShipmentResponse",
           "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersUpdateShipmentResponse\".",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PickupCarrierService": {
+      "id": "PickupCarrierService",
+      "properties": {
+        "carrierName": {
+          "description": "The name of the pickup carrier (e.g., \"UPS\"). Required.",
+          "type": "string"
+        },
+        "serviceName": {
+          "description": "The name of the pickup service (e.g., \"Access point\"). Required.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PickupServicesPickupService": {
+      "id": "PickupServicesPickupService",
+      "properties": {
+        "carrierName": {
+          "description": "The name of the carrier (e.g., \"UPS\"). Always present.",
+          "type": "string"
+        },
+        "country": {
+          "description": "The CLDR country code of the carrier (e.g., \"US\"). Always present.",
+          "type": "string"
+        },
+        "serviceName": {
+          "description": "The name of the pickup service (e.g., \"Access point\"). Always present.",
           "type": "string"
         }
       },
@@ -9730,12 +9788,20 @@
           "description": "Free-form name of the service. Must be unique within target account. Required.",
           "type": "string"
         },
+        "pickupService": {
+          "$ref": "PickupCarrierService",
+          "description": "The carrier-service pair delivering items to collection points. The list of supported pickup services can be retrieved via the getSupportedPickupServices method. Required if and only if the service delivery type is pickup."
+        },
         "rateGroups": {
           "description": "Shipping rate group definitions. Only the last one is allowed to have an empty applicableShippingLabels, which means \"everything else\". The other applicableShippingLabels must not overlap.",
           "items": {
             "$ref": "RateGroup"
           },
           "type": "array"
+        },
+        "shipmentType": {
+          "description": "Type of locations this service ships orders to.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -9941,6 +10007,24 @@
           "default": "content#shippingsettingsGetSupportedHolidaysResponse",
           "description": "Identifies what kind of resource this is. Value: the fixed string \"content#shippingsettingsGetSupportedHolidaysResponse\".",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ShippingsettingsGetSupportedPickupServicesResponse": {
+      "id": "ShippingsettingsGetSupportedPickupServicesResponse",
+      "properties": {
+        "kind": {
+          "default": "content#shippingsettingsGetSupportedPickupServicesResponse",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#shippingsettingsGetSupportedPickupServicesResponse\".",
+          "type": "string"
+        },
+        "pickupServices": {
+          "description": "A list of supported pickup services. May be empty.",
+          "items": {
+            "$ref": "PickupServicesPickupService"
+          },
+          "type": "array"
         }
       },
       "type": "object"

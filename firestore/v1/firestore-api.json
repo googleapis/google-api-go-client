@@ -1101,7 +1101,7 @@
       }
     }
   },
-  "revision": "20191206",
+  "revision": "20200104",
   "rootUrl": "https://firestore.googleapis.com/",
   "schemas": {
     "ArrayValue": {
@@ -1237,7 +1237,7 @@
       "id": "CommitResponse",
       "properties": {
         "commitTime": {
-          "description": "The time at which the commit occurred.",
+          "description": "The time at which the commit occurred. Any read with an equal or greater\n`read_time` is guaranteed to see the effects of the commit.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -2789,7 +2789,7 @@
       "id": "WriteResponse",
       "properties": {
         "commitTime": {
-          "description": "The time at which the commit occurred.",
+          "description": "The time at which the commit occurred. Any read with an equal or greater\n`read_time` is guaranteed to see the effects of the write.",
           "format": "google-datetime",
           "type": "string"
         },

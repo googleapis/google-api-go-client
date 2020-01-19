@@ -2094,7 +2094,7 @@
       }
     }
   },
-  "revision": "20191219",
+  "revision": "20200109",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -3624,7 +3624,8 @@
             "The Anaconda python distribution.",
             "The Hive Web HCatalog (the REST service for accessing HCatalog).",
             "The Jupyter Notebook.",
-            "The Zeppelin notebook."
+            "The Zeppelin notebook.",
+            "The Zookeeper service."
           ],
           "items": {
             "enum": [
@@ -3632,7 +3633,8 @@
               "ANACONDA",
               "HIVE_WEBHCAT",
               "JUPYTER",
-              "ZEPPELIN"
+              "ZEPPELIN",
+              "ZOOKEEPER"
             ],
             "type": "string"
           },

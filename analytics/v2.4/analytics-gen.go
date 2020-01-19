@@ -321,7 +321,7 @@ func (c *DataGetCall) Header() http.Header {
 
 func (c *DataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -507,7 +507,7 @@ func (c *ManagementAccountsListCall) Header() http.Header {
 
 func (c *ManagementAccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -642,7 +642,7 @@ func (c *ManagementGoalsListCall) Header() http.Header {
 
 func (c *ManagementGoalsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -803,7 +803,7 @@ func (c *ManagementProfilesListCall) Header() http.Header {
 
 func (c *ManagementProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -952,7 +952,7 @@ func (c *ManagementSegmentsListCall) Header() http.Header {
 
 func (c *ManagementSegmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1083,7 +1083,7 @@ func (c *ManagementWebpropertiesListCall) Header() http.Header {
 
 func (c *ManagementWebpropertiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

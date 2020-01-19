@@ -745,6 +745,47 @@
             }
           },
           "resources": {
+            "flexTemplates": {
+              "methods": {
+                "launch": {
+                  "description": "Launch a job with a FlexTemplate.",
+                  "flatPath": "v1b3/projects/{projectId}/locations/{location}/flexTemplates:launch",
+                  "httpMethod": "POST",
+                  "id": "dataflow.projects.locations.flexTemplates.launch",
+                  "parameterOrder": [
+                    "projectId",
+                    "location"
+                  ],
+                  "parameters": {
+                    "location": {
+                      "description": "Required. The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to\nwhich to direct the request. E.g., us-central1, us-west1.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "projectId": {
+                      "description": "Required. The ID of the Cloud Platform project that the job belongs to.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1b3/projects/{projectId}/locations/{location}/flexTemplates:launch",
+                  "request": {
+                    "$ref": "LaunchFlexTemplateRequest"
+                  },
+                  "response": {
+                    "$ref": "LaunchFlexTemplateResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/compute",
+                    "https://www.googleapis.com/auth/compute.readonly",
+                    "https://www.googleapis.com/auth/userinfo.email"
+                  ]
+                }
+              }
+            },
             "jobs": {
               "methods": {
                 "create": {
@@ -1604,7 +1645,7 @@
       }
     }
   },
-  "revision": "20191204",
+  "revision": "20191230",
   "rootUrl": "https://dataflow.googleapis.com/",
   "schemas": {
     "ApproximateProgress": {
@@ -1904,6 +1945,25 @@
         "position": {
           "$ref": "Position",
           "description": "Position within the inner source."
+        }
+      },
+      "type": "object"
+    },
+    "ContainerSpec": {
+      "description": "Container Spec.",
+      "id": "ContainerSpec",
+      "properties": {
+        "image": {
+          "description": "Name of the docker container image. E.g., gcr.io/project/some-image",
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "TemplateMetadata",
+          "description": "Metadata describing a template including description and validation rules."
+        },
+        "sdkInfo": {
+          "$ref": "SDKInfo",
+          "description": "Required. SDK info of the Flex Template."
         }
       },
       "type": "object"
@@ -3204,6 +3264,58 @@
       },
       "type": "object"
     },
+    "LaunchFlexTemplateParameter": {
+      "description": "Launch FlexTemplate Parameter.",
+      "id": "LaunchFlexTemplateParameter",
+      "properties": {
+        "containerSpec": {
+          "$ref": "ContainerSpec",
+          "description": "Spec about the container image to launch."
+        },
+        "containerSpecGcsPath": {
+          "description": "Gcs path to a file with json serialized ContainerSpec as content.",
+          "type": "string"
+        },
+        "jobName": {
+          "description": "Required. The job name to use for the created job.",
+          "type": "string"
+        },
+        "parameters": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The parameters for FlexTemplate.\nEx. {\"num_workers\":\"5\"}",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "LaunchFlexTemplateRequest": {
+      "description": "A request to launch a Cloud Dataflow job from a FlexTemplate.",
+      "id": "LaunchFlexTemplateRequest",
+      "properties": {
+        "launchParameter": {
+          "$ref": "LaunchFlexTemplateParameter",
+          "description": "Required. Parameter to launch a job form Flex Template."
+        },
+        "validateOnly": {
+          "description": "If true, the request is validated but not actually executed.\nDefaults to false.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "LaunchFlexTemplateResponse": {
+      "description": "Response to the request to launch a job from Flex Template.",
+      "id": "LaunchFlexTemplateResponse",
+      "properties": {
+        "job": {
+          "$ref": "Job",
+          "description": "The job that was launched, if the request was not a dry run and\nthe job was successfully launched."
+        }
+      },
+      "type": "object"
+    },
     "LaunchTemplateParameters": {
       "description": "Parameters to provide to the template being launched.",
       "id": "LaunchTemplateParameters",
@@ -3343,7 +3455,7 @@
       "type": "object"
     },
     "ListJobsResponse": {
-      "description": "Response to a request to list Cloud Dataflow jobs.  This may be a partial\nresponse, depending on the page size in the ListJobsRequest.",
+      "description": "Response to a request to list Cloud Dataflow jobs in a project. This might\nbe a partial response, depending on the page size in the ListJobsRequest.\nHowever, if the project does not have any jobs, an instance of\nListJobsResponse is not returned and the requests's response\nbody is empty {}.",
       "id": "ListJobsResponse",
       "properties": {
         "failedLocation": {

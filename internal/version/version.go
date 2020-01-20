@@ -16,7 +16,7 @@ import (
 
 // Repo is the current version of the client libraries in this
 // repo. It should be a date in YYYYMMDD format.
-const Repo = "20200119"
+const Repo = "20200120"
 
 // Go returns the Go runtime version. The returned string
 // has no whitespace.

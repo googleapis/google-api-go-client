@@ -2458,7 +2458,7 @@
       }
     }
   },
-  "revision": "20191211",
+  "revision": "20200109",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2824,6 +2824,10 @@
           "description": "[Output only] The IP address range of the Kubernetes services in\nthis cluster, in\n[CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)\nnotation (e.g. `1.2.3.4/29`). Service addresses are\ntypically put in the last `/16` from the container CIDR.",
           "type": "string"
         },
+        "shieldedNodes": {
+          "$ref": "ShieldedNodes",
+          "description": "Shielded Nodes configuration."
+        },
         "status": {
           "description": "[Output only] The current status of this cluster.",
           "enum": [
@@ -2964,6 +2968,10 @@
         "desiredResourceUsageExportConfig": {
           "$ref": "ResourceUsageExportConfig",
           "description": "The desired configuration for exporting resource usage."
+        },
+        "desiredShieldedNodes": {
+          "$ref": "ShieldedNodes",
+          "description": "Configuration for Shielded Nodes."
         },
         "desiredVerticalPodAutoscaling": {
           "$ref": "VerticalPodAutoscaling",
@@ -3638,6 +3646,10 @@
           "$ref": "ReservationAffinity",
           "description": "The optional reservation affinity. Setting this field will apply\nthe specified [Zonal Compute\nReservation](/compute/docs/instances/reserving-zonal-resources)\nto this node pool."
         },
+        "sandboxConfig": {
+          "$ref": "SandboxConfig",
+          "description": "Sandbox configuration for this node."
+        },
         "serviceAccount": {
           "description": "The Google Cloud Platform Service Account to be used by the node VMs. If\nno Service Account is specified, the \"default\" service account is used.",
           "type": "string"
@@ -3956,6 +3968,10 @@
           "description": "The IP range in CIDR notation to use for the hosted master network. This\nrange will be used for assigning internal IP addresses to the master or\nset of masters, as well as the ILB VIP. This range must not overlap with\nany other ranges in use within the cluster's network.",
           "type": "string"
         },
+        "peeringName": {
+          "description": "Output only. The peering name in the customer VPC used by this cluster.",
+          "type": "string"
+        },
         "privateEndpoint": {
           "description": "Output only. The internal IP address of this cluster's master endpoint.",
           "type": "string"
@@ -4078,6 +4094,25 @@
         },
         "zone": {
           "description": "Required. Deprecated. The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) in which the cluster\nresides.\nThis field has been deprecated and replaced by the name field.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SandboxConfig": {
+      "description": "SandboxConfig contains configurations of the sandbox to use for the node.",
+      "id": "SandboxConfig",
+      "properties": {
+        "type": {
+          "description": "Type of the sandbox to use for the node.",
+          "enum": [
+            "UNSPECIFIED",
+            "GVISOR"
+          ],
+          "enumDescriptions": [
+            "Default value. This should not be used.",
+            "Run sandbox using gvisor."
+          ],
           "type": "string"
         }
       },
@@ -4497,6 +4532,17 @@
       },
       "type": "object"
     },
+    "ShieldedNodes": {
+      "description": "Configuration of Shielded Nodes feature.",
+      "id": "ShieldedNodes",
+      "properties": {
+        "enabled": {
+          "description": "Whether Shielded Nodes features are enabled on all nodes in this cluster.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "StartIPRotationRequest": {
       "description": "StartIPRotationRequest creates a new IP for the cluster and then performs\na node upgrade on each node pool to point to the new IP.",
       "id": "StartIPRotationRequest",
@@ -4540,7 +4586,7 @@
           ],
           "enumDescriptions": [
             "UNKNOWN indicates a generic condition.",
-            "GCE_STOCKOUT indicates a Google Compute Engine stockout.",
+            "GCE_STOCKOUT indicates that Google Compute Engine resources are\ntemporarily unavailable.",
             "GKE_SERVICE_ACCOUNT_DELETED indicates that the user deleted their robot\nservice account.",
             "Google Compute Engine quota was exceeded.",
             "Cluster state was manually changed by an SRE due to a system logic error.",

@@ -141,7 +141,7 @@
               "type": "string"
             },
             "sqlResource": {
-              "description": "The SQL name of the entry. SQL names are case-sensitive.\n\nExamples:\n\n  * `cloud_pubsub.project_id.topic_id`\n  * ``pubsub.project_id.`topic.id.with.dots` ``\n  * `bigquery.table.project_id.dataset_id.table_id`\n  * `bigquery.dataset.project_id.dataset_id`\n  * `datacatalog.project_id.location_id.entry_group_id.entry_id`\n\n`*_id`s shoud satisfy the standard SQL rules for identifiers.\nhttps://cloud.google.com/bigquery/docs/reference/standard-sql/lexical.",
+              "description": "The SQL name of the entry. SQL names are case-sensitive.\n\nExamples:\n\n  * `cloud_pubsub.project_id.topic_id`\n  * ``pubsub.project_id.`topic.id.with.dots` ``\n  * `bigquery.table.project_id.dataset_id.table_id`\n  * `bigquery.dataset.project_id.dataset_id`\n  * `datacatalog.entry.project_id.location_id.entry_group_id.entry_id`\n\n`*_id`s shoud satisfy the standard SQL rules for identifiers.\nhttps://cloud.google.com/bigquery/docs/reference/standard-sql/lexical.",
               "location": "query",
               "type": "string"
             }
@@ -484,34 +484,6 @@
                       },
                       "response": {
                         "$ref": "GoogleCloudDatacatalogV1beta1Entry"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ]
-                    },
-                    "setIamPolicy": {
-                      "description": "Sets the access control policy for a resource. Replaces any existing\npolicy.\nSupported resources are:\n  - Tag templates.\n  - Entries.\n  - Entry groups.\nNote, this method cannot be used to manage policies for BigQuery, Cloud\nPub/Sub and any external Google Cloud Platform resources synced to Cloud\nData Catalog.\n\nCallers must have following Google IAM permission\n  - `datacatalog.tagTemplates.setIamPolicy` to set policies on tag\n    templates.\n  - `datacatalog.entries.setIamPolicy` to set policies on entries.\n  - `datacatalog.entryGroups.setIamPolicy` to set policies on entry groups.",
-                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}:setIamPolicy",
-                      "httpMethod": "POST",
-                      "id": "datacatalog.projects.locations.entryGroups.entries.setIamPolicy",
-                      "parameterOrder": [
-                        "resource"
-                      ],
-                      "parameters": {
-                        "resource": {
-                          "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1beta1/{+resource}:setIamPolicy",
-                      "request": {
-                        "$ref": "SetIamPolicyRequest"
-                      },
-                      "response": {
-                        "$ref": "Policy"
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform"
@@ -1562,7 +1534,7 @@
       }
     }
   },
-  "revision": "20191231",
+  "revision": "20200115",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -1763,12 +1735,14 @@
           "enum": [
             "ENTRY_TYPE_UNSPECIFIED",
             "TABLE",
+            "MODEL",
             "DATA_STREAM",
             "FILESET"
           ],
           "enumDescriptions": [
             "Default unknown type",
             "Output only. The type of entry that has a GoogleSQL schema, including\nlogical views.",
+            "Output only. The type of models.",
             "Output only. An entry type which is used for streaming entries. Example:\nCloud Pub/Sub topic.",
             "Alpha feature. An entry type which is a set of files or objects. Example:\nCloud Storage fileset."
           ],
@@ -1890,7 +1864,7 @@
       "id": "GoogleCloudDatacatalogV1beta1GcsFilesetSpec",
       "properties": {
         "filePatterns": {
-          "description": "Required. Patterns to identify a set of files in Google Cloud Storage. See [Cloud\nStorage documentation](storage/docs/gsutil/addlhelp/WildcardNames) for\nmore information. Note that bucket wildcards are currently not supported.\n\nExamples of valid file_patterns:\n\n * `gs://bucket_name/dir/*`: matches all files within `bucket_name/dir`\n                             directory.\n * `gs://bucket_name/dir/**`: matches all files in `bucket_name/dir`\n                              spanning all subdirectories.\n * `gs://bucket_name/file*`: matches files prefixed by `file` in\n                             `bucket_name`\n * `gs://bucket_name/a/*/b`: matches all files in `bucket_name` that match\n                             `a/*/b` pattern, such as `a/c/b`, `a/d/b`\n * `gs://another_bucket/a.txt`: matches `gs://another_bucket/a.txt`",
+          "description": "Required. Patterns to identify a set of files in Google Cloud Storage. See [Cloud\nStorage documentation](/storage/docs/gsutil/addlhelp/WildcardNames) for\nmore information. Note that bucket wildcards are currently not supported.\n\nExamples of valid file_patterns:\n\n * `gs://bucket_name/dir/*`: matches all files within `bucket_name/dir`\n                             directory.\n * `gs://bucket_name/dir/**`: matches all files in `bucket_name/dir`\n                              spanning all subdirectories.\n * `gs://bucket_name/file*`: matches files prefixed by `file` in\n                             `bucket_name`\n * `gs://bucket_name/a/*/b`: matches all files in `bucket_name` that match\n                             `a/*/b` pattern, such as `a/c/b`, `a/d/b`\n * `gs://another_bucket/a.txt`: matches `gs://another_bucket/a.txt`",
           "items": {
             "type": "string"
           },

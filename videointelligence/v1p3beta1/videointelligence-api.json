@@ -127,7 +127,7 @@
       }
     }
   },
-  "revision": "20191109",
+  "revision": "20200115",
   "rootUrl": "https://videointelligence.googleapis.com/",
   "schemas": {
     "GoogleCloudVideointelligenceV1_AnnotateVideoProgress": {
@@ -2347,6 +2347,7 @@
             "Label detection. Detect objects, such as dog or flower.",
             "Shot change detection.",
             "Explicit content detection.",
+            "Human face detection.",
             "Speech transcription.",
             "OCR text detection and tracking.",
             "Object detection and tracking.",
@@ -2359,6 +2360,7 @@
               "LABEL_DETECTION",
               "SHOT_CHANGE_DETECTION",
               "EXPLICIT_CONTENT_DETECTION",
+              "FACE_DETECTION",
               "SPEECH_TRANSCRIPTION",
               "TEXT_DETECTION",
               "OBJECT_TRACKING",
@@ -2549,6 +2551,44 @@
         "timeOffset": {
           "description": "Time-offset, relative to the beginning of the video, corresponding to the\nvideo frame for this location.",
           "format": "google-duration",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1p3beta1_FaceDetectionAnnotation": {
+      "description": "Face detection annotation.",
+      "id": "GoogleCloudVideointelligenceV1p3beta1_FaceDetectionAnnotation",
+      "properties": {
+        "thumbnail": {
+          "description": "The thumbnail of a person's face.",
+          "format": "byte",
+          "type": "string"
+        },
+        "tracks": {
+          "description": "The face tracks with attributes.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p3beta1_Track"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1p3beta1_FaceDetectionConfig": {
+      "description": "Config for FACE_DETECTION.",
+      "id": "GoogleCloudVideointelligenceV1p3beta1_FaceDetectionConfig",
+      "properties": {
+        "includeAttributes": {
+          "description": "Whether to enable face attributes detection, such as glasses, dark_glasses,\nmouth_open etc. Ignored if 'include_bounding_boxes' is false.",
+          "type": "boolean"
+        },
+        "includeBoundingBoxes": {
+          "description": "Whether bounding boxes be included in the face annotation output.",
+          "type": "boolean"
+        },
+        "model": {
+          "description": "Model to use for face detection.\nSupported values: \"builtin/stable\" (the default if unset) and\n\"builtin/latest\".",
           "type": "string"
         }
       },
@@ -3126,6 +3166,7 @@
             "LABEL_DETECTION",
             "SHOT_CHANGE_DETECTION",
             "EXPLICIT_CONTENT_DETECTION",
+            "FACE_DETECTION",
             "SPEECH_TRANSCRIPTION",
             "TEXT_DETECTION",
             "OBJECT_TRACKING",
@@ -3137,6 +3178,7 @@
             "Label detection. Detect objects, such as dog or flower.",
             "Shot change detection.",
             "Explicit content detection.",
+            "Human face detection.",
             "Speech transcription.",
             "OCR text detection and tracking.",
             "Object detection and tracking.",
@@ -3186,6 +3228,13 @@
         "explicitAnnotation": {
           "$ref": "GoogleCloudVideointelligenceV1p3beta1_ExplicitContentAnnotation",
           "description": "Explicit content annotation."
+        },
+        "faceDetectionAnnotations": {
+          "description": "Face detection annotations.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p3beta1_FaceDetectionAnnotation"
+          },
+          "type": "array"
         },
         "frameLabelAnnotations": {
           "description": "Label annotations on frame level.\nThere is exactly one element for each unique label.",
@@ -3275,6 +3324,10 @@
         "explicitContentDetectionConfig": {
           "$ref": "GoogleCloudVideointelligenceV1p3beta1_ExplicitContentDetectionConfig",
           "description": "Config for EXPLICIT_CONTENT_DETECTION."
+        },
+        "faceDetectionConfig": {
+          "$ref": "GoogleCloudVideointelligenceV1p3beta1_FaceDetectionConfig",
+          "description": "Config for FACE_DETECTION."
         },
         "labelDetectionConfig": {
           "$ref": "GoogleCloudVideointelligenceV1p3beta1_LabelDetectionConfig",

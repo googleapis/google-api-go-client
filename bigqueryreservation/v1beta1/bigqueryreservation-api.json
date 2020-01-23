@@ -111,32 +111,6 @@
       "resources": {
         "locations": {
           "methods": {
-            "get": {
-              "description": "Gets information about a location.",
-              "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}",
-              "httpMethod": "GET",
-              "id": "bigqueryreservation.projects.locations.get",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Resource name for the location.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/locations/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v1beta1/{+name}",
-              "response": {
-                "$ref": "Location"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/bigquery",
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
             "getBiReservation": {
               "description": "Retrieves a BI reservation.",
               "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/biReservation",
@@ -157,48 +131,6 @@
               "path": "v1beta1/{+name}",
               "response": {
                 "$ref": "BiReservation"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/bigquery",
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "list": {
-              "description": "Lists information about the supported locations for this service.",
-              "flatPath": "v1beta1/projects/{projectsId}/locations",
-              "httpMethod": "GET",
-              "id": "bigqueryreservation.projects.locations.list",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "filter": {
-                  "description": "The standard list filter.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "name": {
-                  "description": "The resource that owns the locations collection, if applicable.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                },
-                "pageSize": {
-                  "description": "The standard list page size.",
-                  "format": "int32",
-                  "location": "query",
-                  "type": "integer"
-                },
-                "pageToken": {
-                  "description": "The standard list page token.",
-                  "location": "query",
-                  "type": "string"
-                }
-              },
-              "path": "v1beta1/{+name}/locations",
-              "response": {
-                "$ref": "ListLocationsResponse"
               },
               "scopes": [
                 "https://www.googleapis.com/auth/bigquery",
@@ -710,7 +642,7 @@
       }
     }
   },
-  "revision": "20191230",
+  "revision": "20200116",
   "rootUrl": "https://bigqueryreservation.googleapis.com/",
   "schemas": {
     "Assignment": {
@@ -874,24 +806,6 @@
       },
       "type": "object"
     },
-    "ListLocationsResponse": {
-      "description": "The response message for Locations.ListLocations.",
-      "id": "ListLocationsResponse",
-      "properties": {
-        "locations": {
-          "description": "A list of locations that matches the specified filter in the request.",
-          "items": {
-            "$ref": "Location"
-          },
-          "type": "array"
-        },
-        "nextPageToken": {
-          "description": "The standard List next-page token.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "ListReservationsResponse": {
       "description": "The response for ReservationService.ListReservations.",
       "id": "ListReservationsResponse",
@@ -906,51 +820,6 @@
             "$ref": "Reservation"
           },
           "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "Location": {
-      "description": "A resource that represents Google Cloud Platform location.",
-      "id": "Location",
-      "properties": {
-        "displayName": {
-          "description": "The friendly name for this location, typically a nearby city name.\nFor example, \"Tokyo\".",
-          "type": "string"
-        },
-        "labels": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Cross-service attributes for the location. For example\n\n    {\"cloud.googleapis.com/region\": \"us-east1\"}",
-          "type": "object"
-        },
-        "locationId": {
-          "description": "The canonical id for this location. For example: `\"us-east1\"`.",
-          "type": "string"
-        },
-        "metadata": {
-          "additionalProperties": {
-            "description": "Properties of the object. Contains field @type with type URL.",
-            "type": "any"
-          },
-          "description": "Service-specific metadata. For example the available capacity at the given\nlocation.",
-          "type": "object"
-        },
-        "name": {
-          "description": "Resource name for the location, which may vary between implementations.\nFor example: `\"projects/example-project/locations/us-east1\"`",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "LocationMetadata": {
-      "description": "BigQuery-specific metadata about a location. This will be set on\ngoogle.cloud.location.Location.metadata in Cloud Location API\nresponses.",
-      "id": "LocationMetadata",
-      "properties": {
-        "legacyLocationId": {
-          "description": "The legacy BigQuery location ID, e.g. “EU” for the “europe” location.\nThis is for any API consumers that need the legacy “US” and “EU” locations.",
-          "type": "string"
         }
       },
       "type": "object"
@@ -971,7 +840,7 @@
       "id": "Reservation",
       "properties": {
         "ignoreIdleSlots": {
-          "description": "If false, any query using this reservation will use idle slots from other\nreservations within the same admin project. If true, a query using this\nreservation will execute with the maximum slot capacity as specified above.",
+          "description": "If false, any query using this reservation will use idle slots from other\nreservations within the same admin project. If true, a query using this\nreservation will execute with the slot capacity specified above at most.",
           "type": "boolean"
         },
         "name": {
@@ -979,7 +848,7 @@
           "type": "string"
         },
         "slotCapacity": {
-          "description": "Maximum slots available to this reservation. A slot is a unit of\ncomputational power in BigQuery, and serves as the unit of parallelism. In\na scan of a multi-partitioned table, a single slot operates on a single\npartition of the table.\nIf the new reservation's slot capacity exceed the parent's slot capacity or\nif total slot capacity of the new reservation and its siblings exceeds the\nparent's slot capacity, the request will fail with\n`google.rpc.Code.RESOURCE_EXHAUSTED`.",
+          "description": "Minimum slots available to this reservation. A slot is a unit of\ncomputational power in BigQuery, and serves as the unit of parallelism.\nQueries using this reservation might use more slots during runtime if\nignore_idle_slots is set to false.\nIf the new reservation's slot capacity exceed the parent's slot capacity or\nif total slot capacity of the new reservation and its siblings exceeds the\nparent's slot capacity, the request will fail with\n`google.rpc.Code.RESOURCE_EXHAUSTED`.",
           "format": "int64",
           "type": "string"
         }

@@ -422,7 +422,7 @@
       }
     }
   },
-  "revision": "20200104",
+  "revision": "20200116",
   "rootUrl": "https://alertcenter.googleapis.com/",
   "schemas": {
     "AccountWarning": {
@@ -1041,7 +1041,7 @@
       "type": "object"
     },
     "MailPhishing": {
-      "description": "Proto for all phishing alerts with common payload.\nSupported types are any of the following:\n\n* User reported phishing\n* User reported spam spike\n* Suspicious message reported\n* Phishing reclassification\n* Malware reclassification",
+      "description": "Proto for all phishing alerts with common payload.\nSupported types are any of the following:\n\n* User reported phishing\n* User reported spam spike\n* Suspicious message reported\n* Phishing reclassification\n* Malware reclassification\n* Gmail potential employee spoofing",
       "id": "MailPhishing",
       "properties": {
         "domainId": {
@@ -1062,6 +1062,20 @@
             "$ref": "GmailMessageInfo"
           },
           "type": "array"
+        },
+        "systemActionType": {
+          "description": "System actions on the messages.",
+          "enum": [
+            "SYSTEM_ACTION_TYPE_UNSPECIFIED",
+            "NO_OPERATION",
+            "REMOVED_FROM_INBOX"
+          ],
+          "enumDescriptions": [
+            "System action is unspecified.",
+            "No operation.",
+            "Messages were removed from the inbox."
+          ],
+          "type": "string"
         }
       },
       "type": "object"

@@ -349,7 +349,7 @@
       }
     }
   },
-  "revision": "20191109",
+  "revision": "20200115",
   "rootUrl": "https://videointelligence.googleapis.com/",
   "schemas": {
     "GoogleCloudVideointelligenceV1_AnnotateVideoProgress": {
@@ -2957,6 +2957,25 @@
       },
       "type": "object"
     },
+    "GoogleCloudVideointelligenceV1p3beta1_FaceDetectionAnnotation": {
+      "description": "Face detection annotation.",
+      "id": "GoogleCloudVideointelligenceV1p3beta1_FaceDetectionAnnotation",
+      "properties": {
+        "thumbnail": {
+          "description": "The thumbnail of a person's face.",
+          "format": "byte",
+          "type": "string"
+        },
+        "tracks": {
+          "description": "The face tracks with attributes.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p3beta1_Track"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudVideointelligenceV1p3beta1_LabelAnnotation": {
       "description": "Label annotation.",
       "id": "GoogleCloudVideointelligenceV1p3beta1_LabelAnnotation",
@@ -3382,6 +3401,7 @@
             "LABEL_DETECTION",
             "SHOT_CHANGE_DETECTION",
             "EXPLICIT_CONTENT_DETECTION",
+            "FACE_DETECTION",
             "SPEECH_TRANSCRIPTION",
             "TEXT_DETECTION",
             "OBJECT_TRACKING",
@@ -3393,6 +3413,7 @@
             "Label detection. Detect objects, such as dog or flower.",
             "Shot change detection.",
             "Explicit content detection.",
+            "Human face detection.",
             "Speech transcription.",
             "OCR text detection and tracking.",
             "Object detection and tracking.",
@@ -3442,6 +3463,13 @@
         "explicitAnnotation": {
           "$ref": "GoogleCloudVideointelligenceV1p3beta1_ExplicitContentAnnotation",
           "description": "Explicit content annotation."
+        },
+        "faceDetectionAnnotations": {
+          "description": "Face detection annotations.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p3beta1_FaceDetectionAnnotation"
+          },
+          "type": "array"
         },
         "frameLabelAnnotations": {
           "description": "Label annotations on frame level.\nThere is exactly one element for each unique label.",

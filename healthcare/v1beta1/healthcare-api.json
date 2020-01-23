@@ -2810,7 +2810,7 @@
                           ]
                         },
                         "patch": {
-                          "description": "Update the message.",
+                          "description": "Update the message.\n\nThe contents of the message in Message.data and data extracted from\nthe contents such as Message.create_time cannot be altered. Only the\nMessage.labels field is allowed to be updated. The labels in the\nrequest are merged with the existing set of labels. Existing labels with\nthe same keys are updated.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}/messages/{messagesId}",
                           "httpMethod": "PATCH",
                           "id": "healthcare.projects.locations.datasets.hl7V2Stores.messages.patch",
@@ -2826,7 +2826,7 @@
                               "type": "string"
                             },
                             "updateMask": {
-                              "description": "The update mask applies to the resource. For the `FieldMask` definition,\nsee\nhttps://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask\nOnly the `labels` field is allowed to be updated.\nThe labels in the request are merged with the existing set of labels.\nExisting labels with the same keys are updated.",
+                              "description": "The update mask applies to the resource. For the `FieldMask` definition,\nsee\nhttps://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
                               "format": "google-fieldmask",
                               "location": "query",
                               "type": "string"
@@ -2924,7 +2924,7 @@
       }
     }
   },
-  "revision": "20191213",
+  "revision": "20200116",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -4202,7 +4202,7 @@
       "type": "object"
     },
     "ReplaceWithInfoTypeConfig": {
-      "description": "When using the INSPECT_AND_TRANSFORM action, each match is replaced with\nthe name of the info_type. For example, \"My name is Jake\" becomes \"My name is\n[PERSON_NAME].\" The TRANSFORM action is equivalent to redacting.",
+      "description": "When using the\nINSPECT_AND_TRANSFORM\naction, each match is replaced with the name of the info_type. For example,\n\"My name is Jake\" becomes \"My name is [PERSON_NAME].\" The\nTRANSFORM\naction is equivalent to redacting.",
       "id": "ReplaceWithInfoTypeConfig",
       "properties": {},
       "type": "object"

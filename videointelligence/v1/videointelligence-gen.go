@@ -5467,6 +5467,38 @@ func (s *GoogleCloudVideointelligenceV1p3beta1ExplicitContentFrame) MarshalJSON(
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudVideointelligenceV1p3beta1FaceDetectionAnnotation: Face
+// detection annotation.
+type GoogleCloudVideointelligenceV1p3beta1FaceDetectionAnnotation struct {
+	// Thumbnail: The thumbnail of a person's face.
+	Thumbnail string `json:"thumbnail,omitempty"`
+
+	// Tracks: The face tracks with attributes.
+	Tracks []*GoogleCloudVideointelligenceV1p3beta1Track `json:"tracks,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Thumbnail") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Thumbnail") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1p3beta1FaceDetectionAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1p3beta1FaceDetectionAnnotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudVideointelligenceV1p3beta1LabelAnnotation: Label
 // annotation.
 type GoogleCloudVideointelligenceV1p3beta1LabelAnnotation struct {
@@ -6394,6 +6426,7 @@ type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationProgress struct {
 	// flower.
 	//   "SHOT_CHANGE_DETECTION" - Shot change detection.
 	//   "EXPLICIT_CONTENT_DETECTION" - Explicit content detection.
+	//   "FACE_DETECTION" - Human face detection.
 	//   "SPEECH_TRANSCRIPTION" - Speech transcription.
 	//   "TEXT_DETECTION" - OCR text detection and tracking.
 	//   "OBJECT_TRACKING" - Object detection and tracking.
@@ -6457,6 +6490,9 @@ type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationResults struct {
 
 	// ExplicitAnnotation: Explicit content annotation.
 	ExplicitAnnotation *GoogleCloudVideointelligenceV1p3beta1ExplicitContentAnnotation `json:"explicitAnnotation,omitempty"`
+
+	// FaceDetectionAnnotations: Face detection annotations.
+	FaceDetectionAnnotations []*GoogleCloudVideointelligenceV1p3beta1FaceDetectionAnnotation `json:"faceDetectionAnnotations,omitempty"`
 
 	// FrameLabelAnnotations: Label annotations on frame level.
 	// There is exactly one element for each unique label.
@@ -6917,7 +6953,7 @@ func (c *OperationsProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *OperationsProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7053,7 +7089,7 @@ func (c *OperationsProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7198,7 +7234,7 @@ func (c *OperationsProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *OperationsProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7350,7 +7386,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7494,7 +7530,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7639,7 +7675,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7820,7 +7856,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7997,7 +8033,7 @@ func (c *VideosAnnotateCall) Header() http.Header {
 
 func (c *VideosAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

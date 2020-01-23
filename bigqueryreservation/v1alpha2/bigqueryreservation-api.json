@@ -613,7 +613,7 @@
       }
     }
   },
-  "revision": "20191230",
+  "revision": "20200116",
   "rootUrl": "https://bigqueryreservation.googleapis.com/",
   "schemas": {
     "CreateSlotPoolMetadata": {
@@ -683,17 +683,6 @@
             "$ref": "SlotPool"
           },
           "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "LocationMetadata": {
-      "description": "BigQuery-specific metadata about a location. This will be set on\ngoogle.cloud.location.Location.metadata in Cloud Location API\nresponses.",
-      "id": "LocationMetadata",
-      "properties": {
-        "legacyLocationId": {
-          "description": "The legacy BigQuery location ID, e.g. “EU” for the “europe” location.\nThis is for any API consumers that need the legacy “US” and “EU” locations.",
-          "type": "string"
         }
       },
       "type": "object"

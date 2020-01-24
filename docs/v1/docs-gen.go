@@ -553,12 +553,22 @@ func (s *ColumnBreak) MarshalJSON() ([]byte, error) {
 
 // CreateFooterRequest: Creates a Footer. The new footer is applied
 // to
-// the DocumentStyle.
+// the SectionStyle at the location of the
+// SectionBreak if specificed, otherwise
+// it is applied to the DocumentStyle.
 //
 // If a footer of the specified type already exists, a 400 bad request
 // error
 // is returned.
 type CreateFooterRequest struct {
+	// SectionBreakLocation: The location of the SectionBreak
+	// immediately preceding the section whose SectionStyle this footer
+	// should belong to. If this is
+	// unset or refers to the first section break in the document, the
+	// footer
+	// applies to the document style.
+	SectionBreakLocation *Location `json:"sectionBreakLocation,omitempty"`
+
 	// Type: The type of footer to create.
 	//
 	// Possible values:
@@ -567,20 +577,22 @@ type CreateFooterRequest struct {
 	//   "DEFAULT" - A default header/footer.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Type") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "SectionBreakLocation") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Type") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "SectionBreakLocation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -707,12 +719,23 @@ func (s *CreateFootnoteResponse) MarshalJSON() ([]byte, error) {
 
 // CreateHeaderRequest: Creates a Header. The new header is applied
 // to
-// the DocumentStyle.
+// the SectionStyle at the location of the
+// SectionBreak if specificed, otherwise
+// it is applied to the DocumentStyle.
 //
 // If a header of the specified type already exists, a 400 bad request
 // error
 // is returned.
 type CreateHeaderRequest struct {
+	// SectionBreakLocation: The location of the SectionBreak
+	// which begins the section this header should belong to.
+	// If
+	// `section_break_location' is unset or if it refers to the first
+	// section
+	// break in the document body, the header applies to the
+	// DocumentStyle
+	SectionBreakLocation *Location `json:"sectionBreakLocation,omitempty"`
+
 	// Type: The type of header to create.
 	//
 	// Possible values:
@@ -721,20 +744,22 @@ type CreateHeaderRequest struct {
 	//   "DEFAULT" - A default header/footer.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Type") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "SectionBreakLocation") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Type") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "SectionBreakLocation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1126,6 +1151,80 @@ type DeleteContentRangeRequest struct {
 
 func (s *DeleteContentRangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteContentRangeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeleteFooterRequest: Deletes a Footer from the document.
+type DeleteFooterRequest struct {
+	// FooterId: The id of the footer to delete. If this footer is defined
+	// on
+	// DocumentStyle, the reference to
+	// this footer is removed, resulting in no footer of that type for
+	// the first section of the document. If this footer is defined on
+	// a
+	// SectionStyle, the reference to this
+	// footer is removed and the footer of that type is now continued
+	// from
+	// the previous section.
+	FooterId string `json:"footerId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FooterId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FooterId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeleteFooterRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteFooterRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeleteHeaderRequest: Deletes a Header from the document.
+type DeleteHeaderRequest struct {
+	// HeaderId: The id of the header to delete. If this header is defined
+	// on
+	// DocumentStyle, the reference to
+	// this header is removed, resulting in no header of that type for
+	// the first section of the document. If this header is defined on
+	// a
+	// SectionStyle, the reference to this
+	// header is removed and the header of that type is now continued
+	// from
+	// the previous section.
+	HeaderId string `json:"headerId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HeaderId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HeaderId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeleteHeaderRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteHeaderRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1617,15 +1716,11 @@ type DocumentStyle struct {
 	// UseEvenPageHeaderFooter: Indicates whether to use the even page
 	// header / footer IDs for the even
 	// pages.
-	//
-	// This property is read-only.
 	UseEvenPageHeaderFooter bool `json:"useEvenPageHeaderFooter,omitempty"`
 
 	// UseFirstPageHeaderFooter: Indicates whether to use the first page
 	// header / footer IDs for the first
 	// page.
-	//
-	// This property is read-only.
 	UseFirstPageHeaderFooter bool `json:"useFirstPageHeaderFooter,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Background") to
@@ -4991,6 +5086,12 @@ type Request struct {
 	// DeleteContentRange: Deletes content from the document.
 	DeleteContentRange *DeleteContentRangeRequest `json:"deleteContentRange,omitempty"`
 
+	// DeleteFooter: Deletes a footer from the document.
+	DeleteFooter *DeleteFooterRequest `json:"deleteFooter,omitempty"`
+
+	// DeleteHeader: Deletes a header from the document.
+	DeleteHeader *DeleteHeaderRequest `json:"deleteHeader,omitempty"`
+
 	// DeleteNamedRange: Deletes a named range.
 	DeleteNamedRange *DeleteNamedRangeRequest `json:"deleteNamedRange,omitempty"`
 
@@ -5242,7 +5343,7 @@ type SectionColumnProperties struct {
 	// PaddingEnd: The padding at the end of the column.
 	PaddingEnd *Dimension `json:"paddingEnd,omitempty"`
 
-	// Width: The width of the column.
+	// Width: Output only. The width of the column.
 	Width *Dimension `json:"width,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PaddingEnd") to
@@ -5275,11 +5376,21 @@ type SectionStyle struct {
 	// If empty, the section contains one column with the default properties
 	// in
 	// the Docs editor.
+	// A section can be updated to have no more than three columns.
+	//
+	// When updating this property, setting a concrete value is
+	// required.
+	// Unsetting this property will result in a 400 bad request error.
 	ColumnProperties []*SectionColumnProperties `json:"columnProperties,omitempty"`
 
 	// ColumnSeparatorStyle: The style of column separators.
 	//
-	// This style can be set even when there is one column in the section.
+	// This style can be set even when there is one column in the
+	// section.
+	//
+	// When updating this property, setting a concrete value is
+	// required.
+	// Unsetting this property results in a 400 bad request error.
 	//
 	// Possible values:
 	//   "COLUMN_SEPARATOR_STYLE_UNSPECIFIED" - An unspecified column
@@ -5293,12 +5404,102 @@ type SectionStyle struct {
 	// the value defaults to
 	// LEFT_TO_RIGHT.
 	//
+	// When updating this property, setting a concrete value is
+	// required.
+	// Unsetting this property results in a 400 bad request error.
+	//
 	// Possible values:
 	//   "CONTENT_DIRECTION_UNSPECIFIED" - The content direction is
 	// unspecified.
 	//   "LEFT_TO_RIGHT" - The content goes from left to right.
 	//   "RIGHT_TO_LEFT" - The content goes from right to left.
 	ContentDirection string `json:"contentDirection,omitempty"`
+
+	// DefaultFooterId: The ID of the default footer. If unset, the value
+	// inherits from the
+	// previous SectionBreak's SectionStyle.
+	// If the value is unset in the first SectionBreak, it inherits
+	// from
+	// DocumentStyle's default_footer_id.
+	//
+	// This property is read-only.
+	DefaultFooterId string `json:"defaultFooterId,omitempty"`
+
+	// DefaultHeaderId: The ID of the default header. If unset, the value
+	// inherits from the
+	// previous SectionBreak's SectionStyle.
+	// If the value is unset in the first SectionBreak, it inherits
+	// from
+	// DocumentStyle's default_header_id.
+	//
+	// This property is read-only.
+	DefaultHeaderId string `json:"defaultHeaderId,omitempty"`
+
+	// EvenPageFooterId: The ID of the footer used only for even pages. If
+	// the value of
+	// DocumentStyle's use_even_page_header_footer is true,
+	// this value is used for the footers on even pages in the section. If
+	// it
+	// is false, the footers on even pages uses the default_footer_id. If
+	// unset, the value
+	// inherits from the previous SectionBreak's SectionStyle. If the value
+	// is unset in
+	// the first SectionBreak, it inherits from
+	// DocumentStyle's
+	// even_page_footer_id.
+	//
+	// This property is read-only.
+	EvenPageFooterId string `json:"evenPageFooterId,omitempty"`
+
+	// EvenPageHeaderId: The ID of the header used only for even pages. If
+	// the value of
+	// DocumentStyle's use_even_page_header_footer is true,
+	// this value is used for the headers on even pages in the section. If
+	// it
+	// is false, the headers on even pages uses the default_header_id. If
+	// unset, the value
+	// inherits from the previous SectionBreak's SectionStyle. If the value
+	// is unset in
+	// the first SectionBreak, it inherits from
+	// DocumentStyle's
+	// even_page_header_id.
+	//
+	// This property is read-only.
+	EvenPageHeaderId string `json:"evenPageHeaderId,omitempty"`
+
+	// FirstPageFooterId: The ID of the footer used only for the first page
+	// of the section.
+	// If use_first_page_header_footer is true,
+	// this value is used for the footer on the first page of the section.
+	// If
+	// it is false, the footer on the first page of the section uses
+	// the
+	// default_footer_id.
+	// If unset, the value inherits from the previous SectionBreak's
+	// SectionStyle. If the value is unset in
+	// the first SectionBreak, it inherits from
+	// DocumentStyle's
+	// first_page_footer_id.
+	//
+	// This property is read-only.
+	FirstPageFooterId string `json:"firstPageFooterId,omitempty"`
+
+	// FirstPageHeaderId: The ID of the header used only for the first page
+	// of the section.
+	// If use_first_page_header_footer is true,
+	// this value is used for the header on the first page of the section.
+	// If
+	// it is false, the header on the first page of the section uses
+	// the
+	// default_header_id.
+	// If unset, the value inherits from the previous SectionBreak's
+	// SectionStyle. If the value is unset in
+	// the first SectionBreak, it inherits from
+	// DocumentStyle's
+	// first_page_header_id.
+	//
+	// This property is read-only.
+	FirstPageHeaderId string `json:"firstPageHeaderId,omitempty"`
 
 	// MarginBottom: The bottom page margin of the section. If unset, uses
 	// margin_bottom from DocumentStyle.
@@ -5377,6 +5578,20 @@ type SectionStyle struct {
 	// section.
 	//   "NEXT_PAGE" - The section starts on the next page.
 	SectionType string `json:"sectionType,omitempty"`
+
+	// UseFirstPageHeaderFooter: Indicates whether to use the first page
+	// header / footer IDs for the first
+	// page of the section. If unset, it inherits from
+	// DocumentStyle's
+	// use_first_page_header_footer for the
+	// first section. If the value is unset for subsequent sectors, it
+	// should be
+	// interpreted as false.
+	//
+	// When updating this property, setting a concrete value is
+	// required.
+	// Unsetting this property results in a 400 bad request error.
+	UseFirstPageHeaderFooter bool `json:"useFirstPageHeaderFooter,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ColumnProperties") to
 	// unconditionally include in API requests. By default, fields with
@@ -7685,7 +7900,7 @@ func (c *DocumentsBatchUpdateCall) Header() http.Header {
 
 func (c *DocumentsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7828,7 +8043,7 @@ func (c *DocumentsCreateCall) Header() http.Header {
 
 func (c *DocumentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7984,7 +8199,7 @@ func (c *DocumentsGetCall) Header() http.Header {
 
 func (c *DocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

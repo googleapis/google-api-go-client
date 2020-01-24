@@ -209,7 +209,7 @@
       }
     }
   },
-  "revision": "20200107",
+  "revision": "20200121",
   "rootUrl": "https://docs.googleapis.com/",
   "schemas": {
     "AutoText": {
@@ -417,9 +417,13 @@
       "type": "object"
     },
     "CreateFooterRequest": {
-      "description": "Creates a Footer. The new footer is applied to\nthe DocumentStyle.\n\nIf a footer of the specified type already exists, a 400 bad request error\nis returned.",
+      "description": "Creates a Footer. The new footer is applied to\nthe SectionStyle at the location of the\nSectionBreak if specificed, otherwise\nit is applied to the DocumentStyle.\n\nIf a footer of the specified type already exists, a 400 bad request error\nis returned.",
       "id": "CreateFooterRequest",
       "properties": {
+        "sectionBreakLocation": {
+          "$ref": "Location",
+          "description": "The location of the SectionBreak\nimmediately preceding the section whose SectionStyle this footer should belong to. If this is\nunset or refers to the first section break in the document, the footer\napplies to the document style."
+        },
         "type": {
           "description": "The type of footer to create.",
           "enum": [
@@ -473,9 +477,13 @@
       "type": "object"
     },
     "CreateHeaderRequest": {
-      "description": "Creates a Header. The new header is applied to\nthe DocumentStyle.\n\nIf a header of the specified type already exists, a 400 bad request error\nis returned.",
+      "description": "Creates a Header. The new header is applied to\nthe SectionStyle at the location of the\nSectionBreak if specificed, otherwise\nit is applied to the DocumentStyle.\n\nIf a header of the specified type already exists, a 400 bad request error\nis returned.",
       "id": "CreateHeaderRequest",
       "properties": {
+        "sectionBreakLocation": {
+          "$ref": "Location",
+          "description": "The location of the SectionBreak\nwhich begins the section this header should belong to. If\n`section_break_location' is unset or if it refers to the first section\nbreak in the document body, the header applies to the\nDocumentStyle"
+        },
         "type": {
           "description": "The type of header to create.",
           "enum": [
@@ -645,6 +653,28 @@
         "range": {
           "$ref": "Range",
           "description": "The range of content to delete.\n\nDeleting text that crosses a paragraph boundary may result in changes\nto paragraph styles, lists, positioned objects and bookmarks as the two\nparagraphs are merged.\n\nAttempting to delete certain ranges can result in an invalid document\nstructure in which case a 400 bad request error is returned.\n\nSome examples of invalid delete requests include:\n\n* Deleting one code unit of a surrogate pair.\n* Deleting the last newline character of a Body, Header,\n  Footer, Footnote, TableCell or TableOfContents.\n* Deleting the start or end of a Table,\n  TableOfContents or Equation without deleting the entire element.\n* Deleting the newline character before a\n  Table,\n  TableOfContents or\n  SectionBreak without deleting the\n  element.\n* Deleting individual rows or cells of a table. Deleting the content within\n  a table cell is allowed."
+        }
+      },
+      "type": "object"
+    },
+    "DeleteFooterRequest": {
+      "description": "Deletes a Footer from the document.",
+      "id": "DeleteFooterRequest",
+      "properties": {
+        "footerId": {
+          "description": "The id of the footer to delete. If this footer is defined on\nDocumentStyle, the reference to\nthis footer is removed, resulting in no footer of that type for\nthe first section of the document. If this footer is defined on a\nSectionStyle, the reference to this\nfooter is removed and the footer of that type is now continued from\nthe previous section.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DeleteHeaderRequest": {
+      "description": "Deletes a Header from the document.",
+      "id": "DeleteHeaderRequest",
+      "properties": {
+        "headerId": {
+          "description": "The id of the header to delete. If this header is defined on\nDocumentStyle, the reference to\nthis header is removed, resulting in no header of that type for\nthe first section of the document. If this header is defined on a\nSectionStyle, the reference to this\nheader is removed and the header of that type is now continued from\nthe previous section.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -912,11 +942,11 @@
           "type": "boolean"
         },
         "useEvenPageHeaderFooter": {
-          "description": "Indicates whether to use the even page header / footer IDs for the even\npages.\n\nThis property is read-only.",
+          "description": "Indicates whether to use the even page header / footer IDs for the even\npages.",
           "type": "boolean"
         },
         "useFirstPageHeaderFooter": {
-          "description": "Indicates whether to use the first page header / footer IDs for the first\npage.\n\nThis property is read-only.",
+          "description": "Indicates whether to use the first page header / footer IDs for the first\npage.",
           "type": "boolean"
         }
       },
@@ -2715,6 +2745,14 @@
           "$ref": "DeleteContentRangeRequest",
           "description": "Deletes content from the document."
         },
+        "deleteFooter": {
+          "$ref": "DeleteFooterRequest",
+          "description": "Deletes a footer from the document."
+        },
+        "deleteHeader": {
+          "$ref": "DeleteHeaderRequest",
+          "description": "Deletes a header from the document."
+        },
         "deleteNamedRange": {
           "$ref": "DeleteNamedRangeRequest",
           "description": "Deletes a named range."
@@ -2906,7 +2944,7 @@
         },
         "width": {
           "$ref": "Dimension",
-          "description": "The width of the column."
+          "description": "Output only. The width of the column."
         }
       },
       "type": "object"
@@ -2916,14 +2954,14 @@
       "id": "SectionStyle",
       "properties": {
         "columnProperties": {
-          "description": "The section's columns properties.\n\nIf empty, the section contains one column with the default properties in\nthe Docs editor.",
+          "description": "The section's columns properties.\n\nIf empty, the section contains one column with the default properties in\nthe Docs editor.\nA section can be updated to have no more than three columns.\n\nWhen updating this property, setting a concrete value is required.\nUnsetting this property will result in a 400 bad request error.",
           "items": {
             "$ref": "SectionColumnProperties"
           },
           "type": "array"
         },
         "columnSeparatorStyle": {
-          "description": "The style of column separators.\n\nThis style can be set even when there is one column in the section.",
+          "description": "The style of column separators.\n\nThis style can be set even when there is one column in the section.\n\nWhen updating this property, setting a concrete value is required.\nUnsetting this property results in a 400 bad request error.",
           "enum": [
             "COLUMN_SEPARATOR_STYLE_UNSPECIFIED",
             "NONE",
@@ -2937,7 +2975,7 @@
           "type": "string"
         },
         "contentDirection": {
-          "description": "The content direction of this section. If unset, the value defaults to\nLEFT_TO_RIGHT.",
+          "description": "The content direction of this section. If unset, the value defaults to\nLEFT_TO_RIGHT.\n\nWhen updating this property, setting a concrete value is required.\nUnsetting this property results in a 400 bad request error.",
           "enum": [
             "CONTENT_DIRECTION_UNSPECIFIED",
             "LEFT_TO_RIGHT",
@@ -2948,6 +2986,30 @@
             "The content goes from left to right.",
             "The content goes from right to left."
           ],
+          "type": "string"
+        },
+        "defaultFooterId": {
+          "description": "The ID of the default footer. If unset, the value inherits from the\nprevious SectionBreak's SectionStyle.\nIf the value is unset in the first SectionBreak, it inherits from\nDocumentStyle's default_footer_id.\n\nThis property is read-only.",
+          "type": "string"
+        },
+        "defaultHeaderId": {
+          "description": "The ID of the default header. If unset, the value inherits from the\nprevious SectionBreak's SectionStyle.\nIf the value is unset in the first SectionBreak, it inherits from\nDocumentStyle's default_header_id.\n\nThis property is read-only.",
+          "type": "string"
+        },
+        "evenPageFooterId": {
+          "description": "The ID of the footer used only for even pages. If the value of\nDocumentStyle's use_even_page_header_footer is true,\nthis value is used for the footers on even pages in the section. If it\nis false, the footers on even pages uses the default_footer_id. If unset, the value\ninherits from the previous SectionBreak's SectionStyle. If the value is unset in\nthe first SectionBreak, it inherits from DocumentStyle's\neven_page_footer_id.\n\nThis property is read-only.",
+          "type": "string"
+        },
+        "evenPageHeaderId": {
+          "description": "The ID of the header used only for even pages. If the value of\nDocumentStyle's use_even_page_header_footer is true,\nthis value is used for the headers on even pages in the section. If it\nis false, the headers on even pages uses the default_header_id. If unset, the value\ninherits from the previous SectionBreak's SectionStyle. If the value is unset in\nthe first SectionBreak, it inherits from DocumentStyle's\neven_page_header_id.\n\nThis property is read-only.",
+          "type": "string"
+        },
+        "firstPageFooterId": {
+          "description": "The ID of the footer used only for the first page of the section.\nIf use_first_page_header_footer is true,\nthis value is used for the footer on the first page of the section. If\nit is false, the footer on the first page of the section uses the\ndefault_footer_id.\nIf unset, the value inherits from the previous SectionBreak's SectionStyle. If the value is unset in\nthe first SectionBreak, it inherits from DocumentStyle's\nfirst_page_footer_id.\n\nThis property is read-only.",
+          "type": "string"
+        },
+        "firstPageHeaderId": {
+          "description": "The ID of the header used only for the first page of the section.\nIf use_first_page_header_footer is true,\nthis value is used for the header on the first page of the section. If\nit is false, the header on the first page of the section uses the\ndefault_header_id.\nIf unset, the value inherits from the previous SectionBreak's SectionStyle. If the value is unset in\nthe first SectionBreak, it inherits from DocumentStyle's\nfirst_page_header_id.\n\nThis property is read-only.",
           "type": "string"
         },
         "marginBottom": {
@@ -2987,6 +3049,10 @@
             "The section starts on the next page."
           ],
           "type": "string"
+        },
+        "useFirstPageHeaderFooter": {
+          "description": "Indicates whether to use the first page header / footer IDs for the first\npage of the section. If unset, it inherits from DocumentStyle's\nuse_first_page_header_footer for the\nfirst section. If the value is unset for subsequent sectors, it should be\ninterpreted as false.\n\nWhen updating this property, setting a concrete value is required.\nUnsetting this property results in a 400 bad request error.",
+          "type": "boolean"
         }
       },
       "type": "object"

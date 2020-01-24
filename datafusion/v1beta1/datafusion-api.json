@@ -147,6 +147,11 @@
                   "location": "query",
                   "type": "string"
                 },
+                "includeUnrevealedLocations": {
+                  "description": "If true, the returned list will include locations which are not yet\nrevealed.",
+                  "location": "query",
+                  "type": "boolean"
+                },
                 "name": {
                   "description": "The resource that owns the locations collection, if applicable.",
                   "location": "path",
@@ -614,7 +619,7 @@
       }
     }
   },
-  "revision": "20191014",
+  "revision": "20200122",
   "rootUrl": "https://datafusion.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -625,12 +630,6 @@
           "description": "The configuration for logging of each type of permission.",
           "items": {
             "$ref": "AuditLogConfig"
-          },
-          "type": "array"
-        },
-        "exemptedMembers": {
-          "items": {
-            "type": "string"
           },
           "type": "array"
         },
@@ -652,9 +651,6 @@
           },
           "type": "array"
         },
-        "ignoreChildExemptions": {
-          "type": "boolean"
-        },
         "logType": {
           "description": "The log type that this config enables.",
           "enum": [
@@ -674,31 +670,6 @@
       },
       "type": "object"
     },
-    "AuthorizationLoggingOptions": {
-      "description": "Authorization-related information used by Cloud Audit Logging.",
-      "id": "AuthorizationLoggingOptions",
-      "properties": {
-        "permissionType": {
-          "description": "The type of the permission that was checked.",
-          "enum": [
-            "PERMISSION_TYPE_UNSPECIFIED",
-            "ADMIN_READ",
-            "ADMIN_WRITE",
-            "DATA_READ",
-            "DATA_WRITE"
-          ],
-          "enumDescriptions": [
-            "Default. Should not be used.",
-            "A read of admin (meta) data.",
-            "A write of admin (meta) data.",
-            "A read of standard data.",
-            "A write of standard data."
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "Binding": {
       "description": "Associates `members` with a `role`.",
       "id": "Binding",
@@ -708,7 +679,7 @@
           "description": "The condition that is associated with this binding.\nNOTE: An unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
         },
         "members": {
-          "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@example.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
+          "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@example.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n* `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique\n   identifier) representing a user that has been recently deleted. For\n   example, `alice@example.com?uid=123456789012345678901`. If the user is\n   recovered, this value reverts to `user:{emailid}` and the recovered user\n   retains the role in the binding.\n\n* `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus\n   unique identifier) representing a service account that has been recently\n   deleted. For example,\n   `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.\n   If the service account is undeleted, this value reverts to\n   `serviceAccount:{emailid}` and the undeleted service account retains the\n   role in the binding.\n\n* `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique\n   identifier) representing a Google group that has been recently\n   deleted. For example, `admins@example.com?uid=123456789012345678901`. If\n   the group is recovered, this value reverts to `group:{emailid}` and the\n   recovered group retains the role in the binding.\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
           "items": {
             "type": "string"
           },
@@ -727,165 +698,6 @@
       "properties": {},
       "type": "object"
     },
-    "CloudAuditOptions": {
-      "description": "Write a Cloud Audit log",
-      "id": "CloudAuditOptions",
-      "properties": {
-        "authorizationLoggingOptions": {
-          "$ref": "AuthorizationLoggingOptions",
-          "description": "Information used by the Cloud Audit Logging pipeline."
-        },
-        "logName": {
-          "description": "The log_name to populate in the Cloud Audit Record.",
-          "enum": [
-            "UNSPECIFIED_LOG_NAME",
-            "ADMIN_ACTIVITY",
-            "DATA_ACCESS"
-          ],
-          "enumDescriptions": [
-            "Default. Should not be used.",
-            "Corresponds to \"cloudaudit.googleapis.com/activity\"",
-            "Corresponds to \"cloudaudit.googleapis.com/data_access\""
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "Condition": {
-      "description": "A condition to be met.",
-      "id": "Condition",
-      "properties": {
-        "iam": {
-          "description": "Trusted attributes supplied by the IAM system.",
-          "enum": [
-            "NO_ATTR",
-            "AUTHORITY",
-            "ATTRIBUTION",
-            "SECURITY_REALM",
-            "APPROVER",
-            "JUSTIFICATION_TYPE",
-            "CREDENTIALS_TYPE"
-          ],
-          "enumDescriptions": [
-            "Default non-attribute.",
-            "Either principal or (if present) authority selector.",
-            "The principal (even if an authority selector is present), which\nmust only be used for attribution, not authorization.",
-            "Any of the security realms in the IAMContext (go/security-realms).\nWhen used with IN, the condition indicates \"any of the request's realms\nmatch one of the given values; with NOT_IN, \"none of the realms match\nany of the given values\". Note that a value can be:\n - 'self' (i.e., allow connections from clients that are in the same\n security realm)\n - a realm (e.g., 'campus-abc')\n - a realm group (e.g., 'realms-for-borg-cell-xx', see: go/realm-groups)\nA match is determined by a realm group\nmembership check performed by a RealmAclRep object (go/realm-acl-howto).\nIt is not permitted to grant access based on the *absence* of a realm, so\nrealm conditions can only be used in a \"positive\" context (e.g., ALLOW/IN\nor DENY/NOT_IN).",
-            "An approver (distinct from the requester) that has authorized this\nrequest.\nWhen used with IN, the condition indicates that one of the approvers\nassociated with the request matches the specified principal, or is a\nmember of the specified group. Approvers can only grant additional\naccess, and are thus only used in a strictly positive context\n(e.g. ALLOW/IN or DENY/NOT_IN).",
-            "What types of justifications have been supplied with this request.\nString values should match enum names from\nsecurity.credentials.JustificationType, e.g. \"MANUAL_STRING\". It is not\npermitted to grant access based on the *absence* of a justification, so\njustification conditions can only be used in a \"positive\" context\n(e.g., ALLOW/IN or DENY/NOT_IN).\n\nMultiple justifications, e.g., a Buganizer ID and a manually-entered\nreason, are normal and supported.",
-            "What type of credentials have been supplied with this request.\nString values should match enum names from\nsecurity_loas_l2.CredentialsType - currently, only CREDS_TYPE_EMERGENCY\nis supported.\nIt is not permitted to grant access based on the *absence* of a\ncredentials type, so the conditions can only be used in a \"positive\"\ncontext (e.g., ALLOW/IN or DENY/NOT_IN)."
-          ],
-          "type": "string"
-        },
-        "op": {
-          "description": "An operator to apply the subject with.",
-          "enum": [
-            "NO_OP",
-            "EQUALS",
-            "NOT_EQUALS",
-            "IN",
-            "NOT_IN",
-            "DISCHARGED"
-          ],
-          "enumDescriptions": [
-            "Default no-op.",
-            "DEPRECATED. Use IN instead.",
-            "DEPRECATED. Use NOT_IN instead.",
-            "The condition is true if the subject (or any element of it if it is\na set) matches any of the supplied values.",
-            "The condition is true if the subject (or every element of it if it is\na set) matches none of the supplied values.",
-            "Subject is discharged"
-          ],
-          "type": "string"
-        },
-        "svc": {
-          "description": "Trusted attributes discharged by the service.",
-          "type": "string"
-        },
-        "sys": {
-          "description": "Trusted attributes supplied by any service that owns resources and uses\nthe IAM system for access control.",
-          "enum": [
-            "NO_ATTR",
-            "REGION",
-            "SERVICE",
-            "NAME",
-            "IP"
-          ],
-          "enumDescriptions": [
-            "Default non-attribute type",
-            "Region of the resource",
-            "Service name",
-            "Resource name",
-            "IP address of the caller"
-          ],
-          "type": "string"
-        },
-        "values": {
-          "description": "The objects of the condition.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "CounterOptions": {
-      "description": "Increment a streamz counter with the specified metric and field names.\n\nMetric names should start with a '/', generally be lowercase-only,\nand end in \"_count\". Field names should not contain an initial slash.\nThe actual exported metric names will have \"/iam/policy\" prepended.\n\nField names correspond to IAM request parameters and field values are\ntheir respective values.\n\nSupported field names:\n   - \"authority\", which is \"[token]\" if IAMContext.token is present,\n     otherwise the value of IAMContext.authority_selector if present, and\n     otherwise a representation of IAMContext.principal; or\n   - \"iam_principal\", a representation of IAMContext.principal even if a\n     token or authority selector is present; or\n   - \"\" (empty string), resulting in a counter with no fields.\n\nExamples:\n  counter { metric: \"/debug_access_count\"  field: \"iam_principal\" }\n  ==\u003e increment counter /iam/policy/debug_access_count\n                        {iam_principal=[value of IAMContext.principal]}\n",
-      "id": "CounterOptions",
-      "properties": {
-        "customFields": {
-          "description": "Custom fields.",
-          "items": {
-            "$ref": "CustomField"
-          },
-          "type": "array"
-        },
-        "field": {
-          "description": "The field value to attribute.",
-          "type": "string"
-        },
-        "metric": {
-          "description": "The metric to update.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "CustomField": {
-      "description": "Custom fields.\nThese can be used to create a counter with arbitrary field/value\npairs.\nSee: go/rpcsp-custom-fields.",
-      "id": "CustomField",
-      "properties": {
-        "name": {
-          "description": "Name is the field name.",
-          "type": "string"
-        },
-        "value": {
-          "description": "Value is the field value. It is important that in contrast to the\nCounterOptions.field, the value here is a constant that is not\nderived from the IAMContext.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "DataAccessOptions": {
-      "description": "Write a Data Access (Gin) log",
-      "id": "DataAccessOptions",
-      "properties": {
-        "logMode": {
-          "description": "Whether Gin logging should happen in a fail-closed manner at the caller.\nThis is relevant only in the LocalIAM implementation, for now.",
-          "enum": [
-            "LOG_MODE_UNSPECIFIED",
-            "LOG_FAIL_CLOSED"
-          ],
-          "enumDescriptions": [
-            "Client is not required to write a partial Gin log immediately after\nthe authorization check. If client chooses to write one and it fails,\nclient may either fail open (allow the operation to continue) or\nfail closed (handle as a DENY outcome).",
-            "The application's operation in the context of which this authorization\ncheck is being made may only be performed if it is successfully logged\nto Gin. For instance, the authorization library may satisfy this\nobligation by emitting a partial log entry at authorization check time\nand only returning ALLOW to the application if it succeeds.\n\nIf a matching Rule has this directive, but the client has not indicated\nthat it will honor such requirements, then the IAM check will result in\nauthorization failure by setting CheckPolicyResponse.success=false."
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "Empty": {
       "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
       "id": "Empty",
@@ -893,23 +705,23 @@
       "type": "object"
     },
     "Expr": {
-      "description": "Represents an expression text. Example:\n\n    title: \"User account presence\"\n    description: \"Determines whether the request has a user account\"\n    expression: \"size(request.user) \u003e 0\"",
+      "description": "Represents a textual expression in the Common Expression Language (CEL)\nsyntax. CEL is a C-like expression language. The syntax and semantics of CEL\nare documented at https://github.com/google/cel-spec.\n\nExample (Comparison):\n\n    title: \"Summary size limit\"\n    description: \"Determines if a summary is less than 100 chars\"\n    expression: \"document.summary.size() \u003c 100\"\n\nExample (Equality):\n\n    title: \"Requestor is owner\"\n    description: \"Determines if requestor is the document owner\"\n    expression: \"document.owner == request.auth.claims.email\"\n\nExample (Logic):\n\n    title: \"Public documents\"\n    description: \"Determine whether the document should be publicly visible\"\n    expression: \"document.type != 'private' \u0026\u0026 document.type != 'internal'\"\n\nExample (Data Manipulation):\n\n    title: \"Notification string\"\n    description: \"Create a notification string with a timestamp.\"\n    expression: \"'New message received at ' + string(document.create_time)\"\n\nThe exact variables and functions that may be referenced within an expression\nare determined by the service that evaluates it. See the service\ndocumentation for additional information.",
       "id": "Expr",
       "properties": {
         "description": {
-          "description": "An optional description of the expression. This is a longer text which\ndescribes the expression, e.g. when hovered over it in a UI.",
+          "description": "Optional. Description of the expression. This is a longer text which\ndescribes the expression, e.g. when hovered over it in a UI.",
           "type": "string"
         },
         "expression": {
-          "description": "Textual representation of an expression in\nCommon Expression Language syntax.\n\nThe application context of the containing message determines which\nwell-known feature set of CEL is supported.",
+          "description": "Textual representation of an expression in Common Expression Language\nsyntax.",
           "type": "string"
         },
         "location": {
-          "description": "An optional string indicating the location of the expression for error\nreporting, e.g. a file name and a position in the file.",
+          "description": "Optional. String indicating the location of the expression for error\nreporting, e.g. a file name and a position in the file.",
           "type": "string"
         },
         "title": {
-          "description": "An optional title for the expression, i.e. a short string describing\nits purpose. This can be used e.g. in UIs which allow to enter the\nexpression.",
+          "description": "Optional. Title for the expression, i.e. a short string describing\nits purpose. This can be used e.g. in UIs which allow to enter the\nexpression.",
           "type": "string"
         }
       },
@@ -951,11 +763,15 @@
           "description": "Option to enable Stackdriver Monitoring.",
           "type": "boolean"
         },
+        "gcsBucket": {
+          "description": "Output only. Cloud Storage bucket generated by Data Fusion in the customer\nproject.",
+          "type": "string"
+        },
         "labels": {
           "additionalProperties": {
             "type": "string"
           },
-          "description": "The resource labels for instance to use to annotate any related underlying\nresources such as GCE VMs. The character '=' is not allowed to be used\nwithin the labels.",
+          "description": "The resource labels for instance to use to annotate any related underlying\nresources such as Compute Engine VMs. The character '=' is not allowed to\nbe used within the labels.",
           "type": "object"
         },
         "name": {
@@ -1037,7 +853,7 @@
           "type": "string"
         },
         "version": {
-          "description": "Current version of the Data Fusion. Only specifiable in Update.",
+          "description": "Current version of Data Fusion.",
           "type": "string"
         },
         "zone": {
@@ -1142,25 +958,6 @@
       },
       "type": "object"
     },
-    "LogConfig": {
-      "description": "Specifies what kind of log the caller must write",
-      "id": "LogConfig",
-      "properties": {
-        "cloudAudit": {
-          "$ref": "CloudAuditOptions",
-          "description": "Cloud audit options."
-        },
-        "counter": {
-          "$ref": "CounterOptions",
-          "description": "Counter options."
-        },
-        "dataAccess": {
-          "$ref": "DataAccessOptions",
-          "description": "Data access options."
-        }
-      },
-      "type": "object"
-    },
     "NetworkConfig": {
       "description": "Network configuration for a Data Fusion instance. These configurations\nare used for peering with the customer network. Configurations are optional\nwhen a public Data Fusion instance is to be created. However, providing\nthese configurations allows several benefits, such as reduced network latency\nwhile accessing the customer resources from managed Data Fusion instance\nnodes, as well as access to the customer on-prem resources.",
       "id": "NetworkConfig",
@@ -1249,7 +1046,7 @@
       "type": "object"
     },
     "Policy": {
-      "description": "Defines an Identity and Access Management (IAM) policy. It is used to\nspecify access control policies for Cloud Platform resources.\n\n\nA `Policy` is a collection of `bindings`. A `binding` binds one or more\n`members` to a single `role`. Members can be user accounts, service accounts,\nGoogle groups, and domains (such as G Suite). A `role` is a named list of\npermissions (defined by IAM or configured by users). A `binding` can\noptionally specify a `condition`, which is a logic expression that further\nconstrains the role binding based on attributes about the request and/or\ntarget resource.\n\n**JSON Example**\n\n    {\n      \"bindings\": [\n        {\n          \"role\": \"roles/resourcemanager.organizationAdmin\",\n          \"members\": [\n            \"user:mike@example.com\",\n            \"group:admins@example.com\",\n            \"domain:google.com\",\n            \"serviceAccount:my-project-id@appspot.gserviceaccount.com\"\n          ]\n        },\n        {\n          \"role\": \"roles/resourcemanager.organizationViewer\",\n          \"members\": [\"user:eve@example.com\"],\n          \"condition\": {\n            \"title\": \"expirable access\",\n            \"description\": \"Does not grant access after Sep 2020\",\n            \"expression\": \"request.time \u003c\n            timestamp('2020-10-01T00:00:00.000Z')\",\n          }\n        }\n      ]\n    }\n\n**YAML Example**\n\n    bindings:\n    - members:\n      - user:mike@example.com\n      - group:admins@example.com\n      - domain:google.com\n      - serviceAccount:my-project-id@appspot.gserviceaccount.com\n      role: roles/resourcemanager.organizationAdmin\n    - members:\n      - user:eve@example.com\n      role: roles/resourcemanager.organizationViewer\n      condition:\n        title: expirable access\n        description: Does not grant access after Sep 2020\n        expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\n\nFor a description of IAM and its features, see the\n[IAM developer's guide](https://cloud.google.com/iam/docs).",
+      "description": "An Identity and Access Management (IAM) policy, which specifies access\ncontrols for Google Cloud resources.\n\n\nA `Policy` is a collection of `bindings`. A `binding` binds one or more\n`members` to a single `role`. Members can be user accounts, service accounts,\nGoogle groups, and domains (such as G Suite). A `role` is a named list of\npermissions; each `role` can be an IAM predefined role or a user-created\ncustom role.\n\nOptionally, a `binding` can specify a `condition`, which is a logical\nexpression that allows access to a resource only if the expression evaluates\nto `true`. A condition can add constraints based on attributes of the\nrequest, the resource, or both.\n\n**JSON example:**\n\n    {\n      \"bindings\": [\n        {\n          \"role\": \"roles/resourcemanager.organizationAdmin\",\n          \"members\": [\n            \"user:mike@example.com\",\n            \"group:admins@example.com\",\n            \"domain:google.com\",\n            \"serviceAccount:my-project-id@appspot.gserviceaccount.com\"\n          ]\n        },\n        {\n          \"role\": \"roles/resourcemanager.organizationViewer\",\n          \"members\": [\"user:eve@example.com\"],\n          \"condition\": {\n            \"title\": \"expirable access\",\n            \"description\": \"Does not grant access after Sep 2020\",\n            \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\",\n          }\n        }\n      ],\n      \"etag\": \"BwWWja0YfJA=\",\n      \"version\": 3\n    }\n\n**YAML example:**\n\n    bindings:\n    - members:\n      - user:mike@example.com\n      - group:admins@example.com\n      - domain:google.com\n      - serviceAccount:my-project-id@appspot.gserviceaccount.com\n      role: roles/resourcemanager.organizationAdmin\n    - members:\n      - user:eve@example.com\n      role: roles/resourcemanager.organizationViewer\n      condition:\n        title: expirable access\n        description: Does not grant access after Sep 2020\n        expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\n    - etag: BwWWja0YfJA=\n    - version: 3\n\nFor a description of IAM and its features, see the\n[IAM documentation](https://cloud.google.com/iam/docs/).",
       "id": "Policy",
       "properties": {
         "auditConfigs": {
@@ -1260,29 +1057,19 @@
           "type": "array"
         },
         "bindings": {
-          "description": "Associates a list of `members` to a `role`. Optionally may specify a\n`condition` that determines when binding is in effect.\n`bindings` with no members will result in an error.",
+          "description": "Associates a list of `members` to a `role`. Optionally, may specify a\n`condition` that determines how and when the `bindings` are applied. Each\nof the `bindings` must contain at least one member.",
           "items": {
             "$ref": "Binding"
           },
           "type": "array"
         },
         "etag": {
-          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a policy from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform policy updates in order to avoid race\nconditions: An `etag` is returned in the response to `getIamPolicy`, and\nsystems are expected to put that etag in the request to `setIamPolicy` to\nensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing\npolicy is overwritten. Due to blind-set semantics of an etag-less policy,\n'setIamPolicy' will not fail even if either of incoming or stored policy\ndoes not meet the version requirements.",
+          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a policy from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform policy updates in order to avoid race\nconditions: An `etag` is returned in the response to `getIamPolicy`, and\nsystems are expected to put that etag in the request to `setIamPolicy` to\nensure that their change will be applied to the same version of the policy.\n\n**Important:** If you use IAM Conditions, you must include the `etag` field\nwhenever you call `setIamPolicy`. If you omit this field, then IAM allows\nyou to overwrite a version `3` policy with a version `1` policy, and all of\nthe conditions in the version `3` policy are lost.",
           "format": "byte",
           "type": "string"
         },
-        "iamOwned": {
-          "type": "boolean"
-        },
-        "rules": {
-          "description": "If more than one rule is specified, the rules are applied in the following\nmanner:\n- All matching LOG rules are always applied.\n- If any DENY/DENY_WITH_LOG rule matches, permission is denied.\n  Logging will be applied if one or more matching rule requires logging.\n- Otherwise, if any ALLOW/ALLOW_WITH_LOG rule matches, permission is\n  granted.\n  Logging will be applied if one or more matching rule requires logging.\n- Otherwise, if no rule applies, permission is denied.",
-          "items": {
-            "$ref": "Rule"
-          },
-          "type": "array"
-        },
         "version": {
-          "description": "Specifies the format of the policy.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nOperations affecting conditional bindings must specify version 3. This can\nbe either setting a conditional policy, modifying a conditional binding,\nor removing a conditional binding from the stored conditional policy.\nOperations on non-conditional policies may specify any valid value or\nleave the field unset.\n\nIf no etag is provided in the call to `setIamPolicy`, any version\ncompliance checks on the incoming and/or stored policy is skipped.",
+          "description": "Specifies the format of the policy.\n\nValid values are `0`, `1`, and `3`. Requests that specify an invalid value\nare rejected.\n\nAny operation that affects conditional role bindings must specify version\n`3`. This requirement applies to the following operations:\n\n* Getting a policy that includes a conditional role binding\n* Adding a conditional role binding to a policy\n* Changing a conditional role binding in a policy\n* Removing any role binding, with or without a condition, from a policy\n  that includes conditions\n\n**Important:** If you use IAM Conditions, you must include the `etag` field\nwhenever you call `setIamPolicy`. If you omit this field, then IAM allows\nyou to overwrite a version `3` policy with a version `1` policy, and all of\nthe conditions in the version `3` policy are lost.\n\nIf a policy does not include any conditions, operations on that policy may\nspecify any valid version or leave the field unset.",
           "format": "int32",
           "type": "integer"
         }
@@ -1293,72 +1080,6 @@
       "description": "Request message for restarting a Data Fusion instance.",
       "id": "RestartInstanceRequest",
       "properties": {},
-      "type": "object"
-    },
-    "Rule": {
-      "description": "A rule to be applied in a Policy.",
-      "id": "Rule",
-      "properties": {
-        "action": {
-          "description": "Required",
-          "enum": [
-            "NO_ACTION",
-            "ALLOW",
-            "ALLOW_WITH_LOG",
-            "DENY",
-            "DENY_WITH_LOG",
-            "LOG"
-          ],
-          "enumDescriptions": [
-            "Default no action.",
-            "Matching 'Entries' grant access.",
-            "Matching 'Entries' grant access and the caller promises to log\nthe request per the returned log_configs.",
-            "Matching 'Entries' deny access.",
-            "Matching 'Entries' deny access and the caller promises to log\nthe request per the returned log_configs.",
-            "Matching 'Entries' tell IAM.Check callers to generate logs."
-          ],
-          "type": "string"
-        },
-        "conditions": {
-          "description": "Additional restrictions that must be met. All conditions must pass for the\nrule to match.",
-          "items": {
-            "$ref": "Condition"
-          },
-          "type": "array"
-        },
-        "description": {
-          "description": "Human-readable description of the rule.",
-          "type": "string"
-        },
-        "in": {
-          "description": "If one or more 'in' clauses are specified, the rule matches if\nthe PRINCIPAL/AUTHORITY_SELECTOR is in at least one of these entries.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "logConfig": {
-          "description": "The config returned to callers of tech.iam.IAM.CheckPolicy for any entries\nthat match the LOG action.",
-          "items": {
-            "$ref": "LogConfig"
-          },
-          "type": "array"
-        },
-        "notIn": {
-          "description": "If one or more 'not_in' clauses are specified, the rule matches\nif the PRINCIPAL/AUTHORITY_SELECTOR is in none of the entries.\nThe format for in and not_in entries can be found at in the Local IAM\ndocumentation (see go/local-iam#features).",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "permissions": {
-          "description": "A permission is a string of form '\u003cservice\u003e.\u003cresource type\u003e.\u003cverb\u003e'\n(e.g., 'storage.buckets.list'). A value of '*' matches all permissions,\nand a verb part of '*' (e.g., 'storage.buckets.*') matches all verbs.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
-      },
       "type": "object"
     },
     "SetIamPolicyRequest": {

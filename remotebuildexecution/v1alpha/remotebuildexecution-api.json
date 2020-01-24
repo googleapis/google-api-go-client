@@ -387,7 +387,7 @@
       }
     }
   },
-  "revision": "20200107",
+  "revision": "20200121",
   "rootUrl": "https://admin-remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -1333,6 +1333,11 @@
         },
         "machineType": {
           "description": "Required. Machine type of the worker, such as `n1-standard-2`.\nSee https://cloud.google.com/compute/docs/machine-types for a list of\nsupported machine types. Note that `f1-micro` and `g1-small` are not yet\nsupported.",
+          "type": "string"
+        },
+        "maxConcurrentActions": {
+          "description": "The maximum number of actions a worker can execute concurrently.",
+          "format": "int64",
           "type": "string"
         },
         "minCpuPlatform": {

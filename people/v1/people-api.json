@@ -252,12 +252,12 @@
               "type": "integer"
             },
             "pageToken": {
-              "description": "The next_page_token value returned from a previous call to\n[ListContactGroups](/people/api/rest/v1/contactgroups/list).\nRequests the next page of resources.",
+              "description": "Optional. The next_page_token value returned from a previous call to\n[ListContactGroups](/people/api/rest/v1/contactgroups/list).\nRequests the next page of resources.",
               "location": "query",
               "type": "string"
             },
             "syncToken": {
-              "description": "A sync token, returned by a previous call to `contactgroups.list`.\nOnly resources changed since the sync token was created will be returned.",
+              "description": "Optional. A sync token, returned by a previous call to `contactgroups.list`.\nOnly resources changed since the sync token was created will be returned.",
               "location": "query",
               "type": "string"
             }
@@ -281,7 +281,7 @@
           ],
           "parameters": {
             "resourceName": {
-              "description": "The resource name for the contact group, assigned by the server. An ASCII\nstring, in the form of `contactGroups/`\u003cvar\u003econtact_group_id\u003c/var\u003e.",
+              "description": "The resource name for the contact group, assigned by the server. An ASCII\nstring, in the form of `contactGroups/{contact_group_id}`.",
               "location": "path",
               "pattern": "^contactGroups/[^/]+$",
               "required": true,
@@ -304,7 +304,7 @@
         "members": {
           "methods": {
             "modify": {
-              "description": "Modify the members of a contact group owned by the authenticated user.\n\u003cbr\u003e\nThe only system contact groups that can have members added are\n`contactGroups/myContacts` and `contactGroups/starred`. Other system\ncontact groups are deprecated and can only have contacts removed.",
+              "description": "Modify the members of a contact group owned by the authenticated user.\n\nThe only system contact groups that can have members added are\n`contactGroups/myContacts` and `contactGroups/starred`. Other system\ncontact groups are deprecated and can only have contacts removed.",
               "flatPath": "v1/contactGroups/{contactGroupsId}/members:modify",
               "httpMethod": "POST",
               "id": "people.contactGroups.members.modify",
@@ -412,7 +412,7 @@
           ]
         },
         "get": {
-          "description": "Provides information about a person by specifying a resource name. Use\n`people/me` to indicate the authenticated user.\n\u003cbr\u003e\nThe request throws a 400 error if 'personFields' is not specified.",
+          "description": "Provides information about a person by specifying a resource name. Use\n`people/me` to indicate the authenticated user.\n\nThe request throws a 400 error if 'personFields' is not specified.",
           "flatPath": "v1/people/{peopleId}",
           "httpMethod": "GET",
           "id": "people.people.get",
@@ -433,7 +433,7 @@
               "type": "string"
             },
             "resourceName": {
-              "description": "Required. The resource name of the person to provide information about.\n\n- To get information about the authenticated user, specify `people/me`.\n- To get information about a google account, specify\n `people/`\u003cvar\u003eaccount_id\u003c/var\u003e.\n- To get information about a contact, specify the resource name that\n  identifies the contact as returned by\n[`people.connections.list`](/people/api/rest/v1/people.connections/list).",
+              "description": "Required. The resource name of the person to provide information about.\n\n- To get information about the authenticated user, specify `people/me`.\n- To get information about a google account, specify\n `people/{account_id}`.\n- To get information about a contact, specify the resource name that\n  identifies the contact as returned by\n[`people.connections.list`](/people/api/rest/v1/people.connections/list).",
               "location": "path",
               "pattern": "^people/[^/]+$",
               "required": true,
@@ -457,7 +457,7 @@
           ]
         },
         "getBatchGet": {
-          "description": "Provides information about a list of specific people by specifying a list\nof requested resource names. Use `people/me` to indicate the authenticated\nuser.\n\u003cbr\u003e\nThe request throws a 400 error if 'personFields' is not specified.",
+          "description": "Provides information about a list of specific people by specifying a list\nof requested resource names. Use `people/me` to indicate the authenticated\nuser.\n\nThe request throws a 400 error if 'personFields' is not specified.",
           "flatPath": "v1/people:batchGet",
           "httpMethod": "GET",
           "id": "people.people.getBatchGet",
@@ -476,7 +476,7 @@
               "type": "string"
             },
             "resourceNames": {
-              "description": "Required. The resource names of the people to provide information about.\n\n- To get information about the authenticated user, specify `people/me`.\n- To get information about a google account, specify\n  `people/`\u003cvar\u003eaccount_id\u003c/var\u003e.\n- To get information about a contact, specify the resource name that\n  identifies the contact as returned by\n[`people.connections.list`](/people/api/rest/v1/people.connections/list).\n\nYou can include up to 50 resource names in one request.",
+              "description": "Required. The resource names of the people to provide information about.\n\n- To get information about the authenticated user, specify `people/me`.\n- To get information about a google account, specify\n  `people/{account_id}`.\n- To get information about a contact, specify the resource name that\n  identifies the contact as returned by\n[`people.connections.list`](/people/api/rest/v1/people.connections/list).\n\nYou can include up to 50 resource names in one request.",
               "location": "query",
               "repeated": true,
               "type": "string"
@@ -499,7 +499,7 @@
           ]
         },
         "updateContact": {
-          "description": "Update contact data for an existing contact person. Any non-contact data\nwill not be modified.\n\nThe request throws a 400 error if `updatePersonFields` is not specified.\n\u003cbr\u003e\nThe request throws a 400 error if `person.metadata.sources` is not\nspecified for the contact to be updated.\n\u003cbr\u003e\nThe request throws a 400 error with an error with reason\n`\"failedPrecondition\"` if `person.metadata.sources.etag` is different than\nthe contact's etag, which indicates the contact has changed since its data\nwas read. Clients should get the latest person and re-apply their updates\nto the latest person.",
+          "description": "Update contact data for an existing contact person. Any non-contact data\nwill not be modified.\n\nThe request throws a 400 error if `updatePersonFields` is not specified.\n\nThe request throws a 400 error if `person.metadata.sources` is not\nspecified for the contact to be updated.\n\nThe request throws a 400 error with an error with reason\n`\"failedPrecondition\"` if `person.metadata.sources.etag` is different than\nthe contact's etag, which indicates the contact has changed since its data\nwas read. Clients should get the latest person and re-apply their updates\nto the latest person.",
           "flatPath": "v1/people/{peopleId}:updateContact",
           "httpMethod": "PATCH",
           "id": "people.people.updateContact",
@@ -508,7 +508,7 @@
           ],
           "parameters": {
             "resourceName": {
-              "description": "The resource name for the person, assigned by the server. An ASCII string\nwith a max length of 27 characters, in the form of\n`people/`\u003cvar\u003eperson_id\u003c/var\u003e.",
+              "description": "The resource name for the person, assigned by the server. An ASCII string\nwith a max length of 27 characters, in the form of\n`people/{person_id}`.",
               "location": "path",
               "pattern": "^people/[^/]+$",
               "required": true,
@@ -565,7 +565,7 @@
         "connections": {
           "methods": {
             "list": {
-              "description": "Provides a list of the authenticated user's contacts merged with any\nconnected profiles.\n\u003cbr\u003e\nThe request throws a 400 error if 'personFields' is not specified.",
+              "description": "Provides a list of the authenticated user's contacts merged with any\nconnected profiles.\n\nThe request throws a 400 error if 'personFields' is not specified.",
               "flatPath": "v1/people/{peopleId}/connections",
               "httpMethod": "GET",
               "id": "people.people.connections.list",
@@ -580,7 +580,7 @@
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "The token of the page to be returned.",
+                  "description": "Optional. The token of the page to be returned.",
                   "location": "query",
                   "type": "string"
                 },
@@ -597,7 +597,7 @@
                   "type": "string"
                 },
                 "requestSyncToken": {
-                  "description": "Whether the response should include a sync token, which can be used to get\nall changes since the last request. For subsequent sync requests use the\n`sync_token` param instead. Initial sync requests that specify\n`request_sync_token` have an additional rate limit.",
+                  "description": "Optional. Whether the response should include a sync token, which can be used to get\nall changes since the last request. For subsequent sync requests use the\n`sync_token` param instead. Initial sync requests that specify\n`request_sync_token` have an additional rate limit.",
                   "location": "query",
                   "type": "boolean"
                 },
@@ -609,7 +609,7 @@
                   "type": "string"
                 },
                 "sortOrder": {
-                  "description": "The order in which the connections should be sorted. Defaults to\n`LAST_MODIFIED_ASCENDING`.",
+                  "description": "Optional. The order in which the connections should be sorted. Defaults to\n`LAST_MODIFIED_ASCENDING`.",
                   "enum": [
                     "LAST_MODIFIED_ASCENDING",
                     "LAST_MODIFIED_DESCENDING",
@@ -620,7 +620,7 @@
                   "type": "string"
                 },
                 "syncToken": {
-                  "description": "A sync token returned by a previous call to `people.connections.list`.\nOnly resources changed since the sync token was created will be returned.\nSync requests that specify `sync_token` have an additional rate limit.",
+                  "description": "Optional. A sync token returned by a previous call to `people.connections.list`.\nOnly resources changed since the sync token was created will be returned.\nSync requests that specify `sync_token` have an additional rate limit.",
                   "location": "query",
                   "type": "string"
                 }
@@ -639,7 +639,7 @@
       }
     }
   },
-  "revision": "20191230",
+  "revision": "20200122",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {
@@ -848,7 +848,7 @@
           "type": "string"
         },
         "resourceName": {
-          "description": "The resource name for the contact group, assigned by the server. An ASCII\nstring, in the form of `contactGroups/`\u003cvar\u003econtact_group_id\u003c/var\u003e.",
+          "description": "The resource name for the contact group, assigned by the server. An ASCII\nstring, in the form of `contactGroups/{contact_group_id}`.",
           "type": "string"
         }
       },
@@ -863,7 +863,7 @@
           "type": "string"
         },
         "contactGroupResourceName": {
-          "description": "The resource name for the contact group, assigned by the server. An ASCII\nstring, in the form of `contactGroups/`\u003cvar\u003econtact_group_id\u003c/var\u003e.\nOnly contact_group_resource_name can be used for modifying memberships.\nAny contact group membership can be removed, but only user group or\n\"myContacts\" or \"starred\" system groups memberships can be added. A\ncontact must always have at least one contact group membership.",
+          "description": "The resource name for the contact group, assigned by the server. An ASCII\nstring, in the form of `contactGroups/{contact_group_id}`.\nOnly contact_group_resource_name can be used for modifying memberships.\nAny contact group membership can be removed, but only user group or\n\"myContacts\" or \"starred\" system groups memberships can be added. A\ncontact must always have at least one contact group membership.",
           "type": "string"
         }
       },
@@ -1073,6 +1073,7 @@
       "type": "object"
     },
     "GetPeopleResponse": {
+      "description": "The response to a get request for a list of people by resource name.",
       "id": "GetPeopleResponse",
       "properties": {
         "responses": {
@@ -1132,6 +1133,7 @@
       "type": "object"
     },
     "ListConnectionsResponse": {
+      "description": "The response to a request for the authenticated user's connections.",
       "id": "ListConnectionsResponse",
       "properties": {
         "connections": {
@@ -1228,14 +1230,14 @@
       "id": "ModifyContactGroupMembersRequest",
       "properties": {
         "resourceNamesToAdd": {
-          "description": "The resource names of the contact people to add in the form of\n`people/`\u003cvar\u003eperson_id\u003c/var\u003e.",
+          "description": "Optional. The resource names of the contact people to add in the form of\n`people/{person_id}`.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "resourceNamesToRemove": {
-          "description": "The resource names of the contact people to remove in the form of\n`people/`\u003cvar\u003eperson_id\u003c/var\u003e.",
+          "description": "Optional. The resource names of the contact people to remove in the form of\n`people/{person_id}`.",
           "items": {
             "type": "string"
           },
@@ -1343,14 +1345,18 @@
             "MAIDEN_NAME",
             "INITIALS",
             "GPLUS",
-            "OTHER_NAME"
+            "OTHER_NAME",
+            "ALTERNATE_NAME",
+            "SHORT_NAME"
           ],
           "enumDescriptions": [
             "Generic nickname.",
             "Maiden name or birth family name. Used when the person's family name has\nchanged as a result of marriage.",
             "Initials.",
             "Google+ profile nickname.",
-            "A professional affiliation or other name; for example, `Dr. Smith.`"
+            "A professional affiliation or other name; for example, `Dr. Smith.`",
+            "Alternate name person is known by.",
+            "A shorter version of the person's name."
           ],
           "type": "string"
         },
@@ -1451,7 +1457,7 @@
           "type": "array"
         },
         "ageRange": {
-          "description": "Output only. **DEPRECATED** (Please use `person.ageRanges` instead)**\n\nThe person's age range.",
+          "description": "Output only. **DEPRECATED** (Please use `person.ageRanges` instead)\n\nThe person's age range.",
           "enum": [
             "AGE_RANGE_UNSPECIFIED",
             "LESS_THAN_EIGHTEEN",
@@ -1629,7 +1635,7 @@
           "type": "array"
         },
         "resourceName": {
-          "description": "The resource name for the person, assigned by the server. An ASCII string\nwith a max length of 27 characters, in the form of\n`people/`\u003cvar\u003eperson_id\u003c/var\u003e.",
+          "description": "The resource name for the person, assigned by the server. An ASCII string\nwith a max length of 27 characters, in the form of\n`people/{person_id}`.",
           "type": "string"
         },
         "sipAddresses": {
@@ -1780,7 +1786,7 @@
           "description": "Metadata about the photo."
         },
         "url": {
-          "description": "The URL of the photo. You can change the desired size by appending a query\nparameter `sz=`\u003cvar\u003esize\u003c/var\u003e at the end of the url. Example:\n`https://lh3.googleusercontent.com/-T_wVWLlmg7w/AAAAAAAAAAI/AAAAAAAABa8/00gzXvDBYqw/s100/photo.jpg?sz=50`",
+          "description": "The URL of the photo. You can change the desired size by appending a query\nparameter `sz={size}` at the end of the url, where {size} is the size in\npixels. Example:\nhttps://lh3.googleusercontent.com/-T_wVWLlmg7w/AAAAAAAAAAI/AAAAAAAABa8/00gzXvDBYqw/s100/photo.jpg?sz=50",
           "type": "string"
         }
       },
@@ -1972,9 +1978,9 @@
           "enumDescriptions": [
             "Unspecified.",
             "[Google Account](https://accounts.google.com).",
-            "[Google profile](https://profiles.google.com). You can view the\nprofile at https://profiles.google.com/\u003cvar\u003eid\u003c/var\u003e where\n\u003cvar\u003eid\u003c/var\u003e is the source id.",
+            "[Google profile](https://profiles.google.com). You can view the\nprofile at\n[https://profiles.google.com/](https://profiles.google.com/){id}, where\n{id} is the source id.",
             "[G Suite domain profile](https://support.google.com/a/answer/1628008).",
-            "[Google contact](https://contacts.google.com). You can view the\ncontact at https://contact.google.com/\u003cvar\u003eid\u003c/var\u003e where \u003cvar\u003eid\u003c/var\u003e\nis the source id."
+            "[Google contact](https://contacts.google.com). You can view the\ncontact at\n[https://contact.google.com/](https://contact.google.com/){id}, where\n{id} is the source id."
           ],
           "type": "string"
         },

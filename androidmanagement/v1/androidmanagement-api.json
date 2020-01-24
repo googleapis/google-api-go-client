@@ -923,7 +923,7 @@
       }
     }
   },
-  "revision": "20191214",
+  "revision": "20200117",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdvancedSecurityOverrides": {
@@ -2113,6 +2113,20 @@
       "description": "Settings controlling the behavior of a device in kiosk mode. To enable kiosk mode, set kioskCustomLauncherEnabled to true or specify an app in the policy with installType KIOSK.",
       "id": "KioskCustomization",
       "properties": {
+        "deviceSettings": {
+          "description": "Specifies whether the Settings app is allowed in kiosk mode.",
+          "enum": [
+            "DEVICE_SETTINGS_UNSPECIFIED",
+            "SETTINGS_ACCESS_ALLOWED",
+            "SETTINGS_ACCESS_BLOCKED"
+          ],
+          "enumDescriptions": [
+            "Unspecified, defaults to SETTINGS_ACCESS_BLOCKED.",
+            "Access to the Settings app is allowed in kiosk mode.",
+            "Access to the Settings app is not allowed in kiosk mode."
+          ],
+          "type": "string"
+        },
         "powerButtonActions": {
           "description": "Sets the behavior of a device in kiosk mode when a user presses and holds (long-presses) the Power button.",
           "enum": [
@@ -2996,7 +3010,7 @@
           "type": "array"
         },
         "kioskCustomLauncherEnabled": {
-          "description": "Whether the kiosk custom launcher is enabled. This replaces the home screen with a launcher that locks down the device to the apps installed via the applications setting. Apps appear on a single page in alphabetical order. The status bar is disabled when this is set.",
+          "description": "Whether the kiosk custom launcher is enabled. This replaces the home screen with a launcher that locks down the device to the apps installed via the applications setting. Apps appear on a single page in alphabetical order. Use kioskCustomization to further configure the kiosk device behavior.",
           "type": "boolean"
         },
         "kioskCustomization": {

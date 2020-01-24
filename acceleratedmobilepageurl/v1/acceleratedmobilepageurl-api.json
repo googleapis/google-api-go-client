@@ -2,6 +2,7 @@
   "basePath": "",
   "baseUrl": "https://acceleratedmobilepageurl.googleapis.com/",
   "batchPath": "batch",
+  "canonicalName": "Acceleratedmobilepageurl",
   "description": "Retrieves the list of AMP URLs (and equivalent AMP Cache URLs) for a given list of public URL(s).\n",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/amp/cache/",
@@ -113,7 +114,7 @@
       }
     }
   },
-  "revision": "20180612",
+  "revision": "20200122",
   "rootUrl": "https://acceleratedmobilepageurl.googleapis.com/",
   "schemas": {
     "AmpUrl": {

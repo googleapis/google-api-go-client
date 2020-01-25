@@ -15,7 +15,7 @@
   "description": "API for viewing and managing your reports in DoubleClick Bid Manager.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/bid-manager/",
-  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/mWit62b8MmZ_DHIzi3RAHhMmd8o\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/WtmXtqYyvihpGm_TYmOgMYSGj3c\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -281,7 +281,7 @@
       }
     }
   },
-  "revision": "20200106",
+  "revision": "20200116",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "DownloadLineItemsRequest": {
@@ -597,9 +597,11 @@
             "FILTER_PARTNER_NAME",
             "FILTER_PARTNER_STATUS",
             "FILTER_PLACEMENT_ALL_YOUTUBE_CHANNELS",
+            "FILTER_PLACEMENT_NAME_ALL_YOUTUBE_CHANNELS",
             "FILTER_PLATFORM",
             "FILTER_PLAYBACK_METHOD",
             "FILTER_POSITION_IN_CONTENT",
+            "FILTER_PUBLIC_INVENTORY",
             "FILTER_PUBLISHER_PROPERTY",
             "FILTER_PUBLISHER_PROPERTY_ID",
             "FILTER_PUBLISHER_PROPERTY_SECTION",
@@ -699,6 +701,8 @@
             "FILTER_ZIP_POSTAL_CODE"
           ],
           "enumDescriptions": [
+            "",
+            "",
             "",
             "",
             "",
@@ -1189,9 +1193,11 @@
               "FILTER_PARTNER_NAME",
               "FILTER_PARTNER_STATUS",
               "FILTER_PLACEMENT_ALL_YOUTUBE_CHANNELS",
+              "FILTER_PLACEMENT_NAME_ALL_YOUTUBE_CHANNELS",
               "FILTER_PLATFORM",
               "FILTER_PLAYBACK_METHOD",
               "FILTER_POSITION_IN_CONTENT",
+              "FILTER_PUBLIC_INVENTORY",
               "FILTER_PUBLISHER_PROPERTY",
               "FILTER_PUBLISHER_PROPERTY_ID",
               "FILTER_PUBLISHER_PROPERTY_SECTION",
@@ -1291,6 +1297,8 @@
               "FILTER_ZIP_POSTAL_CODE"
             ],
             "enumDescriptions": [
+              "",
+              "",
               "",
               "",
               "",
@@ -2685,6 +2693,11 @@
         },
         "nextRunTimezoneCode": {
           "description": "Canonical timezone code for report generation time. Defaults to America/New_York.",
+          "type": "string"
+        },
+        "startTimeMs": {
+          "description": "When to start running the query. Not applicable to `ONE_TIME` frequency.",
+          "format": "int64",
           "type": "string"
         }
       },

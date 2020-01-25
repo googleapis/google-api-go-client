@@ -1076,6 +1076,12 @@ type BaselineValueFormat struct {
 	// key value. This field is optional.
 	NegativeColor *Color `json:"negativeColor,omitempty"`
 
+	// NegativeColorStyle: Color to be used, in case baseline value
+	// represents a negative change for
+	// key value. This field is optional.
+	// If negative_color is also set, this field takes precedence.
+	NegativeColorStyle *ColorStyle `json:"negativeColorStyle,omitempty"`
+
 	// Position: Specifies the horizontal text positioning of baseline
 	// value.
 	// This field is optional. If not specified, default positioning is
@@ -1086,6 +1092,12 @@ type BaselineValueFormat struct {
 	// positive change for
 	// key value. This field is optional.
 	PositiveColor *Color `json:"positiveColor,omitempty"`
+
+	// PositiveColorStyle: Color to be used, in case baseline value
+	// represents a positive change for
+	// key value. This field is optional.
+	// If positive_color is also set, this field takes precedence.
+	PositiveColorStyle *ColorStyle `json:"positiveColorStyle,omitempty"`
 
 	// TextFormat: Text formatting options for baseline value.
 	TextFormat *TextFormat `json:"textFormat,omitempty"`
@@ -1218,6 +1230,12 @@ type BasicChartSeries struct {
 	// with this
 	// series.  If empty, a default color is used.
 	Color *Color `json:"color,omitempty"`
+
+	// ColorStyle: The color for elements (i.e. bars, lines, points)
+	// associated with this
+	// series.  If empty, a default color is used.
+	// If color is also set, this field takes precedence.
+	ColorStyle *ColorStyle `json:"colorStyle,omitempty"`
 
 	// LineStyle: The line style of this series. Valid only if the
 	// chartType is AREA,
@@ -1507,10 +1525,11 @@ func (s *BatchClearValuesByDataFilterRequest) MarshalJSON() ([]byte, error) {
 // range of values selected with
 // DataFilters in a spreadsheet.
 type BatchClearValuesByDataFilterResponse struct {
-	// ClearedRanges: The ranges that were cleared, in A1 notation.
-	// (If the requests were for an unbounded range or a ranger larger
-	//  than the bounds of the sheet, this will be the actual ranges
-	//  that were cleared, bounded to the sheet's limits.)
+	// ClearedRanges: The ranges that were cleared, in A1 notation. If the
+	// requests are for an
+	// unbounded range or a ranger larger than the bounds of the sheet, this
+	// is
+	// the actual ranges that were cleared, bounded to the sheet's limits.
 	ClearedRanges []string `json:"clearedRanges,omitempty"`
 
 	// SpreadsheetId: The spreadsheet the updates were applied to.
@@ -1575,10 +1594,11 @@ func (s *BatchClearValuesRequest) MarshalJSON() ([]byte, error) {
 // BatchClearValuesResponse: The response when clearing a range of
 // values in a spreadsheet.
 type BatchClearValuesResponse struct {
-	// ClearedRanges: The ranges that were cleared, in A1 notation.
-	// (If the requests were for an unbounded range or a ranger larger
-	//  than the bounds of the sheet, this will be the actual ranges
-	//  that were cleared, bounded to the sheet's limits.)
+	// ClearedRanges: The ranges that were cleared, in A1 notation. If the
+	// requests are for an
+	// unbounded range or a ranger larger than the bounds of the sheet, this
+	// is
+	// the actual ranges that were cleared, bounded to the sheet's limits.
 	ClearedRanges []string `json:"clearedRanges,omitempty"`
 
 	// SpreadsheetId: The spreadsheet the updates were applied to.
@@ -1616,9 +1636,8 @@ func (s *BatchClearValuesResponse) MarshalJSON() ([]byte, error) {
 // set of DataFilters.
 type BatchGetValuesByDataFilterRequest struct {
 	// DataFilters: The data filters used to match the ranges of values to
-	// retrieve.  Ranges
-	// that match any of the specified data filters will be included in
-	// the
+	// retrieve. Ranges
+	// that match any of the specified data filters are included in the
 	// response.
 	DataFilters []*DataFilter `json:"dataFilters,omitempty"`
 
@@ -1656,12 +1675,11 @@ type BatchGetValuesByDataFilterRequest struct {
 	// MajorDimension: The major dimension that results should use.
 	//
 	// For example, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`,
-	// then a request that selects that range and sets `majorDimension=ROWS`
-	// will
-	// return `[[1,2],[3,4]]`,
-	// whereas a request that sets `majorDimension=COLUMNS` will
-	// return
-	// `[[1,3],[2,4]]`.
+	// then a request that selects that range and sets
+	// `majorDimension=ROWS`
+	// returns `[[1,2],[3,4]]`, whereas a request that
+	// sets
+	// `majorDimension=COLUMNS` returns `[[1,3],[2,4]]`.
 	//
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - The default value, do not use.
@@ -1892,9 +1910,9 @@ func (s *BatchUpdateSpreadsheetResponse) MarshalJSON() ([]byte, error) {
 type BatchUpdateValuesByDataFilterRequest struct {
 	// Data: The new values to apply to the spreadsheet.  If more than one
 	// range is
-	// matched by the specified DataFilter the specified values will
-	// be
-	// applied to all of those ranges.
+	// matched by the specified DataFilter the specified values are applied
+	// to
+	// all of those ranges.
 	Data []*DataFilterValueRange `json:"data,omitempty"`
 
 	// IncludeValuesInResponse: Determines if the update response should
@@ -1902,12 +1920,13 @@ type BatchUpdateValuesByDataFilterRequest struct {
 	// of the cells that were updated. By default, responses
 	// do not include the updated values. The `updatedData` field
 	// within
-	// each of the BatchUpdateValuesResponse.responses will contain
-	// the updated values. If the range to write was larger than than the
-	// range
-	// actually written, the response will include all values in the
-	// requested
-	// range (excluding trailing empty rows and columns).
+	// each of the BatchUpdateValuesResponse.responses contains the
+	// updated
+	// values. If the range to write was larger than the range actually
+	// written,
+	// the response includes all values in the requested range (excluding
+	// trailing
+	// empty rows and columns).
 	IncludeValuesInResponse bool `json:"includeValuesInResponse,omitempty"`
 
 	// ResponseDateTimeRenderOption: Determines how dates, times, and
@@ -2072,12 +2091,13 @@ type BatchUpdateValuesRequest struct {
 	// of the cells that were updated. By default, responses
 	// do not include the updated values. The `updatedData` field
 	// within
-	// each of the BatchUpdateValuesResponse.responses will contain
-	// the updated values. If the range to write was larger than than the
-	// range
-	// actually written, the response will include all values in the
-	// requested
-	// range (excluding trailing empty rows and columns).
+	// each of the BatchUpdateValuesResponse.responses contains the
+	// updated
+	// values. If the range to write was larger than the range actually
+	// written,
+	// the response includes all values in the requested range (excluding
+	// trailing
+	// empty rows and columns).
 	IncludeValuesInResponse bool `json:"includeValuesInResponse,omitempty"`
 
 	// ResponseDateTimeRenderOption: Determines how dates, times, and
@@ -2551,6 +2571,10 @@ func (s *Borders) MarshalJSON() ([]byte, error) {
 type BubbleChartSpec struct {
 	// BubbleBorderColor: The bubble border color.
 	BubbleBorderColor *Color `json:"bubbleBorderColor,omitempty"`
+
+	// BubbleBorderColorStyle: The bubble border color.
+	// If bubble_border_color is also set, this field takes precedence.
+	BubbleBorderColorStyle *ColorStyle `json:"bubbleBorderColorStyle,omitempty"`
 
 	// BubbleLabels: The data containing the bubble labels.  These do not
 	// need to be unique.
@@ -3233,6 +3257,11 @@ type ChartSpec struct {
 	// BackgroundColor: The background color of the entire chart.
 	// Not applicable to Org charts.
 	BackgroundColor *Color `json:"backgroundColor,omitempty"`
+
+	// BackgroundColorStyle: The background color of the entire chart.
+	// Not applicable to Org charts.
+	// If background_color is also set, this field takes precedence.
+	BackgroundColorStyle *ColorStyle `json:"backgroundColorStyle,omitempty"`
 
 	// BasicChart: A basic chart specification, can be one of many kinds of
 	// charts.
@@ -3999,12 +4028,11 @@ type DataFilterValueRange struct {
 
 	// Values: The data to be written.  If the provided values exceed any of
 	// the ranges
-	// matched by the data filter then the request will fail.  If the
-	// provided
-	// values are less than the matched ranges only the specified values
-	// will be
-	// written, existing values in the matched ranges will remain
-	// unaffected.
+	// matched by the data filter then the request fails.  If the provided
+	// values
+	// are less than the matched ranges only the specified values are
+	// written,
+	// existing values in the matched ranges remain unaffected.
 	Values [][]interface{} `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataFilter") to
@@ -6150,6 +6178,12 @@ type HistogramSeries struct {
 	// This field is optional.
 	BarColor *Color `json:"barColor,omitempty"`
 
+	// BarColorStyle: The color of the column representing this series in
+	// each bucket.
+	// This field is optional.
+	// If bar_color is also set, this field takes precedence.
+	BarColorStyle *ColorStyle `json:"barColorStyle,omitempty"`
+
 	// Data: The data for this histogram series.
 	Data *ChartData `json:"data,omitempty"`
 
@@ -6830,6 +6864,10 @@ type OrgChartSpec struct {
 	// NodeColor: The color of the org chart nodes.
 	NodeColor *Color `json:"nodeColor,omitempty"`
 
+	// NodeColorStyle: The color of the org chart nodes.
+	// If node_color is also set, this field takes precedence.
+	NodeColorStyle *ColorStyle `json:"nodeColorStyle,omitempty"`
+
 	// NodeSize: The size of the org chart nodes.
 	//
 	// Possible values:
@@ -6849,6 +6887,10 @@ type OrgChartSpec struct {
 
 	// SelectedNodeColor: The color of the selected org chart nodes.
 	SelectedNodeColor *Color `json:"selectedNodeColor,omitempty"`
+
+	// SelectedNodeColorStyle: The color of the selected org chart nodes.
+	// If selected_node_color is also set, this field takes precedence.
+	SelectedNodeColorStyle *ColorStyle `json:"selectedNodeColorStyle,omitempty"`
 
 	// Tooltips: The data containing the tooltip for the corresponding node.
 	//  A blank value
@@ -8106,7 +8148,7 @@ type SearchDeveloperMetadataRequest struct {
 	// determine which
 	// DeveloperMetadata entries to return.  DeveloperMetadata matching any
 	// of the
-	// specified filters will be included in the response.
+	// specified filters are included in the response.
 	DataFilters []*DataFilter `json:"dataFilters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataFilters") to
@@ -8694,8 +8736,8 @@ type SpreadsheetProperties struct {
 	// IterativeCalculationSettings: Determines whether and how circular
 	// references are resolved with iterative
 	// calculation.  Absence of this field means that circular references
-	// will
-	// result in calculation errors.
+	// result
+	// in calculation errors.
 	IterativeCalculationSettings *IterativeCalculationSettings `json:"iterativeCalculationSettings,omitempty"`
 
 	// Locale: The locale of the spreadsheet in one of the following
@@ -8753,9 +8795,9 @@ type SpreadsheetTheme struct {
 	// PrimaryFontFamily: / Name of the primary font family.
 	PrimaryFontFamily string `json:"primaryFontFamily,omitempty"`
 
-	// ThemeColors: The spreadsheet theme color pairs. For update users need
-	// to give all pairs
-	// of theme colors.
+	// ThemeColors: The spreadsheet theme color pairs. To update you must
+	// provide all theme
+	// color pairs.
 	ThemeColors []*ThemeColorPair `json:"themeColors,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PrimaryFontFamily")
@@ -9056,6 +9098,13 @@ type TreemapChartColorScale struct {
 	// specified.
 	MaxValueColor *Color `json:"maxValueColor,omitempty"`
 
+	// MaxValueColorStyle: The background color for cells with a color value
+	// greater than or equal
+	// to maxValue. Defaults to #109618 if not
+	// specified.
+	// If max_value_color is also set, this field takes precedence.
+	MaxValueColorStyle *ColorStyle `json:"maxValueColorStyle,omitempty"`
+
 	// MidValueColor: The background color for cells with a color value at
 	// the midpoint between
 	// minValue and
@@ -9063,16 +9112,37 @@ type TreemapChartColorScale struct {
 	// specified.
 	MidValueColor *Color `json:"midValueColor,omitempty"`
 
+	// MidValueColorStyle: The background color for cells with a color value
+	// at the midpoint between
+	// minValue and
+	// maxValue. Defaults to #efe6dc if not
+	// specified.
+	// If mid_value_color is also set, this field takes precedence.
+	MidValueColorStyle *ColorStyle `json:"midValueColorStyle,omitempty"`
+
 	// MinValueColor: The background color for cells with a color value less
 	// than or equal to
 	// minValue. Defaults to #dc3912 if not
 	// specified.
 	MinValueColor *Color `json:"minValueColor,omitempty"`
 
+	// MinValueColorStyle: The background color for cells with a color value
+	// less than or equal to
+	// minValue. Defaults to #dc3912 if not
+	// specified.
+	// If min_value_color is also set, this field takes precedence.
+	MinValueColorStyle *ColorStyle `json:"minValueColorStyle,omitempty"`
+
 	// NoDataColor: The background color for cells that have no color data
 	// associated with
 	// them. Defaults to #000000 if not specified.
 	NoDataColor *Color `json:"noDataColor,omitempty"`
+
+	// NoDataColorStyle: The background color for cells that have no color
+	// data associated with
+	// them. Defaults to #000000 if not specified.
+	// If no_data_color is also set, this field takes precedence.
+	NoDataColorStyle *ColorStyle `json:"noDataColorStyle,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxValueColor") to
 	// unconditionally include in API requests. By default, fields with
@@ -9135,6 +9205,10 @@ type TreemapChartSpec struct {
 
 	// HeaderColor: The background color for header cells.
 	HeaderColor *Color `json:"headerColor,omitempty"`
+
+	// HeaderColorStyle: The background color for header cells.
+	// If header_color is also set, this field takes precedence.
+	HeaderColorStyle *ColorStyle `json:"headerColorStyle,omitempty"`
 
 	// HideTooltips: True to hide tooltips.
 	HideTooltips bool `json:"hideTooltips,omitempty"`
@@ -10225,6 +10299,10 @@ type WaterfallChartColumnStyle struct {
 	// Color: The color of the column.
 	Color *Color `json:"color,omitempty"`
 
+	// ColorStyle: The color of the column.
+	// If color is also set, this field takes precedence.
+	ColorStyle *ColorStyle `json:"colorStyle,omitempty"`
+
 	// Label: The label of the column's legend.
 	Label string `json:"label,omitempty"`
 
@@ -10513,7 +10591,7 @@ func (c *SpreadsheetsBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10653,7 +10731,7 @@ func (c *SpreadsheetsCreateCall) Header() http.Header {
 
 func (c *SpreadsheetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10830,7 +10908,7 @@ func (c *SpreadsheetsGetCall) Header() http.Header {
 
 func (c *SpreadsheetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11006,7 +11084,7 @@ func (c *SpreadsheetsGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11161,7 +11239,7 @@ func (c *SpreadsheetsDeveloperMetadataGetCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11315,7 +11393,7 @@ func (c *SpreadsheetsDeveloperMetadataSearchCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11460,7 +11538,7 @@ func (c *SpreadsheetsSheetsCopyToCall) Header() http.Header {
 
 func (c *SpreadsheetsSheetsCopyToCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11696,7 +11774,7 @@ func (c *SpreadsheetsValuesAppendCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesAppendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11785,7 +11863,7 @@ func (c *SpreadsheetsValuesAppendCall) Do(opts ...googleapi.CallOption) (*Append
 	//       "type": "string"
 	//     },
 	//     "range": {
-	//       "description": "The A1 notation of a range to search for a logical table of data.\nValues will be appended after the last row of the table.",
+	//       "description": "The A1 notation of a range to search for a logical table of data.\nValues are appended after the last row of the table.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -11894,7 +11972,7 @@ func (c *SpreadsheetsValuesBatchClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12042,7 +12120,7 @@ func (c *SpreadsheetsValuesBatchClearByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12178,11 +12256,10 @@ func (c *SpreadsheetsValuesBatchGetCall) DateTimeRenderOption(dateTimeRenderOpti
 // major dimension that results should use.
 //
 // For example, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`,
-// then requesting `range=A1:B2,majorDimension=ROWS` will
-// return
+// then requesting `range=A1:B2,majorDimension=ROWS` returns
 // `[[1,2],[3,4]]`,
-// whereas requesting `range=A1:B2,majorDimension=COLUMNS` will
-// return
+// whereas requesting `range=A1:B2,majorDimension=COLUMNS`
+// returns
 // `[[1,3],[2,4]]`.
 //
 // Possible values:
@@ -12251,7 +12328,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12331,7 +12408,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Do(opts ...googleapi.CallOption) (*Batc
 	//       "type": "string"
 	//     },
 	//     "majorDimension": {
-	//       "description": "The major dimension that results should use.\n\nFor example, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`,\nthen requesting `range=A1:B2,majorDimension=ROWS` will return\n`[[1,2],[3,4]]`,\nwhereas requesting `range=A1:B2,majorDimension=COLUMNS` will return\n`[[1,3],[2,4]]`.",
+	//       "description": "The major dimension that results should use.\n\nFor example, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`,\nthen requesting `range=A1:B2,majorDimension=ROWS` returns `[[1,2],[3,4]]`,\nwhereas requesting `range=A1:B2,majorDimension=COLUMNS` returns\n`[[1,3],[2,4]]`.",
 	//       "enum": [
 	//         "DIMENSION_UNSPECIFIED",
 	//         "ROWS",
@@ -12429,7 +12506,7 @@ func (c *SpreadsheetsValuesBatchGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12574,7 +12651,7 @@ func (c *SpreadsheetsValuesBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12719,7 +12796,7 @@ func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12867,7 +12944,7 @@ func (c *SpreadsheetsValuesClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13011,11 +13088,11 @@ func (c *SpreadsheetsValuesGetCall) DateTimeRenderOption(dateTimeRenderOption st
 // major dimension that results should use.
 //
 // For example, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`,
-// then requesting `range=A1:B2,majorDimension=ROWS` will
-// return
+// then
+// requesting `range=A1:B2,majorDimension=ROWS` returns
 // `[[1,2],[3,4]]`,
-// whereas requesting `range=A1:B2,majorDimension=COLUMNS` will
-// return
+// whereas requesting `range=A1:B2,majorDimension=COLUMNS`
+// returns
 // `[[1,3],[2,4]]`.
 //
 // Possible values:
@@ -13077,7 +13154,7 @@ func (c *SpreadsheetsValuesGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13159,7 +13236,7 @@ func (c *SpreadsheetsValuesGetCall) Do(opts ...googleapi.CallOption) (*ValueRang
 	//       "type": "string"
 	//     },
 	//     "majorDimension": {
-	//       "description": "The major dimension that results should use.\n\nFor example, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`,\nthen requesting `range=A1:B2,majorDimension=ROWS` will return\n`[[1,2],[3,4]]`,\nwhereas requesting `range=A1:B2,majorDimension=COLUMNS` will return\n`[[1,3],[2,4]]`.",
+	//       "description": "The major dimension that results should use.\n\nFor example, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`, then\nrequesting `range=A1:B2,majorDimension=ROWS` returns `[[1,2],[3,4]]`,\nwhereas requesting `range=A1:B2,majorDimension=COLUMNS` returns\n`[[1,3],[2,4]]`.",
 	//       "enum": [
 	//         "DIMENSION_UNSPECIFIED",
 	//         "ROWS",
@@ -13234,11 +13311,11 @@ func (r *SpreadsheetsValuesService) Update(spreadsheetId string, range_ string, 
 // include the values
 // of the cells that were updated. By default, responses
 // do not include the updated values.
-// If the range to write was larger than than the range actually
-// written,
-// the response will include all values in the requested range
-// (excluding
-// trailing empty rows and columns).
+// If the range to write was larger than the range actually written,
+// the
+// response includes all values in the requested range (excluding
+// trailing
+// empty rows and columns).
 func (c *SpreadsheetsValuesUpdateCall) IncludeValuesInResponse(includeValuesInResponse bool) *SpreadsheetsValuesUpdateCall {
 	c.urlParams_.Set("includeValuesInResponse", fmt.Sprint(includeValuesInResponse))
 	return c
@@ -13315,7 +13392,7 @@ func (c *SpreadsheetsValuesUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13390,7 +13467,7 @@ func (c *SpreadsheetsValuesUpdateCall) Do(opts ...googleapi.CallOption) (*Update
 	//   ],
 	//   "parameters": {
 	//     "includeValuesInResponse": {
-	//       "description": "Determines if the update response should include the values\nof the cells that were updated. By default, responses\ndo not include the updated values.\nIf the range to write was larger than than the range actually written,\nthe response will include all values in the requested range (excluding\ntrailing empty rows and columns).",
+	//       "description": "Determines if the update response should include the values\nof the cells that were updated. By default, responses\ndo not include the updated values.\nIf the range to write was larger than the range actually written, the\nresponse includes all values in the requested range (excluding trailing\nempty rows and columns).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

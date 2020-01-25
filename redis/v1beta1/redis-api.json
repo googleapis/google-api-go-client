@@ -414,6 +414,34 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
+                },
+                "upgrade": {
+                  "description": "Upgrades Redis instance to the newer Redis version specified in the\nrequest.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:upgrade",
+                  "httpMethod": "POST",
+                  "id": "redis.projects.locations.instances.upgrade",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Redis instance resource name using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\nwhere `location_id` refers to a GCP region.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+name}:upgrade",
+                  "request": {
+                    "$ref": "UpgradeInstanceRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
                 }
               }
             },
@@ -542,7 +570,7 @@
       }
     }
   },
-  "revision": "20200107",
+  "revision": "20200124",
   "rootUrl": "https://redis.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -967,6 +995,17 @@
         },
         "message": {
           "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UpgradeInstanceRequest": {
+      "description": "Request for UpgradeInstance.",
+      "id": "UpgradeInstanceRequest",
+      "properties": {
+        "redisVersion": {
+          "description": "Required. Specifies the target version of Redis software to upgrade to.",
           "type": "string"
         }
       },

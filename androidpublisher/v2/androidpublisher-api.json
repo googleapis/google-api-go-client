@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/L0ukqCGyofSVX9uuSRmsurDZJE8\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/Zc80I13MdlmrO7IOEArAhrUwoBI\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2483,7 +2483,7 @@
       }
     }
   },
-  "revision": "20200112",
+  "revision": "20200115",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -3349,7 +3349,7 @@
           "type": "string"
         },
         "purchaseType": {
-          "description": "The type of purchase of the subscription. This field is only set if this purchase was not made using the standard in-app billing flow. Possible values are:  \n- Test (i.e. purchased from a license testing account)",
+          "description": "The type of purchase of the subscription. This field is only set if this purchase was not made using the standard in-app billing flow. Possible values are:  \n- Test (i.e. purchased from a license testing account) \n- Promo (i.e. purchased using a promo code)",
           "format": "int32",
           "type": "integer"
         },

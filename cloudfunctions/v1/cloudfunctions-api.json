@@ -545,7 +545,7 @@
       }
     }
   },
-  "revision": "20200109",
+  "revision": "20200116",
   "rootUrl": "https://cloudfunctions.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -685,14 +685,12 @@
           "enum": [
             "INGRESS_SETTINGS_UNSPECIFIED",
             "ALLOW_ALL",
-            "ALLOW_INTERNAL_ONLY",
-            "ALLOW_INTERNAL_AND_GCLB"
+            "ALLOW_INTERNAL_ONLY"
           ],
           "enumDescriptions": [
             "Unspecified.",
             "Allow HTTP traffic from public and private sources.",
-            "Allow HTTP traffic from only private VPC sources.",
-            "Allow HTTP traffic from private VPC sources and through GCLB."
+            "Allow HTTP traffic from only private VPC sources."
           ],
           "type": "string"
         },

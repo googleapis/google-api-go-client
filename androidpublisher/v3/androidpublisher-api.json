@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/C2YPFJyw1IBZNaWTd0o7oJq6_wY\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/8HRjMsMAUZjbDTub8sPcjVrJuEA\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2537,7 +2537,7 @@
       }
     }
   },
-  "revision": "20200112",
+  "revision": "20200115",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -3561,8 +3561,17 @@
           "description": "The profile name of the user when the subscription was purchased. Only present for purchases made with 'Subscribe with Google'.",
           "type": "string"
         },
+        "promotionCode": {
+          "description": "The promotion code applied on this purchase. This field is only set if a vanity code promotion is applied when the subscription was purchased.",
+          "type": "string"
+        },
+        "promotionType": {
+          "description": "The type of promotion applied on this purchase. This field is only set if a promotion is applied when the subscription was purchased. Possible values are:  \n- One time code \n- Vanity code",
+          "format": "int32",
+          "type": "integer"
+        },
         "purchaseType": {
-          "description": "The type of purchase of the subscription. This field is only set if this purchase was not made using the standard in-app billing flow. Possible values are:  \n- Test (i.e. purchased from a license testing account)",
+          "description": "The type of purchase of the subscription. This field is only set if this purchase was not made using the standard in-app billing flow. Possible values are:  \n- Test (i.e. purchased from a license testing account) \n- Promo (i.e. purchased using a promo code)",
           "format": "int32",
           "type": "integer"
         },

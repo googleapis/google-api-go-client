@@ -372,7 +372,7 @@
                   "type": "string"
                 },
                 "range": {
-                  "description": "The A1 notation of a range to search for a logical table of data.\nValues will be appended after the last row of the table.",
+                  "description": "The A1 notation of a range to search for a logical table of data.\nValues are appended after the last row of the table.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -503,7 +503,7 @@
                   "type": "string"
                 },
                 "majorDimension": {
-                  "description": "The major dimension that results should use.\n\nFor example, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`,\nthen requesting `range=A1:B2,majorDimension=ROWS` will return\n`[[1,2],[3,4]]`,\nwhereas requesting `range=A1:B2,majorDimension=COLUMNS` will return\n`[[1,3],[2,4]]`.",
+                  "description": "The major dimension that results should use.\n\nFor example, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`,\nthen requesting `range=A1:B2,majorDimension=ROWS` returns `[[1,2],[3,4]]`,\nwhereas requesting `range=A1:B2,majorDimension=COLUMNS` returns\n`[[1,3],[2,4]]`.",
                   "enum": [
                     "DIMENSION_UNSPECIFIED",
                     "ROWS",
@@ -690,7 +690,7 @@
                   "type": "string"
                 },
                 "majorDimension": {
-                  "description": "The major dimension that results should use.\n\nFor example, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`,\nthen requesting `range=A1:B2,majorDimension=ROWS` will return\n`[[1,2],[3,4]]`,\nwhereas requesting `range=A1:B2,majorDimension=COLUMNS` will return\n`[[1,3],[2,4]]`.",
+                  "description": "The major dimension that results should use.\n\nFor example, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`, then\nrequesting `range=A1:B2,majorDimension=ROWS` returns `[[1,2],[3,4]]`,\nwhereas requesting `range=A1:B2,majorDimension=COLUMNS` returns\n`[[1,3],[2,4]]`.",
                   "enum": [
                     "DIMENSION_UNSPECIFIED",
                     "ROWS",
@@ -745,7 +745,7 @@
               ],
               "parameters": {
                 "includeValuesInResponse": {
-                  "description": "Determines if the update response should include the values\nof the cells that were updated. By default, responses\ndo not include the updated values.\nIf the range to write was larger than than the range actually written,\nthe response will include all values in the requested range (excluding\ntrailing empty rows and columns).",
+                  "description": "Determines if the update response should include the values\nof the cells that were updated. By default, responses\ndo not include the updated values.\nIf the range to write was larger than the range actually written, the\nresponse includes all values in the requested range (excluding trailing\nempty rows and columns).",
                   "location": "query",
                   "type": "boolean"
                 },
@@ -809,7 +809,7 @@
       }
     }
   },
-  "revision": "20191213",
+  "revision": "20200123",
   "rootUrl": "https://sheets.googleapis.com/",
   "schemas": {
     "AddBandingRequest": {
@@ -1184,6 +1184,10 @@
           "$ref": "Color",
           "description": "Color to be used, in case baseline value represents a negative change for\nkey value. This field is optional."
         },
+        "negativeColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "Color to be used, in case baseline value represents a negative change for\nkey value. This field is optional.\nIf negative_color is also set, this field takes precedence."
+        },
         "position": {
           "$ref": "TextPosition",
           "description": "Specifies the horizontal text positioning of baseline value.\nThis field is optional. If not specified, default positioning is used."
@@ -1191,6 +1195,10 @@
         "positiveColor": {
           "$ref": "Color",
           "description": "Color to be used, in case baseline value represents a positive change for\nkey value. This field is optional."
+        },
+        "positiveColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "Color to be used, in case baseline value represents a positive change for\nkey value. This field is optional.\nIf positive_color is also set, this field takes precedence."
         },
         "textFormat": {
           "$ref": "TextFormat",
@@ -1260,6 +1268,10 @@
         "color": {
           "$ref": "Color",
           "description": "The color for elements (i.e. bars, lines, points) associated with this\nseries.  If empty, a default color is used."
+        },
+        "colorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The color for elements (i.e. bars, lines, points) associated with this\nseries.  If empty, a default color is used.\nIf color is also set, this field takes precedence."
         },
         "lineStyle": {
           "$ref": "LineStyle",
@@ -1475,7 +1487,7 @@
       "id": "BatchClearValuesByDataFilterResponse",
       "properties": {
         "clearedRanges": {
-          "description": "The ranges that were cleared, in A1 notation.\n(If the requests were for an unbounded range or a ranger larger\n than the bounds of the sheet, this will be the actual ranges\n that were cleared, bounded to the sheet's limits.)",
+          "description": "The ranges that were cleared, in A1 notation. If the requests are for an\nunbounded range or a ranger larger than the bounds of the sheet, this is\nthe actual ranges that were cleared, bounded to the sheet's limits.",
           "items": {
             "type": "string"
           },
@@ -1507,7 +1519,7 @@
       "id": "BatchClearValuesResponse",
       "properties": {
         "clearedRanges": {
-          "description": "The ranges that were cleared, in A1 notation.\n(If the requests were for an unbounded range or a ranger larger\n than the bounds of the sheet, this will be the actual ranges\n that were cleared, bounded to the sheet's limits.)",
+          "description": "The ranges that were cleared, in A1 notation. If the requests are for an\nunbounded range or a ranger larger than the bounds of the sheet, this is\nthe actual ranges that were cleared, bounded to the sheet's limits.",
           "items": {
             "type": "string"
           },
@@ -1525,7 +1537,7 @@
       "id": "BatchGetValuesByDataFilterRequest",
       "properties": {
         "dataFilters": {
-          "description": "The data filters used to match the ranges of values to retrieve.  Ranges\nthat match any of the specified data filters will be included in the\nresponse.",
+          "description": "The data filters used to match the ranges of values to retrieve. Ranges\nthat match any of the specified data filters are included in the response.",
           "items": {
             "$ref": "DataFilter"
           },
@@ -1544,7 +1556,7 @@
           "type": "string"
         },
         "majorDimension": {
-          "description": "The major dimension that results should use.\n\nFor example, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`,\nthen a request that selects that range and sets `majorDimension=ROWS` will\nreturn `[[1,2],[3,4]]`,\nwhereas a request that sets `majorDimension=COLUMNS` will return\n`[[1,3],[2,4]]`.",
+          "description": "The major dimension that results should use.\n\nFor example, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`,\nthen a request that selects that range and sets `majorDimension=ROWS`\nreturns `[[1,2],[3,4]]`, whereas a request that sets\n`majorDimension=COLUMNS` returns `[[1,3],[2,4]]`.",
           "enum": [
             "DIMENSION_UNSPECIFIED",
             "ROWS",
@@ -1666,14 +1678,14 @@
       "id": "BatchUpdateValuesByDataFilterRequest",
       "properties": {
         "data": {
-          "description": "The new values to apply to the spreadsheet.  If more than one range is\nmatched by the specified DataFilter the specified values will be\napplied to all of those ranges.",
+          "description": "The new values to apply to the spreadsheet.  If more than one range is\nmatched by the specified DataFilter the specified values are applied to\nall of those ranges.",
           "items": {
             "$ref": "DataFilterValueRange"
           },
           "type": "array"
         },
         "includeValuesInResponse": {
-          "description": "Determines if the update response should include the values\nof the cells that were updated. By default, responses\ndo not include the updated values. The `updatedData` field within\neach of the BatchUpdateValuesResponse.responses will contain\nthe updated values. If the range to write was larger than than the range\nactually written, the response will include all values in the requested\nrange (excluding trailing empty rows and columns).",
+          "description": "Determines if the update response should include the values\nof the cells that were updated. By default, responses\ndo not include the updated values. The `updatedData` field within\neach of the BatchUpdateValuesResponse.responses contains the updated\nvalues. If the range to write was larger than the range actually written,\nthe response includes all values in the requested range (excluding trailing\nempty rows and columns).",
           "type": "boolean"
         },
         "responseDateTimeRenderOption": {
@@ -1769,7 +1781,7 @@
           "type": "array"
         },
         "includeValuesInResponse": {
-          "description": "Determines if the update response should include the values\nof the cells that were updated. By default, responses\ndo not include the updated values. The `updatedData` field within\neach of the BatchUpdateValuesResponse.responses will contain\nthe updated values. If the range to write was larger than than the range\nactually written, the response will include all values in the requested\nrange (excluding trailing empty rows and columns).",
+          "description": "Determines if the update response should include the values\nof the cells that were updated. By default, responses\ndo not include the updated values. The `updatedData` field within\neach of the BatchUpdateValuesResponse.responses contains the updated\nvalues. If the range to write was larger than the range actually written,\nthe response includes all values in the requested range (excluding trailing\nempty rows and columns).",
           "type": "boolean"
         },
         "responseDateTimeRenderOption": {
@@ -2020,6 +2032,10 @@
         "bubbleBorderColor": {
           "$ref": "Color",
           "description": "The bubble border color."
+        },
+        "bubbleBorderColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The bubble border color.\nIf bubble_border_color is also set, this field takes precedence."
         },
         "bubbleLabels": {
           "$ref": "ChartData",
@@ -2395,6 +2411,10 @@
         "backgroundColor": {
           "$ref": "Color",
           "description": "The background color of the entire chart.\nNot applicable to Org charts."
+        },
+        "backgroundColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The background color of the entire chart.\nNot applicable to Org charts.\nIf background_color is also set, this field takes precedence."
         },
         "basicChart": {
           "$ref": "BasicChartSpec",
@@ -2800,7 +2820,7 @@
           "type": "string"
         },
         "values": {
-          "description": "The data to be written.  If the provided values exceed any of the ranges\nmatched by the data filter then the request will fail.  If the provided\nvalues are less than the matched ranges only the specified values will be\nwritten, existing values in the matched ranges will remain unaffected.",
+          "description": "The data to be written.  If the provided values exceed any of the ranges\nmatched by the data filter then the request fails.  If the provided values\nare less than the matched ranges only the specified values are written,\nexisting values in the matched ranges remain unaffected.",
           "items": {
             "items": {
               "type": "any"
@@ -3906,6 +3926,10 @@
           "$ref": "Color",
           "description": "The color of the column representing this series in each bucket.\nThis field is optional."
         },
+        "barColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The color of the column representing this series in each bucket.\nThis field is optional.\nIf bar_color is also set, this field takes precedence."
+        },
         "data": {
           "$ref": "ChartData",
           "description": "The data for this histogram series."
@@ -4235,6 +4259,10 @@
           "$ref": "Color",
           "description": "The color of the org chart nodes."
         },
+        "nodeColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The color of the org chart nodes.\nIf node_color is also set, this field takes precedence."
+        },
         "nodeSize": {
           "description": "The size of the org chart nodes.",
           "enum": [
@@ -4258,6 +4286,10 @@
         "selectedNodeColor": {
           "$ref": "Color",
           "description": "The color of the selected org chart nodes."
+        },
+        "selectedNodeColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The color of the selected org chart nodes.\nIf selected_node_color is also set, this field takes precedence."
         },
         "tooltips": {
           "$ref": "ChartData",
@@ -5155,7 +5187,7 @@
       "id": "SearchDeveloperMetadataRequest",
       "properties": {
         "dataFilters": {
-          "description": "The data filters describing the criteria used to determine which\nDeveloperMetadata entries to return.  DeveloperMetadata matching any of the\nspecified filters will be included in the response.",
+          "description": "The data filters describing the criteria used to determine which\nDeveloperMetadata entries to return.  DeveloperMetadata matching any of the\nspecified filters are included in the response.",
           "items": {
             "$ref": "DataFilter"
           },
@@ -5567,7 +5599,7 @@
         },
         "iterativeCalculationSettings": {
           "$ref": "IterativeCalculationSettings",
-          "description": "Determines whether and how circular references are resolved with iterative\ncalculation.  Absence of this field means that circular references will\nresult in calculation errors."
+          "description": "Determines whether and how circular references are resolved with iterative\ncalculation.  Absence of this field means that circular references result\nin calculation errors."
         },
         "locale": {
           "description": "The locale of the spreadsheet in one of the following formats:\n\n* an ISO 639-1 language code such as `en`\n\n* an ISO 639-2 language code such as `fil`, if no 639-1 code exists\n\n* a combination of the ISO language code and country code, such as `en_US`\n\nNote: when updating this field, not all locales/languages are supported.",
@@ -5597,7 +5629,7 @@
           "type": "string"
         },
         "themeColors": {
-          "description": "The spreadsheet theme color pairs. For update users need to give all pairs\nof theme colors.",
+          "description": "The spreadsheet theme color pairs. To update you must provide all theme\ncolor pairs.",
           "items": {
             "$ref": "ThemeColorPair"
           },
@@ -5781,17 +5813,33 @@
           "$ref": "Color",
           "description": "The background color for cells with a color value greater than or equal\nto maxValue. Defaults to #109618 if not\nspecified."
         },
+        "maxValueColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The background color for cells with a color value greater than or equal\nto maxValue. Defaults to #109618 if not\nspecified.\nIf max_value_color is also set, this field takes precedence."
+        },
         "midValueColor": {
           "$ref": "Color",
           "description": "The background color for cells with a color value at the midpoint between\nminValue and\nmaxValue. Defaults to #efe6dc if not\nspecified."
+        },
+        "midValueColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The background color for cells with a color value at the midpoint between\nminValue and\nmaxValue. Defaults to #efe6dc if not\nspecified.\nIf mid_value_color is also set, this field takes precedence."
         },
         "minValueColor": {
           "$ref": "Color",
           "description": "The background color for cells with a color value less than or equal to\nminValue. Defaults to #dc3912 if not\nspecified."
         },
+        "minValueColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The background color for cells with a color value less than or equal to\nminValue. Defaults to #dc3912 if not\nspecified.\nIf min_value_color is also set, this field takes precedence."
+        },
         "noDataColor": {
           "$ref": "Color",
           "description": "The background color for cells that have no color data associated with\nthem. Defaults to #000000 if not specified."
+        },
+        "noDataColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The background color for cells that have no color data associated with\nthem. Defaults to #000000 if not specified.\nIf no_data_color is also set, this field takes precedence."
         }
       },
       "type": "object"
@@ -5811,6 +5859,10 @@
         "headerColor": {
           "$ref": "Color",
           "description": "The background color for header cells."
+        },
+        "headerColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The background color for header cells.\nIf header_color is also set, this field takes precedence."
         },
         "hideTooltips": {
           "description": "True to hide tooltips.",
@@ -6350,6 +6402,10 @@
         "color": {
           "$ref": "Color",
           "description": "The color of the column."
+        },
+        "colorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The color of the column.\nIf color is also set, this field takes precedence."
         },
         "label": {
           "description": "The label of the column's legend.",

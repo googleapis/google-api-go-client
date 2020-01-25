@@ -4216,7 +4216,7 @@
       }
     }
   },
-  "revision": "20200110",
+  "revision": "20200121",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2AnnotatedMessagePart": {
@@ -4370,8 +4370,8 @@
           ],
           "enumDescriptions": [
             "Not specified. This value should be never used.",
-            "Map entity types allow mapping of a group of synonyms to a canonical\nvalue.",
-            "List entity types contain a set of entries that do not map to canonical\nvalues. However, list entity types can contain references to other entity\ntypes (with or without aliases).",
+            "Map entity types allow mapping of a group of synonyms to a reference\nvalue.",
+            "List entity types contain a set of entries that do not map to reference\nvalues. However, list entity types can contain references to other entity\ntypes (with or without aliases).",
             "Regexp entity types allow to specify regular expressions in entries\nvalues."
           ],
           "type": "string"
@@ -4395,7 +4395,7 @@
           "type": "array"
         },
         "value": {
-          "description": "Required. The primary value associated with this entity entry.\nFor example, if the entity type is *vegetable*, the value could be\n*scallions*.\n\nFor `KIND_MAP` entity types:\n\n*   A canonical value to be used in place of synonyms.\n\nFor `KIND_LIST` entity types:\n\n*   A string that can contain references to other entity types (with or\n    without aliases).",
+          "description": "Required. The primary value associated with this entity entry.\nFor example, if the entity type is *vegetable*, the value could be\n*scallions*.\n\nFor `KIND_MAP` entity types:\n\n*   A reference value to be used in place of synonyms.\n\nFor `KIND_LIST` entity types:\n\n*   A string that can contain references to other entity types (with or\n    without aliases).",
           "type": "string"
         }
       },
@@ -5545,7 +5545,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2SessionEntityType": {
-      "description": "Represents a session entity type.\n\nExtends or replaces a developer entity type at the user session level (we\nrefer to the entity types defined at the agent level as \"developer entity\ntypes\").\n\nNote: session entity types apply to all queries, regardless of the language.",
+      "description": "Represents a session entity type.\n\nExtends or replaces a custom entity type at the user session level (we\nrefer to the entity types defined at the agent level as \"custom entity\ntypes\").\n\nNote: session entity types apply to all queries, regardless of the language.",
       "id": "GoogleCloudDialogflowV2SessionEntityType",
       "properties": {
         "entities": {
@@ -5556,7 +5556,7 @@
           "type": "array"
         },
         "entityOverrideMode": {
-          "description": "Required. Indicates whether the additional data should override or\nsupplement the developer entity type definition.",
+          "description": "Required. Indicates whether the additional data should override or\nsupplement the custom entity type definition.",
           "enum": [
             "ENTITY_OVERRIDE_MODE_UNSPECIFIED",
             "ENTITY_OVERRIDE_MODE_OVERRIDE",
@@ -5564,8 +5564,8 @@
           ],
           "enumDescriptions": [
             "Not specified. This value should be never used.",
-            "The collection of session entities overrides the collection of entities\nin the corresponding developer entity type.",
-            "The collection of session entities extends the collection of entities in\nthe corresponding developer entity type.\n\nNote: Even in this override mode calls to `ListSessionEntityTypes`,\n`GetSessionEntityType`, `CreateSessionEntityType` and\n`UpdateSessionEntityType` only return the additional entities added in\nthis session entity type. If you want to get the supplemented list,\nplease call EntityTypes.GetEntityType on the developer entity type\nand merge."
+            "The collection of session entities overrides the collection of entities\nin the corresponding custom entity type.",
+            "The collection of session entities extends the collection of entities in\nthe corresponding custom entity type.\n\nNote: Even in this override mode calls to `ListSessionEntityTypes`,\n`GetSessionEntityType`, `CreateSessionEntityType` and\n`UpdateSessionEntityType` only return the additional entities added in\nthis session entity type. If you want to get the supplemented list,\nplease call EntityTypes.GetEntityType on the custom entity type\nand merge."
           ],
           "type": "string"
         },
@@ -5702,7 +5702,7 @@
           "enumDescriptions": [
             "Not specified.",
             "Best for agents with a small number of examples in intents and/or wide\nuse of templates syntax and composite entities.",
-            "Can be used for agents with a large number of examples in intents,\nespecially the ones using @sys.any or very large developer entities."
+            "Can be used for agents with a large number of examples in intents,\nespecially the ones using @sys.any or very large custom entities."
           ],
           "type": "string"
         },
@@ -5801,7 +5801,7 @@
       "id": "GoogleCloudDialogflowV2beta1BatchDeleteEntitiesRequest",
       "properties": {
         "entityValues": {
-          "description": "Required. The canonical `values` of the entities to delete. Note that\nthese are not fully-qualified names, i.e. they don't start with\n`projects/\u003cProject ID\u003e`.",
+          "description": "Required. The reference `values` of the entities to delete. Note that\nthese are not fully-qualified names, i.e. they don't start with\n`projects/\u003cProject ID\u003e`.",
           "items": {
             "type": "string"
           },
@@ -6126,8 +6126,8 @@
           ],
           "enumDescriptions": [
             "Not specified. This value should be never used.",
-            "Map entity types allow mapping of a group of synonyms to a canonical\nvalue.",
-            "List entity types contain a set of entries that do not map to canonical\nvalues. However, list entity types can contain references to other entity\ntypes (with or without aliases).",
+            "Map entity types allow mapping of a group of synonyms to a reference\nvalue.",
+            "List entity types contain a set of entries that do not map to reference\nvalues. However, list entity types can contain references to other entity\ntypes (with or without aliases).",
             "Regexp entity types allow to specify regular expressions in entries\nvalues."
           ],
           "type": "string"
@@ -6165,7 +6165,7 @@
           "type": "array"
         },
         "value": {
-          "description": "Required. The primary value associated with this entity entry.\nFor example, if the entity type is *vegetable*, the value could be\n*scallions*.\n\nFor `KIND_MAP` entity types:\n\n*   A canonical value to be used in place of synonyms.\n\nFor `KIND_LIST` entity types:\n\n*   A string that can contain references to other entity types (with or\n    without aliases).",
+          "description": "Required. The primary value associated with this entity entry.\nFor example, if the entity type is *vegetable*, the value could be\n*scallions*.\n\nFor `KIND_MAP` entity types:\n\n*   A reference value to be used in place of synonyms.\n\nFor `KIND_LIST` entity types:\n\n*   A string that can contain references to other entity types (with or\n    without aliases).",
           "type": "string"
         }
       },
@@ -8068,7 +8068,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2beta1SessionEntityType": {
-      "description": "Represents a session entity type.\n\nExtends or replaces a developer entity type at the user session level (we\nrefer to the entity types defined at the agent level as \"developer entity\ntypes\").\n\nNote: session entity types apply to all queries, regardless of the language.",
+      "description": "Represents a session entity type.\n\nExtends or replaces a custom entity type at the user session level (we\nrefer to the entity types defined at the agent level as \"custom entity\ntypes\").\n\nNote: session entity types apply to all queries, regardless of the language.",
       "id": "GoogleCloudDialogflowV2beta1SessionEntityType",
       "properties": {
         "entities": {
@@ -8079,7 +8079,7 @@
           "type": "array"
         },
         "entityOverrideMode": {
-          "description": "Required. Indicates whether the additional data should override or\nsupplement the developer entity type definition.",
+          "description": "Required. Indicates whether the additional data should override or\nsupplement the custom entity type definition.",
           "enum": [
             "ENTITY_OVERRIDE_MODE_UNSPECIFIED",
             "ENTITY_OVERRIDE_MODE_OVERRIDE",
@@ -8087,8 +8087,8 @@
           ],
           "enumDescriptions": [
             "Not specified. This value should be never used.",
-            "The collection of session entities overrides the collection of entities\nin the corresponding developer entity type.",
-            "The collection of session entities extends the collection of entities in\nthe corresponding developer entity type.\n\nNote: Even in this override mode calls to `ListSessionEntityTypes`,\n`GetSessionEntityType`, `CreateSessionEntityType` and\n`UpdateSessionEntityType` only return the additional entities added in\nthis session entity type. If you want to get the supplemented list,\nplease call EntityTypes.GetEntityType on the developer entity type\nand merge."
+            "The collection of session entities overrides the collection of entities\nin the corresponding custom entity type.",
+            "The collection of session entities extends the collection of entities in\nthe corresponding custom entity type.\n\nNote: Even in this override mode calls to `ListSessionEntityTypes`,\n`GetSessionEntityType`, `CreateSessionEntityType` and\n`UpdateSessionEntityType` only return the additional entities added in\nthis session entity type. If you want to get the supplemented list,\nplease call EntityTypes.GetEntityType on the custom entity type\nand merge."
           ],
           "type": "string"
         },

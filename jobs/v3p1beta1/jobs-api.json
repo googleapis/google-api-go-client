@@ -662,7 +662,7 @@
       }
     }
   },
-  "revision": "20200109",
+  "revision": "20200122",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {
@@ -1336,7 +1336,7 @@
           "type": "string"
         },
         "rankingExpression": {
-          "description": "Required. Controls over how job documents get ranked on top of existing relevance\nscore (determined by API algorithm). The product of ranking expression\nand relevance score is used to determine job's final ranking position.\n\nThe syntax for this expression is a subset of Google SQL syntax.\n\nSupported operators are: +, -, *, /, where the left and right side of\nthe operator is either a numeric Job.custom_attributes key,\ninteger/double value or an expression that can be evaluated to a number.\n\nParenthesis are supported to adjust calculation precedence. The\nexpression must be \u003c 100 characters in length.\n\nSample ranking expression\n(year + 25) * 0.25 - (freshness / 0.5)",
+          "description": "Required. Controls over how job documents get ranked on top of existing relevance\nscore (determined by API algorithm). A combination of the ranking\nexpression and relevance score is used to determine job's final ranking\nposition.\n\nThe syntax for this expression is a subset of Google SQL syntax.\n\nSupported operators are: +, -, *, /, where the left and right side of\nthe operator is either a numeric Job.custom_attributes key,\ninteger/double value or an expression that can be evaluated to a number.\n\nParenthesis are supported to adjust calculation precedence. The\nexpression must be \u003c 100 characters in length.\n\nThe expression is considered invalid for a job if the expression\nreferences custom attributes that are not populated on the job or if the\nexpression results in a divide by zero. If an expression is invalid for a\njob, that job is demoted to the end of the results.\n\nSample ranking expression\n(year + 25) * 0.25 - (freshness / 0.5)",
           "type": "string"
         }
       },

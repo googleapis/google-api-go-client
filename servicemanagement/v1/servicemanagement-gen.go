@@ -2133,31 +2133,62 @@ func (s *EnumValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Expr: Represents an expression text. Example:
+// Expr: Represents a textual expression in the Common Expression
+// Language (CEL)
+// syntax. CEL is a C-like expression language. The syntax and semantics
+// of CEL
+// are documented at https://github.com/google/cel-spec.
 //
-//     title: "User account presence"
-//     description: "Determines whether the request has a user account"
-//     expression: "size(request.user) > 0"
+// Example (Comparison):
+//
+//     title: "Summary size limit"
+//     description: "Determines if a summary is less than 100 chars"
+//     expression: "document.summary.size() < 100"
+//
+// Example (Equality):
+//
+//     title: "Requestor is owner"
+//     description: "Determines if requestor is the document owner"
+//     expression: "document.owner ==
+// request.auth.claims.email"
+//
+// Example (Logic):
+//
+//     title: "Public documents"
+//     description: "Determine whether the document should be publicly
+// visible"
+//     expression: "document.type != 'private' && document.type !=
+// 'internal'"
+//
+// Example (Data Manipulation):
+//
+//     title: "Notification string"
+//     description: "Create a notification string with a timestamp."
+//     expression: "'New message received at ' +
+// string(document.create_time)"
+//
+// The exact variables and functions that may be referenced within an
+// expression
+// are determined by the service that evaluates it. See the
+// service
+// documentation for additional information.
 type Expr struct {
-	// Description: An optional description of the expression. This is a
+	// Description: Optional. Description of the expression. This is a
 	// longer text which
 	// describes the expression, e.g. when hovered over it in a UI.
 	Description string `json:"description,omitempty"`
 
-	// Expression: Textual representation of an expression in
-	// Common Expression Language syntax.
-	//
-	// The application context of the containing message determines
-	// which
-	// well-known feature set of CEL is supported.
+	// Expression: Textual representation of an expression in Common
+	// Expression Language
+	// syntax.
 	Expression string `json:"expression,omitempty"`
 
-	// Location: An optional string indicating the location of the
-	// expression for error
+	// Location: Optional. String indicating the location of the expression
+	// for error
 	// reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
-	// Title: An optional title for the expression, i.e. a short string
+	// Title: Optional. Title for the expression, i.e. a short string
 	// describing
 	// its purpose. This can be used e.g. in UIs which allow to enter
 	// the
@@ -5194,6 +5225,61 @@ func (s *Service) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ServiceIdentity: The per-product per-project service identity for a
+// service.
+//
+//
+// Use this field to configure per-product per-project service
+// identity.
+// Example of a service identity configuration.
+//
+//     usage:
+//       service_identity:
+//       - service_account_parent: "projects/123456789"
+//         display_name: "Cloud XXX Service Agent"
+//         description: "Used as the identity of Cloud XXX to access
+// resources"
+type ServiceIdentity struct {
+	// Description: Optional. A user-specified opaque description of the
+	// service account.
+	// Must be less than or equal to 256 UTF-8 bytes.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Optional. A user-specified name for the service
+	// account.
+	// Must be less than or equal to 100 UTF-8 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ServiceAccountParent: A service account project that hosts the
+	// service accounts.
+	//
+	// An example name would be:
+	// `projects/123456789`
+	ServiceAccountParent string `json:"serviceAccountParent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceIdentity) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceIdentity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
@@ -5851,6 +5937,10 @@ type Usage struct {
 	// order.
 	Rules []*UsageRule `json:"rules,omitempty"`
 
+	// ServiceIdentity: The configuration of a per-product per-project
+	// service identity.
+	ServiceIdentity *ServiceIdentity `json:"serviceIdentity,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "ProducerNotificationChannel") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
@@ -6013,7 +6103,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6209,7 +6299,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6377,7 +6467,7 @@ func (c *ServicesCreateCall) Header() http.Header {
 
 func (c *ServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6511,7 +6601,7 @@ func (c *ServicesDeleteCall) Header() http.Header {
 
 func (c *ServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6648,7 +6738,7 @@ func (c *ServicesDisableCall) Header() http.Header {
 
 func (c *ServicesDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6794,7 +6884,7 @@ func (c *ServicesEnableCall) Header() http.Header {
 
 func (c *ServicesEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6949,7 +7039,7 @@ func (c *ServicesGenerateConfigReportCall) Header() http.Header {
 
 func (c *ServicesGenerateConfigReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7088,7 +7178,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7258,7 +7348,7 @@ func (c *ServicesGetConfigCall) Header() http.Header {
 
 func (c *ServicesGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7412,7 +7502,7 @@ func (c *ServicesGetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7609,7 +7699,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7782,7 +7872,7 @@ func (c *ServicesSetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7933,7 +8023,7 @@ func (c *ServicesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ServicesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8082,7 +8172,7 @@ func (c *ServicesUndeleteCall) Header() http.Header {
 
 func (c *ServicesUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8226,7 +8316,7 @@ func (c *ServicesConfigsCreateCall) Header() http.Header {
 
 func (c *ServicesConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8389,7 +8479,7 @@ func (c *ServicesConfigsGetCall) Header() http.Header {
 
 func (c *ServicesConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8569,7 +8659,7 @@ func (c *ServicesConfigsListCall) Header() http.Header {
 
 func (c *ServicesConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8756,7 +8846,7 @@ func (c *ServicesConfigsSubmitCall) Header() http.Header {
 
 func (c *ServicesConfigsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8899,7 +8989,7 @@ func (c *ServicesConsumersGetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesConsumersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9047,7 +9137,7 @@ func (c *ServicesConsumersSetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesConsumersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9198,7 +9288,7 @@ func (c *ServicesConsumersTestIamPermissionsCall) Header() http.Header {
 
 func (c *ServicesConsumersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9361,7 +9451,7 @@ func (c *ServicesRolloutsCreateCall) Header() http.Header {
 
 func (c *ServicesRolloutsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9512,7 +9602,7 @@ func (c *ServicesRolloutsGetCall) Header() http.Header {
 
 func (c *ServicesRolloutsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9699,7 +9789,7 @@ func (c *ServicesRolloutsListCall) Header() http.Header {
 
 func (c *ServicesRolloutsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

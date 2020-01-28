@@ -2125,7 +2125,7 @@
       }
     }
   },
-  "revision": "20191219",
+  "revision": "20200117",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2628,23 +2628,23 @@
       "type": "object"
     },
     "Expr": {
-      "description": "Represents an expression text. Example:\ntitle: \"User account presence\"\ndescription: \"Determines whether the request has a user account\"\nexpression: \"size(request.user) \u003e 0\"\n",
+      "description": "Represents a textual expression in the Common Expression Language (CEL) syntax. CEL is a C-like expression language. The syntax and semantics of CEL are documented at https://github.com/google/cel-spec.Example (Comparison):\ntitle: \"Summary size limit\"\ndescription: \"Determines if a summary is less than 100 chars\"\nexpression: \"document.summary.size() \u003c 100\"\nExample (Equality):\ntitle: \"Requestor is owner\"\ndescription: \"Determines if requestor is the document owner\"\nexpression: \"document.owner == request.auth.claims.email\"\nExample (Logic):\ntitle: \"Public documents\"\ndescription: \"Determine whether the document should be publicly visible\"\nexpression: \"document.type != 'private' \u0026\u0026 document.type != 'internal'\"\nExample (Data Manipulation):\ntitle: \"Notification string\"\ndescription: \"Create a notification string with a timestamp.\"\nexpression: \"'New message received at ' + string(document.create_time)\"\nThe exact variables and functions that may be referenced within an expression are determined by the service that evaluates it. See the service documentation for additional information.",
       "id": "Expr",
       "properties": {
         "description": {
-          "description": "An optional description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.",
+          "description": "Optional. Description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.",
           "type": "string"
         },
         "expression": {
-          "description": "Textual representation of an expression in Common Expression Language syntax.The application context of the containing message determines which well-known feature set of CEL is supported.",
+          "description": "Textual representation of an expression in Common Expression Language syntax.",
           "type": "string"
         },
         "location": {
-          "description": "An optional string indicating the location of the expression for error reporting, e.g. a file name and a position in the file.",
+          "description": "Optional. String indicating the location of the expression for error reporting, e.g. a file name and a position in the file.",
           "type": "string"
         },
         "title": {
-          "description": "An optional title for the expression, i.e. a short string describing its purpose. This can be used e.g. in UIs which allow to enter the expression.",
+          "description": "Optional. Title for the expression, i.e. a short string describing its purpose. This can be used e.g. in UIs which allow to enter the expression.",
           "type": "string"
         }
       },

@@ -111,7 +111,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
-	s.Oauth = NewOauthService(s)
+	s.Projects = NewProjectsService(s)
 	s.V1 = NewV1Service(s)
 	return s, nil
 }
@@ -121,7 +121,7 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
-	Oauth *OauthService
+	Projects *ProjectsService
 
 	V1 *V1Service
 }
@@ -133,48 +133,36 @@ func (s *Service) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
-func NewOauthService(s *Service) *OauthService {
-	rs := &OauthService{s: s}
-	rs.Projects = NewOauthProjectsService(s)
+func NewProjectsService(s *Service) *ProjectsService {
+	rs := &ProjectsService{s: s}
+	rs.Brands = NewProjectsBrandsService(s)
 	return rs
 }
 
-type OauthService struct {
+type ProjectsService struct {
 	s *Service
 
-	Projects *OauthProjectsService
+	Brands *ProjectsBrandsService
 }
 
-func NewOauthProjectsService(s *Service) *OauthProjectsService {
-	rs := &OauthProjectsService{s: s}
-	rs.Brands = NewOauthProjectsBrandsService(s)
+func NewProjectsBrandsService(s *Service) *ProjectsBrandsService {
+	rs := &ProjectsBrandsService{s: s}
+	rs.IdentityAwareProxyClients = NewProjectsBrandsIdentityAwareProxyClientsService(s)
 	return rs
 }
 
-type OauthProjectsService struct {
+type ProjectsBrandsService struct {
 	s *Service
 
-	Brands *OauthProjectsBrandsService
+	IdentityAwareProxyClients *ProjectsBrandsIdentityAwareProxyClientsService
 }
 
-func NewOauthProjectsBrandsService(s *Service) *OauthProjectsBrandsService {
-	rs := &OauthProjectsBrandsService{s: s}
-	rs.IdentityAwareProxyClients = NewOauthProjectsBrandsIdentityAwareProxyClientsService(s)
+func NewProjectsBrandsIdentityAwareProxyClientsService(s *Service) *ProjectsBrandsIdentityAwareProxyClientsService {
+	rs := &ProjectsBrandsIdentityAwareProxyClientsService{s: s}
 	return rs
 }
 
-type OauthProjectsBrandsService struct {
-	s *Service
-
-	IdentityAwareProxyClients *OauthProjectsBrandsIdentityAwareProxyClientsService
-}
-
-func NewOauthProjectsBrandsIdentityAwareProxyClientsService(s *Service) *OauthProjectsBrandsIdentityAwareProxyClientsService {
-	rs := &OauthProjectsBrandsIdentityAwareProxyClientsService{s: s}
-	return rs
-}
-
-type OauthProjectsBrandsIdentityAwareProxyClientsService struct {
+type ProjectsBrandsIdentityAwareProxyClientsService struct {
 	s *Service
 }
 
@@ -490,31 +478,62 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Expr: Represents an expression text. Example:
+// Expr: Represents a textual expression in the Common Expression
+// Language (CEL)
+// syntax. CEL is a C-like expression language. The syntax and semantics
+// of CEL
+// are documented at https://github.com/google/cel-spec.
 //
-//     title: "User account presence"
-//     description: "Determines whether the request has a user account"
-//     expression: "size(request.user) > 0"
+// Example (Comparison):
+//
+//     title: "Summary size limit"
+//     description: "Determines if a summary is less than 100 chars"
+//     expression: "document.summary.size() < 100"
+//
+// Example (Equality):
+//
+//     title: "Requestor is owner"
+//     description: "Determines if requestor is the document owner"
+//     expression: "document.owner ==
+// request.auth.claims.email"
+//
+// Example (Logic):
+//
+//     title: "Public documents"
+//     description: "Determine whether the document should be publicly
+// visible"
+//     expression: "document.type != 'private' && document.type !=
+// 'internal'"
+//
+// Example (Data Manipulation):
+//
+//     title: "Notification string"
+//     description: "Create a notification string with a timestamp."
+//     expression: "'New message received at ' +
+// string(document.create_time)"
+//
+// The exact variables and functions that may be referenced within an
+// expression
+// are determined by the service that evaluates it. See the
+// service
+// documentation for additional information.
 type Expr struct {
-	// Description: An optional description of the expression. This is a
+	// Description: Optional. Description of the expression. This is a
 	// longer text which
 	// describes the expression, e.g. when hovered over it in a UI.
 	Description string `json:"description,omitempty"`
 
-	// Expression: Textual representation of an expression in
-	// Common Expression Language syntax.
-	//
-	// The application context of the containing message determines
-	// which
-	// well-known feature set of CEL is supported.
+	// Expression: Textual representation of an expression in Common
+	// Expression Language
+	// syntax.
 	Expression string `json:"expression,omitempty"`
 
-	// Location: An optional string indicating the location of the
-	// expression for error
+	// Location: Optional. String indicating the location of the expression
+	// for error
 	// reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
-	// Title: An optional title for the expression, i.e. a short string
+	// Title: Optional. Title for the expression, i.e. a short string
 	// describing
 	// its purpose. This can be used e.g. in UIs which allow to enter
 	// the
@@ -1119,9 +1138,9 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// method id "iap.oauth.projects.brands.create":
+// method id "iap.projects.brands.create":
 
-type OauthProjectsBrandsCreateCall struct {
+type ProjectsBrandsCreateCall struct {
 	s          *Service
 	parent     string
 	brand      *Brand
@@ -1143,8 +1162,8 @@ type OauthProjectsBrandsCreateCall struct {
 // Cloud console. Requires that a brand does not already exist for
 // the
 // project, and that the specified support email is owned by the caller.
-func (r *OauthProjectsBrandsService) Create(parent string, brand *Brand) *OauthProjectsBrandsCreateCall {
-	c := &OauthProjectsBrandsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsBrandsService) Create(parent string, brand *Brand) *ProjectsBrandsCreateCall {
+	c := &ProjectsBrandsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.brand = brand
 	return c
@@ -1153,7 +1172,7 @@ func (r *OauthProjectsBrandsService) Create(parent string, brand *Brand) *OauthP
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OauthProjectsBrandsCreateCall) Fields(s ...googleapi.Field) *OauthProjectsBrandsCreateCall {
+func (c *ProjectsBrandsCreateCall) Fields(s ...googleapi.Field) *ProjectsBrandsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -1161,23 +1180,23 @@ func (c *OauthProjectsBrandsCreateCall) Fields(s ...googleapi.Field) *OauthProje
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OauthProjectsBrandsCreateCall) Context(ctx context.Context) *OauthProjectsBrandsCreateCall {
+func (c *ProjectsBrandsCreateCall) Context(ctx context.Context) *ProjectsBrandsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OauthProjectsBrandsCreateCall) Header() http.Header {
+func (c *ProjectsBrandsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OauthProjectsBrandsCreateCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsBrandsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1190,7 +1209,7 @@ func (c *OauthProjectsBrandsCreateCall) doRequest(alt string) (*http.Response, e
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/oauth/{+parent}/brands")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/brands")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -1203,14 +1222,14 @@ func (c *OauthProjectsBrandsCreateCall) doRequest(alt string) (*http.Response, e
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "iap.oauth.projects.brands.create" call.
+// Do executes the "iap.projects.brands.create" call.
 // Exactly one of *Brand or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
 // *Brand.ServerResponse.Header or (if a response was returned at all)
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *OauthProjectsBrandsCreateCall) Do(opts ...googleapi.CallOption) (*Brand, error) {
+func (c *ProjectsBrandsCreateCall) Do(opts ...googleapi.CallOption) (*Brand, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1242,9 +1261,9 @@ func (c *OauthProjectsBrandsCreateCall) Do(opts ...googleapi.CallOption) (*Brand
 	return ret, nil
 	// {
 	//   "description": "Constructs a new OAuth brand for the project if one does not exist.\nThe created brand is \"internal only\", meaning that OAuth clients created\nunder it only accept requests from users who belong to the same G Suite\norganization as the project. The brand is created in an un-reviewed status.\nNOTE: The \"internal only\" status can be manually changed in the Google\nCloud console. Requires that a brand does not already exist for the\nproject, and that the specified support email is owned by the caller.",
-	//   "flatPath": "v1/oauth/projects/{projectsId}/brands",
+	//   "flatPath": "v1/projects/{projectsId}/brands",
 	//   "httpMethod": "POST",
-	//   "id": "iap.oauth.projects.brands.create",
+	//   "id": "iap.projects.brands.create",
 	//   "parameterOrder": [
 	//     "parent"
 	//   ],
@@ -1257,7 +1276,7 @@ func (c *OauthProjectsBrandsCreateCall) Do(opts ...googleapi.CallOption) (*Brand
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1/oauth/{+parent}/brands",
+	//   "path": "v1/{+parent}/brands",
 	//   "request": {
 	//     "$ref": "Brand"
 	//   },
@@ -1271,9 +1290,9 @@ func (c *OauthProjectsBrandsCreateCall) Do(opts ...googleapi.CallOption) (*Brand
 
 }
 
-// method id "iap.oauth.projects.brands.get":
+// method id "iap.projects.brands.get":
 
-type OauthProjectsBrandsGetCall struct {
+type ProjectsBrandsGetCall struct {
 	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
@@ -1283,8 +1302,8 @@ type OauthProjectsBrandsGetCall struct {
 }
 
 // Get: Retrieves the OAuth brand of the project.
-func (r *OauthProjectsBrandsService) Get(name string) *OauthProjectsBrandsGetCall {
-	c := &OauthProjectsBrandsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsBrandsService) Get(name string) *ProjectsBrandsGetCall {
+	c := &ProjectsBrandsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
@@ -1292,7 +1311,7 @@ func (r *OauthProjectsBrandsService) Get(name string) *OauthProjectsBrandsGetCal
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OauthProjectsBrandsGetCall) Fields(s ...googleapi.Field) *OauthProjectsBrandsGetCall {
+func (c *ProjectsBrandsGetCall) Fields(s ...googleapi.Field) *ProjectsBrandsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -1302,7 +1321,7 @@ func (c *OauthProjectsBrandsGetCall) Fields(s ...googleapi.Field) *OauthProjects
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *OauthProjectsBrandsGetCall) IfNoneMatch(entityTag string) *OauthProjectsBrandsGetCall {
+func (c *ProjectsBrandsGetCall) IfNoneMatch(entityTag string) *ProjectsBrandsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -1310,23 +1329,23 @@ func (c *OauthProjectsBrandsGetCall) IfNoneMatch(entityTag string) *OauthProject
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OauthProjectsBrandsGetCall) Context(ctx context.Context) *OauthProjectsBrandsGetCall {
+func (c *ProjectsBrandsGetCall) Context(ctx context.Context) *ProjectsBrandsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OauthProjectsBrandsGetCall) Header() http.Header {
+func (c *ProjectsBrandsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OauthProjectsBrandsGetCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsBrandsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1337,7 +1356,7 @@ func (c *OauthProjectsBrandsGetCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/oauth/{+name}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -1350,14 +1369,14 @@ func (c *OauthProjectsBrandsGetCall) doRequest(alt string) (*http.Response, erro
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "iap.oauth.projects.brands.get" call.
+// Do executes the "iap.projects.brands.get" call.
 // Exactly one of *Brand or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
 // *Brand.ServerResponse.Header or (if a response was returned at all)
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *OauthProjectsBrandsGetCall) Do(opts ...googleapi.CallOption) (*Brand, error) {
+func (c *ProjectsBrandsGetCall) Do(opts ...googleapi.CallOption) (*Brand, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1389,9 +1408,9 @@ func (c *OauthProjectsBrandsGetCall) Do(opts ...googleapi.CallOption) (*Brand, e
 	return ret, nil
 	// {
 	//   "description": "Retrieves the OAuth brand of the project.",
-	//   "flatPath": "v1/oauth/projects/{projectsId}/brands/{brandsId}",
+	//   "flatPath": "v1/projects/{projectsId}/brands/{brandsId}",
 	//   "httpMethod": "GET",
-	//   "id": "iap.oauth.projects.brands.get",
+	//   "id": "iap.projects.brands.get",
 	//   "parameterOrder": [
 	//     "name"
 	//   ],
@@ -1404,7 +1423,7 @@ func (c *OauthProjectsBrandsGetCall) Do(opts ...googleapi.CallOption) (*Brand, e
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1/oauth/{+name}",
+	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Brand"
 	//   },
@@ -1415,9 +1434,9 @@ func (c *OauthProjectsBrandsGetCall) Do(opts ...googleapi.CallOption) (*Brand, e
 
 }
 
-// method id "iap.oauth.projects.brands.list":
+// method id "iap.projects.brands.list":
 
-type OauthProjectsBrandsListCall struct {
+type ProjectsBrandsListCall struct {
 	s            *Service
 	parent       string
 	urlParams_   gensupport.URLParams
@@ -1427,8 +1446,8 @@ type OauthProjectsBrandsListCall struct {
 }
 
 // List: Lists the existing brands for the project.
-func (r *OauthProjectsBrandsService) List(parent string) *OauthProjectsBrandsListCall {
-	c := &OauthProjectsBrandsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsBrandsService) List(parent string) *ProjectsBrandsListCall {
+	c := &ProjectsBrandsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
@@ -1436,7 +1455,7 @@ func (r *OauthProjectsBrandsService) List(parent string) *OauthProjectsBrandsLis
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OauthProjectsBrandsListCall) Fields(s ...googleapi.Field) *OauthProjectsBrandsListCall {
+func (c *ProjectsBrandsListCall) Fields(s ...googleapi.Field) *ProjectsBrandsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -1446,7 +1465,7 @@ func (c *OauthProjectsBrandsListCall) Fields(s ...googleapi.Field) *OauthProject
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *OauthProjectsBrandsListCall) IfNoneMatch(entityTag string) *OauthProjectsBrandsListCall {
+func (c *ProjectsBrandsListCall) IfNoneMatch(entityTag string) *ProjectsBrandsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -1454,23 +1473,23 @@ func (c *OauthProjectsBrandsListCall) IfNoneMatch(entityTag string) *OauthProjec
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OauthProjectsBrandsListCall) Context(ctx context.Context) *OauthProjectsBrandsListCall {
+func (c *ProjectsBrandsListCall) Context(ctx context.Context) *ProjectsBrandsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OauthProjectsBrandsListCall) Header() http.Header {
+func (c *ProjectsBrandsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OauthProjectsBrandsListCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsBrandsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1481,7 +1500,7 @@ func (c *OauthProjectsBrandsListCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/oauth/{+parent}/brands")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/brands")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -1494,14 +1513,14 @@ func (c *OauthProjectsBrandsListCall) doRequest(alt string) (*http.Response, err
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "iap.oauth.projects.brands.list" call.
+// Do executes the "iap.projects.brands.list" call.
 // Exactly one of *ListBrandsResponse or error will be non-nil. Any
 // non-2xx status code is an error. Response headers are in either
 // *ListBrandsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OauthProjectsBrandsListCall) Do(opts ...googleapi.CallOption) (*ListBrandsResponse, error) {
+func (c *ProjectsBrandsListCall) Do(opts ...googleapi.CallOption) (*ListBrandsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1533,9 +1552,9 @@ func (c *OauthProjectsBrandsListCall) Do(opts ...googleapi.CallOption) (*ListBra
 	return ret, nil
 	// {
 	//   "description": "Lists the existing brands for the project.",
-	//   "flatPath": "v1/oauth/projects/{projectsId}/brands",
+	//   "flatPath": "v1/projects/{projectsId}/brands",
 	//   "httpMethod": "GET",
-	//   "id": "iap.oauth.projects.brands.list",
+	//   "id": "iap.projects.brands.list",
 	//   "parameterOrder": [
 	//     "parent"
 	//   ],
@@ -1548,7 +1567,7 @@ func (c *OauthProjectsBrandsListCall) Do(opts ...googleapi.CallOption) (*ListBra
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1/oauth/{+parent}/brands",
+	//   "path": "v1/{+parent}/brands",
 	//   "response": {
 	//     "$ref": "ListBrandsResponse"
 	//   },
@@ -1559,9 +1578,9 @@ func (c *OauthProjectsBrandsListCall) Do(opts ...googleapi.CallOption) (*ListBra
 
 }
 
-// method id "iap.oauth.projects.brands.identityAwareProxyClients.create":
+// method id "iap.projects.brands.identityAwareProxyClients.create":
 
-type OauthProjectsBrandsIdentityAwareProxyClientsCreateCall struct {
+type ProjectsBrandsIdentityAwareProxyClientsCreateCall struct {
 	s                        *Service
 	parent                   string
 	identityawareproxyclient *IdentityAwareProxyClient
@@ -1575,8 +1594,8 @@ type OauthProjectsBrandsIdentityAwareProxyClientsCreateCall struct {
 // by IAP. Requires that the brand for the project exists and that it
 // is
 // set for internal-only use.
-func (r *OauthProjectsBrandsIdentityAwareProxyClientsService) Create(parent string, identityawareproxyclient *IdentityAwareProxyClient) *OauthProjectsBrandsIdentityAwareProxyClientsCreateCall {
-	c := &OauthProjectsBrandsIdentityAwareProxyClientsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsBrandsIdentityAwareProxyClientsService) Create(parent string, identityawareproxyclient *IdentityAwareProxyClient) *ProjectsBrandsIdentityAwareProxyClientsCreateCall {
+	c := &ProjectsBrandsIdentityAwareProxyClientsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.identityawareproxyclient = identityawareproxyclient
 	return c
@@ -1585,7 +1604,7 @@ func (r *OauthProjectsBrandsIdentityAwareProxyClientsService) Create(parent stri
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsCreateCall) Fields(s ...googleapi.Field) *OauthProjectsBrandsIdentityAwareProxyClientsCreateCall {
+func (c *ProjectsBrandsIdentityAwareProxyClientsCreateCall) Fields(s ...googleapi.Field) *ProjectsBrandsIdentityAwareProxyClientsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -1593,23 +1612,23 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsCreateCall) Fields(s ...goo
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsCreateCall) Context(ctx context.Context) *OauthProjectsBrandsIdentityAwareProxyClientsCreateCall {
+func (c *ProjectsBrandsIdentityAwareProxyClientsCreateCall) Context(ctx context.Context) *ProjectsBrandsIdentityAwareProxyClientsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsCreateCall) Header() http.Header {
+func (c *ProjectsBrandsIdentityAwareProxyClientsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsCreateCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsBrandsIdentityAwareProxyClientsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1622,7 +1641,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsCreateCall) doRequest(alt s
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/oauth/{+parent}/identityAwareProxyClients")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/identityAwareProxyClients")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -1635,14 +1654,14 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsCreateCall) doRequest(alt s
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "iap.oauth.projects.brands.identityAwareProxyClients.create" call.
+// Do executes the "iap.projects.brands.identityAwareProxyClients.create" call.
 // Exactly one of *IdentityAwareProxyClient or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *IdentityAwareProxyClient.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsCreateCall) Do(opts ...googleapi.CallOption) (*IdentityAwareProxyClient, error) {
+func (c *ProjectsBrandsIdentityAwareProxyClientsCreateCall) Do(opts ...googleapi.CallOption) (*IdentityAwareProxyClient, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1674,9 +1693,9 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsCreateCall) Do(opts ...goog
 	return ret, nil
 	// {
 	//   "description": "Creates an Identity Aware Proxy (IAP) OAuth client. The client is owned\nby IAP. Requires that the brand for the project exists and that it is\nset for internal-only use.",
-	//   "flatPath": "v1/oauth/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients",
+	//   "flatPath": "v1/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients",
 	//   "httpMethod": "POST",
-	//   "id": "iap.oauth.projects.brands.identityAwareProxyClients.create",
+	//   "id": "iap.projects.brands.identityAwareProxyClients.create",
 	//   "parameterOrder": [
 	//     "parent"
 	//   ],
@@ -1689,7 +1708,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsCreateCall) Do(opts ...goog
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1/oauth/{+parent}/identityAwareProxyClients",
+	//   "path": "v1/{+parent}/identityAwareProxyClients",
 	//   "request": {
 	//     "$ref": "IdentityAwareProxyClient"
 	//   },
@@ -1703,9 +1722,9 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsCreateCall) Do(opts ...goog
 
 }
 
-// method id "iap.oauth.projects.brands.identityAwareProxyClients.delete":
+// method id "iap.projects.brands.identityAwareProxyClients.delete":
 
-type OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall struct {
+type ProjectsBrandsIdentityAwareProxyClientsDeleteCall struct {
 	s          *Service
 	name       string
 	urlParams_ gensupport.URLParams
@@ -1718,8 +1737,8 @@ type OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall struct {
 // obsolete clients, managing the number of clients in a given project,
 // and
 // cleaning up after tests. Requires that the client is owned by IAP.
-func (r *OauthProjectsBrandsIdentityAwareProxyClientsService) Delete(name string) *OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall {
-	c := &OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsBrandsIdentityAwareProxyClientsService) Delete(name string) *ProjectsBrandsIdentityAwareProxyClientsDeleteCall {
+	c := &ProjectsBrandsIdentityAwareProxyClientsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
@@ -1727,7 +1746,7 @@ func (r *OauthProjectsBrandsIdentityAwareProxyClientsService) Delete(name string
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall) Fields(s ...googleapi.Field) *OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall {
+func (c *ProjectsBrandsIdentityAwareProxyClientsDeleteCall) Fields(s ...googleapi.Field) *ProjectsBrandsIdentityAwareProxyClientsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -1735,23 +1754,23 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall) Fields(s ...goo
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall) Context(ctx context.Context) *OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall {
+func (c *ProjectsBrandsIdentityAwareProxyClientsDeleteCall) Context(ctx context.Context) *ProjectsBrandsIdentityAwareProxyClientsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall) Header() http.Header {
+func (c *ProjectsBrandsIdentityAwareProxyClientsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsBrandsIdentityAwareProxyClientsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1759,7 +1778,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall) doRequest(alt s
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/oauth/{+name}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -1772,14 +1791,14 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall) doRequest(alt s
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "iap.oauth.projects.brands.identityAwareProxyClients.delete" call.
+// Do executes the "iap.projects.brands.identityAwareProxyClients.delete" call.
 // Exactly one of *Empty or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
 // *Empty.ServerResponse.Header or (if a response was returned at all)
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+func (c *ProjectsBrandsIdentityAwareProxyClientsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1811,9 +1830,9 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall) Do(opts ...goog
 	return ret, nil
 	// {
 	//   "description": "Deletes an Identity Aware Proxy (IAP) OAuth client. Useful for removing\nobsolete clients, managing the number of clients in a given project, and\ncleaning up after tests. Requires that the client is owned by IAP.",
-	//   "flatPath": "v1/oauth/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients/{identityAwareProxyClientsId}",
+	//   "flatPath": "v1/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients/{identityAwareProxyClientsId}",
 	//   "httpMethod": "DELETE",
-	//   "id": "iap.oauth.projects.brands.identityAwareProxyClients.delete",
+	//   "id": "iap.projects.brands.identityAwareProxyClients.delete",
 	//   "parameterOrder": [
 	//     "name"
 	//   ],
@@ -1826,7 +1845,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall) Do(opts ...goog
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1/oauth/{+name}",
+	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Empty"
 	//   },
@@ -1837,9 +1856,9 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsDeleteCall) Do(opts ...goog
 
 }
 
-// method id "iap.oauth.projects.brands.identityAwareProxyClients.get":
+// method id "iap.projects.brands.identityAwareProxyClients.get":
 
-type OauthProjectsBrandsIdentityAwareProxyClientsGetCall struct {
+type ProjectsBrandsIdentityAwareProxyClientsGetCall struct {
 	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
@@ -1850,8 +1869,8 @@ type OauthProjectsBrandsIdentityAwareProxyClientsGetCall struct {
 
 // Get: Retrieves an Identity Aware Proxy (IAP) OAuth client.
 // Requires that the client is owned by IAP.
-func (r *OauthProjectsBrandsIdentityAwareProxyClientsService) Get(name string) *OauthProjectsBrandsIdentityAwareProxyClientsGetCall {
-	c := &OauthProjectsBrandsIdentityAwareProxyClientsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsBrandsIdentityAwareProxyClientsService) Get(name string) *ProjectsBrandsIdentityAwareProxyClientsGetCall {
+	c := &ProjectsBrandsIdentityAwareProxyClientsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
@@ -1859,7 +1878,7 @@ func (r *OauthProjectsBrandsIdentityAwareProxyClientsService) Get(name string) *
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsGetCall) Fields(s ...googleapi.Field) *OauthProjectsBrandsIdentityAwareProxyClientsGetCall {
+func (c *ProjectsBrandsIdentityAwareProxyClientsGetCall) Fields(s ...googleapi.Field) *ProjectsBrandsIdentityAwareProxyClientsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -1869,7 +1888,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsGetCall) Fields(s ...google
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsGetCall) IfNoneMatch(entityTag string) *OauthProjectsBrandsIdentityAwareProxyClientsGetCall {
+func (c *ProjectsBrandsIdentityAwareProxyClientsGetCall) IfNoneMatch(entityTag string) *ProjectsBrandsIdentityAwareProxyClientsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -1877,23 +1896,23 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsGetCall) IfNoneMatch(entity
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsGetCall) Context(ctx context.Context) *OauthProjectsBrandsIdentityAwareProxyClientsGetCall {
+func (c *ProjectsBrandsIdentityAwareProxyClientsGetCall) Context(ctx context.Context) *ProjectsBrandsIdentityAwareProxyClientsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsGetCall) Header() http.Header {
+func (c *ProjectsBrandsIdentityAwareProxyClientsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsGetCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsBrandsIdentityAwareProxyClientsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1904,7 +1923,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsGetCall) doRequest(alt stri
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/oauth/{+name}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -1917,14 +1936,14 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsGetCall) doRequest(alt stri
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "iap.oauth.projects.brands.identityAwareProxyClients.get" call.
+// Do executes the "iap.projects.brands.identityAwareProxyClients.get" call.
 // Exactly one of *IdentityAwareProxyClient or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *IdentityAwareProxyClient.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsGetCall) Do(opts ...googleapi.CallOption) (*IdentityAwareProxyClient, error) {
+func (c *ProjectsBrandsIdentityAwareProxyClientsGetCall) Do(opts ...googleapi.CallOption) (*IdentityAwareProxyClient, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1956,9 +1975,9 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsGetCall) Do(opts ...googlea
 	return ret, nil
 	// {
 	//   "description": "Retrieves an Identity Aware Proxy (IAP) OAuth client.\nRequires that the client is owned by IAP.",
-	//   "flatPath": "v1/oauth/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients/{identityAwareProxyClientsId}",
+	//   "flatPath": "v1/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients/{identityAwareProxyClientsId}",
 	//   "httpMethod": "GET",
-	//   "id": "iap.oauth.projects.brands.identityAwareProxyClients.get",
+	//   "id": "iap.projects.brands.identityAwareProxyClients.get",
 	//   "parameterOrder": [
 	//     "name"
 	//   ],
@@ -1971,7 +1990,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsGetCall) Do(opts ...googlea
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1/oauth/{+name}",
+	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "IdentityAwareProxyClient"
 	//   },
@@ -1982,9 +2001,9 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsGetCall) Do(opts ...googlea
 
 }
 
-// method id "iap.oauth.projects.brands.identityAwareProxyClients.list":
+// method id "iap.projects.brands.identityAwareProxyClients.list":
 
-type OauthProjectsBrandsIdentityAwareProxyClientsListCall struct {
+type ProjectsBrandsIdentityAwareProxyClientsListCall struct {
 	s            *Service
 	parent       string
 	urlParams_   gensupport.URLParams
@@ -1994,8 +2013,8 @@ type OauthProjectsBrandsIdentityAwareProxyClientsListCall struct {
 }
 
 // List: Lists the existing clients for the brand.
-func (r *OauthProjectsBrandsIdentityAwareProxyClientsService) List(parent string) *OauthProjectsBrandsIdentityAwareProxyClientsListCall {
-	c := &OauthProjectsBrandsIdentityAwareProxyClientsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsBrandsIdentityAwareProxyClientsService) List(parent string) *ProjectsBrandsIdentityAwareProxyClientsListCall {
+	c := &ProjectsBrandsIdentityAwareProxyClientsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
@@ -2005,7 +2024,7 @@ func (r *OauthProjectsBrandsIdentityAwareProxyClientsService) List(parent string
 // this value.
 // If unspecified, at most 100 clients will be returned.
 // The maximum value is 1000; values above 1000 will be coerced to 1000.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) PageSize(pageSize int64) *OauthProjectsBrandsIdentityAwareProxyClientsListCall {
+func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) PageSize(pageSize int64) *ProjectsBrandsIdentityAwareProxyClientsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
@@ -2019,7 +2038,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) PageSize(pageSize
 // `ListIdentityAwareProxyClients` must match the call that provided the
 // page
 // token.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) PageToken(pageToken string) *OauthProjectsBrandsIdentityAwareProxyClientsListCall {
+func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) PageToken(pageToken string) *ProjectsBrandsIdentityAwareProxyClientsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
@@ -2027,7 +2046,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) PageToken(pageTok
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) Fields(s ...googleapi.Field) *OauthProjectsBrandsIdentityAwareProxyClientsListCall {
+func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) Fields(s ...googleapi.Field) *ProjectsBrandsIdentityAwareProxyClientsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -2037,7 +2056,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) Fields(s ...googl
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) IfNoneMatch(entityTag string) *OauthProjectsBrandsIdentityAwareProxyClientsListCall {
+func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) IfNoneMatch(entityTag string) *ProjectsBrandsIdentityAwareProxyClientsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -2045,23 +2064,23 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) IfNoneMatch(entit
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) Context(ctx context.Context) *OauthProjectsBrandsIdentityAwareProxyClientsListCall {
+func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) Context(ctx context.Context) *ProjectsBrandsIdentityAwareProxyClientsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) Header() http.Header {
+func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2072,7 +2091,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) doRequest(alt str
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/oauth/{+parent}/identityAwareProxyClients")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/identityAwareProxyClients")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2085,7 +2104,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) doRequest(alt str
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "iap.oauth.projects.brands.identityAwareProxyClients.list" call.
+// Do executes the "iap.projects.brands.identityAwareProxyClients.list" call.
 // Exactly one of *ListIdentityAwareProxyClientsResponse or error will
 // be non-nil. Any non-2xx status code is an error. Response headers are
 // in either
@@ -2093,7 +2112,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) doRequest(alt str
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) Do(opts ...googleapi.CallOption) (*ListIdentityAwareProxyClientsResponse, error) {
+func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) Do(opts ...googleapi.CallOption) (*ListIdentityAwareProxyClientsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2125,9 +2144,9 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) Do(opts ...google
 	return ret, nil
 	// {
 	//   "description": "Lists the existing clients for the brand.",
-	//   "flatPath": "v1/oauth/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients",
+	//   "flatPath": "v1/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients",
 	//   "httpMethod": "GET",
-	//   "id": "iap.oauth.projects.brands.identityAwareProxyClients.list",
+	//   "id": "iap.projects.brands.identityAwareProxyClients.list",
 	//   "parameterOrder": [
 	//     "parent"
 	//   ],
@@ -2151,7 +2170,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) Do(opts ...google
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1/oauth/{+parent}/identityAwareProxyClients",
+	//   "path": "v1/{+parent}/identityAwareProxyClients",
 	//   "response": {
 	//     "$ref": "ListIdentityAwareProxyClientsResponse"
 	//   },
@@ -2165,7 +2184,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) Do(opts ...google
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) Pages(ctx context.Context, f func(*ListIdentityAwareProxyClientsResponse) error) error {
+func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) Pages(ctx context.Context, f func(*ListIdentityAwareProxyClientsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -2183,9 +2202,9 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsListCall) Pages(ctx context
 	}
 }
 
-// method id "iap.oauth.projects.brands.identityAwareProxyClients.resetSecret":
+// method id "iap.projects.brands.identityAwareProxyClients.resetSecret":
 
-type OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall struct {
+type ProjectsBrandsIdentityAwareProxyClientsResetSecretCall struct {
 	s                                          *Service
 	name                                       string
 	resetidentityawareproxyclientsecretrequest *ResetIdentityAwareProxyClientSecretRequest
@@ -2197,8 +2216,8 @@ type OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall struct {
 // ResetSecret: Resets an Identity Aware Proxy (IAP) OAuth client
 // secret. Useful if the
 // secret was compromised. Requires that the client is owned by IAP.
-func (r *OauthProjectsBrandsIdentityAwareProxyClientsService) ResetSecret(name string, resetidentityawareproxyclientsecretrequest *ResetIdentityAwareProxyClientSecretRequest) *OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall {
-	c := &OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsBrandsIdentityAwareProxyClientsService) ResetSecret(name string, resetidentityawareproxyclientsecretrequest *ResetIdentityAwareProxyClientSecretRequest) *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall {
+	c := &ProjectsBrandsIdentityAwareProxyClientsResetSecretCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.resetidentityawareproxyclientsecretrequest = resetidentityawareproxyclientsecretrequest
 	return c
@@ -2207,7 +2226,7 @@ func (r *OauthProjectsBrandsIdentityAwareProxyClientsService) ResetSecret(name s
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Fields(s ...googleapi.Field) *OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall {
+func (c *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Fields(s ...googleapi.Field) *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -2215,23 +2234,23 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Fields(s .
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Context(ctx context.Context) *OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall {
+func (c *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Context(ctx context.Context) *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Header() http.Header {
+func (c *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2244,7 +2263,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall) doRequest(
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/oauth/{+name}:resetSecret")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:resetSecret")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -2257,14 +2276,14 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall) doRequest(
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "iap.oauth.projects.brands.identityAwareProxyClients.resetSecret" call.
+// Do executes the "iap.projects.brands.identityAwareProxyClients.resetSecret" call.
 // Exactly one of *IdentityAwareProxyClient or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *IdentityAwareProxyClient.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Do(opts ...googleapi.CallOption) (*IdentityAwareProxyClient, error) {
+func (c *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Do(opts ...googleapi.CallOption) (*IdentityAwareProxyClient, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2296,9 +2315,9 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Do(opts ..
 	return ret, nil
 	// {
 	//   "description": "Resets an Identity Aware Proxy (IAP) OAuth client secret. Useful if the\nsecret was compromised. Requires that the client is owned by IAP.",
-	//   "flatPath": "v1/oauth/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients/{identityAwareProxyClientsId}:resetSecret",
+	//   "flatPath": "v1/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients/{identityAwareProxyClientsId}:resetSecret",
 	//   "httpMethod": "POST",
-	//   "id": "iap.oauth.projects.brands.identityAwareProxyClients.resetSecret",
+	//   "id": "iap.projects.brands.identityAwareProxyClients.resetSecret",
 	//   "parameterOrder": [
 	//     "name"
 	//   ],
@@ -2311,7 +2330,7 @@ func (c *OauthProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Do(opts ..
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1/oauth/{+name}:resetSecret",
+	//   "path": "v1/{+name}:resetSecret",
 	//   "request": {
 	//     "$ref": "ResetIdentityAwareProxyClientSecretRequest"
 	//   },
@@ -2377,7 +2396,7 @@ func (c *V1GetIamPolicyCall) Header() http.Header {
 
 func (c *V1GetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2527,7 +2546,7 @@ func (c *V1GetIapSettingsCall) Header() http.Header {
 
 func (c *V1GetIapSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2668,7 +2687,7 @@ func (c *V1SetIamPolicyCall) Header() http.Header {
 
 func (c *V1SetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2814,7 +2833,7 @@ func (c *V1TestIamPermissionsCall) Header() http.Header {
 
 func (c *V1TestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2967,7 +2986,7 @@ func (c *V1UpdateIapSettingsCall) Header() http.Header {
 
 func (c *V1UpdateIapSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

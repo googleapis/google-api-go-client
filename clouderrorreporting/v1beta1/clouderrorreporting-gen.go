@@ -298,7 +298,7 @@ type ErrorGroup struct {
 	GroupId string `json:"groupId,omitempty"`
 
 	// Name: The group resource name.
-	// Example: <code>projects/my-project-123/groups/my-groupid</code>
+	// Example: <code>projects/my-project-123/groups/CNSgkpnppqKCUw</code>
 	Name string `json:"name,omitempty"`
 
 	// TrackingIssues: Associated tracking issues.
@@ -917,7 +917,7 @@ func (c *ProjectsDeleteEventsCall) Header() http.Header {
 
 func (c *ProjectsDeleteEventsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1124,7 +1124,7 @@ func (c *ProjectsEventsListCall) Header() http.Header {
 
 func (c *ProjectsEventsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1336,7 +1336,7 @@ func (c *ProjectsEventsReportCall) Header() http.Header {
 
 func (c *ProjectsEventsReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1599,7 +1599,7 @@ func (c *ProjectsGroupStatsListCall) Header() http.Header {
 
 func (c *ProjectsGroupStatsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1843,7 +1843,7 @@ func (c *ProjectsGroupsGetCall) Header() http.Header {
 
 func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1979,7 +1979,7 @@ func (c *ProjectsGroupsUpdateCall) Header() http.Header {
 
 func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2052,7 +2052,7 @@ func (c *ProjectsGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*ErrorGroup
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The group resource name.\nExample: \u003ccode\u003eprojects/my-project-123/groups/my-groupid\u003c/code\u003e",
+	//       "description": "The group resource name.\nExample: \u003ccode\u003eprojects/my-project-123/groups/CNSgkpnppqKCUw\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,

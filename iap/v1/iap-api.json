@@ -104,237 +104,233 @@
   },
   "protocol": "rest",
   "resources": {
-    "oauth": {
+    "projects": {
       "resources": {
-        "projects": {
+        "brands": {
+          "methods": {
+            "create": {
+              "description": "Constructs a new OAuth brand for the project if one does not exist.\nThe created brand is \"internal only\", meaning that OAuth clients created\nunder it only accept requests from users who belong to the same G Suite\norganization as the project. The brand is created in an un-reviewed status.\nNOTE: The \"internal only\" status can be manually changed in the Google\nCloud console. Requires that a brand does not already exist for the\nproject, and that the specified support email is owned by the caller.",
+              "flatPath": "v1/projects/{projectsId}/brands",
+              "httpMethod": "POST",
+              "id": "iap.projects.brands.create",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. GCP Project number/id under which the brand is to be created.\nIn the following format: projects/{project_number/id}.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/brands",
+              "request": {
+                "$ref": "Brand"
+              },
+              "response": {
+                "$ref": "Brand"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "get": {
+              "description": "Retrieves the OAuth brand of the project.",
+              "flatPath": "v1/projects/{projectsId}/brands/{brandsId}",
+              "httpMethod": "GET",
+              "id": "iap.projects.brands.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Name of the brand to be fetched.\nIn the following format: projects/{project_number/id}/brands/{brand}.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/brands/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "response": {
+                "$ref": "Brand"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "list": {
+              "description": "Lists the existing brands for the project.",
+              "flatPath": "v1/projects/{projectsId}/brands",
+              "httpMethod": "GET",
+              "id": "iap.projects.brands.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. GCP Project number/id.\nIn the following format: projects/{project_number/id}.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/brands",
+              "response": {
+                "$ref": "ListBrandsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            }
+          },
           "resources": {
-            "brands": {
+            "identityAwareProxyClients": {
               "methods": {
                 "create": {
-                  "description": "Constructs a new OAuth brand for the project if one does not exist.\nThe created brand is \"internal only\", meaning that OAuth clients created\nunder it only accept requests from users who belong to the same G Suite\norganization as the project. The brand is created in an un-reviewed status.\nNOTE: The \"internal only\" status can be manually changed in the Google\nCloud console. Requires that a brand does not already exist for the\nproject, and that the specified support email is owned by the caller.",
-                  "flatPath": "v1/oauth/projects/{projectsId}/brands",
+                  "description": "Creates an Identity Aware Proxy (IAP) OAuth client. The client is owned\nby IAP. Requires that the brand for the project exists and that it is\nset for internal-only use.",
+                  "flatPath": "v1/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients",
                   "httpMethod": "POST",
-                  "id": "iap.oauth.projects.brands.create",
+                  "id": "iap.projects.brands.identityAwareProxyClients.create",
                   "parameterOrder": [
                     "parent"
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. GCP Project number/id under which the brand is to be created.\nIn the following format: projects/{project_number/id}.",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1/oauth/{+parent}/brands",
-                  "request": {
-                    "$ref": "Brand"
-                  },
-                  "response": {
-                    "$ref": "Brand"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "get": {
-                  "description": "Retrieves the OAuth brand of the project.",
-                  "flatPath": "v1/oauth/projects/{projectsId}/brands/{brandsId}",
-                  "httpMethod": "GET",
-                  "id": "iap.oauth.projects.brands.get",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "Required. Name of the brand to be fetched.\nIn the following format: projects/{project_number/id}/brands/{brand}.",
+                      "description": "Required. Path to create the client in.\nIn the following format:\nprojects/{project_number/id}/brands/{brand}.\nThe project must belong to a GSuite account.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/brands/[^/]+$",
                       "required": true,
                       "type": "string"
                     }
                   },
-                  "path": "v1/oauth/{+name}",
+                  "path": "v1/{+parent}/identityAwareProxyClients",
+                  "request": {
+                    "$ref": "IdentityAwareProxyClient"
+                  },
                   "response": {
-                    "$ref": "Brand"
+                    "$ref": "IdentityAwareProxyClient"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "delete": {
+                  "description": "Deletes an Identity Aware Proxy (IAP) OAuth client. Useful for removing\nobsolete clients, managing the number of clients in a given project, and\ncleaning up after tests. Requires that the client is owned by IAP.",
+                  "flatPath": "v1/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients/{identityAwareProxyClientsId}",
+                  "httpMethod": "DELETE",
+                  "id": "iap.projects.brands.identityAwareProxyClients.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the Identity Aware Proxy client to be deleted.\nIn the following format:\nprojects/{project_number/id}/brands/{brand}/identityAwareProxyClients/{client_id}.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/brands/[^/]+/identityAwareProxyClients/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "Empty"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Retrieves an Identity Aware Proxy (IAP) OAuth client.\nRequires that the client is owned by IAP.",
+                  "flatPath": "v1/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients/{identityAwareProxyClientsId}",
+                  "httpMethod": "GET",
+                  "id": "iap.projects.brands.identityAwareProxyClients.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the Identity Aware Proxy client to be fetched.\nIn the following format:\nprojects/{project_number/id}/brands/{brand}/identityAwareProxyClients/{client_id}.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/brands/[^/]+/identityAwareProxyClients/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "IdentityAwareProxyClient"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
                 "list": {
-                  "description": "Lists the existing brands for the project.",
-                  "flatPath": "v1/oauth/projects/{projectsId}/brands",
+                  "description": "Lists the existing clients for the brand.",
+                  "flatPath": "v1/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients",
                   "httpMethod": "GET",
-                  "id": "iap.oauth.projects.brands.list",
+                  "id": "iap.projects.brands.identityAwareProxyClients.list",
                   "parameterOrder": [
                     "parent"
                   ],
                   "parameters": {
+                    "pageSize": {
+                      "description": "The maximum number of clients to return. The service may return fewer than\nthis value.\nIf unspecified, at most 100 clients will be returned.\nThe maximum value is 1000; values above 1000 will be coerced to 1000.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "A page token, received from a previous `ListIdentityAwareProxyClients`\ncall. Provide this to retrieve the subsequent page.\n\nWhen paginating, all other parameters provided to\n`ListIdentityAwareProxyClients` must match the call that provided the page\ntoken.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "parent": {
-                      "description": "Required. GCP Project number/id.\nIn the following format: projects/{project_number/id}.",
+                      "description": "Required. Full brand path.\nIn the following format: projects/{project_number/id}/brands/{brand}.",
                       "location": "path",
-                      "pattern": "^projects/[^/]+$",
+                      "pattern": "^projects/[^/]+/brands/[^/]+$",
                       "required": true,
                       "type": "string"
                     }
                   },
-                  "path": "v1/oauth/{+parent}/brands",
+                  "path": "v1/{+parent}/identityAwareProxyClients",
                   "response": {
-                    "$ref": "ListBrandsResponse"
+                    "$ref": "ListIdentityAwareProxyClientsResponse"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
-                }
-              },
-              "resources": {
-                "identityAwareProxyClients": {
-                  "methods": {
-                    "create": {
-                      "description": "Creates an Identity Aware Proxy (IAP) OAuth client. The client is owned\nby IAP. Requires that the brand for the project exists and that it is\nset for internal-only use.",
-                      "flatPath": "v1/oauth/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients",
-                      "httpMethod": "POST",
-                      "id": "iap.oauth.projects.brands.identityAwareProxyClients.create",
-                      "parameterOrder": [
-                        "parent"
-                      ],
-                      "parameters": {
-                        "parent": {
-                          "description": "Required. Path to create the client in.\nIn the following format:\nprojects/{project_number/id}/brands/{brand}.\nThe project must belong to a GSuite account.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/brands/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1/oauth/{+parent}/identityAwareProxyClients",
-                      "request": {
-                        "$ref": "IdentityAwareProxyClient"
-                      },
-                      "response": {
-                        "$ref": "IdentityAwareProxyClient"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ]
-                    },
-                    "delete": {
-                      "description": "Deletes an Identity Aware Proxy (IAP) OAuth client. Useful for removing\nobsolete clients, managing the number of clients in a given project, and\ncleaning up after tests. Requires that the client is owned by IAP.",
-                      "flatPath": "v1/oauth/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients/{identityAwareProxyClientsId}",
-                      "httpMethod": "DELETE",
-                      "id": "iap.oauth.projects.brands.identityAwareProxyClients.delete",
-                      "parameterOrder": [
-                        "name"
-                      ],
-                      "parameters": {
-                        "name": {
-                          "description": "Required. Name of the Identity Aware Proxy client to be deleted.\nIn the following format:\nprojects/{project_number/id}/brands/{brand}/identityAwareProxyClients/{client_id}.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/brands/[^/]+/identityAwareProxyClients/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1/oauth/{+name}",
-                      "response": {
-                        "$ref": "Empty"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ]
-                    },
-                    "get": {
-                      "description": "Retrieves an Identity Aware Proxy (IAP) OAuth client.\nRequires that the client is owned by IAP.",
-                      "flatPath": "v1/oauth/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients/{identityAwareProxyClientsId}",
-                      "httpMethod": "GET",
-                      "id": "iap.oauth.projects.brands.identityAwareProxyClients.get",
-                      "parameterOrder": [
-                        "name"
-                      ],
-                      "parameters": {
-                        "name": {
-                          "description": "Required. Name of the Identity Aware Proxy client to be fetched.\nIn the following format:\nprojects/{project_number/id}/brands/{brand}/identityAwareProxyClients/{client_id}.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/brands/[^/]+/identityAwareProxyClients/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1/oauth/{+name}",
-                      "response": {
-                        "$ref": "IdentityAwareProxyClient"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ]
-                    },
-                    "list": {
-                      "description": "Lists the existing clients for the brand.",
-                      "flatPath": "v1/oauth/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients",
-                      "httpMethod": "GET",
-                      "id": "iap.oauth.projects.brands.identityAwareProxyClients.list",
-                      "parameterOrder": [
-                        "parent"
-                      ],
-                      "parameters": {
-                        "pageSize": {
-                          "description": "The maximum number of clients to return. The service may return fewer than\nthis value.\nIf unspecified, at most 100 clients will be returned.\nThe maximum value is 1000; values above 1000 will be coerced to 1000.",
-                          "format": "int32",
-                          "location": "query",
-                          "type": "integer"
-                        },
-                        "pageToken": {
-                          "description": "A page token, received from a previous `ListIdentityAwareProxyClients`\ncall. Provide this to retrieve the subsequent page.\n\nWhen paginating, all other parameters provided to\n`ListIdentityAwareProxyClients` must match the call that provided the page\ntoken.",
-                          "location": "query",
-                          "type": "string"
-                        },
-                        "parent": {
-                          "description": "Required. Full brand path.\nIn the following format: projects/{project_number/id}/brands/{brand}.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/brands/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1/oauth/{+parent}/identityAwareProxyClients",
-                      "response": {
-                        "$ref": "ListIdentityAwareProxyClientsResponse"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ]
-                    },
-                    "resetSecret": {
-                      "description": "Resets an Identity Aware Proxy (IAP) OAuth client secret. Useful if the\nsecret was compromised. Requires that the client is owned by IAP.",
-                      "flatPath": "v1/oauth/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients/{identityAwareProxyClientsId}:resetSecret",
-                      "httpMethod": "POST",
-                      "id": "iap.oauth.projects.brands.identityAwareProxyClients.resetSecret",
-                      "parameterOrder": [
-                        "name"
-                      ],
-                      "parameters": {
-                        "name": {
-                          "description": "Required. Name of the Identity Aware Proxy client to that will have its\nsecret reset. In the following format:\nprojects/{project_number/id}/brands/{brand}/identityAwareProxyClients/{client_id}.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/brands/[^/]+/identityAwareProxyClients/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1/oauth/{+name}:resetSecret",
-                      "request": {
-                        "$ref": "ResetIdentityAwareProxyClientSecretRequest"
-                      },
-                      "response": {
-                        "$ref": "IdentityAwareProxyClient"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ]
+                },
+                "resetSecret": {
+                  "description": "Resets an Identity Aware Proxy (IAP) OAuth client secret. Useful if the\nsecret was compromised. Requires that the client is owned by IAP.",
+                  "flatPath": "v1/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients/{identityAwareProxyClientsId}:resetSecret",
+                  "httpMethod": "POST",
+                  "id": "iap.projects.brands.identityAwareProxyClients.resetSecret",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the Identity Aware Proxy client to that will have its\nsecret reset. In the following format:\nprojects/{project_number/id}/brands/{brand}/identityAwareProxyClients/{client_id}.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/brands/[^/]+/identityAwareProxyClients/[^/]+$",
+                      "required": true,
+                      "type": "string"
                     }
-                  }
+                  },
+                  "path": "v1/{+name}:resetSecret",
+                  "request": {
+                    "$ref": "ResetIdentityAwareProxyClientSecretRequest"
+                  },
+                  "response": {
+                    "$ref": "IdentityAwareProxyClient"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
                 }
               }
             }
@@ -490,7 +486,7 @@
       }
     }
   },
-  "revision": "20200102",
+  "revision": "20200117",
   "rootUrl": "https://iap.googleapis.com/",
   "schemas": {
     "AccessSettings": {
@@ -597,23 +593,23 @@
       "type": "object"
     },
     "Expr": {
-      "description": "Represents an expression text. Example:\n\n    title: \"User account presence\"\n    description: \"Determines whether the request has a user account\"\n    expression: \"size(request.user) \u003e 0\"",
+      "description": "Represents a textual expression in the Common Expression Language (CEL)\nsyntax. CEL is a C-like expression language. The syntax and semantics of CEL\nare documented at https://github.com/google/cel-spec.\n\nExample (Comparison):\n\n    title: \"Summary size limit\"\n    description: \"Determines if a summary is less than 100 chars\"\n    expression: \"document.summary.size() \u003c 100\"\n\nExample (Equality):\n\n    title: \"Requestor is owner\"\n    description: \"Determines if requestor is the document owner\"\n    expression: \"document.owner == request.auth.claims.email\"\n\nExample (Logic):\n\n    title: \"Public documents\"\n    description: \"Determine whether the document should be publicly visible\"\n    expression: \"document.type != 'private' \u0026\u0026 document.type != 'internal'\"\n\nExample (Data Manipulation):\n\n    title: \"Notification string\"\n    description: \"Create a notification string with a timestamp.\"\n    expression: \"'New message received at ' + string(document.create_time)\"\n\nThe exact variables and functions that may be referenced within an expression\nare determined by the service that evaluates it. See the service\ndocumentation for additional information.",
       "id": "Expr",
       "properties": {
         "description": {
-          "description": "An optional description of the expression. This is a longer text which\ndescribes the expression, e.g. when hovered over it in a UI.",
+          "description": "Optional. Description of the expression. This is a longer text which\ndescribes the expression, e.g. when hovered over it in a UI.",
           "type": "string"
         },
         "expression": {
-          "description": "Textual representation of an expression in\nCommon Expression Language syntax.\n\nThe application context of the containing message determines which\nwell-known feature set of CEL is supported.",
+          "description": "Textual representation of an expression in Common Expression Language\nsyntax.",
           "type": "string"
         },
         "location": {
-          "description": "An optional string indicating the location of the expression for error\nreporting, e.g. a file name and a position in the file.",
+          "description": "Optional. String indicating the location of the expression for error\nreporting, e.g. a file name and a position in the file.",
           "type": "string"
         },
         "title": {
-          "description": "An optional title for the expression, i.e. a short string describing\nits purpose. This can be used e.g. in UIs which allow to enter the\nexpression.",
+          "description": "Optional. Title for the expression, i.e. a short string describing\nits purpose. This can be used e.g. in UIs which allow to enter the\nexpression.",
           "type": "string"
         }
       },

@@ -378,7 +378,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The group resource name.\nExample: \u003ccode\u003eprojects/my-project-123/groups/my-groupid\u003c/code\u003e",
+                  "description": "The group resource name.\nExample: \u003ccode\u003eprojects/my-project-123/groups/CNSgkpnppqKCUw\u003c/code\u003e",
                   "location": "path",
                   "pattern": "^projects/[^/]+/groups/[^/]+$",
                   "required": true,
@@ -401,7 +401,7 @@
       }
     }
   },
-  "revision": "20191230",
+  "revision": "20200122",
   "rootUrl": "https://clouderrorreporting.googleapis.com/",
   "schemas": {
     "DeleteEventsResponse": {
@@ -469,7 +469,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The group resource name.\nExample: \u003ccode\u003eprojects/my-project-123/groups/my-groupid\u003c/code\u003e",
+          "description": "The group resource name.\nExample: \u003ccode\u003eprojects/my-project-123/groups/CNSgkpnppqKCUw\u003c/code\u003e",
           "type": "string"
         },
         "trackingIssues": {

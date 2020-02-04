@@ -7,9 +7,9 @@
 # Fail on error, and display commands being run.
 set -ex
 
-# Only run the linter on go1.12, since it needs type aliases (and we only care
+# Only run the linter on go1.13, since it needs type aliases (and we only care
 # about its output once).
-if [[ `go version` != *"go1.12"* ]]; then
+if [[ `go version` != *"go1.13"* ]]; then
     exit 0
 fi
 

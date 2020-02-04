@@ -4,7 +4,6 @@ go 1.11
 
 require (
 	cloud.google.com/go v0.38.0 // indirect
-	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/google/go-cmp v0.3.0
 	github.com/googleapis/gax-go/v2 v2.0.5
 	github.com/hashicorp/golang-lru v0.5.1 // indirect
@@ -15,9 +14,9 @@ require (
 	golang.org/x/sync v0.0.0-20190423024810-112230192c58
 	golang.org/x/sys v0.0.0-20190507160741-ecd444e8653b
 	golang.org/x/text v0.3.2 // indirect
-	golang.org/x/tools v0.0.0-20190506145303-2d16b83fe98c
+	golang.org/x/tools v0.0.0-20190524140312-2c0ae7006135
 	google.golang.org/appengine v1.5.0
-	google.golang.org/genproto v0.0.0-20190502173448-54afdca5d873
-	google.golang.org/grpc v1.20.1
-	honnef.co/go/tools v0.0.0-20190418001031-e561f6794a2a
+	google.golang.org/genproto v0.0.0-20190819201941-24fa4b261c55
+	google.golang.org/grpc v1.27.0
+	honnef.co/go/tools v0.0.0-20190523083050-ea95bdfd59fc
 )

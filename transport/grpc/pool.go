@@ -5,6 +5,7 @@
 package grpc
 
 import (
+	"context"
 	"fmt"
 	"sync/atomic"
 
@@ -27,6 +28,8 @@ type ConnPool interface {
 	//
 	// The error returned by Close may be a single error or multiple errors.
 	Close() error
+
+	grpc.ClientConnInterface
 }
 
 var _ ConnPool = &roundRobinConnPool{}
@@ -47,6 +50,14 @@ func (p *singleConnPool) Num() int {
 
 func (p *singleConnPool) Close() error {
 	return p.conn.Close()
+}
+
+func (p *singleConnPool) Invoke(ctx context.Context, method string, args interface{}, reply interface{}, opts ...grpc.CallOption) error {
+	return p.conn.Invoke(ctx, method, args, reply, opts...)
+}
+
+func (p *singleConnPool) NewStream(ctx context.Context, desc *grpc.StreamDesc, method string, opts ...grpc.CallOption) (grpc.ClientStream, error) {
+	return p.conn.NewStream(ctx, desc, method, opts...)
 }
 
 type roundRobinConnPool struct {
@@ -75,6 +86,14 @@ func (p *roundRobinConnPool) Close() error {
 		return nil
 	}
 	return errs
+}
+
+func (p *roundRobinConnPool) Invoke(ctx context.Context, method string, args interface{}, reply interface{}, opts ...grpc.CallOption) error {
+	return p.Conn().Invoke(ctx, method, args, reply, opts...)
+}
+
+func (p *roundRobinConnPool) NewStream(ctx context.Context, desc *grpc.StreamDesc, method string, opts ...grpc.CallOption) (grpc.ClientStream, error) {
+	return p.Conn().NewStream(ctx, desc, method, opts...)
 }
 
 // multiError represents errors from mulitple conns in the group.

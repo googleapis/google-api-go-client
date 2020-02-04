@@ -13,6 +13,7 @@ import (
 	"strings"
 	"testing"
 
+	"google.golang.org/api/google-api-go-generator/internal/disco"
 	"google.golang.org/api/internal/version"
 )
 
@@ -99,8 +100,8 @@ func TestScope(t *testing.T) {
 		},
 	}
 	for _, test := range tests {
-		if got := scopeIdentifierFromURL(test[0]); got != test[1] {
-			t.Errorf("scopeIdentifierFromURL(%q) got %q, want %q", test[0], got, test[1])
+		if got := scopeIdentifier(disco.Scope{ID: test[0]}); got != test[1] {
+			t.Errorf("scopeIdentifier(%q) got %q, want %q", test[0], got, test[1])
 		}
 	}
 }

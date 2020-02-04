@@ -93,7 +93,7 @@ type Auth struct {
 
 // A Scope is an OAuth2 scope.
 type Scope struct {
-	URL         string
+	ID          string
 	Description string
 }
 
@@ -114,7 +114,7 @@ func (a *Auth) UnmarshalJSON(data []byte) error {
 	// Sort keys to provide a deterministic ordering, mainly for testing.
 	for _, k := range sortedKeys(m.OAuth2.Scopes) {
 		a.OAuth2Scopes = append(a.OAuth2Scopes, Scope{
-			URL:         k,
+			ID:          k,
 			Description: m.OAuth2.Scopes[k].Description,
 		})
 	}

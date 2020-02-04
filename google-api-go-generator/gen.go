@@ -605,7 +605,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 		pn(`// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:`)
 		pn("//")
 		// NOTE: the first scope tends to be the broadest. Use the last one to demonstrate restriction.
-		pn("//   %sService, err := %s.NewService(ctx, option.WithScopes(%s.%s))", pkg, pkg, pkg, scopeIdentifierFromURL(a.doc.Auth.OAuth2Scopes[len(a.doc.Auth.OAuth2Scopes)-1].URL))
+		pn("//   %sService, err := %s.NewService(ctx, option.WithScopes(%s.%s))", pkg, pkg, pkg, scopeIdentifier(a.doc.Auth.OAuth2Scopes[len(a.doc.Auth.OAuth2Scopes)-1]))
 		pn("//")
 	}
 	pn("// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:")
@@ -683,7 +683,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	if len(a.doc.Auth.OAuth2Scopes) != 0 {
 		pn("scopesOption := option.WithScopes(")
 		for _, scope := range a.doc.Auth.OAuth2Scopes {
-			pn("%q,", scope.URL)
+			pn("%q,", scope.ID)
 		}
 		pn(")")
 		pn("// NOTE: prepend, so we don't override user-specified scopes.")
@@ -770,16 +770,21 @@ func (a *API) generateScopeConstants() {
 			a.p("\n")
 		}
 		n++
-		ident := scopeIdentifierFromURL(scope.URL)
+		ident := scopeIdentifier(scope)
 		if scope.Description != "" {
 			a.p("%s", asComment("\t", scope.Description))
 		}
-		a.pn("\t%s = %q", ident, scope.URL)
+		a.pn("\t%s = %q", ident, scope.ID)
 	}
 	a.p(")\n\n")
 }
 
-func scopeIdentifierFromURL(urlStr string) string {
+func scopeIdentifier(s disco.Scope) string {
+	if s.ID == "openid" {
+		return "OpenIDScope"
+	}
+
+	urlStr := s.ID
 	const prefix = "https://www.googleapis.com/auth/"
 	if !strings.HasPrefix(urlStr, prefix) {
 		const https = "https://"

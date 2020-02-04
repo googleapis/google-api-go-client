@@ -431,6 +431,9 @@ type ProjectsPatchTracesCall struct {
 // and any new fields provided are merged with the existing trace data.
 // If the
 // ID does not match, a new trace is created.
+// In this case, writing traces is not consider an active
+// developer
+// method since traces are machine generated.
 func (r *ProjectsService) PatchTraces(projectId string, traces *Traces) *ProjectsPatchTracesCall {
 	c := &ProjectsPatchTracesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -465,7 +468,7 @@ func (c *ProjectsPatchTracesCall) Header() http.Header {
 
 func (c *ProjectsPatchTracesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -529,7 +532,7 @@ func (c *ProjectsPatchTracesCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Sends new traces to Stackdriver Trace or updates existing traces. If the ID\nof a trace that you send matches that of an existing trace, any fields\nin the existing trace and its spans are overwritten by the provided values,\nand any new fields provided are merged with the existing trace data. If the\nID does not match, a new trace is created.",
+	//   "description": "Sends new traces to Stackdriver Trace or updates existing traces. If the ID\nof a trace that you send matches that of an existing trace, any fields\nin the existing trace and its spans are overwritten by the provided values,\nand any new fields provided are merged with the existing trace data. If the\nID does not match, a new trace is created.\nIn this case, writing traces is not consider an active developer\nmethod since traces are machine generated.",
 	//   "flatPath": "v1/projects/{projectId}/traces",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudtrace.projects.patchTraces",
@@ -572,6 +575,9 @@ type ProjectsTracesGetCall struct {
 }
 
 // Get: Gets a single trace by its ID.
+// In this case, getting for traces is considered an active developer
+// method,
+// even though it is technically a read-only method.
 func (r *ProjectsTracesService) Get(projectId string, traceId string) *ProjectsTracesGetCall {
 	c := &ProjectsTracesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -616,7 +622,7 @@ func (c *ProjectsTracesGetCall) Header() http.Header {
 
 func (c *ProjectsTracesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -679,7 +685,7 @@ func (c *ProjectsTracesGetCall) Do(opts ...googleapi.CallOption) (*Trace, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a single trace by its ID.",
+	//   "description": "Gets a single trace by its ID.\nIn this case, getting for traces is considered an active developer method,\neven though it is technically a read-only method.",
 	//   "flatPath": "v1/projects/{projectId}/traces/{traceId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudtrace.projects.traces.get",
@@ -726,6 +732,9 @@ type ProjectsTracesListCall struct {
 
 // List: Returns of a list of traces that match the specified filter
 // conditions.
+// In this case, listing for traces is considered an active developer
+// method,
+// even though it is technically a read-only method.
 func (r *ProjectsTracesService) List(projectId string) *ProjectsTracesListCall {
 	c := &ProjectsTracesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -883,7 +892,7 @@ func (c *ProjectsTracesListCall) Header() http.Header {
 
 func (c *ProjectsTracesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200127")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -945,7 +954,7 @@ func (c *ProjectsTracesListCall) Do(opts ...googleapi.CallOption) (*ListTracesRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns of a list of traces that match the specified filter conditions.",
+	//   "description": "Returns of a list of traces that match the specified filter conditions.\nIn this case, listing for traces is considered an active developer method,\neven though it is technically a read-only method.",
 	//   "flatPath": "v1/projects/{projectId}/traces",
 	//   "httpMethod": "GET",
 	//   "id": "cloudtrace.projects.traces.list",

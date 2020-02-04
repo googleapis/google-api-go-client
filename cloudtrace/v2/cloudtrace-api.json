@@ -112,7 +112,7 @@
         "traces": {
           "methods": {
             "batchWrite": {
-              "description": "Sends new spans to new or existing traces. You cannot update\nexisting spans.",
+              "description": "Sends new spans to new or existing traces. You cannot update\nexisting spans.\nIn this case, writing traces is not consider an active developer\nmethod since traces are machine generated.",
               "flatPath": "v2/projects/{projectsId}/traces:batchWrite",
               "httpMethod": "POST",
               "id": "cloudtrace.projects.traces.batchWrite",
@@ -145,7 +145,7 @@
             "spans": {
               "methods": {
                 "createSpan": {
-                  "description": "Creates a new span.",
+                  "description": "Creates a new span.\nIn this case, writing traces is not consider an active developer\nmethod since traces are machine generated.",
                   "flatPath": "v2/projects/{projectsId}/traces/{tracesId}/spans/{spansId}",
                   "httpMethod": "POST",
                   "id": "cloudtrace.projects.traces.spans.createSpan",
@@ -180,7 +180,7 @@
       }
     }
   },
-  "revision": "20191202",
+  "revision": "20200128",
   "rootUrl": "https://cloudtrace.googleapis.com/",
   "schemas": {
     "Annotation": {

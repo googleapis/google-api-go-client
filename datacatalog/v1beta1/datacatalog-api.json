@@ -107,7 +107,7 @@
     "catalog": {
       "methods": {
         "search": {
-          "description": "Searches Data Catalog for multiple resources like entries, tags that\nmatch a query.\n\nThis is a custom method\n(https://cloud.google.com/apis/design/custom_methods) and does not return\nthe complete resource, only the resource identifier and high level\nfields. Clients can subsequentally call `Get` methods.\n\nNote that searches do not have full recall. There may be results that match\nyour query but are not returned, even in subsequent pages of results. These\nmissing results may vary across repeated calls to search. Do not rely on\nthis method if you need to guarantee full recall.\n\nSee [Data Catalog Search\nSyntax](/data-catalog/docs/how-to/search-reference) for more information.",
+          "description": "Searches Data Catalog for multiple resources like entries, tags that\nmatch a query.\n\nThis is a custom method\n(https://cloud.google.com/apis/design/custom_methods) and does not return\nthe complete resource, only the resource identifier and high level\nfields. Clients can subsequentally call `Get` methods.\n\nNote that Data Catalog search queries do not guarantee full recall. Query\nresults that match your query may not be returned, even in subsequent\nresult pages. Also note that results returned (and not returned) can vary\nacross repeated search queries.\n\nSee [Data Catalog Search\nSyntax](/data-catalog/docs/how-to/search-reference) for more information.",
           "flatPath": "v1beta1/catalog:search",
           "httpMethod": "POST",
           "id": "datacatalog.catalog.search",
@@ -1534,7 +1534,7 @@
       }
     }
   },
-  "revision": "20200115",
+  "revision": "20200122",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -1566,23 +1566,23 @@
       "type": "object"
     },
     "Expr": {
-      "description": "Represents an expression text. Example:\n\n    title: \"User account presence\"\n    description: \"Determines whether the request has a user account\"\n    expression: \"size(request.user) \u003e 0\"",
+      "description": "Represents a textual expression in the Common Expression Language (CEL)\nsyntax. CEL is a C-like expression language. The syntax and semantics of CEL\nare documented at https://github.com/google/cel-spec.\n\nExample (Comparison):\n\n    title: \"Summary size limit\"\n    description: \"Determines if a summary is less than 100 chars\"\n    expression: \"document.summary.size() \u003c 100\"\n\nExample (Equality):\n\n    title: \"Requestor is owner\"\n    description: \"Determines if requestor is the document owner\"\n    expression: \"document.owner == request.auth.claims.email\"\n\nExample (Logic):\n\n    title: \"Public documents\"\n    description: \"Determine whether the document should be publicly visible\"\n    expression: \"document.type != 'private' \u0026\u0026 document.type != 'internal'\"\n\nExample (Data Manipulation):\n\n    title: \"Notification string\"\n    description: \"Create a notification string with a timestamp.\"\n    expression: \"'New message received at ' + string(document.create_time)\"\n\nThe exact variables and functions that may be referenced within an expression\nare determined by the service that evaluates it. See the service\ndocumentation for additional information.",
       "id": "Expr",
       "properties": {
         "description": {
-          "description": "An optional description of the expression. This is a longer text which\ndescribes the expression, e.g. when hovered over it in a UI.",
+          "description": "Optional. Description of the expression. This is a longer text which\ndescribes the expression, e.g. when hovered over it in a UI.",
           "type": "string"
         },
         "expression": {
-          "description": "Textual representation of an expression in\nCommon Expression Language syntax.\n\nThe application context of the containing message determines which\nwell-known feature set of CEL is supported.",
+          "description": "Textual representation of an expression in Common Expression Language\nsyntax.",
           "type": "string"
         },
         "location": {
-          "description": "An optional string indicating the location of the expression for error\nreporting, e.g. a file name and a position in the file.",
+          "description": "Optional. String indicating the location of the expression for error\nreporting, e.g. a file name and a position in the file.",
           "type": "string"
         },
         "title": {
-          "description": "An optional title for the expression, i.e. a short string describing\nits purpose. This can be used e.g. in UIs which allow to enter the\nexpression.",
+          "description": "Optional. Title for the expression, i.e. a short string describing\nits purpose. This can be used e.g. in UIs which allow to enter the\nexpression.",
           "type": "string"
         }
       },
@@ -1864,7 +1864,7 @@
       "id": "GoogleCloudDatacatalogV1beta1GcsFilesetSpec",
       "properties": {
         "filePatterns": {
-          "description": "Required. Patterns to identify a set of files in Google Cloud Storage. See [Cloud\nStorage documentation](/storage/docs/gsutil/addlhelp/WildcardNames) for\nmore information. Note that bucket wildcards are currently not supported.\n\nExamples of valid file_patterns:\n\n * `gs://bucket_name/dir/*`: matches all files within `bucket_name/dir`\n                             directory.\n * `gs://bucket_name/dir/**`: matches all files in `bucket_name/dir`\n                              spanning all subdirectories.\n * `gs://bucket_name/file*`: matches files prefixed by `file` in\n                             `bucket_name`\n * `gs://bucket_name/a/*/b`: matches all files in `bucket_name` that match\n                             `a/*/b` pattern, such as `a/c/b`, `a/d/b`\n * `gs://another_bucket/a.txt`: matches `gs://another_bucket/a.txt`",
+          "description": "Required. Patterns to identify a set of files in Google Cloud Storage. See [Cloud\nStorage documentation](/storage/docs/gsutil/addlhelp/WildcardNames) for\nmore information. Note that bucket wildcards are currently not supported.\n\nExamples of valid file_patterns:\n\n * `gs://bucket_name/dir/*`: matches all files within `bucket_name/dir`\n                             directory.\n * `gs://bucket_name/dir/**`: matches all files in `bucket_name/dir`\n                              spanning all subdirectories.\n * `gs://bucket_name/file*`: matches files prefixed by `file` in\n                             `bucket_name`\n * `gs://bucket_name/??.txt`: matches files with two characters followed by\n                              `.txt` in `bucket_name`\n * `gs://bucket_name/[aeiou].txt`: matches files that contain a single\n                                   vowel character followed by `.txt` in\n                                   `bucket_name`\n * `gs://bucket_name/[a-m].txt`: matches files that contain `a`, `b`, ...\n                                 or `m` followed by `.txt` in `bucket_name`\n * `gs://bucket_name/a/*/b`: matches all files in `bucket_name` that match\n                             `a/*/b` pattern, such as `a/c/b`, `a/d/b`\n * `gs://another_bucket/a.txt`: matches `gs://another_bucket/a.txt`\n\nYou can combine wildcards to provide more powerful matches, for example:\n\n * `gs://bucket_name/[a-m]??.j*g`",
           "items": {
             "type": "string"
           },

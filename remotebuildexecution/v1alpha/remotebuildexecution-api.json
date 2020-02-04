@@ -387,7 +387,7 @@
       }
     }
   },
-  "revision": "20200121",
+  "revision": "20200128",
   "rootUrl": "https://admin-remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -1021,7 +1021,8 @@
             "DOCKER_UNAVAILABLE",
             "NO_CUDA_CAPABLE_DEVICE",
             "REMOTE_CAS_DOWNLOAD_ERROR",
-            "REMOTE_CAS_UPLOAD_ERROR"
+            "REMOTE_CAS_UPLOAD_ERROR",
+            "LOCAL_CASPROXY_NOT_RUNNING"
           ],
           "enumDescriptions": [
             "The command succeeded.",
@@ -1046,7 +1047,8 @@
             "There are issues with docker service/runtime.",
             "The command failed with \"no cuda-capable device is detected\" error.",
             "The bot encountered errors from remote CAS when downloading blobs.",
-            "The bot encountered errors from remote CAS when uploading blobs."
+            "The bot encountered errors from remote CAS when uploading blobs.",
+            "The local casproxy is not running."
           ],
           "type": "string"
         },

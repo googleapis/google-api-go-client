@@ -1804,7 +1804,7 @@
       }
     }
   },
-  "revision": "20200107",
+  "revision": "20200117",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -3788,8 +3788,8 @@
             "REPLACE"
           ],
           "enumDescriptions": [
-            "No natural language interpretation or the natural language interpretation\nis not used to fetch the search results.",
-            "The natural language results is mixed with results from original query.",
+            "Neither the natural language interpretation, nor a broader version of the\nquery is used to fetch the search results.",
+            "The results from original query are blended with other results. The\nreason for blending these other results with the results from original\nquery is populated in the 'Reason' field below.",
             "The results from original query are replaced. The reason for replacing\nthe results from original query is populated in the 'Reason' field below."
           ],
           "type": "string"
@@ -3808,7 +3808,7 @@
           "enumDescriptions": [
             "",
             "Natural language interpretation of the query is used to fetch the search\nresults.",
-            "A much broader version of the query is used to retrieve the search\nresults since enough results were not found for the user query.\nInterpreted query will be empty for this case."
+            "Query and document terms similarity is used to selectively broaden the\nquery to retrieve additional search results since enough results were not\nfound for the user query.\nInterpreted query will be empty for this case."
           ],
           "type": "string"
         }

@@ -113,6 +113,42 @@
   },
   "protocol": "rest",
   "resources": {
+    "projects": {
+      "resources": {
+        "operations": {
+          "methods": {
+            "get": {
+              "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+              "flatPath": "v1beta1/projects/{projectsId}/operations/{operationsId}",
+              "httpMethod": "GET",
+              "id": "firebasehosting.projects.operations.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "The name of the operation resource.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/operations/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+name}",
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/firebase",
+                "https://www.googleapis.com/auth/firebase.readonly"
+              ]
+            }
+          }
+        }
+      }
+    },
     "sites": {
       "methods": {
         "getConfig": {
@@ -414,6 +450,31 @@
         },
         "versions": {
           "methods": {
+            "clone": {
+              "description": "Creates a new version on the target site using the content\nof the specified version.",
+              "flatPath": "v1beta1/sites/{sitesId}/versions:clone",
+              "httpMethod": "POST",
+              "id": "firebasehosting.sites.versions.clone",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. The target site where the cloned version will reside,\nin the format: `sites/{site}`",
+                  "location": "path",
+                  "pattern": "^sites/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+parent}/versions:clone",
+              "request": {
+                "$ref": "CloneVersionRequest"
+              },
+              "response": {
+                "$ref": "Operation"
+              }
+            },
             "create": {
               "description": "Creates a new version for a site.",
               "flatPath": "v1beta1/sites/{sitesId}/versions",
@@ -642,7 +703,7 @@
       }
     }
   },
-  "revision": "20191122",
+  "revision": "20200203",
   "rootUrl": "https://firebasehosting.googleapis.com/",
   "schemas": {
     "ActingUser": {
@@ -685,6 +746,29 @@
         },
         "token": {
           "description": "The token to serve at the specified URL path to satisfy the certificate\nchallenge.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CloneVersionRequest": {
+      "description": "The request sent to CloneVersion.",
+      "id": "CloneVersionRequest",
+      "properties": {
+        "exclude": {
+          "$ref": "PathFilter",
+          "description": "If provided, only paths that do not match any of the regexes in this\nlist will be included in the new version."
+        },
+        "finalize": {
+          "description": "If true, immediately finalize the version after cloning is complete.",
+          "type": "boolean"
+        },
+        "include": {
+          "$ref": "PathFilter",
+          "description": "If provided, only paths that match one or more regexes in this list\nwill be included in the new version."
+        },
+        "sourceVersion": {
+          "description": "Required. The name of the version to be cloned, in the format:\n`sites/{site}/versions/{version}`",
           "type": "string"
         }
       },
@@ -953,6 +1037,55 @@
       },
       "type": "object"
     },
+    "Operation": {
+      "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
+      "id": "Operation",
+      "properties": {
+        "done": {
+          "description": "If the value is `false`, it means the operation is still in progress.\nIf `true`, the operation is completed, and either `error` or `response` is\navailable.",
+          "type": "boolean"
+        },
+        "error": {
+          "$ref": "Status",
+          "description": "The error result of the operation in case of failure or cancellation."
+        },
+        "metadata": {
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          },
+          "description": "Service-specific metadata associated with the operation.  It typically\ncontains progress information and common metadata such as create time.\nSome services might not provide such metadata.  Any method that returns a\nlong-running operation should document the metadata type, if any.",
+          "type": "object"
+        },
+        "name": {
+          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should be a resource name ending with `operations/{unique_id}`.",
+          "type": "string"
+        },
+        "response": {
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          },
+          "description": "The normal response of the operation in case of success.  If the original\nmethod returns no data on success, such as `Delete`, the response is\n`google.protobuf.Empty`.  If the original method is standard\n`Get`/`Create`/`Update`, the response should be the resource.  For other\nmethods, the response should have the type `XxxResponse`, where `Xxx`\nis the original method name.  For example, if the original method name\nis `TakeSnapshot()`, the inferred response type is\n`TakeSnapshotResponse`.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "PathFilter": {
+      "description": "A representation of filter path.",
+      "id": "PathFilter",
+      "properties": {
+        "regexes": {
+          "description": "An array of regexes to filter by.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "PopulateVersionFilesRequest": {
       "id": "PopulateVersionFilesRequest",
       "properties": {
@@ -1163,6 +1296,33 @@
         "maxVersions": {
           "description": "The number of FINALIZED versions that will be held for a site before\nautomatic deletion. When a new version is deployed, content for versions\nin storage in excess of this number will be deleted, and will no longer be\nbilled for storage usage. Oldest versions will be deleted first; sites are\ncreated with an unlimited number of max_versions by default.",
           "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Status": {
+      "description": "The `Status` type defines a logical error model that is suitable for\ndifferent programming environments, including REST APIs and RPC APIs. It is\nused by [gRPC](https://github.com/grpc). Each `Status` message contains\nthree pieces of data: error code, error message, and error details.\n\nYou can find out more about this error model and how to work with it in the\n[API Design Guide](https://cloud.google.com/apis/design/errors).",
+      "id": "Status",
+      "properties": {
+        "code": {
+          "description": "The status code, which should be an enum value of google.rpc.Code.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "details": {
+          "description": "A list of messages that carry the error details.  There is a common set of\nmessage types for APIs to use.",
+          "items": {
+            "additionalProperties": {
+              "description": "Properties of the object. Contains field @type with type URL.",
+              "type": "any"
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "message": {
+          "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
           "type": "string"
         }
       },

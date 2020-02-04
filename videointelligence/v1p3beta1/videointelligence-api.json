@@ -127,7 +127,7 @@
       }
     }
   },
-  "revision": "20200115",
+  "revision": "20200122",
   "rootUrl": "https://videointelligence.googleapis.com/",
   "schemas": {
     "GoogleCloudVideointelligenceV1_AnnotateVideoProgress": {
@@ -2352,7 +2352,8 @@
             "OCR text detection and tracking.",
             "Object detection and tracking.",
             "Logo detection, tracking, and recognition.",
-            "Celebrity recognition."
+            "Celebrity recognition.",
+            "Person detection."
           ],
           "items": {
             "enum": [
@@ -2365,7 +2366,8 @@
               "TEXT_DETECTION",
               "OBJECT_TRACKING",
               "LOGO_RECOGNITION",
-              "CELEBRITY_RECOGNITION"
+              "CELEBRITY_RECOGNITION",
+              "PERSON_DETECTION"
             ],
             "type": "string"
           },
@@ -2476,6 +2478,26 @@
         "value": {
           "description": "Text value of the detection result. For example, the value for \"HairColor\"\ncan be \"black\", \"blonde\", etc.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1p3beta1_DetectedLandmark": {
+      "description": "A generic detected landmark represented by name in string format and a 2D\nlocation.",
+      "id": "GoogleCloudVideointelligenceV1p3beta1_DetectedLandmark",
+      "properties": {
+        "confidence": {
+          "description": "The confidence score of the detected landmark. Range [0, 1].",
+          "format": "float",
+          "type": "number"
+        },
+        "name": {
+          "description": "The name of this landmark, i.e. left_hand, right_shoulder.",
+          "type": "string"
+        },
+        "point": {
+          "$ref": "GoogleCloudVideointelligenceV1p3beta1_NormalizedVertex",
+          "description": "The 2D point of the detected landmark using the normalized image\ncoordindate system. The normalized coordinates have the range from 0 to 1."
         }
       },
       "type": "object"
@@ -2842,6 +2864,39 @@
       },
       "type": "object"
     },
+    "GoogleCloudVideointelligenceV1p3beta1_PersonDetectionAnnotation": {
+      "description": "Person detection annotation per video.",
+      "id": "GoogleCloudVideointelligenceV1p3beta1_PersonDetectionAnnotation",
+      "properties": {
+        "tracks": {
+          "description": "The trackes that a person is detected.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p3beta1_Track"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1p3beta1_PersonDetectionConfig": {
+      "description": "Config for PERSON_DETECTION.",
+      "id": "GoogleCloudVideointelligenceV1p3beta1_PersonDetectionConfig",
+      "properties": {
+        "includeAttributes": {
+          "description": "Whether to enable person attributes detection, such as cloth color (black,\nblue, etc), type (coat, dress, etc), pattern (plain, floral, etc), hair\ncolor (black, blonde, etc), hair length (long, short, bald), etc.\nIgnored if 'include_bounding_boxes' is false.",
+          "type": "boolean"
+        },
+        "includeBoundingBoxes": {
+          "description": "Whether bounding boxes be included in the person detection annotation\noutput.",
+          "type": "boolean"
+        },
+        "includePoseLandmarks": {
+          "description": "Whether to enable pose landmarks detection. Ignored if\n'include_bounding_boxes' is false.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudVideointelligenceV1p3beta1_RecognizedCelebrity": {
       "description": "The recognized celebrity with confidence score.",
       "id": "GoogleCloudVideointelligenceV1p3beta1_RecognizedCelebrity",
@@ -3113,6 +3168,13 @@
           },
           "type": "array"
         },
+        "landmarks": {
+          "description": "Optional. The detected landmarks.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p3beta1_DetectedLandmark"
+          },
+          "type": "array"
+        },
         "normalizedBoundingBox": {
           "$ref": "GoogleCloudVideointelligenceV1p3beta1_NormalizedBoundingBox",
           "description": "Normalized Bounding box in a frame, where the object is located."
@@ -3171,7 +3233,8 @@
             "TEXT_DETECTION",
             "OBJECT_TRACKING",
             "LOGO_RECOGNITION",
-            "CELEBRITY_RECOGNITION"
+            "CELEBRITY_RECOGNITION",
+            "PERSON_DETECTION"
           ],
           "enumDescriptions": [
             "Unspecified.",
@@ -3183,7 +3246,8 @@
             "OCR text detection and tracking.",
             "Object detection and tracking.",
             "Logo detection, tracking, and recognition.",
-            "Celebrity recognition."
+            "Celebrity recognition.",
+            "Person detection."
           ],
           "type": "string"
         },
@@ -3258,6 +3322,13 @@
           "description": "Annotations for list of objects detected and tracked in video.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p3beta1_ObjectTrackingAnnotation"
+          },
+          "type": "array"
+        },
+        "personDetectionAnnotations": {
+          "description": "Person detection annotations.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p3beta1_PersonDetectionAnnotation"
           },
           "type": "array"
         },
@@ -3336,6 +3407,10 @@
         "objectTrackingConfig": {
           "$ref": "GoogleCloudVideointelligenceV1p3beta1_ObjectTrackingConfig",
           "description": "Config for OBJECT_TRACKING."
+        },
+        "personDetectionConfig": {
+          "$ref": "GoogleCloudVideointelligenceV1p3beta1_PersonDetectionConfig",
+          "description": "Config for PERSON_DETECTION."
         },
         "segments": {
           "description": "Video segments to annotate. The segments may overlap and are not required\nto be contiguous or span the whole video. If unspecified, each video is\ntreated as a single segment.",

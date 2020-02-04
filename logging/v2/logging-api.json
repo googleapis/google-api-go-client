@@ -2667,7 +2667,7 @@
       }
     }
   },
-  "revision": "20200113",
+  "revision": "20200125",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "BigQueryOptions": {
@@ -2676,6 +2676,10 @@
       "properties": {
         "usePartitionedTables": {
           "description": "Optional. Whether to use BigQuery's partition tables. By default, Logging creates dated tables based on the log entries' timestamps, e.g. syslog_20170523. With partitioned tables the date suffix is no longer present and special query syntax has to be used instead. In both cases, tables are sharded based on UTC timezone.",
+          "type": "boolean"
+        },
+        "usesTimestampColumnPartitioning": {
+          "description": "Output only. True if new timestamp column based partitioning is in use, false if legacy ingestion-time partitioning is in use. All new sinks will have this field set true and will use timestamp column based partitioning. If use_partitioned_tables is false, this value has no meaning and will be false. Legacy sinks using partitioned tables will have this field set to false.",
           "type": "boolean"
         }
       },
@@ -3040,7 +3044,7 @@
           "description": "Optional. Information about the HTTP request associated with this log entry, if applicable."
         },
         "insertId": {
-          "description": "Optional. A unique identifier for the log entry. If you provide a value, then Logging considers other log entries in the same project, with the same timestamp, and with the same insert_id to be duplicates which can be removed. If omitted in new log entries, then Logging assigns its own unique identifier. The insert_id is also used to order log entries that have the same timestamp value.",
+          "description": "Optional. A unique identifier for the log entry. If you provide a value, then Logging considers other log entries in the same project, with the same timestamp, and with the same insert_id to be duplicates which are removed in a single query result. However, there are no guarantees of de-duplication in the export of logs.If the insert_id is omitted when writing a log entry, the Logging API  assigns its own unique identifier in this field.In queries, the insert_id is also used to order log entries that have the same log_name and timestamp values.",
           "type": "string"
         },
         "jsonPayload": {

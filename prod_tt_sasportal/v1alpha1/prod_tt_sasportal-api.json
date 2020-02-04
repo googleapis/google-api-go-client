@@ -1253,7 +1253,7 @@
       }
     }
   },
-  "revision": "20200107",
+  "revision": "20200203",
   "rootUrl": "https://prod-tt-sasportal.googleapis.com/",
   "schemas": {
     "SasPortalAssignment": {
@@ -1402,9 +1402,15 @@
             "CAMBIUM_NETWORKS",
             "FOUR_G_BBW_SAA_1",
             "NR",
-            "DOODLE_CBRS"
+            "DOODLE_CBRS",
+            "CW",
+            "REDLINE",
+            "TARANA_WIRELESS"
           ],
           "enumDescriptions": [
+            "",
+            "",
+            "",
             "",
             "",
             "",

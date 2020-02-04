@@ -1990,7 +1990,7 @@
       }
     }
   },
-  "revision": "20200104",
+  "revision": "20200124",
   "rootUrl": "https://sqladmin.googleapis.com/",
   "schemas": {
     "AclEntry": {
@@ -2059,6 +2059,10 @@
         "location": {
           "description": "Location of the backup",
           "type": "string"
+        },
+        "pointInTimeRecoveryEnabled": {
+          "description": "Reserved for future use.",
+          "type": "boolean"
         },
         "replicationLogArchivingEnabled": {
           "description": "Reserved for future use.",
@@ -2238,6 +2242,11 @@
         "pitrTimestampMs": {
           "description": "Reserved for future use.",
           "format": "int64",
+          "type": "string"
+        },
+        "pointInTime": {
+          "description": "Reserved for future use.",
+          "format": "google-datetime",
           "type": "string"
         }
       },

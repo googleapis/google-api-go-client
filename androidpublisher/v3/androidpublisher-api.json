@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/8HRjMsMAUZjbDTub8sPcjVrJuEA\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/-2EPUzGo8AUggd3leJgv-tzSEr8\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2537,7 +2537,7 @@
       }
     }
   },
-  "revision": "20200115",
+  "revision": "20200126",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -3510,6 +3510,10 @@
           "format": "int64",
           "type": "string"
         },
+        "externalAccountId": {
+          "description": "User account identifier in the third-party service. Only present if account linking happened as part of the subscription purchase flow.",
+          "type": "string"
+        },
         "familyName": {
           "description": "The family name of the user when the subscription was purchased. Only present for purchases made with 'Subscribe with Google'.",
           "type": "string"
@@ -3707,6 +3711,11 @@
         },
         "countryTargeting": {
           "$ref": "CountryTargeting"
+        },
+        "inAppUpdatePriority": {
+          "description": "In-app update priority of the release. All newly added APKs in the release will be considered at this priority. in_app_update_priority can take values between [0, 5]. 5 is the highest priority. Default priority is 0. See https://developer.android.com/guide/playcore/in-app-updates.",
+          "format": "int32",
+          "type": "integer"
         },
         "name": {
           "description": "The release name, used to identify this release in the Play Console UI. Not required to be unique. This is optional, if not set it will be generated from the version_name in the APKs.",

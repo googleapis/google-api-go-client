@@ -923,7 +923,7 @@
       }
     }
   },
-  "revision": "20200117",
+  "revision": "20200203",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdvancedSecurityOverrides": {
@@ -2151,7 +2151,7 @@
           ],
           "enumDescriptions": [
             "Unspecified, defaults to INFO_AND_NOTIFICATIONS_DISABLED.",
-            "System info and notifications are shown on the status bar in kiosk mode.",
+            "System info and notifications are shown on the status bar in kiosk mode.Note: For this policy to take effect, the device's home button must be enabled using kioskCustomization.systemNavigation.",
             "System info and notifications are disabled in kiosk mode.",
             "Only system info is shown on the status bar."
           ],

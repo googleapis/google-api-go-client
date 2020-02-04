@@ -362,7 +362,7 @@
                       "type": "string"
                     },
                     "reservationId": {
-                      "description": "The reservation ID. This field must only contain lower case alphanumeric\ncharacters or dash.",
+                      "description": "The reservation ID. This field must only contain lower case alphanumeric\ncharacters or dash. Max length is 64 characters.",
                       "location": "query",
                       "type": "string"
                     }
@@ -642,7 +642,7 @@
       }
     }
   },
-  "revision": "20200116",
+  "revision": "20200124",
   "rootUrl": "https://bigqueryreservation.googleapis.com/",
   "schemas": {
     "Assignment": {

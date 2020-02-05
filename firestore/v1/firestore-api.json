@@ -1101,7 +1101,7 @@
       }
     }
   },
-  "revision": "20200104",
+  "revision": "20200125",
   "rootUrl": "https://firestore.googleapis.com/",
   "schemas": {
     "ArrayValue": {
@@ -2741,7 +2741,7 @@
         },
         "transform": {
           "$ref": "DocumentTransform",
-          "description": "Applies a transformation to a document.\nAt most one `transform` per document is allowed in a given request.\nAn `update` cannot follow a `transform` on the same document in a given\nrequest."
+          "description": "Applies a transformation to a document."
         },
         "update": {
           "$ref": "Document",

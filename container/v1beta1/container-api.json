@@ -2483,7 +2483,7 @@
       }
     }
   },
-  "revision": "20200121",
+  "revision": "20200128",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2513,6 +2513,10 @@
         "dnsCacheConfig": {
           "$ref": "DnsCacheConfig",
           "description": "Configuration for NodeLocalDNS, a dns cache running on cluster nodes"
+        },
+        "gcePersistentDiskCsiDriverConfig": {
+          "$ref": "GcePersistentDiskCsiDriverConfig",
+          "description": "Configuration for the GCE PD CSI driver. This option can only be enabled\nat cluster creation time."
         },
         "horizontalPodAutoscaling": {
           "$ref": "HorizontalPodAutoscaling",
@@ -3313,6 +3317,17 @@
       },
       "type": "object"
     },
+    "GcePersistentDiskCsiDriverConfig": {
+      "description": "Configuration for the GCE PD CSI driver. This option can only be enabled\nat cluster creation time.",
+      "id": "GcePersistentDiskCsiDriverConfig",
+      "properties": {
+        "enabled": {
+          "description": "Whether the GCE PD CSI driver is enabled for this cluster.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "GetJSONWebKeysResponse": {
       "description": "GetJSONWebKeysResponse is a valid JSON Web Key Set as specififed in rfc 7517",
       "id": "GetJSONWebKeysResponse",
@@ -3967,7 +3982,7 @@
           "description": "Sandbox configuration for this node."
         },
         "serviceAccount": {
-          "description": "The Google Cloud Platform Service Account to be used by the node VMs. If\nno Service Account is specified, the \"default\" service account is used.",
+          "description": "The Google Cloud Platform Service Account to be used by the node VMs.\nSpecify the email address of the Service Account; otherwise, if no Service\nAccount is specified, the \"default\" service account is used.",
           "type": "string"
         },
         "shieldedInstanceConfig": {

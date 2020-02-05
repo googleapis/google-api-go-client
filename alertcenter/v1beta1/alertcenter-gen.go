@@ -961,6 +961,44 @@ func (s *DeviceCompromisedSecurityDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DlpRuleViolation: Alerts that get triggered on violations of Data
+// Loss Prevention (DLP) rules.
+type DlpRuleViolation struct {
+	// RuleViolationInfo: Details about the violated DLP rule.
+	//
+	// Admins can use the predefined detectors provided by Google Cloud
+	// DLP
+	// https://cloud.google.com/dlp/ when setting up a DLP rule. Matched
+	// Cloud DLP
+	// detectors in this violation if any will be captured in
+	// the
+	// MatchInfo.predefined_detector.
+	RuleViolationInfo *RuleViolationInfo `json:"ruleViolationInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RuleViolationInfo")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RuleViolationInfo") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DlpRuleViolation) MarshalJSON() ([]byte, error) {
+	type NoMethod DlpRuleViolation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DomainId: Domain ID of Gmail phishing alerts.
 type DomainId struct {
 	// CustomerPrimaryDomain: The primary domain for the customer.
@@ -1344,6 +1382,39 @@ func (s *MaliciousEntity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MatchInfo: Proto that contains match information from the condition
+// part of the rule.
+type MatchInfo struct {
+	// PredefinedDetector: For matched detector predefined by Google.
+	PredefinedDetector *PredefinedDetectorInfo `json:"predefinedDetector,omitempty"`
+
+	// UserDefinedDetector: For matched detector defined by administrators.
+	UserDefinedDetector *UserDefinedDetectorInfo `json:"userDefinedDetector,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PredefinedDetector")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PredefinedDetector") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MatchInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod MatchInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Notification: Settings for callback notifications.
 // For more details see [G Suite
 // Alert
@@ -1420,6 +1491,34 @@ func (s *PhishingSpike) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PredefinedDetectorInfo: Detector provided by Google.
+type PredefinedDetectorInfo struct {
+	// DetectorName: Name that uniquely identifies the detector.
+	DetectorName string `json:"detectorName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DetectorName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetectorName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PredefinedDetectorInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod PredefinedDetectorInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RequestInfo: Requests for one application that needs default SQL
 // setup.
 type RequestInfo struct {
@@ -1456,6 +1555,161 @@ type RequestInfo struct {
 
 func (s *RequestInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod RequestInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResourceInfo: Proto that contains resource information.
+type ResourceInfo struct {
+	// DocumentId: Drive file ID.
+	DocumentId string `json:"documentId,omitempty"`
+
+	// ResourceTitle: Title of the resource, e.g. email subject, or document
+	// title.
+	ResourceTitle string `json:"resourceTitle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DocumentId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DocumentId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResourceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RuleInfo: Proto that contains rule information.
+type RuleInfo struct {
+	// DisplayName: User provided name of the rule.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ResourceName: Resource name that uniquely identifies the rule.
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RuleInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod RuleInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RuleViolationInfo: Common alert information about violated rules that
+// are configured by G Suite
+// administrators.
+type RuleViolationInfo struct {
+	// DataSource: Source of the data.
+	//
+	// Possible values:
+	//   "DATA_SOURCE_UNSPECIFIED" - Data source is unspecified.
+	//   "DRIVE" - Drive data source.
+	DataSource string `json:"dataSource,omitempty"`
+
+	// MatchInfo: List of matches that were found in the resource content.
+	MatchInfo []*MatchInfo `json:"matchInfo,omitempty"`
+
+	// Recipients: Resource recipients.
+	//
+	// For Drive, they are grantees that the Drive file was shared with at
+	// the
+	// time of rule triggering. Valid values include user emails, group
+	// emails,
+	// domains, or 'anyone' if the file was publicly accessible. If the file
+	// was
+	// private the recipients list will be empty.
+	//
+	// For Gmail, they are emails of the users or groups that the Gmail
+	// message
+	// was sent to.
+	Recipients []string `json:"recipients,omitempty"`
+
+	// ResourceInfo: Details of the resource which violated the rule.
+	ResourceInfo *ResourceInfo `json:"resourceInfo,omitempty"`
+
+	// RuleInfo: Details of the violated rule.
+	RuleInfo *RuleInfo `json:"ruleInfo,omitempty"`
+
+	// SuppressedActionTypes: Actions suppressed due to other actions with
+	// higher priority.
+	//
+	// Possible values:
+	//   "ACTION_TYPE_UNSPECIFIED" - Action type is unspecified.
+	//   "DRIVE_BLOCK_EXTERNAL_SHARING" - Block sharing a file externally.
+	//   "DRIVE_WARN_ON_EXTERNAL_SHARING" - Show a warning message when
+	// sharing a file externally.
+	//   "ALERT" - Send alert.
+	SuppressedActionTypes []string `json:"suppressedActionTypes,omitempty"`
+
+	// Trigger: Trigger of the rule.
+	//
+	// Possible values:
+	//   "TRIGGER_UNSPECIFIED" - Trigger is unspecified.
+	//   "DRIVE_SHARE" - A Drive file is shared.
+	Trigger string `json:"trigger,omitempty"`
+
+	// TriggeredActionTypes: Actions applied as a consequence of the rule
+	// being triggered.
+	//
+	// Possible values:
+	//   "ACTION_TYPE_UNSPECIFIED" - Action type is unspecified.
+	//   "DRIVE_BLOCK_EXTERNAL_SHARING" - Block sharing a file externally.
+	//   "DRIVE_WARN_ON_EXTERNAL_SHARING" - Show a warning message when
+	// sharing a file externally.
+	//   "ALERT" - Send alert.
+	TriggeredActionTypes []string `json:"triggeredActionTypes,omitempty"`
+
+	// TriggeringUserEmail: Email of the user who caused the violation.
+	// Value could be empty if not
+	// applicable, for example, a violation found by drive continuous scan.
+	TriggeringUserEmail string `json:"triggeringUserEmail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataSource") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RuleViolationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod RuleViolationInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1721,6 +1975,37 @@ func (s *User) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UserDefinedDetectorInfo: Detector defined by administrators.
+type UserDefinedDetectorInfo struct {
+	// DisplayName: Display name of the detector.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ResourceName: Resource name that uniquely identifies the detector.
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UserDefinedDetectorInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod UserDefinedDetectorInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "alertcenter.alerts.batchDelete":
 
 type AlertsBatchDeleteCall struct {
@@ -1765,7 +2050,7 @@ func (c *AlertsBatchDeleteCall) Header() http.Header {
 
 func (c *AlertsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1890,7 +2175,7 @@ func (c *AlertsBatchUndeleteCall) Header() http.Header {
 
 func (c *AlertsBatchUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2031,7 +2316,7 @@ func (c *AlertsDeleteCall) Header() http.Header {
 
 func (c *AlertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2187,7 +2472,7 @@ func (c *AlertsGetCall) Header() http.Header {
 
 func (c *AlertsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2346,7 +2631,7 @@ func (c *AlertsGetMetadataCall) Header() http.Header {
 
 func (c *AlertsGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2549,7 +2834,7 @@ func (c *AlertsListCall) Header() http.Header {
 
 func (c *AlertsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2728,7 +3013,7 @@ func (c *AlertsUndeleteCall) Header() http.Header {
 
 func (c *AlertsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2882,7 +3167,7 @@ func (c *AlertsFeedbackCreateCall) Header() http.Header {
 
 func (c *AlertsFeedbackCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3061,7 +3346,7 @@ func (c *AlertsFeedbackListCall) Header() http.Header {
 
 func (c *AlertsFeedbackListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3221,7 +3506,7 @@ func (c *V1beta1GetSettingsCall) Header() http.Header {
 
 func (c *V1beta1GetSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3356,7 +3641,7 @@ func (c *V1beta1UpdateSettingsCall) Header() http.Header {
 
 func (c *V1beta1UpdateSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

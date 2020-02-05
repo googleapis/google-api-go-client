@@ -686,7 +686,7 @@
       }
     }
   },
-  "revision": "20200110",
+  "revision": "20200131",
   "rootUrl": "https://translation.googleapis.com/",
   "schemas": {
     "BatchTranslateTextRequest": {
@@ -1125,7 +1125,7 @@
       "id": "TranslateTextGlossaryConfig",
       "properties": {
         "glossary": {
-          "description": "Required. Specifies the glossary used for this translation. Use\nthis format: projects/*/locations/*/glossaries/*",
+          "description": "Required. The `glossary` to be applied for this translation.\n\nThe format depends on glossary:\n\n- User provided custom glossary:\n  `projects/{project-number-or-id}/locations/{location-id}/glossaries/{glossary-id}`",
           "type": "string"
         },
         "ignoreCase": {

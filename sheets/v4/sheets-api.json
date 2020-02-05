@@ -809,7 +809,7 @@
       }
     }
   },
-  "revision": "20200123",
+  "revision": "20200131",
   "rootUrl": "https://sheets.googleapis.com/",
   "schemas": {
     "AddBandingRequest": {
@@ -1143,17 +1143,33 @@
           "$ref": "Color",
           "description": "The first color that is alternating. (Required)"
         },
+        "firstBandColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The first color that is alternating. (Required)\nIf first_band_color is also set, this field takes precedence."
+        },
         "footerColor": {
           "$ref": "Color",
           "description": "The color of the last row or column. If this field is not set, the last\nrow or column will be filled with either first_band_color or\nsecond_band_color, depending on the color of the previous row or\ncolumn."
+        },
+        "footerColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The color of the last row or column. If this field is not set, the last\nrow or column will be filled with either first_band_color or\nsecond_band_color, depending on the color of the previous row or\ncolumn.\nIf footer_color is also set, this field takes precedence."
         },
         "headerColor": {
           "$ref": "Color",
           "description": "The color of the first row or column. If this field is set, the first\nrow or column will be filled with this color and the colors will\nalternate between first_band_color and second_band_color starting\nfrom the second row or column. Otherwise, the first row or column will be\nfilled with first_band_color and the colors will proceed to alternate\nas they normally would."
         },
+        "headerColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The color of the first row or column. If this field is set, the first\nrow or column will be filled with this color and the colors will\nalternate between first_band_color and second_band_color starting\nfrom the second row or column. Otherwise, the first row or column will be\nfilled with first_band_color and the colors will proceed to alternate\nas they normally would.\nIf header_color is also set, this field takes precedence."
+        },
         "secondBandColor": {
           "$ref": "Color",
           "description": "The second color that is alternating. (Required)"
+        },
+        "secondBandColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The second color that is alternating. (Required)\nIf second_band_color is also set, this field takes precedence."
         }
       },
       "type": "object"
@@ -1267,11 +1283,11 @@
       "properties": {
         "color": {
           "$ref": "Color",
-          "description": "The color for elements (i.e. bars, lines, points) associated with this\nseries.  If empty, a default color is used."
+          "description": "The color for elements (such as bars, lines, and points) associated with\nthis series.  If empty, a default color is used."
         },
         "colorStyle": {
           "$ref": "ColorStyle",
-          "description": "The color for elements (i.e. bars, lines, points) associated with this\nseries.  If empty, a default color is used.\nIf color is also set, this field takes precedence."
+          "description": "The color for elements (such as bars, lines, and points) associated with\nthis series.  If empty, a default color is used.\nIf color is also set, this field takes precedence."
         },
         "lineStyle": {
           "$ref": "LineStyle",
@@ -1970,6 +1986,10 @@
           "$ref": "Color",
           "description": "The color of the border."
         },
+        "colorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The color of the border.\nIf color is also set, this field takes precedence."
+        },
         "style": {
           "description": "The style of the border.",
           "enum": [
@@ -2225,6 +2245,10 @@
         "backgroundColor": {
           "$ref": "Color",
           "description": "The background color of the cell."
+        },
+        "backgroundColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The background color of the cell.\nIf background_color is also set, this field takes precedence."
         },
         "borders": {
           "$ref": "Borders",
@@ -3557,9 +3581,17 @@
           "$ref": "Color",
           "description": "The background fill color to filter by; only cells with this fill color are\nshown. Mutually exclusive with all other filter criteria. Requests to set\nthis field will fail with a 400 error if any other filter criteria field is\nset."
         },
+        "visibleBackgroundColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The background fill color to filter by; only cells with this fill color are\nshown. Mutually exclusive with all other filter criteria. Requests to set\nthis field will fail with a 400 error if any other filter criteria field is\nset.\nIf visible_background_color is also set, this field takes precedence."
+        },
         "visibleForegroundColor": {
           "$ref": "Color",
           "description": "The text color to filter by; only cells with this text color are shown.\nMutually exclusive with all other filter criteria. Requests to set this\nfield will fail with a 400 error if any other filter criteria field is set."
+        },
+        "visibleForegroundColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The text color to filter by; only cells with this text color are shown.\nMutually exclusive with all other filter criteria. Requests to set this\nfield will fail with a 400 error if any other filter criteria field is set.\nIf visible_foreground_color is also set, this field takes precedence."
         }
       },
       "type": "object"
@@ -3984,6 +4016,10 @@
         "color": {
           "$ref": "Color",
           "description": "The color this interpolation point should use."
+        },
+        "colorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The color this interpolation point should use.\nIf color is also set, this field takes precedence."
         },
         "type": {
           "description": "How the value should be interpreted.",
@@ -5372,6 +5408,10 @@
           "$ref": "Color",
           "description": "The color of the tab in the UI."
         },
+        "tabColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The color of the tab in the UI.\nIf tab_color is also set, this field takes precedence."
+        },
         "title": {
           "description": "The name of the sheet.",
           "type": "string"
@@ -5410,6 +5450,10 @@
         "backgroundColor": {
           "$ref": "Color",
           "description": "The background color of the slicer."
+        },
+        "backgroundColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The background color of the slicer.\nIf background_color is also set, this field takes precedence."
         },
         "columnIndex": {
           "description": "The column index in the data table on which the filter is applied to.",
@@ -5477,6 +5521,10 @@
           "$ref": "Color",
           "description": "The background fill color to sort by. Mutually exclusive with sorting by\ntext color. Requests to set this field will fail with a 400 error if\nforeground color is also set."
         },
+        "backgroundColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The background fill color to sort by. Mutually exclusive with sorting by\ntext color. Requests to set this field will fail with a 400 error if\nforeground color is also set.\nIf background_color is also set, this field takes precedence."
+        },
         "dimensionIndex": {
           "description": "The dimension the sort should be applied to.",
           "format": "int32",
@@ -5485,6 +5533,10 @@
         "foregroundColor": {
           "$ref": "Color",
           "description": "The text color to sort by. Mutually exclusive with sorting by background\nfill color. Requests to set this field will fail with a 400 error if\nbackground color is also set."
+        },
+        "foregroundColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The text color to sort by. Mutually exclusive with sorting by background\nfill color. Requests to set this field will fail with a 400 error if\nbackground color is also set.\nIf foreground_color is also set, this field takes precedence."
         },
         "sortOrder": {
           "description": "The order data should be sorted.",
@@ -5658,6 +5710,10 @@
         "foregroundColor": {
           "$ref": "Color",
           "description": "The foreground color of the text."
+        },
+        "foregroundColorStyle": {
+          "$ref": "ColorStyle",
+          "description": "The foreground color of the text.\nIf foreground_color is also set, this field takes precedence."
         },
         "italic": {
           "description": "True if the text is italicized.",

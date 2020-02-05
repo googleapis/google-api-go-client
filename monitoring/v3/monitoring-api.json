@@ -127,7 +127,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The project in which to create the alerting policy. The format is projects/[PROJECT_ID].Note that this field names the parent container in which the alerting policy will be written, not the name of the created policy. The alerting policy that is returned will have a name that contains a normalized representation of this name as a prefix but adds a suffix of the form /alertPolicies/[POLICY_ID], identifying the policy in the container.",
+                  "description": "Required. The project in which to create the alerting policy. The format is projects/[PROJECT_ID].Note that this field names the parent container in which the alerting policy will be written, not the name of the created policy. The alerting policy that is returned will have a name that contains a normalized representation of this name as a prefix but adds a suffix of the form /alertPolicies/[POLICY_ID], identifying the policy in the container.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -156,7 +156,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The alerting policy to delete. The format is:\nprojects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]\nFor more information, see AlertPolicy.",
+                  "description": "Required. The alerting policy to delete. The format is:\nprojects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]\nFor more information, see AlertPolicy.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/alertPolicies/[^/]+$",
                   "required": true,
@@ -182,7 +182,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The alerting policy to retrieve. The format is\nprojects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]\n",
+                  "description": "Required. The alerting policy to retrieve. The format is\nprojects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+/alertPolicies/[^/]+$",
                   "required": true,
@@ -214,7 +214,7 @@
                   "type": "string"
                 },
                 "name": {
-                  "description": "The project whose alert policies are to be listed. The format is\nprojects/[PROJECT_ID]\nNote that this field names the parent container in which the alerting policies to be listed are stored. To retrieve a single alerting policy by name, use the GetAlertPolicy operation, instead.",
+                  "description": "Required. The project whose alert policies are to be listed. The format is\nprojects/[PROJECT_ID]\nNote that this field names the parent container in which the alerting policies to be listed are stored. To retrieve a single alerting policy by name, use the GetAlertPolicy operation, instead.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -330,7 +330,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The project in which to create the group. The format is \"projects/{project_id_or_number}\".",
+                  "description": "Required. The project in which to create the group. The format is \"projects/{project_id_or_number}\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -364,7 +364,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The group to delete. The format is \"projects/{project_id_or_number}/groups/{group_id}\".",
+                  "description": "Required. The group to delete. The format is \"projects/{project_id_or_number}/groups/{group_id}\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+/groups/[^/]+$",
                   "required": true,
@@ -395,7 +395,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The group to retrieve. The format is \"projects/{project_id_or_number}/groups/{group_id}\".",
+                  "description": "Required. The group to retrieve. The format is \"projects/{project_id_or_number}/groups/{group_id}\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+/groups/[^/]+$",
                   "required": true,
@@ -437,7 +437,7 @@
                   "type": "string"
                 },
                 "name": {
-                  "description": "The project whose groups are to be listed. The format is \"projects/{project_id_or_number}\".",
+                  "description": "Required. The project whose groups are to be listed. The format is \"projects/{project_id_or_number}\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -530,7 +530,7 @@
                       "type": "string"
                     },
                     "name": {
-                      "description": "The group whose members are listed. The format is \"projects/{project_id_or_number}/groups/{group_id}\".",
+                      "description": "Required. The group whose members are listed. The format is \"projects/{project_id_or_number}/groups/{group_id}\".",
                       "location": "path",
                       "pattern": "^projects/[^/]+/groups/[^/]+$",
                       "required": true,
@@ -574,7 +574,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
+                  "description": "Required. The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -604,7 +604,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The metric descriptor on which to execute the request. The format is \"projects/{project_id_or_number}/metricDescriptors/{metric_id}\". An example of {metric_id} is: \"custom.googleapis.com/my_test_metric\".",
+                  "description": "Required. The metric descriptor on which to execute the request. The format is \"projects/{project_id_or_number}/metricDescriptors/{metric_id}\". An example of {metric_id} is: \"custom.googleapis.com/my_test_metric\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+/metricDescriptors/.+$",
                   "required": true,
@@ -630,7 +630,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The metric descriptor on which to execute the request. The format is \"projects/{project_id_or_number}/metricDescriptors/{metric_id}\". An example value of {metric_id} is \"compute.googleapis.com/instance/disk/read_bytes_count\".",
+                  "description": "Required. The metric descriptor on which to execute the request. The format is \"projects/{project_id_or_number}/metricDescriptors/{metric_id}\". An example value of {metric_id} is \"compute.googleapis.com/instance/disk/read_bytes_count\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+/metricDescriptors/.+$",
                   "required": true,
@@ -663,7 +663,7 @@
                   "type": "string"
                 },
                 "name": {
-                  "description": "The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
+                  "description": "Required. The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -706,7 +706,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The monitored resource descriptor to get. The format is \"projects/{project_id_or_number}/monitoredResourceDescriptors/{resource_type}\". The {resource_type} is a predefined type, such as cloudsql_database.",
+                  "description": "Required. The monitored resource descriptor to get. The format is \"projects/{project_id_or_number}/monitoredResourceDescriptors/{resource_type}\". The {resource_type} is a predefined type, such as cloudsql_database.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/monitoredResourceDescriptors/.+$",
                   "required": true,
@@ -739,7 +739,7 @@
                   "type": "string"
                 },
                 "name": {
-                  "description": "The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
+                  "description": "Required. The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -782,7 +782,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The channel type for which to execute the request. The format is projects/[PROJECT_ID]/notificationChannelDescriptors/{channel_type}.",
+                  "description": "Required. The channel type for which to execute the request. The format is projects/[PROJECT_ID]/notificationChannelDescriptors/{channel_type}.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/notificationChannelDescriptors/[^/]+$",
                   "required": true,
@@ -809,7 +809,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The REST resource name of the parent from which to retrieve the notification channel descriptors. The expected syntax is:\nprojects/[PROJECT_ID]\nNote that this names the parent container in which to look for the descriptors; to retrieve a single descriptor by name, use the GetNotificationChannelDescriptor operation, instead.",
+                  "description": "Required. The REST resource name of the parent from which to retrieve the notification channel descriptors. The expected syntax is:\nprojects/[PROJECT_ID]\nNote that this names the parent container in which to look for the descriptors; to retrieve a single descriptor by name, use the GetNotificationChannelDescriptor operation, instead.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -851,7 +851,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The project on which to execute the request. The format is:\nprojects/[PROJECT_ID]\nNote that this names the container into which the channel will be written. This does not name the newly created channel. The resulting channel's name will have a normalized version of this field as a prefix, but will add /notificationChannels/[CHANNEL_ID] to identify the channel.",
+                  "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID]\nNote that this names the container into which the channel will be written. This does not name the newly created channel. The resulting channel's name will have a normalized version of this field as a prefix, but will add /notificationChannels/[CHANNEL_ID] to identify the channel.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -885,7 +885,7 @@
                   "type": "boolean"
                 },
                 "name": {
-                  "description": "The channel for which to execute the request. The format is projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID].",
+                  "description": "Required. The channel for which to execute the request. The format is projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID].",
                   "location": "path",
                   "pattern": "^projects/[^/]+/notificationChannels/[^/]+$",
                   "required": true,
@@ -911,7 +911,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The channel for which to execute the request. The format is projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID].",
+                  "description": "Required. The channel for which to execute the request. The format is projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID].",
                   "location": "path",
                   "pattern": "^projects/[^/]+/notificationChannels/[^/]+$",
                   "required": true,
@@ -938,7 +938,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The notification channel for which a verification code is to be generated and retrieved. This must name a channel that is already verified; if the specified channel is not verified, the request will fail.",
+                  "description": "Required. The notification channel for which a verification code is to be generated and retrieved. This must name a channel that is already verified; if the specified channel is not verified, the request will fail.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/notificationChannels/[^/]+$",
                   "required": true,
@@ -972,7 +972,7 @@
                   "type": "string"
                 },
                 "name": {
-                  "description": "The project on which to execute the request. The format is projects/[PROJECT_ID]. That is, this names the container in which to look for the notification channels; it does not name a specific channel. To query a specific channel by REST resource name, use the GetNotificationChannel operation.",
+                  "description": "Required. The project on which to execute the request. The format is projects/[PROJECT_ID]. That is, this names the container in which to look for the notification channels; it does not name a specific channel. To query a specific channel by REST resource name, use the GetNotificationChannel operation.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -1050,7 +1050,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The notification channel to which to send a verification code.",
+                  "description": "Required. The notification channel to which to send a verification code.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/notificationChannels/[^/]+$",
                   "required": true,
@@ -1079,7 +1079,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The notification channel to verify.",
+                  "description": "Required. The notification channel to verify.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/notificationChannels/[^/]+$",
                   "required": true,
@@ -1112,7 +1112,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
+                  "description": "Required. The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -1201,7 +1201,7 @@
                   "type": "string"
                 },
                 "filter": {
-                  "description": "A monitoring filter that specifies which time series should be returned. The filter must specify a single metric type, and can additionally specify metric labels and other information. For example:\nmetric.type = \"compute.googleapis.com/instance/cpu/usage_time\" AND\n    metric.labels.instance_name = \"my-instance-name\"\n",
+                  "description": "Required. A monitoring filter that specifies which time series should be returned. The filter must specify a single metric type, and can additionally specify metric labels and other information. For example:\nmetric.type = \"compute.googleapis.com/instance/cpu/usage_time\" AND\n    metric.labels.instance_name = \"my-instance-name\"\n",
                   "location": "query",
                   "type": "string"
                 },
@@ -1218,7 +1218,7 @@
                   "type": "string"
                 },
                 "name": {
-                  "description": "The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
+                  "description": "Required. The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -1241,7 +1241,7 @@
                   "type": "string"
                 },
                 "view": {
-                  "description": "Specifies which information is returned about the time series.",
+                  "description": "Required. Specifies which information is returned about the time series.",
                   "enum": [
                     "FULL",
                     "HEADERS"
@@ -1274,7 +1274,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "The project in which to create the Uptime check. The format  is projects/[PROJECT_ID].",
+                  "description": "Required. The project in which to create the Uptime check. The format  is projects/[PROJECT_ID].",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -1303,7 +1303,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The Uptime check configuration to delete. The format  is projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].",
+                  "description": "Required. The Uptime check configuration to delete. The format  is projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].",
                   "location": "path",
                   "pattern": "^projects/[^/]+/uptimeCheckConfigs/[^/]+$",
                   "required": true,
@@ -1329,7 +1329,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The Uptime check configuration to retrieve. The format  is projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].",
+                  "description": "Required. The Uptime check configuration to retrieve. The format  is projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].",
                   "location": "path",
                   "pattern": "^projects/[^/]+/uptimeCheckConfigs/[^/]+$",
                   "required": true,
@@ -1367,7 +1367,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "The project whose Uptime check configurations are listed. The format  is projects/[PROJECT_ID].",
+                  "description": "Required. The project whose Uptime check configurations are listed. The format  is projects/[PROJECT_ID].",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -1435,7 +1435,7 @@
           ],
           "parameters": {
             "parent": {
-              "description": "Resource name of the parent workspace. Of the form projects/{project_id}.",
+              "description": "Required. Resource name of the parent workspace. Of the form projects/{project_id}.",
               "location": "path",
               "pattern": "^[^/]+/[^/]+$",
               "required": true,
@@ -1469,7 +1469,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "Resource name of the Service to delete. Of the form projects/{project_id}/services/{service_id}.",
+              "description": "Required. Resource name of the Service to delete. Of the form projects/{project_id}/services/{service_id}.",
               "location": "path",
               "pattern": "^[^/]+/[^/]+/services/[^/]+$",
               "required": true,
@@ -1495,7 +1495,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "Resource name of the Service. Of the form projects/{project_id}/services/{service_id}.",
+              "description": "Required. Resource name of the Service. Of the form projects/{project_id}/services/{service_id}.",
               "location": "path",
               "pattern": "^[^/]+/[^/]+/services/[^/]+$",
               "required": true,
@@ -1538,7 +1538,7 @@
               "type": "string"
             },
             "parent": {
-              "description": "Resource name of the parent Workspace. Of the form projects/{project_id}.",
+              "description": "Required. Resource name of the parent containing the listed services, either a project or Stackdriver Account (workspace).One of the forms: \"projects/{project_id}\" \"workspaces/{host_project_id}\"",
               "location": "path",
               "pattern": "^[^/]+/[^/]+$",
               "required": true,
@@ -1604,7 +1604,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Resource name of the parent Service. Of the form projects/{project_id}/services/{service_id}.",
+                  "description": "Required. Resource name of the parent Service. Of the form projects/{project_id}/services/{service_id}.",
                   "location": "path",
                   "pattern": "^[^/]+/[^/]+/services/[^/]+$",
                   "required": true,
@@ -1638,7 +1638,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Resource name of the ServiceLevelObjective to delete. Of the form projects/{project_id}/services/{service_id}/serviceLevelObjectives/{slo_name}.",
+                  "description": "Required. Resource name of the ServiceLevelObjective to delete. Of the form projects/{project_id}/services/{service_id}/serviceLevelObjectives/{slo_name}.",
                   "location": "path",
                   "pattern": "^[^/]+/[^/]+/services/[^/]+/serviceLevelObjectives/[^/]+$",
                   "required": true,
@@ -1664,7 +1664,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Resource name of the ServiceLevelObjective to get. Of the form projects/{project_id}/services/{service_id}/serviceLevelObjectives/{slo_name}.",
+                  "description": "Required. Resource name of the ServiceLevelObjective to get. Of the form projects/{project_id}/services/{service_id}/serviceLevelObjectives/{slo_name}.",
                   "location": "path",
                   "pattern": "^[^/]+/[^/]+/services/[^/]+/serviceLevelObjectives/[^/]+$",
                   "required": true,
@@ -1717,7 +1717,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Resource name of the parent Service. Of the form projects/{project_id}/services/{service_id}.",
+                  "description": "Required. Resource name of the parent Service. Of the form projects/{project_id}/services/{service_id}.",
                   "location": "path",
                   "pattern": "^[^/]+/[^/]+/services/[^/]+$",
                   "required": true,
@@ -1817,7 +1817,7 @@
       }
     }
   },
-  "revision": "20200126",
+  "revision": "20200204",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -2330,7 +2330,7 @@
       "id": "CreateTimeSeriesRequest",
       "properties": {
         "timeSeries": {
-          "description": "The new data to be added to a list of time series. Adds at most one data point to each of several time series. The new data point must be more recent than any other point in its time series. Each TimeSeries value must fully specify a unique time series by supplying all label values for the metric and the monitored resource.The maximum number of TimeSeries objects per Create request is 200.",
+          "description": "Required. The new data to be added to a list of time series. Adds at most one data point to each of several time series. The new data point must be more recent than any other point in its time series. Each TimeSeries value must fully specify a unique time series by supplying all label values for the metric and the monitored resource.The maximum number of TimeSeries objects per Create request is 200.",
           "items": {
             "$ref": "TimeSeries"
           },
@@ -4183,7 +4183,7 @@
       "id": "VerifyNotificationChannelRequest",
       "properties": {
         "code": {
-          "description": "The verification code that was delivered to the channel as a result of invoking the SendNotificationChannelVerificationCode API method or that was retrieved from a verified channel via GetNotificationChannelVerificationCode. For example, one might have \"G-123456\" or \"TKNZGhhd2EyN3I1MnRnMjRv\" (in general, one is only guaranteed that the code is valid UTF-8; one should not make any assumptions regarding the structure or format of the code).",
+          "description": "Required. The verification code that was delivered to the channel as a result of invoking the SendNotificationChannelVerificationCode API method or that was retrieved from a verified channel via GetNotificationChannelVerificationCode. For example, one might have \"G-123456\" or \"TKNZGhhd2EyN3I1MnRnMjRv\" (in general, one is only guaranteed that the code is valid UTF-8; one should not make any assumptions regarding the structure or format of the code).",
           "type": "string"
         }
       },

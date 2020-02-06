@@ -150,7 +150,7 @@ func WithGRPCConnectionPool(size int) ClientOption {
 type withGRPCConnectionPool int
 
 func (w withGRPCConnectionPool) Apply(o *internal.DialSettings) {
-	o.GRPCConnPool = int(w)
+	o.GRPCConnPoolSize = int(w)
 }
 
 // WithAPIKey returns a ClientOption that specifies an API key to be used

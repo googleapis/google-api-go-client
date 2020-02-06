@@ -36,13 +36,16 @@ var timeoutDialerOption grpc.DialOption
 // Dial returns a GRPC connection for use communicating with a Google cloud
 // service, configured with the given ClientOptions.
 func Dial(ctx context.Context, opts ...option.ClientOption) (*grpc.ClientConn, error) {
-	var o internal.DialSettings
-	for _, opt := range opts {
-		opt.Apply(&o)
+	o, err := processAndValidateOpts(opts)
+	if err != nil {
+		return nil, err
 	}
-	if o.GRPCConnPool != 0 {
+	if o.GRPCConnPool != nil {
+		return o.GRPCConnPool.Conn(), nil
+	}
+	if o.GRPCConnPoolSize != 0 {
 		// NOTE(cbro): RoundRobin and WithBalancer are deprecated and we need to remove usages of it.
-		balancer := grpc.RoundRobin(internal.NewPoolResolver(o.GRPCConnPool, &o))
+		balancer := grpc.RoundRobin(internal.NewPoolResolver(o.GRPCConnPoolSize, o))
 		o.GRPCDialOpts = append(o.GRPCDialOpts, grpc.WithBalancer(balancer))
 	}
 	return dial(ctx, false, o)
@@ -52,9 +55,9 @@ func Dial(ctx context.Context, opts ...option.ClientOption) (*grpc.ClientConn, e
 // with fake or mock Google cloud service implementations, such as emulators.
 // The connection is configured with the given ClientOptions.
 func DialInsecure(ctx context.Context, opts ...option.ClientOption) (*grpc.ClientConn, error) {
-	var o internal.DialSettings
-	for _, opt := range opts {
-		opt.Apply(&o)
+	o, err := processAndValidateOpts(opts)
+	if err != nil {
+		return nil, err
 	}
 	return dial(ctx, true, o)
 }
@@ -67,12 +70,15 @@ func DialInsecure(ctx context.Context, opts ...option.ClientOption) (*grpc.Clien
 //
 // This API is subject to change as we further refine requirements. It will go away if gRPC stubs accept an interface instead of the concrete ClientConn type. See https://github.com/grpc/grpc-go/issues/1287.
 func DialPool(ctx context.Context, opts ...option.ClientOption) (ConnPool, error) {
-	var o internal.DialSettings
-	for _, opt := range opts {
-		opt.Apply(&o)
+	o, err := processAndValidateOpts(opts)
+	if err != nil {
+		return nil, err
 	}
-	poolSize := o.GRPCConnPool
-	o.GRPCConnPool = 0 // we don't *need* to set this to zero, but it's safe to.
+	if o.GRPCConnPool != nil {
+		return o.GRPCConnPool, nil
+	}
+	poolSize := o.GRPCConnPoolSize
+	o.GRPCConnPoolSize = 0 // we don't *need* to set this to zero, but it's safe to.
 
 	if poolSize == 0 || poolSize == 1 {
 		// Fast path for common case for a connection pool with a single connection.
@@ -95,10 +101,7 @@ func DialPool(ctx context.Context, opts ...option.ClientOption) (ConnPool, error
 	return pool, nil
 }
 
-func dial(ctx context.Context, insecure bool, o internal.DialSettings) (*grpc.ClientConn, error) {
-	if err := o.Validate(); err != nil {
-		return nil, err
-	}
+func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.ClientConn, error) {
 	if o.HTTPClient != nil {
 		return nil, errors.New("unsupported HTTP client specified")
 	}
@@ -112,7 +115,7 @@ func dial(ctx context.Context, insecure bool, o internal.DialSettings) (*grpc.Cl
 		if o.APIKey != "" {
 			log.Print("API keys are not supported for gRPC APIs. Remove the WithAPIKey option from your client-creating call.")
 		}
-		creds, err := internal.Creds(ctx, &o)
+		creds, err := internal.Creds(ctx, o)
 		if err != nil {
 			return nil, err
 		}
@@ -180,7 +183,7 @@ func dial(ctx context.Context, insecure bool, o internal.DialSettings) (*grpc.Cl
 	return grpc.DialContext(ctx, o.Endpoint, grpcOpts...)
 }
 
-func addOCStatsHandler(opts []grpc.DialOption, settings internal.DialSettings) []grpc.DialOption {
+func addOCStatsHandler(opts []grpc.DialOption, settings *internal.DialSettings) []grpc.DialOption {
 	if settings.TelemetryDisabled {
 		return opts
 	}
@@ -254,4 +257,31 @@ func isDirectPathEnabled(endpoint string) bool {
 		}
 	}
 	return false
+}
+
+func processAndValidateOpts(opts []option.ClientOption) (*internal.DialSettings, error) {
+	var o internal.DialSettings
+	for _, opt := range opts {
+		opt.Apply(&o)
+	}
+	if err := o.Validate(); err != nil {
+		return nil, err
+	}
+	return &o, nil
+}
+
+type connPoolOption struct{ ConnPool }
+
+// WithConnPool returns a ClientOption that specifies the ConnPool
+// connection to use as the basis of communications.
+//
+// This is only to be used by Google client libraries internally, for example
+// when creating a longrunning API client that shares the same connection pool
+// as a service client.
+func WithConnPool(p ConnPool) option.ClientOption {
+	return connPoolOption{p}
+}
+
+func (o connPoolOption) Apply(s *internal.DialSettings) {
+	s.GRPCConnPool = o.ConnPool
 }

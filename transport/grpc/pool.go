@@ -9,56 +9,23 @@ import (
 	"fmt"
 	"sync/atomic"
 
+	"google.golang.org/api/internal"
 	"google.golang.org/grpc"
 )
 
 // ConnPool is a pool of grpc.ClientConns.
-type ConnPool interface {
-	// Conn returns a ClientConn from the pool.
-	//
-	// Conns aren't returned to the pool.
-	Conn() *grpc.ClientConn
-
-	// Num returns the number of connections in the pool.
-	//
-	// It will always return the same value.
-	Num() int
-
-	// Close closes every ClientConn in the pool.
-	//
-	// The error returned by Close may be a single error or multiple errors.
-	Close() error
-
-	grpc.ClientConnInterface
-}
+type ConnPool = internal.ConnPool // NOTE(cbro): type alias to export the type. It must live in internal to avoid a circular dependency.
 
 var _ ConnPool = &roundRobinConnPool{}
 var _ ConnPool = &singleConnPool{}
 
 // singleConnPool is a special case for a single connection.
 type singleConnPool struct {
-	conn *grpc.ClientConn
+	*grpc.ClientConn
 }
 
-func (p *singleConnPool) Conn() *grpc.ClientConn {
-	return p.conn
-}
-
-func (p *singleConnPool) Num() int {
-	return 1
-}
-
-func (p *singleConnPool) Close() error {
-	return p.conn.Close()
-}
-
-func (p *singleConnPool) Invoke(ctx context.Context, method string, args interface{}, reply interface{}, opts ...grpc.CallOption) error {
-	return p.conn.Invoke(ctx, method, args, reply, opts...)
-}
-
-func (p *singleConnPool) NewStream(ctx context.Context, desc *grpc.StreamDesc, method string, opts ...grpc.CallOption) (grpc.ClientStream, error) {
-	return p.conn.NewStream(ctx, desc, method, opts...)
-}
+func (p *singleConnPool) Conn() *grpc.ClientConn { return p.ClientConn }
+func (p *singleConnPool) Num() int               { return 1 }
 
 type roundRobinConnPool struct {
 	conns []*grpc.ClientConn

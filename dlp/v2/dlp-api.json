@@ -3130,7 +3130,7 @@
       }
     }
   },
-  "revision": "20200104",
+  "revision": "20200203",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -3251,7 +3251,7 @@
       "id": "GooglePrivacyDlpV2BigQueryKey",
       "properties": {
         "rowNumber": {
-          "description": "Absolute number of the row from the beginning of the table at the time\nof scanning.",
+          "description": "Row number inferred at the time the table was scanned. This value is\nnondeterministic, cannot be queried, and may be null for inspection\njobs. To locate findings within a table, specify\n`inspect_job.storage_config.big_query_options.identifying_fields` in\n`CreateDlpJobRequest`.",
           "format": "int64",
           "type": "string"
         },
@@ -3274,7 +3274,7 @@
           "type": "array"
         },
         "identifyingFields": {
-          "description": "References to fields uniquely identifying rows within the table.\nNested fields in the format, like `person.birthdate.year`, are allowed.",
+          "description": "Table fields that may uniquely identify a row within the table. When\n`actions.saveFindings.outputConfig.table` is specified, the values of\ncolumns specified here are available in the output table under\n`location.content_locations.record_location.record_key.id_values`. Nested\nfields such as `person.birthdate.year` are allowed.",
           "items": {
             "$ref": "GooglePrivacyDlpV2FieldId"
           },
@@ -3750,7 +3750,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2ContentLocation": {
-      "description": "Findings container location data.",
+      "description": "Precise location of the finding within a document, record, image, or metadata\ncontainer.",
       "id": "GooglePrivacyDlpV2ContentLocation",
       "properties": {
         "containerName": {
@@ -6008,7 +6008,7 @@
           "$ref": "GooglePrivacyDlpV2DatastoreKey"
         },
         "idValues": {
-          "description": "Values of identifying columns in the given row. Order of values matches\nthe order of field identifiers specified in the scanning request.",
+          "description": "Values of identifying columns in the given row. Order of values matches\nthe order of `identifying_fields` specified in the scanning request.",
           "items": {
             "type": "string"
           },

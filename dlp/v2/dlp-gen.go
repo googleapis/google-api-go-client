@@ -643,9 +643,15 @@ func (s *GooglePrivacyDlpV2BigQueryField) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2BigQueryKey: Row key for identifying a record in
 // BigQuery table.
 type GooglePrivacyDlpV2BigQueryKey struct {
-	// RowNumber: Absolute number of the row from the beginning of the table
-	// at the time
-	// of scanning.
+	// RowNumber: Row number inferred at the time the table was scanned.
+	// This value is
+	// nondeterministic, cannot be queried, and may be null for
+	// inspection
+	// jobs. To locate findings within a table,
+	// specify
+	// `inspect_job.storage_config.big_query_options.identifying_fiel
+	// ds` in
+	// `CreateDlpJobRequest`.
 	RowNumber int64 `json:"rowNumber,omitempty,string"`
 
 	// TableReference: Complete BigQuery table reference.
@@ -682,10 +688,15 @@ type GooglePrivacyDlpV2BigQueryOptions struct {
 	// inspection of entire columns which you know have no findings.
 	ExcludedFields []*GooglePrivacyDlpV2FieldId `json:"excludedFields,omitempty"`
 
-	// IdentifyingFields: References to fields uniquely identifying rows
-	// within the table.
-	// Nested fields in the format, like `person.birthdate.year`, are
-	// allowed.
+	// IdentifyingFields: Table fields that may uniquely identify a row
+	// within the table. When
+	// `actions.saveFindings.outputConfig.table` is specified, the values
+	// of
+	// columns specified here are available in the output table
+	// under
+	// `location.content_locations.record_location.record_key.id_values
+	// `. Nested
+	// fields such as `person.birthdate.year` are allowed.
 	IdentifyingFields []*GooglePrivacyDlpV2FieldId `json:"identifyingFields,omitempty"`
 
 	// RowsLimit: Max number of rows to scan. If the table has more rows
@@ -1631,7 +1642,9 @@ func (s *GooglePrivacyDlpV2ContentItem) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2ContentLocation: Findings container location data.
+// GooglePrivacyDlpV2ContentLocation: Precise location of the finding
+// within a document, record, image, or metadata
+// container.
 type GooglePrivacyDlpV2ContentLocation struct {
 	// ContainerName: Name of the container where the finding is
 	// located.
@@ -6292,7 +6305,7 @@ type GooglePrivacyDlpV2RecordKey struct {
 
 	// IdValues: Values of identifying columns in the given row. Order of
 	// values matches
-	// the order of field identifiers specified in the scanning request.
+	// the order of `identifying_fields` specified in the scanning request.
 	IdValues []string `json:"idValues,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BigQueryKey") to

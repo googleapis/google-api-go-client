@@ -876,7 +876,7 @@
       }
     }
   },
-  "revision": "20200131",
+  "revision": "20200128",
   "rootUrl": "https://servicemanagement.googleapis.com/",
   "schemas": {
     "Advice": {
@@ -1102,7 +1102,7 @@
           "type": "string"
         },
         "deadline": {
-          "description": "The number of seconds to wait for a response from a request. The default\nvaries based on the request protocol and deployment environment.",
+          "description": "The number of seconds to wait for a response from a request.  The default\ndeadline for gRPC is infinite (no deadline) and HTTP requests is 5 seconds.",
           "format": "double",
           "type": "number"
         },

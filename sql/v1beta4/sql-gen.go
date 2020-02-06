@@ -2480,21 +2480,12 @@ type OnPremisesConfiguration struct {
 	// is encoded in the client's certificate.
 	ClientKey string `json:"clientKey,omitempty"`
 
-	// DumpFilePath: The dump file to create the Cloud SQL replica.
-	DumpFilePath string `json:"dumpFilePath,omitempty"`
-
 	// HostPort: The host and port of the on-premises instance in host:port
 	// format
 	HostPort string `json:"hostPort,omitempty"`
 
 	// Kind: This is always <code>sql#onPremisesConfiguration</code>.
 	Kind string `json:"kind,omitempty"`
-
-	// Password: The password for connecting to on-premises instance.
-	Password string `json:"password,omitempty"`
-
-	// Username: The username for connecting to on-premises instance.
-	Username string `json:"username,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CaCertificate") to
 	// unconditionally include in API requests. By default, fields with
@@ -2618,8 +2609,6 @@ type Operation struct {
 	//   "DEFER_MAINTENANCE"
 	//   "CREATE_CLONE" - Creates clone instance.
 	//   "RESCHEDULE_MAINTENANCE" - Reschedule maintenance to another time.
-	//   "START_EXTERNAL_SYNC" - Starts external sync of a Cloud SQL EM
-	// replica to an external master.
 	OperationType string `json:"operationType,omitempty"`
 
 	// SelfLink: The URI of this resource.
@@ -2864,11 +2853,7 @@ type Reschedule struct {
 
 	// ScheduleTime: Optional. Timestamp when the maintenance shall be
 	// rescheduled to if
-	// reschedule_type=SPECIFIC_TIME, in
-	// <a
-	// href="https://tools.ietf.org/html/rfc3339">RFC 3339</a> format,
-	// for
-	// example <code>2012-11-15T16:19:00.094Z</code>.
+	// reschedule_type=SPECIFIC_TIME.
 	ScheduleTime string `json:"scheduleTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RescheduleType") to
@@ -3182,48 +3167,6 @@ func (s *Settings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SqlExternalSyncSettingError: External master migration setting error.
-type SqlExternalSyncSettingError struct {
-	// Detail: Additional information about the error encountered.
-	Detail string `json:"detail,omitempty"`
-
-	// Kind: This is always <code>sql#migrationSettingError</code>.
-	Kind string `json:"kind,omitempty"`
-
-	// Type: Identifies the specific error that occurred.
-	//
-	// Possible values:
-	//   "SQL_EXTERNAL_SYNC_SETTING_ERROR_TYPE_UNSPECIFIED"
-	//   "CONNECTION_FAILURE"
-	//   "BINLOG_NOT_ENABLED"
-	//   "INCOMPATIBLE_DATABASE_VERSION"
-	//   "REPLICA_ALREADY_SETUP"
-	//   "INSUFFICIENT_PRIVILEGE"
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Detail") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Detail") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SqlExternalSyncSettingError) MarshalJSON() ([]byte, error) {
-	type NoMethod SqlExternalSyncSettingError
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // SqlInstancesRescheduleMaintenanceRequestBody: Reschedule options for
 // maintenance windows.
 type SqlInstancesRescheduleMaintenanceRequestBody struct {
@@ -3249,42 +3192,6 @@ type SqlInstancesRescheduleMaintenanceRequestBody struct {
 
 func (s *SqlInstancesRescheduleMaintenanceRequestBody) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlInstancesRescheduleMaintenanceRequestBody
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SqlInstancesVerifyExternalSyncSettingsResponse: Instance verify
-// external sync settings response.
-type SqlInstancesVerifyExternalSyncSettingsResponse struct {
-	// Errors: List of migration violations.
-	Errors []*SqlExternalSyncSettingError `json:"errors,omitempty"`
-
-	// Kind: This is always <code>sql#migrationSettingErrorList</code>.
-	Kind string `json:"kind,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Errors") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Errors") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SqlInstancesVerifyExternalSyncSettingsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod SqlInstancesVerifyExternalSyncSettingsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3908,7 +3815,7 @@ func (c *BackupRunsDeleteCall) Header() http.Header {
 
 func (c *BackupRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4086,7 +3993,7 @@ func (c *BackupRunsGetCall) Header() http.Header {
 
 func (c *BackupRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4255,7 +4162,7 @@ func (c *BackupRunsInsertCall) Header() http.Header {
 
 func (c *BackupRunsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4445,7 +4352,7 @@ func (c *BackupRunsListCall) Header() http.Header {
 
 func (c *BackupRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4638,7 +4545,7 @@ func (c *DatabasesDeleteCall) Header() http.Header {
 
 func (c *DatabasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4817,7 +4724,7 @@ func (c *DatabasesGetCall) Header() http.Header {
 
 func (c *DatabasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4985,7 +4892,7 @@ func (c *DatabasesInsertCall) Header() http.Header {
 
 func (c *DatabasesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5157,7 +5064,7 @@ func (c *DatabasesListCall) Header() http.Header {
 
 func (c *DatabasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5332,7 +5239,7 @@ func (c *DatabasesPatchCall) Header() http.Header {
 
 func (c *DatabasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5510,7 +5417,7 @@ func (c *DatabasesUpdateCall) Header() http.Header {
 
 func (c *DatabasesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5687,7 +5594,7 @@ func (c *FlagsListCall) Header() http.Header {
 
 func (c *FlagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5832,7 +5739,7 @@ func (c *InstancesAddServerCaCall) Header() http.Header {
 
 func (c *InstancesAddServerCaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5988,7 +5895,7 @@ func (c *InstancesCloneCall) Header() http.Header {
 
 func (c *InstancesCloneCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6149,7 +6056,7 @@ func (c *InstancesDeleteCall) Header() http.Header {
 
 func (c *InstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6306,7 +6213,7 @@ func (c *InstancesDemoteMasterCall) Header() http.Header {
 
 func (c *InstancesDemoteMasterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6471,7 +6378,7 @@ func (c *InstancesExportCall) Header() http.Header {
 
 func (c *InstancesExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6635,7 +6542,7 @@ func (c *InstancesFailoverCall) Header() http.Header {
 
 func (c *InstancesFailoverCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6808,7 +6715,7 @@ func (c *InstancesGetCall) Header() http.Header {
 
 func (c *InstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6968,7 +6875,7 @@ func (c *InstancesImportCall) Header() http.Header {
 
 func (c *InstancesImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7128,7 +7035,7 @@ func (c *InstancesInsertCall) Header() http.Header {
 
 func (c *InstancesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7327,7 +7234,7 @@ func (c *InstancesListCall) Header() http.Header {
 
 func (c *InstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7531,7 +7438,7 @@ func (c *InstancesListServerCasCall) Header() http.Header {
 
 func (c *InstancesListServerCasCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7690,7 +7597,7 @@ func (c *InstancesPatchCall) Header() http.Header {
 
 func (c *InstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7852,7 +7759,7 @@ func (c *InstancesPromoteReplicaCall) Header() http.Header {
 
 func (c *InstancesPromoteReplicaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8007,7 +7914,7 @@ func (c *InstancesResetSslConfigCall) Header() http.Header {
 
 func (c *InstancesResetSslConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8160,7 +8067,7 @@ func (c *InstancesRestartCall) Header() http.Header {
 
 func (c *InstancesRestartCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8317,7 +8224,7 @@ func (c *InstancesRestoreBackupCall) Header() http.Header {
 
 func (c *InstancesRestoreBackupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8482,7 +8389,7 @@ func (c *InstancesRotateServerCaCall) Header() http.Header {
 
 func (c *InstancesRotateServerCaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8645,7 +8552,7 @@ func (c *InstancesStartReplicaCall) Header() http.Header {
 
 func (c *InstancesStartReplicaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8800,7 +8707,7 @@ func (c *InstancesStopReplicaCall) Header() http.Header {
 
 func (c *InstancesStopReplicaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8955,7 +8862,7 @@ func (c *InstancesTruncateLogCall) Header() http.Header {
 
 func (c *InstancesTruncateLogCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9118,7 +9025,7 @@ func (c *InstancesUpdateCall) Header() http.Header {
 
 func (c *InstancesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9292,7 +9199,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9485,7 +9392,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9675,7 +9582,7 @@ func (c *ProjectsInstancesRescheduleMaintenanceCall) Header() http.Header {
 
 func (c *ProjectsInstancesRescheduleMaintenanceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9782,373 +9689,6 @@ func (c *ProjectsInstancesRescheduleMaintenanceCall) Do(opts ...googleapi.CallOp
 
 }
 
-// method id "sql.projects.instances.startExternalSync":
-
-type ProjectsInstancesStartExternalSyncCall struct {
-	s          *Service
-	project    string
-	instance   string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// StartExternalSync: Start External master migration.
-func (r *ProjectsInstancesService) StartExternalSync(project string, instance string) *ProjectsInstancesStartExternalSyncCall {
-	c := &ProjectsInstancesStartExternalSyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.project = project
-	c.instance = instance
-	return c
-}
-
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL starts this database instance
-// external sync.
-// Format:
-// projects/{project}/locations/{location}/instances/{instance}
-func (c *ProjectsInstancesStartExternalSyncCall) Parent(parent string) *ProjectsInstancesStartExternalSyncCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
-// SyncMode sets the optional parameter "syncMode": External sync mode
-//
-// Possible values:
-//   "EXTERNAL_SYNC_MODE_UNSPECIFIED"
-//   "ONLINE"
-//   "OFFLINE"
-func (c *ProjectsInstancesStartExternalSyncCall) SyncMode(syncMode string) *ProjectsInstancesStartExternalSyncCall {
-	c.urlParams_.Set("syncMode", syncMode)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsInstancesStartExternalSyncCall) Fields(s ...googleapi.Field) *ProjectsInstancesStartExternalSyncCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsInstancesStartExternalSyncCall) Context(ctx context.Context) *ProjectsInstancesStartExternalSyncCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsInstancesStartExternalSyncCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsInstancesStartExternalSyncCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "sql/v1beta4/projects/{project}/instances/{instance}/startExternalSync")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"project":  c.project,
-		"instance": c.instance,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "sql.projects.instances.startExternalSync" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsInstancesStartExternalSyncCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Start External master migration.",
-	//   "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/startExternalSync",
-	//   "httpMethod": "POST",
-	//   "id": "sql.projects.instances.startExternalSync",
-	//   "parameterOrder": [
-	//     "project",
-	//     "instance"
-	//   ],
-	//   "parameters": {
-	//     "instance": {
-	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL starts this database instance\nexternal sync. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "project": {
-	//       "description": "ID of the project that contains the first generation instance.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "syncMode": {
-	//       "description": "External sync mode",
-	//       "enum": [
-	//         "EXTERNAL_SYNC_MODE_UNSPECIFIED",
-	//         "ONLINE",
-	//         "OFFLINE"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/startExternalSync",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/sqlservice.admin"
-	//   ]
-	// }
-
-}
-
-// method id "sql.projects.instances.verifyExternalSyncSettings":
-
-type ProjectsInstancesVerifyExternalSyncSettingsCall struct {
-	s          *Service
-	project    string
-	instance   string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// VerifyExternalSyncSettings: Verify External master external sync
-// settings.
-func (r *ProjectsInstancesService) VerifyExternalSyncSettings(project string, instance string) *ProjectsInstancesVerifyExternalSyncSettingsCall {
-	c := &ProjectsInstancesVerifyExternalSyncSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.project = project
-	c.instance = instance
-	return c
-}
-
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL verifies this database instance
-// external sync settings.
-// Format:
-// projects/{project}/locations/{location}/instances/{instance}
-func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) Parent(parent string) *ProjectsInstancesVerifyExternalSyncSettingsCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
-// SyncMode sets the optional parameter "syncMode": External sync mode
-//
-// Possible values:
-//   "EXTERNAL_SYNC_MODE_UNSPECIFIED"
-//   "ONLINE"
-//   "OFFLINE"
-func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) SyncMode(syncMode string) *ProjectsInstancesVerifyExternalSyncSettingsCall {
-	c.urlParams_.Set("syncMode", syncMode)
-	return c
-}
-
-// VerifyConnectionOnly sets the optional parameter
-// "verifyConnectionOnly": Flag to enable verifying connection only
-func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) VerifyConnectionOnly(verifyConnectionOnly bool) *ProjectsInstancesVerifyExternalSyncSettingsCall {
-	c.urlParams_.Set("verifyConnectionOnly", fmt.Sprint(verifyConnectionOnly))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) Fields(s ...googleapi.Field) *ProjectsInstancesVerifyExternalSyncSettingsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) Context(ctx context.Context) *ProjectsInstancesVerifyExternalSyncSettingsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "sql/v1beta4/projects/{project}/instances/{instance}/verifyExternalSyncSettings")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"project":  c.project,
-		"instance": c.instance,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "sql.projects.instances.verifyExternalSyncSettings" call.
-// Exactly one of *SqlInstancesVerifyExternalSyncSettingsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *SqlInstancesVerifyExternalSyncSettingsResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) Do(opts ...googleapi.CallOption) (*SqlInstancesVerifyExternalSyncSettingsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &SqlInstancesVerifyExternalSyncSettingsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Verify External master external sync settings.",
-	//   "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/verifyExternalSyncSettings",
-	//   "httpMethod": "POST",
-	//   "id": "sql.projects.instances.verifyExternalSyncSettings",
-	//   "parameterOrder": [
-	//     "project",
-	//     "instance"
-	//   ],
-	//   "parameters": {
-	//     "instance": {
-	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL verifies this database instance\nexternal sync settings. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "project": {
-	//       "description": "Project ID of the project that contains the instance.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "syncMode": {
-	//       "description": "External sync mode",
-	//       "enum": [
-	//         "EXTERNAL_SYNC_MODE_UNSPECIFIED",
-	//         "ONLINE",
-	//         "OFFLINE"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "verifyConnectionOnly": {
-	//       "description": "Flag to enable verifying connection only",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/verifyExternalSyncSettings",
-	//   "response": {
-	//     "$ref": "SqlInstancesVerifyExternalSyncSettingsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/sqlservice.admin"
-	//   ]
-	// }
-
-}
-
 // method id "sql.projects.locations.instances.rescheduleMaintenance":
 
 type ProjectsLocationsInstancesRescheduleMaintenanceCall struct {
@@ -10210,7 +9750,7 @@ func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) Header() http.Head
 
 func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10315,373 +9855,6 @@ func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) Do(opts ...googlea
 
 }
 
-// method id "sql.projects.locations.instances.startExternalSync":
-
-type ProjectsLocationsInstancesStartExternalSyncCall struct {
-	s          *Service
-	parent     string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// StartExternalSync: Start External master migration.
-func (r *ProjectsLocationsInstancesService) StartExternalSync(parent string) *ProjectsLocationsInstancesStartExternalSyncCall {
-	c := &ProjectsLocationsInstancesStartExternalSyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Instance sets the optional parameter "instance": Cloud SQL instance
-// ID. This does not include the project ID.
-func (c *ProjectsLocationsInstancesStartExternalSyncCall) Instance(instance string) *ProjectsLocationsInstancesStartExternalSyncCall {
-	c.urlParams_.Set("instance", instance)
-	return c
-}
-
-// Project sets the optional parameter "project": ID of the project that
-// contains the first generation instance.
-func (c *ProjectsLocationsInstancesStartExternalSyncCall) Project(project string) *ProjectsLocationsInstancesStartExternalSyncCall {
-	c.urlParams_.Set("project", project)
-	return c
-}
-
-// SyncMode sets the optional parameter "syncMode": External sync mode
-//
-// Possible values:
-//   "EXTERNAL_SYNC_MODE_UNSPECIFIED"
-//   "ONLINE"
-//   "OFFLINE"
-func (c *ProjectsLocationsInstancesStartExternalSyncCall) SyncMode(syncMode string) *ProjectsLocationsInstancesStartExternalSyncCall {
-	c.urlParams_.Set("syncMode", syncMode)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsInstancesStartExternalSyncCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesStartExternalSyncCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsInstancesStartExternalSyncCall) Context(ctx context.Context) *ProjectsLocationsInstancesStartExternalSyncCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsInstancesStartExternalSyncCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsInstancesStartExternalSyncCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "sql/v1beta4/{+parent}/startExternalSync")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "sql.projects.locations.instances.startExternalSync" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsInstancesStartExternalSyncCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Start External master migration.",
-	//   "flatPath": "sql/v1beta4/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/startExternalSync",
-	//   "httpMethod": "POST",
-	//   "id": "sql.projects.locations.instances.startExternalSync",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "instance": {
-	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL starts this database instance\nexternal sync. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "project": {
-	//       "description": "ID of the project that contains the first generation instance.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "syncMode": {
-	//       "description": "External sync mode",
-	//       "enum": [
-	//         "EXTERNAL_SYNC_MODE_UNSPECIFIED",
-	//         "ONLINE",
-	//         "OFFLINE"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "sql/v1beta4/{+parent}/startExternalSync",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/sqlservice.admin"
-	//   ]
-	// }
-
-}
-
-// method id "sql.projects.locations.instances.verifyExternalSyncSettings":
-
-type ProjectsLocationsInstancesVerifyExternalSyncSettingsCall struct {
-	s          *Service
-	parent     string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// VerifyExternalSyncSettings: Verify External master external sync
-// settings.
-func (r *ProjectsLocationsInstancesService) VerifyExternalSyncSettings(parent string) *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall {
-	c := &ProjectsLocationsInstancesVerifyExternalSyncSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Instance sets the optional parameter "instance": Cloud SQL instance
-// ID. This does not include the project ID.
-func (c *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall) Instance(instance string) *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall {
-	c.urlParams_.Set("instance", instance)
-	return c
-}
-
-// Project sets the optional parameter "project": Project ID of the
-// project that contains the instance.
-func (c *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall) Project(project string) *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall {
-	c.urlParams_.Set("project", project)
-	return c
-}
-
-// SyncMode sets the optional parameter "syncMode": External sync mode
-//
-// Possible values:
-//   "EXTERNAL_SYNC_MODE_UNSPECIFIED"
-//   "ONLINE"
-//   "OFFLINE"
-func (c *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall) SyncMode(syncMode string) *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall {
-	c.urlParams_.Set("syncMode", syncMode)
-	return c
-}
-
-// VerifyConnectionOnly sets the optional parameter
-// "verifyConnectionOnly": Flag to enable verifying connection only
-func (c *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall) VerifyConnectionOnly(verifyConnectionOnly bool) *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall {
-	c.urlParams_.Set("verifyConnectionOnly", fmt.Sprint(verifyConnectionOnly))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall) Context(ctx context.Context) *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "sql/v1beta4/{+parent}/verifyExternalSyncSettings")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "sql.projects.locations.instances.verifyExternalSyncSettings" call.
-// Exactly one of *SqlInstancesVerifyExternalSyncSettingsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *SqlInstancesVerifyExternalSyncSettingsResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall) Do(opts ...googleapi.CallOption) (*SqlInstancesVerifyExternalSyncSettingsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &SqlInstancesVerifyExternalSyncSettingsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Verify External master external sync settings.",
-	//   "flatPath": "sql/v1beta4/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/verifyExternalSyncSettings",
-	//   "httpMethod": "POST",
-	//   "id": "sql.projects.locations.instances.verifyExternalSyncSettings",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "instance": {
-	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL verifies this database instance\nexternal sync settings. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "project": {
-	//       "description": "Project ID of the project that contains the instance.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "syncMode": {
-	//       "description": "External sync mode",
-	//       "enum": [
-	//         "EXTERNAL_SYNC_MODE_UNSPECIFIED",
-	//         "ONLINE",
-	//         "OFFLINE"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "verifyConnectionOnly": {
-	//       "description": "Flag to enable verifying connection only",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "sql/v1beta4/{+parent}/verifyExternalSyncSettings",
-	//   "response": {
-	//     "$ref": "SqlInstancesVerifyExternalSyncSettingsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/sqlservice.admin"
-	//   ]
-	// }
-
-}
-
 // method id "sql.sslCerts.createEphemeral":
 
 type SslCertsCreateEphemeralCall struct {
@@ -10744,7 +9917,7 @@ func (c *SslCertsCreateEphemeralCall) Header() http.Header {
 
 func (c *SslCertsCreateEphemeralCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10912,7 +10085,7 @@ func (c *SslCertsDeleteCall) Header() http.Header {
 
 func (c *SslCertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11093,7 +10266,7 @@ func (c *SslCertsGetCall) Header() http.Header {
 
 func (c *SslCertsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11263,7 +10436,7 @@ func (c *SslCertsInsertCall) Header() http.Header {
 
 func (c *SslCertsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11435,7 +10608,7 @@ func (c *SslCertsListCall) Header() http.Header {
 
 func (c *SslCertsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11596,7 +10769,7 @@ func (c *TiersListCall) Header() http.Header {
 
 func (c *TiersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11754,7 +10927,7 @@ func (c *UsersDeleteCall) Header() http.Header {
 
 func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11919,7 +11092,7 @@ func (c *UsersInsertCall) Header() http.Header {
 
 func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12091,7 +11264,7 @@ func (c *UsersListCall) Header() http.Header {
 
 func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12264,7 +11437,7 @@ func (c *UsersUpdateCall) Header() http.Header {
 
 func (c *UsersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

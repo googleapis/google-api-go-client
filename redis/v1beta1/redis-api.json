@@ -22,7 +22,6 @@
   },
   "id": "redis:v1beta1",
   "kind": "discovery#restDescription",
-  "mtlsRootUrl": "https://redis.mtls.googleapis.com/",
   "name": "redis",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -571,7 +570,7 @@
       }
     }
   },
-  "revision": "20200204",
+  "revision": "20200124",
   "rootUrl": "https://redis.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -723,20 +722,6 @@
         },
         "authorizedNetwork": {
           "description": "Optional. The full name of the Google Compute Engine\n[network](/compute/docs/networks-and-firewalls#networks) to which the\ninstance is connected. If left unspecified, the `default` network\nwill be used.",
-          "type": "string"
-        },
-        "connectMode": {
-          "description": "Optional. The connect mode of Redis instance.\nIf not provided, default one will be used.\nCurrent default: DIRECT_PEERING.",
-          "enum": [
-            "CONNECT_MODE_UNSPECIFIED",
-            "DIRECT_PEERING",
-            "PRIVATE_SERVICE_ACCESS"
-          ],
-          "enumDescriptions": [
-            "Not set.",
-            "Connect via directly peering with memorystore redis hosted service.",
-            "Connect with google via private service access and share connection\nacross google managed services."
-          ],
           "type": "string"
         },
         "createTime": {

@@ -270,31 +270,6 @@
             "https://www.googleapis.com/auth/cloud-platform"
           ]
         },
-        "delete": {
-          "description": "This method is not supported and the server returns `UNIMPLEMENTED`.",
-          "flatPath": "v1/transferOperations/{transferOperationsId}",
-          "httpMethod": "DELETE",
-          "id": "storagetransfer.transferOperations.delete",
-          "parameterOrder": [
-            "name"
-          ],
-          "parameters": {
-            "name": {
-              "description": "The name of the operation resource to be deleted.",
-              "location": "path",
-              "pattern": "^transferOperations/.+$",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "v1/{+name}",
-          "response": {
-            "$ref": "Empty"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
-          ]
-        },
         "get": {
           "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
           "flatPath": "v1/transferOperations/{transferOperationsId}",
@@ -420,7 +395,7 @@
       }
     }
   },
-  "revision": "20191206",
+  "revision": "20200203",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AwsAccessKey": {

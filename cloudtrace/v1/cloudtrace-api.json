@@ -113,7 +113,7 @@
     "projects": {
       "methods": {
         "patchTraces": {
-          "description": "Sends new traces to Stackdriver Trace or updates existing traces. If the ID\nof a trace that you send matches that of an existing trace, any fields\nin the existing trace and its spans are overwritten by the provided values,\nand any new fields provided are merged with the existing trace data. If the\nID does not match, a new trace is created.\nIn this case, writing traces is not consider an active developer\nmethod since traces are machine generated.",
+          "description": "Sends new traces to Stackdriver Trace or updates existing traces. If the ID\nof a trace that you send matches that of an existing trace, any fields\nin the existing trace and its spans are overwritten by the provided values,\nand any new fields provided are merged with the existing trace data. If the\nID does not match, a new trace is created.\nIn this case, writing traces is not considered an active developer\nmethod since traces are machine generated.",
           "flatPath": "v1/projects/{projectId}/traces",
           "httpMethod": "PATCH",
           "id": "cloudtrace.projects.patchTraces",
@@ -250,7 +250,7 @@
       }
     }
   },
-  "revision": "20200128",
+  "revision": "20200203",
   "rootUrl": "https://cloudtrace.googleapis.com/",
   "schemas": {
     "Empty": {

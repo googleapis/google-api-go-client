@@ -431,7 +431,7 @@ type ProjectsPatchTracesCall struct {
 // and any new fields provided are merged with the existing trace data.
 // If the
 // ID does not match, a new trace is created.
-// In this case, writing traces is not consider an active
+// In this case, writing traces is not considered an active
 // developer
 // method since traces are machine generated.
 func (r *ProjectsService) PatchTraces(projectId string, traces *Traces) *ProjectsPatchTracesCall {
@@ -468,7 +468,7 @@ func (c *ProjectsPatchTracesCall) Header() http.Header {
 
 func (c *ProjectsPatchTracesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -532,7 +532,7 @@ func (c *ProjectsPatchTracesCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Sends new traces to Stackdriver Trace or updates existing traces. If the ID\nof a trace that you send matches that of an existing trace, any fields\nin the existing trace and its spans are overwritten by the provided values,\nand any new fields provided are merged with the existing trace data. If the\nID does not match, a new trace is created.\nIn this case, writing traces is not consider an active developer\nmethod since traces are machine generated.",
+	//   "description": "Sends new traces to Stackdriver Trace or updates existing traces. If the ID\nof a trace that you send matches that of an existing trace, any fields\nin the existing trace and its spans are overwritten by the provided values,\nand any new fields provided are merged with the existing trace data. If the\nID does not match, a new trace is created.\nIn this case, writing traces is not considered an active developer\nmethod since traces are machine generated.",
 	//   "flatPath": "v1/projects/{projectId}/traces",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudtrace.projects.patchTraces",
@@ -622,7 +622,7 @@ func (c *ProjectsTracesGetCall) Header() http.Header {
 
 func (c *ProjectsTracesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -892,7 +892,7 @@ func (c *ProjectsTracesListCall) Header() http.Header {
 
 func (c *ProjectsTracesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

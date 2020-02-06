@@ -988,7 +988,7 @@ type ProjectsTracesBatchWriteCall struct {
 // BatchWrite: Sends new spans to new or existing traces. You cannot
 // update
 // existing spans.
-// In this case, writing traces is not consider an active
+// In this case, writing traces is not considered an active
 // developer
 // method since traces are machine generated.
 func (r *ProjectsTracesService) BatchWrite(name string, batchwritespansrequest *BatchWriteSpansRequest) *ProjectsTracesBatchWriteCall {
@@ -1025,7 +1025,7 @@ func (c *ProjectsTracesBatchWriteCall) Header() http.Header {
 
 func (c *ProjectsTracesBatchWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1089,7 +1089,7 @@ func (c *ProjectsTracesBatchWriteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	}
 	return ret, nil
 	// {
-	//   "description": "Sends new spans to new or existing traces. You cannot update\nexisting spans.\nIn this case, writing traces is not consider an active developer\nmethod since traces are machine generated.",
+	//   "description": "Sends new spans to new or existing traces. You cannot update\nexisting spans.\nIn this case, writing traces is not considered an active developer\nmethod since traces are machine generated.",
 	//   "flatPath": "v2/projects/{projectsId}/traces:batchWrite",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtrace.projects.traces.batchWrite",
@@ -1132,7 +1132,7 @@ type ProjectsTracesSpansCreateSpanCall struct {
 }
 
 // CreateSpan: Creates a new span.
-// In this case, writing traces is not consider an active
+// In this case, writing traces is not considered an active
 // developer
 // method since traces are machine generated.
 func (r *ProjectsTracesSpansService) CreateSpan(nameid string, span *Span) *ProjectsTracesSpansCreateSpanCall {
@@ -1169,7 +1169,7 @@ func (c *ProjectsTracesSpansCreateSpanCall) Header() http.Header {
 
 func (c *ProjectsTracesSpansCreateSpanCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1233,7 +1233,7 @@ func (c *ProjectsTracesSpansCreateSpanCall) Do(opts ...googleapi.CallOption) (*S
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new span.\nIn this case, writing traces is not consider an active developer\nmethod since traces are machine generated.",
+	//   "description": "Creates a new span.\nIn this case, writing traces is not considered an active developer\nmethod since traces are machine generated.",
 	//   "flatPath": "v2/projects/{projectsId}/traces/{tracesId}/spans/{spansId}",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtrace.projects.traces.spans.createSpan",

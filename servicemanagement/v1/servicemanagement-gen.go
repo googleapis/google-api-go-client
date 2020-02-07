@@ -787,9 +787,8 @@ type BackendRule struct {
 	Address string `json:"address,omitempty"`
 
 	// Deadline: The number of seconds to wait for a response from a
-	// request.  The default
-	// deadline for gRPC is infinite (no deadline) and HTTP requests is 5
-	// seconds.
+	// request. The default
+	// varies based on the request protocol and deployment environment.
 	Deadline float64 `json:"deadline,omitempty"`
 
 	// DisableAuth: When disable_auth is false,  a JWT ID token will be

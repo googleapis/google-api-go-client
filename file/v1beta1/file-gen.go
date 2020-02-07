@@ -849,8 +849,8 @@ type Instance struct {
 	// CreateTime: Output only. The time when the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Description: Optional. A description of the instance (2048 characters
-	// or less).
+	// Description: Optional. The description of the instance (2048
+	// characters or less).
 	Description string `json:"description,omitempty"`
 
 	// Etag: Server-specified ETag for the instance resource to prevent
@@ -900,8 +900,23 @@ type Instance struct {
 	//
 	// Possible values:
 	//   "TIER_UNSPECIFIED" - Not set.
-	//   "STANDARD" - STANDARD tier.
-	//   "PREMIUM" - PREMIUM tier.
+	//   "STANDARD" - STANDARD tier. BASIC_HDD is the preferred term for
+	// this tier.
+	//   "PREMIUM" - PREMIUM tier. BASIC_SSD is the preferred term for this
+	// tier.
+	//   "BASIC_HDD" - BASIC instances offer a maximum capacity of 63.9
+	// TB.
+	// BASIC_HDD is an alias for STANDARD Tier, offering
+	// economical
+	// performance backed by Persistent Disk HDD.
+	//   "BASIC_SSD" - BASIC instances offer a maximum capacity of 63.9
+	// TB.
+	// BASIC_SSD is an alias for PREMIUM Tier, and offers
+	// improved
+	// performance backed by Persistent Disk SSD.
+	//   "HIGH_SCALE_SSD" - HIGH_SCALE instances offer larger capacity and
+	// professional
+	// performance backed by Persistent Disk SSD.
 	Tier string `json:"tier,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

@@ -497,6 +497,19 @@ type Instance struct {
 	// will be used.
 	AuthorizedNetwork string `json:"authorizedNetwork,omitempty"`
 
+	// ConnectMode: Optional. The connect mode of Redis instance.
+	// If not provided, default one will be used.
+	// Current default: DIRECT_PEERING.
+	//
+	// Possible values:
+	//   "CONNECT_MODE_UNSPECIFIED" - Not set.
+	//   "DIRECT_PEERING" - Connect via directly peering with memorystore
+	// redis hosted service.
+	//   "PRIVATE_SERVICE_ACCESS" - Connect with google via private service
+	// access and share connection
+	// across google managed services.
+	ConnectMode string `json:"connectMode,omitempty"`
+
 	// CreateTime: Output only. The time the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
 

@@ -1898,7 +1898,7 @@ type GoogleCloudMlV1__RequestLoggingConfig struct {
 	// "<var>project_id</var>.<var>dataset_name</var>.<var>table_name
 	// </var>"
 	//
-	// The specified table must already exist, and the "Cloud ML Service
+	// The specifcied table must already exist, and the "Cloud ML Service
 	// Agent"
 	// for your project must have permission to write to it. The table must
 	// have
@@ -1993,64 +1993,6 @@ type GoogleCloudMlV1__SampledShapleyAttribution struct {
 
 func (s *GoogleCloudMlV1__SampledShapleyAttribution) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudMlV1__SampledShapleyAttribution
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudMlV1__Scheduling: All parameters related to queuing and
-// scheduling of training jobs.
-type GoogleCloudMlV1__Scheduling struct {
-	// MaxRunningTime: Optional. The maximum job running time, expressed in
-	// seconds. By default
-	// there is no limit.
-	//
-	// If the training job is still running after this duration, AI
-	// Platform
-	// Training cancels it.
-	//
-	// For example, if you want to ensure your job runs for no more than 2
-	// hours,
-	// set this field to `7200s` (2 hours * 60 minutes / hour * 60 seconds
-	// /
-	// minute).
-	//
-	// If you submit your training job using the `gcloud` tool, you can
-	// [provide
-	// this field in a
-	// `config.yaml`
-	// file](/ml-engine/docs/training-jobs#formatting_your_conf
-	// iguration_parameters).
-	// For example:
-	//
-	// ```yaml
-	// trainingInput:
-	//   ...
-	//   scheduling:
-	//     maxRunningTime: 7200s
-	//   ...
-	// ```
-	MaxRunningTime string `json:"maxRunningTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "MaxRunningTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MaxRunningTime") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudMlV1__Scheduling) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudMlV1__Scheduling
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2337,9 +2279,6 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// be
 	// different from your worker type and master type.
 	ScaleTier string `json:"scaleTier,omitempty"`
-
-	// Scheduling: Optional. Scheduling options for a training job.
-	Scheduling *GoogleCloudMlV1__Scheduling `json:"scheduling,omitempty"`
 
 	// UseChiefInTfConfig: Optional. Use 'chief' instead of 'master' in
 	// TF_CONFIG when Custom
@@ -3622,62 +3561,31 @@ func (s *GoogleRpc__Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleType__Expr: Represents a textual expression in the Common
-// Expression Language (CEL)
-// syntax. CEL is a C-like expression language. The syntax and semantics
-// of CEL
-// are documented at https://github.com/google/cel-spec.
+// GoogleType__Expr: Represents an expression text. Example:
 //
-// Example (Comparison):
-//
-//     title: "Summary size limit"
-//     description: "Determines if a summary is less than 100 chars"
-//     expression: "document.summary.size() < 100"
-//
-// Example (Equality):
-//
-//     title: "Requestor is owner"
-//     description: "Determines if requestor is the document owner"
-//     expression: "document.owner ==
-// request.auth.claims.email"
-//
-// Example (Logic):
-//
-//     title: "Public documents"
-//     description: "Determine whether the document should be publicly
-// visible"
-//     expression: "document.type != 'private' && document.type !=
-// 'internal'"
-//
-// Example (Data Manipulation):
-//
-//     title: "Notification string"
-//     description: "Create a notification string with a timestamp."
-//     expression: "'New message received at ' +
-// string(document.create_time)"
-//
-// The exact variables and functions that may be referenced within an
-// expression
-// are determined by the service that evaluates it. See the
-// service
-// documentation for additional information.
+//     title: "User account presence"
+//     description: "Determines whether the request has a user account"
+//     expression: "size(request.user) > 0"
 type GoogleType__Expr struct {
-	// Description: Optional. Description of the expression. This is a
+	// Description: An optional description of the expression. This is a
 	// longer text which
 	// describes the expression, e.g. when hovered over it in a UI.
 	Description string `json:"description,omitempty"`
 
-	// Expression: Textual representation of an expression in Common
-	// Expression Language
-	// syntax.
+	// Expression: Textual representation of an expression in
+	// Common Expression Language syntax.
+	//
+	// The application context of the containing message determines
+	// which
+	// well-known feature set of CEL is supported.
 	Expression string `json:"expression,omitempty"`
 
-	// Location: Optional. String indicating the location of the expression
-	// for error
+	// Location: An optional string indicating the location of the
+	// expression for error
 	// reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
-	// Title: Optional. Title for the expression, i.e. a short string
+	// Title: An optional title for the expression, i.e. a short string
 	// describing
 	// its purpose. This can be used e.g. in UIs which allow to enter
 	// the

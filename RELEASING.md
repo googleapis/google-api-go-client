@@ -16,3 +16,15 @@
    d. Push the tag: `git push origin $NV`.
 1. Update [the releases page](https://github.com/googleapis/google-api-go-client/releases)
    with the new release, copying the contents of the CHANGES.md.
+
+# Auto-regeneration
+
+A nightly cron job re-generates all of the clients. It runs `make all`.
+
+Releases are manually tagged (see above).
+
+See:
+
+* [Code for the cronjob, in the discovery-artifact-manager repo](https://github.com/googleapis/discovery-artifact-manager/blob/master/server/tasks/google_api_go_client.py)
+* [List of cronjobs](https://console.cloud.google.com/appengine/cronjobs?project=discovery-artifact-manager)
+* [App Engine stderr logs](https://console.cloud.google.com/logs/viewer?project=discovery-artifact-manager)

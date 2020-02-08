@@ -22,6 +22,7 @@
   },
   "id": "datacatalog:v1beta1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://datacatalog.mtls.googleapis.com/",
   "name": "datacatalog",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -163,7 +164,7 @@
             "entryGroups": {
               "methods": {
                 "create": {
-                  "description": "Alpha feature.\nCreates an EntryGroup.\nThe user should enable the Data Catalog API in the project identified by\nthe `parent` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+                  "description": "Creates an EntryGroup.\n\nThe user should enable the Data Catalog API in the project identified by\nthe `parent` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).\n\nA maximum of 10,000 entry groups may be created per organization across all\nlocations.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups",
                   "httpMethod": "POST",
                   "id": "datacatalog.projects.locations.entryGroups.create",
@@ -196,7 +197,7 @@
                   ]
                 },
                 "delete": {
-                  "description": "Alpha feature.\nDeletes an EntryGroup. Only entry groups that do not contain entries can be\ndeleted. The user should enable the Data Catalog API in the project\nidentified by the `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+                  "description": "Deletes an EntryGroup. Only entry groups that do not contain entries can be\ndeleted. The user should enable the Data Catalog API in the project\nidentified by the `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}",
                   "httpMethod": "DELETE",
                   "id": "datacatalog.projects.locations.entryGroups.delete",
@@ -226,7 +227,7 @@
                   ]
                 },
                 "get": {
-                  "description": "Alpha feature.\nGets an EntryGroup.",
+                  "description": "Gets an EntryGroup.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}",
                   "httpMethod": "GET",
                   "id": "datacatalog.projects.locations.entryGroups.get",
@@ -279,6 +280,76 @@
                   },
                   "response": {
                     "$ref": "Policy"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Lists entry groups.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups",
+                  "httpMethod": "GET",
+                  "id": "datacatalog.projects.locations.entryGroups.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "Optional. The maximum number of items to return. Default is 10. Max limit is 1000.\nThrows an invalid argument for `page_size \u003e 1000`.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "Optional. Token that specifies which page is requested. If empty, the first page is\nreturned.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The name of the location that contains the entry groups, which can be\nprovided in URL format. Example:\n\n* projects/{project_id}/locations/{location}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+parent}/entryGroups",
+                  "response": {
+                    "$ref": "GoogleCloudDatacatalogV1beta1ListEntryGroupsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "patch": {
+                  "description": "Updates an EntryGroup. The user should enable the Data Catalog API in the\nproject identified by the `entry_group.name` parameter (see [Data Catalog\nResource Project] (/data-catalog/docs/concepts/resource-project) for more\ninformation).",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}",
+                  "httpMethod": "PATCH",
+                  "id": "datacatalog.projects.locations.entryGroups.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "The resource name of the entry group in URL format. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}\n\nNote that this EntryGroup and its child resources may not actually be\nstored in the location in this name.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "The fields to update on the entry group. If absent or empty, all modifiable\nfields are updated.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+name}",
+                  "request": {
+                    "$ref": "GoogleCloudDatacatalogV1beta1EntryGroup"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudDatacatalogV1beta1EntryGroup"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -345,7 +416,7 @@
                 "entries": {
                   "methods": {
                     "create": {
-                      "description": "Alpha feature.\nCreates an entry. Currently only entries of 'FILESET' type can be created.\nThe user should enable the Data Catalog API in the project identified by\nthe `parent` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+                      "description": "Creates an entry. Only entries of 'FILESET' type or user-specified type can\nbe created.\n\nThe user should enable the Data Catalog API in the project identified by\nthe `parent` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).\n\nA maximum of 100,000 entries may be created per entry group.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries",
                       "httpMethod": "POST",
                       "id": "datacatalog.projects.locations.entryGroups.entries.create",
@@ -378,7 +449,7 @@
                       ]
                     },
                     "delete": {
-                      "description": "Alpha feature.\nDeletes an existing entry. Only entries created through\nCreateEntry\nmethod can be deleted.\nThe user should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+                      "description": "Deletes an existing entry. Only entries created through\nCreateEntry\nmethod can be deleted.\nThe user should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}",
                       "httpMethod": "DELETE",
                       "id": "datacatalog.projects.locations.entryGroups.entries.delete",
@@ -450,6 +521,48 @@
                       },
                       "response": {
                         "$ref": "Policy"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "list": {
+                      "description": "Lists entries.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries",
+                      "httpMethod": "GET",
+                      "id": "datacatalog.projects.locations.entryGroups.entries.list",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "pageSize": {
+                          "description": "The maximum number of items to return. Default is 10. Max limit is 1000.\nThrows an invalid argument for `page_size \u003e 1000`.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "Token that specifies which page is requested. If empty, the first page is\nreturned.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. The name of the entry group that contains the entries, which can\nbe provided in URL format. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "readMask": {
+                          "description": "The fields to return for each Entry. If not set or empty, all\nfields are returned.\nFor example, setting read_mask to contain only one path \"name\" will cause\nListEntries to return a list of Entries with only \"name\" field.",
+                          "format": "google-fieldmask",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+parent}/entries",
+                      "response": {
+                        "$ref": "GoogleCloudDatacatalogV1beta1ListEntriesResponse"
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform"
@@ -662,7 +775,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. The name of the project and the location this template is in.\nExample:\n\n* projects/{project_id}/locations/{location}\n\nTagTemplate and its child resources may not actually be stored in the\nlocation in this name.",
+                      "description": "Required. The name of the project and the template location\n[region](/compute/docs/regions-zones/#available).\nNOTE: Currently, only the `us-central1 region` is supported.\n\nExample:\n\n* projects/{project_id}/locations/us-central1",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -872,7 +985,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "Required. The name of the project this template is in. Example:\n\n* projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}\n\nNote that this TagTemplateField may not actually be stored in the location\nin this name.",
+                          "description": "Required. The name of the project and the template location\n[region](/compute/docs/regions-zones/#available).\nNOTE: Currently, only the `us-central1 region` is supported.\n\nExample:\n\n* projects/{project_id}/locations/us-central1/tagTemplates/{tag_template_id}",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+$",
                           "required": true,
@@ -1534,7 +1647,7 @@
       }
     }
   },
-  "revision": "20200122",
+  "revision": "20200206",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -1714,8 +1827,22 @@
           "$ref": "GoogleCloudDatacatalogV1beta1GcsFilesetSpec",
           "description": "Specification that applies to a Cloud Storage fileset. This is only valid\non entries of type FILESET."
         },
+        "integratedSystem": {
+          "description": "Output only. This field indicates the entry's source system that Data Catalog\nintegrates with, such as BigQuery or Cloud Pub/Sub.",
+          "enum": [
+            "INTEGRATED_SYSTEM_UNSPECIFIED",
+            "BIGQUERY",
+            "CLOUD_PUBSUB"
+          ],
+          "enumDescriptions": [
+            "Default unknown system.",
+            "BigQuery.",
+            "Cloud Pub/Sub."
+          ],
+          "type": "string"
+        },
         "linkedResource": {
-          "description": "Output only. The resource this metadata entry refers to.\n\nFor Google Cloud Platform resources, `linked_resource` is the [full name of\nthe\nresource](https://cloud.google.com/apis/design/resource_names#full_resource_name).\nFor example, the `linked_resource` for a table resource from BigQuery is:\n\n* //bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId",
+          "description": "The resource this metadata entry refers to.\n\nFor Google Cloud Platform resources, `linked_resource` is the [full name of\nthe\nresource](https://cloud.google.com/apis/design/resource_names#full_resource_name).\nFor example, the `linked_resource` for a table resource from BigQuery is:\n\n* //bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId\n\nOutput only when Entry is of type in the EntryType enum. For entries with\nuser_specified_type, this field is optional and defaults to an empty\nstring.",
           "type": "string"
         },
         "name": {
@@ -1728,10 +1855,10 @@
         },
         "sourceSystemTimestamps": {
           "$ref": "GoogleCloudDatacatalogV1beta1SystemTimestamps",
-          "description": "Output only. Timestamps about the underlying Google Cloud Platform\nresource, not about this Data Catalog Entry."
+          "description": "Output only. Timestamps about the underlying resource, not about this Data Catalog\nentry. Output only when Entry is of type in the EntryType enum. For entries\nwith user_specified_type, this field is optional and defaults to an empty\ntimestamp."
         },
         "type": {
-          "description": "The type of the entry.",
+          "description": "The type of the entry.\nOnly used for Entries with types in the EntryType enum.",
           "enum": [
             "ENTRY_TYPE_UNSPECIFIED",
             "TABLE",
@@ -1744,8 +1871,16 @@
             "Output only. The type of entry that has a GoogleSQL schema, including\nlogical views.",
             "Output only. The type of models.",
             "Output only. An entry type which is used for streaming entries. Example:\nCloud Pub/Sub topic.",
-            "Alpha feature. An entry type which is a set of files or objects. Example:\nCloud Storage fileset."
+            "An entry type which is a set of files or objects. Example:\nCloud Storage fileset."
           ],
+          "type": "string"
+        },
+        "userSpecifiedSystem": {
+          "description": "This field indicates the entry's source system that Data Catalog does not\nintegrate with. `user_specified_system` strings must begin with a letter\nor underscore and can only contain letters, numbers, and underscores; are\ncase insensitive; must be at least 1 character and at most 64 characters\nlong.",
+          "type": "string"
+        },
+        "userSpecifiedType": {
+          "description": "Entry type if it does not fit any of the input-allowed values listed in\n`EntryType` enum above. When creating an entry, users should check the\nenum values first, if nothing matches the entry to be created, then\nprovide a custom value, for example \"my_special_type\".\n`user_specified_type` strings must begin with a letter or underscore and\ncan only contain letters, numbers, and underscores; are case insensitive;\nmust be at least 1 character and at most 64 characters long.\n\nCurrently, only FILESET enum value is allowed. All other entries created\nthrough Data Catalog must use `user_specified_type`.",
           "type": "string"
         }
       },
@@ -1919,6 +2054,42 @@
       },
       "type": "object"
     },
+    "GoogleCloudDatacatalogV1beta1ListEntriesResponse": {
+      "description": "Response message for\nListEntries.",
+      "id": "GoogleCloudDatacatalogV1beta1ListEntriesResponse",
+      "properties": {
+        "entries": {
+          "description": "Entry details.",
+          "items": {
+            "$ref": "GoogleCloudDatacatalogV1beta1Entry"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Token to retrieve the next page of results. It is set to empty if no items\nremain in results.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1beta1ListEntryGroupsResponse": {
+      "description": "Response message for\nListEntryGroups.",
+      "id": "GoogleCloudDatacatalogV1beta1ListEntryGroupsResponse",
+      "properties": {
+        "entryGroups": {
+          "description": "EntryGroup details.",
+          "items": {
+            "$ref": "GoogleCloudDatacatalogV1beta1EntryGroup"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Token to retrieve the next page of results. It is set to empty if no items\nremain in results.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDatacatalogV1beta1ListPolicyTagsResponse": {
       "description": "Response message for\nListPolicyTags.",
       "id": "GoogleCloudDatacatalogV1beta1ListPolicyTagsResponse",
@@ -1974,7 +2145,7 @@
       "type": "object"
     },
     "GoogleCloudDatacatalogV1beta1PolicyTag": {
-      "description": "Denotes one policy tag in a taxonomy (e.g. ssn). Policy Tags can be defined\nin a hierarchy. For example, consider the following hierachy:\nGeolocation -\u0026gt; (LatLong, City, ZipCode). PolicyTag \"Geolocation\"\ncontains three child policy tags: \"LatLong\", \"City\", and \"ZipCode\".",
+      "description": "Denotes one policy tag in a taxonomy (e.g. ssn). Policy Tags can be defined\nin a hierarchy. For example, consider the following hierarchy:\nGeolocation -\u0026gt; (LatLong, City, ZipCode). PolicyTag \"Geolocation\"\ncontains three child policy tags: \"LatLong\", \"City\", and \"ZipCode\".",
       "id": "GoogleCloudDatacatalogV1beta1PolicyTag",
       "properties": {
         "childPolicyTags": {
@@ -2033,7 +2204,7 @@
       "id": "GoogleCloudDatacatalogV1beta1SearchCatalogRequest",
       "properties": {
         "orderBy": {
-          "description": "Specifies the ordering of results, currently supported case-sensitive\nchoices are:\n\n  * `relevance`, only supports desecending\n  * `last_access_timestamp [asc|desc]`, defaults to descending if not\n    specified\n  * `last_modified_timestamp [asc|desc]`, defaults to descending if not\n    specified\n\nIf not specified, defaults to `relevance` descending.",
+          "description": "Specifies the ordering of results, currently supported case-sensitive\nchoices are:\n\n  * `relevance`, only supports descending\n  * `last_modified_timestamp [asc|desc]`, defaults to descending if not\n    specified\n\nIf not specified, defaults to `relevance` descending.",
           "type": "string"
         },
         "pageSize": {

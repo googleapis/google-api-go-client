@@ -4,9 +4,6 @@
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
           "description": "View and manage your data across Google Cloud Platform services"
-        },
-        "https://www.googleapis.com/auth/compute": {
-          "description": "View and manage your Google Compute Engine resources"
         }
       }
     }
@@ -141,8 +138,7 @@
                 "$ref": "GuestPolicy"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute"
+                "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
             "delete": {
@@ -167,8 +163,7 @@
                 "$ref": "Empty"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute"
+                "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
             "get": {
@@ -193,8 +188,7 @@
                 "$ref": "GuestPolicy"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute"
+                "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
             "list": {
@@ -230,8 +224,7 @@
                 "$ref": "ListGuestPoliciesResponse"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute"
+                "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
             "patch": {
@@ -265,8 +258,7 @@
                 "$ref": "GuestPolicy"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute"
+                "https://www.googleapis.com/auth/cloud-platform"
               ]
             }
           }
@@ -303,8 +295,7 @@
                 "$ref": "PatchDeployment"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute"
+                "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
             "delete": {
@@ -329,8 +320,7 @@
                 "$ref": "Empty"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute"
+                "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
             "get": {
@@ -355,8 +345,7 @@
                 "$ref": "PatchDeployment"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute"
+                "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
             "list": {
@@ -392,8 +381,7 @@
                 "$ref": "ListPatchDeploymentsResponse"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute"
+                "https://www.googleapis.com/auth/cloud-platform"
               ]
             }
           }
@@ -425,8 +413,7 @@
                 "$ref": "PatchJob"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute"
+                "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
             "execute": {
@@ -454,8 +441,7 @@
                 "$ref": "PatchJob"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute"
+                "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
             "get": {
@@ -480,8 +466,7 @@
                 "$ref": "PatchJob"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute"
+                "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
             "list": {
@@ -522,8 +507,7 @@
                 "$ref": "ListPatchJobsResponse"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute"
+                "https://www.googleapis.com/auth/cloud-platform"
               ]
             }
           },
@@ -568,8 +552,7 @@
                     "$ref": "ListPatchJobInstanceDetailsResponse"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute"
+                    "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 }
               }
@@ -605,8 +588,7 @@
                     "$ref": "EffectiveGuestPolicy"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/compute"
+                    "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 }
               }
@@ -616,7 +598,7 @@
       }
     }
   },
-  "revision": "20200109",
+  "revision": "20200207",
   "rootUrl": "https://osconfig.googleapis.com/",
   "schemas": {
     "AptRepository": {
@@ -985,7 +967,7 @@
       "properties": {
         "assignment": {
           "$ref": "Assignment",
-          "description": "Required. Specifies the VM instances that are assigned to this policy. This allows\nyou to target sets or groups of VM instances by different parameters such\nas labels, names, OS, or zones.\n\nIf left empty, all VM instances underneath this policy are targeted.\n\n\nConflict Management\n\nAt the same level in the resource hierarchy (that is within a project), the\nservice prevents the creation of multiple policies that conflict with\neach other. If there are multiple policies that specify the same config\n(eg. package, software recipe, repository, etc.), the service ensures\nthat no VM instance could potentially receive instructions from both\npolicies. To create multiple policies that specify different versions of a\npackage or different configs for different operating systems, each policy\nmust be mutually exclusive in their targeting according to labels, OS, or\nother criteria.\n\nDifferent configs are identified for conflicts in different ways. Packages\nare identified by their name and the package manager(s) they target.\nPackage repositories are identified by their unique id where applicable.\nSome package managers don't have a unique identifier for repositories and\nwhere that's the case, no uniqueness is validated by the service.\n\nNote that if OS Inventory is disabled, a VM instance cannot assign a policy\nthat targets by OS because the service sees the OS as unknown."
+          "description": "Required. Specifies the VM instances that are assigned to this policy. This allows\nyou to target sets or groups of VM instances by different parameters such\nas labels, names, OS, or zones.\n\nIf left empty, all VM instances underneath this policy are targeted.\n\nAt the same level in the resource hierarchy (that is within a project), the\nservice prevents the creation of multiple policies that conflict with\neach other. For more information, see how the service [handles assignment\nconflicts](/compute/docs/os-config-management/create-guest-policy#handle-conflicts)."
         },
         "createTime": {
           "description": "Output only. Time this guest policy was created.",

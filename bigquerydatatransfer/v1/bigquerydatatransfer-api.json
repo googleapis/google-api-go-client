@@ -1264,7 +1264,7 @@
       }
     }
   },
-  "revision": "20191206",
+  "revision": "20200203",
   "rootUrl": "https://bigquerydatatransfer.googleapis.com/",
   "schemas": {
     "CheckValidCredsRequest": {
@@ -1495,6 +1495,17 @@
         "validationRegex": {
           "description": "Regular expression which can be used for parameter validation.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "EmailPreferences": {
+      "description": "Represents preferences for sending email notifications for transfer run\nevents.",
+      "id": "EmailPreferences",
+      "properties": {
+        "enableFailureEmail": {
+          "description": "If true, email notifications will be sent on transfer run failures.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -1784,6 +1795,10 @@
           "description": "User specified display name for the data transfer.",
           "type": "string"
         },
+        "emailPreferences": {
+          "$ref": "EmailPreferences",
+          "description": "Email notifications will be sent according to these preferences\nto the email address of the user who owns this transfer config."
+        },
         "name": {
           "description": "The resource name of the transfer config.\nTransfer config names have the form of\n`projects/{project_id}/locations/{region}/transferConfigs/{config_id}`.\nThe name is automatically generated based on the config_id specified in\nCreateTransferConfigRequest along with project_id and region. If config_id\nis not provided, usually a uuid, even though it is not guaranteed or\nrequired, will be generated for config_id.",
           "type": "string"
@@ -1791,6 +1806,10 @@
         "nextRunTime": {
           "description": "Output only. Next time when data transfer will run.",
           "format": "google-datetime",
+          "type": "string"
+        },
+        "notificationPubsubTopic": {
+          "description": "Pub/Sub topic where notifications will be sent after transfer runs\nassociated with this transfer config finish.",
           "type": "string"
         },
         "params": {
@@ -1886,6 +1905,10 @@
           "description": "Output only. The BigQuery target dataset id.",
           "type": "string"
         },
+        "emailPreferences": {
+          "$ref": "EmailPreferences",
+          "description": "Output only. Email notifications will be sent according to these\npreferences to the email address of the user who owns the transfer config\nthis run was derived from."
+        },
         "endTime": {
           "description": "Output only. Time when transfer run ended.\nParameter ignored by server for input requests.",
           "format": "google-datetime",
@@ -1897,6 +1920,10 @@
         },
         "name": {
           "description": "The resource name of the transfer run.\nTransfer run names have the form\n`projects/{project_id}/locations/{location}/transferConfigs/{config_id}/runs/{run_id}`.\nThe name is ignored when creating a transfer run.",
+          "type": "string"
+        },
+        "notificationPubsubTopic": {
+          "description": "Output only. Pub/Sub topic where a notification will be sent after this\ntransfer run finishes",
           "type": "string"
         },
         "params": {

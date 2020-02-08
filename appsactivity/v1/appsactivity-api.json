@@ -14,7 +14,7 @@
   "description": "Provides a historical view of activity.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/google-apps/activity/",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/CGupfnZG_qKM1HNP9Q7CnX6bxR8\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/EPm-mIaUlffEieKph-AEYsz0i8Y\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -137,7 +137,7 @@
       }
     }
   },
-  "revision": "20190331",
+  "revision": "20200128",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Activity": {
@@ -334,12 +334,14 @@
           "description": "Indicates the Google Drive permissions role. The role determines a user's ability to read, write, or comment on the file.",
           "enum": [
             "commenter",
+            "fileOrganizer",
             "owner",
             "publishedReader",
             "reader",
             "writer"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",

@@ -448,9 +448,6 @@ type FilterPair struct {
 	//   "FILTER_DEVICE_MAKE"
 	//   "FILTER_DEVICE_MODEL"
 	//   "FILTER_DEVICE_TYPE"
-	//   "FILTER_DFP_INSERTION_ORDER"
-	//   "FILTER_DFP_LINE_ITEM"
-	//   "FILTER_DFP_LINE_ITEM_ID"
 	//   "FILTER_DFP_ORDER_ID"
 	//   "FILTER_DIGITAL_CONTENT_LABEL"
 	//   "FILTER_DMA"
@@ -469,6 +466,9 @@ type FilterPair struct {
 	//   "FILTER_FLOODLIGHT_ACTIVITY"
 	//   "FILTER_FLOODLIGHT_ACTIVITY_ID"
 	//   "FILTER_FORMAT"
+	//   "FILTER_GAM_INSERTION_ORDER"
+	//   "FILTER_GAM_LINE_ITEM"
+	//   "FILTER_GAM_LINE_ITEM_ID"
 	//   "FILTER_GENDER"
 	//   "FILTER_GMAIL_AGE"
 	//   "FILTER_GMAIL_CITY"
@@ -850,9 +850,6 @@ type Parameters struct {
 	//   "FILTER_DEVICE_MAKE"
 	//   "FILTER_DEVICE_MODEL"
 	//   "FILTER_DEVICE_TYPE"
-	//   "FILTER_DFP_INSERTION_ORDER"
-	//   "FILTER_DFP_LINE_ITEM"
-	//   "FILTER_DFP_LINE_ITEM_ID"
 	//   "FILTER_DFP_ORDER_ID"
 	//   "FILTER_DIGITAL_CONTENT_LABEL"
 	//   "FILTER_DMA"
@@ -871,6 +868,9 @@ type Parameters struct {
 	//   "FILTER_FLOODLIGHT_ACTIVITY"
 	//   "FILTER_FLOODLIGHT_ACTIVITY_ID"
 	//   "FILTER_FORMAT"
+	//   "FILTER_GAM_INSERTION_ORDER"
+	//   "FILTER_GAM_LINE_ITEM"
+	//   "FILTER_GAM_LINE_ITEM_ID"
 	//   "FILTER_GENDER"
 	//   "FILTER_GMAIL_AGE"
 	//   "FILTER_GMAIL_CITY"
@@ -2226,7 +2226,7 @@ func (c *LineitemsDownloadlineitemsCall) Header() http.Header {
 
 func (c *LineitemsDownloadlineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2349,7 +2349,7 @@ func (c *LineitemsUploadlineitemsCall) Header() http.Header {
 
 func (c *LineitemsUploadlineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2471,7 +2471,7 @@ func (c *QueriesCreatequeryCall) Header() http.Header {
 
 func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2594,7 +2594,7 @@ func (c *QueriesDeletequeryCall) Header() http.Header {
 
 func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2706,7 +2706,7 @@ func (c *QueriesGetqueryCall) Header() http.Header {
 
 func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2862,7 +2862,7 @@ func (c *QueriesListqueriesCall) Header() http.Header {
 
 func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3015,7 +3015,7 @@ func (c *QueriesRunqueryCall) Header() http.Header {
 
 func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3150,7 +3150,7 @@ func (c *ReportsListreportsCall) Header() http.Header {
 
 func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3314,7 +3314,7 @@ func (c *SdfDownloadCall) Header() http.Header {
 
 func (c *SdfDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

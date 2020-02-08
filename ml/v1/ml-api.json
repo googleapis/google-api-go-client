@@ -1040,7 +1040,7 @@
       }
     }
   },
-  "revision": "20200124",
+  "revision": "20200205",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1935,7 +1935,7 @@
       "id": "GoogleCloudMlV1__RequestLoggingConfig",
       "properties": {
         "bigqueryTableName": {
-          "description": "Required. Fully qualified BigQuery table name in the following format:\n\"\u003cvar\u003eproject_id\u003c/var\u003e.\u003cvar\u003edataset_name\u003c/var\u003e.\u003cvar\u003etable_name\u003c/var\u003e\"\n\nThe specifcied table must already exist, and the \"Cloud ML Service Agent\"\nfor your project must have permission to write to it. The table must have\nthe following [schema](/bigquery/docs/schemas):\n\n\u003ctable\u003e\n  \u003ctr\u003e\u003cth\u003eField name\u003c/th\u003e\u003cth style=\"display: table-cell\"\u003eType\u003c/th\u003e\n    \u003cth style=\"display: table-cell\"\u003eMode\u003c/th\u003e\u003c/tr\u003e\n  \u003ctr\u003e\u003ctd\u003emodel\u003c/td\u003e\u003ctd\u003eSTRING\u003c/td\u003e\u003ctd\u003eREQUIRED\u003c/td\u003e\u003c/tr\u003e\n  \u003ctr\u003e\u003ctd\u003emodel_version\u003c/td\u003e\u003ctd\u003eSTRING\u003c/td\u003e\u003ctd\u003eREQUIRED\u003c/td\u003e\u003c/tr\u003e\n  \u003ctr\u003e\u003ctd\u003etime\u003c/td\u003e\u003ctd\u003eTIMESTAMP\u003c/td\u003e\u003ctd\u003eREQUIRED\u003c/td\u003e\u003c/tr\u003e\n  \u003ctr\u003e\u003ctd\u003eraw_data\u003c/td\u003e\u003ctd\u003eSTRING\u003c/td\u003e\u003ctd\u003eREQUIRED\u003c/td\u003e\u003c/tr\u003e\n  \u003ctr\u003e\u003ctd\u003eraw_prediction\u003c/td\u003e\u003ctd\u003eSTRING\u003c/td\u003e\u003ctd\u003eNULLABLE\u003c/td\u003e\u003c/tr\u003e\n  \u003ctr\u003e\u003ctd\u003egroundtruth\u003c/td\u003e\u003ctd\u003eSTRING\u003c/td\u003e\u003ctd\u003eNULLABLE\u003c/td\u003e\u003c/tr\u003e\n\u003c/table\u003e",
+          "description": "Required. Fully qualified BigQuery table name in the following format:\n\"\u003cvar\u003eproject_id\u003c/var\u003e.\u003cvar\u003edataset_name\u003c/var\u003e.\u003cvar\u003etable_name\u003c/var\u003e\"\n\nThe specified table must already exist, and the \"Cloud ML Service Agent\"\nfor your project must have permission to write to it. The table must have\nthe following [schema](/bigquery/docs/schemas):\n\n\u003ctable\u003e\n  \u003ctr\u003e\u003cth\u003eField name\u003c/th\u003e\u003cth style=\"display: table-cell\"\u003eType\u003c/th\u003e\n    \u003cth style=\"display: table-cell\"\u003eMode\u003c/th\u003e\u003c/tr\u003e\n  \u003ctr\u003e\u003ctd\u003emodel\u003c/td\u003e\u003ctd\u003eSTRING\u003c/td\u003e\u003ctd\u003eREQUIRED\u003c/td\u003e\u003c/tr\u003e\n  \u003ctr\u003e\u003ctd\u003emodel_version\u003c/td\u003e\u003ctd\u003eSTRING\u003c/td\u003e\u003ctd\u003eREQUIRED\u003c/td\u003e\u003c/tr\u003e\n  \u003ctr\u003e\u003ctd\u003etime\u003c/td\u003e\u003ctd\u003eTIMESTAMP\u003c/td\u003e\u003ctd\u003eREQUIRED\u003c/td\u003e\u003c/tr\u003e\n  \u003ctr\u003e\u003ctd\u003eraw_data\u003c/td\u003e\u003ctd\u003eSTRING\u003c/td\u003e\u003ctd\u003eREQUIRED\u003c/td\u003e\u003c/tr\u003e\n  \u003ctr\u003e\u003ctd\u003eraw_prediction\u003c/td\u003e\u003ctd\u003eSTRING\u003c/td\u003e\u003ctd\u003eNULLABLE\u003c/td\u003e\u003c/tr\u003e\n  \u003ctr\u003e\u003ctd\u003egroundtruth\u003c/td\u003e\u003ctd\u003eSTRING\u003c/td\u003e\u003ctd\u003eNULLABLE\u003c/td\u003e\u003c/tr\u003e\n\u003c/table\u003e",
           "type": "string"
         },
         "samplingPercentage": {
@@ -1954,6 +1954,18 @@
           "description": "The number of feature permutations to consider when approximating the\nShapley values.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1__Scheduling": {
+      "description": "All parameters related to queuing and scheduling of training jobs.",
+      "id": "GoogleCloudMlV1__Scheduling",
+      "properties": {
+        "maxRunningTime": {
+          "description": "Optional. The maximum job running time, expressed in seconds. By default\nthere is no limit.\n\nIf the training job is still running after this duration, AI Platform\nTraining cancels it.\n\nFor example, if you want to ensure your job runs for no more than 2 hours,\nset this field to `7200s` (2 hours * 60 minutes / hour * 60 seconds /\nminute).\n\nIf you submit your training job using the `gcloud` tool, you can [provide\nthis field in a `config.yaml`\nfile](/ml-engine/docs/training-jobs#formatting_your_configuration_parameters).\nFor example:\n\n```yaml\ntrainingInput:\n  ...\n  scheduling:\n    maxRunningTime: 7200s\n  ...\n```",
+          "format": "google-duration",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2046,6 +2058,10 @@
             "The CUSTOM tier is not a set tier, but rather enables you to use your\nown cluster specification. When you use this tier, set values to\nconfigure your processing cluster according to these guidelines:\n\n*   You _must_ set `TrainingInput.masterType` to specify the type\n    of machine to use for your master node. This is the only required\n    setting.\n\n*   You _may_ set `TrainingInput.workerCount` to specify the number of\n    workers to use. If you specify one or more workers, you _must_ also\n    set `TrainingInput.workerType` to specify the type of machine to use\n    for your worker nodes.\n\n*   You _may_ set `TrainingInput.parameterServerCount` to specify the\n    number of parameter servers to use. If you specify one or more\n    parameter servers, you _must_ also set\n    `TrainingInput.parameterServerType` to specify the type of machine to\n    use for your parameter servers.\n\nNote that all of your workers must use the same machine type, which can\nbe different from your parameter server type and master type. Your\nparameter servers must likewise use the same machine type, which can be\ndifferent from your worker type and master type."
           ],
           "type": "string"
+        },
+        "scheduling": {
+          "$ref": "GoogleCloudMlV1__Scheduling",
+          "description": "Optional. Scheduling options for a training job."
         },
         "useChiefInTfConfig": {
           "description": "Optional. Use 'chief' instead of 'master' in TF_CONFIG when Custom\nContainer is used and evaluator is not specified.\n\nDefaults to false.",
@@ -2471,23 +2487,23 @@
       "type": "object"
     },
     "GoogleType__Expr": {
-      "description": "Represents an expression text. Example:\n\n    title: \"User account presence\"\n    description: \"Determines whether the request has a user account\"\n    expression: \"size(request.user) \u003e 0\"",
+      "description": "Represents a textual expression in the Common Expression Language (CEL)\nsyntax. CEL is a C-like expression language. The syntax and semantics of CEL\nare documented at https://github.com/google/cel-spec.\n\nExample (Comparison):\n\n    title: \"Summary size limit\"\n    description: \"Determines if a summary is less than 100 chars\"\n    expression: \"document.summary.size() \u003c 100\"\n\nExample (Equality):\n\n    title: \"Requestor is owner\"\n    description: \"Determines if requestor is the document owner\"\n    expression: \"document.owner == request.auth.claims.email\"\n\nExample (Logic):\n\n    title: \"Public documents\"\n    description: \"Determine whether the document should be publicly visible\"\n    expression: \"document.type != 'private' \u0026\u0026 document.type != 'internal'\"\n\nExample (Data Manipulation):\n\n    title: \"Notification string\"\n    description: \"Create a notification string with a timestamp.\"\n    expression: \"'New message received at ' + string(document.create_time)\"\n\nThe exact variables and functions that may be referenced within an expression\nare determined by the service that evaluates it. See the service\ndocumentation for additional information.",
       "id": "GoogleType__Expr",
       "properties": {
         "description": {
-          "description": "An optional description of the expression. This is a longer text which\ndescribes the expression, e.g. when hovered over it in a UI.",
+          "description": "Optional. Description of the expression. This is a longer text which\ndescribes the expression, e.g. when hovered over it in a UI.",
           "type": "string"
         },
         "expression": {
-          "description": "Textual representation of an expression in\nCommon Expression Language syntax.\n\nThe application context of the containing message determines which\nwell-known feature set of CEL is supported.",
+          "description": "Textual representation of an expression in Common Expression Language\nsyntax.",
           "type": "string"
         },
         "location": {
-          "description": "An optional string indicating the location of the expression for error\nreporting, e.g. a file name and a position in the file.",
+          "description": "Optional. String indicating the location of the expression for error\nreporting, e.g. a file name and a position in the file.",
           "type": "string"
         },
         "title": {
-          "description": "An optional title for the expression, i.e. a short string describing\nits purpose. This can be used e.g. in UIs which allow to enter the\nexpression.",
+          "description": "Optional. Title for the expression, i.e. a short string describing\nits purpose. This can be used e.g. in UIs which allow to enter the\nexpression.",
           "type": "string"
         }
       },

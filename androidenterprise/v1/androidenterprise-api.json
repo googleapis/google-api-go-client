@@ -15,7 +15,7 @@
   "description": "Manages the deployment of apps to Android for Work users.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android/work/play/emm-api",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/czPxRRvGHykWb4txNH0hToSOO5E\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/IG1fj6800zuIJE6IapkP0SlR3Q8\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -207,51 +207,6 @@
           "path": "enterprises/{enterpriseId}/users/{userId}/devices",
           "response": {
             "$ref": "DevicesListResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/androidenterprise"
-          ]
-        },
-        "patch": {
-          "description": "Updates the device policy. This method supports patch semantics.",
-          "httpMethod": "PATCH",
-          "id": "androidenterprise.devices.patch",
-          "parameterOrder": [
-            "enterpriseId",
-            "userId",
-            "deviceId"
-          ],
-          "parameters": {
-            "deviceId": {
-              "description": "The ID of the device.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "enterpriseId": {
-              "description": "The ID of the enterprise.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "updateMask": {
-              "description": "Mask that identifies which fields to update. If not set, all modifiable fields will be modified.\n\nWhen set in a query parameter, this field should be specified as updateMask=\u003cfield1\u003e,\u003cfield2\u003e,...",
-              "location": "query",
-              "type": "string"
-            },
-            "userId": {
-              "description": "The ID of the user.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}",
-          "request": {
-            "$ref": "Device"
-          },
-          "response": {
-            "$ref": "Device"
           },
           "scopes": [
             "https://www.googleapis.com/auth/androidenterprise"
@@ -789,51 +744,6 @@
             "https://www.googleapis.com/auth/androidenterprise"
           ]
         },
-        "patch": {
-          "description": "Adds or updates an entitlement to an app for a user. This method supports patch semantics.",
-          "httpMethod": "PATCH",
-          "id": "androidenterprise.entitlements.patch",
-          "parameterOrder": [
-            "enterpriseId",
-            "userId",
-            "entitlementId"
-          ],
-          "parameters": {
-            "enterpriseId": {
-              "description": "The ID of the enterprise.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "entitlementId": {
-              "description": "The ID of the entitlement (a product ID), e.g. \"app:com.google.android.gm\".",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "install": {
-              "description": "Set to true to also install the product on all the user's devices where possible. Failure to install on one or more devices will not prevent this operation from returning successfully, as long as the entitlement was successfully assigned to the user.",
-              "location": "query",
-              "type": "boolean"
-            },
-            "userId": {
-              "description": "The ID of the user.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}",
-          "request": {
-            "$ref": "Entitlement"
-          },
-          "response": {
-            "$ref": "Entitlement"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/androidenterprise"
-          ]
-        },
         "update": {
           "description": "Adds or updates an entitlement to an app for a user.",
           "httpMethod": "PUT",
@@ -1096,53 +1006,6 @@
             "https://www.googleapis.com/auth/androidenterprise"
           ]
         },
-        "patch": {
-          "description": "Requests to install the latest version of an app to a device. If the app is already installed, then it is updated to the latest version if necessary. This method supports patch semantics.",
-          "httpMethod": "PATCH",
-          "id": "androidenterprise.installs.patch",
-          "parameterOrder": [
-            "enterpriseId",
-            "userId",
-            "deviceId",
-            "installId"
-          ],
-          "parameters": {
-            "deviceId": {
-              "description": "The Android ID of the device.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "enterpriseId": {
-              "description": "The ID of the enterprise.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "installId": {
-              "description": "The ID of the product represented by the install, e.g. \"app:com.google.android.gm\".",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "userId": {
-              "description": "The ID of the user.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs/{installId}",
-          "request": {
-            "$ref": "Install"
-          },
-          "response": {
-            "$ref": "Install"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/androidenterprise"
-          ]
-        },
         "update": {
           "description": "Requests to install the latest version of an app to a device. If the app is already installed, then it is updated to the latest version if necessary.",
           "httpMethod": "PUT",
@@ -1316,53 +1179,6 @@
             "https://www.googleapis.com/auth/androidenterprise"
           ]
         },
-        "patch": {
-          "description": "Adds or updates a per-device managed configuration for an app for the specified device. This method supports patch semantics.",
-          "httpMethod": "PATCH",
-          "id": "androidenterprise.managedconfigurationsfordevice.patch",
-          "parameterOrder": [
-            "enterpriseId",
-            "userId",
-            "deviceId",
-            "managedConfigurationForDeviceId"
-          ],
-          "parameters": {
-            "deviceId": {
-              "description": "The Android ID of the device.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "enterpriseId": {
-              "description": "The ID of the enterprise.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "managedConfigurationForDeviceId": {
-              "description": "The ID of the managed configuration (a product ID), e.g. \"app:com.google.android.gm\".",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "userId": {
-              "description": "The ID of the user.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}",
-          "request": {
-            "$ref": "ManagedConfiguration"
-          },
-          "response": {
-            "$ref": "ManagedConfiguration"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/androidenterprise"
-          ]
-        },
         "update": {
           "description": "Adds or updates a per-device managed configuration for an app for the specified device.",
           "httpMethod": "PUT",
@@ -1510,46 +1326,6 @@
           "path": "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser",
           "response": {
             "$ref": "ManagedConfigurationsForUserListResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/androidenterprise"
-          ]
-        },
-        "patch": {
-          "description": "Adds or updates the managed configuration settings for an app for the specified user. If you support the Managed configurations iframe, you can apply managed configurations to a user by specifying an mcmId and its associated configuration variables (if any) in the request. Alternatively, all EMMs can apply managed configurations by passing a list of managed properties. This method supports patch semantics.",
-          "httpMethod": "PATCH",
-          "id": "androidenterprise.managedconfigurationsforuser.patch",
-          "parameterOrder": [
-            "enterpriseId",
-            "userId",
-            "managedConfigurationForUserId"
-          ],
-          "parameters": {
-            "enterpriseId": {
-              "description": "The ID of the enterprise.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "managedConfigurationForUserId": {
-              "description": "The ID of the managed configuration (a product ID), e.g. \"app:com.google.android.gm\".",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "userId": {
-              "description": "The ID of the user.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}",
-          "request": {
-            "$ref": "ManagedConfiguration"
-          },
-          "response": {
-            "$ref": "ManagedConfiguration"
           },
           "scopes": [
             "https://www.googleapis.com/auth/androidenterprise"
@@ -2124,46 +1900,6 @@
             "https://www.googleapis.com/auth/androidenterprise"
           ]
         },
-        "patch": {
-          "description": "Updates a cluster. This method supports patch semantics.",
-          "httpMethod": "PATCH",
-          "id": "androidenterprise.storelayoutclusters.patch",
-          "parameterOrder": [
-            "enterpriseId",
-            "pageId",
-            "clusterId"
-          ],
-          "parameters": {
-            "clusterId": {
-              "description": "The ID of the cluster.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "enterpriseId": {
-              "description": "The ID of the enterprise.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "pageId": {
-              "description": "The ID of the page.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}",
-          "request": {
-            "$ref": "StoreCluster"
-          },
-          "response": {
-            "$ref": "StoreCluster"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/androidenterprise"
-          ]
-        },
         "update": {
           "description": "Updates a cluster.",
           "httpMethod": "PUT",
@@ -2309,39 +2045,6 @@
           "path": "enterprises/{enterpriseId}/storeLayout/pages",
           "response": {
             "$ref": "StoreLayoutPagesListResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/androidenterprise"
-          ]
-        },
-        "patch": {
-          "description": "Updates the content of a store page. This method supports patch semantics.",
-          "httpMethod": "PATCH",
-          "id": "androidenterprise.storelayoutpages.patch",
-          "parameterOrder": [
-            "enterpriseId",
-            "pageId"
-          ],
-          "parameters": {
-            "enterpriseId": {
-              "description": "The ID of the enterprise.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "pageId": {
-              "description": "The ID of the page.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}",
-          "request": {
-            "$ref": "StorePage"
-          },
-          "response": {
-            "$ref": "StorePage"
           },
           "scopes": [
             "https://www.googleapis.com/auth/androidenterprise"
@@ -2587,39 +2290,6 @@
             "https://www.googleapis.com/auth/androidenterprise"
           ]
         },
-        "patch": {
-          "description": "Updates the details of an EMM-managed user.\n\nCan be used with EMM-managed users only (not Google managed users). Pass the new details in the Users resource in the request body. Only the displayName field can be changed. Other fields must either be unset or have the currently active value. This method supports patch semantics.",
-          "httpMethod": "PATCH",
-          "id": "androidenterprise.users.patch",
-          "parameterOrder": [
-            "enterpriseId",
-            "userId"
-          ],
-          "parameters": {
-            "enterpriseId": {
-              "description": "The ID of the enterprise.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "userId": {
-              "description": "The ID of the user.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "enterprises/{enterpriseId}/users/{userId}",
-          "request": {
-            "$ref": "User"
-          },
-          "response": {
-            "$ref": "User"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/androidenterprise"
-          ]
-        },
         "revokeDeviceAccess": {
           "description": "Revokes access to all devices currently provisioned to the user. The user will no longer be able to use the managed Play store on any of their managed devices.\n\nThis call only works with EMM-managed accounts.",
           "httpMethod": "DELETE",
@@ -2850,39 +2520,6 @@
             "https://www.googleapis.com/auth/androidenterprise"
           ]
         },
-        "patch": {
-          "description": "Updates an existing web app. This method supports patch semantics.",
-          "httpMethod": "PATCH",
-          "id": "androidenterprise.webapps.patch",
-          "parameterOrder": [
-            "enterpriseId",
-            "webAppId"
-          ],
-          "parameters": {
-            "enterpriseId": {
-              "description": "The ID of the enterprise.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "webAppId": {
-              "description": "The ID of the web app.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "enterprises/{enterpriseId}/webApps/{webAppId}",
-          "request": {
-            "$ref": "WebApp"
-          },
-          "response": {
-            "$ref": "WebApp"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/androidenterprise"
-          ]
-        },
         "update": {
           "description": "Updates an existing web app.",
           "httpMethod": "PUT",
@@ -2919,7 +2556,7 @@
       }
     }
   },
-  "revision": "20200115",
+  "revision": "20200129",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Administrator": {

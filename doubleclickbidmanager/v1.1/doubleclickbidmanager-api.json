@@ -15,7 +15,7 @@
   "description": "API for viewing and managing your reports in DoubleClick Bid Manager.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/bid-manager/",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/WtmXtqYyvihpGm_TYmOgMYSGj3c\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/W5tdY_k9mZiffmUcW3f8Mi--770\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -281,7 +281,7 @@
       }
     }
   },
-  "revision": "20200116",
+  "revision": "20200124",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "DownloadLineItemsRequest": {
@@ -514,9 +514,6 @@
             "FILTER_DEVICE_MAKE",
             "FILTER_DEVICE_MODEL",
             "FILTER_DEVICE_TYPE",
-            "FILTER_DFP_INSERTION_ORDER",
-            "FILTER_DFP_LINE_ITEM",
-            "FILTER_DFP_LINE_ITEM_ID",
             "FILTER_DFP_ORDER_ID",
             "FILTER_DIGITAL_CONTENT_LABEL",
             "FILTER_DMA",
@@ -535,6 +532,9 @@
             "FILTER_FLOODLIGHT_ACTIVITY",
             "FILTER_FLOODLIGHT_ACTIVITY_ID",
             "FILTER_FORMAT",
+            "FILTER_GAM_INSERTION_ORDER",
+            "FILTER_GAM_LINE_ITEM",
+            "FILTER_GAM_LINE_ITEM_ID",
             "FILTER_GENDER",
             "FILTER_GMAIL_AGE",
             "FILTER_GMAIL_CITY",
@@ -1110,9 +1110,6 @@
               "FILTER_DEVICE_MAKE",
               "FILTER_DEVICE_MODEL",
               "FILTER_DEVICE_TYPE",
-              "FILTER_DFP_INSERTION_ORDER",
-              "FILTER_DFP_LINE_ITEM",
-              "FILTER_DFP_LINE_ITEM_ID",
               "FILTER_DFP_ORDER_ID",
               "FILTER_DIGITAL_CONTENT_LABEL",
               "FILTER_DMA",
@@ -1131,6 +1128,9 @@
               "FILTER_FLOODLIGHT_ACTIVITY",
               "FILTER_FLOODLIGHT_ACTIVITY_ID",
               "FILTER_FORMAT",
+              "FILTER_GAM_INSERTION_ORDER",
+              "FILTER_GAM_LINE_ITEM",
+              "FILTER_GAM_LINE_ITEM_ID",
               "FILTER_GENDER",
               "FILTER_GMAIL_AGE",
               "FILTER_GMAIL_CITY",

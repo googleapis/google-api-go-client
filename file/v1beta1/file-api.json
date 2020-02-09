@@ -476,7 +476,7 @@
       }
     }
   },
-  "revision": "20200205",
+  "revision": "20200109",
   "rootUrl": "https://file.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {
@@ -800,7 +800,7 @@
           "type": "string"
         },
         "description": {
-          "description": "Optional. The description of the instance (2048 characters or less).",
+          "description": "Optional. A description of the instance (2048 characters or less).",
           "type": "string"
         },
         "etag": {
@@ -861,18 +861,12 @@
           "enum": [
             "TIER_UNSPECIFIED",
             "STANDARD",
-            "PREMIUM",
-            "BASIC_HDD",
-            "BASIC_SSD",
-            "HIGH_SCALE_SSD"
+            "PREMIUM"
           ],
           "enumDescriptions": [
             "Not set.",
-            "STANDARD tier. BASIC_HDD is the preferred term for this tier.",
-            "PREMIUM tier. BASIC_SSD is the preferred term for this tier.",
-            "BASIC instances offer a maximum capacity of 63.9 TB.\nBASIC_HDD is an alias for STANDARD Tier, offering economical\nperformance backed by Persistent Disk HDD.",
-            "BASIC instances offer a maximum capacity of 63.9 TB.\nBASIC_SSD is an alias for PREMIUM Tier, and offers improved\nperformance backed by Persistent Disk SSD.",
-            "HIGH_SCALE instances offer larger capacity and professional\nperformance backed by Persistent Disk SSD."
+            "STANDARD tier.",
+            "PREMIUM tier."
           ],
           "type": "string"
         }

@@ -13,6 +13,7 @@
   },
   "id": "searchconsole:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://searchconsole.mtls.googleapis.com/",
   "name": "searchconsole",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -119,7 +120,7 @@
       }
     }
   },
-  "revision": "20200104",
+  "revision": "20200208",
   "rootUrl": "https://searchconsole.googleapis.com/",
   "schemas": {
     "BlockedResource": {

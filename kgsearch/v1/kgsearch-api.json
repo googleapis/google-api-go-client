@@ -11,6 +11,7 @@
   },
   "id": "kgsearch:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://kgsearch.mtls.googleapis.com/",
   "name": "kgsearch",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -150,7 +151,7 @@
       }
     }
   },
-  "revision": "20180809",
+  "revision": "20200210",
   "rootUrl": "https://kgsearch.googleapis.com/",
   "schemas": {
     "SearchResponse": {

@@ -12,6 +12,7 @@
   },
   "id": "acceleratedmobilepageurl:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://acceleratedmobilepageurl.mtls.googleapis.com/",
   "name": "acceleratedmobilepageurl",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -114,7 +115,7 @@
       }
     }
   },
-  "revision": "20200122",
+  "revision": "20200210",
   "rootUrl": "https://acceleratedmobilepageurl.googleapis.com/",
   "schemas": {
     "AmpUrl": {

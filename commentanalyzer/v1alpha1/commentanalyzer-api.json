@@ -21,6 +21,7 @@
   },
   "id": "commentanalyzer:v1alpha1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://commentanalyzer.mtls.googleapis.com/",
   "name": "commentanalyzer",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -144,7 +145,7 @@
       }
     }
   },
-  "revision": "20191124",
+  "revision": "20200209",
   "rootUrl": "https://commentanalyzer.googleapis.com/",
   "schemas": {
     "AnalyzeCommentRequest": {

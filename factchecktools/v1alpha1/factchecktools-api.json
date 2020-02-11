@@ -22,6 +22,7 @@
   },
   "id": "factchecktools:v1alpha1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://factchecktools.mtls.googleapis.com/",
   "name": "factchecktools",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -303,7 +304,7 @@
       }
     }
   },
-  "revision": "20190822",
+  "revision": "20200210",
   "rootUrl": "https://factchecktools.googleapis.com/",
   "schemas": {
     "GoogleFactcheckingFactchecktoolsV1alpha1Claim": {

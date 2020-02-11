@@ -13,6 +13,7 @@
   },
   "id": "androiddeviceprovisioning:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://androiddeviceprovisioning.mtls.googleapis.com/",
   "name": "androiddeviceprovisioning",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -824,7 +825,7 @@
       }
     }
   },
-  "revision": "20190704",
+  "revision": "20200209",
   "rootUrl": "https://androiddeviceprovisioning.googleapis.com/",
   "schemas": {
     "ClaimDeviceRequest": {

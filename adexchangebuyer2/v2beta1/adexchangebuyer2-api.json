@@ -21,6 +21,7 @@
   },
   "id": "adexchangebuyer2:v2beta1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://adexchangebuyer.mtls.googleapis.com/",
   "name": "adexchangebuyer2",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -2485,7 +2486,7 @@
       }
     }
   },
-  "revision": "20191111",
+  "revision": "20200210",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {

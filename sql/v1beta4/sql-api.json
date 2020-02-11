@@ -1521,6 +1521,105 @@
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/sqlservice.admin"
               ]
+            },
+            "startExternalSync": {
+              "description": "Start External master migration.",
+              "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/startExternalSync",
+              "httpMethod": "POST",
+              "id": "sql.projects.instances.startExternalSync",
+              "parameterOrder": [
+                "project",
+                "instance"
+              ],
+              "parameters": {
+                "instance": {
+                  "description": "Cloud SQL instance ID. This does not include the project ID.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "The parent resource where Cloud SQL starts this database instance\nexternal sync. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
+                  "location": "query",
+                  "type": "string"
+                },
+                "project": {
+                  "description": "ID of the project that contains the first generation instance.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "syncMode": {
+                  "description": "External sync mode",
+                  "enum": [
+                    "EXTERNAL_SYNC_MODE_UNSPECIFIED",
+                    "ONLINE",
+                    "OFFLINE"
+                  ],
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "sql/v1beta4/projects/{project}/instances/{instance}/startExternalSync",
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/sqlservice.admin"
+              ]
+            },
+            "verifyExternalSyncSettings": {
+              "description": "Verify External master external sync settings.",
+              "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/verifyExternalSyncSettings",
+              "httpMethod": "POST",
+              "id": "sql.projects.instances.verifyExternalSyncSettings",
+              "parameterOrder": [
+                "project",
+                "instance"
+              ],
+              "parameters": {
+                "instance": {
+                  "description": "Cloud SQL instance ID. This does not include the project ID.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "The parent resource where Cloud SQL verifies this database instance\nexternal sync settings. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
+                  "location": "query",
+                  "type": "string"
+                },
+                "project": {
+                  "description": "Project ID of the project that contains the instance.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "syncMode": {
+                  "description": "External sync mode",
+                  "enum": [
+                    "EXTERNAL_SYNC_MODE_UNSPECIFIED",
+                    "ONLINE",
+                    "OFFLINE"
+                  ],
+                  "location": "query",
+                  "type": "string"
+                },
+                "verifyConnectionOnly": {
+                  "description": "Flag to enable verifying connection only",
+                  "location": "query",
+                  "type": "boolean"
+                }
+              },
+              "path": "sql/v1beta4/projects/{project}/instances/{instance}/verifyExternalSyncSettings",
+              "response": {
+                "$ref": "SqlInstancesVerifyExternalSyncSettingsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/sqlservice.admin"
+              ]
             }
           }
         },
@@ -1561,6 +1660,103 @@
                   },
                   "response": {
                     "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/sqlservice.admin"
+                  ]
+                },
+                "startExternalSync": {
+                  "description": "Start External master migration.",
+                  "flatPath": "sql/v1beta4/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/startExternalSync",
+                  "httpMethod": "POST",
+                  "id": "sql.projects.locations.instances.startExternalSync",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "instance": {
+                      "description": "Cloud SQL instance ID. This does not include the project ID.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "The parent resource where Cloud SQL starts this database instance\nexternal sync. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "project": {
+                      "description": "ID of the project that contains the first generation instance.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "syncMode": {
+                      "description": "External sync mode",
+                      "enum": [
+                        "EXTERNAL_SYNC_MODE_UNSPECIFIED",
+                        "ONLINE",
+                        "OFFLINE"
+                      ],
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "sql/v1beta4/{+parent}/startExternalSync",
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/sqlservice.admin"
+                  ]
+                },
+                "verifyExternalSyncSettings": {
+                  "description": "Verify External master external sync settings.",
+                  "flatPath": "sql/v1beta4/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/verifyExternalSyncSettings",
+                  "httpMethod": "POST",
+                  "id": "sql.projects.locations.instances.verifyExternalSyncSettings",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "instance": {
+                      "description": "Cloud SQL instance ID. This does not include the project ID.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "The parent resource where Cloud SQL verifies this database instance\nexternal sync settings. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "project": {
+                      "description": "Project ID of the project that contains the instance.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "syncMode": {
+                      "description": "External sync mode",
+                      "enum": [
+                        "EXTERNAL_SYNC_MODE_UNSPECIFIED",
+                        "ONLINE",
+                        "OFFLINE"
+                      ],
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "verifyConnectionOnly": {
+                      "description": "Flag to enable verifying connection only",
+                      "location": "query",
+                      "type": "boolean"
+                    }
+                  },
+                  "path": "sql/v1beta4/{+parent}/verifyExternalSyncSettings",
+                  "response": {
+                    "$ref": "SqlInstancesVerifyExternalSyncSettingsResponse"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
@@ -1990,7 +2186,7 @@
       }
     }
   },
-  "revision": "20200124",
+  "revision": "20200203",
   "rootUrl": "https://sqladmin.googleapis.com/",
   "schemas": {
     "AclEntry": {
@@ -3271,12 +3467,24 @@
           "description": "PEM representation of the slave's private key. The corresponsing public key\nis encoded in the client's certificate.",
           "type": "string"
         },
+        "dumpFilePath": {
+          "description": "The dump file to create the Cloud SQL replica.",
+          "type": "string"
+        },
         "hostPort": {
           "description": "The host and port of the on-premises instance in host:port format",
           "type": "string"
         },
         "kind": {
           "description": "This is always \u003ccode\u003esql#onPremisesConfiguration\u003c/code\u003e.",
+          "type": "string"
+        },
+        "password": {
+          "description": "The password for connecting to on-premises instance.",
+          "type": "string"
+        },
+        "username": {
+          "description": "The username for connecting to on-premises instance.",
           "type": "string"
         }
       },
@@ -3352,7 +3560,8 @@
             "ENABLE_PRIVATE_IP",
             "DEFER_MAINTENANCE",
             "CREATE_CLONE",
-            "RESCHEDULE_MAINTENANCE"
+            "RESCHEDULE_MAINTENANCE",
+            "START_EXTERNAL_SYNC"
           ],
           "enumDescriptions": [
             "Unknown operation type.",
@@ -3388,7 +3597,8 @@
             "This field is deprecated, and will be removed in future version of API.",
             "",
             "Creates clone instance.",
-            "Reschedule maintenance to another time."
+            "Reschedule maintenance to another time.",
+            "Starts external sync of a Cloud SQL EM replica to an external master."
           ],
           "type": "string"
         },
@@ -3533,7 +3743,7 @@
           "type": "string"
         },
         "scheduleTime": {
-          "description": "Optional. Timestamp when the maintenance shall be rescheduled to if\nreschedule_type=SPECIFIC_TIME.",
+          "description": "Optional. Timestamp when the maintenance shall be rescheduled to if\nreschedule_type=SPECIFIC_TIME, in \u003ca\nhref=\"https://tools.ietf.org/html/rfc3339\"\u003eRFC 3339\u003c/a\u003e format, for\nexample \u003ccode\u003e2012-11-15T16:19:00.094Z\u003c/code\u003e.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -3732,6 +3942,41 @@
       },
       "type": "object"
     },
+    "SqlExternalSyncSettingError": {
+      "description": "External master migration setting error.",
+      "id": "SqlExternalSyncSettingError",
+      "properties": {
+        "detail": {
+          "description": "Additional information about the error encountered.",
+          "type": "string"
+        },
+        "kind": {
+          "description": "This is always \u003ccode\u003esql#migrationSettingError\u003c/code\u003e.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Identifies the specific error that occurred.",
+          "enum": [
+            "SQL_EXTERNAL_SYNC_SETTING_ERROR_TYPE_UNSPECIFIED",
+            "CONNECTION_FAILURE",
+            "BINLOG_NOT_ENABLED",
+            "INCOMPATIBLE_DATABASE_VERSION",
+            "REPLICA_ALREADY_SETUP",
+            "INSUFFICIENT_PRIVILEGE"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "SqlInstancesRescheduleMaintenanceRequestBody": {
       "description": "Reschedule options for maintenance windows.",
       "id": "SqlInstancesRescheduleMaintenanceRequestBody",
@@ -3739,6 +3984,24 @@
         "reschedule": {
           "$ref": "Reschedule",
           "description": "Required. The type of the reschedule the user wants."
+        }
+      },
+      "type": "object"
+    },
+    "SqlInstancesVerifyExternalSyncSettingsResponse": {
+      "description": "Instance verify external sync settings response.",
+      "id": "SqlInstancesVerifyExternalSyncSettingsResponse",
+      "properties": {
+        "errors": {
+          "description": "List of migration violations.",
+          "items": {
+            "$ref": "SqlExternalSyncSettingError"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "description": "This is always \u003ccode\u003esql#migrationSettingErrorList\u003c/code\u003e.",
+          "type": "string"
         }
       },
       "type": "object"

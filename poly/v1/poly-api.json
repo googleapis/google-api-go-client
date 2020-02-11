@@ -13,6 +13,7 @@
   },
   "id": "poly:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://poly.mtls.googleapis.com/",
   "name": "poly",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -290,7 +291,7 @@
       }
     }
   },
-  "revision": "20190409",
+  "revision": "20200210",
   "rootUrl": "https://poly.googleapis.com/",
   "schemas": {
     "Asset": {

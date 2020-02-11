@@ -1195,7 +1195,8 @@
                             "elementVisibilityRecentTime",
                             "requestPath",
                             "requestMethod",
-                            "clientName"
+                            "clientName",
+                            "queryString"
                           ],
                           "location": "query",
                           "repeated": true,
@@ -1337,7 +1338,8 @@
                             "elementVisibilityRecentTime",
                             "requestPath",
                             "requestMethod",
-                            "clientName"
+                            "clientName",
+                            "queryString"
                           ],
                           "location": "query",
                           "repeated": true,
@@ -1507,7 +1509,8 @@
                             "elementVisibilityRecentTime",
                             "requestPath",
                             "requestMethod",
-                            "clientName"
+                            "clientName",
+                            "queryString"
                           ],
                           "location": "query",
                           "type": "string"
@@ -2785,7 +2788,7 @@
       }
     }
   },
-  "revision": "20200109",
+  "revision": "20200207",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -2973,7 +2976,8 @@
             "elementVisibilityRecentTime",
             "requestPath",
             "requestMethod",
-            "clientName"
+            "clientName",
+            "queryString"
           ],
           "enumDescriptions": [
             "",
@@ -3009,6 +3013,7 @@
             "",
             "For web or mobile.",
             "For web or mobile.",
+            "",
             "",
             "",
             "",

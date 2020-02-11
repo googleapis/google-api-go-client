@@ -13,6 +13,7 @@
   },
   "id": "admob:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://admob.mtls.googleapis.com/",
   "name": "admob",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -206,7 +207,7 @@
       }
     }
   },
-  "revision": "20200203",
+  "revision": "20200210",
   "rootUrl": "https://admob.googleapis.com/",
   "schemas": {
     "Date": {

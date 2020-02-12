@@ -22,6 +22,7 @@
   },
   "id": "cloudasset:v1beta1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://cloudasset.mtls.googleapis.com/",
   "name": "cloudasset",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -400,7 +401,7 @@
       }
     }
   },
-  "revision": "20200118",
+  "revision": "20200209",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "Asset": {

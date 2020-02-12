@@ -24,6 +24,7 @@
   },
   "id": "genomics:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://genomics.mtls.googleapis.com/",
   "name": "genomics",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -208,7 +209,7 @@
       }
     }
   },
-  "revision": "20190719",
+  "revision": "20200210",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {

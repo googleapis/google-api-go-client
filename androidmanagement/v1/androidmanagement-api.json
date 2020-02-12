@@ -2121,7 +2121,7 @@
             "SETTINGS_ACCESS_BLOCKED"
           ],
           "enumDescriptions": [
-            "Unspecified, defaults to SETTINGS_ACCESS_BLOCKED.",
+            "Unspecified, defaults to SETTINGS_ACCESS_ALLOWED.",
             "Access to the Settings app is allowed in kiosk mode.",
             "Access to the Settings app is not allowed in kiosk mode."
           ],

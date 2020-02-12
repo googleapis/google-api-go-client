@@ -25,6 +25,7 @@
   },
   "id": "driveactivity:v2",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://driveactivity.mtls.googleapis.com/",
   "name": "driveactivity",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -131,7 +132,7 @@
       }
     }
   },
-  "revision": "20191218",
+  "revision": "20200210",
   "rootUrl": "https://driveactivity.googleapis.com/",
   "schemas": {
     "Action": {

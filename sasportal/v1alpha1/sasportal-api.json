@@ -21,6 +21,7 @@
   },
   "id": "sasportal:v1alpha1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://sasportal.mtls.googleapis.com/",
   "name": "sasportal",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -1252,7 +1253,7 @@
       }
     }
   },
-  "revision": "20200203",
+  "revision": "20200210",
   "rootUrl": "https://sasportal.googleapis.com/",
   "schemas": {
     "SasPortalAssignment": {

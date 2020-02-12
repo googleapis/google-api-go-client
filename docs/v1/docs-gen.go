@@ -5569,6 +5569,19 @@ type SectionStyle struct {
 	// Unsetting this property results in a 400 bad request error.
 	MarginTop *Dimension `json:"marginTop,omitempty"`
 
+	// PageNumberStart: The page number from which to start counting the
+	// number of pages for this
+	// section. If unset, page numbering continues from the previous
+	// section.
+	// If the value is unset in the first
+	// SectionBreak, refer to DocumentStyle's
+	// page_number_start.
+	//
+	// When updating this property, setting a concrete value is
+	// required.
+	// Unsetting this property results in a 400 bad request error.
+	PageNumberStart int64 `json:"pageNumberStart,omitempty"`
+
 	// SectionType: Output only. The type of section.
 	//
 	// Possible values:
@@ -7900,7 +7913,7 @@ func (c *DocumentsBatchUpdateCall) Header() http.Header {
 
 func (c *DocumentsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8043,7 +8056,7 @@ func (c *DocumentsCreateCall) Header() http.Header {
 
 func (c *DocumentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8199,7 +8212,7 @@ func (c *DocumentsGetCall) Header() http.Header {
 
 func (c *DocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

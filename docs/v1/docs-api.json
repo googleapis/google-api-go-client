@@ -209,7 +209,7 @@
       }
     }
   },
-  "revision": "20200121",
+  "revision": "20200207",
   "rootUrl": "https://docs.googleapis.com/",
   "schemas": {
     "AutoText": {
@@ -3035,6 +3035,11 @@
         "marginTop": {
           "$ref": "Dimension",
           "description": "The top page margin of the section. If unset, uses margin_top from DocumentStyle.\n\nWhen updating this property, setting a concrete value is required.\nUnsetting this property results in a 400 bad request error."
+        },
+        "pageNumberStart": {
+          "description": "The page number from which to start counting the number of pages for this\nsection. If unset, page numbering continues from the previous section.\nIf the value is unset in the first\nSectionBreak, refer to DocumentStyle's\npage_number_start.\n\nWhen updating this property, setting a concrete value is required.\nUnsetting this property results in a 400 bad request error.",
+          "format": "int32",
+          "type": "integer"
         },
         "sectionType": {
           "description": "Output only. The type of section.",

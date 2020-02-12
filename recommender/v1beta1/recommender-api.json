@@ -22,6 +22,7 @@
   },
   "id": "recommender:v1beta1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://recommender.mtls.googleapis.com/",
   "name": "recommender",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -271,7 +272,7 @@
       }
     }
   },
-  "revision": "20200108",
+  "revision": "20200210",
   "rootUrl": "https://recommender.googleapis.com/",
   "schemas": {
     "GoogleCloudRecommenderV1beta1CostProjection": {
@@ -360,7 +361,7 @@
       "id": "GoogleCloudRecommenderV1beta1MarkRecommendationFailedRequest",
       "properties": {
         "etag": {
-          "description": "Required. Fingerprint of the Recommendation. Provides optimistic locking.",
+          "description": "Fingerprint of the Recommendation. Provides optimistic locking.",
           "type": "string"
         },
         "stateMetadata": {

@@ -471,7 +471,7 @@
       }
     }
   },
-  "revision": "20191209",
+  "revision": "20200206",
   "rootUrl": "https://firebaserules.googleapis.com/",
   "schemas": {
     "Arg": {
@@ -799,6 +799,16 @@
       "properties": {
         "column": {
           "description": "First column on the source line associated with the source fragment.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "currentOffset": {
+          "description": "Start position relative to the beginning of the file.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "endOffset": {
+          "description": "End position relative to the beginning of the file.",
           "format": "int32",
           "type": "integer"
         },

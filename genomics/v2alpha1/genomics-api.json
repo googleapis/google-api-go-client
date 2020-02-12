@@ -24,6 +24,7 @@
   },
   "id": "genomics:v2alpha1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://genomics.mtls.googleapis.com/",
   "name": "genomics",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -267,7 +268,7 @@
       }
     }
   },
-  "revision": "20191112",
+  "revision": "20200210",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "Accelerator": {

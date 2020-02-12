@@ -22,6 +22,7 @@
   },
   "id": "cloudprivatecatalogproducer:v1beta1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://cloudprivatecatalogproducer.mtls.googleapis.com/",
   "name": "cloudprivatecatalogproducer",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -973,7 +974,7 @@
       }
     }
   },
-  "revision": "20200120",
+  "revision": "20200210",
   "rootUrl": "https://cloudprivatecatalogproducer.googleapis.com/",
   "schemas": {
     "GoogleCloudPrivatecatalogproducerV1beta1Association": {

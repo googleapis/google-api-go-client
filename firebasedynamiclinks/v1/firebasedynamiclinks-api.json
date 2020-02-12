@@ -21,6 +21,7 @@
   },
   "id": "firebasedynamiclinks:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://firebasedynamiclinks.mtls.googleapis.com/",
   "name": "firebasedynamiclinks",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -223,7 +224,7 @@
       }
     }
   },
-  "revision": "20190425",
+  "revision": "20200210",
   "rootUrl": "https://firebasedynamiclinks.googleapis.com/",
   "schemas": {
     "AnalyticsInfo": {

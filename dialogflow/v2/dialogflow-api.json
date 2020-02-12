@@ -1534,7 +1534,7 @@
       }
     }
   },
-  "revision": "20200121",
+  "revision": "20200204",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -1888,7 +1888,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2DetectIntentRequest": {
-      "description": "The request to detect user's intent.",
+      "description": "============================================================================\nRequests and responses for custom methods.\nThe request to detect user's intent.",
       "id": "GoogleCloudDialogflowV2DetectIntentRequest",
       "properties": {
         "inputAudio": {

@@ -642,7 +642,7 @@
       }
     }
   },
-  "revision": "20200205",
+  "revision": "20200124",
   "rootUrl": "https://bigqueryreservation.googleapis.com/",
   "schemas": {
     "Assignment": {
@@ -730,13 +730,11 @@
           "description": "Capacity commitment commitment plan.",
           "enum": [
             "COMMITMENT_PLAN_UNSPECIFIED",
-            "FLEX",
             "MONTHLY",
             "ANNUAL"
           ],
           "enumDescriptions": [
             "Invalid plan value. Requests with this value will be rejected with\nerror code `google.rpc.Code.INVALID_ARGUMENT`.",
-            "Capacity commitment can be removed at any point, even after becoming\nACTIVE.",
             "Capacity commitment cannot be removed for 30 days after becoming ACTIVE.",
             "Capacity commitment cannot be removed for 365 days after becoming ACTIVE.\nNote: annual commitments are automatically downgraded to monthly after\n365 days."
           ],

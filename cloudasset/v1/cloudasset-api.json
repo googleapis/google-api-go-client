@@ -22,7 +22,6 @@
   },
   "id": "cloudasset:v1",
   "kind": "discovery#restDescription",
-  "mtlsRootUrl": "https://cloudasset.mtls.googleapis.com/",
   "name": "cloudasset",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -357,7 +356,7 @@
       }
     }
   },
-  "revision": "20200209",
+  "revision": "20200201",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -990,18 +989,14 @@
             "DESKTOP_MAC",
             "DESKTOP_WINDOWS",
             "DESKTOP_LINUX",
-            "DESKTOP_CHROME_OS",
-            "ANDROID",
-            "IOS"
+            "DESKTOP_CHROME_OS"
           ],
           "enumDescriptions": [
             "The operating system of the device is not specified or not known.",
             "A desktop Mac operating system.",
             "A desktop Windows operating system.",
             "A desktop Linux operating system.",
-            "A desktop ChromeOS operating system.",
-            "An Android operating system.",
-            "An iOS operating system."
+            "A desktop ChromeOS operating system."
           ],
           "type": "string"
         },

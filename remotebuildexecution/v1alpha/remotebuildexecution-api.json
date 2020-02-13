@@ -22,6 +22,7 @@
   },
   "id": "remotebuildexecution:v1alpha",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://admin-remotebuildexecution.mtls.googleapis.com/",
   "name": "remotebuildexecution",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -387,7 +388,7 @@
       }
     }
   },
-  "revision": "20200128",
+  "revision": "20200211",
   "rootUrl": "https://admin-remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -1022,7 +1023,11 @@
             "NO_CUDA_CAPABLE_DEVICE",
             "REMOTE_CAS_DOWNLOAD_ERROR",
             "REMOTE_CAS_UPLOAD_ERROR",
-            "LOCAL_CASPROXY_NOT_RUNNING"
+            "LOCAL_CASPROXY_NOT_RUNNING",
+            "DOCKER_CREATE_CONTAINER_ERROR",
+            "DOCKER_INVALID_ULIMIT",
+            "DOCKER_UNKNOWN_RUNTIME",
+            "DOCKER_UNKNOWN_CAPABILITY"
           ],
           "enumDescriptions": [
             "The command succeeded.",
@@ -1048,7 +1053,11 @@
             "The command failed with \"no cuda-capable device is detected\" error.",
             "The bot encountered errors from remote CAS when downloading blobs.",
             "The bot encountered errors from remote CAS when uploading blobs.",
-            "The local casproxy is not running."
+            "The local casproxy is not running.",
+            "The bot couldn't start the container.",
+            "The docker ulimit is not valid.",
+            "The docker runtime is unknown.",
+            "The docker capability is unknown."
           ],
           "type": "string"
         },

@@ -21,6 +21,7 @@
   },
   "id": "storagetransfer:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://storagetransfer.mtls.googleapis.com/",
   "name": "storagetransfer",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -395,7 +396,7 @@
       }
     }
   },
-  "revision": "20200203",
+  "revision": "20200210",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AwsAccessKey": {
@@ -866,7 +867,7 @@
           "type": "string"
         },
         "name": {
-          "description": "A globally unique name assigned by Storage Transfer Service when the\njob is created. This field should be left empty in requests to create a new\ntransfer job; otherwise, the requests result in an `INVALID_ARGUMENT`\nerror.",
+          "description": "A unique name (within the transfer project) assigned when the job is\ncreated.\nIf this field is left empty in a CreateTransferJobRequest,\nStorage Transfer Service will assign a unique name. Otherwise, the supplied\nname is used as the unique name for this job.\n\nThis name must start with \"transferJobs/\" prefix and end with a letter or a\nnumber, and should be no more than 128 characters.\nExample of a valid format : \"transferJobs/[A-Za-z0-9-._~]*[A-Za-z0-9]$\"\n\n**NOTE:**\nIf the supplied name is already in use, the creation request results in an\n`ALREADY_EXISTS` error and the transfer job will not be created.\nInvalid job names will return an 'INVALID_ARGUMENT' error and the job will\nnot be created.",
           "type": "string"
         },
         "projectId": {

@@ -831,8 +831,25 @@ func (s *ListIdentityAwareProxyClientsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OAuthSettings: Configuration for OAuth login&consent flow behavior.
+// OAuthSettings: Configuration for OAuth login&consent flow behavior as
+// well as for OAuth
+// Credentials.
 type OAuthSettings struct {
+	// ClientId: OAuth 2.0 client ID used in the OAuth flow to generate an
+	// access token. If
+	// this field is set, you can skip obtaining the OAuth credentials in
+	// this
+	// step:
+	// https://developers.google.com/identity/protocols/OAuth2?hl=
+	// en_US#1.-obtain-oauth-2.0-credentials-from-the-google-api-console.
+	// How
+	// ever, this could allow for client sharing. The risks of client
+	// sharing
+	// are outlined
+	// here:
+	// https://cloud.google.com/iap/docs/sharing-oauth-clients#risks.
+	ClientId string `json:"clientId,omitempty"`
+
 	// LoginHint: Domain hint to send as hd=? parameter in OAuth request
 	// flow. Enables
 	// redirect to primary IDP by skipping Google's login
@@ -844,7 +861,7 @@ type OAuthSettings struct {
 	// since access behavior is managed by IAM policies.
 	LoginHint string `json:"loginHint,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "LoginHint") to
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -852,7 +869,7 @@ type OAuthSettings struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "LoginHint") to include in
+	// NullFields is a list of field names (e.g. "ClientId") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1196,7 +1213,7 @@ func (c *ProjectsBrandsCreateCall) Header() http.Header {
 
 func (c *ProjectsBrandsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1345,7 +1362,7 @@ func (c *ProjectsBrandsGetCall) Header() http.Header {
 
 func (c *ProjectsBrandsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1489,7 +1506,7 @@ func (c *ProjectsBrandsListCall) Header() http.Header {
 
 func (c *ProjectsBrandsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1628,7 +1645,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsCreateCall) Header() http.Header
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1770,7 +1787,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsDeleteCall) Header() http.Header
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1912,7 +1929,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsGetCall) Header() http.Header {
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2080,7 +2097,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) Header() http.Header {
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2250,7 +2267,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Header() http.H
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2396,7 +2413,7 @@ func (c *V1GetIamPolicyCall) Header() http.Header {
 
 func (c *V1GetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2546,7 +2563,7 @@ func (c *V1GetIapSettingsCall) Header() http.Header {
 
 func (c *V1GetIapSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2687,7 +2704,7 @@ func (c *V1SetIamPolicyCall) Header() http.Header {
 
 func (c *V1SetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2833,7 +2850,7 @@ func (c *V1TestIamPermissionsCall) Header() http.Header {
 
 func (c *V1TestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2986,7 +3003,7 @@ func (c *V1UpdateIapSettingsCall) Header() http.Header {
 
 func (c *V1UpdateIapSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -2721,7 +2721,8 @@
                                 "MESSAGE_VIEW_UNSPECIFIED",
                                 "RAW_ONLY",
                                 "PARSED_ONLY",
-                                "FULL"
+                                "FULL",
+                                "BASIC"
                               ],
                               "location": "query",
                               "type": "string"
@@ -2798,6 +2799,18 @@
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
                               "required": true,
+                              "type": "string"
+                            },
+                            "view": {
+                              "description": "Specifies the parts of the Message to return in the response.\nWhen unspecified, equivalent to BASIC.",
+                              "enum": [
+                                "MESSAGE_VIEW_UNSPECIFIED",
+                                "RAW_ONLY",
+                                "PARSED_ONLY",
+                                "FULL",
+                                "BASIC"
+                              ],
+                              "location": "query",
                               "type": "string"
                             }
                           },
@@ -2924,7 +2937,7 @@
       }
     }
   },
-  "revision": "20200120",
+  "revision": "20200131",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -3090,7 +3103,7 @@
           "description": "Deidentify configuration."
         },
         "destinationDataset": {
-          "description": "The name of the dataset resource to create and write the redacted data to.\n\n * The destination dataset must not exist.\n * The destination dataset must be in the same project as the source\n   dataset. De-identifying data across multiple projects is not supported.",
+          "description": "The name of the dataset resource to create and write the redacted data to.\n\n * The destination dataset must not exist.\n * The destination dataset must be in the same project and location as the\n source dataset. De-identifying data across multiple projects or locations\n is not supported.",
           "type": "string"
         }
       },
@@ -3305,23 +3318,23 @@
       "type": "object"
     },
     "Expr": {
-      "description": "Represents an expression text. Example:\n\n    title: \"User account presence\"\n    description: \"Determines whether the request has a user account\"\n    expression: \"size(request.user) \u003e 0\"",
+      "description": "Represents a textual expression in the Common Expression Language (CEL)\nsyntax. CEL is a C-like expression language. The syntax and semantics of CEL\nare documented at https://github.com/google/cel-spec.\n\nExample (Comparison):\n\n    title: \"Summary size limit\"\n    description: \"Determines if a summary is less than 100 chars\"\n    expression: \"document.summary.size() \u003c 100\"\n\nExample (Equality):\n\n    title: \"Requestor is owner\"\n    description: \"Determines if requestor is the document owner\"\n    expression: \"document.owner == request.auth.claims.email\"\n\nExample (Logic):\n\n    title: \"Public documents\"\n    description: \"Determine whether the document should be publicly visible\"\n    expression: \"document.type != 'private' \u0026\u0026 document.type != 'internal'\"\n\nExample (Data Manipulation):\n\n    title: \"Notification string\"\n    description: \"Create a notification string with a timestamp.\"\n    expression: \"'New message received at ' + string(document.create_time)\"\n\nThe exact variables and functions that may be referenced within an expression\nare determined by the service that evaluates it. See the service\ndocumentation for additional information.",
       "id": "Expr",
       "properties": {
         "description": {
-          "description": "An optional description of the expression. This is a longer text which\ndescribes the expression, e.g. when hovered over it in a UI.",
+          "description": "Optional. Description of the expression. This is a longer text which\ndescribes the expression, e.g. when hovered over it in a UI.",
           "type": "string"
         },
         "expression": {
-          "description": "Textual representation of an expression in\nCommon Expression Language syntax.\n\nThe application context of the containing message determines which\nwell-known feature set of CEL is supported.",
+          "description": "Textual representation of an expression in Common Expression Language\nsyntax.",
           "type": "string"
         },
         "location": {
-          "description": "An optional string indicating the location of the expression for error\nreporting, e.g. a file name and a position in the file.",
+          "description": "Optional. String indicating the location of the expression for error\nreporting, e.g. a file name and a position in the file.",
           "type": "string"
         },
         "title": {
-          "description": "An optional title for the expression, i.e. a short string describing\nits purpose. This can be used e.g. in UIs which allow to enter the\nexpression.",
+          "description": "Optional. Title for the expression, i.e. a short string describing\nits purpose. This can be used e.g. in UIs which allow to enter the\nexpression.",
           "type": "string"
         }
       },
@@ -3332,7 +3345,7 @@
       "id": "FhirConfig",
       "properties": {
         "fieldMetadataList": {
-          "description": "Specifies FHIR paths to match and how to transform them. Any field that\nis not matched by a FieldMetadata is passed through to the output\ndataset unmodified. All extensions are removed in the output.",
+          "description": "Specifies FHIR paths to match and how to transform them. Any field that\nis not matched by a FieldMetadata is passed through to the output\ndataset unmodified. All extensions are removed in the output.\nIf a field can be matched by more than one FieldMetadata, the first\nFieldMetadata.Action is applied.",
           "items": {
             "$ref": "FieldMetadata"
           },
@@ -3416,14 +3429,14 @@
           ],
           "enumDescriptions": [
             "No action specified.",
-            "Transform the entire field.",
+            "Transform the entire field based on transformations specified in\nTextConfig. When the specified transformation cannot be applied to a\nfield (for example, a Crypto Hash transformation cannot be applied\nto a FHIR Date field), RedactConfig is used.",
             "Inspect and transform any found PHI.",
             "Do not transform."
           ],
           "type": "string"
         },
         "paths": {
-          "description": "List of paths to FHIR fields to be redacted. Each path is a\nperiod-separated list where each component is either a field name or\nFHIR type name, for example: Patient, HumanName.\nFor \"choice\" types (those defined in the FHIR spec with the form:\nfield[x]) we use two separate components. For example,\n\"deceasedAge.unit\" is matched by \"Deceased.Age.unit\".\nSupported types are: AdministrativeGenderCode, Code, Date, DateTime,\nDecimal, HumanName, Id, LanguageCode, Markdown, Oid, String, Uri, Uuid,\nXhtml.",
+          "description": "List of paths to FHIR fields to redact. Each path is a\nperiod-separated list where each component is either a field name or\nFHIR type name. All types begin with an upper case letter. For example,\nthe resource field \"Patient.Address.city\", which uses a string type,\ncan be matched by \"Patient.Address.String\". Path also supports partial\nmatching. For example, \"Patient.Address.city\" can be matched by\n\"Address.city\" (Patient omitted). Partial matching and type matching\ncan be combined, for example \"Patient.Address.city\" can be matched by\n\"Address.String\". For \"choice\" types (those defined in the FHIR spec\nwith the form: field[x]), use two separate components. For example,\n\"deceasedAge.unit\" is matched by \"Deceased.Age.unit\". Supported types\nare: AdministrativeGenderCode, Code, Date, DateTime, Decimal,\nHumanName, Id, LanguageCode, Markdown, Oid, String, Uri, Uuid, Xhtml.\nThe sub-type for HumanName(for example HumanName.given,\nHumanName.family) can be omitted.",
           "items": {
             "type": "string"
           },
@@ -3649,6 +3662,10 @@
         "parserConfig": {
           "$ref": "ParserConfig",
           "description": "The configuration for the parser. It determines how the server parses the\nmessages."
+        },
+        "rejectDuplicateMessage": {
+          "description": "Determines whether duplicate messages should be rejected. A duplicate\nmessage is a message with the same raw bytes as a message that has already\nbeen ingested/created in this HL7v2 store.\nThe default value is false, meaning that the store accepts the duplicate\nmessages and it also returns the same ACK message in the\nIngestMessageResponse as has been returned previously. Note that only\none resource is created in the store.\nWhen this field is set to true,\nCreateMessage/IngestMessage\nrequests with a duplicate message will be rejected by the store, and\nIngestMessageErrorDetail returns a NACK message upon rejection.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -3774,7 +3791,7 @@
           "description": "Config for date shift."
         },
         "infoTypes": {
-          "description": "InfoTypes to apply this transformation to. If this is not specified, the\ntransformation applies to any info_type.",
+          "description": "InfoTypes to apply this transformation to. If this is not specified, this\ntransformation becomes the default transformation, and is used for any\ninfo_type that is not specified in another transformation.",
           "items": {
             "type": "string"
           },
@@ -3912,8 +3929,15 @@
       "description": "Lists the messages in the specified HL7v2 store.",
       "id": "ListMessagesResponse",
       "properties": {
+        "hl7V2Messages": {
+          "description": "The returned Messages. Won't be more Messages than the value of\npage_size in the request. See\nview for\npopulated fields.",
+          "items": {
+            "$ref": "Message"
+          },
+          "type": "array"
+        },
         "messages": {
-          "description": "The returned message names. Won't be more values than the value of\npage_size in the request.",
+          "description": "Deprecated. Use `hl7_v2_messages` instead.\nThe returned message names. Won't be more values than the value of\npage_size in the request.",
           "items": {
             "type": "string"
           },

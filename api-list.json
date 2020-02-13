@@ -285,22 +285,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "analytics:v2.4",
-      "name": "analytics",
-      "version": "v2.4",
-      "title": "Google Analytics API",
-      "description": "Views and manages your Google Analytics data.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/analytics/v2.4/rest",
-      "discoveryLink": "./apis/analytics/v2.4/rest",
-      "icons": {
-        "x16": "https://www.google.com/images/icons/product/analytics-16.png",
-        "x32": "https://www.google.com/images/icons/product/analytics-32.png"
-      },
-      "documentationLink": "https://developers.google.com/analytics/",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "analytics:v3",
       "name": "analytics",
       "version": "v3",

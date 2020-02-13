@@ -1812,6 +1812,11 @@ type GoogleDevtoolsRemotebuildbotCommandStatus struct {
 	//   "REMOTE_CAS_UPLOAD_ERROR" - The bot encountered errors from remote
 	// CAS when uploading blobs.
 	//   "LOCAL_CASPROXY_NOT_RUNNING" - The local casproxy is not running.
+	//   "DOCKER_CREATE_CONTAINER_ERROR" - The bot couldn't start the
+	// container.
+	//   "DOCKER_INVALID_ULIMIT" - The docker ulimit is not valid.
+	//   "DOCKER_UNKNOWN_RUNTIME" - The docker runtime is unknown.
+	//   "DOCKER_UNKNOWN_CAPABILITY" - The docker capability is unknown.
 	Code string `json:"code,omitempty"`
 
 	// Message: The error message.
@@ -3564,7 +3569,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3757,7 +3762,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3954,7 +3959,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4098,7 +4103,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4276,7 +4281,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4462,7 +4467,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

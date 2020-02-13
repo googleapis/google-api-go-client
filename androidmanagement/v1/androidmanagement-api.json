@@ -923,7 +923,7 @@
       }
     }
   },
-  "revision": "20200203",
+  "revision": "20200205",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdvancedSecurityOverrides": {
@@ -2121,7 +2121,7 @@
             "SETTINGS_ACCESS_BLOCKED"
           ],
           "enumDescriptions": [
-            "Unspecified, defaults to SETTINGS_ACCESS_ALLOWED.",
+            "Unspecified, defaults to SETTINGS_ACCESS_BLOCKED.",
             "Access to the Settings app is allowed in kiosk mode.",
             "Access to the Settings app is not allowed in kiosk mode."
           ],

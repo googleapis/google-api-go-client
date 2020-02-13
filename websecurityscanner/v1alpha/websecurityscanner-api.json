@@ -22,6 +22,7 @@
   },
   "id": "websecurityscanner:v1alpha",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://websecurityscanner.mtls.googleapis.com/",
   "name": "websecurityscanner",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -525,7 +526,7 @@
       }
     }
   },
-  "revision": "20190919",
+  "revision": "20200210",
   "rootUrl": "https://websecurityscanner.googleapis.com/",
   "schemas": {
     "Authentication": {

@@ -1040,7 +1040,7 @@
       }
     }
   },
-  "revision": "20200205",
+  "revision": "20200207",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1959,11 +1959,11 @@
       "type": "object"
     },
     "GoogleCloudMlV1__Scheduling": {
-      "description": "All parameters related to queuing and scheduling of training jobs.",
+      "description": "All parameters related to scheduling of training jobs.",
       "id": "GoogleCloudMlV1__Scheduling",
       "properties": {
         "maxRunningTime": {
-          "description": "Optional. The maximum job running time, expressed in seconds. By default\nthere is no limit.\n\nIf the training job is still running after this duration, AI Platform\nTraining cancels it.\n\nFor example, if you want to ensure your job runs for no more than 2 hours,\nset this field to `7200s` (2 hours * 60 minutes / hour * 60 seconds /\nminute).\n\nIf you submit your training job using the `gcloud` tool, you can [provide\nthis field in a `config.yaml`\nfile](/ml-engine/docs/training-jobs#formatting_your_configuration_parameters).\nFor example:\n\n```yaml\ntrainingInput:\n  ...\n  scheduling:\n    maxRunningTime: 7200s\n  ...\n```",
+          "description": "Optional. The maximum job running time, expressed in seconds. The field can\ncontain up to nine fractional digits, terminated by `s`. By default there\nis no limit to the running time.\n\nIf the training job is still running after this duration, AI Platform\nTraining cancels it.\n\nFor example, if you want to ensure your job runs for no more than 2 hours,\nset this field to `7200s` (2 hours * 60 minutes / hour * 60 seconds /\nminute).\n\nIf you submit your training job using the `gcloud` tool, you can [provide\nthis field in a `config.yaml`\nfile](/ai-platform/training/docs/training-jobs#formatting_your_configuration_parameters).\nFor example:\n\n```yaml\ntrainingInput:\n  ...\n  scheduling:\n    maxRunningTime: 7200s\n  ...\n```",
           "format": "google-duration",
           "type": "string"
         }

@@ -1277,13 +1277,28 @@ type TransferJob struct {
 	// last modified.
 	LastModificationTime string `json:"lastModificationTime,omitempty"`
 
-	// Name: A globally unique name assigned by Storage Transfer Service
-	// when the
-	// job is created. This field should be left empty in requests to create
-	// a new
-	// transfer job; otherwise, the requests result in an
-	// `INVALID_ARGUMENT`
-	// error.
+	// Name: A unique name (within the transfer project) assigned when the
+	// job is
+	// created.
+	// If this field is left empty in a CreateTransferJobRequest,
+	// Storage Transfer Service will assign a unique name. Otherwise, the
+	// supplied
+	// name is used as the unique name for this job.
+	//
+	// This name must start with "transferJobs/" prefix and end with a
+	// letter or a
+	// number, and should be no more than 128 characters.
+	// Example of a valid format :
+	// "transferJobs/[A-Za-z0-9-._~]*[A-Za-z0-9]$"
+	//
+	// **NOTE:**
+	// If the supplied name is already in use, the creation request results
+	// in an
+	// `ALREADY_EXISTS` error and the transfer job will not be
+	// created.
+	// Invalid job names will return an 'INVALID_ARGUMENT' error and the job
+	// will
+	// not be created.
 	Name string `json:"name,omitempty"`
 
 	// ProjectId: The ID of the Google Cloud Platform Project that owns the
@@ -1631,7 +1646,7 @@ func (c *GoogleServiceAccountsGetCall) Header() http.Header {
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1763,7 +1778,7 @@ func (c *TransferJobsCreateCall) Header() http.Header {
 
 func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1907,7 +1922,7 @@ func (c *TransferJobsGetCall) Header() http.Header {
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2087,7 +2102,7 @@ func (c *TransferJobsListCall) Header() http.Header {
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2255,7 +2270,7 @@ func (c *TransferJobsPatchCall) Header() http.Header {
 
 func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2395,7 +2410,7 @@ func (c *TransferOperationsCancelCall) Header() http.Header {
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2540,7 +2555,7 @@ func (c *TransferOperationsGetCall) Header() http.Header {
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2715,7 +2730,7 @@ func (c *TransferOperationsListCall) Header() http.Header {
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2887,7 +2902,7 @@ func (c *TransferOperationsPauseCall) Header() http.Header {
 
 func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3027,7 +3042,7 @@ func (c *TransferOperationsResumeCall) Header() http.Header {
 
 func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

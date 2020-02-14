@@ -24,7 +24,6 @@
   },
   "id": "youtubereporting:v1",
   "kind": "discovery#restDescription",
-  "mtlsRootUrl": "https://youtubereporting.mtls.googleapis.com/",
   "name": "youtubereporting",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -411,7 +410,7 @@
       }
     }
   },
-  "revision": "20200209",
+  "revision": "20200212",
   "rootUrl": "https://youtubereporting.googleapis.com/",
   "schemas": {
     "Empty": {

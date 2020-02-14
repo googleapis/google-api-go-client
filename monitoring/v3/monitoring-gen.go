@@ -58,6 +58,7 @@ import (
 	googleapi "google.golang.org/api/googleapi"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
+	internaloption "google.golang.org/api/option/internaloption"
 	htransport "google.golang.org/api/transport/http"
 )
 
@@ -74,6 +75,7 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
+var _ = internaloption.WithDefaultEndpoint
 
 const apiId = "monitoring:v3"
 const apiName = "monitoring"
@@ -107,6 +109,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
+	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -597,9 +600,9 @@ type AlertPolicy struct {
 	// Possible values:
 	//   "COMBINE_UNSPECIFIED" - An unspecified combiner.
 	//   "AND" - Combine conditions using the logical AND operator. An
-	// incident is created only if all conditions are met simultaneously.
-	// This combiner is satisfied if all conditions are met, even if they
-	// are met on completely different resources.
+	// incident is created only if all the conditions are met
+	// simultaneously. This combiner is satisfied if all conditions are met,
+	// even if they are met on completely different resources.
 	//   "OR" - Combine conditions using the logical OR operator. An
 	// incident is created if any of the listed conditions is met.
 	//   "AND_WITH_MATCHING_RESOURCE" - Combine conditions using logical AND
@@ -612,8 +615,8 @@ type AlertPolicy struct {
 	// combined by AND or OR according to the combiner field. If the
 	// combined conditions evaluate to true, then an incident is created. A
 	// policy can have from one to six conditions. If
-	// |condition_time_series_uery_language| is present, it must be the only
-	// |condition|.
+	// condition_time_series_query_language is present, it must be the only
+	// condition.
 	Conditions []*Condition `json:"conditions,omitempty"`
 
 	// CreationRecord: A read-only record of the creation of the alerting
@@ -649,13 +652,14 @@ type AlertPolicy struct {
 	MutationRecord *MutationRecord `json:"mutationRecord,omitempty"`
 
 	// Name: Required if the policy exists. The resource name for this
-	// policy. The syntax
+	// policy. The format
 	// is:
-	// projects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]
-	// [ALERT_POLIC
-	// Y_ID] is assigned by Stackdriver Monitoring when the policy is
-	// created. When calling the alertPolicies.create method, do not include
-	// the name field in the alerting policy passed as part of the request.
+	// projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
+	// [A
+	// LERT_POLICY_ID] is assigned by Stackdriver Monitoring when the policy
+	// is created. When calling the alertPolicies.create method, do not
+	// include the name field in the alerting policy passed as part of the
+	// request.
 	Name string `json:"name,omitempty"`
 
 	// NotificationChannels: Identifies the notification channels to which
@@ -663,9 +667,10 @@ type AlertPolicy struct {
 	// when new violations occur on an already opened incident. Each element
 	// of this array corresponds to the name field in each of the
 	// NotificationChannel objects that are returned from the
-	// ListNotificationChannels method. The syntax of the entries in this
-	// field is:
-	// projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID]
+	// ListNotificationChannels method. The format of the entries in this
+	// field
+	// is:
+	// projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]
 	//
 	NotificationChannels []string `json:"notificationChannels,omitempty"`
 
@@ -922,7 +927,8 @@ func (s *CloudEndpoints) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ClusterIstio: Istio service. Learn more at http://istio.io.
+// ClusterIstio: Istio service scoped to a single Kubernetes cluster.
+// Learn more at http://istio.io.
 type ClusterIstio struct {
 	// ClusterName: The name of the Kubernetes cluster in which this Istio
 	// service is defined. Corresponds to the cluster_name resource label in
@@ -1158,10 +1164,10 @@ type Condition struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Required if the condition exists. The unique resource name for
-	// this condition. Its syntax
+	// this condition. Its format
 	// is:
-	// projects/[PROJECT_ID]/alertPolicies/[POLICY_ID]/conditions/[CONDIT
-	// ION_ID]
+	// projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[POLICY_ID]/conditio
+	// ns/[CONDITION_ID]
 	// [CONDITION_ID] is assigned by Stackdriver Monitoring when the
 	// condition is created as part of a new or updated alerting policy.When
 	// calling the alertPolicies.create method, do not include the name
@@ -2080,16 +2086,18 @@ type Group struct {
 	// are clusters.
 	IsCluster bool `json:"isCluster,omitempty"`
 
-	// Name: Output only. The name of this group. The format is
-	// "projects/{project_id_or_number}/groups/{group_id}". When creating a
-	// group, this field is ignored and a new name is created consisting of
-	// the project specified in the call to CreateGroup and a unique
-	// {group_id} that is generated automatically.
+	// Name: Output only. The name of this group. The format
+	// is:
+	// projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
+	// When creating a group, this field is ignored and a new name is
+	// created consisting of the project specified in the call to
+	// CreateGroup and a unique [GROUP_ID] that is generated automatically.
 	Name string `json:"name,omitempty"`
 
 	// ParentName: The name of the group's parent, if it has one. The format
-	// is "projects/{project_id_or_number}/groups/{group_id}". For groups
-	// with no parent, parentName is the empty string, "".
+	// is:
+	// projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
+	// For groups with no parent, parent_name is the empty string, "".
 	ParentName string `json:"parentName,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2203,9 +2211,11 @@ type InternalChecker struct {
 	GcpZone string `json:"gcpZone,omitempty"`
 
 	// Name: A unique resource name for this InternalChecker. The format
-	// is:projects/[PROJECT_ID]/internalCheckers/[INTERNAL_CHECKER_ID].[PROJE
-	// CT_ID] is the Stackdriver Workspace project for the Uptime check
-	// config associated with the internal checker.
+	// is:
+	// projects/[PROJECT_ID_OR_NUMBER]/internalCheckers/[INTERNAL_CHECKER
+	// _ID]
+	// [PROJECT_ID_OR_NUMBER] is the Stackdriver Workspace project for the
+	// Uptime check config associated with the internal checker.
 	Name string `json:"name,omitempty"`
 
 	// Network: The GCP VPC network (https://cloud.google.com/vpc/docs/vpc)
@@ -2397,7 +2407,8 @@ type ListAlertPoliciesResponse struct {
 
 	// NextPageToken: If there might be more results than were returned,
 	// then this field is set to a non-empty value. To see the additional
-	// results, use that value as pageToken in the next call to this method.
+	// results, use that value as page_token in the next call to this
+	// method.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2434,7 +2445,8 @@ type ListGroupMembersResponse struct {
 
 	// NextPageToken: If there are more results than have been returned,
 	// then this field is set to a non-empty value. To see the additional
-	// results, use that value as pageToken in the next call to this method.
+	// results, use that value as page_token in the next call to this
+	// method.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TotalSize: The total number of elements matching this request.
@@ -2474,7 +2486,8 @@ type ListGroupsResponse struct {
 
 	// NextPageToken: If there are more results than have been returned,
 	// then this field is set to a non-empty value. To see the additional
-	// results, use that value as pageToken in the next call to this method.
+	// results, use that value as page_token in the next call to this
+	// method.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2512,7 +2525,8 @@ type ListMetricDescriptorsResponse struct {
 
 	// NextPageToken: If there are more results than have been returned,
 	// then this field is set to a non-empty value. To see the additional
-	// results, use that value as pageToken in the next call to this method.
+	// results, use that value as page_token in the next call to this
+	// method.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2548,7 +2562,8 @@ func (s *ListMetricDescriptorsResponse) MarshalJSON() ([]byte, error) {
 type ListMonitoredResourceDescriptorsResponse struct {
 	// NextPageToken: If there are more results than have been returned,
 	// then this field is set to a non-empty value. To see the additional
-	// results, use that value as pageToken in the next call to this method.
+	// results, use that value as page_token in the next call to this
+	// method.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ResourceDescriptors: The monitored resource descriptors that are
@@ -2668,7 +2683,8 @@ func (s *ListNotificationChannelsResponse) MarshalJSON() ([]byte, error) {
 type ListServiceLevelObjectivesResponse struct {
 	// NextPageToken: If there are more results than have been returned,
 	// then this field is set to a non-empty value. To see the additional
-	// results, use that value as pageToken in the next call to this method.
+	// results, use that value as page_token in the next call to this
+	// method.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServiceLevelObjectives: The ServiceLevelObjectives matching the
@@ -2706,7 +2722,8 @@ func (s *ListServiceLevelObjectivesResponse) MarshalJSON() ([]byte, error) {
 type ListServicesResponse struct {
 	// NextPageToken: If there are more results than have been returned,
 	// then this field is set to a non-empty value. To see the additional
-	// results, use that value as pageToken in the next call to this method.
+	// results, use that value as page_token in the next call to this
+	// method.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Services: The Services matching the specified filter.
@@ -2747,7 +2764,8 @@ type ListTimeSeriesResponse struct {
 
 	// NextPageToken: If there are more results than have been returned,
 	// then this field is set to a non-empty value. To see the additional
-	// results, use that value as pageToken in the next call to this method.
+	// results, use that value as page_token in the next call to this
+	// method.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TimeSeries: One or more time series that match the filter included in
@@ -2864,6 +2882,45 @@ type ListUptimeCheckIpsResponse struct {
 
 func (s *ListUptimeCheckIpsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListUptimeCheckIpsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MeshIstio: Istio service scoped to an Istio mesh
+type MeshIstio struct {
+	// MeshUid: Identifier for the mesh in which this Istio service is
+	// defined. Corresponds to the mesh_uid metric label in Istio metrics.
+	MeshUid string `json:"meshUid,omitempty"`
+
+	// ServiceName: The name of the Istio service underlying this service.
+	// Corresponds to the destination_service_name metric label in Istio
+	// metrics.
+	ServiceName string `json:"serviceName,omitempty"`
+
+	// ServiceNamespace: The namespace of the Istio service underlying this
+	// service. Corresponds to the destination_service_namespace metric
+	// label in Istio metrics.
+	ServiceNamespace string `json:"serviceNamespace,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MeshUid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MeshUid") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MeshIstio) MarshalJSON() ([]byte, error) {
+	type NoMethod MeshIstio
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3677,9 +3734,10 @@ type NotificationChannel struct {
 	// NotificationChannelDescriptor corresponding to the type field.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: The full REST resource name for this channel. The syntax
+	// Name: The full REST resource name for this channel. The format
 	// is:
-	// projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID]
+	// projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]
+	//
 	// The [CHANNEL_ID] is automatically assigned by the server on creation.
 	Name string `json:"name,omitempty"`
 
@@ -3804,9 +3862,10 @@ type NotificationChannelDescriptor struct {
 	// (https://cloud.google.com/terms/deprecation) documentation.
 	LaunchStage string `json:"launchStage,omitempty"`
 
-	// Name: The full REST resource name for this descriptor. The syntax
+	// Name: The full REST resource name for this descriptor. The format
 	// is:
-	// projects/[PROJECT_ID]/notificationChannelDescriptors/[TYPE]
+	// projects/[PROJECT_ID_OR_NUMBER]/notificationChannelDescriptors/[TY
+	// PE]
 	// In the above, [TYPE] is the value of the type field.
 	Name string `json:"name,omitempty"`
 
@@ -4060,7 +4119,7 @@ func (s *RequestBasedSli) MarshalJSON() ([]byte, error) {
 type ResourceGroup struct {
 	// GroupId: The group of resources being monitored. Should be only the
 	// [GROUP_ID], and not the full-path
-	// projects/[PROJECT_ID]/groups/[GROUP_ID].
+	// projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID].
 	GroupId string `json:"groupId,omitempty"`
 
 	// ResourceType: The resource type of the group members.
@@ -4122,8 +4181,13 @@ type MService struct {
 	// DisplayName: Name used for UI elements listing this Service.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Resource name for this Service. Of the form
-	// projects/{project_id}/services/{service_id}.
+	// MeshIstio: Type used for Istio services scoped to an Istio mesh.
+	MeshIstio *MeshIstio `json:"meshIstio,omitempty"`
+
+	// Name: Resource name for this Service. The format
+	// is:
+	// projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID}
+	//
 	Name string `json:"name,omitempty"`
 
 	// Telemetry: Configuration for how to query telemetry on a Service.
@@ -4240,9 +4304,11 @@ type ServiceLevelObjective struct {
 	// objective to be met. 0 < goal <= 0.999.
 	Goal float64 `json:"goal,omitempty"`
 
-	// Name: Resource name for this ServiceLevelObjective. Of the form
-	// projects/{project_id}/services/{service_id}/serviceLevelObjectives/{sl
-	// o_name}.
+	// Name: Resource name for this ServiceLevelObjective. The format
+	// is:
+	// projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevel
+	// Objectives/[SLO_NAME]
+	//
 	Name string `json:"name,omitempty"`
 
 	// RollingPeriod: A rolling time period, semantically "in the past
@@ -4328,17 +4394,20 @@ func (s *SourceContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SpanContext: The context of a span, attached to
-// google.api.Distribution.Exemplars in google.api.Distribution values
-// during aggregation.It contains the name of a span with format:
-// projects/PROJECT_ID/traces/TRACE_ID/spans/SPAN_ID
+// SpanContext: The context of a span, attached to Exemplars in
+// Distribution values during aggregation.It contains the name of a span
+// with
+// format:
+// projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_
+// ID]
+//
 type SpanContext struct {
-	// SpanName: The resource name of the span in the following
-	// format:
-	// projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]
-	// TRACE_
-	// ID is a unique identifier for a trace within a project; it is a
-	// 32-character hexadecimal encoding of a 16-byte array.SPAN_ID is a
+	// SpanName: The resource name of the span. The format
+	// is:
+	// projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]
+	//
+	// [TRACE_ID] is a unique identifier for a trace within a project; it is
+	// a 32-character hexadecimal encoding of a 16-byte array.[SPAN_ID] is a
 	// unique identifier for a span within a trace; it is a 16-character
 	// hexadecimal encoding of an 8-byte array.
 	SpanName string `json:"spanName,omitempty"`
@@ -4862,11 +4931,13 @@ type UptimeCheckConfig struct {
 	MonitoredResource *MonitoredResource `json:"monitoredResource,omitempty"`
 
 	// Name: A unique resource name for this Uptime check configuration. The
-	// format
-	// is:projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].This
-	// field should be omitted when creating the Uptime check configuration;
-	// on create, the resource name is assigned by the server and included
-	// in the response.
+	// format is:
+	//
+	// projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID]
+	// T
+	// his field should be omitted when creating the Uptime check
+	// configuration; on create, the resource name is assigned by the server
+	// and included in the response.
 	Name string `json:"name,omitempty"`
 
 	// Period: How often, in seconds, the Uptime check is performed.
@@ -5120,7 +5191,7 @@ func (c *ProjectsAlertPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5193,7 +5264,7 @@ func (c *ProjectsAlertPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*Ale
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The project in which to create the alerting policy. The format is projects/[PROJECT_ID].Note that this field names the parent container in which the alerting policy will be written, not the name of the created policy. The alerting policy that is returned will have a name that contains a normalized representation of this name as a prefix but adds a suffix of the form /alertPolicies/[POLICY_ID], identifying the policy in the container.",
+	//       "description": "Required. The project in which to create the alerting policy. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\nNote that this field names the parent container in which the alerting policy will be written, not the name of the created policy. The alerting policy that is returned will have a name that contains a normalized representation of this name as a prefix but adds a suffix of the form /alertPolicies/[ALERT_POLICY_ID], identifying the policy in the container.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -5259,7 +5330,7 @@ func (c *ProjectsAlertPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5327,7 +5398,7 @@ func (c *ProjectsAlertPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The alerting policy to delete. The format is:\nprojects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]\nFor more information, see AlertPolicy.",
+	//       "description": "Required. The alerting policy to delete. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]\nFor more information, see AlertPolicy.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/alertPolicies/[^/]+$",
 	//       "required": true,
@@ -5401,7 +5472,7 @@ func (c *ProjectsAlertPoliciesGetCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5472,7 +5543,7 @@ func (c *ProjectsAlertPoliciesGetCall) Do(opts ...googleapi.CallOption) (*AlertP
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The alerting policy to retrieve. The format is\nprojects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]\n",
+	//       "description": "Required. The alerting policy to retrieve. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/alertPolicies/[^/]+$",
 	//       "required": true,
@@ -5581,7 +5652,7 @@ func (c *ProjectsAlertPoliciesListCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5657,7 +5728,7 @@ func (c *ProjectsAlertPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListA
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project whose alert policies are to be listed. The format is\nprojects/[PROJECT_ID]\nNote that this field names the parent container in which the alerting policies to be listed are stored. To retrieve a single alerting policy by name, use the GetAlertPolicy operation, instead.",
+	//       "description": "Required. The project whose alert policies are to be listed. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\nNote that this field names the parent container in which the alerting policies to be listed are stored. To retrieve a single alerting policy by name, use the GetAlertPolicy operation, instead.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -5787,7 +5858,7 @@ func (c *ProjectsAlertPoliciesPatchCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5860,7 +5931,7 @@ func (c *ProjectsAlertPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Aler
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required if the policy exists. The resource name for this policy. The syntax is:\nprojects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]\n[ALERT_POLICY_ID] is assigned by Stackdriver Monitoring when the policy is created. When calling the alertPolicies.create method, do not include the name field in the alerting policy passed as part of the request.",
+	//       "description": "Required if the policy exists. The resource name for this policy. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]\n[ALERT_POLICY_ID] is assigned by Stackdriver Monitoring when the policy is created. When calling the alertPolicies.create method, do not include the name field in the alerting policy passed as part of the request.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/alertPolicies/[^/]+$",
 	//       "required": true,
@@ -5937,7 +6008,7 @@ func (c *ProjectsCollectdTimeSeriesCreateCall) Header() http.Header {
 
 func (c *ProjectsCollectdTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6010,7 +6081,7 @@ func (c *ProjectsCollectdTimeSeriesCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The project in which to create the time series. The format is \"projects/PROJECT_ID_OR_NUMBER\".",
+	//       "description": "The project in which to create the time series. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -6086,7 +6157,7 @@ func (c *ProjectsGroupsCreateCall) Header() http.Header {
 
 func (c *ProjectsGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6159,7 +6230,7 @@ func (c *ProjectsGroupsCreateCall) Do(opts ...googleapi.CallOption) (*Group, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The project in which to create the group. The format is \"projects/{project_id_or_number}\".",
+	//       "description": "Required. The project in which to create the group. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -6239,7 +6310,7 @@ func (c *ProjectsGroupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6307,7 +6378,7 @@ func (c *ProjectsGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The group to delete. The format is \"projects/{project_id_or_number}/groups/{group_id}\".",
+	//       "description": "Required. The group to delete. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,
@@ -6386,7 +6457,7 @@ func (c *ProjectsGroupsGetCall) Header() http.Header {
 
 func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6457,7 +6528,7 @@ func (c *ProjectsGroupsGetCall) Do(opts ...googleapi.CallOption) (*Group, error)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The group to retrieve. The format is \"projects/{project_id_or_number}/groups/{group_id}\".",
+	//       "description": "Required. The group to retrieve. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,
@@ -6496,7 +6567,9 @@ func (r *ProjectsGroupsService) List(name string) *ProjectsGroupsListCall {
 }
 
 // AncestorsOfGroup sets the optional parameter "ancestorsOfGroup": A
-// group name: "projects/{project_id_or_number}/groups/{group_id}".
+// group name. The format
+// is:
+// projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
 // Returns groups that are ancestors of the specified group. The groups
 // are returned in order, starting with the immediate parent and ending
 // with the most distant ancestor. If the specified group has no
@@ -6507,8 +6580,10 @@ func (c *ProjectsGroupsListCall) AncestorsOfGroup(ancestorsOfGroup string) *Proj
 }
 
 // ChildrenOfGroup sets the optional parameter "childrenOfGroup": A
-// group name: "projects/{project_id_or_number}/groups/{group_id}".
-// Returns groups whose parentName field contains the group name. If no
+// group name. The format
+// is:
+// projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
+// Returns groups whose parent_name field contains the group name. If no
 // groups have this parent, the results are empty.
 func (c *ProjectsGroupsListCall) ChildrenOfGroup(childrenOfGroup string) *ProjectsGroupsListCall {
 	c.urlParams_.Set("childrenOfGroup", childrenOfGroup)
@@ -6516,9 +6591,11 @@ func (c *ProjectsGroupsListCall) ChildrenOfGroup(childrenOfGroup string) *Projec
 }
 
 // DescendantsOfGroup sets the optional parameter "descendantsOfGroup":
-// A group name: "projects/{project_id_or_number}/groups/{group_id}".
+// A group name. The format
+// is:
+// projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
 // Returns the descendants of the specified group. This is a superset of
-// the results returned by the childrenOfGroup filter, and includes
+// the results returned by the children_of_group filter, and includes
 // children-of-children, and so forth.
 func (c *ProjectsGroupsListCall) DescendantsOfGroup(descendantsOfGroup string) *ProjectsGroupsListCall {
 	c.urlParams_.Set("descendantsOfGroup", descendantsOfGroup)
@@ -6533,8 +6610,8 @@ func (c *ProjectsGroupsListCall) PageSize(pageSize int64) *ProjectsGroupsListCal
 }
 
 // PageToken sets the optional parameter "pageToken": If this field is
-// not empty then it must contain the nextPageToken value returned by a
-// previous call to this method. Using this field causes the method to
+// not empty then it must contain the next_page_token value returned by
+// a previous call to this method. Using this field causes the method to
 // return additional results from the previous method call.
 func (c *ProjectsGroupsListCall) PageToken(pageToken string) *ProjectsGroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -6578,7 +6655,7 @@ func (c *ProjectsGroupsListCall) Header() http.Header {
 
 func (c *ProjectsGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6649,22 +6726,22 @@ func (c *ProjectsGroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsRe
 	//   ],
 	//   "parameters": {
 	//     "ancestorsOfGroup": {
-	//       "description": "A group name: \"projects/{project_id_or_number}/groups/{group_id}\". Returns groups that are ancestors of the specified group. The groups are returned in order, starting with the immediate parent and ending with the most distant ancestor. If the specified group has no immediate parent, the results are empty.",
+	//       "description": "A group name. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]\nReturns groups that are ancestors of the specified group. The groups are returned in order, starting with the immediate parent and ending with the most distant ancestor. If the specified group has no immediate parent, the results are empty.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "childrenOfGroup": {
-	//       "description": "A group name: \"projects/{project_id_or_number}/groups/{group_id}\". Returns groups whose parentName field contains the group name. If no groups have this parent, the results are empty.",
+	//       "description": "A group name. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]\nReturns groups whose parent_name field contains the group name. If no groups have this parent, the results are empty.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "descendantsOfGroup": {
-	//       "description": "A group name: \"projects/{project_id_or_number}/groups/{group_id}\". Returns the descendants of the specified group. This is a superset of the results returned by the childrenOfGroup filter, and includes children-of-children, and so forth.",
+	//       "description": "A group name. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]\nReturns the descendants of the specified group. This is a superset of the results returned by the children_of_group filter, and includes children-of-children, and so forth.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project whose groups are to be listed. The format is \"projects/{project_id_or_number}\".",
+	//       "description": "Required. The project whose groups are to be listed. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -6677,7 +6754,7 @@ func (c *ProjectsGroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsRe
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "If this field is not empty then it must contain the nextPageToken value returned by a previous call to this method. Using this field causes the method to return additional results from the previous method call.",
+	//       "description": "If this field is not empty then it must contain the next_page_token value returned by a previous call to this method. Using this field causes the method to return additional results from the previous method call.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6770,7 +6847,7 @@ func (c *ProjectsGroupsUpdateCall) Header() http.Header {
 
 func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6843,7 +6920,7 @@ func (c *ProjectsGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Group, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The name of this group. The format is \"projects/{project_id_or_number}/groups/{group_id}\". When creating a group, this field is ignored and a new name is created consisting of the project specified in the call to CreateGroup and a unique {group_id} that is generated automatically.",
+	//       "description": "Output only. The name of this group. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]\nWhen creating a group, this field is ignored and a new name is created consisting of the project specified in the call to CreateGroup and a unique [GROUP_ID] that is generated automatically.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,
@@ -6893,7 +6970,7 @@ func (r *ProjectsGroupsMembersService) List(name string) *ProjectsGroupsMembersL
 // type, labels, and metadata of monitored resources that comprise the
 // group. For example, to return only resources representing Compute
 // Engine VM instances, use this filter:
-// resource.type = "gce_instance"
+// `resource.type = "gce_instance"
 func (c *ProjectsGroupsMembersListCall) Filter(filter string) *ProjectsGroupsMembersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6923,8 +7000,8 @@ func (c *ProjectsGroupsMembersListCall) PageSize(pageSize int64) *ProjectsGroups
 }
 
 // PageToken sets the optional parameter "pageToken": If this field is
-// not empty then it must contain the nextPageToken value returned by a
-// previous call to this method. Using this field causes the method to
+// not empty then it must contain the next_page_token value returned by
+// a previous call to this method. Using this field causes the method to
 // return additional results from the previous method call.
 func (c *ProjectsGroupsMembersListCall) PageToken(pageToken string) *ProjectsGroupsMembersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -6968,7 +7045,7 @@ func (c *ProjectsGroupsMembersListCall) Header() http.Header {
 
 func (c *ProjectsGroupsMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7039,7 +7116,7 @@ func (c *ProjectsGroupsMembersListCall) Do(opts ...googleapi.CallOption) (*ListG
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An optional list filter describing the members to be returned. The filter may reference the type, labels, and metadata of monitored resources that comprise the group. For example, to return only resources representing Compute Engine VM instances, use this filter:\nresource.type = \"gce_instance\"\n",
+	//       "description": "An optional list filter describing the members to be returned. The filter may reference the type, labels, and metadata of monitored resources that comprise the group. For example, to return only resources representing Compute Engine VM instances, use this filter:\n`resource.type = \"gce_instance\"`\n",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7056,7 +7133,7 @@ func (c *ProjectsGroupsMembersListCall) Do(opts ...googleapi.CallOption) (*ListG
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The group whose members are listed. The format is \"projects/{project_id_or_number}/groups/{group_id}\".",
+	//       "description": "Required. The group whose members are listed. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,
@@ -7069,7 +7146,7 @@ func (c *ProjectsGroupsMembersListCall) Do(opts ...googleapi.CallOption) (*ListG
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "If this field is not empty then it must contain the nextPageToken value returned by a previous call to this method. Using this field causes the method to return additional results from the previous method call.",
+	//       "description": "If this field is not empty then it must contain the next_page_token value returned by a previous call to this method. Using this field causes the method to return additional results from the previous method call.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7155,7 +7232,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7228,7 +7305,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
+	//       "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -7296,7 +7373,7 @@ func (c *ProjectsMetricDescriptorsDeleteCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7364,7 +7441,7 @@ func (c *ProjectsMetricDescriptorsDeleteCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The metric descriptor on which to execute the request. The format is \"projects/{project_id_or_number}/metricDescriptors/{metric_id}\". An example of {metric_id} is: \"custom.googleapis.com/my_test_metric\".",
+	//       "description": "Required. The metric descriptor on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]\nAn example of [METRIC_ID] is: \"custom.googleapis.com/my_test_metric\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/metricDescriptors/.+$",
 	//       "required": true,
@@ -7439,7 +7516,7 @@ func (c *ProjectsMetricDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7510,7 +7587,7 @@ func (c *ProjectsMetricDescriptorsGetCall) Do(opts ...googleapi.CallOption) (*Me
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The metric descriptor on which to execute the request. The format is \"projects/{project_id_or_number}/metricDescriptors/{metric_id}\". An example value of {metric_id} is \"compute.googleapis.com/instance/disk/read_bytes_count\".",
+	//       "description": "Required. The metric descriptor on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]\nAn example value of [METRIC_ID] is \"compute.googleapis.com/instance/disk/read_bytes_count\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/metricDescriptors/.+$",
 	//       "required": true,
@@ -7614,7 +7691,7 @@ func (c *ProjectsMetricDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7690,7 +7767,7 @@ func (c *ProjectsMetricDescriptorsListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
+	//       "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -7799,7 +7876,7 @@ func (c *ProjectsMonitoredResourceDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsMonitoredResourceDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7870,7 +7947,7 @@ func (c *ProjectsMonitoredResourceDescriptorsGetCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The monitored resource descriptor to get. The format is \"projects/{project_id_or_number}/monitoredResourceDescriptors/{resource_type}\". The {resource_type} is a predefined type, such as cloudsql_database.",
+	//       "description": "Required. The monitored resource descriptor to get. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/monitoredResourceDescriptors/[RESOURCE_TYPE]\nThe [RESOURCE_TYPE] is a predefined type, such as cloudsql_database.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/monitoredResourceDescriptors/.+$",
 	//       "required": true,
@@ -7974,7 +8051,7 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsMonitoredResourceDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8052,7 +8129,7 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
+	//       "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -8162,7 +8239,7 @@ func (c *ProjectsNotificationChannelDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8233,7 +8310,7 @@ func (c *ProjectsNotificationChannelDescriptorsGetCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The channel type for which to execute the request. The format is projects/[PROJECT_ID]/notificationChannelDescriptors/{channel_type}.",
+	//       "description": "Required. The channel type for which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/notificationChannelDescriptors/[CHANNEL_TYPE]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/notificationChannelDescriptors/[^/]+$",
 	//       "required": true,
@@ -8326,7 +8403,7 @@ func (c *ProjectsNotificationChannelDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8399,7 +8476,7 @@ func (c *ProjectsNotificationChannelDescriptorsListCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The REST resource name of the parent from which to retrieve the notification channel descriptors. The expected syntax is:\nprojects/[PROJECT_ID]\nNote that this names the parent container in which to look for the descriptors; to retrieve a single descriptor by name, use the GetNotificationChannelDescriptor operation, instead.",
+	//       "description": "Required. The REST resource name of the parent from which to retrieve the notification channel descriptors. The expected syntax is:\nprojects/[PROJECT_ID_OR_NUMBER]\nNote that this names the parent container in which to look for the descriptors; to retrieve a single descriptor by name, use the GetNotificationChannelDescriptor operation, instead.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -8499,7 +8576,7 @@ func (c *ProjectsNotificationChannelsCreateCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8572,7 +8649,7 @@ func (c *ProjectsNotificationChannelsCreateCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID]\nNote that this names the container into which the channel will be written. This does not name the newly created channel. The resulting channel's name will have a normalized version of this field as a prefix, but will add /notificationChannels/[CHANNEL_ID] to identify the channel.",
+	//       "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\nThis names the container into which the channel will be written, this does not name the newly created channel. The resulting channel's name will have a normalized version of this field as a prefix, but will add /notificationChannels/[CHANNEL_ID] to identify the channel.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -8648,7 +8725,7 @@ func (c *ProjectsNotificationChannelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8721,7 +8798,7 @@ func (c *ProjectsNotificationChannelsDeleteCall) Do(opts ...googleapi.CallOption
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Required. The channel for which to execute the request. The format is projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID].",
+	//       "description": "Required. The channel for which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/notificationChannels/[^/]+$",
 	//       "required": true,
@@ -8800,7 +8877,7 @@ func (c *ProjectsNotificationChannelsGetCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8871,7 +8948,7 @@ func (c *ProjectsNotificationChannelsGetCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The channel for which to execute the request. The format is projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID].",
+	//       "description": "Required. The channel for which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/notificationChannels/[^/]+$",
 	//       "required": true,
@@ -8957,7 +9034,7 @@ func (c *ProjectsNotificationChannelsGetVerificationCodeCall) Header() http.Head
 
 func (c *ProjectsNotificationChannelsGetVerificationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9145,7 +9222,7 @@ func (c *ProjectsNotificationChannelsListCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9221,7 +9298,7 @@ func (c *ProjectsNotificationChannelsListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is projects/[PROJECT_ID]. That is, this names the container in which to look for the notification channels; it does not name a specific channel. To query a specific channel by REST resource name, use the GetNotificationChannel operation.",
+	//       "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\nThis names the container in which to look for the notification channels; it does not name a specific channel. To query a specific channel by REST resource name, use the GetNotificationChannel operation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -9332,7 +9409,7 @@ func (c *ProjectsNotificationChannelsPatchCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9405,7 +9482,7 @@ func (c *ProjectsNotificationChannelsPatchCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The full REST resource name for this channel. The syntax is:\nprojects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID]\nThe [CHANNEL_ID] is automatically assigned by the server on creation.",
+	//       "description": "The full REST resource name for this channel. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]\nThe [CHANNEL_ID] is automatically assigned by the server on creation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/notificationChannels/[^/]+$",
 	//       "required": true,
@@ -9481,7 +9558,7 @@ func (c *ProjectsNotificationChannelsSendVerificationCodeCall) Header() http.Hea
 
 func (c *ProjectsNotificationChannelsSendVerificationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9624,7 +9701,7 @@ func (c *ProjectsNotificationChannelsVerifyCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsVerifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9768,7 +9845,7 @@ func (c *ProjectsTimeSeriesCreateCall) Header() http.Header {
 
 func (c *ProjectsTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9841,7 +9918,7 @@ func (c *ProjectsTimeSeriesCreateCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
+	//       "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -10094,7 +10171,7 @@ func (c *ProjectsTimeSeriesListCall) Header() http.Header {
 
 func (c *ProjectsTimeSeriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10241,7 +10318,7 @@ func (c *ProjectsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTime
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
+	//       "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -10353,7 +10430,7 @@ func (c *ProjectsUptimeCheckConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10426,7 +10503,7 @@ func (c *ProjectsUptimeCheckConfigsCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project in which to create the Uptime check. The format  is projects/[PROJECT_ID].",
+	//       "description": "Required. The project in which to create the Uptime check. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -10495,7 +10572,7 @@ func (c *ProjectsUptimeCheckConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10563,7 +10640,7 @@ func (c *ProjectsUptimeCheckConfigsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The Uptime check configuration to delete. The format  is projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].",
+	//       "description": "Required. The Uptime check configuration to delete. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/uptimeCheckConfigs/[^/]+$",
 	//       "required": true,
@@ -10637,7 +10714,7 @@ func (c *ProjectsUptimeCheckConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10708,7 +10785,7 @@ func (c *ProjectsUptimeCheckConfigsGetCall) Do(opts ...googleapi.CallOption) (*U
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The Uptime check configuration to retrieve. The format  is projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].",
+	//       "description": "Required. The Uptime check configuration to retrieve. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/uptimeCheckConfigs/[^/]+$",
 	//       "required": true,
@@ -10803,7 +10880,7 @@ func (c *ProjectsUptimeCheckConfigsListCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10885,7 +10962,7 @@ func (c *ProjectsUptimeCheckConfigsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project whose Uptime check configurations are listed. The format  is projects/[PROJECT_ID].",
+	//       "description": "Required. The project whose Uptime check configurations are listed. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -10985,7 +11062,7 @@ func (c *ProjectsUptimeCheckConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11058,7 +11135,7 @@ func (c *ProjectsUptimeCheckConfigsPatchCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "A unique resource name for this Uptime check configuration. The format is:projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].This field should be omitted when creating the Uptime check configuration; on create, the resource name is assigned by the server and included in the response.",
+	//       "description": "A unique resource name for this Uptime check configuration. The format is:\n projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID]\nThis field should be omitted when creating the Uptime check configuration; on create, the resource name is assigned by the server and included in the response.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/uptimeCheckConfigs/[^/]+$",
 	//       "required": true,
@@ -11107,7 +11184,7 @@ func (r *ServicesService) Create(parent string, service *MService) *ServicesCrea
 
 // ServiceId sets the optional parameter "serviceId": The Service id to
 // use for this Service. If omitted, an id will be generated instead.
-// Must match the pattern a-z0-9-+
+// Must match the pattern [a-z0-9\-]+
 func (c *ServicesCreateCall) ServiceId(serviceId string) *ServicesCreateCall {
 	c.urlParams_.Set("serviceId", serviceId)
 	return c
@@ -11140,7 +11217,7 @@ func (c *ServicesCreateCall) Header() http.Header {
 
 func (c *ServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11213,14 +11290,14 @@ func (c *ServicesCreateCall) Do(opts ...googleapi.CallOption) (*MService, error)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent workspace. Of the form projects/{project_id}.",
+	//       "description": "Required. Resource name of the parent workspace. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "serviceId": {
-	//       "description": "Optional. The Service id to use for this Service. If omitted, an id will be generated instead. Must match the pattern a-z0-9-+",
+	//       "description": "Optional. The Service id to use for this Service. If omitted, an id will be generated instead. Must match the pattern [a-z0-9\\-]+",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -11284,7 +11361,7 @@ func (c *ServicesDeleteCall) Header() http.Header {
 
 func (c *ServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11352,7 +11429,7 @@ func (c *ServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the Service to delete. Of the form projects/{project_id}/services/{service_id}.",
+	//       "description": "Required. Resource name of the Service to delete. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]\n",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -11426,7 +11503,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11497,7 +11574,7 @@ func (c *ServicesGetCall) Do(opts ...googleapi.CallOption) (*MService, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the Service. Of the form projects/{project_id}/services/{service_id}.",
+	//       "description": "Required. Resource name of the Service. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]\n",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -11608,7 +11685,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11695,7 +11772,7 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent containing the listed services, either a project or Stackdriver Account (workspace).One of the forms: \"projects/{project_id}\" \"workspaces/{host_project_id}\"",
+	//       "description": "Required. Resource name of the parent containing the listed services, either a project or Stackdriver Account (workspace). The formats are:\nprojects/[PROJECT_ID_OR_NUMBER]\nworkspaces/[HOST_PROJECT_ID]\n",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -11789,7 +11866,7 @@ func (c *ServicesPatchCall) Header() http.Header {
 
 func (c *ServicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11862,7 +11939,7 @@ func (c *ServicesPatchCall) Do(opts ...googleapi.CallOption) (*MService, error) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name for this Service. Of the form projects/{project_id}/services/{service_id}.",
+	//       "description": "Resource name for this Service. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID}\n",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -11912,7 +11989,7 @@ func (r *ServicesServiceLevelObjectivesService) Create(parent string, servicelev
 // ServiceLevelObjectiveId sets the optional parameter
 // "serviceLevelObjectiveId": The ServiceLevelObjective id to use for
 // this ServiceLevelObjective. If omitted, an id will be generated
-// instead. Must match the pattern a-z0-9-+
+// instead. Must match the pattern [a-z0-9\-]+
 func (c *ServicesServiceLevelObjectivesCreateCall) ServiceLevelObjectiveId(serviceLevelObjectiveId string) *ServicesServiceLevelObjectivesCreateCall {
 	c.urlParams_.Set("serviceLevelObjectiveId", serviceLevelObjectiveId)
 	return c
@@ -11945,7 +12022,7 @@ func (c *ServicesServiceLevelObjectivesCreateCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12018,14 +12095,14 @@ func (c *ServicesServiceLevelObjectivesCreateCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent Service. Of the form projects/{project_id}/services/{service_id}.",
+	//       "description": "Required. Resource name of the parent Service. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]\n",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/services/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "serviceLevelObjectiveId": {
-	//       "description": "Optional. The ServiceLevelObjective id to use for this ServiceLevelObjective. If omitted, an id will be generated instead. Must match the pattern a-z0-9-+",
+	//       "description": "Optional. The ServiceLevelObjective id to use for this ServiceLevelObjective. If omitted, an id will be generated instead. Must match the pattern [a-z0-9\\-]+",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -12089,7 +12166,7 @@ func (c *ServicesServiceLevelObjectivesDeleteCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12157,7 +12234,7 @@ func (c *ServicesServiceLevelObjectivesDeleteCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the ServiceLevelObjective to delete. Of the form projects/{project_id}/services/{service_id}/serviceLevelObjectives/{slo_name}.",
+	//       "description": "Required. Resource name of the ServiceLevelObjective to delete. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME]\n",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/services/[^/]+/serviceLevelObjectives/[^/]+$",
 	//       "required": true,
@@ -12246,7 +12323,7 @@ func (c *ServicesServiceLevelObjectivesGetCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12317,7 +12394,7 @@ func (c *ServicesServiceLevelObjectivesGetCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the ServiceLevelObjective to get. Of the form projects/{project_id}/services/{service_id}/serviceLevelObjectives/{slo_name}.",
+	//       "description": "Required. Resource name of the ServiceLevelObjective to get. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME]\n",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/services/[^/]+/serviceLevelObjectives/[^/]+$",
 	//       "required": true,
@@ -12441,7 +12518,7 @@ func (c *ServicesServiceLevelObjectivesListCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12529,7 +12606,7 @@ func (c *ServicesServiceLevelObjectivesListCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent Service. Of the form projects/{project_id}/services/{service_id}.",
+	//       "description": "Required. Resource name of the parent Service. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]\n",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -12633,7 +12710,7 @@ func (c *ServicesServiceLevelObjectivesPatchCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12706,7 +12783,7 @@ func (c *ServicesServiceLevelObjectivesPatchCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name for this ServiceLevelObjective. Of the form projects/{project_id}/services/{service_id}/serviceLevelObjectives/{slo_name}.",
+	//       "description": "Resource name for this ServiceLevelObjective. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME]\n",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/services/[^/]+/serviceLevelObjectives/[^/]+$",
 	//       "required": true,
@@ -12807,7 +12884,7 @@ func (c *UptimeCheckIpsListCall) Header() http.Header {
 
 func (c *UptimeCheckIpsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

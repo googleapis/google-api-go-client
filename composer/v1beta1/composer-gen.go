@@ -52,6 +52,7 @@ import (
 	googleapi "google.golang.org/api/googleapi"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
+	internaloption "google.golang.org/api/option/internaloption"
 	htransport "google.golang.org/api/transport/http"
 )
 
@@ -68,6 +69,7 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
+var _ = internaloption.WithDefaultEndpoint
 
 const apiId = "composer:v1beta1"
 const apiName = "composer"
@@ -87,6 +89,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
+	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -187,6 +190,50 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+// AllowedIpRange: Allowed IP range with user-provided description.
+type AllowedIpRange struct {
+	// Description: Optional. User-provided description.
+	Description string `json:"description,omitempty"`
+
+	// Value: IP address or range, defined using CIDR notation, of requests
+	// that this
+	// rule applies to. You can use the wildcard character "*" to match all
+	// IPs
+	// equivalent to "0/0" and "::/0" together.
+	// Examples: `192.168.1.1` or `192.168.0.0/16` or `2001:db8::/32`
+	//           or `2001:0db8:0000:0042:0000:8a2e:0370:7334`.
+	//
+	//
+	// <p>IP range prefixes should be properly truncated. For
+	// example,
+	// `1.2.3.4/24` should be truncated to `1.2.3.0/24`. Similarly, for
+	// IPv6,
+	// `2001:db8::1/32` should be truncated to `2001:db8::/32`.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AllowedIpRange) MarshalJSON() ([]byte, error) {
+	type NoMethod AllowedIpRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated
 // empty messages in your APIs. A typical example is to use it as the
@@ -230,6 +277,10 @@ type Environment struct {
 	// form:
 	// "projects/{projectId}/locations/{locationId}/environments/{envir
 	// onmentId}"
+	//
+	// EnvironmentId must start with a lowercase letter followed by up to
+	// 63
+	// lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
 	Name string `json:"name,omitempty"`
 
 	// State: The current state of the environment.
@@ -323,6 +374,11 @@ type EnvironmentConfig struct {
 	// SoftwareConfig: The configuration settings for software inside the
 	// environment.
 	SoftwareConfig *SoftwareConfig `json:"softwareConfig,omitempty"`
+
+	// WebServerNetworkAccessControl: Optional. The network-level access
+	// control policy for the Airflow web server. If
+	// unspecified, no network-level access restrictions will be applied.
+	WebServerNetworkAccessControl *WebServerNetworkAccessControl `json:"webServerNetworkAccessControl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AirflowUri") to
 	// unconditionally include in API requests. By default, fields with
@@ -1176,6 +1232,36 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// WebServerNetworkAccessControl: Network-level access control policy
+// for the Airflow web server.
+type WebServerNetworkAccessControl struct {
+	// AllowedIpRanges: A collection of allowed IP ranges with descriptions.
+	AllowedIpRanges []*AllowedIpRange `json:"allowedIpRanges,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowedIpRanges") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedIpRanges") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WebServerNetworkAccessControl) MarshalJSON() ([]byte, error) {
+	type NoMethod WebServerNetworkAccessControl
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "composer.projects.locations.environments.create":
 
 type ProjectsLocationsEnvironmentsCreateCall struct {
@@ -1222,7 +1308,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1360,7 +1446,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1501,7 +1587,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1659,7 +1745,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2010,7 +2096,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2179,7 +2265,7 @@ func (c *ProjectsLocationsImageVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2350,7 +2436,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2495,7 +2581,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2676,7 +2762,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -31,6 +31,7 @@
   },
   "id": "monitoring:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://monitoring.mtls.googleapis.com/",
   "name": "monitoring",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -127,7 +128,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. The project on which to execute the request. The format is \"projects/{project_id_or_number}\". The {project_id_or_number} must match the dashboard resource name.",
+                  "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\nThe [PROJECT_ID_OR_NUMBER] must match the dashboard resource name.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -157,7 +158,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The resource name of the Dashboard. The format is \"projects/{project_id_or_number}/dashboards/{dashboard_id}\".",
+                  "description": "Required. The resource name of the Dashboard. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+/dashboards/[^/]+$",
                   "required": true,
@@ -184,7 +185,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The resource name of the Dashboard. The format is one of \"dashboards/{dashboard_id}\" (for system dashboards) or \"projects/{project_id_or_number}/dashboards/{dashboard_id}\" (for custom dashboards).",
+                  "description": "Required. The resource name of the Dashboard. The format is one of:\ndashboards/[DASHBOARD_ID] (for system dashboards)\nprojects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID]  (for custom dashboards).",
                   "location": "path",
                   "pattern": "^projects/[^/]+/dashboards/[^/]+$",
                   "required": true,
@@ -222,7 +223,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. The scope of the dashboards to list. A project scope must be specified in the form of \"projects/{project_id_or_number}\".",
+                  "description": "Required. The scope of the dashboards to list. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -274,7 +275,7 @@
       }
     }
   },
-  "revision": "20200126",
+  "revision": "20200210",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -702,7 +703,7 @@
           "type": "array"
         },
         "nextPageToken": {
-          "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as pageToken in the next call to this method.",
+          "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as page_token in the next call to this method.",
           "type": "string"
         }
       },
@@ -859,11 +860,11 @@
       "type": "object"
     },
     "SpanContext": {
-      "description": "The context of a span, attached to google.api.Distribution.Exemplars in google.api.Distribution values during aggregation.It contains the name of a span with format:  projects/PROJECT_ID/traces/TRACE_ID/spans/SPAN_ID",
+      "description": "The context of a span, attached to Exemplars in Distribution values during aggregation.It contains the name of a span with format:\nprojects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]\n",
       "id": "SpanContext",
       "properties": {
         "spanName": {
-          "description": "The resource name of the span in the following format:\nprojects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]\nTRACE_ID is a unique identifier for a trace within a project; it is a 32-character hexadecimal encoding of a 16-byte array.SPAN_ID is a unique identifier for a span within a trace; it is a 16-character hexadecimal encoding of an 8-byte array.",
+          "description": "The resource name of the span. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]\n[TRACE_ID] is a unique identifier for a trace within a project; it is a 32-character hexadecimal encoding of a 16-byte array.[SPAN_ID] is a unique identifier for a span within a trace; it is a 16-character hexadecimal encoding of an 8-byte array.",
           "type": "string"
         }
       },

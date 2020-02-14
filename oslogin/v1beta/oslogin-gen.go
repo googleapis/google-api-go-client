@@ -58,6 +58,7 @@ import (
 	googleapi "google.golang.org/api/googleapi"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
+	internaloption "google.golang.org/api/option/internaloption"
 	htransport "google.golang.org/api/transport/http"
 )
 
@@ -74,6 +75,7 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
+var _ = internaloption.WithDefaultEndpoint
 
 const apiId = "oslogin:v1beta"
 const apiName = "oslogin"
@@ -105,6 +107,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
+	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -460,7 +463,7 @@ func (c *UsersGetLoginProfileCall) Header() http.Header {
 
 func (c *UsersGetLoginProfileCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -619,7 +622,7 @@ func (c *UsersImportSshPublicKeyCall) Header() http.Header {
 
 func (c *UsersImportSshPublicKeyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -763,7 +766,7 @@ func (c *UsersProjectsDeleteCall) Header() http.Header {
 
 func (c *UsersProjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -894,7 +897,7 @@ func (c *UsersSshPublicKeysDeleteCall) Header() http.Header {
 
 func (c *UsersSshPublicKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1036,7 +1039,7 @@ func (c *UsersSshPublicKeysGetCall) Header() http.Header {
 
 func (c *UsersSshPublicKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1181,7 +1184,7 @@ func (c *UsersSshPublicKeysPatchCall) Header() http.Header {
 
 func (c *UsersSshPublicKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

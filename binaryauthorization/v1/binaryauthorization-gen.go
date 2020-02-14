@@ -52,6 +52,7 @@ import (
 	googleapi "google.golang.org/api/googleapi"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
+	internaloption "google.golang.org/api/option/internaloption"
 	htransport "google.golang.org/api/transport/http"
 )
 
@@ -68,6 +69,7 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
+var _ = internaloption.WithDefaultEndpoint
 
 const apiId = "binaryauthorization:v1"
 const apiName = "binaryauthorization"
@@ -87,6 +89,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
+	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -1199,7 +1202,7 @@ func (c *ProjectsGetPolicyCall) Header() http.Header {
 
 func (c *ProjectsGetPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1342,7 +1345,7 @@ func (c *ProjectsUpdatePolicyCall) Header() http.Header {
 
 func (c *ProjectsUpdatePolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1494,7 +1497,7 @@ func (c *ProjectsAttestorsCreateCall) Header() http.Header {
 
 func (c *ProjectsAttestorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1638,7 +1641,7 @@ func (c *ProjectsAttestorsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAttestorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1780,7 +1783,7 @@ func (c *ProjectsAttestorsGetCall) Header() http.Header {
 
 func (c *ProjectsAttestorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1945,7 +1948,7 @@ func (c *ProjectsAttestorsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsAttestorsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2115,7 +2118,7 @@ func (c *ProjectsAttestorsListCall) Header() http.Header {
 
 func (c *ProjectsAttestorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2287,7 +2290,7 @@ func (c *ProjectsAttestorsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsAttestorsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2437,7 +2440,7 @@ func (c *ProjectsAttestorsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsAttestorsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2578,7 +2581,7 @@ func (c *ProjectsAttestorsUpdateCall) Header() http.Header {
 
 func (c *ProjectsAttestorsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2748,7 +2751,7 @@ func (c *ProjectsPolicyGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsPolicyGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2894,7 +2897,7 @@ func (c *ProjectsPolicySetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsPolicySetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3044,7 +3047,7 @@ func (c *ProjectsPolicyTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsPolicyTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

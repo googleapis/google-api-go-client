@@ -58,6 +58,7 @@ import (
 	googleapi "google.golang.org/api/googleapi"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
+	internaloption "google.golang.org/api/option/internaloption"
 	htransport "google.golang.org/api/transport/http"
 )
 
@@ -74,6 +75,7 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
+var _ = internaloption.WithDefaultEndpoint
 
 const apiId = "monitoring:v1"
 const apiName = "monitoring"
@@ -107,6 +109,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
+	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -941,7 +944,8 @@ type ListDashboardsResponse struct {
 
 	// NextPageToken: If there are more results than have been returned,
 	// then this field is set to a non-empty value. To see the additional
-	// results, use that value as pageToken in the next call to this method.
+	// results, use that value as page_token in the next call to this
+	// method.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1253,17 +1257,20 @@ func (s *SourceContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SpanContext: The context of a span, attached to
-// google.api.Distribution.Exemplars in google.api.Distribution values
-// during aggregation.It contains the name of a span with format:
-// projects/PROJECT_ID/traces/TRACE_ID/spans/SPAN_ID
+// SpanContext: The context of a span, attached to Exemplars in
+// Distribution values during aggregation.It contains the name of a span
+// with
+// format:
+// projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_
+// ID]
+//
 type SpanContext struct {
-	// SpanName: The resource name of the span in the following
-	// format:
-	// projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]
-	// TRACE_
-	// ID is a unique identifier for a trace within a project; it is a
-	// 32-character hexadecimal encoding of a 16-byte array.SPAN_ID is a
+	// SpanName: The resource name of the span. The format
+	// is:
+	// projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]
+	//
+	// [TRACE_ID] is a unique identifier for a trace within a project; it is
+	// a 32-character hexadecimal encoding of a 16-byte array.[SPAN_ID] is a
 	// unique identifier for a span within a trace; it is a 16-character
 	// hexadecimal encoding of an 8-byte array.
 	SpanName string `json:"spanName,omitempty"`
@@ -1746,7 +1753,7 @@ func (c *ProjectsDashboardsCreateCall) Header() http.Header {
 
 func (c *ProjectsDashboardsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1819,7 +1826,7 @@ func (c *ProjectsDashboardsCreateCall) Do(opts ...googleapi.CallOption) (*Dashbo
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project on which to execute the request. The format is \"projects/{project_id_or_number}\". The {project_id_or_number} must match the dashboard resource name.",
+	//       "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\nThe [PROJECT_ID_OR_NUMBER] must match the dashboard resource name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1889,7 +1896,7 @@ func (c *ProjectsDashboardsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDashboardsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1957,7 +1964,7 @@ func (c *ProjectsDashboardsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Dashboard. The format is \"projects/{project_id_or_number}/dashboards/{dashboard_id}\".",
+	//       "description": "Required. The resource name of the Dashboard. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/dashboards/[^/]+$",
 	//       "required": true,
@@ -2035,7 +2042,7 @@ func (c *ProjectsDashboardsGetCall) Header() http.Header {
 
 func (c *ProjectsDashboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2106,7 +2113,7 @@ func (c *ProjectsDashboardsGetCall) Do(opts ...googleapi.CallOption) (*Dashboard
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Dashboard. The format is one of \"dashboards/{dashboard_id}\" (for system dashboards) or \"projects/{project_id_or_number}/dashboards/{dashboard_id}\" (for custom dashboards).",
+	//       "description": "Required. The resource name of the Dashboard. The format is one of:\ndashboards/[DASHBOARD_ID] (for system dashboards)\nprojects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID]  (for custom dashboards).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/dashboards/[^/]+$",
 	//       "required": true,
@@ -2201,7 +2208,7 @@ func (c *ProjectsDashboardsListCall) Header() http.Header {
 
 func (c *ProjectsDashboardsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2283,7 +2290,7 @@ func (c *ProjectsDashboardsListCall) Do(opts ...googleapi.CallOption) (*ListDash
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The scope of the dashboards to list. A project scope must be specified in the form of \"projects/{project_id_or_number}\".",
+	//       "description": "Required. The scope of the dashboards to list. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2373,7 +2380,7 @@ func (c *ProjectsDashboardsPatchCall) Header() http.Header {
 
 func (c *ProjectsDashboardsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

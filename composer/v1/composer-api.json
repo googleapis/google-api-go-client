@@ -400,7 +400,7 @@
       }
     }
   },
-  "revision": "20190827",
+  "revision": "20200207",
   "rootUrl": "https://composer.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -430,7 +430,7 @@
           "type": "object"
         },
         "name": {
-          "description": "The resource name of the environment, in the form:\n\"projects/{projectId}/locations/{locationId}/environments/{environmentId}\"",
+          "description": "The resource name of the environment, in the form:\n\"projects/{projectId}/locations/{locationId}/environments/{environmentId}\"\n\nEnvironmentId must start with a lowercase letter followed by up to 63\nlowercase letters, numbers, or hyphens, and cannot end with a hyphen.",
           "type": "string"
         },
         "state": {

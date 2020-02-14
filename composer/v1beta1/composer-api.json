@@ -400,9 +400,24 @@
       }
     }
   },
-  "revision": "20190827",
+  "revision": "20200207",
   "rootUrl": "https://composer.googleapis.com/",
   "schemas": {
+    "AllowedIpRange": {
+      "description": "Allowed IP range with user-provided description.",
+      "id": "AllowedIpRange",
+      "properties": {
+        "description": {
+          "description": "Optional. User-provided description.",
+          "type": "string"
+        },
+        "value": {
+          "description": "IP address or range, defined using CIDR notation, of requests that this\nrule applies to. You can use the wildcard character \"*\" to match all IPs\nequivalent to \"0/0\" and \"::/0\" together.\nExamples: `192.168.1.1` or `192.168.0.0/16` or `2001:db8::/32`\n          or `2001:0db8:0000:0042:0000:8a2e:0370:7334`.\n\n\n\u003cp\u003eIP range prefixes should be properly truncated. For example,\n`1.2.3.4/24` should be truncated to `1.2.3.0/24`. Similarly, for IPv6,\n`2001:db8::1/32` should be truncated to `2001:db8::/32`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Empty": {
       "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
       "id": "Empty",
@@ -430,7 +445,7 @@
           "type": "object"
         },
         "name": {
-          "description": "The resource name of the environment, in the form:\n\"projects/{projectId}/locations/{locationId}/environments/{environmentId}\"",
+          "description": "The resource name of the environment, in the form:\n\"projects/{projectId}/locations/{locationId}/environments/{environmentId}\"\n\nEnvironmentId must start with a lowercase letter followed by up to 63\nlowercase letters, numbers, or hyphens, and cannot end with a hyphen.",
           "type": "string"
         },
         "state": {
@@ -497,6 +512,10 @@
         "softwareConfig": {
           "$ref": "SoftwareConfig",
           "description": "The configuration settings for software inside the environment."
+        },
+        "webServerNetworkAccessControl": {
+          "$ref": "WebServerNetworkAccessControl",
+          "description": "Optional. The network-level access control policy for the Airflow web server. If\nunspecified, no network-level access restrictions will be applied."
         }
       },
       "type": "object"
@@ -837,6 +856,20 @@
         "message": {
           "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "WebServerNetworkAccessControl": {
+      "description": "Network-level access control policy for the Airflow web server.",
+      "id": "WebServerNetworkAccessControl",
+      "properties": {
+        "allowedIpRanges": {
+          "description": "A collection of allowed IP ranges with descriptions.",
+          "items": {
+            "$ref": "AllowedIpRange"
+          },
+          "type": "array"
         }
       },
       "type": "object"

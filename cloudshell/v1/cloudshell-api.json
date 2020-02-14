@@ -22,7 +22,6 @@
   },
   "id": "cloudshell:v1",
   "kind": "discovery#restDescription",
-  "mtlsRootUrl": "https://cloudshell.mtls.googleapis.com/",
   "name": "cloudshell",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -229,7 +228,7 @@
       }
     }
   },
-  "revision": "20200210",
+  "revision": "20200213",
   "rootUrl": "https://cloudshell.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {

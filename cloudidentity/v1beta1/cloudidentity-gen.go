@@ -56,6 +56,7 @@ import (
 	googleapi "google.golang.org/api/googleapi"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
+	internaloption "google.golang.org/api/option/internaloption"
 	htransport "google.golang.org/api/transport/http"
 )
 
@@ -72,6 +73,7 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
+var _ = internaloption.WithDefaultEndpoint
 
 const apiId = "cloudidentity:v1beta1"
 const apiName = "cloudidentity"
@@ -101,6 +103,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
+	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -195,10 +198,10 @@ type EntityKey struct {
 	// as a Google user or a Google Group.
 	//
 	// If specified, the `EntityKey` represents an external-identity-mapped
-	// group
-	// created through Admin Console. Must be of the
-	// form
-	// `identitysources/{identity_source_id}.
+	// group.
+	// The namespace must correspond to an identity source created in
+	// Admin
+	// Console. Must be of the form `identitysources/{identity_source_id}.
 	Namespace string `json:"namespace,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -443,8 +446,9 @@ func (s *GoogleAppsCloudidentityDevicesV1alpha1CancelWipeDeviceUserResponse) Mar
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCloudidentityDevicesV1alpha1Device: Resource representing a
-// Device.
+// GoogleAppsCloudidentityDevicesV1alpha1Device: Represents a Device
+// known to Google Cloud, independent of the device
+// ownership, type, and whether it is assigned or in use by a user.
 type GoogleAppsCloudidentityDevicesV1alpha1Device struct {
 	// AndroidSpecificAttributes: Output only. Attributes specific to
 	// Android devices.
@@ -1571,7 +1575,7 @@ func (c *GroupsCreateCall) Header() http.Header {
 
 func (c *GroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1708,7 +1712,7 @@ func (c *GroupsDeleteCall) Header() http.Header {
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1850,7 +1854,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1951,7 +1955,7 @@ type GroupsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the `Group`s within a customer or namespace.
+// List: Lists the `Group`s under a customer or namespace.
 func (r *GroupsService) List() *GroupsListCall {
 	c := &GroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -2049,7 +2053,7 @@ func (c *GroupsListCall) Header() http.Header {
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2108,7 +2112,7 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the `Group`s within a customer or namespace.",
+	//   "description": "Lists the `Group`s under a customer or namespace.",
 	//   "flatPath": "v1beta1/groups",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.groups.list",
@@ -2220,10 +2224,10 @@ func (c *GroupsLookupCall) GroupKeyId(groupKeyId string) *GroupsLookupCall {
 // as a Google user or a Google Group.
 //
 // If specified, the `EntityKey` represents an external-identity-mapped
-// group
-// created through Admin Console. Must be of the
-// form
-// `identitysources/{identity_source_id}.
+// group.
+// The namespace must correspond to an identity source created in
+// Admin
+// Console. Must be of the form `identitysources/{identity_source_id}.
 func (c *GroupsLookupCall) GroupKeyNamespace(groupKeyNamespace string) *GroupsLookupCall {
 	c.urlParams_.Set("groupKey.namespace", groupKeyNamespace)
 	return c
@@ -2266,7 +2270,7 @@ func (c *GroupsLookupCall) Header() http.Header {
 
 func (c *GroupsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2337,7 +2341,7 @@ func (c *GroupsLookupCall) Do(opts ...googleapi.CallOption) (*LookupGroupNameRes
 	//       "type": "string"
 	//     },
 	//     "groupKey.namespace": {
-	//       "description": "The namespace in which the entity exists.\n\nIf not specified, the `EntityKey` represents a Google-managed entity such\nas a Google user or a Google Group.\n\nIf specified, the `EntityKey` represents an external-identity-mapped group\ncreated through Admin Console. Must be of the form\n`identitysources/{identity_source_id}.",
+	//       "description": "The namespace in which the entity exists.\n\nIf not specified, the `EntityKey` represents a Google-managed entity such\nas a Google user or a Google Group.\n\nIf specified, the `EntityKey` represents an external-identity-mapped group.\nThe namespace must correspond to an identity source created in Admin\nConsole. Must be of the form `identitysources/{identity_source_id}.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2410,7 +2414,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2626,7 +2630,7 @@ func (c *GroupsSearchCall) Header() http.Header {
 
 func (c *GroupsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2797,7 +2801,7 @@ func (c *GroupsMembershipsCreateCall) Header() http.Header {
 
 func (c *GroupsMembershipsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2936,7 +2940,7 @@ func (c *GroupsMembershipsDeleteCall) Header() http.Header {
 
 func (c *GroupsMembershipsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3078,7 +3082,7 @@ func (c *GroupsMembershipsGetCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3269,7 +3273,7 @@ func (c *GroupsMembershipsListCall) Header() http.Header {
 
 func (c *GroupsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3448,10 +3452,10 @@ func (c *GroupsMembershipsLookupCall) MemberKeyId(memberKeyId string) *GroupsMem
 // as a Google user or a Google Group.
 //
 // If specified, the `EntityKey` represents an external-identity-mapped
-// group
-// created through Admin Console. Must be of the
-// form
-// `identitysources/{identity_source_id}.
+// group.
+// The namespace must correspond to an identity source created in
+// Admin
+// Console. Must be of the form `identitysources/{identity_source_id}.
 func (c *GroupsMembershipsLookupCall) MemberKeyNamespace(memberKeyNamespace string) *GroupsMembershipsLookupCall {
 	c.urlParams_.Set("memberKey.namespace", memberKeyNamespace)
 	return c
@@ -3494,7 +3498,7 @@ func (c *GroupsMembershipsLookupCall) Header() http.Header {
 
 func (c *GroupsMembershipsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3570,7 +3574,7 @@ func (c *GroupsMembershipsLookupCall) Do(opts ...googleapi.CallOption) (*LookupM
 	//       "type": "string"
 	//     },
 	//     "memberKey.namespace": {
-	//       "description": "The namespace in which the entity exists.\n\nIf not specified, the `EntityKey` represents a Google-managed entity such\nas a Google user or a Google Group.\n\nIf specified, the `EntityKey` represents an external-identity-mapped group\ncreated through Admin Console. Must be of the form\n`identitysources/{identity_source_id}.",
+	//       "description": "The namespace in which the entity exists.\n\nIf not specified, the `EntityKey` represents a Google-managed entity such\nas a Google user or a Google Group.\n\nIf specified, the `EntityKey` represents an external-identity-mapped group.\nThe namespace must correspond to an identity source created in Admin\nConsole. Must be of the form `identitysources/{identity_source_id}.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3642,7 +3646,7 @@ func (c *GroupsMembershipsModifyMembershipRolesCall) Header() http.Header {
 
 func (c *GroupsMembershipsModifyMembershipRolesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -34,7 +34,6 @@
   },
   "id": "youtubeAnalytics:v2",
   "kind": "discovery#restDescription",
-  "mtlsRootUrl": "https://youtubeanalytics.mtls.googleapis.com/",
   "name": "youtubeAnalytics",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -421,7 +420,7 @@
       }
     }
   },
-  "revision": "20200209",
+  "revision": "20200212",
   "rootUrl": "https://youtubeanalytics.googleapis.com/",
   "schemas": {
     "EmptyResponse": {

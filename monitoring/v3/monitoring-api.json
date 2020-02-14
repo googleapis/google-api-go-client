@@ -31,6 +31,7 @@
   },
   "id": "monitoring:v3",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://monitoring.mtls.googleapis.com/",
   "name": "monitoring",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -127,7 +128,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The project in which to create the alerting policy. The format is projects/[PROJECT_ID].Note that this field names the parent container in which the alerting policy will be written, not the name of the created policy. The alerting policy that is returned will have a name that contains a normalized representation of this name as a prefix but adds a suffix of the form /alertPolicies/[POLICY_ID], identifying the policy in the container.",
+                  "description": "Required. The project in which to create the alerting policy. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\nNote that this field names the parent container in which the alerting policy will be written, not the name of the created policy. The alerting policy that is returned will have a name that contains a normalized representation of this name as a prefix but adds a suffix of the form /alertPolicies/[ALERT_POLICY_ID], identifying the policy in the container.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -156,7 +157,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The alerting policy to delete. The format is:\nprojects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]\nFor more information, see AlertPolicy.",
+                  "description": "Required. The alerting policy to delete. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]\nFor more information, see AlertPolicy.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/alertPolicies/[^/]+$",
                   "required": true,
@@ -182,7 +183,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The alerting policy to retrieve. The format is\nprojects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]\n",
+                  "description": "Required. The alerting policy to retrieve. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+/alertPolicies/[^/]+$",
                   "required": true,
@@ -214,7 +215,7 @@
                   "type": "string"
                 },
                 "name": {
-                  "description": "Required. The project whose alert policies are to be listed. The format is\nprojects/[PROJECT_ID]\nNote that this field names the parent container in which the alerting policies to be listed are stored. To retrieve a single alerting policy by name, use the GetAlertPolicy operation, instead.",
+                  "description": "Required. The project whose alert policies are to be listed. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\nNote that this field names the parent container in which the alerting policies to be listed are stored. To retrieve a single alerting policy by name, use the GetAlertPolicy operation, instead.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -257,7 +258,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required if the policy exists. The resource name for this policy. The syntax is:\nprojects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]\n[ALERT_POLICY_ID] is assigned by Stackdriver Monitoring when the policy is created. When calling the alertPolicies.create method, do not include the name field in the alerting policy passed as part of the request.",
+                  "description": "Required if the policy exists. The resource name for this policy. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]\n[ALERT_POLICY_ID] is assigned by Stackdriver Monitoring when the policy is created. When calling the alertPolicies.create method, do not include the name field in the alerting policy passed as part of the request.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/alertPolicies/[^/]+$",
                   "required": true,
@@ -296,7 +297,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The project in which to create the time series. The format is \"projects/PROJECT_ID_OR_NUMBER\".",
+                  "description": "The project in which to create the time series. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -330,7 +331,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The project in which to create the group. The format is \"projects/{project_id_or_number}\".",
+                  "description": "Required. The project in which to create the group. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -364,7 +365,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The group to delete. The format is \"projects/{project_id_or_number}/groups/{group_id}\".",
+                  "description": "Required. The group to delete. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+/groups/[^/]+$",
                   "required": true,
@@ -395,7 +396,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The group to retrieve. The format is \"projects/{project_id_or_number}/groups/{group_id}\".",
+                  "description": "Required. The group to retrieve. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+/groups/[^/]+$",
                   "required": true,
@@ -422,22 +423,22 @@
               ],
               "parameters": {
                 "ancestorsOfGroup": {
-                  "description": "A group name: \"projects/{project_id_or_number}/groups/{group_id}\". Returns groups that are ancestors of the specified group. The groups are returned in order, starting with the immediate parent and ending with the most distant ancestor. If the specified group has no immediate parent, the results are empty.",
+                  "description": "A group name. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]\nReturns groups that are ancestors of the specified group. The groups are returned in order, starting with the immediate parent and ending with the most distant ancestor. If the specified group has no immediate parent, the results are empty.",
                   "location": "query",
                   "type": "string"
                 },
                 "childrenOfGroup": {
-                  "description": "A group name: \"projects/{project_id_or_number}/groups/{group_id}\". Returns groups whose parentName field contains the group name. If no groups have this parent, the results are empty.",
+                  "description": "A group name. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]\nReturns groups whose parent_name field contains the group name. If no groups have this parent, the results are empty.",
                   "location": "query",
                   "type": "string"
                 },
                 "descendantsOfGroup": {
-                  "description": "A group name: \"projects/{project_id_or_number}/groups/{group_id}\". Returns the descendants of the specified group. This is a superset of the results returned by the childrenOfGroup filter, and includes children-of-children, and so forth.",
+                  "description": "A group name. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]\nReturns the descendants of the specified group. This is a superset of the results returned by the children_of_group filter, and includes children-of-children, and so forth.",
                   "location": "query",
                   "type": "string"
                 },
                 "name": {
-                  "description": "Required. The project whose groups are to be listed. The format is \"projects/{project_id_or_number}\".",
+                  "description": "Required. The project whose groups are to be listed. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -450,7 +451,7 @@
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "If this field is not empty then it must contain the nextPageToken value returned by a previous call to this method. Using this field causes the method to return additional results from the previous method call.",
+                  "description": "If this field is not empty then it must contain the next_page_token value returned by a previous call to this method. Using this field causes the method to return additional results from the previous method call.",
                   "location": "query",
                   "type": "string"
                 }
@@ -475,7 +476,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Output only. The name of this group. The format is \"projects/{project_id_or_number}/groups/{group_id}\". When creating a group, this field is ignored and a new name is created consisting of the project specified in the call to CreateGroup and a unique {group_id} that is generated automatically.",
+                  "description": "Output only. The name of this group. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]\nWhen creating a group, this field is ignored and a new name is created consisting of the project specified in the call to CreateGroup and a unique [GROUP_ID] that is generated automatically.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/groups/[^/]+$",
                   "required": true,
@@ -513,7 +514,7 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "description": "An optional list filter describing the members to be returned. The filter may reference the type, labels, and metadata of monitored resources that comprise the group. For example, to return only resources representing Compute Engine VM instances, use this filter:\nresource.type = \"gce_instance\"\n",
+                      "description": "An optional list filter describing the members to be returned. The filter may reference the type, labels, and metadata of monitored resources that comprise the group. For example, to return only resources representing Compute Engine VM instances, use this filter:\n`resource.type = \"gce_instance\"`\n",
                       "location": "query",
                       "type": "string"
                     },
@@ -530,7 +531,7 @@
                       "type": "string"
                     },
                     "name": {
-                      "description": "Required. The group whose members are listed. The format is \"projects/{project_id_or_number}/groups/{group_id}\".",
+                      "description": "Required. The group whose members are listed. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]\n",
                       "location": "path",
                       "pattern": "^projects/[^/]+/groups/[^/]+$",
                       "required": true,
@@ -543,7 +544,7 @@
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "If this field is not empty then it must contain the nextPageToken value returned by a previous call to this method. Using this field causes the method to return additional results from the previous method call.",
+                      "description": "If this field is not empty then it must contain the next_page_token value returned by a previous call to this method. Using this field causes the method to return additional results from the previous method call.",
                       "location": "query",
                       "type": "string"
                     }
@@ -574,7 +575,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
+                  "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -604,7 +605,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The metric descriptor on which to execute the request. The format is \"projects/{project_id_or_number}/metricDescriptors/{metric_id}\". An example of {metric_id} is: \"custom.googleapis.com/my_test_metric\".",
+                  "description": "Required. The metric descriptor on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]\nAn example of [METRIC_ID] is: \"custom.googleapis.com/my_test_metric\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+/metricDescriptors/.+$",
                   "required": true,
@@ -630,7 +631,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The metric descriptor on which to execute the request. The format is \"projects/{project_id_or_number}/metricDescriptors/{metric_id}\". An example value of {metric_id} is \"compute.googleapis.com/instance/disk/read_bytes_count\".",
+                  "description": "Required. The metric descriptor on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]\nAn example value of [METRIC_ID] is \"compute.googleapis.com/instance/disk/read_bytes_count\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+/metricDescriptors/.+$",
                   "required": true,
@@ -663,7 +664,7 @@
                   "type": "string"
                 },
                 "name": {
-                  "description": "Required. The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
+                  "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -706,7 +707,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The monitored resource descriptor to get. The format is \"projects/{project_id_or_number}/monitoredResourceDescriptors/{resource_type}\". The {resource_type} is a predefined type, such as cloudsql_database.",
+                  "description": "Required. The monitored resource descriptor to get. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/monitoredResourceDescriptors/[RESOURCE_TYPE]\nThe [RESOURCE_TYPE] is a predefined type, such as cloudsql_database.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/monitoredResourceDescriptors/.+$",
                   "required": true,
@@ -739,7 +740,7 @@
                   "type": "string"
                 },
                 "name": {
-                  "description": "Required. The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
+                  "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -782,7 +783,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The channel type for which to execute the request. The format is projects/[PROJECT_ID]/notificationChannelDescriptors/{channel_type}.",
+                  "description": "Required. The channel type for which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/notificationChannelDescriptors/[CHANNEL_TYPE]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+/notificationChannelDescriptors/[^/]+$",
                   "required": true,
@@ -809,7 +810,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The REST resource name of the parent from which to retrieve the notification channel descriptors. The expected syntax is:\nprojects/[PROJECT_ID]\nNote that this names the parent container in which to look for the descriptors; to retrieve a single descriptor by name, use the GetNotificationChannelDescriptor operation, instead.",
+                  "description": "Required. The REST resource name of the parent from which to retrieve the notification channel descriptors. The expected syntax is:\nprojects/[PROJECT_ID_OR_NUMBER]\nNote that this names the parent container in which to look for the descriptors; to retrieve a single descriptor by name, use the GetNotificationChannelDescriptor operation, instead.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -851,7 +852,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID]\nNote that this names the container into which the channel will be written. This does not name the newly created channel. The resulting channel's name will have a normalized version of this field as a prefix, but will add /notificationChannels/[CHANNEL_ID] to identify the channel.",
+                  "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\nThis names the container into which the channel will be written, this does not name the newly created channel. The resulting channel's name will have a normalized version of this field as a prefix, but will add /notificationChannels/[CHANNEL_ID] to identify the channel.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -885,7 +886,7 @@
                   "type": "boolean"
                 },
                 "name": {
-                  "description": "Required. The channel for which to execute the request. The format is projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID].",
+                  "description": "Required. The channel for which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+/notificationChannels/[^/]+$",
                   "required": true,
@@ -911,7 +912,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The channel for which to execute the request. The format is projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID].",
+                  "description": "Required. The channel for which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+/notificationChannels/[^/]+$",
                   "required": true,
@@ -972,7 +973,7 @@
                   "type": "string"
                 },
                 "name": {
-                  "description": "Required. The project on which to execute the request. The format is projects/[PROJECT_ID]. That is, this names the container in which to look for the notification channels; it does not name a specific channel. To query a specific channel by REST resource name, use the GetNotificationChannel operation.",
+                  "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\nThis names the container in which to look for the notification channels; it does not name a specific channel. To query a specific channel by REST resource name, use the GetNotificationChannel operation.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -1015,7 +1016,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The full REST resource name for this channel. The syntax is:\nprojects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID]\nThe [CHANNEL_ID] is automatically assigned by the server on creation.",
+                  "description": "The full REST resource name for this channel. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]\nThe [CHANNEL_ID] is automatically assigned by the server on creation.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/notificationChannels/[^/]+$",
                   "required": true,
@@ -1112,7 +1113,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
+                  "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -1218,7 +1219,7 @@
                   "type": "string"
                 },
                 "name": {
-                  "description": "Required. The project on which to execute the request. The format is \"projects/{project_id_or_number}\".",
+                  "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -1274,7 +1275,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. The project in which to create the Uptime check. The format  is projects/[PROJECT_ID].",
+                  "description": "Required. The project in which to create the Uptime check. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -1303,7 +1304,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The Uptime check configuration to delete. The format  is projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].",
+                  "description": "Required. The Uptime check configuration to delete. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+/uptimeCheckConfigs/[^/]+$",
                   "required": true,
@@ -1329,7 +1330,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The Uptime check configuration to retrieve. The format  is projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].",
+                  "description": "Required. The Uptime check configuration to retrieve. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+/uptimeCheckConfigs/[^/]+$",
                   "required": true,
@@ -1367,7 +1368,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. The project whose Uptime check configurations are listed. The format  is projects/[PROJECT_ID].",
+                  "description": "Required. The project whose Uptime check configurations are listed. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -1394,7 +1395,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "A unique resource name for this Uptime check configuration. The format is:projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].This field should be omitted when creating the Uptime check configuration; on create, the resource name is assigned by the server and included in the response.",
+                  "description": "A unique resource name for this Uptime check configuration. The format is:\n projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID]\nThis field should be omitted when creating the Uptime check configuration; on create, the resource name is assigned by the server and included in the response.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/uptimeCheckConfigs/[^/]+$",
                   "required": true,
@@ -1435,14 +1436,14 @@
           ],
           "parameters": {
             "parent": {
-              "description": "Required. Resource name of the parent workspace. Of the form projects/{project_id}.",
+              "description": "Required. Resource name of the parent workspace. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
               "location": "path",
               "pattern": "^[^/]+/[^/]+$",
               "required": true,
               "type": "string"
             },
             "serviceId": {
-              "description": "Optional. The Service id to use for this Service. If omitted, an id will be generated instead. Must match the pattern a-z0-9-+",
+              "description": "Optional. The Service id to use for this Service. If omitted, an id will be generated instead. Must match the pattern [a-z0-9\\-]+",
               "location": "query",
               "type": "string"
             }
@@ -1469,7 +1470,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "Required. Resource name of the Service to delete. Of the form projects/{project_id}/services/{service_id}.",
+              "description": "Required. Resource name of the Service to delete. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]\n",
               "location": "path",
               "pattern": "^[^/]+/[^/]+/services/[^/]+$",
               "required": true,
@@ -1495,7 +1496,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "Required. Resource name of the Service. Of the form projects/{project_id}/services/{service_id}.",
+              "description": "Required. Resource name of the Service. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]\n",
               "location": "path",
               "pattern": "^[^/]+/[^/]+/services/[^/]+$",
               "required": true,
@@ -1538,7 +1539,7 @@
               "type": "string"
             },
             "parent": {
-              "description": "Required. Resource name of the parent containing the listed services, either a project or Stackdriver Account (workspace).One of the forms: \"projects/{project_id}\" \"workspaces/{host_project_id}\"",
+              "description": "Required. Resource name of the parent containing the listed services, either a project or Stackdriver Account (workspace). The formats are:\nprojects/[PROJECT_ID_OR_NUMBER]\nworkspaces/[HOST_PROJECT_ID]\n",
               "location": "path",
               "pattern": "^[^/]+/[^/]+$",
               "required": true,
@@ -1565,7 +1566,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "Resource name for this Service. Of the form projects/{project_id}/services/{service_id}.",
+              "description": "Resource name for this Service. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID}\n",
               "location": "path",
               "pattern": "^[^/]+/[^/]+/services/[^/]+$",
               "required": true,
@@ -1604,14 +1605,14 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. Resource name of the parent Service. Of the form projects/{project_id}/services/{service_id}.",
+                  "description": "Required. Resource name of the parent Service. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]\n",
                   "location": "path",
                   "pattern": "^[^/]+/[^/]+/services/[^/]+$",
                   "required": true,
                   "type": "string"
                 },
                 "serviceLevelObjectiveId": {
-                  "description": "Optional. The ServiceLevelObjective id to use for this ServiceLevelObjective. If omitted, an id will be generated instead. Must match the pattern a-z0-9-+",
+                  "description": "Optional. The ServiceLevelObjective id to use for this ServiceLevelObjective. If omitted, an id will be generated instead. Must match the pattern [a-z0-9\\-]+",
                   "location": "query",
                   "type": "string"
                 }
@@ -1638,7 +1639,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name of the ServiceLevelObjective to delete. Of the form projects/{project_id}/services/{service_id}/serviceLevelObjectives/{slo_name}.",
+                  "description": "Required. Resource name of the ServiceLevelObjective to delete. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME]\n",
                   "location": "path",
                   "pattern": "^[^/]+/[^/]+/services/[^/]+/serviceLevelObjectives/[^/]+$",
                   "required": true,
@@ -1664,7 +1665,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name of the ServiceLevelObjective to get. Of the form projects/{project_id}/services/{service_id}/serviceLevelObjectives/{slo_name}.",
+                  "description": "Required. Resource name of the ServiceLevelObjective to get. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME]\n",
                   "location": "path",
                   "pattern": "^[^/]+/[^/]+/services/[^/]+/serviceLevelObjectives/[^/]+$",
                   "required": true,
@@ -1717,7 +1718,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. Resource name of the parent Service. Of the form projects/{project_id}/services/{service_id}.",
+                  "description": "Required. Resource name of the parent Service. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]\n",
                   "location": "path",
                   "pattern": "^[^/]+/[^/]+/services/[^/]+$",
                   "required": true,
@@ -1754,7 +1755,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Resource name for this ServiceLevelObjective. Of the form projects/{project_id}/services/{service_id}/serviceLevelObjectives/{slo_name}.",
+                  "description": "Resource name for this ServiceLevelObjective. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME]\n",
                   "location": "path",
                   "pattern": "^[^/]+/[^/]+/services/[^/]+/serviceLevelObjectives/[^/]+$",
                   "required": true,
@@ -1817,7 +1818,7 @@
       }
     }
   },
-  "revision": "20200204",
+  "revision": "20200210",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -1935,14 +1936,14 @@
           ],
           "enumDescriptions": [
             "An unspecified combiner.",
-            "Combine conditions using the logical AND operator. An incident is created only if all conditions are met simultaneously. This combiner is satisfied if all conditions are met, even if they are met on completely different resources.",
+            "Combine conditions using the logical AND operator. An incident is created only if all the conditions are met simultaneously. This combiner is satisfied if all conditions are met, even if they are met on completely different resources.",
             "Combine conditions using the logical OR operator. An incident is created if any of the listed conditions is met.",
             "Combine conditions using logical AND operator, but unlike the regular AND option, an incident is created only if all conditions are met simultaneously on at least one resource."
           ],
           "type": "string"
         },
         "conditions": {
-          "description": "A list of conditions for the policy. The conditions are combined by AND or OR according to the combiner field. If the combined conditions evaluate to true, then an incident is created. A policy can have from one to six conditions. If |condition_time_series_uery_language| is present, it must be the only |condition|.",
+          "description": "A list of conditions for the policy. The conditions are combined by AND or OR according to the combiner field. If the combined conditions evaluate to true, then an incident is created. A policy can have from one to six conditions. If condition_time_series_query_language is present, it must be the only condition.",
           "items": {
             "$ref": "Condition"
           },
@@ -1969,11 +1970,11 @@
           "description": "A read-only record of the most recent change to the alerting policy. If provided in a call to create or update, this field will be ignored."
         },
         "name": {
-          "description": "Required if the policy exists. The resource name for this policy. The syntax is:\nprojects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]\n[ALERT_POLICY_ID] is assigned by Stackdriver Monitoring when the policy is created. When calling the alertPolicies.create method, do not include the name field in the alerting policy passed as part of the request.",
+          "description": "Required if the policy exists. The resource name for this policy. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]\n[ALERT_POLICY_ID] is assigned by Stackdriver Monitoring when the policy is created. When calling the alertPolicies.create method, do not include the name field in the alerting policy passed as part of the request.",
           "type": "string"
         },
         "notificationChannels": {
-          "description": "Identifies the notification channels to which notifications should be sent when incidents are opened or closed or when new violations occur on an already opened incident. Each element of this array corresponds to the name field in each of the NotificationChannel objects that are returned from the ListNotificationChannels method. The syntax of the entries in this field is:\nprojects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID]\n",
+          "description": "Identifies the notification channels to which notifications should be sent when incidents are opened or closed or when new violations occur on an already opened incident. Each element of this array corresponds to the name field in each of the NotificationChannel objects that are returned from the ListNotificationChannels method. The format of the entries in this field is:\nprojects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]\n",
           "items": {
             "type": "string"
           },
@@ -2092,7 +2093,7 @@
       "type": "object"
     },
     "ClusterIstio": {
-      "description": "Istio service. Learn more at http://istio.io.",
+      "description": "Istio service scoped to a single Kubernetes cluster. Learn more at http://istio.io.",
       "id": "ClusterIstio",
       "properties": {
         "clusterName": {
@@ -2250,7 +2251,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Required if the condition exists. The unique resource name for this condition. Its syntax is:\nprojects/[PROJECT_ID]/alertPolicies/[POLICY_ID]/conditions/[CONDITION_ID]\n[CONDITION_ID] is assigned by Stackdriver Monitoring when the condition is created as part of a new or updated alerting policy.When calling the alertPolicies.create method, do not include the name field in the conditions of the requested alerting policy. Stackdriver Monitoring creates the condition identifiers and includes them in the new policy.When calling the alertPolicies.update method to update a policy, including a condition name causes the existing condition to be updated. Conditions without names are added to the updated policy. Existing conditions are deleted if they are not updated.Best practice is to preserve [CONDITION_ID] if you make only small changes, such as those to condition thresholds, durations, or trigger values. Otherwise, treat the change as a new condition and let the existing condition be deleted.",
+          "description": "Required if the condition exists. The unique resource name for this condition. Its format is:\nprojects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[POLICY_ID]/conditions/[CONDITION_ID]\n[CONDITION_ID] is assigned by Stackdriver Monitoring when the condition is created as part of a new or updated alerting policy.When calling the alertPolicies.create method, do not include the name field in the conditions of the requested alerting policy. Stackdriver Monitoring creates the condition identifiers and includes them in the new policy.When calling the alertPolicies.update method to update a policy, including a condition name causes the existing condition to be updated. Conditions without names are added to the updated policy. Existing conditions are deleted if they are not updated.Best practice is to preserve [CONDITION_ID] if you make only small changes, such as those to condition thresholds, durations, or trigger values. Otherwise, treat the change as a new condition and let the existing condition be deleted.",
           "type": "string"
         }
       },
@@ -2713,11 +2714,11 @@
           "type": "boolean"
         },
         "name": {
-          "description": "Output only. The name of this group. The format is \"projects/{project_id_or_number}/groups/{group_id}\". When creating a group, this field is ignored and a new name is created consisting of the project specified in the call to CreateGroup and a unique {group_id} that is generated automatically.",
+          "description": "Output only. The name of this group. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]\nWhen creating a group, this field is ignored and a new name is created consisting of the project specified in the call to CreateGroup and a unique [GROUP_ID] that is generated automatically.",
           "type": "string"
         },
         "parentName": {
-          "description": "The name of the group's parent, if it has one. The format is \"projects/{project_id_or_number}/groups/{group_id}\". For groups with no parent, parentName is the empty string, \"\".",
+          "description": "The name of the group's parent, if it has one. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]\nFor groups with no parent, parent_name is the empty string, \"\".",
           "type": "string"
         }
       },
@@ -2775,7 +2776,7 @@
           "type": "string"
         },
         "name": {
-          "description": "A unique resource name for this InternalChecker. The format is:projects/[PROJECT_ID]/internalCheckers/[INTERNAL_CHECKER_ID].[PROJECT_ID] is the Stackdriver Workspace project for the Uptime check config associated with the internal checker.",
+          "description": "A unique resource name for this InternalChecker. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/internalCheckers/[INTERNAL_CHECKER_ID]\n[PROJECT_ID_OR_NUMBER] is the Stackdriver Workspace project for the Uptime check config associated with the internal checker.",
           "type": "string"
         },
         "network": {
@@ -2878,7 +2879,7 @@
           "type": "array"
         },
         "nextPageToken": {
-          "description": "If there might be more results than were returned, then this field is set to a non-empty value. To see the additional results, use that value as pageToken in the next call to this method.",
+          "description": "If there might be more results than were returned, then this field is set to a non-empty value. To see the additional results, use that value as page_token in the next call to this method.",
           "type": "string"
         }
       },
@@ -2896,7 +2897,7 @@
           "type": "array"
         },
         "nextPageToken": {
-          "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as pageToken in the next call to this method.",
+          "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as page_token in the next call to this method.",
           "type": "string"
         },
         "totalSize": {
@@ -2919,7 +2920,7 @@
           "type": "array"
         },
         "nextPageToken": {
-          "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as pageToken in the next call to this method.",
+          "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as page_token in the next call to this method.",
           "type": "string"
         }
       },
@@ -2937,7 +2938,7 @@
           "type": "array"
         },
         "nextPageToken": {
-          "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as pageToken in the next call to this method.",
+          "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as page_token in the next call to this method.",
           "type": "string"
         }
       },
@@ -2948,7 +2949,7 @@
       "id": "ListMonitoredResourceDescriptorsResponse",
       "properties": {
         "nextPageToken": {
-          "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as pageToken in the next call to this method.",
+          "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as page_token in the next call to this method.",
           "type": "string"
         },
         "resourceDescriptors": {
@@ -3002,7 +3003,7 @@
       "id": "ListServiceLevelObjectivesResponse",
       "properties": {
         "nextPageToken": {
-          "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as pageToken in the next call to this method.",
+          "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as page_token in the next call to this method.",
           "type": "string"
         },
         "serviceLevelObjectives": {
@@ -3020,7 +3021,7 @@
       "id": "ListServicesResponse",
       "properties": {
         "nextPageToken": {
-          "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as pageToken in the next call to this method.",
+          "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as page_token in the next call to this method.",
           "type": "string"
         },
         "services": {
@@ -3045,7 +3046,7 @@
           "type": "array"
         },
         "nextPageToken": {
-          "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as pageToken in the next call to this method.",
+          "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as page_token in the next call to this method.",
           "type": "string"
         },
         "timeSeries": {
@@ -3095,6 +3096,25 @@
             "$ref": "UptimeCheckIp"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "MeshIstio": {
+      "description": "Istio service scoped to an Istio mesh",
+      "id": "MeshIstio",
+      "properties": {
+        "meshUid": {
+          "description": "Identifier for the mesh in which this Istio service is defined. Corresponds to the mesh_uid metric label in Istio metrics.",
+          "type": "string"
+        },
+        "serviceName": {
+          "description": "The name of the Istio service underlying this service. Corresponds to the destination_service_name metric label in Istio metrics.",
+          "type": "string"
+        },
+        "serviceNamespace": {
+          "description": "The namespace of the Istio service underlying this service. Corresponds to the destination_service_namespace metric label in Istio metrics.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3494,7 +3514,7 @@
           "type": "object"
         },
         "name": {
-          "description": "The full REST resource name for this channel. The syntax is:\nprojects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID]\nThe [CHANNEL_ID] is automatically assigned by the server on creation.",
+          "description": "The full REST resource name for this channel. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]\nThe [CHANNEL_ID] is automatically assigned by the server on creation.",
           "type": "string"
         },
         "type": {
@@ -3565,7 +3585,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The full REST resource name for this descriptor. The syntax is:\nprojects/[PROJECT_ID]/notificationChannelDescriptors/[TYPE]\nIn the above, [TYPE] is the value of the type field.",
+          "description": "The full REST resource name for this descriptor. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/notificationChannelDescriptors/[TYPE]\nIn the above, [TYPE] is the value of the type field.",
           "type": "string"
         },
         "type": {
@@ -3666,7 +3686,7 @@
       "id": "ResourceGroup",
       "properties": {
         "groupId": {
-          "description": "The group of resources being monitored. Should be only the [GROUP_ID], and not the full-path projects/[PROJECT_ID]/groups/[GROUP_ID].",
+          "description": "The group of resources being monitored. Should be only the [GROUP_ID], and not the full-path projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID].",
           "type": "string"
         },
         "resourceType": {
@@ -3716,8 +3736,12 @@
           "description": "Name used for UI elements listing this Service.",
           "type": "string"
         },
+        "meshIstio": {
+          "$ref": "MeshIstio",
+          "description": "Type used for Istio services scoped to an Istio mesh."
+        },
         "name": {
-          "description": "Resource name for this Service. Of the form projects/{project_id}/services/{service_id}.",
+          "description": "Resource name for this Service. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID}\n",
           "type": "string"
         },
         "telemetry": {
@@ -3784,7 +3808,7 @@
           "type": "number"
         },
         "name": {
-          "description": "Resource name for this ServiceLevelObjective. Of the form projects/{project_id}/services/{service_id}/serviceLevelObjectives/{slo_name}.",
+          "description": "Resource name for this ServiceLevelObjective. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME]\n",
           "type": "string"
         },
         "rollingPeriod": {
@@ -3811,11 +3835,11 @@
       "type": "object"
     },
     "SpanContext": {
-      "description": "The context of a span, attached to google.api.Distribution.Exemplars in google.api.Distribution values during aggregation.It contains the name of a span with format:  projects/PROJECT_ID/traces/TRACE_ID/spans/SPAN_ID",
+      "description": "The context of a span, attached to Exemplars in Distribution values during aggregation.It contains the name of a span with format:\nprojects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]\n",
       "id": "SpanContext",
       "properties": {
         "spanName": {
-          "description": "The resource name of the span in the following format:\nprojects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]\nTRACE_ID is a unique identifier for a trace within a project; it is a 32-character hexadecimal encoding of a 16-byte array.SPAN_ID is a unique identifier for a span within a trace; it is a 16-character hexadecimal encoding of an 8-byte array.",
+          "description": "The resource name of the span. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]\n[TRACE_ID] is a unique identifier for a trace within a project; it is a 32-character hexadecimal encoding of a 16-byte array.[SPAN_ID] is a unique identifier for a span within a trace; it is a 16-character hexadecimal encoding of an 8-byte array.",
           "type": "string"
         }
       },
@@ -4100,7 +4124,7 @@
           "description": "The monitored resource (https://cloud.google.com/monitoring/api/resources) associated with the configuration. The following monitored resource types are supported for Uptime checks:  uptime_url,  gce_instance,  gae_app,  aws_ec2_instance,  aws_elb_load_balancer"
         },
         "name": {
-          "description": "A unique resource name for this Uptime check configuration. The format is:projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].This field should be omitted when creating the Uptime check configuration; on create, the resource name is assigned by the server and included in the response.",
+          "description": "A unique resource name for this Uptime check configuration. The format is:\n projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID]\nThis field should be omitted when creating the Uptime check configuration; on create, the resource name is assigned by the server and included in the response.",
           "type": "string"
         },
         "period": {

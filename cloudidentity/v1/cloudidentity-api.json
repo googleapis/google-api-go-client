@@ -28,7 +28,6 @@
   },
   "id": "cloudidentity:v1",
   "kind": "discovery#restDescription",
-  "mtlsRootUrl": "https://cloudidentity.mtls.googleapis.com/",
   "name": "cloudidentity",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -512,7 +511,7 @@
       }
     }
   },
-  "revision": "20200210",
+  "revision": "20200211",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "EntityKey": {
@@ -666,7 +665,7 @@
       "type": "object"
     },
     "GoogleAppsCloudidentityDevicesV1alpha1Device": {
-      "description": "Resource representing a Device.",
+      "description": "Represents a Device known to Google Cloud, independent of the device\nownership, type, and whether it is assigned or in use by a user.",
       "id": "GoogleAppsCloudidentityDevicesV1alpha1Device",
       "properties": {
         "androidSpecificAttributes": {

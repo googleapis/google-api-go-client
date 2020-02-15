@@ -281,9 +281,9 @@ type Constraints struct {
 
 	// MaxDatabaseEntries: Sets the maximum number of entries that the
 	// client is willing to have
-	// in the local database. This should be a power of 2 between 2**10
-	// and
-	// 2**20. If zero, no database size limit is set.
+	// in the local database for the specified list. This should be a power
+	// of
+	// 2 between 2**10 and 2**20. If zero, no database size limit is set.
 	MaxDatabaseEntries int64 `json:"maxDatabaseEntries,omitempty"`
 
 	// MaxUpdateEntries: The maximum size in number of entries. The update
@@ -1608,7 +1608,7 @@ func (c *EncodedFullHashesGetCall) Header() http.Header {
 
 func (c *EncodedFullHashesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1774,7 +1774,7 @@ func (c *EncodedUpdatesGetCall) Header() http.Header {
 
 func (c *EncodedUpdatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1914,7 +1914,7 @@ func (c *FullHashesFindCall) Header() http.Header {
 
 func (c *FullHashesFindCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2038,7 +2038,7 @@ func (c *ThreatHitsCreateCall) Header() http.Header {
 
 func (c *ThreatHitsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2162,7 +2162,7 @@ func (c *ThreatListUpdatesFetchCall) Header() http.Header {
 
 func (c *ThreatListUpdatesFetchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2293,7 +2293,7 @@ func (c *ThreatListsListCall) Header() http.Header {
 
 func (c *ThreatListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2410,7 +2410,7 @@ func (c *ThreatMatchesFindCall) Header() http.Header {
 
 func (c *ThreatMatchesFindCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -11,6 +11,7 @@
   },
   "id": "safebrowsing:v4",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://safebrowsing.mtls.googleapis.com/",
   "name": "safebrowsing",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -258,7 +259,7 @@
       }
     }
   },
-  "revision": "20190930",
+  "revision": "20200210",
   "rootUrl": "https://safebrowsing.googleapis.com/",
   "schemas": {
     "Checksum": {
@@ -301,7 +302,7 @@
           "type": "string"
         },
         "maxDatabaseEntries": {
-          "description": "Sets the maximum number of entries that the client is willing to have\nin the local database. This should be a power of 2 between 2**10 and\n2**20. If zero, no database size limit is set.",
+          "description": "Sets the maximum number of entries that the client is willing to have\nin the local database for the specified list. This should be a power of\n2 between 2**10 and 2**20. If zero, no database size limit is set.",
           "format": "int32",
           "type": "integer"
         },

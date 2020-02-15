@@ -13,6 +13,7 @@
   },
   "id": "chat:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://chat.mtls.googleapis.com/",
   "name": "chat",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -316,7 +317,7 @@
       }
     }
   },
-  "revision": "20191205",
+  "revision": "20200209",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {

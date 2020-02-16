@@ -17,7 +17,7 @@
   "description": "Manages your tasks and task lists.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/google-apps/tasks/firstapp",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/sib0TfOU9SmOWm02eMFRVq-fFck\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/hFPeXxltvOJhEJjSu7bzNBnzbwY\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/tasks-16.png",
     "x32": "https://www.google.com/images/icons/product/tasks-32.png"
@@ -121,7 +121,7 @@
           ]
         },
         "insert": {
-          "description": "Creates a new task list and adds it to the authenticated user's task lists.",
+          "description": "Creates a new task list and adds it to the authenticated user's task lists. Fails with HTTP code 403 or 429 after reaching the storage limit of 2,000 lists.",
           "httpMethod": "POST",
           "id": "tasks.tasklists.insert",
           "path": "users/@me/lists",
@@ -296,7 +296,7 @@
           ]
         },
         "insert": {
-          "description": "Creates a new task on the specified task list.",
+          "description": "Creates a new task on the specified task list. Fails with HTTP code 403 or 429 after reaching the storage limit of 100,000 tasks per account.",
           "httpMethod": "POST",
           "id": "tasks.tasks.insert",
           "parameterOrder": [
@@ -515,7 +515,7 @@
       }
     }
   },
-  "revision": "20190628",
+  "revision": "20200129",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Task": {

@@ -460,7 +460,7 @@ func (c *TasklistsDeleteCall) Header() http.Header {
 
 func (c *TasklistsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -571,7 +571,7 @@ func (c *TasklistsGetCall) Header() http.Header {
 
 func (c *TasklistsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -670,7 +670,8 @@ type TasklistsInsertCall struct {
 }
 
 // Insert: Creates a new task list and adds it to the authenticated
-// user's task lists.
+// user's task lists. Fails with HTTP code 403 or 429 after reaching the
+// storage limit of 2,000 lists.
 func (r *TasklistsService) Insert(tasklist *TaskList) *TasklistsInsertCall {
 	c := &TasklistsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklist = tasklist
@@ -704,7 +705,7 @@ func (c *TasklistsInsertCall) Header() http.Header {
 
 func (c *TasklistsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -765,7 +766,7 @@ func (c *TasklistsInsertCall) Do(opts ...googleapi.CallOption) (*TaskList, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new task list and adds it to the authenticated user's task lists.",
+	//   "description": "Creates a new task list and adds it to the authenticated user's task lists. Fails with HTTP code 403 or 429 after reaching the storage limit of 2,000 lists.",
 	//   "httpMethod": "POST",
 	//   "id": "tasks.tasklists.insert",
 	//   "path": "users/@me/lists",
@@ -850,7 +851,7 @@ func (c *TasklistsListCall) Header() http.Header {
 
 func (c *TasklistsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1005,7 +1006,7 @@ func (c *TasklistsPatchCall) Header() http.Header {
 
 func (c *TasklistsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1143,7 +1144,7 @@ func (c *TasklistsUpdateCall) Header() http.Header {
 
 func (c *TasklistsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1281,7 +1282,7 @@ func (c *TasksClearCall) Header() http.Header {
 
 func (c *TasksClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1383,7 +1384,7 @@ func (c *TasksDeleteCall) Header() http.Header {
 
 func (c *TasksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1504,7 +1505,7 @@ func (c *TasksGetCall) Header() http.Header {
 
 func (c *TasksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1611,7 +1612,9 @@ type TasksInsertCall struct {
 	header_    http.Header
 }
 
-// Insert: Creates a new task on the specified task list.
+// Insert: Creates a new task on the specified task list. Fails with
+// HTTP code 403 or 429 after reaching the storage limit of 100,000
+// tasks per account.
 func (r *TasksService) Insert(tasklistid string, task *Task) *TasksInsertCall {
 	c := &TasksInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -1661,7 +1664,7 @@ func (c *TasksInsertCall) Header() http.Header {
 
 func (c *TasksInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1725,7 +1728,7 @@ func (c *TasksInsertCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new task on the specified task list.",
+	//   "description": "Creates a new task on the specified task list. Fails with HTTP code 403 or 429 after reaching the storage limit of 100,000 tasks per account.",
 	//   "httpMethod": "POST",
 	//   "id": "tasks.tasks.insert",
 	//   "parameterOrder": [
@@ -1897,7 +1900,7 @@ func (c *TasksListCall) Header() http.Header {
 
 func (c *TasksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2121,7 +2124,7 @@ func (c *TasksMoveCall) Header() http.Header {
 
 func (c *TasksMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2272,7 +2275,7 @@ func (c *TasksPatchCall) Header() http.Header {
 
 func (c *TasksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2420,7 +2423,7 @@ func (c *TasksUpdateCall) Header() http.Header {
 
 func (c *TasksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200214")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

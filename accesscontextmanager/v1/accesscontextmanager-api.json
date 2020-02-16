@@ -22,6 +22,7 @@
   },
   "id": "accesscontextmanager:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://accesscontextmanager.mtls.googleapis.com/",
   "name": "accesscontextmanager",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -692,7 +693,7 @@
       }
     }
   },
-  "revision": "20200120",
+  "revision": "20200210",
   "rootUrl": "https://accesscontextmanager.googleapis.com/",
   "schemas": {
     "AccessLevel": {
@@ -1062,14 +1063,18 @@
             "DESKTOP_MAC",
             "DESKTOP_WINDOWS",
             "DESKTOP_LINUX",
-            "DESKTOP_CHROME_OS"
+            "DESKTOP_CHROME_OS",
+            "ANDROID",
+            "IOS"
           ],
           "enumDescriptions": [
             "The operating system of the device is not specified or not known.",
             "A desktop Mac operating system.",
             "A desktop Windows operating system.",
             "A desktop Linux operating system.",
-            "A desktop ChromeOS operating system."
+            "A desktop ChromeOS operating system.",
+            "An Android operating system.",
+            "An iOS operating system."
           ],
           "type": "string"
         },

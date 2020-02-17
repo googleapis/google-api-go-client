@@ -3339,7 +3339,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3501,7 +3501,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3662,7 +3662,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

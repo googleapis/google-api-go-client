@@ -22,6 +22,7 @@
   },
   "id": "dlp:v2",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://dlp.mtls.googleapis.com/",
   "name": "dlp",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -3130,7 +3131,7 @@
       }
     }
   },
-  "revision": "20200203",
+  "revision": "20200212",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -4406,7 +4407,7 @@
           "enumDescriptions": [
             "Unused.",
             "The job has not yet started.",
-            "The job is currently running.",
+            "The job is currently running. Once a job has finished it will transition\nto FAILED or DONE.",
             "The job is no longer running.",
             "The job was canceled before it could complete.",
             "The job had an error and did not complete."
@@ -6332,15 +6333,15 @@
       "properties": {
         "bigQueryOptions": {
           "$ref": "GooglePrivacyDlpV2BigQueryOptions",
-          "description": "BigQuery options specification."
+          "description": "BigQuery options."
         },
         "cloudStorageOptions": {
           "$ref": "GooglePrivacyDlpV2CloudStorageOptions",
-          "description": "Google Cloud Storage options specification."
+          "description": "Google Cloud Storage options."
         },
         "datastoreOptions": {
           "$ref": "GooglePrivacyDlpV2DatastoreOptions",
-          "description": "Google Cloud Datastore options specification."
+          "description": "Google Cloud Datastore options."
         },
         "timespanConfig": {
           "$ref": "GooglePrivacyDlpV2TimespanConfig"

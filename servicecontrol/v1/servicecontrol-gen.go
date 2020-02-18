@@ -2977,20 +2977,24 @@ func (s *ServiceAccountDelegationInfo) MarshalJSON() ([]byte, error) {
 }
 
 // SpanContext: The context of a span, attached to
-// google.api.Distribution.Exemplars
-// in google.api.Distribution values during aggregation.
+// Exemplars
+// in Distribution values during aggregation.
 //
 // It contains the name of a span with format:
-//     projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]
+//
+//     projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]
 type SpanContext struct {
-	// SpanName: The resource name of the span in the following format:
+	// SpanName: The resource name of the span. The format is:
 	//
-	//     projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a unique
-	// identifier for a trace within a project;
+	//
+	// projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]
+	//
+	// `[T
+	// RACE_ID]` is a unique identifier for a trace within a project;
 	// it is a 32-character hexadecimal encoding of a 16-byte
 	// array.
 	//
-	// [SPAN_ID] is a unique identifier for a span within a trace; it
+	// `[SPAN_ID]` is a unique identifier for a span within a trace; it
 	// is a 16-character hexadecimal encoding of an 8-byte array.
 	SpanName string `json:"spanName,omitempty"`
 
@@ -3339,7 +3343,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3501,7 +3505,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3662,7 +3666,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

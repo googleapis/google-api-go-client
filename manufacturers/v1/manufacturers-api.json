@@ -21,6 +21,7 @@
   },
   "id": "manufacturers:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://manufacturers.mtls.googleapis.com/",
   "name": "manufacturers",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -274,7 +275,7 @@
       }
     }
   },
-  "revision": "20180903",
+  "revision": "20200213",
   "rootUrl": "https://manufacturers.googleapis.com/",
   "schemas": {
     "Attributes": {

@@ -25,6 +25,7 @@
   },
   "id": "servicecontrol:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://servicecontrol.mtls.googleapis.com/",
   "name": "servicecontrol",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -196,7 +197,7 @@
       }
     }
   },
-  "revision": "20200113",
+  "revision": "20200210",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -1669,11 +1670,11 @@
       "type": "object"
     },
     "SpanContext": {
-      "description": "The context of a span, attached to google.api.Distribution.Exemplars\nin google.api.Distribution values during aggregation.\n\nIt contains the name of a span with format:\n    projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]",
+      "description": "The context of a span, attached to\nExemplars\nin Distribution values during aggregation.\n\nIt contains the name of a span with format:\n\n    projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]",
       "id": "SpanContext",
       "properties": {
         "spanName": {
-          "description": "The resource name of the span in the following format:\n\n    projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a unique identifier for a trace within a project;\nit is a 32-character hexadecimal encoding of a 16-byte array.\n\n[SPAN_ID] is a unique identifier for a span within a trace; it\nis a 16-character hexadecimal encoding of an 8-byte array.",
+          "description": "The resource name of the span. The format is:\n\n    projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]\n\n`[TRACE_ID]` is a unique identifier for a trace within a project;\nit is a 32-character hexadecimal encoding of a 16-byte array.\n\n`[SPAN_ID]` is a unique identifier for a span within a trace; it\nis a 16-character hexadecimal encoding of an 8-byte array.",
           "type": "string"
         }
       },

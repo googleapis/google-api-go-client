@@ -78,6 +78,11 @@ func DialPool(ctx context.Context, opts ...option.ClientOption) (ConnPool, error
 		return o.GRPCConnPool, nil
 	}
 	poolSize := o.GRPCConnPoolSize
+	if o.GRPCConn != nil {
+		// WithGRPCConn is technically incompatible with WithGRPCConnectionPool.
+		// Always assume pool size is 1 when a grpc.ClientConn is explicitly used.
+		poolSize = 1
+	}
 	o.GRPCConnPoolSize = 0 // we don't *need* to set this to zero, but it's safe to.
 
 	if poolSize == 0 || poolSize == 1 {

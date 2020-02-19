@@ -34,6 +34,7 @@
   },
   "id": "sheets:v4",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://sheets.mtls.googleapis.com/",
   "name": "sheets",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -809,7 +810,7 @@
       }
     }
   },
-  "revision": "20200131",
+  "revision": "20200211",
   "rootUrl": "https://sheets.googleapis.com/",
   "schemas": {
     "AddBandingRequest": {
@@ -1149,19 +1150,19 @@
         },
         "footerColor": {
           "$ref": "Color",
-          "description": "The color of the last row or column. If this field is not set, the last\nrow or column will be filled with either first_band_color or\nsecond_band_color, depending on the color of the previous row or\ncolumn."
+          "description": "The color of the last row or column. If this field is not set, the last\nrow or column is filled with either first_band_color or\nsecond_band_color, depending on the color of the previous row or\ncolumn."
         },
         "footerColorStyle": {
           "$ref": "ColorStyle",
-          "description": "The color of the last row or column. If this field is not set, the last\nrow or column will be filled with either first_band_color or\nsecond_band_color, depending on the color of the previous row or\ncolumn.\nIf footer_color is also set, this field takes precedence."
+          "description": "The color of the last row or column. If this field is not set, the last\nrow or column is filled with either first_band_color or\nsecond_band_color, depending on the color of the previous row or\ncolumn.\nIf footer_color is also set, this field takes precedence."
         },
         "headerColor": {
           "$ref": "Color",
-          "description": "The color of the first row or column. If this field is set, the first\nrow or column will be filled with this color and the colors will\nalternate between first_band_color and second_band_color starting\nfrom the second row or column. Otherwise, the first row or column will be\nfilled with first_band_color and the colors will proceed to alternate\nas they normally would."
+          "description": "The color of the first row or column. If this field is set, the first row\nor column is filled with this color and the colors alternate between\nfirst_band_color and second_band_color starting from the second\nrow or column. Otherwise, the first row or column is filled with\nfirst_band_color and the colors proceed to alternate as they normally\nwould."
         },
         "headerColorStyle": {
           "$ref": "ColorStyle",
-          "description": "The color of the first row or column. If this field is set, the first\nrow or column will be filled with this color and the colors will\nalternate between first_band_color and second_band_color starting\nfrom the second row or column. Otherwise, the first row or column will be\nfilled with first_band_color and the colors will proceed to alternate\nas they normally would.\nIf header_color is also set, this field takes precedence."
+          "description": "The color of the first row or column. If this field is set, the first row\nor column is filled with this color and the colors alternate between\nfirst_band_color and second_band_color starting from the second\nrow or column. Otherwise, the first row or column is filled with\nfirst_band_color and the colors proceed to alternate as they normally\nwould. If header_color is also set, this field takes precedence."
         },
         "secondBandColor": {
           "$ref": "Color",
@@ -3579,19 +3580,19 @@
         },
         "visibleBackgroundColor": {
           "$ref": "Color",
-          "description": "The background fill color to filter by; only cells with this fill color are\nshown. Mutually exclusive with all other filter criteria. Requests to set\nthis field will fail with a 400 error if any other filter criteria field is\nset."
+          "description": "The background fill color to filter by; only cells with this fill color are\nshown. Mutually exclusive with all other filter criteria. Requests to set\nthis field fail with a 400 error if any other filter criteria field is set."
         },
         "visibleBackgroundColorStyle": {
           "$ref": "ColorStyle",
-          "description": "The background fill color to filter by; only cells with this fill color are\nshown. Mutually exclusive with all other filter criteria. Requests to set\nthis field will fail with a 400 error if any other filter criteria field is\nset.\nIf visible_background_color is also set, this field takes precedence."
+          "description": "The background fill color to filter by; only cells with this fill color are\nshown. Mutually exclusive with all other filter criteria. Requests to set\nthis field fail with a 400 error if any other filter criteria field is set.\nIf visible_background_color is also set, this field takes precedence."
         },
         "visibleForegroundColor": {
           "$ref": "Color",
-          "description": "The text color to filter by; only cells with this text color are shown.\nMutually exclusive with all other filter criteria. Requests to set this\nfield will fail with a 400 error if any other filter criteria field is set."
+          "description": "The text color to filter by; only cells with this text color are shown.\nMutually exclusive with all other filter criteria. Requests to set this\nfield fail with a 400 error if any other filter criteria field is set."
         },
         "visibleForegroundColorStyle": {
           "$ref": "ColorStyle",
-          "description": "The text color to filter by; only cells with this text color are shown.\nMutually exclusive with all other filter criteria. Requests to set this\nfield will fail with a 400 error if any other filter criteria field is set.\nIf visible_foreground_color is also set, this field takes precedence."
+          "description": "The text color to filter by; only cells with this text color are shown.\nMutually exclusive with all other filter criteria. Requests to set this\nfield fail with a 400 error if any other filter criteria field is set.\nIf visible_foreground_color is also set, this field takes precedence."
         }
       },
       "type": "object"
@@ -5519,11 +5520,11 @@
       "properties": {
         "backgroundColor": {
           "$ref": "Color",
-          "description": "The background fill color to sort by. Mutually exclusive with sorting by\ntext color. Requests to set this field will fail with a 400 error if\nforeground color is also set."
+          "description": "The background fill color to sort by. Mutually exclusive with sorting by\ntext color. Requests to set this field fail with a 400 error if foreground\ncolor is also set."
         },
         "backgroundColorStyle": {
           "$ref": "ColorStyle",
-          "description": "The background fill color to sort by. Mutually exclusive with sorting by\ntext color. Requests to set this field will fail with a 400 error if\nforeground color is also set.\nIf background_color is also set, this field takes precedence."
+          "description": "The background fill color to sort by. Mutually exclusive with sorting by\ntext color. Requests to set this field fail with a 400 error if foreground\ncolor is also set.\nIf background_color is also set, this field takes precedence."
         },
         "dimensionIndex": {
           "description": "The dimension the sort should be applied to.",
@@ -5532,11 +5533,11 @@
         },
         "foregroundColor": {
           "$ref": "Color",
-          "description": "The text color to sort by. Mutually exclusive with sorting by background\nfill color. Requests to set this field will fail with a 400 error if\nbackground color is also set."
+          "description": "The text color to sort by. Mutually exclusive with sorting by background\nfill color. Requests to set this field fail with a 400 error if background\ncolor is also set."
         },
         "foregroundColorStyle": {
           "$ref": "ColorStyle",
-          "description": "The text color to sort by. Mutually exclusive with sorting by background\nfill color. Requests to set this field will fail with a 400 error if\nbackground color is also set.\nIf foreground_color is also set, this field takes precedence."
+          "description": "The text color to sort by. Mutually exclusive with sorting by background\nfill color. Requests to set this field fail with a 400 error if background\ncolor is also set.\nIf foreground_color is also set, this field takes precedence."
         },
         "sortOrder": {
           "description": "The order data should be sorted.",

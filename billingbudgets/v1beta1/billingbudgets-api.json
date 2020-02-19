@@ -22,6 +22,7 @@
   },
   "id": "billingbudgets:v1beta1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://billingbudgets.mtls.googleapis.com/",
   "name": "billingbudgets",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -255,7 +256,7 @@
       }
     }
   },
-  "revision": "20191118",
+  "revision": "20200215",
   "rootUrl": "https://billingbudgets.googleapis.com/",
   "schemas": {
     "GoogleCloudBillingBudgetsV1beta1AllUpdatesRule": {

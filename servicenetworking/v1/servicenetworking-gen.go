@@ -209,6 +209,14 @@ type AddSubnetworkRequest struct {
 	// pool of available ranges in the service consumer's allocated range.
 	IpPrefixLength int64 `json:"ipPrefixLength,omitempty"`
 
+	// PrivateIpv6GoogleAccess: Optional. The private IPv6 google access
+	// type for the VMs in this subnet.
+	// For information about the access types that can be set using this
+	// field,
+	// see [subnetwork](/compute/docs/reference/rest/v1/subnetworks)
+	// in the Compute API documentation.
+	PrivateIpv6GoogleAccess string `json:"privateIpv6GoogleAccess,omitempty"`
+
 	// Region: Required. The name of a
 	// [region](/compute/docs/regions-zones)
 	// for the subnet, such `europe-west1`.
@@ -655,6 +663,27 @@ func (s *Backend) MarshalJSON() ([]byte, error) {
 // API element.
 type BackendRule struct {
 	// Address: The address of the API backend.
+	//
+	// The scheme is used to determine the backend protocol and
+	// security.
+	// The following schemes are accepted:
+	//
+	//    SCHEME        PROTOCOL    SECURITY
+	//    http://       HTTP        None
+	//    https://      HTTP        TLS
+	//    grpc://       gRPC        None
+	//    grpcs://      gRPC        TLS
+	//
+	// It is recommended to explicitly include a scheme. Leaving out the
+	// scheme
+	// may cause constrasting behaviors across platforms.
+	//
+	// If the port is unspecified, the default is:
+	// - 80 for schemes without TLS
+	// - 443 for schemes with TLS
+	//
+	// For HTTP backends, use protocol
+	// to specify the protocol version.
 	Address string `json:"address,omitempty"`
 
 	// Deadline: The number of seconds to wait for a response from a
@@ -662,14 +691,8 @@ type BackendRule struct {
 	// varies based on the request protocol and deployment environment.
 	Deadline float64 `json:"deadline,omitempty"`
 
-	// DisableAuth: When disable_auth is false,  a JWT ID token will be
-	// generated with the
-	// value from BackendRule.address as jwt_audience, overrode to the
-	// HTTP
-	// "Authorization" request header and sent to the backend.
-	//
-	// When disable_auth is true, a JWT ID token won't be generated and
-	// the
+	// DisableAuth: When disable_auth is true, a JWT ID token won't be
+	// generated and the
 	// original "Authorization" HTTP header will be preserved. If the header
 	// is
 	// used to carry the original token and is expected by the backend,
@@ -751,6 +774,33 @@ type BackendRule struct {
 	//
 	// https://example.appspot.com/api/company/widgetworks/user/johndoe?timezone=EST
 	PathTranslation string `json:"pathTranslation,omitempty"`
+
+	// Protocol: The protocol used for sending a request to the backend.
+	// The supported values are "http/1.1" and "h2".
+	//
+	// The default value is inferred from the scheme in the
+	// address field:
+	//
+	//    SCHEME        PROTOCOL
+	//    http://       http/1.1
+	//    https://      http/1.1
+	//    grpc://       h2
+	//    grpcs://      h2
+	//
+	// For secure HTTP backends (https://) that support HTTP/2, set this
+	// field
+	// to "h2" for improved performance.
+	//
+	// Configuring this field to non-default values is only supported for
+	// secure
+	// HTTP backends. This field will be ignored for all other
+	// backends.
+	//
+	// See
+	// https://www.iana.org/assignments/tls-extensiontype-valu
+	// es/tls-extensiontype-values.xhtml#alpn-protocol-ids
+	// for more details on the supported values.
+	Protocol string `json:"protocol,omitempty"`
 
 	// Selector: Selects the methods to which this rule applies.
 	//
@@ -3999,6 +4049,17 @@ type RangeReservation struct {
 	// size.
 	IpPrefixLength int64 `json:"ipPrefixLength,omitempty"`
 
+	// SecondaryRangeIpPrefixLengths: Optional. DO NOT USE - Under
+	// development.
+	// The size of the desired secondary ranges for the subnet. Use usual
+	// CIDR
+	// range notation. For example, '30' to find unused x.x.x.x/30 CIDR
+	// range. The
+	// goal is to determine that the allocated ranges have enough free space
+	// for
+	// all the requested secondary ranges.
+	SecondaryRangeIpPrefixLengths []int64 `json:"secondaryRangeIpPrefixLengths,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "IpPrefixLength") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -4997,7 +5058,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5072,7 +5133,7 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//     "name": {
 	//       "description": "The name of the operation resource to be cancelled.",
 	//       "location": "path",
-	//       "pattern": "^operations/.+$",
+	//       "pattern": "^operations/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -5142,7 +5203,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5212,7 +5273,7 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//     "name": {
 	//       "description": "The name of the operation resource to be deleted.",
 	//       "location": "path",
-	//       "pattern": "^operations/.+$",
+	//       "pattern": "^operations/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -5288,7 +5349,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5470,7 +5531,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5659,7 +5720,7 @@ func (c *ServicesAddSubnetworkCall) Header() http.Header {
 
 func (c *ServicesAddSubnetworkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5801,7 +5862,7 @@ func (c *ServicesDisableVpcServiceControlsCall) Header() http.Header {
 
 func (c *ServicesDisableVpcServiceControlsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5943,7 +6004,7 @@ func (c *ServicesEnableVpcServiceControlsCall) Header() http.Header {
 
 func (c *ServicesEnableVpcServiceControlsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6095,7 +6156,7 @@ func (c *ServicesSearchRangeCall) Header() http.Header {
 
 func (c *ServicesSearchRangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6243,7 +6304,7 @@ func (c *ServicesValidateCall) Header() http.Header {
 
 func (c *ServicesValidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6400,7 +6461,7 @@ func (c *ServicesConnectionsCreateCall) Header() http.Header {
 
 func (c *ServicesConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6569,7 +6630,7 @@ func (c *ServicesConnectionsListCall) Header() http.Header {
 
 func (c *ServicesConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6730,7 +6791,7 @@ func (c *ServicesConnectionsPatchCall) Header() http.Header {
 
 func (c *ServicesConnectionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

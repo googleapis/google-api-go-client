@@ -190,6 +190,7 @@ type ProjectsLocationsService struct {
 func NewProjectsLocationsEntryGroupsService(s *Service) *ProjectsLocationsEntryGroupsService {
 	rs := &ProjectsLocationsEntryGroupsService{s: s}
 	rs.Entries = NewProjectsLocationsEntryGroupsEntriesService(s)
+	rs.Tags = NewProjectsLocationsEntryGroupsTagsService(s)
 	return rs
 }
 
@@ -197,6 +198,8 @@ type ProjectsLocationsEntryGroupsService struct {
 	s *Service
 
 	Entries *ProjectsLocationsEntryGroupsEntriesService
+
+	Tags *ProjectsLocationsEntryGroupsTagsService
 }
 
 func NewProjectsLocationsEntryGroupsEntriesService(s *Service) *ProjectsLocationsEntryGroupsEntriesService {
@@ -217,6 +220,15 @@ func NewProjectsLocationsEntryGroupsEntriesTagsService(s *Service) *ProjectsLoca
 }
 
 type ProjectsLocationsEntryGroupsEntriesTagsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsEntryGroupsTagsService(s *Service) *ProjectsLocationsEntryGroupsTagsService {
+	rs := &ProjectsLocationsEntryGroupsTagsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsEntryGroupsTagsService struct {
 	s *Service
 }
 
@@ -684,11 +696,13 @@ func (s *GoogleCloudDatacatalogV1beta1ColumnSchema) MarshalJSON() ([]byte, error
 // GoogleCloudDatacatalogV1beta1Entry: Entry Metadata.
 // A Data Catalog Entry resource represents another resource in
 // Google
-// Cloud Platform, such as a BigQuery dataset or a Cloud Pub/Sub
-// topic.
-// Clients can use the `linked_resource` field in the Entry resource to
-// refer to
-// the original resource ID of the source system.
+// Cloud Platform (such as a BigQuery dataset or a Cloud Pub/Sub topic),
+// or
+// outside of Google Cloud Platform. Clients can use the
+// `linked_resource` field
+// in the Entry resource to refer to the original resource ID of the
+// source
+// system.
 //
 // An Entry resource contains resource details, such as its schema. An
 // Entry can
@@ -2718,7 +2732,7 @@ func (c *CatalogSearchCall) Header() http.Header {
 
 func (c *CatalogSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2920,7 +2934,7 @@ func (c *EntriesLookupCall) Header() http.Header {
 
 func (c *EntriesLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3019,18 +3033,15 @@ type ProjectsLocationsEntryGroupsCreateCall struct {
 	header_                                 http.Header
 }
 
-// Create: Creates an EntryGroup.
+// Create: A maximum of 10,000 entry groups may be created per
+// organization across all
+// locations.
 //
-// The user should enable the Data Catalog API in the project identified
+// Users should enable the Data Catalog API in the project identified
 // by
 // the `parent` parameter (see [Data Catalog Resource
 // Project]
-// (/data-catalog/docs/concepts/resource-project) for more
-// information).
-//
-// A maximum of 10,000 entry groups may be created per organization
-// across all
-// locations.
+// (/data-catalog/docs/concepts/resource-project) for more information).
 func (r *ProjectsLocationsEntryGroupsService) Create(parent string, googleclouddatacatalogv1beta1entrygroup *GoogleCloudDatacatalogV1beta1EntryGroup) *ProjectsLocationsEntryGroupsCreateCall {
 	c := &ProjectsLocationsEntryGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3075,7 +3086,7 @@ func (c *ProjectsLocationsEntryGroupsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3140,7 +3151,7 @@ func (c *ProjectsLocationsEntryGroupsCreateCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an EntryGroup.\n\nThe user should enable the Data Catalog API in the project identified by\nthe `parent` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).\n\nA maximum of 10,000 entry groups may be created per organization across all\nlocations.",
+	//   "description": "A maximum of 10,000 entry groups may be created per organization across all\nlocations.\n\nUsers should enable the Data Catalog API in the project identified by\nthe `parent` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.entryGroups.create",
@@ -3187,7 +3198,7 @@ type ProjectsLocationsEntryGroupsDeleteCall struct {
 
 // Delete: Deletes an EntryGroup. Only entry groups that do not contain
 // entries can be
-// deleted. The user should enable the Data Catalog API in the
+// deleted. Users should enable the Data Catalog API in the
 // project
 // identified by the `name` parameter (see [Data Catalog Resource
 // Project]
@@ -3232,7 +3243,7 @@ func (c *ProjectsLocationsEntryGroupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3291,7 +3302,7 @@ func (c *ProjectsLocationsEntryGroupsDeleteCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an EntryGroup. Only entry groups that do not contain entries can be\ndeleted. The user should enable the Data Catalog API in the project\nidentified by the `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+	//   "description": "Deletes an EntryGroup. Only entry groups that do not contain entries can be\ndeleted. Users should enable the Data Catalog API in the project\nidentified by the `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "datacatalog.projects.locations.entryGroups.delete",
@@ -3385,7 +3396,7 @@ func (c *ProjectsLocationsEntryGroupsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3549,7 +3560,7 @@ func (c *ProjectsLocationsEntryGroupsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3715,7 +3726,7 @@ func (c *ProjectsLocationsEntryGroupsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3898,7 +3909,7 @@ func (c *ProjectsLocationsEntryGroupsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4063,7 +4074,7 @@ func (c *ProjectsLocationsEntryGroupsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4221,7 +4232,7 @@ func (c *ProjectsLocationsEntryGroupsTestIamPermissionsCall) Header() http.Heade
 
 func (c *ProjectsLocationsEntryGroupsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4330,7 +4341,7 @@ type ProjectsLocationsEntryGroupsEntriesCreateCall struct {
 // user-specified type can
 // be created.
 //
-// The user should enable the Data Catalog API in the project identified
+// Users should enable the Data Catalog API in the project identified
 // by
 // the `parent` parameter (see [Data Catalog Resource
 // Project]
@@ -4379,7 +4390,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsEntriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4444,7 +4455,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesCreateCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an entry. Only entries of 'FILESET' type or user-specified type can\nbe created.\n\nThe user should enable the Data Catalog API in the project identified by\nthe `parent` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).\n\nA maximum of 100,000 entries may be created per entry group.",
+	//   "description": "Creates an entry. Only entries of 'FILESET' type or user-specified type can\nbe created.\n\nUsers should enable the Data Catalog API in the project identified by\nthe `parent` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).\n\nA maximum of 100,000 entries may be created per entry group.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.entryGroups.entries.create",
@@ -4493,7 +4504,7 @@ type ProjectsLocationsEntryGroupsEntriesDeleteCall struct {
 // through
 // CreateEntry
 // method can be deleted.
-// The user should enable the Data Catalog API in the project identified
+// Users should enable the Data Catalog API in the project identified
 // by
 // the `name` parameter (see [Data Catalog Resource
 // Project]
@@ -4531,7 +4542,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsEntriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4590,7 +4601,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesDeleteCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an existing entry. Only entries created through\nCreateEntry\nmethod can be deleted.\nThe user should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+	//   "description": "Deletes an existing entry. Only entries created through\nCreateEntry\nmethod can be deleted.\nUsers should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "datacatalog.projects.locations.entryGroups.entries.delete",
@@ -4672,7 +4683,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsEntriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4744,7 +4755,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesGetCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entry. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}\n\nEntry groups are logical groupings of entries. Currently, users cannot\ncreate/modify entry groups. They are created by Data Catalog; they include\n`@bigquery` for all BigQuery entries, and `@pubsub` for all Cloud Pub/Sub\nentries.",
+	//       "description": "Required. The name of the entry. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
 	//       "required": true,
@@ -4830,7 +4841,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5007,7 +5018,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsEntriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5148,7 +5159,7 @@ type ProjectsLocationsEntryGroupsEntriesPatchCall struct {
 }
 
 // Patch: Updates an existing entry.
-// The user should enable the Data Catalog API in the project identified
+// Users should enable the Data Catalog API in the project identified
 // by
 // the `entry.name` parameter (see [Data Catalog Resource
 // Project]
@@ -5173,6 +5184,14 @@ func (r *ProjectsLocationsEntryGroupsEntriesService) Patch(name string, googlecl
 //    * `description`
 //    * `gcs_fileset_spec`
 //    * `gcs_fileset_spec.file_patterns`
+// * For entries with `user_specified_type`
+//    * `schema`
+//    * `display_name`
+//    * `description`
+//    * user_specified_type
+//    * user_specified_system
+//    * linked_resource
+//    * source_system_timestamps
 func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsEntryGroupsEntriesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5205,7 +5224,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5270,7 +5289,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing entry.\nThe user should enable the Data Catalog API in the project identified by\nthe `entry.name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+	//   "description": "Updates an existing entry.\nUsers should enable the Data Catalog API in the project identified by\nthe `entry.name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "datacatalog.projects.locations.entryGroups.entries.patch",
@@ -5286,7 +5305,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The fields to update on the entry. If absent or empty, all modifiable\nfields are updated.\n\nThe following fields are modifiable:\n* For entries with type `DATA_STREAM`:\n   * `schema`\n* For entries with type `FILESET`\n   * `schema`\n   * `display_name`\n   * `description`\n   * `gcs_fileset_spec`\n   * `gcs_fileset_spec.file_patterns`",
+	//       "description": "The fields to update on the entry. If absent or empty, all modifiable\nfields are updated.\n\nThe following fields are modifiable:\n* For entries with type `DATA_STREAM`:\n   * `schema`\n* For entries with type `FILESET`\n   * `schema`\n   * `display_name`\n   * `description`\n   * `gcs_fileset_spec`\n   * `gcs_fileset_spec.file_patterns`\n* For entries with `user_specified_type`\n   * `schema`\n   * `display_name`\n   * `description`\n   * user_specified_type\n   * user_specified_system\n   * linked_resource\n   * source_system_timestamps",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -5370,7 +5389,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall) Header() htt
 
 func (c *ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5520,7 +5539,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsCreateCall) Header() http.Header
 
 func (c *ProjectsLocationsEntryGroupsEntriesTagsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5658,7 +5677,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsDeleteCall) Header() http.Header
 
 func (c *ProjectsLocationsEntryGroupsEntriesTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5815,7 +5834,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsEntriesTagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5899,7 +5918,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsListCall) Do(opts ...googleapi.C
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the Data Catalog resource to list the tags of. The\nresource could be an Entry.",
+	//       "description": "Required. The name of the Data Catalog resource to list the tags of. The resource\ncould be an Entry or an\nEntryGroup.\n\nExamples:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
 	//       "required": true,
@@ -5993,7 +6012,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsPatchCall) Header() http.Header 
 
 func (c *ProjectsLocationsEntryGroupsEntriesTagsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6093,6 +6112,635 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsPatchCall) Do(opts ...googleapi.
 
 }
 
+// method id "datacatalog.projects.locations.entryGroups.tags.create":
+
+type ProjectsLocationsEntryGroupsTagsCreateCall struct {
+	s                                *Service
+	parent                           string
+	googleclouddatacatalogv1beta1tag *GoogleCloudDatacatalogV1beta1Tag
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Create: Creates a tag on an Entry.
+// Note: The project identified by the `parent` parameter for
+// the
+// [tag](/data-catalog/docs/reference/rest/v1beta1/projects.locations
+// .entryGroups.entries.tags/create#path-parameters)
+// and
+// the
+// [tag
+// template](/data-catalog/docs/reference/rest/v1beta1/projects.
+// locations.tagTemplates/create#path-parameters)
+// used to create the tag must be from the same organization.
+func (r *ProjectsLocationsEntryGroupsTagsService) Create(parent string, googleclouddatacatalogv1beta1tag *GoogleCloudDatacatalogV1beta1Tag) *ProjectsLocationsEntryGroupsTagsCreateCall {
+	c := &ProjectsLocationsEntryGroupsTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddatacatalogv1beta1tag = googleclouddatacatalogv1beta1tag
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEntryGroupsTagsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsEntryGroupsTagsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEntryGroupsTagsCreateCall) Context(ctx context.Context) *ProjectsLocationsEntryGroupsTagsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEntryGroupsTagsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEntryGroupsTagsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatacatalogv1beta1tag)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/tags")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datacatalog.projects.locations.entryGroups.tags.create" call.
+// Exactly one of *GoogleCloudDatacatalogV1beta1Tag or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudDatacatalogV1beta1Tag.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEntryGroupsTagsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogV1beta1Tag, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDatacatalogV1beta1Tag{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a tag on an Entry.\nNote: The project identified by the `parent` parameter for the\n[tag](/data-catalog/docs/reference/rest/v1beta1/projects.locations.entryGroups.entries.tags/create#path-parameters)\nand the\n[tag\ntemplate](/data-catalog/docs/reference/rest/v1beta1/projects.locations.tagTemplates/create#path-parameters)\nused to create the tag must be from the same organization.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/tags",
+	//   "httpMethod": "POST",
+	//   "id": "datacatalog.projects.locations.entryGroups.tags.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the resource to attach this tag to. Tags can be attached to\nEntries. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}\n\nNote that this Tag and its child resources may not actually be stored in\nthe location in this name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/tags",
+	//   "request": {
+	//     "$ref": "GoogleCloudDatacatalogV1beta1Tag"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDatacatalogV1beta1Tag"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datacatalog.projects.locations.entryGroups.tags.delete":
+
+type ProjectsLocationsEntryGroupsTagsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a tag.
+func (r *ProjectsLocationsEntryGroupsTagsService) Delete(name string) *ProjectsLocationsEntryGroupsTagsDeleteCall {
+	c := &ProjectsLocationsEntryGroupsTagsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEntryGroupsTagsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsEntryGroupsTagsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEntryGroupsTagsDeleteCall) Context(ctx context.Context) *ProjectsLocationsEntryGroupsTagsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEntryGroupsTagsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEntryGroupsTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datacatalog.projects.locations.entryGroups.tags.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsEntryGroupsTagsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a tag.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/tags/{tagsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "datacatalog.projects.locations.entryGroups.tags.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the tag to delete. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/tags/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datacatalog.projects.locations.entryGroups.tags.list":
+
+type ProjectsLocationsEntryGroupsTagsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the tags on an Entry.
+func (r *ProjectsLocationsEntryGroupsTagsService) List(parent string) *ProjectsLocationsEntryGroupsTagsListCall {
+	c := &ProjectsLocationsEntryGroupsTagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of tags to return. Default is 10. Max limit is 1000.
+func (c *ProjectsLocationsEntryGroupsTagsListCall) PageSize(pageSize int64) *ProjectsLocationsEntryGroupsTagsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token that
+// specifies which page is requested. If empty, the first page
+// is
+// returned.
+func (c *ProjectsLocationsEntryGroupsTagsListCall) PageToken(pageToken string) *ProjectsLocationsEntryGroupsTagsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEntryGroupsTagsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsEntryGroupsTagsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsEntryGroupsTagsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsEntryGroupsTagsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEntryGroupsTagsListCall) Context(ctx context.Context) *ProjectsLocationsEntryGroupsTagsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEntryGroupsTagsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEntryGroupsTagsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/tags")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datacatalog.projects.locations.entryGroups.tags.list" call.
+// Exactly one of *GoogleCloudDatacatalogV1beta1ListTagsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDatacatalogV1beta1ListTagsResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsEntryGroupsTagsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogV1beta1ListTagsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDatacatalogV1beta1ListTagsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the tags on an Entry.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/tags",
+	//   "httpMethod": "GET",
+	//   "id": "datacatalog.projects.locations.entryGroups.tags.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of tags to return. Default is 10. Max limit is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token that specifies which page is requested. If empty, the first page is\nreturned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the Data Catalog resource to list the tags of. The resource\ncould be an Entry or an\nEntryGroup.\n\nExamples:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/tags",
+	//   "response": {
+	//     "$ref": "GoogleCloudDatacatalogV1beta1ListTagsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsEntryGroupsTagsListCall) Pages(ctx context.Context, f func(*GoogleCloudDatacatalogV1beta1ListTagsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "datacatalog.projects.locations.entryGroups.tags.patch":
+
+type ProjectsLocationsEntryGroupsTagsPatchCall struct {
+	s                                *Service
+	nameid                           string
+	googleclouddatacatalogv1beta1tag *GoogleCloudDatacatalogV1beta1Tag
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Patch: Updates an existing tag.
+func (r *ProjectsLocationsEntryGroupsTagsService) Patch(nameid string, googleclouddatacatalogv1beta1tag *GoogleCloudDatacatalogV1beta1Tag) *ProjectsLocationsEntryGroupsTagsPatchCall {
+	c := &ProjectsLocationsEntryGroupsTagsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.googleclouddatacatalogv1beta1tag = googleclouddatacatalogv1beta1tag
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The fields to
+// update on the Tag. If absent or empty, all modifiable fields
+// are updated. Currently the only modifiable field is the field
+// `fields`.
+func (c *ProjectsLocationsEntryGroupsTagsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsEntryGroupsTagsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEntryGroupsTagsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsEntryGroupsTagsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEntryGroupsTagsPatchCall) Context(ctx context.Context) *ProjectsLocationsEntryGroupsTagsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEntryGroupsTagsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEntryGroupsTagsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatacatalogv1beta1tag)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datacatalog.projects.locations.entryGroups.tags.patch" call.
+// Exactly one of *GoogleCloudDatacatalogV1beta1Tag or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudDatacatalogV1beta1Tag.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEntryGroupsTagsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogV1beta1Tag, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDatacatalogV1beta1Tag{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing tag.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/tags/{tagsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "datacatalog.projects.locations.entryGroups.tags.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the tag in URL format. Example:\n\n* projects/{project_id}/locations/{location}/entrygroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id}\n\nwhere `tag_id` is a system-generated identifier.\nNote that this Tag may not actually be stored in the location in this name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/tags/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The fields to update on the Tag. If absent or empty, all modifiable fields\nare updated. Currently the only modifiable field is the field `fields`.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudDatacatalogV1beta1Tag"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDatacatalogV1beta1Tag"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "datacatalog.projects.locations.tagTemplates.create":
 
 type ProjectsLocationsTagTemplatesCreateCall struct {
@@ -6152,7 +6800,7 @@ func (c *ProjectsLocationsTagTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6264,7 +6912,7 @@ type ProjectsLocationsTagTemplatesDeleteCall struct {
 }
 
 // Delete: Deletes a tag template and all tags using the template.
-// The user should enable the Data Catalog API in the project identified
+// Users should enable the Data Catalog API in the project identified
 // by
 // the `name` parameter (see [Data Catalog Resource
 // Project]
@@ -6312,7 +6960,7 @@ func (c *ProjectsLocationsTagTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6371,7 +7019,7 @@ func (c *ProjectsLocationsTagTemplatesDeleteCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a tag template and all tags using the template.\nThe user should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+	//   "description": "Deletes a tag template and all tags using the template.\nUsers should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "datacatalog.projects.locations.tagTemplates.delete",
@@ -6458,7 +7106,7 @@ func (c *ProjectsLocationsTagTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6617,7 +7265,7 @@ func (c *ProjectsLocationsTagTemplatesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6728,7 +7376,7 @@ type ProjectsLocationsTagTemplatesPatchCall struct {
 // resources
 // and should be updated using their own create/update/delete
 // methods.
-// The user should enable the Data Catalog API in the project identified
+// Users should enable the Data Catalog API in the project identified
 // by
 // the `tag_template.name` parameter (see [Data Catalog Resource
 // Project]
@@ -6780,7 +7428,7 @@ func (c *ProjectsLocationsTagTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6846,7 +7494,7 @@ func (c *ProjectsLocationsTagTemplatesPatchCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a tag template. This method cannot be used to update the fields of\na template. The tag template fields are represented as separate resources\nand should be updated using their own create/update/delete methods.\nThe user should enable the Data Catalog API in the project identified by\nthe `tag_template.name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+	//   "description": "Updates a tag template. This method cannot be used to update the fields of\na template. The tag template fields are represented as separate resources\nand should be updated using their own create/update/delete methods.\nUsers should enable the Data Catalog API in the project identified by\nthe `tag_template.name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "datacatalog.projects.locations.tagTemplates.patch",
@@ -6946,7 +7594,7 @@ func (c *ProjectsLocationsTagTemplatesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7104,7 +7752,7 @@ func (c *ProjectsLocationsTagTemplatesTestIamPermissionsCall) Header() http.Head
 
 func (c *ProjectsLocationsTagTemplatesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7265,7 +7913,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesFieldsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7378,7 +8026,7 @@ type ProjectsLocationsTagTemplatesFieldsDeleteCall struct {
 
 // Delete: Deletes a field in a tag template and all uses of that
 // field.
-// The user should enable the Data Catalog API in the project identified
+// Users should enable the Data Catalog API in the project identified
 // by
 // the `name` parameter (see [Data Catalog Resource
 // Project]
@@ -7426,7 +8074,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesFieldsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7485,7 +8133,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsDeleteCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a field in a tag template and all uses of that field.\nThe user should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+	//   "description": "Deletes a field in a tag template and all uses of that field.\nUsers should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}/fields/{fieldsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "datacatalog.projects.locations.tagTemplates.fields.delete",
@@ -7530,7 +8178,7 @@ type ProjectsLocationsTagTemplatesFieldsPatchCall struct {
 
 // Patch: Updates a field in a tag template. This method cannot be used
 // to update the
-// field type. The user should enable the Data Catalog API in the
+// field type. Users should enable the Data Catalog API in the
 // project
 // identified by the `name` parameter (see [Data Catalog Resource
 // Project]
@@ -7593,7 +8241,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesFieldsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7659,7 +8307,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsPatchCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a field in a tag template. This method cannot be used to update the\nfield type. The user should enable the Data Catalog API in the project\nidentified by the `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+	//   "description": "Updates a field in a tag template. This method cannot be used to update the\nfield type. Users should enable the Data Catalog API in the project\nidentified by the `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}/fields/{fieldsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "datacatalog.projects.locations.tagTemplates.fields.patch",
@@ -7747,7 +8395,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsRenameCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesFieldsRenameCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7889,7 +8537,7 @@ func (c *ProjectsLocationsTaxonomiesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8030,7 +8678,7 @@ func (c *ProjectsLocationsTaxonomiesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8190,7 +8838,7 @@ func (c *ProjectsLocationsTaxonomiesExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8347,7 +8995,7 @@ func (c *ProjectsLocationsTaxonomiesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8483,7 +9131,7 @@ func (c *ProjectsLocationsTaxonomiesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8629,7 +9277,7 @@ func (c *ProjectsLocationsTaxonomiesImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8799,7 +9447,7 @@ func (c *ProjectsLocationsTaxonomiesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8980,7 +9628,7 @@ func (c *ProjectsLocationsTaxonomiesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9127,7 +9775,7 @@ func (c *ProjectsLocationsTaxonomiesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9269,7 +9917,7 @@ func (c *ProjectsLocationsTaxonomiesTestIamPermissionsCall) Header() http.Header
 
 func (c *ProjectsLocationsTaxonomiesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9409,7 +10057,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9549,7 +10197,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9690,7 +10338,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9826,7 +10474,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsGetIamPolicyCall) Header() http.He
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9992,7 +10640,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10180,7 +10828,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10327,7 +10975,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsSetIamPolicyCall) Header() http.He
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10469,7 +11117,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall) Header() h
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

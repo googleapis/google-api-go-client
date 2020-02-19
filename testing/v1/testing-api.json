@@ -23,6 +23,7 @@
   },
   "id": "testing:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://testing.mtls.googleapis.com/",
   "name": "testing",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -272,7 +273,7 @@
       }
     }
   },
-  "revision": "20191203",
+  "revision": "20200211",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -1510,6 +1511,17 @@
       },
       "type": "object"
     },
+    "SystraceSetup": {
+      "id": "SystraceSetup",
+      "properties": {
+        "durationSeconds": {
+          "description": "Systrace duration in seconds.\nShould be between 1 and 30 seconds. 0 disables systrace.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "TestDetails": {
       "description": "Additional details about the progress of the running test.",
       "id": "TestDetails",
@@ -1838,6 +1850,10 @@
         "networkProfile": {
           "description": "The network traffic profile used for running the test.\nAvailable network profiles can be queried by using the\nNETWORK_CONFIGURATION environment type when calling\nTestEnvironmentDiscoveryService.GetTestEnvironmentCatalog.",
           "type": "string"
+        },
+        "systrace": {
+          "$ref": "SystraceSetup",
+          "description": "Systrace configuration for the run.\nIf set a systrace will be taken, starting on test start and lasting for the\nconfigured duration. The systrace file thus obtained is put in the results\nbucket together with the other artifacts from the run."
         }
       },
       "type": "object"

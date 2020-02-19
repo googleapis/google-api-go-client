@@ -164,7 +164,7 @@
             "entryGroups": {
               "methods": {
                 "create": {
-                  "description": "Creates an EntryGroup.\n\nThe user should enable the Data Catalog API in the project identified by\nthe `parent` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).\n\nA maximum of 10,000 entry groups may be created per organization across all\nlocations.",
+                  "description": "A maximum of 10,000 entry groups may be created per organization across all\nlocations.\n\nUsers should enable the Data Catalog API in the project identified by\nthe `parent` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups",
                   "httpMethod": "POST",
                   "id": "datacatalog.projects.locations.entryGroups.create",
@@ -197,7 +197,7 @@
                   ]
                 },
                 "delete": {
-                  "description": "Deletes an EntryGroup. Only entry groups that do not contain entries can be\ndeleted. The user should enable the Data Catalog API in the project\nidentified by the `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+                  "description": "Deletes an EntryGroup. Only entry groups that do not contain entries can be\ndeleted. Users should enable the Data Catalog API in the project\nidentified by the `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}",
                   "httpMethod": "DELETE",
                   "id": "datacatalog.projects.locations.entryGroups.delete",
@@ -416,7 +416,7 @@
                 "entries": {
                   "methods": {
                     "create": {
-                      "description": "Creates an entry. Only entries of 'FILESET' type or user-specified type can\nbe created.\n\nThe user should enable the Data Catalog API in the project identified by\nthe `parent` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).\n\nA maximum of 100,000 entries may be created per entry group.",
+                      "description": "Creates an entry. Only entries of 'FILESET' type or user-specified type can\nbe created.\n\nUsers should enable the Data Catalog API in the project identified by\nthe `parent` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).\n\nA maximum of 100,000 entries may be created per entry group.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries",
                       "httpMethod": "POST",
                       "id": "datacatalog.projects.locations.entryGroups.entries.create",
@@ -449,7 +449,7 @@
                       ]
                     },
                     "delete": {
-                      "description": "Deletes an existing entry. Only entries created through\nCreateEntry\nmethod can be deleted.\nThe user should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+                      "description": "Deletes an existing entry. Only entries created through\nCreateEntry\nmethod can be deleted.\nUsers should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}",
                       "httpMethod": "DELETE",
                       "id": "datacatalog.projects.locations.entryGroups.entries.delete",
@@ -483,7 +483,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The name of the entry. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}\n\nEntry groups are logical groupings of entries. Currently, users cannot\ncreate/modify entry groups. They are created by Data Catalog; they include\n`@bigquery` for all BigQuery entries, and `@pubsub` for all Cloud Pub/Sub\nentries.",
+                          "description": "Required. The name of the entry. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
                           "required": true,
@@ -569,7 +569,7 @@
                       ]
                     },
                     "patch": {
-                      "description": "Updates an existing entry.\nThe user should enable the Data Catalog API in the project identified by\nthe `entry.name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+                      "description": "Updates an existing entry.\nUsers should enable the Data Catalog API in the project identified by\nthe `entry.name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}",
                       "httpMethod": "PATCH",
                       "id": "datacatalog.projects.locations.entryGroups.entries.patch",
@@ -585,7 +585,7 @@
                           "type": "string"
                         },
                         "updateMask": {
-                          "description": "The fields to update on the entry. If absent or empty, all modifiable\nfields are updated.\n\nThe following fields are modifiable:\n* For entries with type `DATA_STREAM`:\n   * `schema`\n* For entries with type `FILESET`\n   * `schema`\n   * `display_name`\n   * `description`\n   * `gcs_fileset_spec`\n   * `gcs_fileset_spec.file_patterns`",
+                          "description": "The fields to update on the entry. If absent or empty, all modifiable\nfields are updated.\n\nThe following fields are modifiable:\n* For entries with type `DATA_STREAM`:\n   * `schema`\n* For entries with type `FILESET`\n   * `schema`\n   * `display_name`\n   * `description`\n   * `gcs_fileset_spec`\n   * `gcs_fileset_spec.file_patterns`\n* For entries with `user_specified_type`\n   * `schema`\n   * `display_name`\n   * `description`\n   * user_specified_type\n   * user_specified_system\n   * linked_resource\n   * source_system_timestamps",
                           "format": "google-fieldmask",
                           "location": "query",
                           "type": "string"
@@ -708,7 +708,7 @@
                               "type": "string"
                             },
                             "parent": {
-                              "description": "Required. The name of the Data Catalog resource to list the tags of. The\nresource could be an Entry.",
+                              "description": "Required. The name of the Data Catalog resource to list the tags of. The resource\ncould be an Entry or an\nEntryGroup.\n\nExamples:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
                               "required": true,
@@ -760,6 +760,133 @@
                       }
                     }
                   }
+                },
+                "tags": {
+                  "methods": {
+                    "create": {
+                      "description": "Creates a tag on an Entry.\nNote: The project identified by the `parent` parameter for the\n[tag](/data-catalog/docs/reference/rest/v1beta1/projects.locations.entryGroups.entries.tags/create#path-parameters)\nand the\n[tag\ntemplate](/data-catalog/docs/reference/rest/v1beta1/projects.locations.tagTemplates/create#path-parameters)\nused to create the tag must be from the same organization.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/tags",
+                      "httpMethod": "POST",
+                      "id": "datacatalog.projects.locations.entryGroups.tags.create",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Required. The name of the resource to attach this tag to. Tags can be attached to\nEntries. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}\n\nNote that this Tag and its child resources may not actually be stored in\nthe location in this name.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+parent}/tags",
+                      "request": {
+                        "$ref": "GoogleCloudDatacatalogV1beta1Tag"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudDatacatalogV1beta1Tag"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "delete": {
+                      "description": "Deletes a tag.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/tags/{tagsId}",
+                      "httpMethod": "DELETE",
+                      "id": "datacatalog.projects.locations.entryGroups.tags.delete",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The name of the tag to delete. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id}",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/tags/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+name}",
+                      "response": {
+                        "$ref": "Empty"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "list": {
+                      "description": "Lists the tags on an Entry.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/tags",
+                      "httpMethod": "GET",
+                      "id": "datacatalog.projects.locations.entryGroups.tags.list",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "pageSize": {
+                          "description": "The maximum number of tags to return. Default is 10. Max limit is 1000.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "Token that specifies which page is requested. If empty, the first page is\nreturned.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. The name of the Data Catalog resource to list the tags of. The resource\ncould be an Entry or an\nEntryGroup.\n\nExamples:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+parent}/tags",
+                      "response": {
+                        "$ref": "GoogleCloudDatacatalogV1beta1ListTagsResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "patch": {
+                      "description": "Updates an existing tag.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/tags/{tagsId}",
+                      "httpMethod": "PATCH",
+                      "id": "datacatalog.projects.locations.entryGroups.tags.patch",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "The resource name of the tag in URL format. Example:\n\n* projects/{project_id}/locations/{location}/entrygroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id}\n\nwhere `tag_id` is a system-generated identifier.\nNote that this Tag may not actually be stored in the location in this name.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/tags/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "updateMask": {
+                          "description": "The fields to update on the Tag. If absent or empty, all modifiable fields\nare updated. Currently the only modifiable field is the field `fields`.",
+                          "format": "google-fieldmask",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+name}",
+                      "request": {
+                        "$ref": "GoogleCloudDatacatalogV1beta1Tag"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudDatacatalogV1beta1Tag"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    }
+                  }
                 }
               }
             },
@@ -799,7 +926,7 @@
                   ]
                 },
                 "delete": {
-                  "description": "Deletes a tag template and all tags using the template.\nThe user should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+                  "description": "Deletes a tag template and all tags using the template.\nUsers should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}",
                   "httpMethod": "DELETE",
                   "id": "datacatalog.projects.locations.tagTemplates.delete",
@@ -882,7 +1009,7 @@
                   ]
                 },
                 "patch": {
-                  "description": "Updates a tag template. This method cannot be used to update the fields of\na template. The tag template fields are represented as separate resources\nand should be updated using their own create/update/delete methods.\nThe user should enable the Data Catalog API in the project identified by\nthe `tag_template.name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+                  "description": "Updates a tag template. This method cannot be used to update the fields of\na template. The tag template fields are represented as separate resources\nand should be updated using their own create/update/delete methods.\nUsers should enable the Data Catalog API in the project identified by\nthe `tag_template.name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}",
                   "httpMethod": "PATCH",
                   "id": "datacatalog.projects.locations.tagTemplates.patch",
@@ -1009,7 +1136,7 @@
                       ]
                     },
                     "delete": {
-                      "description": "Deletes a field in a tag template and all uses of that field.\nThe user should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+                      "description": "Deletes a field in a tag template and all uses of that field.\nUsers should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}/fields/{fieldsId}",
                       "httpMethod": "DELETE",
                       "id": "datacatalog.projects.locations.tagTemplates.fields.delete",
@@ -1039,7 +1166,7 @@
                       ]
                     },
                     "patch": {
-                      "description": "Updates a field in a tag template. This method cannot be used to update the\nfield type. The user should enable the Data Catalog API in the project\nidentified by the `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+                      "description": "Updates a field in a tag template. This method cannot be used to update the\nfield type. Users should enable the Data Catalog API in the project\nidentified by the `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}/fields/{fieldsId}",
                       "httpMethod": "PATCH",
                       "id": "datacatalog.projects.locations.tagTemplates.fields.patch",
@@ -1647,7 +1774,7 @@
       }
     }
   },
-  "revision": "20200206",
+  "revision": "20200211",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -1804,7 +1931,7 @@
       "type": "object"
     },
     "GoogleCloudDatacatalogV1beta1Entry": {
-      "description": "Entry Metadata. \nA Data Catalog Entry resource represents another resource in Google\nCloud Platform, such as a BigQuery dataset or a Cloud Pub/Sub topic.\nClients can use the `linked_resource` field in the Entry resource to refer to\nthe original resource ID of the source system.\n\nAn Entry resource contains resource details, such as its schema. An Entry can\nalso be used to attach flexible metadata, such as a\nTag.",
+      "description": "Entry Metadata. \nA Data Catalog Entry resource represents another resource in Google\nCloud Platform (such as a BigQuery dataset or a Cloud Pub/Sub topic), or\noutside of Google Cloud Platform. Clients can use the `linked_resource` field\nin the Entry resource to refer to the original resource ID of the source\nsystem.\n\nAn Entry resource contains resource details, such as its schema. An Entry can\nalso be used to attach flexible metadata, such as a\nTag.",
       "id": "GoogleCloudDatacatalogV1beta1Entry",
       "properties": {
         "bigqueryDateShardedSpec": {

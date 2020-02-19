@@ -423,7 +423,7 @@
       }
     }
   },
-  "revision": "20200208",
+  "revision": "20200215",
   "rootUrl": "https://alertcenter.googleapis.com/",
   "schemas": {
     "AccountWarning": {
@@ -925,6 +925,56 @@
         "takeoutRequestId": {
           "description": "The takeout request ID.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DriveFile": {
+      "description": "A Drive file",
+      "id": "DriveFile",
+      "properties": {
+        "abuseType": {
+          "description": "Abuse type of the file.",
+          "enum": [
+            "DRIVE_ABUSE_TYPE_UNSPECIFIED",
+            "SUSPECTED_MALWARE"
+          ],
+          "enumDescriptions": [
+            "Not specified abuse type.",
+            "The content is detected as suspected malware."
+          ],
+          "type": "string"
+        },
+        "id": {
+          "description": "The ID of the file.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the file.",
+          "type": "string"
+        },
+        "numRecentDownload": {
+          "description": "The number of recent downloads of the file. This is available for the\nfollowing alert types:\n\n*Drive malware sharing detected",
+          "format": "int64",
+          "type": "string"
+        },
+        "owner": {
+          "description": "The email address of the file owner.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DriveFileWarning": {
+      "description": "Alerts for suspicious Drive files or activities.",
+      "id": "DriveFileWarning",
+      "properties": {
+        "files": {
+          "description": "List of files in the alert.",
+          "items": {
+            "$ref": "DriveFile"
+          },
+          "type": "array"
         }
       },
       "type": "object"

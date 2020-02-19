@@ -2446,6 +2446,35 @@ func (s *StartActivityIntent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type SystraceSetup struct {
+	// DurationSeconds: Systrace duration in seconds.
+	// Should be between 1 and 30 seconds. 0 disables systrace.
+	DurationSeconds int64 `json:"durationSeconds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DurationSeconds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DurationSeconds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SystraceSetup) MarshalJSON() ([]byte, error) {
+	type NoMethod SystraceSetup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TestDetails: Additional details about the progress of the running
 // test.
 type TestDetails struct {
@@ -2931,6 +2960,14 @@ type TestSetup struct {
 	// TestEnvironmentDiscoveryService.GetTestEnvironmentCatalog.
 	NetworkProfile string `json:"networkProfile,omitempty"`
 
+	// Systrace: Systrace configuration for the run.
+	// If set a systrace will be taken, starting on test start and lasting
+	// for the
+	// configured duration. The systrace file thus obtained is put in the
+	// results
+	// bucket together with the other artifacts from the run.
+	Systrace *SystraceSetup `json:"systrace,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Account") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -3338,7 +3375,7 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Header() http.Header {
 
 func (c *ApplicationDetailServiceGetApkDetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3475,7 +3512,7 @@ func (c *ProjectsTestMatricesCancelCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3638,7 +3675,7 @@ func (c *ProjectsTestMatricesCreateCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3799,7 +3836,7 @@ func (c *ProjectsTestMatricesGetCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3964,7 +4001,7 @@ func (c *TestEnvironmentCatalogGetCall) Header() http.Header {
 
 func (c *TestEnvironmentCatalogGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

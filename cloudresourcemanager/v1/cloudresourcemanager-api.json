@@ -315,9 +315,9 @@
           ],
           "parameters": {
             "name": {
-              "description": "The name/identifier of the Lien to delete.",
+              "description": "Required. The name/identifier of the Lien to delete.",
               "location": "path",
-              "pattern": "^liens/.+$",
+              "pattern": "^liens/.*$",
               "required": true,
               "type": "string"
             }
@@ -341,9 +341,9 @@
           ],
           "parameters": {
             "name": {
-              "description": "The name/identifier of the Lien.",
+              "description": "Required. The name/identifier of the Lien.",
               "location": "path",
-              "pattern": "^liens/.+$",
+              "pattern": "^liens/.*$",
               "required": true,
               "type": "string"
             }
@@ -376,7 +376,7 @@
               "type": "string"
             },
             "parent": {
-              "description": "The name of the resource to list all attached Liens.\nFor example, `projects/1234`.",
+              "description": "Required. The name of the resource to list all attached Liens.\nFor example, `projects/1234`.",
               "location": "query",
               "type": "string"
             }
@@ -406,7 +406,7 @@
             "name": {
               "description": "The name of the operation resource.",
               "location": "path",
-              "pattern": "^operations/.+$",
+              "pattern": "^operations/.*$",
               "required": true,
               "type": "string"
             }
@@ -1171,7 +1171,7 @@
       }
     }
   },
-  "revision": "20200205",
+  "revision": "20200212",
   "rootUrl": "https://cloudresourcemanager.googleapis.com/",
   "schemas": {
     "Ancestor": {

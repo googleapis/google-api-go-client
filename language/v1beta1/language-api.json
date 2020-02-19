@@ -25,7 +25,6 @@
   },
   "id": "language:v1beta1",
   "kind": "discovery#restDescription",
-  "mtlsRootUrl": "https://language.mtls.googleapis.com/",
   "name": "language",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -189,7 +188,7 @@
       }
     }
   },
-  "revision": "20200208",
+  "revision": "20200215",
   "rootUrl": "https://language.googleapis.com/",
   "schemas": {
     "AnalyzeEntitiesRequest": {

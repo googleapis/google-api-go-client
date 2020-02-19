@@ -40,6 +40,7 @@
   },
   "id": "slides:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://slides.mtls.googleapis.com/",
   "name": "slides",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -303,7 +304,7 @@
       }
     }
   },
-  "revision": "20190826",
+  "revision": "20200214",
   "rootUrl": "https://slides.googleapis.com/",
   "schemas": {
     "AffineTransform": {

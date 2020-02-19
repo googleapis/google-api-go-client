@@ -25,6 +25,7 @@
   },
   "id": "analyticsreporting:v4",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://analyticsreporting.mtls.googleapis.com/",
   "name": "analyticsreporting",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -154,7 +155,7 @@
       }
     }
   },
-  "revision": "20190904",
+  "revision": "20200215",
   "rootUrl": "https://analyticsreporting.googleapis.com/",
   "schemas": {
     "Activity": {

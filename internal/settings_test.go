@@ -34,7 +34,7 @@ func TestSettingsValidate(t *testing.T) {
 		// cloud clients add WithScopes to user-provided options to make
 		// the check feasible.
 		{NoAuth: true, Scopes: []string{"s"}},
-		{GetClientCertificate: dummyGetClientCertificate},
+		{ClientCertSource: dummyGetClientCertificate},
 	} {
 		err := ds.Validate()
 		if err != nil {
@@ -58,11 +58,11 @@ func TestSettingsValidate(t *testing.T) {
 		{Audiences: []string{"foo"}, Scopes: []string{"foo"}},
 		{HTTPClient: &http.Client{}, QuotaProject: "foo"},
 		{HTTPClient: &http.Client{}, RequestReason: "foo"},
-		{HTTPClient: &http.Client{}, GetClientCertificate: dummyGetClientCertificate},
-		{GetClientCertificate: dummyGetClientCertificate, GRPCConn: &grpc.ClientConn{}},
-		{GetClientCertificate: dummyGetClientCertificate, GRPCConnPool: struct{ ConnPool }{}},
-		{GetClientCertificate: dummyGetClientCertificate, GRPCDialOpts: []grpc.DialOption{grpc.WithInsecure()}},
-		{GetClientCertificate: dummyGetClientCertificate, GRPCConnPoolSize: 1},
+		{HTTPClient: &http.Client{}, ClientCertSource: dummyGetClientCertificate},
+		{ClientCertSource: dummyGetClientCertificate, GRPCConn: &grpc.ClientConn{}},
+		{ClientCertSource: dummyGetClientCertificate, GRPCConnPool: struct{ ConnPool }{}},
+		{ClientCertSource: dummyGetClientCertificate, GRPCDialOpts: []grpc.DialOption{grpc.WithInsecure()}},
+		{ClientCertSource: dummyGetClientCertificate, GRPCConnPoolSize: 1},
 	} {
 		err := ds.Validate()
 		if err == nil {

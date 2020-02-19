@@ -150,12 +150,18 @@ var appengineUrlfetchHook func(context.Context) http.RoundTripper
 func defaultBaseTransport(ctx context.Context, settings *internal.DialSettings) http.RoundTripper {
 	if appengineUrlfetchHook != nil {
 		return appengineUrlfetchHook(ctx)
-	} else if settings.GetClientCertificate != nil {
-		tlsConfig := tls.Config{GetClientCertificate: settings.GetClientCertificate}
-		return &http.Transport{TLSClientConfig: &tlsConfig}
-	} else {
-		return http.DefaultTransport
 	}
+
+	if settings.ClientCertSource != nil {
+		// TODO (cbro): copy default transport settings from http.DefaultTransport
+		return &http.Transport{
+			TLSClientConfig: &tls.Config{
+				GetClientCertificate: settings.ClientCertSource,
+			},
+		}
+	}
+
+	return http.DefaultTransport
 }
 
 func addOCTransport(trans http.RoundTripper, settings *internal.DialSettings) http.RoundTripper {

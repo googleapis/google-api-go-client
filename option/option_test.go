@@ -97,29 +97,29 @@ func TestApply(t *testing.T) {
 	}
 }
 
-func mockGetClientCertificate(info *tls.CertificateRequestInfo) (*tls.Certificate, error) {
+func mockClientCertSource(info *tls.CertificateRequestInfo) (*tls.Certificate, error) {
 	cert, _ := tls.X509KeyPair([]byte(certPEM), []byte(certPEM))
 	return &cert, nil
 }
 
-func TestApplyGetClientCertificate(t *testing.T) {
+func TestApplyClientCertSource(t *testing.T) {
 	opts := []ClientOption{
-		WithGetClientCertificate(mockGetClientCertificate),
+		WithClientCertSource(mockClientCertSource),
 	}
 	var got internal.DialSettings
 	for _, opt := range opts {
 		opt.Apply(&got)
 	}
 	want := internal.DialSettings{
-		GetClientCertificate: mockGetClientCertificate,
+		ClientCertSource: mockClientCertSource,
 	}
 
 	// Functions cannot be compared in Golang for equality, so we will compare the output of the functions instead.
-	certGot, err := got.GetClientCertificate(nil)
+	certGot, err := got.ClientCertSource(nil)
 	if err != nil {
 		t.Error(err)
 	}
-	certWant, err := want.GetClientCertificate(nil)
+	certWant, err := want.ClientCertSource(nil)
 	if err != nil {
 		t.Error(err)
 	}

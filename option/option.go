@@ -228,16 +228,24 @@ func (w withRequestReason) Apply(o *internal.DialSettings) {
 // settings on gRPC and HTTP clients.
 // An example reason would be to bind custom telemetry that overrides the defaults.
 func WithTelemetryDisabled() ClientOption {
-	return withTelemetryDisabledOption{}
+	return withTelemetryDisabled{}
 }
 
-type withTelemetryDisabledOption struct{}
+type withTelemetryDisabled struct{}
 
-func (w withTelemetryDisabledOption) Apply(o *internal.DialSettings) {
+func (w withTelemetryDisabled) Apply(o *internal.DialSettings) {
 	o.TelemetryDisabled = true
 }
 
-// WithGetClientCertificate returns a ClientOption that specifies a
+// ClientCertSource is a function that returns a TLS client certificate to be used
+// when opening TLS connections.
+//
+// It follows the same semantics as crypto/tls.Config.GetClientCertificate.
+//
+// This is an EXPERIMENTAL API and may be changed or removed in the future.
+type ClientCertSource = func(*tls.CertificateRequestInfo) (*tls.Certificate, error)
+
+// WithClientCertSource returns a ClientOption that specifies a
 // callback function for obtaining a TLS client certificate.
 //
 // This option is used for supporting mTLS authentication, where the
@@ -251,14 +259,12 @@ func (w withTelemetryDisabledOption) Apply(o *internal.DialSettings) {
 // should be returned.
 //
 // This is an EXPERIMENTAL API and may be changed or removed in the future.
-func WithGetClientCertificate(getClientCertificate func(*tls.CertificateRequestInfo) (*tls.Certificate, error)) ClientOption {
-	return withGetClientCertificate{getClientCertificate: getClientCertificate}
+func WithClientCertSource(s ClientCertSource) ClientOption {
+	return withClientCertSource{s}
 }
 
-type withGetClientCertificate struct {
-	getClientCertificate func(*tls.CertificateRequestInfo) (*tls.Certificate, error)
-}
+type withClientCertSource struct{ s ClientCertSource }
 
-func (w withGetClientCertificate) Apply(o *internal.DialSettings) {
-	o.GetClientCertificate = w.getClientCertificate
+func (w withClientCertSource) Apply(o *internal.DialSettings) {
+	o.ClientCertSource = w.s
 }

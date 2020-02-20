@@ -13,6 +13,7 @@
   },
   "id": "domainsrdap:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://domainsrdap.mtls.googleapis.com/",
   "name": "domainsrdap",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -288,7 +289,7 @@
       }
     }
   },
-  "revision": "20190828",
+  "revision": "20200218",
   "rootUrl": "https://domainsrdap.googleapis.com/",
   "schemas": {
     "HttpBody": {

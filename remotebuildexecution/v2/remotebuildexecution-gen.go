@@ -2598,6 +2598,8 @@ type GoogleDevtoolsRemotebuildbotCommandStatus struct {
 	//   "DOCKER_INVALID_ULIMIT" - The docker ulimit is not valid.
 	//   "DOCKER_UNKNOWN_RUNTIME" - The docker runtime is unknown.
 	//   "DOCKER_UNKNOWN_CAPABILITY" - The docker capability is unknown.
+	//   "DOCKER_UNKNOWN_ERROR" - The command failed with unknown docker
+	// errors.
 	Code string `json:"code,omitempty"`
 
 	// Message: The error message.
@@ -4333,7 +4335,7 @@ func (c *ActionResultsGetCall) Header() http.Header {
 
 func (c *ActionResultsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4433,7 +4435,7 @@ func (c *ActionResultsGetCall) Do(opts ...googleapi.CallOption) (*BuildBazelRemo
 	//     "instanceName": {
 	//       "description": "The instance of the execution system to operate against. A server may\nsupport multiple instances of the execution system (with their own workers,\nstorage, caches, etc.). The server MAY require use of this field to select\nbetween them in an implementation-defined fashion, otherwise it can be\nomitted.",
 	//       "location": "path",
-	//       "pattern": "^.+$",
+	//       "pattern": "^.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -4543,7 +4545,7 @@ func (c *ActionResultsUpdateCall) Header() http.Header {
 
 func (c *ActionResultsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4629,7 +4631,7 @@ func (c *ActionResultsUpdateCall) Do(opts ...googleapi.CallOption) (*BuildBazelR
 	//     "instanceName": {
 	//       "description": "The instance of the execution system to operate against. A server may\nsupport multiple instances of the execution system (with their own workers,\nstorage, caches, etc.). The server MAY require use of this field to select\nbetween them in an implementation-defined fashion, otherwise it can be\nomitted.",
 	//       "location": "path",
-	//       "pattern": "^.+$",
+	//       "pattern": "^.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -4798,7 +4800,7 @@ func (c *ActionsExecuteCall) Header() http.Header {
 
 func (c *ActionsExecuteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4873,7 +4875,7 @@ func (c *ActionsExecuteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 	//     "instanceName": {
 	//       "description": "The instance of the execution system to operate against. A server may\nsupport multiple instances of the execution system (with their own workers,\nstorage, caches, etc.). The server MAY require use of this field to select\nbetween them in an implementation-defined fashion, otherwise it can be\nomitted.",
 	//       "location": "path",
-	//       "pattern": "^.+$",
+	//       "pattern": "^.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -4961,7 +4963,7 @@ func (c *BlobsBatchReadCall) Header() http.Header {
 
 func (c *BlobsBatchReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5038,7 +5040,7 @@ func (c *BlobsBatchReadCall) Do(opts ...googleapi.CallOption) (*BuildBazelRemote
 	//     "instanceName": {
 	//       "description": "The instance of the execution system to operate against. A server may\nsupport multiple instances of the execution system (with their own workers,\nstorage, caches, etc.). The server MAY require use of this field to select\nbetween them in an implementation-defined fashion, otherwise it can be\nomitted.",
 	//       "location": "path",
-	//       "pattern": "^.+$",
+	//       "pattern": "^.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -5130,7 +5132,7 @@ func (c *BlobsBatchUpdateCall) Header() http.Header {
 
 func (c *BlobsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5207,7 +5209,7 @@ func (c *BlobsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*BuildBazelRemo
 	//     "instanceName": {
 	//       "description": "The instance of the execution system to operate against. A server may\nsupport multiple instances of the execution system (with their own workers,\nstorage, caches, etc.). The server MAY require use of this field to select\nbetween them in an implementation-defined fashion, otherwise it can be\nomitted.",
 	//       "location": "path",
-	//       "pattern": "^.+$",
+	//       "pattern": "^.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -5279,7 +5281,7 @@ func (c *BlobsFindMissingCall) Header() http.Header {
 
 func (c *BlobsFindMissingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5356,7 +5358,7 @@ func (c *BlobsFindMissingCall) Do(opts ...googleapi.CallOption) (*BuildBazelRemo
 	//     "instanceName": {
 	//       "description": "The instance of the execution system to operate against. A server may\nsupport multiple instances of the execution system (with their own workers,\nstorage, caches, etc.). The server MAY require use of this field to select\nbetween them in an implementation-defined fashion, otherwise it can be\nomitted.",
 	//       "location": "path",
-	//       "pattern": "^.+$",
+	//       "pattern": "^.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -5483,7 +5485,7 @@ func (c *BlobsGetTreeCall) Header() http.Header {
 
 func (c *BlobsGetTreeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5568,7 +5570,7 @@ func (c *BlobsGetTreeCall) Do(opts ...googleapi.CallOption) (*BuildBazelRemoteEx
 	//     "instanceName": {
 	//       "description": "The instance of the execution system to operate against. A server may\nsupport multiple instances of the execution system (with their own workers,\nstorage, caches, etc.). The server MAY require use of this field to select\nbetween them in an implementation-defined fashion, otherwise it can be\nomitted.",
 	//       "location": "path",
-	//       "pattern": "^.+$",
+	//       "pattern": "^.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -5679,7 +5681,7 @@ func (c *OperationsWaitExecutionCall) Header() http.Header {
 
 func (c *OperationsWaitExecutionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5754,7 +5756,7 @@ func (c *OperationsWaitExecutionCall) Do(opts ...googleapi.CallOption) (*GoogleL
 	//     "name": {
 	//       "description": "The name of the Operation\nreturned by Execute.",
 	//       "location": "path",
-	//       "pattern": "^operations/.+$",
+	//       "pattern": "^operations/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -5837,7 +5839,7 @@ func (c *V2GetCapabilitiesCall) Header() http.Header {
 
 func (c *V2GetCapabilitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200218")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5912,7 +5914,7 @@ func (c *V2GetCapabilitiesCall) Do(opts ...googleapi.CallOption) (*BuildBazelRem
 	//     "instanceName": {
 	//       "description": "The instance of the execution system to operate against. A server may\nsupport multiple instances of the execution system (with their own workers,\nstorage, caches, etc.). The server MAY require use of this field to select\nbetween them in an implementation-defined fashion, otherwise it can be\nomitted.",
 	//       "location": "path",
-	//       "pattern": "^.+$",
+	//       "pattern": "^.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }

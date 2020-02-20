@@ -22,6 +22,7 @@
   },
   "id": "dlp:v2",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://dlp.mtls.googleapis.com/",
   "name": "dlp",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -3130,7 +3131,7 @@
       }
     }
   },
-  "revision": "20200203",
+  "revision": "20200215",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -4406,7 +4407,7 @@
           "enumDescriptions": [
             "Unused.",
             "The job has not yet started.",
-            "The job is currently running.",
+            "The job is currently running. Once a job has finished it will transition\nto FAILED or DONE.",
             "The job is no longer running.",
             "The job was canceled before it could complete.",
             "The job had an error and did not complete."
@@ -4656,7 +4657,7 @@
           "type": "array"
         },
         "maxFindingsPerItem": {
-          "description": "Max number of findings that will be returned for each item scanned.\nWhen set within `InspectDataSourceRequest`,\nthe maximum returned is 2000 regardless if this is set higher.\nWhen set within `InspectContentRequest`, this field is ignored.",
+          "description": "Max number of findings that will be returned for each item scanned.\nWhen set within `InspectJobConfig`,\nthe maximum returned is 2000 regardless if this is set higher.\nWhen set within `InspectContentRequest`, this field is ignored.",
           "format": "int32",
           "type": "integer"
         },
@@ -5716,7 +5717,7 @@
       "id": "GooglePrivacyDlpV2OutputStorageConfig",
       "properties": {
         "outputSchema": {
-          "description": "Schema used for writing the findings for Inspect jobs. This field is only\nused for Inspect and must be unspecified for Risk jobs. Columns are derived\nfrom the `Finding` object. If appending to an existing table, any columns\nfrom the predefined schema that are missing will be added. No columns in\nthe existing table will be deleted.\n\nIf unspecified, then all available columns will be used for a new table or\nan (existing) table with no schema, and no changes will be made to an\nexisting table that has a schema.",
+          "description": "Schema used for writing the findings for Inspect jobs. This field is only\nused for Inspect and must be unspecified for Risk jobs. Columns are derived\nfrom the `Finding` object. If appending to an existing table, any columns\nfrom the predefined schema that are missing will be added. No columns in\nthe existing table will be deleted.\n\nIf unspecified, then all available columns will be used for a new table or\nan (existing) table with no schema, and no changes will be made to an\nexisting table that has a schema.\nOnly for use with external storage.",
           "enum": [
             "OUTPUT_SCHEMA_UNSPECIFIED",
             "BASIC_COLUMNS",
@@ -6332,15 +6333,15 @@
       "properties": {
         "bigQueryOptions": {
           "$ref": "GooglePrivacyDlpV2BigQueryOptions",
-          "description": "BigQuery options specification."
+          "description": "BigQuery options."
         },
         "cloudStorageOptions": {
           "$ref": "GooglePrivacyDlpV2CloudStorageOptions",
-          "description": "Google Cloud Storage options specification."
+          "description": "Google Cloud Storage options."
         },
         "datastoreOptions": {
           "$ref": "GooglePrivacyDlpV2DatastoreOptions",
-          "description": "Google Cloud Datastore options specification."
+          "description": "Google Cloud Datastore options."
         },
         "timespanConfig": {
           "$ref": "GooglePrivacyDlpV2TimespanConfig"

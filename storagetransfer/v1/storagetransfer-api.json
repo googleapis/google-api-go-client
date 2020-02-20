@@ -164,7 +164,7 @@
             "jobName": {
               "description": "Required. The job to get.",
               "location": "path",
-              "pattern": "^transferJobs/.+$",
+              "pattern": "^transferJobs/.*$",
               "required": true,
               "type": "string"
             },
@@ -190,7 +190,7 @@
           "parameterOrder": [],
           "parameters": {
             "filter": {
-              "description": "Required. A list of query parameters specified as JSON text in the form of:\n{\"project_id\":\"my_project_id\",\n \"job_names\":[\"jobid1\",\"jobid2\",...],\n \"job_statuses\":[\"status1\",\"status2\",...]}.\nSince `job_names` and `job_statuses` support multiple values, their values\nmust be specified with array notation. `project_id` is required.\n`job_names` and `job_statuses` are optional.  The valid values for\n`job_statuses` are case-insensitive: `ENABLED`, `DISABLED`, and `DELETED`.",
+              "description": "Required. A list of query parameters specified as JSON text in the form of:\n{\"project\u003cspan\u003e_\u003c/span\u003eid\":\"my_project_id\",\n \"job_names\":[\"jobid1\",\"jobid2\",...],\n \"job_statuses\":[\"status1\",\"status2\",...]}.\nSince `job_names` and `job_statuses` support multiple values, their values\nmust be specified with array notation. `project`\u003cspan\u003e`_`\u003c/span\u003e`id` is\nrequired.  `job_names` and `job_statuses` are optional.  The valid values\nfor `job_statuses` are case-insensitive:\nENABLED,\nDISABLED, and\nDELETED.",
               "location": "query",
               "type": "string"
             },
@@ -215,7 +215,7 @@
           ]
         },
         "patch": {
-          "description": "Updates a transfer job. Updating a job's transfer spec does not affect\ntransfer operations that are running already. Updating a job's schedule\nis not allowed.\n\nNote: The job's `status` field can be modified using this RPC (for example,\nto set a job's status to `DELETED`, `DISABLED`, or `ENABLED`).",
+          "description": "Updates a transfer job. Updating a job's transfer spec does not affect\ntransfer operations that are running already. Updating a job's schedule\nis not allowed.\n\n**Note:** The job's status field can be modified\nusing this RPC (for example, to set a job's status to\nDELETED,\nDISABLED, or\nENABLED).",
           "flatPath": "v1/transferJobs/{transferJobsId}",
           "httpMethod": "PATCH",
           "id": "storagetransfer.transferJobs.patch",
@@ -226,7 +226,7 @@
             "jobName": {
               "description": "Required. The name of job to update.",
               "location": "path",
-              "pattern": "^transferJobs/.+$",
+              "pattern": "^transferJobs/.*$",
               "required": true,
               "type": "string"
             }
@@ -258,7 +258,7 @@
             "name": {
               "description": "The name of the operation resource to be cancelled.",
               "location": "path",
-              "pattern": "^transferOperations/.+$",
+              "pattern": "^transferOperations/.*$",
               "required": true,
               "type": "string"
             }
@@ -283,7 +283,7 @@
             "name": {
               "description": "The name of the operation resource.",
               "location": "path",
-              "pattern": "^transferOperations/.+$",
+              "pattern": "^transferOperations/.*$",
               "required": true,
               "type": "string"
             }
@@ -306,7 +306,7 @@
           ],
           "parameters": {
             "filter": {
-              "description": "Required. A list of query parameters specified as JSON text in the form of: {\"project_id\":\"my_project_id\",\n \"job_names\":[\"jobid1\",\"jobid2\",...],\n \"operation_names\":[\"opid1\",\"opid2\",...],\n \"transfer_statuses\":[\"status1\",\"status2\",...]}.\nSince `job_names`, `operation_names`, and `transfer_statuses` support multiple values, they must be specified with array notation. `project_id` is required. `job_names`, `operation_names`, and `transfer_statuses` are optional. The valid values for `transfer_statuses` are case-insensitive: `IN_PROGRESS`, `PAUSED`, `SUCCESS`, `FAILED`, and `ABORTED`.",
+              "description": "Required. A list of query parameters specified as JSON text in the form of: {\"project\u003cspan\u003e_\u003c/span\u003eid\":\"my_project_id\",\n \"job_names\":[\"jobid1\",\"jobid2\",...],\n \"operation_names\":[\"opid1\",\"opid2\",...],\n \"transfer_statuses\":[\"status1\",\"status2\",...]}.\nSince `job_names`, `operation_names`, and `transfer_statuses` support multiple values, they must be specified with array notation. `project`\u003cspan\u003e`_`\u003c/span\u003e`id` is required. `job_names`, `operation_names`, and `transfer_statuses` are optional. The valid values for `transfer_statuses` are case-insensitive: IN_PROGRESS, PAUSED, SUCCESS, FAILED, and ABORTED.",
               "location": "query",
               "type": "string"
             },
@@ -349,7 +349,7 @@
             "name": {
               "description": "Required. The name of the transfer operation.",
               "location": "path",
-              "pattern": "^transferOperations/.+$",
+              "pattern": "^transferOperations/.*$",
               "required": true,
               "type": "string"
             }
@@ -377,7 +377,7 @@
             "name": {
               "description": "Required. The name of the transfer operation.",
               "location": "path",
-              "pattern": "^transferOperations/.+$",
+              "pattern": "^transferOperations/.*$",
               "required": true,
               "type": "string"
             }
@@ -396,11 +396,11 @@
       }
     }
   },
-  "revision": "20200210",
+  "revision": "20200215",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AwsAccessKey": {
-      "description": "AWS access key (see\n[AWS Security\nCredentials](http://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html)).",
+      "description": "AWS access key (see\n[AWS Security\nCredentials](https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html)).",
       "id": "AwsAccessKey",
       "properties": {
         "accessKeyId": {
@@ -423,7 +423,7 @@
           "description": "Required. AWS access key used to sign the API requests to the AWS S3\nbucket. Permissions on the bucket must be granted to the access ID of the\nAWS access key."
         },
         "bucketName": {
-          "description": "Required. S3 Bucket name (see\n[Creating a\nbucket](http://docs.aws.amazon.com/AmazonS3/latest/dev/create-bucket-get-location-example.html)).",
+          "description": "Required. S3 Bucket name (see\n[Creating a\nbucket](https://docs.aws.amazon.com/AmazonS3/latest/dev/create-bucket-get-location-example.html)).",
           "type": "string"
         }
       },
@@ -537,7 +537,7 @@
       "type": "object"
     },
     "GcsData": {
-      "description": "In a GcsData resource, an object's name is the Cloud Storage object's\nname and its `lastModificationTime` refers to the object's updated time,\nwhich changes when the content or the metadata of the object is updated.",
+      "description": "In a GcsData resource, an object's name is the Cloud Storage object's\nname and its \"last modification time\" refers to the object's `updated`\nproperty of Cloud Storage objects, which changes when the content or the\nmetadata of the object is updated.",
       "id": "GcsData",
       "properties": {
         "bucketName": {
@@ -559,7 +559,7 @@
       "type": "object"
     },
     "HttpData": {
-      "description": "An HttpData resource specifies a list of objects on the web to be transferred\nover HTTP.  The information of the objects to be transferred is contained in\na file referenced by a URL. The first line in the file must be\n\"TsvHttpData-1.0\", which specifies the format of the file.  Subsequent lines\nspecify the information of the list of objects, one object per list entry.\nEach entry has the following tab-delimited fields:\n\n* HTTP URL - The location of the object.\n\n* Length - The size of the object in bytes.\n\n* MD5 - The base64-encoded MD5 hash of the object.\n\nFor an example of a valid TSV file, see\n[Transferring data from\nURLs](https://cloud.google.com/storage/transfer/create-url-list).\n\nWhen transferring data based on a URL list, keep the following in mind:\n\n* When an object located at `http(s)://hostname:port/\u003cURL-path\u003e` is\ntransferred to a data sink, the name of the object at the data sink is\n`\u003chostname\u003e/\u003cURL-path\u003e`.\n\n* If the specified size of an object does not match the actual size of the\nobject fetched, the object will not be transferred.\n\n* If the specified MD5 does not match the MD5 computed from the transferred\nbytes, the object transfer will fail. For more information, see\n[Generating MD5 hashes](https://cloud.google.com/storage/transfer/#md5)\n\n* Ensure that each URL you specify is publicly accessible. For\nexample, in Cloud Storage you can\n[share an object publicly]\n(https://cloud.google.com/storage/docs/cloud-console#_sharingdata) and get\na link to it.\n\n* Storage Transfer Service obeys `robots.txt` rules and requires the source\nHTTP server to support `Range` requests and to return a `Content-Length`\nheader in each response.\n\n* [ObjectConditions](#ObjectConditions) have no effect when filtering objects\nto transfer.",
+      "description": "An HttpData resource specifies a list of objects on the web to be transferred\nover HTTP.  The information of the objects to be transferred is contained in\na file referenced by a URL. The first line in the file must be\n`\"TsvHttpData-1.0\"`, which specifies the format of the file.  Subsequent\nlines specify the information of the list of objects, one object per list\nentry. Each entry has the following tab-delimited fields:\n\n* **HTTP URL** — The location of the object.\n\n* **Length** — The size of the object in bytes.\n\n* **MD5** — The base64-encoded MD5 hash of the object.\n\nFor an example of a valid TSV file, see\n[Transferring data from\nURLs](https://cloud.google.com/storage-transfer/docs/create-url-list).\n\nWhen transferring data based on a URL list, keep the following in mind:\n\n* When an object located at `http(s)://hostname:port/\u003cURL-path\u003e` is\ntransferred to a data sink, the name of the object at the data sink is\n`\u003chostname\u003e/\u003cURL-path\u003e`.\n\n* If the specified size of an object does not match the actual size of the\nobject fetched, the object will not be transferred.\n\n* If the specified MD5 does not match the MD5 computed from the transferred\nbytes, the object transfer will fail. For more information, see\n[Generating MD5\nhashes](https://cloud.google.com/storage-transfer/docs/create-url-list#md5)\n\n* Ensure that each URL you specify is publicly accessible. For\nexample, in Cloud Storage you can\n[share an object publicly]\n(https://cloud.google.com/storage/docs/cloud-console#_sharingdata) and get\na link to it.\n\n* Storage Transfer Service obeys `robots.txt` rules and requires the source\nHTTP server to support `Range` requests and to return a `Content-Length`\nheader in each response.\n\n* ObjectConditions have no effect when filtering objects to transfer.",
       "id": "HttpData",
       "properties": {
         "listUrl": {
@@ -606,30 +606,30 @@
       "type": "object"
     },
     "ObjectConditions": {
-      "description": "Conditions that determine which objects will be transferred. Applies only\nto S3 and Cloud Storage objects.",
+      "description": "Conditions that determine which objects will be transferred. Applies only\nto S3 and Cloud Storage objects.\n\nThe \"last modification time\" refers to the time of the\nlast change to the object's content or metadata — specifically, this is\nthe `updated` property of Cloud Storage objects and the `LastModified`\nfield of S3 objects.",
       "id": "ObjectConditions",
       "properties": {
         "excludePrefixes": {
-          "description": "`excludePrefixes` must follow the requirements described for\n`includePrefixes`.\n\nThe max size of `excludePrefixes` is 1000.",
+          "description": "`exclude_prefixes` must follow the requirements described for\ninclude_prefixes.\n\nThe max size of `exclude_prefixes` is 1000.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "includePrefixes": {
-          "description": "If `includePrefixes` is specified, objects that satisfy the object\nconditions must have names that start with one of the `includePrefixes`\nand that do not start with any of the `excludePrefixes`. If\n`includePrefixes` is not specified, all objects except those that have\nnames starting with one of the `excludePrefixes` must satisfy the object\nconditions.\n\nRequirements:\n\n  * Each include-prefix and exclude-prefix can contain any sequence of\n    Unicode characters, of max length 1024 bytes when UTF8-encoded, and\n    must not contain Carriage Return or Line Feed characters.  Wildcard\n    matching and regular expression matching are not supported.\n\n  * Each include-prefix and exclude-prefix must omit the leading slash.\n    For example, to include the `requests.gz` object in a transfer from\n    `s3://my-aws-bucket/logs/y=2015/requests.gz`, specify the include\n    prefix as `logs/y=2015/requests.gz`.\n\n  * None of the include-prefix or the exclude-prefix values can be empty,\n    if specified.\n\n  * Each include-prefix must include a distinct portion of the object\n    namespace, i.e., no include-prefix may be a prefix of another\n    include-prefix.\n\n  * Each exclude-prefix must exclude a distinct portion of the object\n    namespace, i.e., no exclude-prefix may be a prefix of another\n    exclude-prefix.\n\n  * If `includePrefixes` is specified, then each exclude-prefix must start\n    with the value of a path explicitly included by `includePrefixes`.\n\nThe max size of `includePrefixes` is 1000.",
+          "description": "If `include_prefixes` is specified, objects that satisfy the object\nconditions must have names that start with one of the `include_prefixes`\nand that do not start with any of the exclude_prefixes. If\n`include_prefixes` is not specified, all objects except those that have\nnames starting with one of the `exclude_prefixes` must satisfy the object\nconditions.\n\nRequirements:\n\n  * Each include-prefix and exclude-prefix can contain any sequence of\n    Unicode characters, to a max length of 1024 bytes when UTF8-encoded,\n    and must not contain Carriage Return or Line Feed characters.  Wildcard\n    matching and regular expression matching are not supported.\n\n  * Each include-prefix and exclude-prefix must omit the leading slash.\n    For example, to include the `requests.gz` object in a transfer from\n    `s3://my-aws-bucket/logs/y=2015/requests.gz`, specify the include\n    prefix as `logs/y=2015/requests.gz`.\n\n  * None of the include-prefix or the exclude-prefix values can be empty,\n    if specified.\n\n  * Each include-prefix must include a distinct portion of the object\n    namespace. No include-prefix may be a prefix of another\n    include-prefix.\n\n  * Each exclude-prefix must exclude a distinct portion of the object\n    namespace. No exclude-prefix may be a prefix of another\n    exclude-prefix.\n\n  * If `include_prefixes` is specified, then each exclude-prefix must start\n    with the value of a path explicitly included by `include_prefixes`.\n\nThe max size of `include_prefixes` is 1000.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "maxTimeElapsedSinceLastModification": {
-          "description": "If specified, only objects with a `lastModificationTime` on or after\n`NOW` - `maxTimeElapsedSinceLastModification` and objects that don't have\na `lastModificationTime` are transferred.\n\nNote that, for each `TransferOperation` started by this `TransferJob`,\n`NOW` refers to the `start_time` of the 'TransferOperation`. Also,\n`lastModificationTime` refers to the time of the last change to the\nobject's content or metadata - specifically, this would be the `updated`\nproperty of Cloud Storage objects and the `LastModified` field of S3\nobjects.",
+          "description": "If specified, only objects with a \"last modification time\" on or after\n`NOW` - `max_time_elapsed_since_last_modification` and objects that don't\nhave a \"last modification time\" are transferred.\n\nFor each TransferOperation started by this TransferJob,\n`NOW` refers to the start_time of the\n`TransferOperation`.",
           "format": "google-duration",
           "type": "string"
         },
         "minTimeElapsedSinceLastModification": {
-          "description": "If specified, only objects with a `lastModificationTime` before\n`NOW` - `minTimeElapsedSinceLastModification` and objects that don't have a\n`lastModificationTime` are transferred.\n\nNote that, for each `TransferOperation` started by this `TransferJob`,\n`NOW` refers to the `start_time` of the 'TransferOperation`. Also,\n`lastModificationTime` refers to the time of the last change to the\nobject's content or metadata - specifically, this would be the `updated`\nproperty of Cloud Storage objects and the `LastModified` field of S3\nobjects.",
+          "description": "If specified, only objects with a \"last modification time\" before\n`NOW` - `min_time_elapsed_since_last_modification` and objects that don't\n have a \"last modification time\" are transferred.\n\nFor each TransferOperation started by this TransferJob, `NOW`\nrefers to the start_time of the\n`TransferOperation`.",
           "format": "google-duration",
           "type": "string"
         }
@@ -689,15 +689,15 @@
       "properties": {
         "scheduleEndDate": {
           "$ref": "Date",
-          "description": "The last day a transfer runs. Date boundaries are determined relative to\nUTC time. A job will run once per 24 hours within the following guidelines:\n\n*   If `scheduleEndDate` and `scheduleStartDate` are the same and in the\n    future relative to UTC, the transfer is executed only one time.\n*   If `scheduleEndDate` is later than `scheduleStartDate` and\n    `scheduleEndDate` is in the future relative to UTC, the job will\n    run each day at `startTimeOfDay` through `scheduleEndDate`."
+          "description": "The last day a transfer runs. Date boundaries are determined relative to\nUTC time. A job will run once per 24 hours within the following guidelines:\n\n*   If `schedule_end_date` and schedule_start_date are the same and in\n    the future relative to UTC, the transfer is executed only one time.\n*   If `schedule_end_date` is later than `schedule_start_date`  and\n    `schedule_end_date` is in the future relative to UTC, the job will\n    run each day at start_time_of_day through `schedule_end_date`."
         },
         "scheduleStartDate": {
           "$ref": "Date",
-          "description": "Required. The start date of a transfer. Date boundaries are determined\nrelative to UTC time. If `scheduleStartDate` and `startTimeOfDay` are in\nthe past relative to the job's creation time, the transfer starts the day\nafter you schedule the transfer request.\n\nNote: When starting jobs at or near midnight UTC it is possible that\na job will start later than expected. For example, if you send an outbound\nrequest on June 1 one millisecond prior to midnight UTC and the Storage\nTransfer Service server receives the request on June 2, then it will create\na TransferJob with `scheduleStartDate` set to June 2 and a `startTimeOfDay`\nset to midnight UTC. The first scheduled TransferOperation will take place\non June 3 at midnight UTC."
+          "description": "Required. The start date of a transfer. Date boundaries are determined\nrelative to UTC time. If `schedule_start_date` and start_time_of_day\nare in the past relative to the job's creation time, the transfer starts\nthe day after you schedule the transfer request.\n\n**Note:** When starting jobs at or near midnight UTC it is possible that\na job will start later than expected. For example, if you send an outbound\nrequest on June 1 one millisecond prior to midnight UTC and the Storage\nTransfer Service server receives the request on June 2, then it will create\na TransferJob with `schedule_start_date` set to June 2 and a\n`start_time_of_day` set to midnight UTC. The first scheduled\nTransferOperation will take place on June 3 at midnight UTC."
         },
         "startTimeOfDay": {
           "$ref": "TimeOfDay",
-          "description": "The time in UTC that a transfer job is scheduled to run. Transfers may\nstart later than this time.\n\nIf `startTimeOfDay` is not specified:\n\n*   One-time transfers run immediately.\n*   Recurring transfers run immediately, and each day at midnight UTC,\n    through `scheduleEndDate`.\n\nIf `startTimeOfDay` is specified:\n\n*   One-time transfers run at the specified time.\n*   Recurring transfers run at the specified time each day, through\n    `scheduleEndDate`."
+          "description": "The time in UTC that a transfer job is scheduled to run. Transfers may\nstart later than this time.\n\nIf `start_time_of_day` is not specified:\n\n*   One-time transfers run immediately.\n*   Recurring transfers run immediately, and each day at midnight UTC,\n    through schedule_end_date.\n\nIf `start_time_of_day` is specified:\n\n*   One-time transfers run at the specified time.\n*   Recurring transfers run at the specified time each day, through\n    `schedule_end_date`."
         }
       },
       "type": "object"
@@ -867,7 +867,7 @@
           "type": "string"
         },
         "name": {
-          "description": "A unique name (within the transfer project) assigned when the job is\ncreated.\nIf this field is left empty in a CreateTransferJobRequest,\nStorage Transfer Service will assign a unique name. Otherwise, the supplied\nname is used as the unique name for this job.\n\nThis name must start with \"transferJobs/\" prefix and end with a letter or a\nnumber, and should be no more than 128 characters.\nExample of a valid format : \"transferJobs/[A-Za-z0-9-._~]*[A-Za-z0-9]$\"\n\n**NOTE:**\nIf the supplied name is already in use, the creation request results in an\n`ALREADY_EXISTS` error and the transfer job will not be created.\nInvalid job names will return an 'INVALID_ARGUMENT' error and the job will\nnot be created.",
+          "description": "A unique name (within the transfer project) assigned when the job is\ncreated.\nIf this field is left empty in a CreateTransferJobRequest, Storage Transfer\nService will assign a unique name. Otherwise, the supplied name is used as\nthe unique name for this job.\n\nThis name must start with `\"transferJobs/\"` prefix and end with a letter or\na number, and should be no more than 128 characters.\nExample of a valid format : `\"transferJobs/[A-Za-z0-9-._~]*[A-Za-z0-9]$\"`\n\n**Note:** If the supplied name is already in use, the creation request\nresults in an ALREADY_EXISTS error and\nthe transfer job will not be created.  Invalid job names will return an\nINVALID_ARGUMENT error and the job will\nnot be created.",
           "type": "string"
         },
         "projectId": {
@@ -879,7 +879,7 @@
           "description": "Schedule specification."
         },
         "status": {
-          "description": "Status of the job. This value MUST be specified for\n`CreateTransferJobRequests`.\n\nNOTE: The effect of the new job status takes place during a subsequent job\nrun. For example, if you change the job status from `ENABLED` to\n`DISABLED`, and an operation spawned by the transfer is running, the status\nchange would not affect the current operation.",
+          "description": "Status of the job. This value MUST be specified for\n`CreateTransferJobRequests`.\n\n**Note:** The effect of the new job status takes place during a subsequent\njob run. For example, if you change the job status from\nENABLED to DISABLED, and an operation\nspawned by the transfer is running, the status change would not affect the\ncurrent operation.",
           "enum": [
             "STATUS_UNSPECIFIED",
             "ENABLED",
@@ -952,7 +952,7 @@
             "Completed successfully.",
             "Terminated due to an unrecoverable failure.",
             "Aborted by the user.",
-            "Execution is temporarily delayed by the system. No user action is\nrequired."
+            "Temporarily delayed by the system. No user action is required."
           ],
           "type": "string"
         },
@@ -972,11 +972,11 @@
       "id": "TransferOptions",
       "properties": {
         "deleteObjectsFromSourceAfterTransfer": {
-          "description": "Whether objects should be deleted from the source after they are\ntransferred to the sink.  Note that this option and\n`deleteObjectsUniqueInSink` are mutually exclusive.",
+          "description": "Whether objects should be deleted from the source after they are\ntransferred to the sink.\n\n**Note:** This option and delete_objects_unique_in_sink are mutually\nexclusive.",
           "type": "boolean"
         },
         "deleteObjectsUniqueInSink": {
-          "description": "Whether objects that exist only in the sink should be deleted.  Note that\nthis option and `deleteObjectsFromSourceAfterTransfer` are mutually\nexclusive.",
+          "description": "Whether objects that exist only in the sink should be deleted.\n\n**Note:** This option and delete_objects_from_source_after_transfer are\nmutually exclusive.",
           "type": "boolean"
         },
         "overwriteObjectsAlreadyExistingInSink": {
@@ -1008,11 +1008,11 @@
         },
         "objectConditions": {
           "$ref": "ObjectConditions",
-          "description": "Only objects that satisfy these object conditions are included in the set\nof data source and data sink objects.  Object conditions based on\nobjects' `lastModificationTime` do not exclude objects in a data sink."
+          "description": "Only objects that satisfy these object conditions are included in the set\nof data source and data sink objects.  Object conditions based on\nobjects' \"last modification time\" do not exclude objects in a data sink."
         },
         "transferOptions": {
           "$ref": "TransferOptions",
-          "description": "If the option `deleteObjectsUniqueInSink` is `true`, object conditions\nbased on objects' `lastModificationTime` are ignored and do not exclude\nobjects in a data source or a data sink."
+          "description": "If the option\ndelete_objects_unique_in_sink\nis `true`, object conditions based on objects' \"last modification time\" are\nignored and do not exclude objects in a data source or a data sink."
         }
       },
       "type": "object"
@@ -1027,10 +1027,10 @@
         },
         "transferJob": {
           "$ref": "TransferJob",
-          "description": "Required. The job to update. `transferJob` is expected to specify only\nthree fields: `description`, `transferSpec`, and `status`.  An\nUpdateTransferJobRequest that specifies other fields will be rejected with\nan error `INVALID_ARGUMENT`."
+          "description": "Required. The job to update. `transferJob` is expected to specify only\nthree fields:\ndescription,\ntransfer_spec, and\nstatus.  An `UpdateTransferJobRequest` that specifies\nother fields will be rejected with the error\nINVALID_ARGUMENT."
         },
         "updateTransferJobFieldMask": {
-          "description": "The field mask of the fields in `transferJob` that are to be updated in\nthis request.  Fields in `transferJob` that can be updated are:\n`description`, `transferSpec`, and `status`.  To update the `transferSpec`\nof the job, a complete transfer specification has to be provided. An\nincomplete specification which misses any required fields will be rejected\nwith the error `INVALID_ARGUMENT`.",
+          "description": "The field mask of the fields in `transferJob` that are to be updated in\nthis request.  Fields in `transferJob` that can be updated are:\ndescription,\ntransfer_spec, and\nstatus.  To update the `transfer_spec` of the job, a\ncomplete transfer specification must be provided. An incomplete\nspecification missing any required fields will be rejected with the error\nINVALID_ARGUMENT.",
           "format": "google-fieldmask",
           "type": "string"
         }

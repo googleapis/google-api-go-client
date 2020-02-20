@@ -28,6 +28,7 @@
   },
   "id": "cloudidentity:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://cloudidentity.mtls.googleapis.com/",
   "name": "cloudidentity",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -511,27 +512,12 @@
       }
     }
   },
-  "revision": "20200211",
+  "revision": "20200215",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
-    "EntityKey": {
-      "description": "An EntityKey uniquely identifies an Entity. Namespaces are used to provide\nisolation for IDs. A single ID can be reused across namespaces but the\ncombination of a namespace and an ID must be unique.",
-      "id": "EntityKey",
-      "properties": {
-        "id": {
-          "description": "The ID of the entity within the given namespace. The ID must be unique\nwithin its namespace.",
-          "type": "string"
-        },
-        "namespace": {
-          "description": "Namespaces provide isolation for IDs, so an ID only needs to be unique\nwithin its namespace.\n\nNamespaces are currently only created as part of IdentitySource creation\nfrom Admin Console. A namespace `\"identitysources/{identity_source_id}\"` is\ncreated corresponding to every Identity Source `identity_source_id`.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleAppsCloudidentityDevicesV1alpha1AndroidAttributes": {
+    "AndroidAttributes": {
       "description": "Resource representing the Android specific attributes of a Device.",
-      "id": "GoogleAppsCloudidentityDevicesV1alpha1AndroidAttributes",
+      "id": "AndroidAttributes",
       "properties": {
         "basebandVersion": {
           "description": "Baseband version of Android device.",
@@ -620,56 +606,56 @@
       },
       "type": "object"
     },
-    "GoogleAppsCloudidentityDevicesV1alpha1ApproveDeviceUserResponse": {
+    "ApproveDeviceUserResponse": {
       "description": "Response message for approving the device to access user data.",
-      "id": "GoogleAppsCloudidentityDevicesV1alpha1ApproveDeviceUserResponse",
+      "id": "ApproveDeviceUserResponse",
       "properties": {
         "deviceUser": {
-          "$ref": "GoogleAppsCloudidentityDevicesV1alpha1DeviceUser",
+          "$ref": "DeviceUser",
           "description": "Resultant DeviceUser object for the action."
         }
       },
       "type": "object"
     },
-    "GoogleAppsCloudidentityDevicesV1alpha1BlockDeviceUserResponse": {
+    "BlockDeviceUserResponse": {
       "description": "Response message for blocking the device from accessing user data.",
-      "id": "GoogleAppsCloudidentityDevicesV1alpha1BlockDeviceUserResponse",
+      "id": "BlockDeviceUserResponse",
       "properties": {
         "deviceUser": {
-          "$ref": "GoogleAppsCloudidentityDevicesV1alpha1DeviceUser",
+          "$ref": "DeviceUser",
           "description": "Resultant DeviceUser object for the action."
         }
       },
       "type": "object"
     },
-    "GoogleAppsCloudidentityDevicesV1alpha1CancelWipeDeviceResponse": {
+    "CancelWipeDeviceResponse": {
       "description": "Response message for cancelling an unfinished device wipe.",
-      "id": "GoogleAppsCloudidentityDevicesV1alpha1CancelWipeDeviceResponse",
+      "id": "CancelWipeDeviceResponse",
       "properties": {
         "device": {
-          "$ref": "GoogleAppsCloudidentityDevicesV1alpha1Device",
+          "$ref": "Device",
           "description": "Resultant Device object for the action. Note that asset tags will not be\nreturned in the device object."
         }
       },
       "type": "object"
     },
-    "GoogleAppsCloudidentityDevicesV1alpha1CancelWipeDeviceUserResponse": {
+    "CancelWipeDeviceUserResponse": {
       "description": "Response message for cancelling an unfinished user account wipe.",
-      "id": "GoogleAppsCloudidentityDevicesV1alpha1CancelWipeDeviceUserResponse",
+      "id": "CancelWipeDeviceUserResponse",
       "properties": {
         "deviceUser": {
-          "$ref": "GoogleAppsCloudidentityDevicesV1alpha1DeviceUser",
+          "$ref": "DeviceUser",
           "description": "Resultant DeviceUser object for the action."
         }
       },
       "type": "object"
     },
-    "GoogleAppsCloudidentityDevicesV1alpha1Device": {
+    "Device": {
       "description": "Represents a Device known to Google Cloud, independent of the device\nownership, type, and whether it is assigned or in use by a user.",
-      "id": "GoogleAppsCloudidentityDevicesV1alpha1Device",
+      "id": "Device",
       "properties": {
         "androidSpecificAttributes": {
-          "$ref": "GoogleAppsCloudidentityDevicesV1alpha1AndroidAttributes",
+          "$ref": "AndroidAttributes",
           "description": "Output only. Attributes specific to Android devices."
         },
         "assetTag": {
@@ -810,9 +796,9 @@
       },
       "type": "object"
     },
-    "GoogleAppsCloudidentityDevicesV1alpha1DeviceUser": {
-      "description": "Resource representing a user's use of a Device",
-      "id": "GoogleAppsCloudidentityDevicesV1alpha1DeviceUser",
+    "DeviceUser": {
+      "description": "A DeviceUser is a resource representing a user's use of a Device",
+      "id": "DeviceUser",
       "properties": {
         "compromisedState": {
           "description": "Compromised State of the DeviceUser object",
@@ -893,9 +879,9 @@
       },
       "type": "object"
     },
-    "GoogleAppsCloudidentityDevicesV1alpha1EndpointApp": {
-      "description": "Next ID to use: 7",
-      "id": "GoogleAppsCloudidentityDevicesV1alpha1EndpointApp",
+    "EndpointApp": {
+      "description": "An EndpointApp represents an app that is installed on a device\nNext ID to use: 7",
+      "id": "EndpointApp",
       "properties": {
         "displayName": {
           "description": "Output only. Name of the app displayed to the user",
@@ -928,78 +914,17 @@
       },
       "type": "object"
     },
-    "GoogleAppsCloudidentityDevicesV1alpha1ListDeviceUsersResponse": {
-      "description": "Response message that is returned in LRO result of ListDeviceUsers Operation.",
-      "id": "GoogleAppsCloudidentityDevicesV1alpha1ListDeviceUsersResponse",
+    "EntityKey": {
+      "description": "An EntityKey uniquely identifies an Entity. Namespaces are used to provide\nisolation for IDs. A single ID can be reused across namespaces but the\ncombination of a namespace and an ID must be unique.",
+      "id": "EntityKey",
       "properties": {
-        "deviceUsers": {
-          "description": "Devices meeting the list restrictions.",
-          "items": {
-            "$ref": "GoogleAppsCloudidentityDevicesV1alpha1DeviceUser"
-          },
-          "type": "array"
-        },
-        "nextPageToken": {
-          "description": "Token to retrieve the next page of results. Empty if there are no more\nresults.",
+        "id": {
+          "description": "The ID of the entity within the given namespace. The ID must be unique\nwithin its namespace.",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleAppsCloudidentityDevicesV1alpha1ListDevicesResponse": {
-      "description": "Response message that is returned in LRO result of ListDevices Operation.",
-      "id": "GoogleAppsCloudidentityDevicesV1alpha1ListDevicesResponse",
-      "properties": {
-        "devices": {
-          "description": "Devices meeting the list restrictions.",
-          "items": {
-            "$ref": "GoogleAppsCloudidentityDevicesV1alpha1Device"
-          },
-          "type": "array"
         },
-        "nextPageToken": {
-          "description": "Token to retrieve the next page of results. Empty if there are no more\nresults.",
+        "namespace": {
+          "description": "Namespaces provide isolation for IDs, so an ID only needs to be unique\nwithin its namespace.\n\nNamespaces are currently only created as part of IdentitySource creation\nfrom Admin Console. A namespace `\"identitysources/{identity_source_id}\"` is\ncreated corresponding to every Identity Source `identity_source_id`.",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleAppsCloudidentityDevicesV1alpha1ListEndpointAppsResponse": {
-      "description": "Response message for listing all apps on the device.",
-      "id": "GoogleAppsCloudidentityDevicesV1alpha1ListEndpointAppsResponse",
-      "properties": {
-        "endpointApps": {
-          "description": "The list of matching EndpointApps found as a result of the request.",
-          "items": {
-            "$ref": "GoogleAppsCloudidentityDevicesV1alpha1EndpointApp"
-          },
-          "type": "array"
-        },
-        "nextPageToken": {
-          "description": "Token to retrieve the next page of results. Empty if there are no more\nresults.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleAppsCloudidentityDevicesV1alpha1WipeDeviceResponse": {
-      "description": "Response message for wiping all data on the device.",
-      "id": "GoogleAppsCloudidentityDevicesV1alpha1WipeDeviceResponse",
-      "properties": {
-        "device": {
-          "$ref": "GoogleAppsCloudidentityDevicesV1alpha1Device",
-          "description": "Resultant Device object for the action. Note that asset tags will not be\nreturned in the device object."
-        }
-      },
-      "type": "object"
-    },
-    "GoogleAppsCloudidentityDevicesV1alpha1WipeDeviceUserResponse": {
-      "description": "Response message for wiping the user's account from the device.",
-      "id": "GoogleAppsCloudidentityDevicesV1alpha1WipeDeviceUserResponse",
-      "properties": {
-        "deviceUser": {
-          "$ref": "GoogleAppsCloudidentityDevicesV1alpha1DeviceUser",
-          "description": "Resultant DeviceUser object for the action."
         }
       },
       "type": "object"
@@ -1043,6 +968,60 @@
         "updateTime": {
           "description": "Output only. The time when the Group was last updated.\nOutput only.",
           "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ListDeviceUsersResponse": {
+      "description": "Response message that is returned in LRO result of ListDeviceUsers Operation.",
+      "id": "ListDeviceUsersResponse",
+      "properties": {
+        "deviceUsers": {
+          "description": "Devices meeting the list restrictions.",
+          "items": {
+            "$ref": "DeviceUser"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Token to retrieve the next page of results. Empty if there are no more\nresults.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ListDevicesResponse": {
+      "description": "Response message that is returned in LRO result of ListDevices Operation.",
+      "id": "ListDevicesResponse",
+      "properties": {
+        "devices": {
+          "description": "Devices meeting the list restrictions.",
+          "items": {
+            "$ref": "Device"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Token to retrieve the next page of results. Empty if there are no more\nresults.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ListEndpointAppsResponse": {
+      "description": "Response message for listing all apps on the device.",
+      "id": "ListEndpointAppsResponse",
+      "properties": {
+        "endpointApps": {
+          "description": "The list of matching EndpointApps found as a result of the request.",
+          "items": {
+            "$ref": "EndpointApp"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Token to retrieve the next page of results. Empty if there are no more\nresults.",
           "type": "string"
         }
       },
@@ -1221,6 +1200,28 @@
         "message": {
           "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "WipeDeviceResponse": {
+      "description": "Response message for wiping all data on the device.",
+      "id": "WipeDeviceResponse",
+      "properties": {
+        "device": {
+          "$ref": "Device",
+          "description": "Resultant Device object for the action. Note that asset tags will not be\nreturned in the device object."
+        }
+      },
+      "type": "object"
+    },
+    "WipeDeviceUserResponse": {
+      "description": "Response message for wiping the user's account from the device.",
+      "id": "WipeDeviceUserResponse",
+      "properties": {
+        "deviceUser": {
+          "$ref": "DeviceUser",
+          "description": "Resultant DeviceUser object for the action."
         }
       },
       "type": "object"

@@ -22,6 +22,7 @@
   },
   "id": "dataproc:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://dataproc.mtls.googleapis.com/",
   "name": "dataproc",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -2094,7 +2095,7 @@
       }
     }
   },
-  "revision": "20200117",
+  "revision": "20200213",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2874,10 +2875,12 @@
           "type": "string"
         },
         "hadoopJob": {
-          "$ref": "HadoopJob"
+          "$ref": "HadoopJob",
+          "description": "Optional. Job is a Hadoop job."
         },
         "hiveJob": {
-          "$ref": "HiveJob"
+          "$ref": "HiveJob",
+          "description": "Optional. Job is a Hive job."
         },
         "jobUuid": {
           "description": "Output only. A UUID that uniquely identifies a job within the project over time. This is in contrast to a user-settable reference.job_id that may be reused over time.",
@@ -2891,14 +2894,20 @@
           "type": "object"
         },
         "pigJob": {
-          "$ref": "PigJob"
+          "$ref": "PigJob",
+          "description": "Optional. Job is a Pig job."
         },
         "placement": {
           "$ref": "JobPlacement",
           "description": "Required. Job information, including how, when, and where to run the job."
         },
+        "prestoJob": {
+          "$ref": "PrestoJob",
+          "description": "Optional. Job is a Presto job."
+        },
         "pysparkJob": {
-          "$ref": "PySparkJob"
+          "$ref": "PySparkJob",
+          "description": "Optional. Job is a PySpark job."
         },
         "reference": {
           "$ref": "JobReference",
@@ -2909,13 +2918,16 @@
           "description": "Optional. Job scheduling configuration."
         },
         "sparkJob": {
-          "$ref": "SparkJob"
+          "$ref": "SparkJob",
+          "description": "Optional. Job is a Spark job."
         },
         "sparkRJob": {
-          "$ref": "SparkRJob"
+          "$ref": "SparkRJob",
+          "description": "Optional. Job is a SparkR job."
         },
         "sparkSqlJob": {
-          "$ref": "SparkSqlJob"
+          "$ref": "SparkSqlJob",
+          "description": "Optional. Job is a SparkSql job."
         },
         "status": {
           "$ref": "JobStatus",
@@ -3464,6 +3476,47 @@
           "description": "Specifies the format of the policy.Valid values are 0, 1, and 3. Requests that specify an invalid value are rejected.Any operation that affects conditional role bindings must specify version 3. This requirement applies to the following operations:\nGetting a policy that includes a conditional role binding\nAdding a conditional role binding to a policy\nChanging a conditional role binding in a policy\nRemoving any role binding, with or without a condition, from a policy  that includes conditionsImportant: If you use IAM Conditions, you must include the etag field whenever you call setIamPolicy. If you omit this field, then IAM allows you to overwrite a version 3 policy with a version 1 policy, and all of the conditions in the version 3 policy are lost.If a policy does not include any conditions, operations on that policy may specify any valid version or leave the field unset.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "PrestoJob": {
+      "description": "A Dataproc job for running Presto (https://prestosql.io/) queries",
+      "id": "PrestoJob",
+      "properties": {
+        "clientTags": {
+          "description": "Optional. Presto client tags to attach to this query",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "continueOnFailure": {
+          "description": "Optional. Whether to continue executing queries if a query fails. The default value is false. Setting to true can be useful when executing independent parallel queries.",
+          "type": "boolean"
+        },
+        "loggingConfig": {
+          "$ref": "LoggingConfig",
+          "description": "Optional. The runtime log config for job execution."
+        },
+        "outputFormat": {
+          "description": "Optional. The format in which query output will be displayed. See the Presto documentation for supported output formats",
+          "type": "string"
+        },
+        "properties": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. A mapping of property names to values. Used to set Presto session properties (https://prestodb.io/docs/current/sql/set-session.html) Equivalent to using the --session flag in the Presto CLI",
+          "type": "object"
+        },
+        "queryFileUri": {
+          "description": "The HCFS URI of the script that contains SQL queries.",
+          "type": "string"
+        },
+        "queryList": {
+          "$ref": "QueryList",
+          "description": "A list of queries."
         }
       },
       "type": "object"

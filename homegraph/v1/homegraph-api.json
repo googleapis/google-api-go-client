@@ -13,6 +13,7 @@
   },
   "id": "homegraph:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://homegraph.mtls.googleapis.com/",
   "name": "homegraph",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -109,7 +110,7 @@
             "agentUserId": {
               "description": "Required. Third-party user ID.",
               "location": "path",
-              "pattern": "^agentUsers/.+$",
+              "pattern": "^agentUsers/.*$",
               "required": true,
               "type": "string"
             },
@@ -191,7 +192,7 @@
       }
     }
   },
-  "revision": "20200115",
+  "revision": "20200219",
   "rootUrl": "https://homegraph.googleapis.com/",
   "schemas": {
     "AgentDeviceId": {

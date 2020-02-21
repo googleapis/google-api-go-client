@@ -590,7 +590,12 @@ func (s *FormAction) MarshalJSON() ([]byte, error) {
 // Image: An image that is specified by a URL and can have an onclick
 // action.
 type Image struct {
-	// AspectRatio: The aspect ratio of this image (width/height).
+	// AspectRatio: The aspect ratio of this image (width/height). This
+	// field allows clients
+	// to reserve the right height for the image while waiting for it to
+	// load.
+	// It's not meant to override the native aspect ratio of the image.
+	// If unset, server will fill it by prefetching the image.
 	AspectRatio float64 `json:"aspectRatio,omitempty"`
 
 	// ImageUrl: The URL of the image.
@@ -1251,6 +1256,9 @@ type User struct {
 	// DisplayName: The user's display name.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// DomainId: Obfuscated domain information.
+	DomainId string `json:"domainId,omitempty"`
+
 	// Name: Resource name, in the format "users/*".
 	Name string `json:"name,omitempty"`
 
@@ -1416,7 +1424,7 @@ func (c *SpacesGetCall) Header() http.Header {
 
 func (c *SpacesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1571,7 +1579,7 @@ func (c *SpacesListCall) Header() http.Header {
 
 func (c *SpacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1732,7 +1740,7 @@ func (c *SpacesMembersGetCall) Header() http.Header {
 
 func (c *SpacesMembersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1889,7 +1897,7 @@ func (c *SpacesMembersListCall) Header() http.Header {
 
 func (c *SpacesMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2072,7 +2080,7 @@ func (c *SpacesMessagesCreateCall) Header() http.Header {
 
 func (c *SpacesMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2212,7 +2220,7 @@ func (c *SpacesMessagesDeleteCall) Header() http.Header {
 
 func (c *SpacesMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2350,7 +2358,7 @@ func (c *SpacesMessagesGetCall) Header() http.Header {
 
 func (c *SpacesMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2495,7 +2503,7 @@ func (c *SpacesMessagesUpdateCall) Header() http.Header {
 
 func (c *SpacesMessagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

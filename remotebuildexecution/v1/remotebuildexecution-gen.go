@@ -1820,6 +1820,8 @@ type GoogleDevtoolsRemotebuildbotCommandStatus struct {
 	//   "DOCKER_INVALID_ULIMIT" - The docker ulimit is not valid.
 	//   "DOCKER_UNKNOWN_RUNTIME" - The docker runtime is unknown.
 	//   "DOCKER_UNKNOWN_CAPABILITY" - The docker capability is unknown.
+	//   "DOCKER_UNKNOWN_ERROR" - The command failed with unknown docker
+	// errors.
 	Code string `json:"code,omitempty"`
 
 	// Message: The error message.
@@ -3572,7 +3574,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3661,7 +3663,7 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*GoogleBytestreamM
 	//     "resourceName": {
 	//       "description": "Name of the media that is being downloaded.  See\nReadRequest.resource_name.",
 	//       "location": "path",
-	//       "pattern": "^.+$",
+	//       "pattern": "^.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3765,7 +3767,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3879,7 +3881,7 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*GoogleBytestreamMed
 	//     "resourceName": {
 	//       "description": "Name of the media that is being downloaded.  See\nReadRequest.resource_name.",
 	//       "location": "path",
-	//       "pattern": "^.+$",
+	//       "pattern": "^.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3962,7 +3964,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4037,7 +4039,7 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobuf
 	//     "name": {
 	//       "description": "The name of the operation resource to be cancelled.",
 	//       "location": "path",
-	//       "pattern": "^operations/.+$",
+	//       "pattern": "^operations/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -4106,7 +4108,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4176,7 +4178,7 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobuf
 	//     "name": {
 	//       "description": "The name of the operation resource to be deleted.",
 	//       "location": "path",
-	//       "pattern": "^operations/.+$",
+	//       "pattern": "^operations/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -4284,7 +4286,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4470,7 +4472,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

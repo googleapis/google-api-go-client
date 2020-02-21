@@ -388,7 +388,7 @@
       }
     }
   },
-  "revision": "20200211",
+  "revision": "20200218",
   "rootUrl": "https://admin-remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -1027,7 +1027,8 @@
             "DOCKER_CREATE_CONTAINER_ERROR",
             "DOCKER_INVALID_ULIMIT",
             "DOCKER_UNKNOWN_RUNTIME",
-            "DOCKER_UNKNOWN_CAPABILITY"
+            "DOCKER_UNKNOWN_CAPABILITY",
+            "DOCKER_UNKNOWN_ERROR"
           ],
           "enumDescriptions": [
             "The command succeeded.",
@@ -1057,7 +1058,8 @@
             "The bot couldn't start the container.",
             "The docker ulimit is not valid.",
             "The docker runtime is unknown.",
-            "The docker capability is unknown."
+            "The docker capability is unknown.",
+            "The command failed with unknown docker errors."
           ],
           "type": "string"
         },

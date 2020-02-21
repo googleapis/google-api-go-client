@@ -1062,7 +1062,7 @@ func (c *AgentUsersDeleteCall) Header() http.Header {
 
 func (c *AgentUsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1132,7 +1132,7 @@ func (c *AgentUsersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//     "agentUserId": {
 	//       "description": "Required. Third-party user ID.",
 	//       "location": "path",
-	//       "pattern": "^agentUsers/.+$",
+	//       "pattern": "^agentUsers/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -1199,7 +1199,7 @@ func (c *DevicesQueryCall) Header() http.Header {
 
 func (c *DevicesQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1344,7 +1344,7 @@ func (c *DevicesReportStateAndNotificationCall) Header() http.Header {
 
 func (c *DevicesReportStateAndNotificationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1476,7 +1476,7 @@ func (c *DevicesRequestSyncCall) Header() http.Header {
 
 func (c *DevicesRequestSyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1604,7 +1604,7 @@ func (c *DevicesSyncCall) Header() http.Header {
 
 func (c *DevicesSyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

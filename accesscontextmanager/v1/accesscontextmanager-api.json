@@ -412,11 +412,67 @@
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
+            },
+            "replaceAll": {
+              "description": "Replace all existing Access Levels in an Access\nPolicy with\nthe Access Levels provided. This\nis done within one transaction. The longrunning operation from this RPC\nwill have a successful status once all replacements have propagated to\nlong-lasting storage. Replacements containing errors will result in an\nerror response for the first error encountered and the transaction will be\ncancelled. Operation.response field will contain\nReplaceAccessLevelsResponse. Removing Access Levels contained in existing\nService Perimeters will result in\nerror.",
+              "flatPath": "v1/accessPolicies/{accessPoliciesId}/accessLevels:replaceAll",
+              "httpMethod": "POST",
+              "id": "accesscontextmanager.accessPolicies.accessLevels.replaceAll",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. Resource name for the access policy which owns these\nAccess Levels.\n\nFormat: `accessPolicies/{policy_id}`",
+                  "location": "path",
+                  "pattern": "^accessPolicies/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/accessLevels:replaceAll",
+              "request": {
+                "$ref": "ReplaceAccessLevelsRequest"
+              },
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
             }
           }
         },
         "servicePerimeters": {
           "methods": {
+            "commit": {
+              "description": "Commit the dry-run spec for all the Service Perimeters in an\nAccess Policy.\nA commit operation on a Service Perimeter involves copying its `spec` field\nto that Service Perimeter's `status` field. Only Service Perimeters with\n`use_explicit_dry_run_spec` field set to true are affected by a commit\noperation. The longrunning operation from this RPC will have a successful\nstatus once the dry-run specs for all the Service Perimeters have been\ncommitted. If a commit fails, it will cause the longrunning operation to\nreturn an error response and the entire commit operation will be cancelled.\nWhen successful, Operation.response field will contain\nCommitServicePerimetersResponse. The `dry_run` and the `spec` fields will\nbe cleared after a successful commit operation.",
+              "flatPath": "v1/accessPolicies/{accessPoliciesId}/servicePerimeters:commit",
+              "httpMethod": "POST",
+              "id": "accesscontextmanager.accessPolicies.servicePerimeters.commit",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. Resource name for the parent Access Policy which owns all\nService Perimeters in scope for\nthe commit operation.\n\nFormat: `accessPolicies/{policy_id}`",
+                  "location": "path",
+                  "pattern": "^accessPolicies/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/servicePerimeters:commit",
+              "request": {
+                "$ref": "CommitServicePerimetersRequest"
+              },
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
             "create": {
               "description": "Create an Service Perimeter. The\nlongrunning operation from this RPC will have a successful status once the\nService Perimeter has\npropagated to long-lasting storage. Service Perimeters containing\nerrors will result in an error response for the first error encountered.",
               "flatPath": "v1/accessPolicies/{accessPoliciesId}/servicePerimeters",
@@ -564,6 +620,34 @@
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
+            },
+            "replaceAll": {
+              "description": "Replace all existing Service Perimeters in an\nAccess Policy\nwith the Service Perimeters provided.\nThis is done within one transaction. The longrunning operation from this\nRPC will have a successful status once all replacements have propagated to\nlong-lasting storage. Replacements containing errors will result in an\nerror response for the first error encountered and the transaction will be\ncancelled. Operation.response field will contain\nReplaceServicePerimetersResponse.",
+              "flatPath": "v1/accessPolicies/{accessPoliciesId}/servicePerimeters:replaceAll",
+              "httpMethod": "POST",
+              "id": "accesscontextmanager.accessPolicies.servicePerimeters.replaceAll",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. Resource name for the access policy which owns these\nService Perimeters.\n\nFormat: `accessPolicies/{policy_id}`",
+                  "location": "path",
+                  "pattern": "^accessPolicies/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/servicePerimeters:replaceAll",
+              "request": {
+                "$ref": "ReplaceServicePerimetersRequest"
+              },
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
             }
           }
         }
@@ -583,7 +667,7 @@
             "name": {
               "description": "The name of the operation resource to be cancelled.",
               "location": "path",
-              "pattern": "^operations/.+$",
+              "pattern": "^operations/.*$",
               "required": true,
               "type": "string"
             }
@@ -611,7 +695,7 @@
             "name": {
               "description": "The name of the operation resource to be deleted.",
               "location": "path",
-              "pattern": "^operations/.+$",
+              "pattern": "^operations/.*$",
               "required": true,
               "type": "string"
             }
@@ -636,7 +720,7 @@
             "name": {
               "description": "The name of the operation resource.",
               "location": "path",
-              "pattern": "^operations/.+$",
+              "pattern": "^operations/.*$",
               "required": true,
               "type": "string"
             }
@@ -693,11 +777,11 @@
       }
     }
   },
-  "revision": "20200210",
+  "revision": "20200215",
   "rootUrl": "https://accesscontextmanager.googleapis.com/",
   "schemas": {
     "AccessLevel": {
-      "description": "An `AccessLevel` is a label that can be applied to requests to GCP services,\nalong with a list of requirements necessary for the label to be applied.",
+      "description": "An `AccessLevel` is a label that can be applied to requests to Google Cloud\nservices, along with a list of requirements necessary for the label to be\napplied.",
       "id": "AccessLevel",
       "properties": {
         "basic": {
@@ -734,7 +818,7 @@
       "type": "object"
     },
     "AccessPolicy": {
-      "description": "`AccessPolicy` is a container for `AccessLevels` (which define the necessary\nattributes to use GCP services) and `ServicePerimeters` (which define regions\nof services able to freely pass data within a perimeter). An access policy is\nglobally visible within an organization, and the restrictions it specifies\napply to all projects within an organization.",
+      "description": "`AccessPolicy` is a container for `AccessLevels` (which define the necessary\nattributes to use Google Cloud services) and `ServicePerimeters` (which\ndefine regions of services able to freely pass data within a perimeter). An\naccess policy is globally visible within an organization, and the\nrestrictions it specifies apply to all projects within an organization.",
       "id": "AccessPolicy",
       "properties": {
         "createTime": {
@@ -792,6 +876,31 @@
       "description": "The request message for Operations.CancelOperation.",
       "id": "CancelOperationRequest",
       "properties": {},
+      "type": "object"
+    },
+    "CommitServicePerimetersRequest": {
+      "description": "A request to commit dry-run specs in all Service Perimeters belonging to\nan Access Policy.",
+      "id": "CommitServicePerimetersRequest",
+      "properties": {
+        "etag": {
+          "description": "Optional. The etag for the version of the Access Policy that this\ncommit operation is to be performed on. If, at the time of commit, the\netag for the Access Policy stored in Access Context Manager is different\nfrom the specified etag, then the commit operation will not be performed\nand the call will fail. This field is not required. If etag is not\nprovided, the operation will be performed as if a valid etag is provided.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CommitServicePerimetersResponse": {
+      "description": "A response to CommitServicePerimetersRequest. This will be put inside of\nOperation.response field.",
+      "id": "CommitServicePerimetersResponse",
+      "properties": {
+        "servicePerimeters": {
+          "description": "List of all the Service Perimeter instances in\nthe Access Policy.",
+          "items": {
+            "$ref": "ServicePerimeter"
+          },
+          "type": "array"
+        }
+      },
       "type": "object"
     },
     "Condition": {
@@ -1085,8 +1194,72 @@
       },
       "type": "object"
     },
+    "ReplaceAccessLevelsRequest": {
+      "description": "A request to replace all existing Access Levels in an Access Policy with\nthe Access Levels provided. This is done within one transaction.",
+      "id": "ReplaceAccessLevelsRequest",
+      "properties": {
+        "accessLevels": {
+          "description": "Required. The desired Access Levels that should\nreplace all existing Access Levels in the\nAccess Policy.",
+          "items": {
+            "$ref": "AccessLevel"
+          },
+          "type": "array"
+        },
+        "etag": {
+          "description": "Optional. The etag for the version of the Access Policy that this\nreplace operation is to be performed on. If, at the time of replace, the\netag for the Access Policy stored in Access Context Manager is different\nfrom the specified etag, then the replace operation will not be performed\nand the call will fail. This field is not required. If etag is not\nprovided, the operation will be performed as if a valid etag is provided.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ReplaceAccessLevelsResponse": {
+      "description": "A response to ReplaceAccessLevelsRequest. This will be put inside of\nOperation.response field.",
+      "id": "ReplaceAccessLevelsResponse",
+      "properties": {
+        "accessLevels": {
+          "description": "List of the Access Level instances.",
+          "items": {
+            "$ref": "AccessLevel"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ReplaceServicePerimetersRequest": {
+      "description": "A request to replace all existing Service Perimeters in an Access Policy\nwith the Service Perimeters provided. This is done within one transaction.",
+      "id": "ReplaceServicePerimetersRequest",
+      "properties": {
+        "etag": {
+          "description": "Optional. The etag for the version of the Access Policy that this\nreplace operation is to be performed on. If, at the time of replace, the\netag for the Access Policy stored in Access Context Manager is different\nfrom the specified etag, then the replace operation will not be performed\nand the call will fail. This field is not required. If etag is not\nprovided, the operation will be performed as if a valid etag is provided.",
+          "type": "string"
+        },
+        "servicePerimeters": {
+          "description": "Required. The desired Service Perimeters that should\nreplace all existing Service Perimeters in the\nAccess Policy.",
+          "items": {
+            "$ref": "ServicePerimeter"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ReplaceServicePerimetersResponse": {
+      "description": "A response to ReplaceServicePerimetersRequest. This will be put inside of\nOperation.response field.",
+      "id": "ReplaceServicePerimetersResponse",
+      "properties": {
+        "servicePerimeters": {
+          "description": "List of the Service Perimeter instances.",
+          "items": {
+            "$ref": "ServicePerimeter"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "ServicePerimeter": {
-      "description": "`ServicePerimeter` describes a set of GCP resources which can freely import\nand export data amongst themselves, but not export outside of the\n`ServicePerimeter`. If a request with a source within this `ServicePerimeter`\nhas a target outside of the `ServicePerimeter`, the request will be blocked.\nOtherwise the request is allowed. There are two types of Service Perimeter -\nRegular and Bridge. Regular Service Perimeters cannot overlap, a single GCP\nproject can only belong to a single regular Service Perimeter. Service\nPerimeter Bridges can contain only GCP projects as members, a single GCP\nproject may belong to multiple Service Perimeter Bridges.",
+      "description": "`ServicePerimeter` describes a set of Google Cloud resources which can freely\nimport and export data amongst themselves, but not export outside of the\n`ServicePerimeter`. If a request with a source within this `ServicePerimeter`\nhas a target outside of the `ServicePerimeter`, the request will be blocked.\nOtherwise the request is allowed. There are two types of Service Perimeter -\nRegular and Bridge. Regular Service Perimeters cannot overlap, a single\nGoogle Cloud project can only belong to a single regular Service Perimeter.\nService Perimeter Bridges can contain only Google Cloud projects as members,\na single Google Cloud project may belong to multiple Service Perimeter\nBridges.",
       "id": "ServicePerimeter",
       "properties": {
         "createTime": {
@@ -1114,6 +1287,10 @@
           ],
           "type": "string"
         },
+        "spec": {
+          "$ref": "ServicePerimeterConfig",
+          "description": "Proposed (or dry run) ServicePerimeter configuration. This configuration\nallows to specify and test ServicePerimeter configuration without enforcing\nactual access restrictions. Only allowed to be set when the\n\"use_explicit_dry_run_spec\" flag is set."
+        },
         "status": {
           "$ref": "ServicePerimeterConfig",
           "description": "Current ServicePerimeter configuration. Specifies sets of resources,\nrestricted services and access levels that determine perimeter\ncontent and boundaries."
@@ -1126,34 +1303,42 @@
           "description": "Output only. Time the `ServicePerimeter` was updated in UTC.",
           "format": "google-datetime",
           "type": "string"
+        },
+        "useExplicitDryRunSpec": {
+          "description": "Use explicit dry run spec flag. Ordinarily, a dry-run spec implicitly\nexists  for all Service Perimeters, and that spec is identical to the\nstatus for those Service Perimeters. When this flag is set, it inhibits the\ngeneration of the implicit spec, thereby allowing the user to explicitly\nprovide a configuration (\"spec\") to use in a dry-run version of the Service\nPerimeter. This allows the user to test changes to the enforced config\n(\"status\") without actually enforcing them. This testing is done through\nanalyzing the differences between currently enforced and suggested\nrestrictions. use_explicit_dry_run_spec must bet set to True if any of the\nfields in the spec are set to non-default values.",
+          "type": "boolean"
         }
       },
       "type": "object"
     },
     "ServicePerimeterConfig": {
-      "description": "`ServicePerimeterConfig` specifies a set of GCP resources that describe\nspecific Service Perimeter configuration.",
+      "description": "`ServicePerimeterConfig` specifies a set of Google Cloud resources that\ndescribe specific Service Perimeter configuration.",
       "id": "ServicePerimeterConfig",
       "properties": {
         "accessLevels": {
-          "description": "A list of `AccessLevel` resource names that allow resources within the\n`ServicePerimeter` to be accessed from the internet. `AccessLevels` listed\nmust be in the same policy as this `ServicePerimeter`. Referencing a\nnonexistent `AccessLevel` is a syntax error. If no `AccessLevel` names are\nlisted, resources within the perimeter can only be accessed via GCP calls\nwith request origins within the perimeter. Example:\n`\"accessPolicies/MY_POLICY/accessLevels/MY_LEVEL\"`.\nFor Service Perimeter Bridge, must be empty.",
+          "description": "A list of `AccessLevel` resource names that allow resources within the\n`ServicePerimeter` to be accessed from the internet. `AccessLevels` listed\nmust be in the same policy as this `ServicePerimeter`. Referencing a\nnonexistent `AccessLevel` is a syntax error. If no `AccessLevel` names are\nlisted, resources within the perimeter can only be accessed via Google\nCloud calls with request origins within the perimeter. Example:\n`\"accessPolicies/MY_POLICY/accessLevels/MY_LEVEL\"`.\nFor Service Perimeter Bridge, must be empty.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "resources": {
-          "description": "A list of GCP resources that are inside of the service perimeter.\nCurrently only projects are allowed. Format: `projects/{project_number}`",
+          "description": "A list of Google Cloud resources that are inside of the service perimeter.\nCurrently only projects are allowed. Format: `projects/{project_number}`",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "restrictedServices": {
-          "description": "GCP services that are subject to the Service Perimeter restrictions. For\nexample, if `storage.googleapis.com` is specified, access to the storage\nbuckets inside the perimeter must meet the perimeter's access restrictions.",
+          "description": "Google Cloud services that are subject to the Service Perimeter\nrestrictions. For example, if `storage.googleapis.com` is specified, access\nto the storage buckets inside the perimeter must meet the perimeter's\naccess restrictions.",
           "items": {
             "type": "string"
           },
           "type": "array"
+        },
+        "vpcAccessibleServices": {
+          "$ref": "VpcAccessibleServices",
+          "description": "Configuration for within Perimeter allowed APIs."
         }
       },
       "type": "object"
@@ -1181,6 +1366,24 @@
         "message": {
           "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "VpcAccessibleServices": {
+      "description": "Specifies how APIs are allowed to communicate within the Service\nPerimeter.",
+      "id": "VpcAccessibleServices",
+      "properties": {
+        "allowedServices": {
+          "description": "The list of APIs usable within the Service Perimeter. Must be empty\nunless 'enable_restriction' is True.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "enableRestriction": {
+          "description": "Whether to restrict API calls within the Service Perimeter to the list of\nAPIs specified in 'allowed_services'.",
+          "type": "boolean"
         }
       },
       "type": "object"

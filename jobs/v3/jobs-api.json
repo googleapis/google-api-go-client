@@ -25,6 +25,7 @@
   },
   "id": "jobs:v3",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://jobs.mtls.googleapis.com/",
   "name": "jobs",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -632,7 +633,7 @@
       }
     }
   },
-  "revision": "20200109",
+  "revision": "20200219",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {

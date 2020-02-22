@@ -2982,13 +2982,14 @@ type MetricAbsence struct {
 	// Duration.nanos field is ignored.
 	Duration string `json:"duration,omitempty"`
 
-	// Filter: A filter that identifies which time series should be compared
-	// with the threshold.The filter is similar to the one that is specified
-	// in the ListTimeSeries request (that call is useful to verify the time
-	// series that will be retrieved / processed) and must specify the
-	// metric type and optionally may contain restrictions on resource type,
-	// resource labels, and metric labels. This field may not exceed 2048
-	// Unicode characters in length.
+	// Filter: A filter (https://cloud.google.com/monitoring/api/v3/filters)
+	// that identifies which time series should be compared with the
+	// threshold.The filter is similar to the one that is specified in the
+	// ListTimeSeries request (that call is useful to verify the time series
+	// that will be retrieved / processed) and must specify the metric type
+	// and optionally may contain restrictions on resource type, resource
+	// labels, and metric labels. This field may not exceed 2048 Unicode
+	// characters in length.
 	Filter string `json:"filter,omitempty"`
 
 	// Trigger: The number/percent of time series for which the comparison
@@ -3397,13 +3398,15 @@ type MetricThreshold struct {
 	// and produce time series that have the same periodicity and labels.
 	DenominatorAggregations []*Aggregation `json:"denominatorAggregations,omitempty"`
 
-	// DenominatorFilter: A filter that identifies a time series that should
-	// be used as the denominator of a ratio that will be compared with the
-	// threshold. If a denominator_filter is specified, the time series
-	// specified by the filter field will be used as the numerator.The
-	// filter must specify the metric type and optionally may contain
-	// restrictions on resource type, resource labels, and metric labels.
-	// This field may not exceed 2048 Unicode characters in length.
+	// DenominatorFilter: A filter
+	// (https://cloud.google.com/monitoring/api/v3/filters) that identifies
+	// a time series that should be used as the denominator of a ratio that
+	// will be compared with the threshold. If a denominator_filter is
+	// specified, the time series specified by the filter field will be used
+	// as the numerator.The filter must specify the metric type and
+	// optionally may contain restrictions on resource type, resource
+	// labels, and metric labels. This field may not exceed 2048 Unicode
+	// characters in length.
 	DenominatorFilter string `json:"denominatorFilter,omitempty"`
 
 	// Duration: The amount of time that a time series must violate the
@@ -3418,13 +3421,14 @@ type MetricThreshold struct {
 	// alerted on quickly.
 	Duration string `json:"duration,omitempty"`
 
-	// Filter: A filter that identifies which time series should be compared
-	// with the threshold.The filter is similar to the one that is specified
-	// in the ListTimeSeries request (that call is useful to verify the time
-	// series that will be retrieved / processed) and must specify the
-	// metric type and optionally may contain restrictions on resource type,
-	// resource labels, and metric labels. This field may not exceed 2048
-	// Unicode characters in length.
+	// Filter: A filter (https://cloud.google.com/monitoring/api/v3/filters)
+	// that identifies which time series should be compared with the
+	// threshold.The filter is similar to the one that is specified in the
+	// ListTimeSeries request (that call is useful to verify the time series
+	// that will be retrieved / processed) and must specify the metric type
+	// and optionally may contain restrictions on resource type, resource
+	// labels, and metric labels. This field may not exceed 2048 Unicode
+	// characters in length.
 	Filter string `json:"filter,omitempty"`
 
 	// ThresholdValue: A value against which to compare the time series.
@@ -5191,7 +5195,7 @@ func (c *ProjectsAlertPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5330,7 +5334,7 @@ func (c *ProjectsAlertPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5472,7 +5476,7 @@ func (c *ProjectsAlertPoliciesGetCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5583,7 +5587,8 @@ func (r *ProjectsAlertPoliciesService) List(name string) *ProjectsAlertPoliciesL
 
 // Filter sets the optional parameter "filter": If provided, this field
 // specifies the criteria that must be met by alert policies to be
-// included in the response.For more details, see sorting and filtering.
+// included in the response.For more details, see sorting and filtering
+// (https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).
 func (c *ProjectsAlertPoliciesListCall) Filter(filter string) *ProjectsAlertPoliciesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5593,7 +5598,8 @@ func (c *ProjectsAlertPoliciesListCall) Filter(filter string) *ProjectsAlertPoli
 // of fields by which to sort the result. Supports the same set of field
 // references as the filter field. Entries can be prefixed with a minus
 // sign to sort by the field in descending order.For more details, see
-// sorting and filtering.
+// sorting and filtering
+// (https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).
 func (c *ProjectsAlertPoliciesListCall) OrderBy(orderBy string) *ProjectsAlertPoliciesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -5652,7 +5658,7 @@ func (c *ProjectsAlertPoliciesListCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5723,7 +5729,7 @@ func (c *ProjectsAlertPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListA
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "If provided, this field specifies the criteria that must be met by alert policies to be included in the response.For more details, see sorting and filtering.",
+	//       "description": "If provided, this field specifies the criteria that must be met by alert policies to be included in the response.For more details, see sorting and filtering (https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5735,7 +5741,7 @@ func (c *ProjectsAlertPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListA
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "A comma-separated list of fields by which to sort the result. Supports the same set of field references as the filter field. Entries can be prefixed with a minus sign to sort by the field in descending order.For more details, see sorting and filtering.",
+	//       "description": "A comma-separated list of fields by which to sort the result. Supports the same set of field references as the filter field. Entries can be prefixed with a minus sign to sort by the field in descending order.For more details, see sorting and filtering (https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5858,7 +5864,7 @@ func (c *ProjectsAlertPoliciesPatchCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6008,7 +6014,7 @@ func (c *ProjectsCollectdTimeSeriesCreateCall) Header() http.Header {
 
 func (c *ProjectsCollectdTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6157,7 +6163,7 @@ func (c *ProjectsGroupsCreateCall) Header() http.Header {
 
 func (c *ProjectsGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6310,7 +6316,7 @@ func (c *ProjectsGroupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6457,7 +6463,7 @@ func (c *ProjectsGroupsGetCall) Header() http.Header {
 
 func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6655,7 +6661,7 @@ func (c *ProjectsGroupsListCall) Header() http.Header {
 
 func (c *ProjectsGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6847,7 +6853,7 @@ func (c *ProjectsGroupsUpdateCall) Header() http.Header {
 
 func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6966,6 +6972,7 @@ func (r *ProjectsGroupsMembersService) List(name string) *ProjectsGroupsMembersL
 }
 
 // Filter sets the optional parameter "filter": An optional list filter
+// (https://cloud.google.com/monitoring/api/learn_more#filtering)
 // describing the members to be returned. The filter may reference the
 // type, labels, and metadata of monitored resources that comprise the
 // group. For example, to return only resources representing Compute
@@ -7045,7 +7052,7 @@ func (c *ProjectsGroupsMembersListCall) Header() http.Header {
 
 func (c *ProjectsGroupsMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7116,7 +7123,7 @@ func (c *ProjectsGroupsMembersListCall) Do(opts ...googleapi.CallOption) (*ListG
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An optional list filter describing the members to be returned. The filter may reference the type, labels, and metadata of monitored resources that comprise the group. For example, to return only resources representing Compute Engine VM instances, use this filter:\n`resource.type = \"gce_instance\"`\n",
+	//       "description": "An optional list filter (https://cloud.google.com/monitoring/api/learn_more#filtering) describing the members to be returned. The filter may reference the type, labels, and metadata of monitored resources that comprise the group. For example, to return only resources representing Compute Engine VM instances, use this filter:\n`resource.type = \"gce_instance\"`\n",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7197,7 +7204,8 @@ type ProjectsMetricDescriptorsCreateCall struct {
 }
 
 // Create: Creates a new metric descriptor. User-created metric
-// descriptors define custom metrics.
+// descriptors define custom metrics
+// (https://cloud.google.com/monitoring/custom-metrics).
 func (r *ProjectsMetricDescriptorsService) Create(name string, metricdescriptor *MetricDescriptor) *ProjectsMetricDescriptorsCreateCall {
 	c := &ProjectsMetricDescriptorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7232,7 +7240,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7296,7 +7304,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new metric descriptor. User-created metric descriptors define custom metrics.",
+	//   "description": "Creates a new metric descriptor. User-created metric descriptors define custom metrics (https://cloud.google.com/monitoring/custom-metrics).",
 	//   "flatPath": "v3/projects/{projectsId}/metricDescriptors",
 	//   "httpMethod": "POST",
 	//   "id": "monitoring.projects.metricDescriptors.create",
@@ -7339,7 +7347,7 @@ type ProjectsMetricDescriptorsDeleteCall struct {
 }
 
 // Delete: Deletes a metric descriptor. Only user-created custom metrics
-// can be deleted.
+// (https://cloud.google.com/monitoring/custom-metrics) can be deleted.
 func (r *ProjectsMetricDescriptorsService) Delete(name string) *ProjectsMetricDescriptorsDeleteCall {
 	c := &ProjectsMetricDescriptorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7373,7 +7381,7 @@ func (c *ProjectsMetricDescriptorsDeleteCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7432,7 +7440,7 @@ func (c *ProjectsMetricDescriptorsDeleteCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a metric descriptor. Only user-created custom metrics can be deleted.",
+	//   "description": "Deletes a metric descriptor. Only user-created custom metrics (https://cloud.google.com/monitoring/custom-metrics) can be deleted.",
 	//   "flatPath": "v3/projects/{projectsId}/metricDescriptors/{metricDescriptorsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "monitoring.projects.metricDescriptors.delete",
@@ -7443,7 +7451,7 @@ func (c *ProjectsMetricDescriptorsDeleteCall) Do(opts ...googleapi.CallOption) (
 	//     "name": {
 	//       "description": "Required. The metric descriptor on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]\nAn example of [METRIC_ID] is: \"custom.googleapis.com/my_test_metric\".",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/metricDescriptors/.+$",
+	//       "pattern": "^projects/[^/]+/metricDescriptors/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -7516,7 +7524,7 @@ func (c *ProjectsMetricDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7589,7 +7597,7 @@ func (c *ProjectsMetricDescriptorsGetCall) Do(opts ...googleapi.CallOption) (*Me
 	//     "name": {
 	//       "description": "Required. The metric descriptor on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]\nAn example value of [METRIC_ID] is \"compute.googleapis.com/instance/disk/read_bytes_count\".",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/metricDescriptors/.+$",
+	//       "pattern": "^projects/[^/]+/metricDescriptors/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -7629,9 +7637,11 @@ func (r *ProjectsMetricDescriptorsService) List(name string) *ProjectsMetricDesc
 
 // Filter sets the optional parameter "filter": If this field is empty,
 // all custom and system-defined metric descriptors are returned.
-// Otherwise, the filter specifies which metric descriptors are to be
-// returned. For example, the following filter matches all custom
-// metrics:
+// Otherwise, the filter
+// (https://cloud.google.com/monitoring/api/v3/filters) specifies which
+// metric descriptors are to be returned. For example, the following
+// filter matches all custom metrics
+// (https://cloud.google.com/monitoring/custom-metrics):
 // metric.type = starts_with("custom.googleapis.com/")
 func (c *ProjectsMetricDescriptorsListCall) Filter(filter string) *ProjectsMetricDescriptorsListCall {
 	c.urlParams_.Set("filter", filter)
@@ -7691,7 +7701,7 @@ func (c *ProjectsMetricDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7762,7 +7772,7 @@ func (c *ProjectsMetricDescriptorsListCall) Do(opts ...googleapi.CallOption) (*L
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "If this field is empty, all custom and system-defined metric descriptors are returned. Otherwise, the filter specifies which metric descriptors are to be returned. For example, the following filter matches all custom metrics:\nmetric.type = starts_with(\"custom.googleapis.com/\")\n",
+	//       "description": "If this field is empty, all custom and system-defined metric descriptors are returned. Otherwise, the filter (https://cloud.google.com/monitoring/api/v3/filters) specifies which metric descriptors are to be returned. For example, the following filter matches all custom metrics (https://cloud.google.com/monitoring/custom-metrics):\nmetric.type = starts_with(\"custom.googleapis.com/\")\n",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7876,7 +7886,7 @@ func (c *ProjectsMonitoredResourceDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsMonitoredResourceDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7949,7 +7959,7 @@ func (c *ProjectsMonitoredResourceDescriptorsGetCall) Do(opts ...googleapi.CallO
 	//     "name": {
 	//       "description": "Required. The monitored resource descriptor to get. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/monitoredResourceDescriptors/[RESOURCE_TYPE]\nThe [RESOURCE_TYPE] is a predefined type, such as cloudsql_database.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/monitoredResourceDescriptors/.+$",
+	//       "pattern": "^projects/[^/]+/monitoredResourceDescriptors/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -7988,9 +7998,10 @@ func (r *ProjectsMonitoredResourceDescriptorsService) List(name string) *Project
 }
 
 // Filter sets the optional parameter "filter": An optional filter
-// describing the descriptors to be returned. The filter can reference
-// the descriptor's type and labels. For example, the following filter
-// returns only Google Compute Engine descriptors that have an id
+// (https://cloud.google.com/monitoring/api/v3/filters) describing the
+// descriptors to be returned. The filter can reference the descriptor's
+// type and labels. For example, the following filter returns only
+// Google Compute Engine descriptors that have an id
 // label:
 // resource.type = starts_with("gce_") AND resource.label:id
 func (c *ProjectsMonitoredResourceDescriptorsListCall) Filter(filter string) *ProjectsMonitoredResourceDescriptorsListCall {
@@ -8051,7 +8062,7 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsMonitoredResourceDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8124,7 +8135,7 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An optional filter describing the descriptors to be returned. The filter can reference the descriptor's type and labels. For example, the following filter returns only Google Compute Engine descriptors that have an id label:\nresource.type = starts_with(\"gce_\") AND resource.label:id\n",
+	//       "description": "An optional filter (https://cloud.google.com/monitoring/api/v3/filters) describing the descriptors to be returned. The filter can reference the descriptor's type and labels. For example, the following filter returns only Google Compute Engine descriptors that have an id label:\nresource.type = starts_with(\"gce_\") AND resource.label:id\n",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8239,7 +8250,7 @@ func (c *ProjectsNotificationChannelDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8403,7 +8414,7 @@ func (c *ProjectsNotificationChannelDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8576,7 +8587,7 @@ func (c *ProjectsNotificationChannelsCreateCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8725,7 +8736,7 @@ func (c *ProjectsNotificationChannelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8877,7 +8888,7 @@ func (c *ProjectsNotificationChannelsGetCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9034,7 +9045,7 @@ func (c *ProjectsNotificationChannelsGetVerificationCodeCall) Header() http.Head
 
 func (c *ProjectsNotificationChannelsGetVerificationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9153,7 +9164,8 @@ func (r *ProjectsNotificationChannelsService) List(name string) *ProjectsNotific
 // Filter sets the optional parameter "filter": If provided, this field
 // specifies the criteria that must be met by notification channels to
 // be included in the response.For more details, see sorting and
-// filtering.
+// filtering
+// (https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).
 func (c *ProjectsNotificationChannelsListCall) Filter(filter string) *ProjectsNotificationChannelsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -9163,7 +9175,8 @@ func (c *ProjectsNotificationChannelsListCall) Filter(filter string) *ProjectsNo
 // of fields by which to sort the result. Supports the same set of
 // fields as in filter. Entries can be prefixed with a minus sign to
 // sort in descending rather than ascending order.For more details, see
-// sorting and filtering.
+// sorting and filtering
+// (https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).
 func (c *ProjectsNotificationChannelsListCall) OrderBy(orderBy string) *ProjectsNotificationChannelsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -9222,7 +9235,7 @@ func (c *ProjectsNotificationChannelsListCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9293,7 +9306,7 @@ func (c *ProjectsNotificationChannelsListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "If provided, this field specifies the criteria that must be met by notification channels to be included in the response.For more details, see sorting and filtering.",
+	//       "description": "If provided, this field specifies the criteria that must be met by notification channels to be included in the response.For more details, see sorting and filtering (https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9305,7 +9318,7 @@ func (c *ProjectsNotificationChannelsListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "A comma-separated list of fields by which to sort the result. Supports the same set of fields as in filter. Entries can be prefixed with a minus sign to sort in descending rather than ascending order.For more details, see sorting and filtering.",
+	//       "description": "A comma-separated list of fields by which to sort the result. Supports the same set of fields as in filter. Entries can be prefixed with a minus sign to sort in descending rather than ascending order.For more details, see sorting and filtering (https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9409,7 +9422,7 @@ func (c *ProjectsNotificationChannelsPatchCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9558,7 +9571,7 @@ func (c *ProjectsNotificationChannelsSendVerificationCodeCall) Header() http.Hea
 
 func (c *ProjectsNotificationChannelsSendVerificationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9701,7 +9714,7 @@ func (c *ProjectsNotificationChannelsVerifyCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsVerifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9845,7 +9858,7 @@ func (c *ProjectsTimeSeriesCreateCall) Header() http.Header {
 
 func (c *ProjectsTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10069,9 +10082,10 @@ func (c *ProjectsTimeSeriesListCall) AggregationPerSeriesAligner(aggregationPerS
 }
 
 // Filter sets the optional parameter "filter": Required. A monitoring
-// filter that specifies which time series should be returned. The
-// filter must specify a single metric type, and can additionally
-// specify metric labels and other information. For example:
+// filter (https://cloud.google.com/monitoring/api/v3/filters) that
+// specifies which time series should be returned. The filter must
+// specify a single metric type, and can additionally specify metric
+// labels and other information. For example:
 // metric.type = "compute.googleapis.com/instance/cpu/usage_time" AND
 //     metric.labels.instance_name = "my-instance-name"
 func (c *ProjectsTimeSeriesListCall) Filter(filter string) *ProjectsTimeSeriesListCall {
@@ -10171,7 +10185,7 @@ func (c *ProjectsTimeSeriesListCall) Header() http.Header {
 
 func (c *ProjectsTimeSeriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10301,7 +10315,7 @@ func (c *ProjectsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTime
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Required. A monitoring filter that specifies which time series should be returned. The filter must specify a single metric type, and can additionally specify metric labels and other information. For example:\nmetric.type = \"compute.googleapis.com/instance/cpu/usage_time\" AND\n    metric.labels.instance_name = \"my-instance-name\"\n",
+	//       "description": "Required. A monitoring filter (https://cloud.google.com/monitoring/api/v3/filters) that specifies which time series should be returned. The filter must specify a single metric type, and can additionally specify metric labels and other information. For example:\nmetric.type = \"compute.googleapis.com/instance/cpu/usage_time\" AND\n    metric.labels.instance_name = \"my-instance-name\"\n",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10430,7 +10444,7 @@ func (c *ProjectsUptimeCheckConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10572,7 +10586,7 @@ func (c *ProjectsUptimeCheckConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10714,7 +10728,7 @@ func (c *ProjectsUptimeCheckConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10880,7 +10894,7 @@ func (c *ProjectsUptimeCheckConfigsListCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11062,7 +11076,7 @@ func (c *ProjectsUptimeCheckConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11217,7 +11231,7 @@ func (c *ServicesCreateCall) Header() http.Header {
 
 func (c *ServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11361,7 +11375,7 @@ func (c *ServicesDeleteCall) Header() http.Header {
 
 func (c *ServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11503,7 +11517,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11685,7 +11699,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11866,7 +11880,7 @@ func (c *ServicesPatchCall) Header() http.Header {
 
 func (c *ServicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12022,7 +12036,7 @@ func (c *ServicesServiceLevelObjectivesCreateCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12166,7 +12180,7 @@ func (c *ServicesServiceLevelObjectivesDeleteCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12323,7 +12337,7 @@ func (c *ServicesServiceLevelObjectivesGetCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12518,7 +12532,7 @@ func (c *ServicesServiceLevelObjectivesListCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12710,7 +12724,7 @@ func (c *ServicesServiceLevelObjectivesPatchCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12884,7 +12898,7 @@ func (c *UptimeCheckIpsListCall) Header() http.Header {
 
 func (c *UptimeCheckIpsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

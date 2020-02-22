@@ -22,7 +22,6 @@
   },
   "id": "cloudasset:v1",
   "kind": "discovery#restDescription",
-  "mtlsRootUrl": "https://cloudasset.mtls.googleapis.com/",
   "name": "cloudasset",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -357,7 +356,7 @@
       }
     }
   },
-  "revision": "20200209",
+  "revision": "20200219",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -766,7 +765,7 @@
       "type": "object"
     },
     "GoogleIdentityAccesscontextmanagerV1AccessLevel": {
-      "description": "An `AccessLevel` is a label that can be applied to requests to GCP services,\nalong with a list of requirements necessary for the label to be applied.",
+      "description": "An `AccessLevel` is a label that can be applied to requests to Google Cloud\nservices, along with a list of requirements necessary for the label to be\napplied.",
       "id": "GoogleIdentityAccesscontextmanagerV1AccessLevel",
       "properties": {
         "basic": {
@@ -803,7 +802,7 @@
       "type": "object"
     },
     "GoogleIdentityAccesscontextmanagerV1AccessPolicy": {
-      "description": "`AccessPolicy` is a container for `AccessLevels` (which define the necessary\nattributes to use GCP services) and `ServicePerimeters` (which define regions\nof services able to freely pass data within a perimeter). An access policy is\nglobally visible within an organization, and the restrictions it specifies\napply to all projects within an organization.",
+      "description": "`AccessPolicy` is a container for `AccessLevels` (which define the necessary\nattributes to use Google Cloud services) and `ServicePerimeters` (which\ndefine regions of services able to freely pass data within a perimeter). An\naccess policy is globally visible within an organization, and the\nrestrictions it specifies apply to all projects within an organization.",
       "id": "GoogleIdentityAccesscontextmanagerV1AccessPolicy",
       "properties": {
         "createTime": {
@@ -1013,7 +1012,7 @@
       "type": "object"
     },
     "GoogleIdentityAccesscontextmanagerV1ServicePerimeter": {
-      "description": "`ServicePerimeter` describes a set of GCP resources which can freely import\nand export data amongst themselves, but not export outside of the\n`ServicePerimeter`. If a request with a source within this `ServicePerimeter`\nhas a target outside of the `ServicePerimeter`, the request will be blocked.\nOtherwise the request is allowed. There are two types of Service Perimeter -\nRegular and Bridge. Regular Service Perimeters cannot overlap, a single GCP\nproject can only belong to a single regular Service Perimeter. Service\nPerimeter Bridges can contain only GCP projects as members, a single GCP\nproject may belong to multiple Service Perimeter Bridges.",
+      "description": "`ServicePerimeter` describes a set of Google Cloud resources which can freely\nimport and export data amongst themselves, but not export outside of the\n`ServicePerimeter`. If a request with a source within this `ServicePerimeter`\nhas a target outside of the `ServicePerimeter`, the request will be blocked.\nOtherwise the request is allowed. There are two types of Service Perimeter -\nRegular and Bridge. Regular Service Perimeters cannot overlap, a single\nGoogle Cloud project can only belong to a single regular Service Perimeter.\nService Perimeter Bridges can contain only Google Cloud projects as members,\na single Google Cloud project may belong to multiple Service Perimeter\nBridges.",
       "id": "GoogleIdentityAccesscontextmanagerV1ServicePerimeter",
       "properties": {
         "createTime": {
@@ -1041,6 +1040,10 @@
           ],
           "type": "string"
         },
+        "spec": {
+          "$ref": "GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig",
+          "description": "Proposed (or dry run) ServicePerimeter configuration. This configuration\nallows to specify and test ServicePerimeter configuration without enforcing\nactual access restrictions. Only allowed to be set when the\n\"use_explicit_dry_run_spec\" flag is set."
+        },
         "status": {
           "$ref": "GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig",
           "description": "Current ServicePerimeter configuration. Specifies sets of resources,\nrestricted services and access levels that determine perimeter\ncontent and boundaries."
@@ -1053,34 +1056,60 @@
           "description": "Output only. Time the `ServicePerimeter` was updated in UTC.",
           "format": "google-datetime",
           "type": "string"
+        },
+        "useExplicitDryRunSpec": {
+          "description": "Use explicit dry run spec flag. Ordinarily, a dry-run spec implicitly\nexists  for all Service Perimeters, and that spec is identical to the\nstatus for those Service Perimeters. When this flag is set, it inhibits the\ngeneration of the implicit spec, thereby allowing the user to explicitly\nprovide a configuration (\"spec\") to use in a dry-run version of the Service\nPerimeter. This allows the user to test changes to the enforced config\n(\"status\") without actually enforcing them. This testing is done through\nanalyzing the differences between currently enforced and suggested\nrestrictions. use_explicit_dry_run_spec must bet set to True if any of the\nfields in the spec are set to non-default values.",
+          "type": "boolean"
         }
       },
       "type": "object"
     },
     "GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig": {
-      "description": "`ServicePerimeterConfig` specifies a set of GCP resources that describe\nspecific Service Perimeter configuration.",
+      "description": "`ServicePerimeterConfig` specifies a set of Google Cloud resources that\ndescribe specific Service Perimeter configuration.",
       "id": "GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig",
       "properties": {
         "accessLevels": {
-          "description": "A list of `AccessLevel` resource names that allow resources within the\n`ServicePerimeter` to be accessed from the internet. `AccessLevels` listed\nmust be in the same policy as this `ServicePerimeter`. Referencing a\nnonexistent `AccessLevel` is a syntax error. If no `AccessLevel` names are\nlisted, resources within the perimeter can only be accessed via GCP calls\nwith request origins within the perimeter. Example:\n`\"accessPolicies/MY_POLICY/accessLevels/MY_LEVEL\"`.\nFor Service Perimeter Bridge, must be empty.",
+          "description": "A list of `AccessLevel` resource names that allow resources within the\n`ServicePerimeter` to be accessed from the internet. `AccessLevels` listed\nmust be in the same policy as this `ServicePerimeter`. Referencing a\nnonexistent `AccessLevel` is a syntax error. If no `AccessLevel` names are\nlisted, resources within the perimeter can only be accessed via Google\nCloud calls with request origins within the perimeter. Example:\n`\"accessPolicies/MY_POLICY/accessLevels/MY_LEVEL\"`.\nFor Service Perimeter Bridge, must be empty.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "resources": {
-          "description": "A list of GCP resources that are inside of the service perimeter.\nCurrently only projects are allowed. Format: `projects/{project_number}`",
+          "description": "A list of Google Cloud resources that are inside of the service perimeter.\nCurrently only projects are allowed. Format: `projects/{project_number}`",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "restrictedServices": {
-          "description": "GCP services that are subject to the Service Perimeter restrictions. For\nexample, if `storage.googleapis.com` is specified, access to the storage\nbuckets inside the perimeter must meet the perimeter's access restrictions.",
+          "description": "Google Cloud services that are subject to the Service Perimeter\nrestrictions. For example, if `storage.googleapis.com` is specified, access\nto the storage buckets inside the perimeter must meet the perimeter's\naccess restrictions.",
           "items": {
             "type": "string"
           },
           "type": "array"
+        },
+        "vpcAccessibleServices": {
+          "$ref": "GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices",
+          "description": "Configuration for within Perimeter allowed APIs."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices": {
+      "description": "Specifies how APIs are allowed to communicate within the Service\nPerimeter.",
+      "id": "GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices",
+      "properties": {
+        "allowedServices": {
+          "description": "The list of APIs usable within the Service Perimeter. Must be empty\nunless 'enable_restriction' is True.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "enableRestriction": {
+          "description": "Whether to restrict API calls within the Service Perimeter to the list of\nAPIs specified in 'allowed_services'.",
+          "type": "boolean"
         }
       },
       "type": "object"

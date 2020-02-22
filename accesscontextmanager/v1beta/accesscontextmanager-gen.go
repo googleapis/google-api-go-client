@@ -179,8 +179,9 @@ type OperationsService struct {
 }
 
 // AccessLevel: An `AccessLevel` is a label that can be applied to
-// requests to GCP services,
-// along with a list of requirements necessary for the label to be
+// requests to Google Cloud
+// services, along with a list of requirements necessary for the label
+// to be
 // applied.
 type AccessLevel struct {
 	// Basic: A `BasicLevel` composed of `Conditions`.
@@ -238,13 +239,14 @@ func (s *AccessLevel) MarshalJSON() ([]byte, error) {
 
 // AccessPolicy: `AccessPolicy` is a container for `AccessLevels` (which
 // define the necessary
-// attributes to use GCP services) and `ServicePerimeters` (which define
-// regions
-// of services able to freely pass data within a perimeter). An access
-// policy is
-// globally visible within an organization, and the restrictions it
-// specifies
-// apply to all projects within an organization.
+// attributes to use Google Cloud services) and `ServicePerimeters`
+// (which
+// define regions of services able to freely pass data within a
+// perimeter). An
+// access policy is globally visible within an organization, and
+// the
+// restrictions it specifies apply to all projects within an
+// organization.
 type AccessPolicy struct {
 	// CreateTime: Output only. Time the `AccessPolicy` was created in UTC.
 	CreateTime string `json:"createTime,omitempty"`
@@ -880,9 +882,9 @@ func (s *OsConstraint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ServicePerimeter: `ServicePerimeter` describes a set of GCP resources
-// which can freely import
-// and export data amongst themselves, but not export outside of
+// ServicePerimeter: `ServicePerimeter` describes a set of Google Cloud
+// resources which can freely
+// import and export data amongst themselves, but not export outside of
 // the
 // `ServicePerimeter`. If a request with a source within this
 // `ServicePerimeter`
@@ -891,12 +893,14 @@ func (s *OsConstraint) MarshalJSON() ([]byte, error) {
 // Otherwise the request is allowed. There are two types of Service
 // Perimeter -
 // Regular and Bridge. Regular Service Perimeters cannot overlap, a
-// single GCP
-// project can only belong to a single regular Service Perimeter.
-// Service
-// Perimeter Bridges can contain only GCP projects as members, a single
-// GCP
-// project may belong to multiple Service Perimeter Bridges.
+// single
+// Google Cloud project can only belong to a single regular Service
+// Perimeter.
+// Service Perimeter Bridges can contain only Google Cloud projects as
+// members,
+// a single Google Cloud project may belong to multiple Service
+// Perimeter
+// Bridges.
 type ServicePerimeter struct {
 	// CreateTime: Output only. Time the `ServicePerimeter` was created in
 	// UTC.
@@ -972,8 +976,8 @@ func (s *ServicePerimeter) MarshalJSON() ([]byte, error) {
 }
 
 // ServicePerimeterConfig: `ServicePerimeterConfig` specifies a set of
-// GCP resources that describe
-// specific Service Perimeter configuration.
+// Google Cloud resources that
+// describe specific Service Perimeter configuration.
 type ServicePerimeterConfig struct {
 	// AccessLevels: A list of `AccessLevel` resource names that allow
 	// resources within the
@@ -983,30 +987,31 @@ type ServicePerimeterConfig struct {
 	// a
 	// nonexistent `AccessLevel` is a syntax error. If no `AccessLevel`
 	// names are
-	// listed, resources within the perimeter can only be accessed via GCP
-	// calls
-	// with request origins within the perimeter.
+	// listed, resources within the perimeter can only be accessed via
+	// Google
+	// Cloud calls with request origins within the perimeter.
 	// Example:
 	// "accessPolicies/MY_POLICY/accessLevels/MY_LEVEL".
 	// For Service Perimeter Bridge, must be empty.
 	AccessLevels []string `json:"accessLevels,omitempty"`
 
-	// Resources: A list of GCP resources that are inside of the service
-	// perimeter.
+	// Resources: A list of Google Cloud resources that are inside of the
+	// service perimeter.
 	// Currently only projects are allowed. Format:
 	// `projects/{project_number}`
 	Resources []string `json:"resources,omitempty"`
 
-	// RestrictedServices: GCP services that are subject to the Service
-	// Perimeter restrictions. Must
-	// contain a list of services. For example, if
+	// RestrictedServices: Google Cloud services that are subject to the
+	// Service Perimeter
+	// restrictions. Must contain a list of services. For example,
+	// if
 	// `storage.googleapis.com` is specified, access to the storage
 	// buckets
 	// inside the perimeter must meet the perimeter's access restrictions.
 	RestrictedServices []string `json:"restrictedServices,omitempty"`
 
-	// UnrestrictedServices: GCP services that are not subject to the
-	// Service Perimeter
+	// UnrestrictedServices: Google Cloud services that are not subject to
+	// the Service Perimeter
 	// restrictions. Deprecated. Must be set to a single wildcard "*".
 	//
 	// The wildcard means that unless explicitly specified
@@ -1228,7 +1233,7 @@ func (c *AccessPoliciesCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1357,7 +1362,7 @@ func (c *AccessPoliciesDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1498,7 +1503,7 @@ func (c *AccessPoliciesGetCall) Header() http.Header {
 
 func (c *AccessPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1668,7 +1673,7 @@ func (c *AccessPoliciesListCall) Header() http.Header {
 
 func (c *AccessPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1841,7 +1846,7 @@ func (c *AccessPoliciesPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1993,7 +1998,7 @@ func (c *AccessPoliciesAccessLevelsCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2135,7 +2140,7 @@ func (c *AccessPoliciesAccessLevelsDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2300,7 +2305,7 @@ func (c *AccessPoliciesAccessLevelsGetCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2487,7 +2492,7 @@ func (c *AccessPoliciesAccessLevelsListCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2677,7 +2682,7 @@ func (c *AccessPoliciesAccessLevelsPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2830,7 +2835,7 @@ func (c *AccessPoliciesServicePerimetersCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2972,7 +2977,7 @@ func (c *AccessPoliciesServicePerimetersDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3114,7 +3119,7 @@ func (c *AccessPoliciesServicePerimetersGetCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3275,7 +3280,7 @@ func (c *AccessPoliciesServicePerimetersListCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3456,7 +3461,7 @@ func (c *AccessPoliciesServicePerimetersPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3615,7 +3620,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3688,7 +3693,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//     "name": {
 	//       "description": "The name of the operation resource.",
 	//       "location": "path",
-	//       "pattern": "^operations/.+$",
+	//       "pattern": "^operations/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }

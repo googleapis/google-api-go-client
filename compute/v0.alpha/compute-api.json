@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/_2NSgecmMGzz6OQ8gKpra0OzU08\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/xuyH2JwG74YJLo-nkfRiEfYtPdA\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -8778,6 +8778,48 @@
             "https://www.googleapis.com/auth/compute.readonly"
           ]
         },
+        "getScreenshot": {
+          "description": "Returns the screenshot from the specified instance.",
+          "httpMethod": "GET",
+          "id": "compute.instances.getScreenshot",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "instance"
+          ],
+          "parameters": {
+            "instance": {
+              "description": "Name of the instance scoping this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "zone": {
+              "description": "The name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/zones/{zone}/instances/{instance}/screenshot",
+          "response": {
+            "$ref": "Screenshot"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
         "getSerialPortOutput": {
           "description": "Returns the last 1 MB of serial port output from the specified instance.",
           "httpMethod": "GET",
@@ -14017,55 +14059,6 @@
             "https://www.googleapis.com/auth/compute"
           ]
         },
-        "setAutoscalingPolicy": {
-          "description": "Sets the autoscaling policy of the node group.",
-          "httpMethod": "POST",
-          "id": "compute.nodeGroups.setAutoscalingPolicy",
-          "parameterOrder": [
-            "project",
-            "zone",
-            "nodeGroup"
-          ],
-          "parameters": {
-            "nodeGroup": {
-              "description": "Name of the NodeGroup resource to update.",
-              "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-              "required": true,
-              "type": "string"
-            },
-            "project": {
-              "description": "Project ID for this request.",
-              "location": "path",
-              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-              "required": true,
-              "type": "string"
-            },
-            "requestId": {
-              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
-              "location": "query",
-              "type": "string"
-            },
-            "zone": {
-              "description": "The name of the zone for this request.",
-              "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{project}/zones/{zone}/nodeGroups/{nodeGroup}/setAutoscalingPolicy",
-          "request": {
-            "$ref": "NodeGroupsSetAutoscalingPolicyRequest"
-          },
-          "response": {
-            "$ref": "Operation"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/compute"
-          ]
-        },
         "setIamPolicy": {
           "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
           "httpMethod": "POST",
@@ -17502,7 +17495,7 @@
           ]
         },
         "updateReservations": {
-          "description": "Update the shape of reservations for GPUS/Local SSDs of reservations within the commitments.",
+          "description": "Transfers GPUs or local SSDs between reservations within commitments.",
           "httpMethod": "POST",
           "id": "compute.regionCommitments.updateReservations",
           "parameterOrder": [
@@ -29522,7 +29515,7 @@
       }
     }
   },
-  "revision": "20200114",
+  "revision": "20200120",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -31390,6 +31383,20 @@
       "description": "CPU utilization policy.",
       "id": "AutoscalingPolicyCpuUtilization",
       "properties": {
+        "predictiveMethod": {
+          "description": "Indicates which method of prediction is used for CPU utilization metric, if any. Current set of possible values: * NONE: No predictions are made based on the scaling metric when calculating the number of VM instances. * STANDARD: Standard predictive autoscaling predicts the future values of the scaling metric and then scales a MIG to ensure that new VM instances are ready in time to cover the predicted peak. New values might be added in the future. Some of the values might not be available in all API versions.",
+          "enum": [
+            "NONE",
+            "PREDICTIVE_METHOD_UNSPECIFIED",
+            "STANDARD"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
         "utilizationTarget": {
           "description": "The target CPU utilization that the autoscaler should maintain. Must be a float value in the range (0, 1]. If not specified, the default is 0.6.\n\nIf the CPU level is below the target utilization, the autoscaler scales down the number of instances until it reaches the minimum number of instances you specified or until the average CPU of your instances reaches the target utilization.\n\nIf the average CPU is above the target utilization, the autoscaler scales up until it reaches the maximum number of instances you specified or until the average utilization reaches the target utilization.",
           "format": "double",
@@ -34831,23 +34838,23 @@
       "type": "object"
     },
     "Expr": {
-      "description": "Represents an expression text. Example:\n\ntitle: \"User account presence\" description: \"Determines whether the request has a user account\" expression: \"size(request.user) \u003e 0\"",
+      "description": "Represents a textual expression in the Common Expression Language (CEL) syntax. CEL is a C-like expression language. The syntax and semantics of CEL are documented at https://github.com/google/cel-spec.\n\nExample (Comparison):\n\ntitle: \"Summary size limit\" description: \"Determines if a summary is less than 100 chars\" expression: \"document.summary.size() \u003c 100\"\n\nExample (Equality):\n\ntitle: \"Requestor is owner\" description: \"Determines if requestor is the document owner\" expression: \"document.owner == request.auth.claims.email\"\n\nExample (Logic):\n\ntitle: \"Public documents\" description: \"Determine whether the document should be publicly visible\" expression: \"document.type != 'private' \u0026\u0026 document.type != 'internal'\"\n\nExample (Data Manipulation):\n\ntitle: \"Notification string\" description: \"Create a notification string with a timestamp.\" expression: \"'New message received at ' + string(document.create_time)\"\n\nThe exact variables and functions that may be referenced within an expression are determined by the service that evaluates it. See the service documentation for additional information.",
       "id": "Expr",
       "properties": {
         "description": {
-          "description": "An optional description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.",
+          "description": "Optional. Description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.",
           "type": "string"
         },
         "expression": {
-          "description": "Textual representation of an expression in Common Expression Language syntax.\n\nThe application context of the containing message determines which well-known feature set of CEL is supported.",
+          "description": "Textual representation of an expression in Common Expression Language syntax.",
           "type": "string"
         },
         "location": {
-          "description": "An optional string indicating the location of the expression for error reporting, e.g. a file name and a position in the file.",
+          "description": "Optional. String indicating the location of the expression for error reporting, e.g. a file name and a position in the file.",
           "type": "string"
         },
         "title": {
-          "description": "An optional title for the expression, i.e. a short string describing its purpose. This can be used e.g. in UIs which allow to enter the expression.",
+          "description": "Optional. Title for the expression, i.e. a short string describing its purpose. This can be used e.g. in UIs which allow to enter the expression.",
           "type": "string"
         }
       },
@@ -36946,11 +36953,11 @@
           "type": "string"
         },
         "ipAddress": {
-          "description": "The IP address represented by this resource.",
+          "description": "A forwarding rule IP address assigned to this instance.",
           "type": "string"
         },
         "port": {
-          "description": "The port on the instance.",
+          "description": "The named port of the instance group, not necessarily the port that is health-checked.",
           "format": "int32",
           "type": "integer"
         }
@@ -38875,7 +38882,7 @@
               "compute.regionInstanceGroupManagers.insert"
             ]
           },
-          "description": "The target number of running instances for this managed instance group. Deleting or abandoning instances reduces this number. Resizing the group changes this number.",
+          "description": "The target number of running instances for this managed instance group. You can reduce this number by using the instanceGroupManager deleteInstances or abandonInstances methods. Resizing the group also changes this number.",
           "format": "int32",
           "type": "integer"
         },
@@ -43067,7 +43074,7 @@
       "type": "object"
     },
     "MachineImage": {
-      "description": "Machine image resource.",
+      "description": "Represents a machine image resource.\n\nA machine image is a Compute Engine resource that stores all the configuration, metadata, permissions, and data from one or more disks required to create a Virtual machine (VM) instance. For more information, see Machine images. (== resource_for {$api_version}.machineImages ==)",
       "id": "MachineImage",
       "properties": {
         "creationTimestamp": {
@@ -45776,15 +45783,6 @@
             }
           },
           "type": "object"
-        }
-      },
-      "type": "object"
-    },
-    "NodeGroupsSetAutoscalingPolicyRequest": {
-      "id": "NodeGroupsSetAutoscalingPolicyRequest",
-      "properties": {
-        "autoscalingPolicy": {
-          "$ref": "NodeGroupAutoscalingPolicy"
         }
       },
       "type": "object"
@@ -48806,7 +48804,15 @@
         },
         "status": {
           "description": "[Output Only] The status of the public delegated prefix.",
-          "type": "any"
+          "enum": [
+            "ANNOUNCED",
+            "INITIALIZING"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -49064,7 +49070,15 @@
         },
         "status": {
           "description": "[Output Only] The status of the sub public delegated prefix.",
-          "type": "any"
+          "enum": [
+            "ACTIVE",
+            "INACTIVE"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -49184,6 +49198,7 @@
             "COMMITMENTS",
             "COMMITTED_C2_CPUS",
             "COMMITTED_CPUS",
+            "COMMITTED_LICENSES",
             "COMMITTED_LOCAL_SSD_TOTAL_GB",
             "COMMITTED_N2D_CPUS",
             "COMMITTED_N2_CPUS",
@@ -49274,6 +49289,7 @@
             "XPN_SERVICE_PROJECTS"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -49617,7 +49633,7 @@
       "id": "RegionCommitmentsUpdateReservationsRequest",
       "properties": {
         "reservations": {
-          "description": "List of two reservations to transfer GPUs and local SSD between.",
+          "description": "A list of two reservations to transfer GPUs and local SSD between.",
           "items": {
             "$ref": "Reservation"
           },
@@ -53457,6 +53473,22 @@
       },
       "type": "object"
     },
+    "Screenshot": {
+      "description": "An instance's screenshot.",
+      "id": "Screenshot",
+      "properties": {
+        "contents": {
+          "description": "[Output Only] The Base64-encoded screenshot data.",
+          "type": "string"
+        },
+        "kind": {
+          "default": "compute#screenshot",
+          "description": "[Output Only] Type of the resource. Always compute#screenshot for the screenshots.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "SdsConfig": {
       "description": "The configuration to access the SDS server.",
       "id": "SdsConfig",
@@ -53491,7 +53523,7 @@
       "id": "SecurityPolicy",
       "properties": {
         "associations": {
-          "description": "A list of assocations that belong to this policy.",
+          "description": "A list of associations that belong to this policy.",
           "items": {
             "$ref": "SecurityPolicyAssociation"
           },
@@ -53506,6 +53538,11 @@
         },
         "description": {
           "description": "An optional description of this resource. Provide this property when you create the resource.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "User-provided name of the Organization security plicy. The name should be unique in the organization in which the security policy is created. This should only be used when SecurityPolicyType is FIREWALL. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+          "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
           "type": "string"
         },
         "fingerprint": {
@@ -53538,6 +53575,10 @@
         "name": {
           "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
           "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+          "type": "string"
+        },
+        "parent": {
+          "description": "[Output Only] The parent of the security policy.",
           "type": "string"
         },
         "ruleTupleCount": {
@@ -53580,6 +53621,10 @@
       "properties": {
         "attachmentId": {
           "description": "The resource that the security policy is attached to.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "[Output Only] The display name of the security policy of the association.",
           "type": "string"
         },
         "name": {
@@ -53781,6 +53826,13 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "targetServiceAccounts": {
+          "description": "A list of service accounts indicating the sets of instances that are applied with this rule.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -53829,6 +53881,13 @@
           },
           "type": "array"
         },
+        "layer4Configs": {
+          "description": "Pairs of IP protocols and ports that the rule should match.\n\nThis field may only be specified when versioned_expr is set to FIREWALL.",
+          "items": {
+            "$ref": "SecurityPolicyRuleMatcherConfigLayer4Config"
+          },
+          "type": "array"
+        },
         "srcIpRanges": {
           "description": "CIDR IP address range.",
           "items": {
@@ -53841,6 +53900,23 @@
     },
     "SecurityPolicyRuleMatcherConfigDestinationPort": {
       "id": "SecurityPolicyRuleMatcherConfigDestinationPort",
+      "properties": {
+        "ipProtocol": {
+          "description": "The IP protocol to which this rule applies. The protocol type is required when creating a firewall rule. This value can either be one of the following well known protocol strings (tcp, udp, icmp, esp, ah, ipip, sctp), or the IP protocol number.",
+          "type": "string"
+        },
+        "ports": {
+          "description": "An optional list of ports to which this rule applies. This field is only applicable for UDP or TCP protocol. Each entry must be either an integer or a range. If not specified, this rule applies to connections through any port.\n\nExample inputs include: [\"22\"], [\"80\",\"443\"], and [\"12345-12349\"].\n\nThis field may only be specified when versioned_expr is set to FIREWALL.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SecurityPolicyRuleMatcherConfigLayer4Config": {
+      "id": "SecurityPolicyRuleMatcherConfigLayer4Config",
       "properties": {
         "ipProtocol": {
           "description": "The IP protocol to which this rule applies. The protocol type is required when creating a firewall rule. This value can either be one of the following well known protocol strings (tcp, udp, icmp, esp, ah, ipip, sctp), or the IP protocol number.",

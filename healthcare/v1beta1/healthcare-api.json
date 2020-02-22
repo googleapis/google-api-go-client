@@ -2937,7 +2937,7 @@
       }
     }
   },
-  "revision": "20200131",
+  "revision": "20200212",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -3164,7 +3164,7 @@
           "description": "Deidentify configuration."
         },
         "destinationStore": {
-          "description": "The name of the FHIR store to create and write the redacted data to.\nFor example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.\n\n * The destination dataset must exist.\n * The source dataset and destination dataset must both reside in the same\n   project. De-identifying data across multiple projects is not supported.\n * The destination FHIR store must not exist.\n * The caller must have the necessary permissions to create the destination\n   FHIR store.",
+          "description": "The name of the FHIR store to create and write the redacted data to.\nFor example,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.\n\n * The destination dataset must exist.\n * The source dataset and destination dataset must both reside in the same\n   project. De-identifying data across multiple projects is not supported.\n * The destination FHIR store must exist.\n * The caller must have the healthcare.fhirResources.update permission to\n   write to the destination FHIR store.",
           "type": "string"
         },
         "resourceFilter": {

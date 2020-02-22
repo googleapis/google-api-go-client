@@ -210,7 +210,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "If provided, this field specifies the criteria that must be met by alert policies to be included in the response.For more details, see sorting and filtering.",
+                  "description": "If provided, this field specifies the criteria that must be met by alert policies to be included in the response.For more details, see sorting and filtering (https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).",
                   "location": "query",
                   "type": "string"
                 },
@@ -222,7 +222,7 @@
                   "type": "string"
                 },
                 "orderBy": {
-                  "description": "A comma-separated list of fields by which to sort the result. Supports the same set of field references as the filter field. Entries can be prefixed with a minus sign to sort by the field in descending order.For more details, see sorting and filtering.",
+                  "description": "A comma-separated list of fields by which to sort the result. Supports the same set of field references as the filter field. Entries can be prefixed with a minus sign to sort by the field in descending order.For more details, see sorting and filtering (https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).",
                   "location": "query",
                   "type": "string"
                 },
@@ -514,7 +514,7 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "description": "An optional list filter describing the members to be returned. The filter may reference the type, labels, and metadata of monitored resources that comprise the group. For example, to return only resources representing Compute Engine VM instances, use this filter:\n`resource.type = \"gce_instance\"`\n",
+                      "description": "An optional list filter (https://cloud.google.com/monitoring/api/learn_more#filtering) describing the members to be returned. The filter may reference the type, labels, and metadata of monitored resources that comprise the group. For example, to return only resources representing Compute Engine VM instances, use this filter:\n`resource.type = \"gce_instance\"`\n",
                       "location": "query",
                       "type": "string"
                     },
@@ -566,7 +566,7 @@
         "metricDescriptors": {
           "methods": {
             "create": {
-              "description": "Creates a new metric descriptor. User-created metric descriptors define custom metrics.",
+              "description": "Creates a new metric descriptor. User-created metric descriptors define custom metrics (https://cloud.google.com/monitoring/custom-metrics).",
               "flatPath": "v3/projects/{projectsId}/metricDescriptors",
               "httpMethod": "POST",
               "id": "monitoring.projects.metricDescriptors.create",
@@ -596,7 +596,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes a metric descriptor. Only user-created custom metrics can be deleted.",
+              "description": "Deletes a metric descriptor. Only user-created custom metrics (https://cloud.google.com/monitoring/custom-metrics) can be deleted.",
               "flatPath": "v3/projects/{projectsId}/metricDescriptors/{metricDescriptorsId}",
               "httpMethod": "DELETE",
               "id": "monitoring.projects.metricDescriptors.delete",
@@ -607,7 +607,7 @@
                 "name": {
                   "description": "Required. The metric descriptor on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]\nAn example of [METRIC_ID] is: \"custom.googleapis.com/my_test_metric\".",
                   "location": "path",
-                  "pattern": "^projects/[^/]+/metricDescriptors/.+$",
+                  "pattern": "^projects/[^/]+/metricDescriptors/.*$",
                   "required": true,
                   "type": "string"
                 }
@@ -633,7 +633,7 @@
                 "name": {
                   "description": "Required. The metric descriptor on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]\nAn example value of [METRIC_ID] is \"compute.googleapis.com/instance/disk/read_bytes_count\".",
                   "location": "path",
-                  "pattern": "^projects/[^/]+/metricDescriptors/.+$",
+                  "pattern": "^projects/[^/]+/metricDescriptors/.*$",
                   "required": true,
                   "type": "string"
                 }
@@ -659,7 +659,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "If this field is empty, all custom and system-defined metric descriptors are returned. Otherwise, the filter specifies which metric descriptors are to be returned. For example, the following filter matches all custom metrics:\nmetric.type = starts_with(\"custom.googleapis.com/\")\n",
+                  "description": "If this field is empty, all custom and system-defined metric descriptors are returned. Otherwise, the filter (https://cloud.google.com/monitoring/api/v3/filters) specifies which metric descriptors are to be returned. For example, the following filter matches all custom metrics (https://cloud.google.com/monitoring/custom-metrics):\nmetric.type = starts_with(\"custom.googleapis.com/\")\n",
                   "location": "query",
                   "type": "string"
                 },
@@ -709,7 +709,7 @@
                 "name": {
                   "description": "Required. The monitored resource descriptor to get. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/monitoredResourceDescriptors/[RESOURCE_TYPE]\nThe [RESOURCE_TYPE] is a predefined type, such as cloudsql_database.",
                   "location": "path",
-                  "pattern": "^projects/[^/]+/monitoredResourceDescriptors/.+$",
+                  "pattern": "^projects/[^/]+/monitoredResourceDescriptors/.*$",
                   "required": true,
                   "type": "string"
                 }
@@ -735,7 +735,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "An optional filter describing the descriptors to be returned. The filter can reference the descriptor's type and labels. For example, the following filter returns only Google Compute Engine descriptors that have an id label:\nresource.type = starts_with(\"gce_\") AND resource.label:id\n",
+                  "description": "An optional filter (https://cloud.google.com/monitoring/api/v3/filters) describing the descriptors to be returned. The filter can reference the descriptor's type and labels. For example, the following filter returns only Google Compute Engine descriptors that have an id label:\nresource.type = starts_with(\"gce_\") AND resource.label:id\n",
                   "location": "query",
                   "type": "string"
                 },
@@ -968,7 +968,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "If provided, this field specifies the criteria that must be met by notification channels to be included in the response.For more details, see sorting and filtering.",
+                  "description": "If provided, this field specifies the criteria that must be met by notification channels to be included in the response.For more details, see sorting and filtering (https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).",
                   "location": "query",
                   "type": "string"
                 },
@@ -980,7 +980,7 @@
                   "type": "string"
                 },
                 "orderBy": {
-                  "description": "A comma-separated list of fields by which to sort the result. Supports the same set of fields as in filter. Entries can be prefixed with a minus sign to sort in descending rather than ascending order.For more details, see sorting and filtering.",
+                  "description": "A comma-separated list of fields by which to sort the result. Supports the same set of fields as in filter. Entries can be prefixed with a minus sign to sort in descending rather than ascending order.For more details, see sorting and filtering (https://cloud.google.com/monitoring/api/v3/sorting-and-filtering).",
                   "location": "query",
                   "type": "string"
                 },
@@ -1202,7 +1202,7 @@
                   "type": "string"
                 },
                 "filter": {
-                  "description": "Required. A monitoring filter that specifies which time series should be returned. The filter must specify a single metric type, and can additionally specify metric labels and other information. For example:\nmetric.type = \"compute.googleapis.com/instance/cpu/usage_time\" AND\n    metric.labels.instance_name = \"my-instance-name\"\n",
+                  "description": "Required. A monitoring filter (https://cloud.google.com/monitoring/api/v3/filters) that specifies which time series should be returned. The filter must specify a single metric type, and can additionally specify metric labels and other information. For example:\nmetric.type = \"compute.googleapis.com/instance/cpu/usage_time\" AND\n    metric.labels.instance_name = \"my-instance-name\"\n",
                   "location": "query",
                   "type": "string"
                 },
@@ -1818,7 +1818,7 @@
       }
     }
   },
-  "revision": "20200210",
+  "revision": "20200219",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -3154,7 +3154,7 @@
           "type": "string"
         },
         "filter": {
-          "description": "A filter that identifies which time series should be compared with the threshold.The filter is similar to the one that is specified in the ListTimeSeries request (that call is useful to verify the time series that will be retrieved / processed) and must specify the metric type and optionally may contain restrictions on resource type, resource labels, and metric labels. This field may not exceed 2048 Unicode characters in length.",
+          "description": "A filter (https://cloud.google.com/monitoring/api/v3/filters) that identifies which time series should be compared with the threshold.The filter is similar to the one that is specified in the ListTimeSeries request (that call is useful to verify the time series that will be retrieved / processed) and must specify the metric type and optionally may contain restrictions on resource type, resource labels, and metric labels. This field may not exceed 2048 Unicode characters in length.",
           "type": "string"
         },
         "trigger": {
@@ -3360,7 +3360,7 @@
           "type": "array"
         },
         "denominatorFilter": {
-          "description": "A filter that identifies a time series that should be used as the denominator of a ratio that will be compared with the threshold. If a denominator_filter is specified, the time series specified by the filter field will be used as the numerator.The filter must specify the metric type and optionally may contain restrictions on resource type, resource labels, and metric labels. This field may not exceed 2048 Unicode characters in length.",
+          "description": "A filter (https://cloud.google.com/monitoring/api/v3/filters) that identifies a time series that should be used as the denominator of a ratio that will be compared with the threshold. If a denominator_filter is specified, the time series specified by the filter field will be used as the numerator.The filter must specify the metric type and optionally may contain restrictions on resource type, resource labels, and metric labels. This field may not exceed 2048 Unicode characters in length.",
           "type": "string"
         },
         "duration": {
@@ -3369,7 +3369,7 @@
           "type": "string"
         },
         "filter": {
-          "description": "A filter that identifies which time series should be compared with the threshold.The filter is similar to the one that is specified in the ListTimeSeries request (that call is useful to verify the time series that will be retrieved / processed) and must specify the metric type and optionally may contain restrictions on resource type, resource labels, and metric labels. This field may not exceed 2048 Unicode characters in length.",
+          "description": "A filter (https://cloud.google.com/monitoring/api/v3/filters) that identifies which time series should be compared with the threshold.The filter is similar to the one that is specified in the ListTimeSeries request (that call is useful to verify the time series that will be retrieved / processed) and must specify the metric type and optionally may contain restrictions on resource type, resource labels, and metric labels. This field may not exceed 2048 Unicode characters in length.",
           "type": "string"
         },
         "thresholdValue": {

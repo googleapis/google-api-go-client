@@ -179,8 +179,9 @@ type OperationsService struct {
 }
 
 // AccessLevel: An `AccessLevel` is a label that can be applied to
-// requests to GCP services,
-// along with a list of requirements necessary for the label to be
+// requests to Google Cloud
+// services, along with a list of requirements necessary for the label
+// to be
 // applied.
 type AccessLevel struct {
 	// Basic: A `BasicLevel` composed of `Conditions`.
@@ -238,13 +239,14 @@ func (s *AccessLevel) MarshalJSON() ([]byte, error) {
 
 // AccessPolicy: `AccessPolicy` is a container for `AccessLevels` (which
 // define the necessary
-// attributes to use GCP services) and `ServicePerimeters` (which define
-// regions
-// of services able to freely pass data within a perimeter). An access
-// policy is
-// globally visible within an organization, and the restrictions it
-// specifies
-// apply to all projects within an organization.
+// attributes to use Google Cloud services) and `ServicePerimeters`
+// (which
+// define regions of services able to freely pass data within a
+// perimeter). An
+// access policy is globally visible within an organization, and
+// the
+// restrictions it specifies apply to all projects within an
+// organization.
 type AccessPolicy struct {
 	// CreateTime: Output only. Time the `AccessPolicy` was created in UTC.
 	CreateTime string `json:"createTime,omitempty"`
@@ -345,6 +347,80 @@ func (s *BasicLevel) MarshalJSON() ([]byte, error) {
 // CancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type CancelOperationRequest struct {
+}
+
+// CommitServicePerimetersRequest: A request to commit dry-run specs in
+// all Service Perimeters belonging to
+// an Access Policy.
+type CommitServicePerimetersRequest struct {
+	// Etag: Optional. The etag for the version of the Access Policy that
+	// this
+	// commit operation is to be performed on. If, at the time of commit,
+	// the
+	// etag for the Access Policy stored in Access Context Manager is
+	// different
+	// from the specified etag, then the commit operation will not be
+	// performed
+	// and the call will fail. This field is not required. If etag is
+	// not
+	// provided, the operation will be performed as if a valid etag is
+	// provided.
+	Etag string `json:"etag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Etag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommitServicePerimetersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CommitServicePerimetersRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CommitServicePerimetersResponse: A response to
+// CommitServicePerimetersRequest. This will be put inside
+// of
+// Operation.response field.
+type CommitServicePerimetersResponse struct {
+	// ServicePerimeters: List of all the Service Perimeter instances in
+	// the Access Policy.
+	ServicePerimeters []*ServicePerimeter `json:"servicePerimeters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ServicePerimeters")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ServicePerimeters") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommitServicePerimetersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CommitServicePerimetersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Condition: A condition necessary for an `AccessLevel` to be granted.
@@ -940,9 +1016,166 @@ func (s *OsConstraint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ServicePerimeter: `ServicePerimeter` describes a set of GCP resources
-// which can freely import
-// and export data amongst themselves, but not export outside of
+// ReplaceAccessLevelsRequest: A request to replace all existing Access
+// Levels in an Access Policy with
+// the Access Levels provided. This is done within one transaction.
+type ReplaceAccessLevelsRequest struct {
+	// AccessLevels: Required. The desired Access Levels that should
+	// replace all existing Access Levels in the
+	// Access Policy.
+	AccessLevels []*AccessLevel `json:"accessLevels,omitempty"`
+
+	// Etag: Optional. The etag for the version of the Access Policy that
+	// this
+	// replace operation is to be performed on. If, at the time of replace,
+	// the
+	// etag for the Access Policy stored in Access Context Manager is
+	// different
+	// from the specified etag, then the replace operation will not be
+	// performed
+	// and the call will fail. This field is not required. If etag is
+	// not
+	// provided, the operation will be performed as if a valid etag is
+	// provided.
+	Etag string `json:"etag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessLevels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessLevels") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplaceAccessLevelsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplaceAccessLevelsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReplaceAccessLevelsResponse: A response to
+// ReplaceAccessLevelsRequest. This will be put inside
+// of
+// Operation.response field.
+type ReplaceAccessLevelsResponse struct {
+	// AccessLevels: List of the Access Level instances.
+	AccessLevels []*AccessLevel `json:"accessLevels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessLevels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessLevels") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplaceAccessLevelsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplaceAccessLevelsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReplaceServicePerimetersRequest: A request to replace all existing
+// Service Perimeters in an Access Policy
+// with the Service Perimeters provided. This is done within one
+// transaction.
+type ReplaceServicePerimetersRequest struct {
+	// Etag: Optional. The etag for the version of the Access Policy that
+	// this
+	// replace operation is to be performed on. If, at the time of replace,
+	// the
+	// etag for the Access Policy stored in Access Context Manager is
+	// different
+	// from the specified etag, then the replace operation will not be
+	// performed
+	// and the call will fail. This field is not required. If etag is
+	// not
+	// provided, the operation will be performed as if a valid etag is
+	// provided.
+	Etag string `json:"etag,omitempty"`
+
+	// ServicePerimeters: Required. The desired Service Perimeters that
+	// should
+	// replace all existing Service Perimeters in the
+	// Access Policy.
+	ServicePerimeters []*ServicePerimeter `json:"servicePerimeters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Etag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplaceServicePerimetersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplaceServicePerimetersRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReplaceServicePerimetersResponse: A response to
+// ReplaceServicePerimetersRequest. This will be put inside
+// of
+// Operation.response field.
+type ReplaceServicePerimetersResponse struct {
+	// ServicePerimeters: List of the Service Perimeter instances.
+	ServicePerimeters []*ServicePerimeter `json:"servicePerimeters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ServicePerimeters")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ServicePerimeters") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplaceServicePerimetersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplaceServicePerimetersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ServicePerimeter: `ServicePerimeter` describes a set of Google Cloud
+// resources which can freely
+// import and export data amongst themselves, but not export outside of
 // the
 // `ServicePerimeter`. If a request with a source within this
 // `ServicePerimeter`
@@ -951,12 +1184,14 @@ func (s *OsConstraint) MarshalJSON() ([]byte, error) {
 // Otherwise the request is allowed. There are two types of Service
 // Perimeter -
 // Regular and Bridge. Regular Service Perimeters cannot overlap, a
-// single GCP
-// project can only belong to a single regular Service Perimeter.
-// Service
-// Perimeter Bridges can contain only GCP projects as members, a single
-// GCP
-// project may belong to multiple Service Perimeter Bridges.
+// single
+// Google Cloud project can only belong to a single regular Service
+// Perimeter.
+// Service Perimeter Bridges can contain only Google Cloud projects as
+// members,
+// a single Google Cloud project may belong to multiple Service
+// Perimeter
+// Bridges.
 type ServicePerimeter struct {
 	// CreateTime: Output only. Time the `ServicePerimeter` was created in
 	// UTC.
@@ -990,6 +1225,15 @@ type ServicePerimeter struct {
 	//   "PERIMETER_TYPE_BRIDGE" - Perimeter Bridge.
 	PerimeterType string `json:"perimeterType,omitempty"`
 
+	// Spec: Proposed (or dry run) ServicePerimeter configuration. This
+	// configuration
+	// allows to specify and test ServicePerimeter configuration without
+	// enforcing
+	// actual access restrictions. Only allowed to be set when
+	// the
+	// "use_explicit_dry_run_spec" flag is set.
+	Spec *ServicePerimeterConfig `json:"spec,omitempty"`
+
 	// Status: Current ServicePerimeter configuration. Specifies sets of
 	// resources,
 	// restricted services and access levels that determine
@@ -1003,6 +1247,27 @@ type ServicePerimeter struct {
 	// UpdateTime: Output only. Time the `ServicePerimeter` was updated in
 	// UTC.
 	UpdateTime string `json:"updateTime,omitempty"`
+
+	// UseExplicitDryRunSpec: Use explicit dry run spec flag. Ordinarily, a
+	// dry-run spec implicitly
+	// exists  for all Service Perimeters, and that spec is identical to
+	// the
+	// status for those Service Perimeters. When this flag is set, it
+	// inhibits the
+	// generation of the implicit spec, thereby allowing the user to
+	// explicitly
+	// provide a configuration ("spec") to use in a dry-run version of the
+	// Service
+	// Perimeter. This allows the user to test changes to the enforced
+	// config
+	// ("status") without actually enforcing them. This testing is done
+	// through
+	// analyzing the differences between currently enforced and
+	// suggested
+	// restrictions. use_explicit_dry_run_spec must bet set to True if any
+	// of the
+	// fields in the spec are set to non-default values.
+	UseExplicitDryRunSpec bool `json:"useExplicitDryRunSpec,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1032,8 +1297,8 @@ func (s *ServicePerimeter) MarshalJSON() ([]byte, error) {
 }
 
 // ServicePerimeterConfig: `ServicePerimeterConfig` specifies a set of
-// GCP resources that describe
-// specific Service Perimeter configuration.
+// Google Cloud resources that
+// describe specific Service Perimeter configuration.
 type ServicePerimeterConfig struct {
 	// AccessLevels: A list of `AccessLevel` resource names that allow
 	// resources within the
@@ -1043,27 +1308,32 @@ type ServicePerimeterConfig struct {
 	// a
 	// nonexistent `AccessLevel` is a syntax error. If no `AccessLevel`
 	// names are
-	// listed, resources within the perimeter can only be accessed via GCP
-	// calls
-	// with request origins within the perimeter.
+	// listed, resources within the perimeter can only be accessed via
+	// Google
+	// Cloud calls with request origins within the perimeter.
 	// Example:
 	// "accessPolicies/MY_POLICY/accessLevels/MY_LEVEL".
 	// For Service Perimeter Bridge, must be empty.
 	AccessLevels []string `json:"accessLevels,omitempty"`
 
-	// Resources: A list of GCP resources that are inside of the service
-	// perimeter.
+	// Resources: A list of Google Cloud resources that are inside of the
+	// service perimeter.
 	// Currently only projects are allowed. Format:
 	// `projects/{project_number}`
 	Resources []string `json:"resources,omitempty"`
 
-	// RestrictedServices: GCP services that are subject to the Service
-	// Perimeter restrictions. For
-	// example, if `storage.googleapis.com` is specified, access to the
-	// storage
-	// buckets inside the perimeter must meet the perimeter's access
-	// restrictions.
+	// RestrictedServices: Google Cloud services that are subject to the
+	// Service Perimeter
+	// restrictions. For example, if `storage.googleapis.com` is specified,
+	// access
+	// to the storage buckets inside the perimeter must meet the
+	// perimeter's
+	// access restrictions.
 	RestrictedServices []string `json:"restrictedServices,omitempty"`
+
+	// VpcAccessibleServices: Configuration for within Perimeter allowed
+	// APIs.
+	VpcAccessibleServices *VpcAccessibleServices `json:"vpcAccessibleServices,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessLevels") to
 	// unconditionally include in API requests. By default, fields with
@@ -1140,6 +1410,44 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VpcAccessibleServices: Specifies how APIs are allowed to communicate
+// within the Service
+// Perimeter.
+type VpcAccessibleServices struct {
+	// AllowedServices: The list of APIs usable within the Service
+	// Perimeter. Must be empty
+	// unless 'enable_restriction' is True.
+	AllowedServices []string `json:"allowedServices,omitempty"`
+
+	// EnableRestriction: Whether to restrict API calls within the Service
+	// Perimeter to the list of
+	// APIs specified in 'allowed_services'.
+	EnableRestriction bool `json:"enableRestriction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowedServices") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedServices") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VpcAccessibleServices) MarshalJSON() ([]byte, error) {
+	type NoMethod VpcAccessibleServices
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "accesscontextmanager.accessPolicies.create":
 
 type AccessPoliciesCreateCall struct {
@@ -1192,7 +1500,7 @@ func (c *AccessPoliciesCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1321,7 +1629,7 @@ func (c *AccessPoliciesDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1462,7 +1770,7 @@ func (c *AccessPoliciesGetCall) Header() http.Header {
 
 func (c *AccessPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1632,7 +1940,7 @@ func (c *AccessPoliciesListCall) Header() http.Header {
 
 func (c *AccessPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1805,7 +2113,7 @@ func (c *AccessPoliciesPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1957,7 +2265,7 @@ func (c *AccessPoliciesAccessLevelsCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2099,7 +2407,7 @@ func (c *AccessPoliciesAccessLevelsDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2264,7 +2572,7 @@ func (c *AccessPoliciesAccessLevelsGetCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2451,7 +2759,7 @@ func (c *AccessPoliciesAccessLevelsListCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2641,7 +2949,7 @@ func (c *AccessPoliciesAccessLevelsPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2741,6 +3049,323 @@ func (c *AccessPoliciesAccessLevelsPatchCall) Do(opts ...googleapi.CallOption) (
 
 }
 
+// method id "accesscontextmanager.accessPolicies.accessLevels.replaceAll":
+
+type AccessPoliciesAccessLevelsReplaceAllCall struct {
+	s                          *Service
+	parent                     string
+	replaceaccesslevelsrequest *ReplaceAccessLevelsRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// ReplaceAll: Replace all existing Access Levels in an Access
+// Policy with
+// the Access Levels provided. This
+// is done within one transaction. The longrunning operation from this
+// RPC
+// will have a successful status once all replacements have propagated
+// to
+// long-lasting storage. Replacements containing errors will result in
+// an
+// error response for the first error encountered and the transaction
+// will be
+// cancelled. Operation.response field will
+// contain
+// ReplaceAccessLevelsResponse. Removing Access Levels contained in
+// existing
+// Service Perimeters will result in
+// error.
+func (r *AccessPoliciesAccessLevelsService) ReplaceAll(parent string, replaceaccesslevelsrequest *ReplaceAccessLevelsRequest) *AccessPoliciesAccessLevelsReplaceAllCall {
+	c := &AccessPoliciesAccessLevelsReplaceAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.replaceaccesslevelsrequest = replaceaccesslevelsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccessPoliciesAccessLevelsReplaceAllCall) Fields(s ...googleapi.Field) *AccessPoliciesAccessLevelsReplaceAllCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccessPoliciesAccessLevelsReplaceAllCall) Context(ctx context.Context) *AccessPoliciesAccessLevelsReplaceAllCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccessPoliciesAccessLevelsReplaceAllCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccessPoliciesAccessLevelsReplaceAllCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.replaceaccesslevelsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/accessLevels:replaceAll")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "accesscontextmanager.accessPolicies.accessLevels.replaceAll" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccessPoliciesAccessLevelsReplaceAllCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Replace all existing Access Levels in an Access\nPolicy with\nthe Access Levels provided. This\nis done within one transaction. The longrunning operation from this RPC\nwill have a successful status once all replacements have propagated to\nlong-lasting storage. Replacements containing errors will result in an\nerror response for the first error encountered and the transaction will be\ncancelled. Operation.response field will contain\nReplaceAccessLevelsResponse. Removing Access Levels contained in existing\nService Perimeters will result in\nerror.",
+	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}/accessLevels:replaceAll",
+	//   "httpMethod": "POST",
+	//   "id": "accesscontextmanager.accessPolicies.accessLevels.replaceAll",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Resource name for the access policy which owns these\nAccess Levels.\n\nFormat: `accessPolicies/{policy_id}`",
+	//       "location": "path",
+	//       "pattern": "^accessPolicies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/accessLevels:replaceAll",
+	//   "request": {
+	//     "$ref": "ReplaceAccessLevelsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "accesscontextmanager.accessPolicies.servicePerimeters.commit":
+
+type AccessPoliciesServicePerimetersCommitCall struct {
+	s                              *Service
+	parent                         string
+	commitserviceperimetersrequest *CommitServicePerimetersRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Commit: Commit the dry-run spec for all the Service Perimeters in
+// an
+// Access Policy.
+// A commit operation on a Service Perimeter involves copying its `spec`
+// field
+// to that Service Perimeter's `status` field. Only Service Perimeters
+// with
+// `use_explicit_dry_run_spec` field set to true are affected by a
+// commit
+// operation. The longrunning operation from this RPC will have a
+// successful
+// status once the dry-run specs for all the Service Perimeters have
+// been
+// committed. If a commit fails, it will cause the longrunning operation
+// to
+// return an error response and the entire commit operation will be
+// cancelled.
+// When successful, Operation.response field will
+// contain
+// CommitServicePerimetersResponse. The `dry_run` and the `spec` fields
+// will
+// be cleared after a successful commit operation.
+func (r *AccessPoliciesServicePerimetersService) Commit(parent string, commitserviceperimetersrequest *CommitServicePerimetersRequest) *AccessPoliciesServicePerimetersCommitCall {
+	c := &AccessPoliciesServicePerimetersCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.commitserviceperimetersrequest = commitserviceperimetersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccessPoliciesServicePerimetersCommitCall) Fields(s ...googleapi.Field) *AccessPoliciesServicePerimetersCommitCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccessPoliciesServicePerimetersCommitCall) Context(ctx context.Context) *AccessPoliciesServicePerimetersCommitCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccessPoliciesServicePerimetersCommitCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccessPoliciesServicePerimetersCommitCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.commitserviceperimetersrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/servicePerimeters:commit")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "accesscontextmanager.accessPolicies.servicePerimeters.commit" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccessPoliciesServicePerimetersCommitCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Commit the dry-run spec for all the Service Perimeters in an\nAccess Policy.\nA commit operation on a Service Perimeter involves copying its `spec` field\nto that Service Perimeter's `status` field. Only Service Perimeters with\n`use_explicit_dry_run_spec` field set to true are affected by a commit\noperation. The longrunning operation from this RPC will have a successful\nstatus once the dry-run specs for all the Service Perimeters have been\ncommitted. If a commit fails, it will cause the longrunning operation to\nreturn an error response and the entire commit operation will be cancelled.\nWhen successful, Operation.response field will contain\nCommitServicePerimetersResponse. The `dry_run` and the `spec` fields will\nbe cleared after a successful commit operation.",
+	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}/servicePerimeters:commit",
+	//   "httpMethod": "POST",
+	//   "id": "accesscontextmanager.accessPolicies.servicePerimeters.commit",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Resource name for the parent Access Policy which owns all\nService Perimeters in scope for\nthe commit operation.\n\nFormat: `accessPolicies/{policy_id}`",
+	//       "location": "path",
+	//       "pattern": "^accessPolicies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/servicePerimeters:commit",
+	//   "request": {
+	//     "$ref": "CommitServicePerimetersRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "accesscontextmanager.accessPolicies.servicePerimeters.create":
 
 type AccessPoliciesServicePerimetersCreateCall struct {
@@ -2794,7 +3419,7 @@ func (c *AccessPoliciesServicePerimetersCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2936,7 +3561,7 @@ func (c *AccessPoliciesServicePerimetersDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3078,7 +3703,7 @@ func (c *AccessPoliciesServicePerimetersGetCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3239,7 +3864,7 @@ func (c *AccessPoliciesServicePerimetersListCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3420,7 +4045,7 @@ func (c *AccessPoliciesServicePerimetersPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3520,6 +4145,159 @@ func (c *AccessPoliciesServicePerimetersPatchCall) Do(opts ...googleapi.CallOpti
 
 }
 
+// method id "accesscontextmanager.accessPolicies.servicePerimeters.replaceAll":
+
+type AccessPoliciesServicePerimetersReplaceAllCall struct {
+	s                               *Service
+	parent                          string
+	replaceserviceperimetersrequest *ReplaceServicePerimetersRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// ReplaceAll: Replace all existing Service Perimeters in an
+// Access Policy
+// with the Service Perimeters provided.
+// This is done within one transaction. The longrunning operation from
+// this
+// RPC will have a successful status once all replacements have
+// propagated to
+// long-lasting storage. Replacements containing errors will result in
+// an
+// error response for the first error encountered and the transaction
+// will be
+// cancelled. Operation.response field will
+// contain
+// ReplaceServicePerimetersResponse.
+func (r *AccessPoliciesServicePerimetersService) ReplaceAll(parent string, replaceserviceperimetersrequest *ReplaceServicePerimetersRequest) *AccessPoliciesServicePerimetersReplaceAllCall {
+	c := &AccessPoliciesServicePerimetersReplaceAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.replaceserviceperimetersrequest = replaceserviceperimetersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccessPoliciesServicePerimetersReplaceAllCall) Fields(s ...googleapi.Field) *AccessPoliciesServicePerimetersReplaceAllCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccessPoliciesServicePerimetersReplaceAllCall) Context(ctx context.Context) *AccessPoliciesServicePerimetersReplaceAllCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccessPoliciesServicePerimetersReplaceAllCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccessPoliciesServicePerimetersReplaceAllCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.replaceserviceperimetersrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/servicePerimeters:replaceAll")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "accesscontextmanager.accessPolicies.servicePerimeters.replaceAll" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccessPoliciesServicePerimetersReplaceAllCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Replace all existing Service Perimeters in an\nAccess Policy\nwith the Service Perimeters provided.\nThis is done within one transaction. The longrunning operation from this\nRPC will have a successful status once all replacements have propagated to\nlong-lasting storage. Replacements containing errors will result in an\nerror response for the first error encountered and the transaction will be\ncancelled. Operation.response field will contain\nReplaceServicePerimetersResponse.",
+	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}/servicePerimeters:replaceAll",
+	//   "httpMethod": "POST",
+	//   "id": "accesscontextmanager.accessPolicies.servicePerimeters.replaceAll",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Resource name for the access policy which owns these\nService Perimeters.\n\nFormat: `accessPolicies/{policy_id}`",
+	//       "location": "path",
+	//       "pattern": "^accessPolicies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/servicePerimeters:replaceAll",
+	//   "request": {
+	//     "$ref": "ReplaceServicePerimetersRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "accesscontextmanager.operations.cancel":
 
 type OperationsCancelCall struct {
@@ -3583,7 +4361,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3658,7 +4436,7 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//     "name": {
 	//       "description": "The name of the operation resource to be cancelled.",
 	//       "location": "path",
-	//       "pattern": "^operations/.+$",
+	//       "pattern": "^operations/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3727,7 +4505,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3797,7 +4575,7 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//     "name": {
 	//       "description": "The name of the operation resource to be deleted.",
 	//       "location": "path",
-	//       "pattern": "^operations/.+$",
+	//       "pattern": "^operations/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3872,7 +4650,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3945,7 +4723,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//     "name": {
 	//       "description": "The name of the operation resource.",
 	//       "location": "path",
-	//       "pattern": "^operations/.+$",
+	//       "pattern": "^operations/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -4053,7 +4831,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

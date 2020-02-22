@@ -1370,8 +1370,9 @@ type GoogleCloudOrgpolicyV1RestoreDefault struct {
 }
 
 // GoogleIdentityAccesscontextmanagerV1AccessLevel: An `AccessLevel` is
-// a label that can be applied to requests to GCP services,
-// along with a list of requirements necessary for the label to be
+// a label that can be applied to requests to Google Cloud
+// services, along with a list of requirements necessary for the label
+// to be
 // applied.
 type GoogleIdentityAccesscontextmanagerV1AccessLevel struct {
 	// Basic: A `BasicLevel` composed of `Conditions`.
@@ -1425,13 +1426,14 @@ func (s *GoogleIdentityAccesscontextmanagerV1AccessLevel) MarshalJSON() ([]byte,
 
 // GoogleIdentityAccesscontextmanagerV1AccessPolicy: `AccessPolicy` is a
 // container for `AccessLevels` (which define the necessary
-// attributes to use GCP services) and `ServicePerimeters` (which define
-// regions
-// of services able to freely pass data within a perimeter). An access
-// policy is
-// globally visible within an organization, and the restrictions it
-// specifies
-// apply to all projects within an organization.
+// attributes to use Google Cloud services) and `ServicePerimeters`
+// (which
+// define regions of services able to freely pass data within a
+// perimeter). An
+// access policy is globally visible within an organization, and
+// the
+// restrictions it specifies apply to all projects within an
+// organization.
 type GoogleIdentityAccesscontextmanagerV1AccessPolicy struct {
 	// CreateTime: Output only. Time the `AccessPolicy` was created in UTC.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1789,9 +1791,9 @@ func (s *GoogleIdentityAccesscontextmanagerV1OsConstraint) MarshalJSON() ([]byte
 }
 
 // GoogleIdentityAccesscontextmanagerV1ServicePerimeter:
-// `ServicePerimeter` describes a set of GCP resources which can freely
-// import
-// and export data amongst themselves, but not export outside of
+// `ServicePerimeter` describes a set of Google Cloud resources which
+// can freely
+// import and export data amongst themselves, but not export outside of
 // the
 // `ServicePerimeter`. If a request with a source within this
 // `ServicePerimeter`
@@ -1800,12 +1802,14 @@ func (s *GoogleIdentityAccesscontextmanagerV1OsConstraint) MarshalJSON() ([]byte
 // Otherwise the request is allowed. There are two types of Service
 // Perimeter -
 // Regular and Bridge. Regular Service Perimeters cannot overlap, a
-// single GCP
-// project can only belong to a single regular Service Perimeter.
-// Service
-// Perimeter Bridges can contain only GCP projects as members, a single
-// GCP
-// project may belong to multiple Service Perimeter Bridges.
+// single
+// Google Cloud project can only belong to a single regular Service
+// Perimeter.
+// Service Perimeter Bridges can contain only Google Cloud projects as
+// members,
+// a single Google Cloud project may belong to multiple Service
+// Perimeter
+// Bridges.
 type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	// CreateTime: Output only. Time the `ServicePerimeter` was created in
 	// UTC.
@@ -1839,6 +1843,15 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	//   "PERIMETER_TYPE_BRIDGE" - Perimeter Bridge.
 	PerimeterType string `json:"perimeterType,omitempty"`
 
+	// Spec: Proposed (or dry run) ServicePerimeter configuration. This
+	// configuration
+	// allows to specify and test ServicePerimeter configuration without
+	// enforcing
+	// actual access restrictions. Only allowed to be set when
+	// the
+	// "use_explicit_dry_run_spec" flag is set.
+	Spec *GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig `json:"spec,omitempty"`
+
 	// Status: Current ServicePerimeter configuration. Specifies sets of
 	// resources,
 	// restricted services and access levels that determine
@@ -1852,6 +1865,27 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	// UpdateTime: Output only. Time the `ServicePerimeter` was updated in
 	// UTC.
 	UpdateTime string `json:"updateTime,omitempty"`
+
+	// UseExplicitDryRunSpec: Use explicit dry run spec flag. Ordinarily, a
+	// dry-run spec implicitly
+	// exists  for all Service Perimeters, and that spec is identical to
+	// the
+	// status for those Service Perimeters. When this flag is set, it
+	// inhibits the
+	// generation of the implicit spec, thereby allowing the user to
+	// explicitly
+	// provide a configuration ("spec") to use in a dry-run version of the
+	// Service
+	// Perimeter. This allows the user to test changes to the enforced
+	// config
+	// ("status") without actually enforcing them. This testing is done
+	// through
+	// analyzing the differences between currently enforced and
+	// suggested
+	// restrictions. use_explicit_dry_run_spec must bet set to True if any
+	// of the
+	// fields in the spec are set to non-default values.
+	UseExplicitDryRunSpec bool `json:"useExplicitDryRunSpec,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
@@ -1877,9 +1911,9 @@ func (s *GoogleIdentityAccesscontextmanagerV1ServicePerimeter) MarshalJSON() ([]
 }
 
 // GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig:
-// `ServicePerimeterConfig` specifies a set of GCP resources that
-// describe
-// specific Service Perimeter configuration.
+// `ServicePerimeterConfig` specifies a set of Google Cloud resources
+// that
+// describe specific Service Perimeter configuration.
 type GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig struct {
 	// AccessLevels: A list of `AccessLevel` resource names that allow
 	// resources within the
@@ -1889,27 +1923,32 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig struct {
 	// a
 	// nonexistent `AccessLevel` is a syntax error. If no `AccessLevel`
 	// names are
-	// listed, resources within the perimeter can only be accessed via GCP
-	// calls
-	// with request origins within the perimeter.
+	// listed, resources within the perimeter can only be accessed via
+	// Google
+	// Cloud calls with request origins within the perimeter.
 	// Example:
 	// "accessPolicies/MY_POLICY/accessLevels/MY_LEVEL".
 	// For Service Perimeter Bridge, must be empty.
 	AccessLevels []string `json:"accessLevels,omitempty"`
 
-	// Resources: A list of GCP resources that are inside of the service
-	// perimeter.
+	// Resources: A list of Google Cloud resources that are inside of the
+	// service perimeter.
 	// Currently only projects are allowed. Format:
 	// `projects/{project_number}`
 	Resources []string `json:"resources,omitempty"`
 
-	// RestrictedServices: GCP services that are subject to the Service
-	// Perimeter restrictions. For
-	// example, if `storage.googleapis.com` is specified, access to the
-	// storage
-	// buckets inside the perimeter must meet the perimeter's access
-	// restrictions.
+	// RestrictedServices: Google Cloud services that are subject to the
+	// Service Perimeter
+	// restrictions. For example, if `storage.googleapis.com` is specified,
+	// access
+	// to the storage buckets inside the perimeter must meet the
+	// perimeter's
+	// access restrictions.
 	RestrictedServices []string `json:"restrictedServices,omitempty"`
+
+	// VpcAccessibleServices: Configuration for within Perimeter allowed
+	// APIs.
+	VpcAccessibleServices *GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices `json:"vpcAccessibleServices,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessLevels") to
 	// unconditionally include in API requests. By default, fields with
@@ -1930,6 +1969,44 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig struct {
 
 func (s *GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices: Specifies
+// how APIs are allowed to communicate within the Service
+// Perimeter.
+type GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices struct {
+	// AllowedServices: The list of APIs usable within the Service
+	// Perimeter. Must be empty
+	// unless 'enable_restriction' is True.
+	AllowedServices []string `json:"allowedServices,omitempty"`
+
+	// EnableRestriction: Whether to restrict API calls within the Service
+	// Perimeter to the list of
+	// APIs specified in 'allowed_services'.
+	EnableRestriction bool `json:"enableRestriction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowedServices") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedServices") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2562,7 +2639,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2700,7 +2777,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2841,7 +2918,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2985,7 +3062,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3120,7 +3197,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3273,7 +3350,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3482,7 +3559,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3652,7 +3729,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

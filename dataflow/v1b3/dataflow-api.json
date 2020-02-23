@@ -1645,7 +1645,7 @@
       }
     }
   },
-  "revision": "20191230",
+  "revision": "20200215",
   "rootUrl": "https://dataflow.googleapis.com/",
   "schemas": {
     "ApproximateProgress": {
@@ -4214,6 +4214,21 @@
       },
       "type": "object"
     },
+    "SdkHarnessContainerImage": {
+      "description": "Defines a SDK harness container for executing Dataflow pipelines.",
+      "id": "SdkHarnessContainerImage",
+      "properties": {
+        "containerImage": {
+          "description": "A docker container image that resides in Google Container Registry.",
+          "type": "string"
+        },
+        "useSingleCorePerContainer": {
+          "description": "If true, recommends the Dataflow service to use only one core per SDK\ncontainer instance with this image. If false (or unset) recommends using\nmore than one core per SDK container instance with this image for\nefficiency. Note that Dataflow service may choose to override this property\nif needed.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "SdkVersion": {
       "description": "The version of the SDK used to run the job.",
       "id": "SdkVersion",
@@ -5760,6 +5775,13 @@
           "description": "Extra arguments for this worker pool.",
           "type": "object"
         },
+        "sdkHarnessContainerImages": {
+          "description": "Set of SDK harness containers needed to execute this pipeline. This will\nonly be set in the Fn API path. For non-cross-language pipelines this\nshould have only one entry. Cross-language pipelines will have two or more\nentries.",
+          "items": {
+            "$ref": "SdkHarnessContainerImage"
+          },
+          "type": "array"
+        },
         "subnetwork": {
           "description": "Subnetwork to which VMs will be assigned, if desired.  Expected to be of\nthe form \"regions/REGION/subnetworks/SUBNETWORK\".",
           "type": "string"
@@ -5785,7 +5807,7 @@
           "type": "string"
         },
         "workerHarnessContainerImage": {
-          "description": "Required. Docker container image that executes the Cloud Dataflow worker\nharness, residing in Google Container Registry.",
+          "description": "Required. Docker container image that executes the Cloud Dataflow worker\nharness, residing in Google Container Registry.\n\nDeprecated for the Fn API path. Use sdk_harness_container_images instead.",
           "type": "string"
         },
         "zone": {

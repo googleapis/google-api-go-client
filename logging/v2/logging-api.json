@@ -118,6 +118,38 @@
   "resources": {
     "billingAccounts": {
       "resources": {
+        "buckets": {
+          "methods": {
+            "get": {
+              "description": "Gets a bucket (Beta).",
+              "flatPath": "v2/billingAccounts/{billingAccountsId}/buckets/{bucketsId}",
+              "httpMethod": "GET",
+              "id": "logging.billingAccounts.buckets.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The resource name of the bucket:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\nExample: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id\".",
+                  "location": "path",
+                  "pattern": "^billingAccounts/[^/]+/buckets/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+name}",
+              "response": {
+                "$ref": "LogBucket"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/logging.admin",
+                "https://www.googleapis.com/auth/logging.read"
+              ]
+            }
+          }
+        },
         "exclusions": {
           "methods": {
             "create": {
@@ -276,6 +308,88 @@
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/logging.admin"
               ]
+            }
+          }
+        },
+        "locations": {
+          "resources": {
+            "buckets": {
+              "methods": {
+                "list": {
+                  "description": "Lists buckets (Beta).",
+                  "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/buckets",
+                  "httpMethod": "GET",
+                  "id": "logging.billingAccounts.locations.buckets.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent resource whose buckets are to be listed:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]\"\nNote: The locations portion of the resource is required, but supplying the character - in place of LOCATION_ID will return all buckets.",
+                      "location": "path",
+                      "pattern": "^billingAccounts/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+parent}/buckets",
+                  "response": {
+                    "$ref": "ListBucketsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only",
+                    "https://www.googleapis.com/auth/logging.admin",
+                    "https://www.googleapis.com/auth/logging.read"
+                  ]
+                },
+                "patch": {
+                  "description": "Updates a bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be returned.A buckets region may not be modified after it is created. This method is in Beta.",
+                  "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/buckets/{bucketsId}",
+                  "httpMethod": "PATCH",
+                  "id": "logging.billingAccounts.locations.buckets.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The full resource name of the bucket to update.\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\nExample: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id\". Also requires permission \"resourcemanager.projects.updateLiens\" to set the locked property",
+                      "location": "path",
+                      "pattern": "^billingAccounts/[^/]+/locations/[^/]+/buckets/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "Required. Field mask that specifies the fields in bucket that need an update. A bucket field will be overwritten if, and only if, it is in the update mask. name and output only fields cannot be updated.For a detailed FieldMask definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskExample: updateMask=retention_days.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "request": {
+                    "$ref": "LogBucket"
+                  },
+                  "response": {
+                    "$ref": "LogBucket"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/logging.admin"
+                  ]
+                }
+              }
             }
           }
         },
@@ -930,6 +1044,116 @@
             }
           }
         },
+        "locations": {
+          "resources": {
+            "buckets": {
+              "methods": {
+                "get": {
+                  "description": "Gets a bucket (Beta).",
+                  "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/buckets/{bucketsId}",
+                  "httpMethod": "GET",
+                  "id": "logging.folders.locations.buckets.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The resource name of the bucket:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\nExample: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id\".",
+                      "location": "path",
+                      "pattern": "^folders/[^/]+/locations/[^/]+/buckets/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "response": {
+                    "$ref": "LogBucket"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only",
+                    "https://www.googleapis.com/auth/logging.admin",
+                    "https://www.googleapis.com/auth/logging.read"
+                  ]
+                },
+                "list": {
+                  "description": "Lists buckets (Beta).",
+                  "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/buckets",
+                  "httpMethod": "GET",
+                  "id": "logging.folders.locations.buckets.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent resource whose buckets are to be listed:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]\"\nNote: The locations portion of the resource is required, but supplying the character - in place of LOCATION_ID will return all buckets.",
+                      "location": "path",
+                      "pattern": "^folders/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+parent}/buckets",
+                  "response": {
+                    "$ref": "ListBucketsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only",
+                    "https://www.googleapis.com/auth/logging.admin",
+                    "https://www.googleapis.com/auth/logging.read"
+                  ]
+                },
+                "patch": {
+                  "description": "Updates a bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be returned.A buckets region may not be modified after it is created. This method is in Beta.",
+                  "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/buckets/{bucketsId}",
+                  "httpMethod": "PATCH",
+                  "id": "logging.folders.locations.buckets.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The full resource name of the bucket to update.\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\nExample: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id\". Also requires permission \"resourcemanager.projects.updateLiens\" to set the locked property",
+                      "location": "path",
+                      "pattern": "^folders/[^/]+/locations/[^/]+/buckets/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "Required. Field mask that specifies the fields in bucket that need an update. A bucket field will be overwritten if, and only if, it is in the update mask. name and output only fields cannot be updated.For a detailed FieldMask definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskExample: updateMask=retention_days.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "request": {
+                    "$ref": "LogBucket"
+                  },
+                  "response": {
+                    "$ref": "LogBucket"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/logging.admin"
+                  ]
+                }
+              }
+            }
+          }
+        },
         "logs": {
           "methods": {
             "delete": {
@@ -1202,6 +1426,116 @@
               },
               "response": {
                 "$ref": "LogSink"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/logging.admin"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "locations": {
+      "resources": {
+        "buckets": {
+          "methods": {
+            "get": {
+              "description": "Gets a bucket (Beta).",
+              "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}/buckets/{bucketsId}",
+              "httpMethod": "GET",
+              "id": "logging.locations.buckets.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The resource name of the bucket:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\nExample: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id\".",
+                  "location": "path",
+                  "pattern": "^[^/]+/[^/]+/locations/[^/]+/buckets/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+name}",
+              "response": {
+                "$ref": "LogBucket"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/logging.admin",
+                "https://www.googleapis.com/auth/logging.read"
+              ]
+            },
+            "list": {
+              "description": "Lists buckets (Beta).",
+              "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}/buckets",
+              "httpMethod": "GET",
+              "id": "logging.locations.buckets.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "pageSize": {
+                  "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Required. The parent resource whose buckets are to be listed:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]\"\nNote: The locations portion of the resource is required, but supplying the character - in place of LOCATION_ID will return all buckets.",
+                  "location": "path",
+                  "pattern": "^[^/]+/[^/]+/locations/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+parent}/buckets",
+              "response": {
+                "$ref": "ListBucketsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/logging.admin",
+                "https://www.googleapis.com/auth/logging.read"
+              ]
+            },
+            "patch": {
+              "description": "Updates a bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be returned.A buckets region may not be modified after it is created. This method is in Beta.",
+              "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}/buckets/{bucketsId}",
+              "httpMethod": "PATCH",
+              "id": "logging.locations.buckets.patch",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The full resource name of the bucket to update.\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\nExample: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id\". Also requires permission \"resourcemanager.projects.updateLiens\" to set the locked property",
+                  "location": "path",
+                  "pattern": "^[^/]+/[^/]+/locations/[^/]+/buckets/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "Required. Field mask that specifies the fields in bucket that need an update. A bucket field will be overwritten if, and only if, it is in the update mask. name and output only fields cannot be updated.For a detailed FieldMask definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskExample: updateMask=retention_days.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+name}",
+              "request": {
+                "$ref": "LogBucket"
+              },
+              "response": {
+                "$ref": "LogBucket"
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
@@ -1540,6 +1874,116 @@
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/logging.admin"
               ]
+            }
+          }
+        },
+        "locations": {
+          "resources": {
+            "buckets": {
+              "methods": {
+                "get": {
+                  "description": "Gets a bucket (Beta).",
+                  "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/buckets/{bucketsId}",
+                  "httpMethod": "GET",
+                  "id": "logging.organizations.locations.buckets.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The resource name of the bucket:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\nExample: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id\".",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/locations/[^/]+/buckets/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "response": {
+                    "$ref": "LogBucket"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only",
+                    "https://www.googleapis.com/auth/logging.admin",
+                    "https://www.googleapis.com/auth/logging.read"
+                  ]
+                },
+                "list": {
+                  "description": "Lists buckets (Beta).",
+                  "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/buckets",
+                  "httpMethod": "GET",
+                  "id": "logging.organizations.locations.buckets.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent resource whose buckets are to be listed:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]\"\nNote: The locations portion of the resource is required, but supplying the character - in place of LOCATION_ID will return all buckets.",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+parent}/buckets",
+                  "response": {
+                    "$ref": "ListBucketsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only",
+                    "https://www.googleapis.com/auth/logging.admin",
+                    "https://www.googleapis.com/auth/logging.read"
+                  ]
+                },
+                "patch": {
+                  "description": "Updates a bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be returned.A buckets region may not be modified after it is created. This method is in Beta.",
+                  "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/buckets/{bucketsId}",
+                  "httpMethod": "PATCH",
+                  "id": "logging.organizations.locations.buckets.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The full resource name of the bucket to update.\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\nExample: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id\". Also requires permission \"resourcemanager.projects.updateLiens\" to set the locked property",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/locations/[^/]+/buckets/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "Required. Field mask that specifies the fields in bucket that need an update. A bucket field will be overwritten if, and only if, it is in the update mask. name and output only fields cannot be updated.For a detailed FieldMask definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskExample: updateMask=retention_days.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "request": {
+                    "$ref": "LogBucket"
+                  },
+                  "response": {
+                    "$ref": "LogBucket"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/logging.admin"
+                  ]
+                }
+              }
             }
           }
         },
@@ -1985,6 +2429,116 @@
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/logging.admin"
               ]
+            }
+          }
+        },
+        "locations": {
+          "resources": {
+            "buckets": {
+              "methods": {
+                "get": {
+                  "description": "Gets a bucket (Beta).",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/buckets/{bucketsId}",
+                  "httpMethod": "GET",
+                  "id": "logging.projects.locations.buckets.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The resource name of the bucket:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\nExample: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id\".",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/buckets/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "response": {
+                    "$ref": "LogBucket"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only",
+                    "https://www.googleapis.com/auth/logging.admin",
+                    "https://www.googleapis.com/auth/logging.read"
+                  ]
+                },
+                "list": {
+                  "description": "Lists buckets (Beta).",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/buckets",
+                  "httpMethod": "GET",
+                  "id": "logging.projects.locations.buckets.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent resource whose buckets are to be listed:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]\"\nNote: The locations portion of the resource is required, but supplying the character - in place of LOCATION_ID will return all buckets.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+parent}/buckets",
+                  "response": {
+                    "$ref": "ListBucketsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only",
+                    "https://www.googleapis.com/auth/logging.admin",
+                    "https://www.googleapis.com/auth/logging.read"
+                  ]
+                },
+                "patch": {
+                  "description": "Updates a bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be returned.A buckets region may not be modified after it is created. This method is in Beta.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/buckets/{bucketsId}",
+                  "httpMethod": "PATCH",
+                  "id": "logging.projects.locations.buckets.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The full resource name of the bucket to update.\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\"\nExample: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id\". Also requires permission \"resourcemanager.projects.updateLiens\" to set the locked property",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/buckets/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "Required. Field mask that specifies the fields in bucket that need an update. A bucket field will be overwritten if, and only if, it is in the update mask. name and output only fields cannot be updated.For a detailed FieldMask definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskExample: updateMask=retention_days.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "request": {
+                    "$ref": "LogBucket"
+                  },
+                  "response": {
+                    "$ref": "LogBucket"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/logging.admin"
+                  ]
+                }
+              }
             }
           }
         },
@@ -2667,7 +3221,7 @@
       }
     }
   },
-  "revision": "20200125",
+  "revision": "20200221",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "BigQueryOptions": {
@@ -2889,6 +3443,24 @@
       },
       "type": "object"
     },
+    "ListBucketsResponse": {
+      "description": "The response from ListBuckets (Beta).",
+      "id": "ListBucketsResponse",
+      "properties": {
+        "buckets": {
+          "description": "A list of buckets.",
+          "items": {
+            "$ref": "LogBucket"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "If there might be more results than appear in this response, then nextPageToken is included. To get the next set of results, call the same method again using the value of nextPageToken as pageToken.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ListExclusionsResponse": {
       "description": "Result returned from ListExclusions.",
       "id": "ListExclusionsResponse",
@@ -3031,6 +3603,50 @@
             "$ref": "LogSink"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "LogBucket": {
+      "description": "Describes a repository of logs (Beta).",
+      "id": "LogBucket",
+      "properties": {
+        "createTime": {
+          "description": "Output only. The creation timestamp of the bucket. This is not set for any of the default buckets.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "description": {
+          "description": "Describes this bucket.",
+          "type": "string"
+        },
+        "lifecycleState": {
+          "description": "The bucket lifecycle state.Output only.",
+          "enum": [
+            "LIFECYCLE_STATE_UNSPECIFIED",
+            "ACTIVE",
+            "DELETE_REQUESTED"
+          ],
+          "enumDescriptions": [
+            "Unspecified state. This is only used/useful for distinguishing unset values.",
+            "The normal and active state.",
+            "The bucket has been marked for deletion by the user."
+          ],
+          "type": "string"
+        },
+        "name": {
+          "description": "The resource name of the bucket. For example: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id The supported locations are:  \"global\"  \"us-central1\"For the location of global it is unspecified where logs are actually stored. Once a bucket has been created, the location can not be changed.",
+          "type": "string"
+        },
+        "retentionDays": {
+          "description": "Logs will be retained by default for this amount of time, after which they will automatically be deleted. The minimum retention period is 1 day. If this value is set to zero at bucket creation time, the default time of 30 days will be used.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "updateTime": {
+          "description": "Output only. The last update timestamp of the bucket.",
+          "format": "google-datetime",
+          "type": "string"
         }
       },
       "type": "object"

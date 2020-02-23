@@ -31,6 +31,7 @@
   },
   "id": "oslogin:v1beta",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://oslogin.mtls.googleapis.com/",
   "name": "oslogin",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -313,7 +314,7 @@
       }
     }
   },
-  "revision": "20200120",
+  "revision": "20200215",
   "rootUrl": "https://oslogin.googleapis.com/",
   "schemas": {
     "Empty": {

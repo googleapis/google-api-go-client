@@ -24,6 +24,7 @@
   },
   "id": "pubsub:v1beta2",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://pubsub.mtls.googleapis.com/",
   "name": "pubsub",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -723,7 +724,7 @@
       }
     }
   },
-  "revision": "20200128",
+  "revision": "20200211",
   "rootUrl": "https://pubsub.googleapis.com/",
   "schemas": {
     "AcknowledgeRequest": {

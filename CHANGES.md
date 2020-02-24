@@ -1,5 +1,12 @@
-# v0.17.0
+# v0.18.0
 
+- Add the WithClientCertSource option for mTLS (client TLS certificates), currently only supported for HTTP clients.
+
+- Allow host:port for endpoint overrides, rather than requiring the full base URL (for google.golang.org/api clients).
+
+- Make DialPool work with WithGRPCConn plus non-zero pool size [googleapis/google-cloud-go#1780](https://github.com/googleapis/google-cloud-go/issues/1780)
+
+# v0.17.0
 
 - Revert sqladmin package name back from sql to sqladmin. (#448)
 

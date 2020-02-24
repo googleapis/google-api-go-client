@@ -22,7 +22,6 @@
   },
   "id": "cloudtasks:v2beta2",
   "kind": "discovery#restDescription",
-  "mtlsRootUrl": "https://cloudtasks.mtls.googleapis.com/",
   "name": "cloudtasks",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -787,7 +786,7 @@
       }
     }
   },
-  "revision": "20200210",
+  "revision": "20200201",
   "rootUrl": "https://cloudtasks.googleapis.com/",
   "schemas": {
     "AcknowledgeTaskRequest": {

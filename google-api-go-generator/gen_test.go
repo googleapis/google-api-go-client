@@ -59,8 +59,7 @@ func TestAPIs(t *testing.T) {
 			}
 			goldenFile := filepath.Join("testdata", name+".want")
 			if *updateGolden {
-				clean := strings.Replace(string(clean), fmt.Sprintf("gl-go/%s", version.Go()), "gl-go/1.12.5", -1)
-				clean = strings.Replace(clean, fmt.Sprintf("gdcl/%s", version.Repo), "gdcl/00000000", -1)
+				clean := strings.Replace(string(clean), fmt.Sprintf("gdcl/%s", version.Repo), "gdcl/00000000", -1)
 				if err := ioutil.WriteFile(goldenFile, []byte(clean), 0644); err != nil {
 					t.Fatal(err)
 				}
@@ -69,10 +68,8 @@ func TestAPIs(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			wantStr := strings.Replace(string(want), "gl-go/1.12.5", fmt.Sprintf("gl-go/%s", version.Go()), -1)
-			wantStr = strings.Replace(wantStr, "gdcl/00000000", fmt.Sprintf("gdcl/%s", version.Repo), -1)
-			want = []byte(wantStr)
-			if !bytes.Equal(want, clean) {
+			wantStr := strings.Replace(string(want), "gdcl/00000000", fmt.Sprintf("gdcl/%s", version.Repo), -1)
+			if !bytes.Equal([]byte(wantStr), clean) {
 				tf, _ := ioutil.TempFile("", "api-"+name+"-got-json.")
 				if _, err := tf.Write(clean); err != nil {
 					t.Fatal(err)
@@ -80,6 +77,7 @@ func TestAPIs(t *testing.T) {
 				if err := tf.Close(); err != nil {
 					t.Fatal(err)
 				}
+				// NOTE: update golden files with `go test -update_golden`
 				t.Errorf("Output for API %s differs: diff -u %s %s", name, goldenFile, tf.Name())
 			}
 		})

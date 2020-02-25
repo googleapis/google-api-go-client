@@ -32,7 +32,6 @@ import (
 
 const (
 	googleDiscoveryURL = "https://www.googleapis.com/discovery/v1/apis"
-	generatorVersion   = "2018018"
 )
 
 var (
@@ -1937,7 +1936,7 @@ func (meth *Method) generateCode() {
 
 	pn("\nfunc (c *%s) doRequest(alt string) (*http.Response, error) {", callName)
 	pn(`reqHeaders := make(http.Header)`)
-	pn(`reqHeaders.Set("x-goog-api-client", "gl-go/%s gdcl/%s")`, version.Go(), version.Repo)
+	pn(`reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/%s")`, version.Repo)
 	pn("for k, v := range c.header_ {")
 	pn(" reqHeaders[k] = v")
 	pn("}")

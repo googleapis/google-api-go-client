@@ -793,10 +793,7 @@ type DataSource struct {
 	// contained
 	// items. This ensures a high level access on the entire datasource,
 	// and
-	// that the individual items are not shared outside this
-	// visibility.
-	// This should not be set if anonymous search is enabled for the data
-	// source.
+	// that the individual items are not shared outside this visibility.
 	ItemsVisibility []*GSuitePrincipal `json:"itemsVisibility,omitempty"`
 
 	// Name: Name of the datasource resource.
@@ -4349,9 +4346,6 @@ type PropertyDefinition struct {
 	// set this option. In a given datasource maximum of 5 properties can
 	// be
 	// marked as is_wildcard_searchable.
-	//
-	// Note: This is an alpha feature and is enabled for whitelisted users
-	// only.
 	IsWildcardSearchable bool `json:"isWildcardSearchable,omitempty"`
 
 	// Name: The name of the property. Item indexing requests sent to the
@@ -7030,7 +7024,7 @@ func (c *DebugDatasourcesItemsCheckAccessCall) Header() http.Header {
 
 func (c *DebugDatasourcesItemsCheckAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7180,7 +7174,7 @@ func (c *DebugDatasourcesItemsSearchByViewUrlCall) Header() http.Header {
 
 func (c *DebugDatasourcesItemsSearchByViewUrlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7377,7 +7371,7 @@ func (c *DebugDatasourcesItemsUnmappedidsListCall) Header() http.Header {
 
 func (c *DebugDatasourcesItemsUnmappedidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7598,7 +7592,7 @@ func (c *DebugIdentitysourcesItemsListForunmappedidentityCall) Header() http.Hea
 
 func (c *DebugIdentitysourcesItemsListForunmappedidentityCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7832,7 +7826,7 @@ func (c *DebugIdentitysourcesUnmappedidsListCall) Header() http.Header {
 
 func (c *DebugIdentitysourcesUnmappedidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8027,7 +8021,7 @@ func (c *IndexingDatasourcesDeleteSchemaCall) Header() http.Header {
 
 func (c *IndexingDatasourcesDeleteSchemaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8186,7 +8180,7 @@ func (c *IndexingDatasourcesGetSchemaCall) Header() http.Header {
 
 func (c *IndexingDatasourcesGetSchemaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8334,7 +8328,7 @@ func (c *IndexingDatasourcesUpdateSchemaCall) Header() http.Header {
 
 func (c *IndexingDatasourcesUpdateSchemaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8523,7 +8517,7 @@ func (c *IndexingDatasourcesItemsDeleteCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8688,7 +8682,7 @@ func (c *IndexingDatasourcesItemsDeleteQueueItemsCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsDeleteQueueItemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8859,7 +8853,7 @@ func (c *IndexingDatasourcesItemsGetCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9014,7 +9008,7 @@ func (c *IndexingDatasourcesItemsIndexCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsIndexCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9234,7 +9228,7 @@ func (c *IndexingDatasourcesItemsListCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9448,7 +9442,7 @@ func (c *IndexingDatasourcesItemsPollCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsPollCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9594,7 +9588,7 @@ func (c *IndexingDatasourcesItemsPushCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsPushCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9742,7 +9736,7 @@ func (c *IndexingDatasourcesItemsUnreserveCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsUnreserveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9891,7 +9885,7 @@ func (c *IndexingDatasourcesItemsUploadCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10102,7 +10096,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10296,7 +10290,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10409,6 +10403,13 @@ type QuerySearchCall struct {
 // that you have indexed from a third party.
 //
 // **Note:** This API requires a standard end user account to execute.
+// A service account can't perform Query API requests directly; to use
+// a
+// service account to perform queries, set up [G Suite domain-wide
+// delegation
+// of
+// authority](https://developers.google.com/cloud-search/do
+// cs/guides/delegation/).
 func (r *QueryService) Search(searchrequest *SearchRequest) *QuerySearchCall {
 	c := &QuerySearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.searchrequest = searchrequest
@@ -10442,7 +10443,7 @@ func (c *QuerySearchCall) Header() http.Header {
 
 func (c *QuerySearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10503,7 +10504,7 @@ func (c *QuerySearchCall) Do(opts ...googleapi.CallOption) (*SearchResponse, err
 	}
 	return ret, nil
 	// {
-	//   "description": "The Cloud Search Query API provides the search method, which returns\nthe most relevant results from a user query.  The results can come from\nG Suite Apps, such as Gmail or Google Drive, or they can come from data\nthat you have indexed from a third party.\n\n**Note:** This API requires a standard end user account to execute.",
+	//   "description": "The Cloud Search Query API provides the search method, which returns\nthe most relevant results from a user query.  The results can come from\nG Suite Apps, such as Gmail or Google Drive, or they can come from data\nthat you have indexed from a third party.\n\n**Note:** This API requires a standard end user account to execute.\nA service account can't perform Query API requests directly; to use a\nservice account to perform queries, set up [G Suite domain-wide delegation\nof\nauthority](https://developers.google.com/cloud-search/docs/guides/delegation/).",
 	//   "flatPath": "v1/query/search",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsearch.query.search",
@@ -10538,6 +10539,13 @@ type QuerySuggestCall struct {
 // query.
 //
 // **Note:** This API requires a standard end user account to execute.
+// A service account can't perform Query API requests directly; to use
+// a
+// service account to perform queries, set up [G Suite domain-wide
+// delegation
+// of
+// authority](https://developers.google.com/cloud-search/do
+// cs/guides/delegation/).
 func (r *QueryService) Suggest(suggestrequest *SuggestRequest) *QuerySuggestCall {
 	c := &QuerySuggestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.suggestrequest = suggestrequest
@@ -10571,7 +10579,7 @@ func (c *QuerySuggestCall) Header() http.Header {
 
 func (c *QuerySuggestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10632,7 +10640,7 @@ func (c *QuerySuggestCall) Do(opts ...googleapi.CallOption) (*SuggestResponse, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Provides suggestions for autocompleting the query.\n\n**Note:** This API requires a standard end user account to execute.",
+	//   "description": "Provides suggestions for autocompleting the query.\n\n**Note:** This API requires a standard end user account to execute.\nA service account can't perform Query API requests directly; to use a\nservice account to perform queries, set up [G Suite domain-wide delegation\nof\nauthority](https://developers.google.com/cloud-search/docs/guides/delegation/).",
 	//   "flatPath": "v1/query/suggest",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsearch.query.suggest",
@@ -10667,6 +10675,13 @@ type QuerySourcesListCall struct {
 // Suggest APIs.
 //
 // **Note:** This API requires a standard end user account to execute.
+// A service account can't perform Query API requests directly; to use
+// a
+// service account to perform queries, set up [G Suite domain-wide
+// delegation
+// of
+// authority](https://developers.google.com/cloud-search/do
+// cs/guides/delegation/).
 func (r *QuerySourcesService) List() *QuerySourcesListCall {
 	c := &QuerySourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -10777,7 +10792,7 @@ func (c *QuerySourcesListCall) Header() http.Header {
 
 func (c *QuerySourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10836,7 +10851,7 @@ func (c *QuerySourcesListCall) Do(opts ...googleapi.CallOption) (*ListQuerySourc
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns list of sources that user can use for Search and Suggest APIs.\n\n**Note:** This API requires a standard end user account to execute.",
+	//   "description": "Returns list of sources that user can use for Search and Suggest APIs.\n\n**Note:** This API requires a standard end user account to execute.\nA service account can't perform Query API requests directly; to use a\nservice account to perform queries, set up [G Suite domain-wide delegation\nof\nauthority](https://developers.google.com/cloud-search/docs/guides/delegation/).",
 	//   "flatPath": "v1/query/sources",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsearch.query.sources.list",
@@ -10947,7 +10962,7 @@ func (c *SettingsDatasourcesCreateCall) Header() http.Header {
 
 func (c *SettingsDatasourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11085,7 +11100,7 @@ func (c *SettingsDatasourcesDeleteCall) Header() http.Header {
 
 func (c *SettingsDatasourcesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11244,7 +11259,7 @@ func (c *SettingsDatasourcesGetCall) Header() http.Header {
 
 func (c *SettingsDatasourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11420,7 +11435,7 @@ func (c *SettingsDatasourcesListCall) Header() http.Header {
 
 func (c *SettingsDatasourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11584,7 +11599,7 @@ func (c *SettingsDatasourcesUpdateCall) Header() http.Header {
 
 func (c *SettingsDatasourcesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11726,7 +11741,7 @@ func (c *SettingsSearchapplicationsCreateCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11864,7 +11879,7 @@ func (c *SettingsSearchapplicationsDeleteCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12023,7 +12038,7 @@ func (c *SettingsSearchapplicationsGetCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12199,7 +12214,7 @@ func (c *SettingsSearchapplicationsListCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12365,7 +12380,7 @@ func (c *SettingsSearchapplicationsResetCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12509,7 +12524,7 @@ func (c *SettingsSearchapplicationsUpdateCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12706,7 +12721,7 @@ func (c *StatsGetIndexCall) Header() http.Header {
 
 func (c *StatsGetIndexCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12918,7 +12933,7 @@ func (c *StatsGetQueryCall) Header() http.Header {
 
 func (c *StatsGetQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13132,7 +13147,7 @@ func (c *StatsGetSessionCall) Header() http.Header {
 
 func (c *StatsGetSessionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13344,7 +13359,7 @@ func (c *StatsGetUserCall) Header() http.Header {
 
 func (c *StatsGetUserCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13559,7 +13574,7 @@ func (c *StatsIndexDatasourcesGetCall) Header() http.Header {
 
 func (c *StatsIndexDatasourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13785,7 +13800,7 @@ func (c *StatsQuerySearchapplicationsGetCall) Header() http.Header {
 
 func (c *StatsQuerySearchapplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14014,7 +14029,7 @@ func (c *StatsSessionSearchapplicationsGetCall) Header() http.Header {
 
 func (c *StatsSessionSearchapplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14242,7 +14257,7 @@ func (c *StatsUserSearchapplicationsGetCall) Header() http.Header {
 
 func (c *StatsUserSearchapplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

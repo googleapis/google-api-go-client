@@ -28,6 +28,7 @@
   },
   "id": "cloudtrace:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://cloudtrace.mtls.googleapis.com/",
   "name": "cloudtrace",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -250,7 +251,7 @@
       }
     }
   },
-  "revision": "20200203",
+  "revision": "20200218",
   "rootUrl": "https://cloudtrace.googleapis.com/",
   "schemas": {
     "Empty": {

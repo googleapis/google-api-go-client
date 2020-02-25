@@ -872,7 +872,7 @@
     "query": {
       "methods": {
         "search": {
-          "description": "The Cloud Search Query API provides the search method, which returns\nthe most relevant results from a user query.  The results can come from\nG Suite Apps, such as Gmail or Google Drive, or they can come from data\nthat you have indexed from a third party.\n\n**Note:** This API requires a standard end user account to execute.",
+          "description": "The Cloud Search Query API provides the search method, which returns\nthe most relevant results from a user query.  The results can come from\nG Suite Apps, such as Gmail or Google Drive, or they can come from data\nthat you have indexed from a third party.\n\n**Note:** This API requires a standard end user account to execute.\nA service account can't perform Query API requests directly; to use a\nservice account to perform queries, set up [G Suite domain-wide delegation\nof\nauthority](https://developers.google.com/cloud-search/docs/guides/delegation/).",
           "flatPath": "v1/query/search",
           "httpMethod": "POST",
           "id": "cloudsearch.query.search",
@@ -891,7 +891,7 @@
           ]
         },
         "suggest": {
-          "description": "Provides suggestions for autocompleting the query.\n\n**Note:** This API requires a standard end user account to execute.",
+          "description": "Provides suggestions for autocompleting the query.\n\n**Note:** This API requires a standard end user account to execute.\nA service account can't perform Query API requests directly; to use a\nservice account to perform queries, set up [G Suite domain-wide delegation\nof\nauthority](https://developers.google.com/cloud-search/docs/guides/delegation/).",
           "flatPath": "v1/query/suggest",
           "httpMethod": "POST",
           "id": "cloudsearch.query.suggest",
@@ -914,7 +914,7 @@
         "sources": {
           "methods": {
             "list": {
-              "description": "Returns list of sources that user can use for Search and Suggest APIs.\n\n**Note:** This API requires a standard end user account to execute.",
+              "description": "Returns list of sources that user can use for Search and Suggest APIs.\n\n**Note:** This API requires a standard end user account to execute.\nA service account can't perform Query API requests directly; to use a\nservice account to perform queries, set up [G Suite domain-wide delegation\nof\nauthority](https://developers.google.com/cloud-search/docs/guides/delegation/).",
               "flatPath": "v1/query/sources",
               "httpMethod": "GET",
               "id": "cloudsearch.query.sources.list",
@@ -1804,7 +1804,7 @@
       }
     }
   },
-  "revision": "20200117",
+  "revision": "20200212",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -1964,7 +1964,7 @@
           "type": "array"
         },
         "itemsVisibility": {
-          "description": "This field restricts visibility to items at the datasource level. Items\nwithin the datasource are restricted to the union of users and groups\nincluded in this field. Note that, this does not ensure access to a\nspecific item, as users need to have ACL permissions on the contained\nitems. This ensures a high level access on the entire datasource, and\nthat the individual items are not shared outside this visibility.\nThis should not be set if anonymous search is enabled for the data source.",
+          "description": "This field restricts visibility to items at the datasource level. Items\nwithin the datasource are restricted to the union of users and groups\nincluded in this field. Note that, this does not ensure access to a\nspecific item, as users need to have ACL permissions on the contained\nitems. This ensures a high level access on the entire datasource, and\nthat the individual items are not shared outside this visibility.",
           "items": {
             "$ref": "GSuitePrincipal"
           },
@@ -3665,7 +3665,7 @@
           "type": "boolean"
         },
         "isWildcardSearchable": {
-          "description": "Indicates that users can perform wildcard search for this\nproperty. Only supported for Text properties. IsReturnable must be true to\nset this option. In a given datasource maximum of 5 properties can be\nmarked as is_wildcard_searchable.\n\nNote: This is an alpha feature and is enabled for whitelisted users only.",
+          "description": "Indicates that users can perform wildcard search for this\nproperty. Only supported for Text properties. IsReturnable must be true to\nset this option. In a given datasource maximum of 5 properties can be\nmarked as is_wildcard_searchable.",
           "type": "boolean"
         },
         "name": {

@@ -74,7 +74,7 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "toolresults:v1"
 const apiName = "toolresults"
 const apiVersion = "v1"
-const basePath = "https://toolresults.googleapis.com/"
+const basePath = "https://www.googleapis.com/"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {

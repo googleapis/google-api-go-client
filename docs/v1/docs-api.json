@@ -210,7 +210,7 @@
       }
     }
   },
-  "revision": "20200213",
+  "revision": "20200221",
   "rootUrl": "https://docs.googleapis.com/",
   "schemas": {
     "AutoText": {
@@ -989,6 +989,14 @@
           "description": "Indicates if there was a suggested change to margin_bottom.",
           "type": "boolean"
         },
+        "marginFooterSuggested": {
+          "description": "Indicates if there was a suggested change to margin_footer.",
+          "type": "boolean"
+        },
+        "marginHeaderSuggested": {
+          "description": "Indicates if there was a suggested change to margin_header.",
+          "type": "boolean"
+        },
         "marginLeftSuggested": {
           "description": "Indicates if there was a suggested change to margin_left.",
           "type": "boolean"
@@ -1008,6 +1016,10 @@
         "pageSizeSuggestionState": {
           "$ref": "SizeSuggestionState",
           "description": "A mask that indicates which of the fields in size have been changed in this\nsuggestion."
+        },
+        "useCustomHeaderFooterMarginsSuggested": {
+          "description": "Indicates if there was a suggested change to\nuse_custom_header_footer_margins.",
+          "type": "boolean"
         },
         "useEvenPageHeaderFooterSuggested": {
           "description": "Indicates if there was a suggested change to use_even_page_header_footer.",

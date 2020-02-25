@@ -285,42 +285,6 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
-                "list": {
-                  "description": "Lists entry groups.",
-                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups",
-                  "httpMethod": "GET",
-                  "id": "datacatalog.projects.locations.entryGroups.list",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "pageSize": {
-                      "description": "Optional. The maximum number of items to return. Default is 10. Max limit is 1000.\nThrows an invalid argument for `page_size \u003e 1000`.",
-                      "format": "int32",
-                      "location": "query",
-                      "type": "integer"
-                    },
-                    "pageToken": {
-                      "description": "Optional. Token that specifies which page is requested. If empty, the first page is\nreturned.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "parent": {
-                      "description": "Required. The name of the location that contains the entry groups, which can be\nprovided in URL format. Example:\n\n* projects/{project_id}/locations/{location}",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1beta1/{+parent}/entryGroups",
-                  "response": {
-                    "$ref": "GoogleCloudDatacatalogV1beta1ListEntryGroupsResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
                 "patch": {
                   "description": "Updates an EntryGroup. The user should enable the Data Catalog API in the\nproject identified by the `entry_group.name` parameter (see [Data Catalog\nResource Project] (/data-catalog/docs/concepts/resource-project) for more\ninformation).",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}",
@@ -1774,7 +1738,7 @@
       }
     }
   },
-  "revision": "20200211",
+  "revision": "20200218",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -2189,24 +2153,6 @@
           "description": "Entry details.",
           "items": {
             "$ref": "GoogleCloudDatacatalogV1beta1Entry"
-          },
-          "type": "array"
-        },
-        "nextPageToken": {
-          "description": "Token to retrieve the next page of results. It is set to empty if no items\nremain in results.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDatacatalogV1beta1ListEntryGroupsResponse": {
-      "description": "Response message for\nListEntryGroups.",
-      "id": "GoogleCloudDatacatalogV1beta1ListEntryGroupsResponse",
-      "properties": {
-        "entryGroups": {
-          "description": "EntryGroup details.",
-          "items": {
-            "$ref": "GoogleCloudDatacatalogV1beta1EntryGroup"
           },
           "type": "array"
         },

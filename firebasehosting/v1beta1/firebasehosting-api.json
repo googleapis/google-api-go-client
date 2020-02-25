@@ -704,7 +704,7 @@
       }
     }
   },
-  "revision": "20200217",
+  "revision": "20200224",
   "rootUrl": "https://firebasehosting.googleapis.com/",
   "schemas": {
     "ActingUser": {
@@ -821,7 +821,7 @@
           ],
           "enumDescriptions": [
             "Unspecified domain association status.",
-            "An operation is in progress on the domain association and no further\noperations can be performed until it is complete.",
+            "An external operation is in progress on the domain association and no\nfurther operations can be performed until it is complete. Formerly used for\nmetabase updates.  Not currently used",
             "The domain association is active and no additional action is required.",
             "The domain was previously verified in the legacy system. User must\nreverify the domain through the ownership service.",
             "The domain verification has been lost and the domain is in the grace period\nbefore being removed from the Firebase Hosting site."

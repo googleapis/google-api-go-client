@@ -22,6 +22,7 @@
   },
   "id": "securitycenter:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://securitycenter.mtls.googleapis.com/",
   "name": "securitycenter",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -898,7 +899,7 @@
       }
     }
   },
-  "revision": "20200131",
+  "revision": "20200224",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Asset": {

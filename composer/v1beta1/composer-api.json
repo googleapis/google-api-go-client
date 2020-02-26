@@ -400,7 +400,7 @@
       }
     }
   },
-  "revision": "20200207",
+  "revision": "20200219",
   "rootUrl": "https://composer.googleapis.com/",
   "schemas": {
     "AllowedIpRange": {
@@ -408,7 +408,7 @@
       "id": "AllowedIpRange",
       "properties": {
         "description": {
-          "description": "Optional. User-provided description.",
+          "description": "Optional. User-provided description. It must contain at most 300 characters.",
           "type": "string"
         },
         "value": {

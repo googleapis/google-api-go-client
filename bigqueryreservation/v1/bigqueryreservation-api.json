@@ -25,6 +25,7 @@
   },
   "id": "bigqueryreservation:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://bigqueryreservation.mtls.googleapis.com/",
   "name": "bigqueryreservation",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -121,7 +122,7 @@
             "name": {
               "description": "The name of the operation resource to be deleted.",
               "location": "path",
-              "pattern": "^operations/.+$",
+              "pattern": "^operations/.*$",
               "required": true,
               "type": "string"
             }
@@ -180,7 +181,7 @@
       }
     }
   },
-  "revision": "20200116",
+  "revision": "20200220",
   "rootUrl": "https://bigqueryreservation.googleapis.com/",
   "schemas": {
     "Empty": {

@@ -22,6 +22,7 @@
   },
   "id": "file:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://file.mtls.googleapis.com/",
   "name": "file",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -322,7 +323,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Output only. The resource name of the instance, in the format\nprojects/{project_id}/locations/{location_id}/instances/{instance_id}.",
+                      "description": "Output only. The resource name of the instance, in the format\nprojects/{project}/locations/{location}/instances/{instance}.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
                       "required": true,
@@ -476,7 +477,7 @@
       }
     }
   },
-  "revision": "20200205",
+  "revision": "20200224",
   "rootUrl": "https://file.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {
@@ -508,7 +509,7 @@
       "type": "object"
     },
     "GoogleCloudSaasacceleratorManagementProvidersV1Instance": {
-      "description": "Instance represents the interface for SLM services to actuate the state\nof control plane resources.\n\nExample Instance in JSON, where\n  consumer-project=snapchat,\n  producer-project=cloud-sql:\n\n```json\nInstance:\n{\n  \"name\":\n  \"projects/snapchat/locations/us-east1/instances/prod-instance\",\n  \"create_time\": {\n    \"seconds\": 1526406431,\n  },\n  \"labels\": {\n    \"env\": \"prod\",\n    \"foo\": \"bar\"\n  },\n  \"state\": READY,\n  \"software_versions\": {\n    \"software_update\": \"cloud-sql-09-28-2018\",\n  },\n  \"maintenance_policy_names\": {\n    \"UpdatePolicy\":\n    \"projects/snapchat/locations/us-east1/maintenancePolicies/prod-update-policy\",\n  }\n  \"rollout_metadata\": {\n    \"projects/cloud-sql/locations/global/rolloutTypes/software_update\": {\n      \"release\":\n      \"projects/cloud-sql/locations/global/releases/cloud-sql-09-28-2018\",\n      \"rollout\":\n      \"projects/cloud-sql/locations/us-east1/rollouts/cloud-sql-09-28-2018-canary\",\n    },\n    \"projects/cloud-sql/locations/global/rolloutTypes/instance_restart\": {\n      \"release\":\n      \"projects/cloud-sql/locations/global/releases/cloud-sql-09-20-repair\",\n      \"rollout\":\n      \"projects/cloud-sql/locations/us-east1/rollouts/cloud-sql-09-20-repair-100-percent\",\n    }\n  }\n  \"tenant_project_id\": \"cloud-sql-test-tenant\",\n  \"producer_metadata\": {\n    \"cloud-sql-tier\": \"basic\",\n    \"cloud-sql-instance-size\": \"1G\",\n  },\n  \"provisioned_resources\": [\n    {\n      \"resource-type\": \"compute-instance\",\n      \"resource-url\":\n      \"https://www.googleapis.com/compute/v1/projects/cloud-sql/zones/us-east1-b/instances/vm-1\",\n    }\n  ],\n  \"maintenance_schedules\": {\n    \"csa_rollout\": {\n       \"start_time\": {\n          \"seconds\": 1526406431,\n       },\n       \"end_time\": {\n          \"seconds\": 1535406431,\n       },\n    },\n    \"ncsa_rollout\": {\n       \"start_time\": {\n          \"seconds\": 1526406431,\n       },\n       \"end_time\": {\n          \"seconds\": 1535406431,\n       },\n    }\n  },\n  \"consumer_defined_name\": \"my-sql-instance1\",\n}\n```",
+      "description": "Instance represents the interface for SLM services to actuate the state\nof control plane resources.\n\nExample Instance in JSON, where\n  consumer-project=snapchat,\n  producer-project=cloud-sql:\n\n```json\nInstance:\n{\n  \"name\":\n  \"projects/snapchat/locations/us-east1/instances/prod-instance\",\n  \"create_time\": {\n    \"seconds\": 1526406431,\n  },\n  \"labels\": {\n    \"env\": \"prod\",\n    \"foo\": \"bar\"\n  },\n  \"state\": READY,\n  \"software_versions\": {\n    \"software_update\": \"cloud-sql-09-28-2018\",\n  },\n  \"maintenance_policy_names\": {\n    \"UpdatePolicy\":\n    \"projects/snapchat/locations/us-east1/maintenancePolicies/prod-update-policy\",\n  }\n  \"tenant_project_id\": \"cloud-sql-test-tenant\",\n  \"producer_metadata\": {\n    \"cloud-sql-tier\": \"basic\",\n    \"cloud-sql-instance-size\": \"1G\",\n  },\n  \"provisioned_resources\": [\n    {\n      \"resource-type\": \"compute-instance\",\n      \"resource-url\":\n      \"https://www.googleapis.com/compute/v1/projects/cloud-sql/zones/us-east1-b/instances/vm-1\",\n    }\n  ],\n  \"maintenance_schedules\": {\n    \"csa_rollout\": {\n       \"start_time\": {\n          \"seconds\": 1526406431,\n       },\n       \"end_time\": {\n          \"seconds\": 1535406431,\n       },\n    },\n    \"ncsa_rollout\": {\n       \"start_time\": {\n          \"seconds\": 1526406431,\n       },\n       \"end_time\": {\n          \"seconds\": 1535406431,\n       },\n    }\n  },\n  \"consumer_defined_name\": \"my-sql-instance1\",\n}\n```",
       "id": "GoogleCloudSaasacceleratorManagementProvidersV1Instance",
       "properties": {
         "consumerDefinedName": {
@@ -663,7 +664,7 @@
       "type": "object"
     },
     "GoogleCloudSaasacceleratorManagementProvidersV1NotificationMetadata": {
-      "description": "NotificationMetadata is the notification state for an instance.",
+      "description": "This message has been deprecated.\nNotificationMetadata is the notification state for an instance.",
       "id": "GoogleCloudSaasacceleratorManagementProvidersV1NotificationMetadata",
       "properties": {
         "rescheduled": {
@@ -703,7 +704,7 @@
       "type": "object"
     },
     "GoogleCloudSaasacceleratorManagementProvidersV1RolloutMetadata": {
-      "description": "RolloutMetadata for an actuation instance. It maps to a single RolloutType.",
+      "description": "This message has been deprecated.\nRolloutMetadata for an actuation instance. It maps to a single RolloutType.",
       "id": "GoogleCloudSaasacceleratorManagementProvidersV1RolloutMetadata",
       "properties": {
         "notification": {
@@ -767,7 +768,7 @@
       "properties": {
         "eligibility": {
           "$ref": "GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility",
-          "description": "Optional: user-defined instance eligibility."
+          "description": "Optional. User-defined instance eligibility."
         },
         "exclusions": {
           "description": "List of SLO exclusion windows. When multiple entries in the list match\n(matching the exclusion time-window against current time point)\nthe exclusion reason used in the first matching entry will be published.\n\nIt is not needed to include expired exclusion in this list, as only the\ncurrently applicable exclusions are taken into account by the eligibility\nexporting subsystem (the historical state of exclusions will be reflected\nin the historically produced timeseries regardless of the current state).\n\nThis field can be used to mark the instance as temporary ineligible\nfor the purpose of SLO calculation. For permanent instance SLO exclusion,\nuse of custom instance eligibility is recommended. See 'eligibility' field\nbelow.",
@@ -777,7 +778,7 @@
           "type": "array"
         },
         "nodes": {
-          "description": "Optional: list of nodes.\nSome producers need to use per-node metadata to calculate SLO.\nThis field allows such producers to publish per-node SLO meta data,\nwhich will be consumed by SSA Eligibility Exporter and published in the\nform of per node metric to Monarch.",
+          "description": "Optional. List of nodes.\nSome producers need to use per-node metadata to calculate SLO.\nThis field allows such producers to publish per-node SLO meta data,\nwhich will be consumed by SSA Eligibility Exporter and published in the\nform of per node metric to Monarch.",
           "items": {
             "$ref": "GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata"
           },
@@ -800,7 +801,7 @@
           "type": "string"
         },
         "description": {
-          "description": "Optional. A description of the instance (2048 characters or less).",
+          "description": "Optional. The description of the instance (2048 characters or less).",
           "type": "string"
         },
         "etag": {
@@ -822,7 +823,7 @@
           "type": "object"
         },
         "name": {
-          "description": "Output only. The resource name of the instance, in the format\nprojects/{project_id}/locations/{location_id}/instances/{instance_id}.",
+          "description": "Output only. The resource name of the instance, in the format\nprojects/{project}/locations/{location}/instances/{instance}.",
           "type": "string"
         },
         "networks": {
@@ -861,12 +862,18 @@
           "enum": [
             "TIER_UNSPECIFIED",
             "STANDARD",
-            "PREMIUM"
+            "PREMIUM",
+            "BASIC_HDD",
+            "BASIC_SSD",
+            "HIGH_SCALE_SSD"
           ],
           "enumDescriptions": [
             "Not set.",
-            "STANDARD tier.",
-            "PREMIUM tier."
+            "STANDARD tier. BASIC_HDD is the preferred term for this tier.",
+            "PREMIUM tier. BASIC_SSD is the preferred term for this tier.",
+            "BASIC instances offer a maximum capacity of 63.9 TB.\nBASIC_HDD is an alias for STANDARD Tier, offering economical\nperformance backed by Persistent Disk HDD.",
+            "BASIC instances offer a maximum capacity of 63.9 TB.\nBASIC_SSD is an alias for PREMIUM Tier, and offers improved\nperformance backed by Persistent Disk SSD.",
+            "HIGH_SCALE instances offer larger capacity and professional\nperformance backed by Persistent Disk SSD."
           ],
           "type": "string"
         }

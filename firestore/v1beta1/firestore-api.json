@@ -25,6 +25,7 @@
   },
   "id": "firestore:v1beta1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://firestore.mtls.googleapis.com/",
   "name": "firestore",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -290,7 +291,7 @@
                     "parent": {
                       "description": "Required. The parent resource. For example:\n`projects/{project_id}/databases/{database_id}/documents` or\n`projects/{project_id}/databases/{database_id}/documents/chatrooms/{chatroom_id}`",
                       "location": "path",
-                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/.+$",
+                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/.*$",
                       "required": true,
                       "type": "string"
                     }
@@ -330,7 +331,7 @@
                     "name": {
                       "description": "Required. The resource name of the Document to delete. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
                       "location": "path",
-                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$",
+                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.*$",
                       "required": true,
                       "type": "string"
                     }
@@ -362,7 +363,7 @@
                     "name": {
                       "description": "Required. The resource name of the Document to get. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
                       "location": "path",
-                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$",
+                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.*$",
                       "required": true,
                       "type": "string"
                     },
@@ -429,7 +430,7 @@
                     "parent": {
                       "description": "Required. The parent resource name. In the format:\n`projects/{project_id}/databases/{database_id}/documents` or\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nFor example:\n`projects/my-project/databases/my-database/documents` or\n`projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
                       "location": "path",
-                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$",
+                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.*$",
                       "required": true,
                       "type": "string"
                     },
@@ -472,7 +473,7 @@
                     "parent": {
                       "description": "Required. The parent document. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nFor example:\n`projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
                       "location": "path",
-                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$",
+                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.*$",
                       "required": true,
                       "type": "string"
                     }
@@ -547,7 +548,7 @@
                     "name": {
                       "description": "The resource name of the document, for example\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
                       "location": "path",
-                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$",
+                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.*$",
                       "required": true,
                       "type": "string"
                     },
@@ -611,7 +612,7 @@
                     "parent": {
                       "description": "Required. The parent resource name. In the format:\n`projects/{project_id}/databases/{database_id}/documents` or\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nFor example:\n`projects/my-project/databases/my-database/documents` or\n`projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
                       "location": "path",
-                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$",
+                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.*$",
                       "required": true,
                       "type": "string"
                     }
@@ -790,7 +791,7 @@
       }
     }
   },
-  "revision": "20200126",
+  "revision": "20200216",
   "rootUrl": "https://firestore.googleapis.com/",
   "schemas": {
     "ArrayValue": {

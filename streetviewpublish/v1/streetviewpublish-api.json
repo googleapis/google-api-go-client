@@ -188,7 +188,7 @@
           ]
         },
         "startUpload": {
-          "description": "Creates an upload session to start uploading photo bytes.  The method uses\nthe upload URL of the returned\nUploadRef to upload the bytes for\nthe Photo.\n\nIn addition to the photo requirements shown in\nhttps://support.google.com/maps/answer/7012050?hl=en\u0026ref_topic=6275604,\nthe photo must meet the following requirements:\n\n* Photo Sphere XMP metadata must be included in the photo medadata. See\nhttps://developers.google.com/streetview/spherical-metadata for the\nrequired fields.\n* The pixel size of the photo must meet the size requirements listed in\nhttps://support.google.com/maps/answer/7012050?hl=en\u0026ref_topic=6275604, and\nthe photo must be a full 360 horizontally.\n\nAfter the upload completes, the method uses\nUploadRef with\nCreatePhoto\nto create the Photo object entry.",
+          "description": "Creates an upload session to start uploading photo bytes.  The method uses\nthe upload URL of the returned\nUploadRef to upload the bytes for\nthe Photo.\n\nIn addition to the photo requirements shown in\nhttps://support.google.com/maps/answer/7012050?hl=en\u0026ref_topic=6275604,\nthe photo must meet the following requirements:\n\n* Photo Sphere XMP metadata must be included in the photo metadata. See\nhttps://developers.google.com/streetview/spherical-metadata for the\nrequired fields.\n* The pixel size of the photo must meet the size requirements listed in\nhttps://support.google.com/maps/answer/7012050?hl=en\u0026ref_topic=6275604, and\nthe photo must be a full 360 horizontally.\n\nAfter the upload completes, the method uses\nUploadRef with\nCreatePhoto\nto create the Photo object entry.",
           "flatPath": "v1/photo:startUpload",
           "httpMethod": "POST",
           "id": "streetviewpublish.photo.startUpload",
@@ -363,7 +363,7 @@
       }
     }
   },
-  "revision": "20200215",
+  "revision": "20200224",
   "rootUrl": "https://streetviewpublish.googleapis.com/",
   "schemas": {
     "BatchDeletePhotosRequest": {

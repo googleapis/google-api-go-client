@@ -25,6 +25,7 @@
   },
   "id": "bigqueryreservation:v1alpha2",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://bigqueryreservation.mtls.googleapis.com/",
   "name": "bigqueryreservation",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -355,7 +356,7 @@
                     "parent": {
                       "description": "Project, location, and (optionally) reservation name. E.g.,\n   projects/myproject/locations/us-central1/reservations/parent",
                       "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+/reservations/.+$",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/reservations/.*$",
                       "required": true,
                       "type": "string"
                     },
@@ -394,7 +395,7 @@
                     "name": {
                       "description": "Resource name of the reservation to retrieve. E.g.,\n   projects/myproject/locations/us-central1/reservations/my_reservation",
                       "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+/reservations/.+$",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/reservations/.*$",
                       "required": true,
                       "type": "string"
                     }
@@ -420,7 +421,7 @@
                     "name": {
                       "description": "Resource name of the reservation to retrieve. E.g.,\n   projects/myproject/locations/us-central1/reservations/path/to/reserv",
                       "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+/reservations/.+$",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/reservations/.*$",
                       "required": true,
                       "type": "string"
                     }
@@ -488,7 +489,7 @@
                     "name": {
                       "description": "The resource name of the reservation, e.g.,\n\"projects/*/locations/*/reservations/dev/team/product\". Reservation names\n(e.g., \"dev/team/product\") exceeding a depth of six will fail with\n`google.rpc.Code.INVALID_ARGUMENT`.",
                       "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+/reservations/[^/]+/.+$",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/reservations/[^/]+/.*$",
                       "required": true,
                       "type": "string"
                     },
@@ -613,7 +614,7 @@
       }
     }
   },
-  "revision": "20200205",
+  "revision": "20200220",
   "rootUrl": "https://bigqueryreservation.googleapis.com/",
   "schemas": {
     "CreateSlotPoolMetadata": {

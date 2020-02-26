@@ -263,31 +263,6 @@ func (s *FileShareConfig) MarshalJSON() ([]byte, error) {
 // "projects/snapchat/locations/us-east1/maintenancePolicies/prod-update-
 // policy",
 //   }
-//   "rollout_metadata": {
-//
-// "projects/cloud-sql/locations/global/rolloutTypes/software_update":
-// {
-//       "release":
-//
-// "projects/cloud-sql/locations/global/releases/cloud-sql-09-28-2018",
-//       "rollout":
-//
-// "projects/cloud-sql/locations/us-east1/rollouts/cloud-sql-09-28-2018-c
-// anary",
-//     },
-//
-// "projects/cloud-sql/locations/global/rolloutTypes/instance_restart":
-// {
-//       "release":
-//
-// "projects/cloud-sql/locations/global/releases/cloud-sql-09-20-repair",
-//
-//       "rollout":
-//
-// "projects/cloud-sql/locations/us-east1/rollouts/cloud-sql-09-20-repair
-// -100-percent",
-//     }
-//   }
 //   "tenant_project_id": "cloud-sql-test-tenant",
 //   "producer_metadata": {
 //     "cloud-sql-tier": "basic",
@@ -553,6 +528,7 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata) Marshal
 }
 
 // GoogleCloudSaasacceleratorManagementProvidersV1NotificationMetadata:
+// This message has been deprecated.
 // NotificationMetadata is the notification state for an instance.
 type GoogleCloudSaasacceleratorManagementProvidersV1NotificationMetadata struct {
 	// Rescheduled: Whether the instance update has been rescheduled.
@@ -638,7 +614,8 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource) Mar
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSaasacceleratorManagementProvidersV1RolloutMetadata:
+// GoogleCloudSaasacceleratorManagementProvidersV1RolloutMetadata: This
+// message has been deprecated.
 // RolloutMetadata for an actuation instance. It maps to a single
 // RolloutType.
 type GoogleCloudSaasacceleratorManagementProvidersV1RolloutMetadata struct {
@@ -781,7 +758,7 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion) MarshalJSO
 // of the
 // instance.
 type GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata struct {
-	// Eligibility: Optional: user-defined instance eligibility.
+	// Eligibility: Optional. User-defined instance eligibility.
 	Eligibility *GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility `json:"eligibility,omitempty"`
 
 	// Exclusions: List of SLO exclusion windows. When multiple entries in
@@ -808,7 +785,7 @@ type GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata struct {
 	// below.
 	Exclusions []*GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion `json:"exclusions,omitempty"`
 
-	// Nodes: Optional: list of nodes.
+	// Nodes: Optional. List of nodes.
 	// Some producers need to use per-node metadata to calculate SLO.
 	// This field allows such producers to publish per-node SLO meta
 	// data,
@@ -1427,7 +1404,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1602,7 +1579,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1787,7 +1764,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1930,7 +1907,7 @@ func (c *ProjectsLocationsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2071,7 +2048,7 @@ func (c *ProjectsLocationsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2245,7 +2222,7 @@ func (c *ProjectsLocationsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2436,7 +2413,7 @@ func (c *ProjectsLocationsInstancesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2599,7 +2576,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2743,7 +2720,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2888,7 +2865,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3069,7 +3046,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/1.11.0 gdcl/20200225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

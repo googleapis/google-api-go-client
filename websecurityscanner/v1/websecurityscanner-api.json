@@ -526,7 +526,7 @@
       }
     }
   },
-  "revision": "20200210",
+  "revision": "20200224",
   "rootUrl": "https://websecurityscanner.googleapis.com/",
   "schemas": {
     "Authentication": {
@@ -638,6 +638,24 @@
         },
         "reproductionUrl": {
           "description": "Output only. The URL containing human-readable payload that user can leverage to\nreproduce the vulnerability.",
+          "type": "string"
+        },
+        "severity": {
+          "description": "Output only. The severity level of the reported vulnerability.",
+          "enum": [
+            "SEVERITY_UNSPECIFIED",
+            "CRITICAL",
+            "HIGH",
+            "MEDIUM",
+            "LOW"
+          ],
+          "enumDescriptions": [
+            "No severity specified. The default value.",
+            "Critical severity.",
+            "High severity.",
+            "Medium severity.",
+            "Low severity."
+          ],
           "type": "string"
         },
         "trackingId": {

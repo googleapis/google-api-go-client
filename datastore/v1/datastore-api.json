@@ -23,6 +23,7 @@
   },
   "id": "datastore:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://datastore.mtls.googleapis.com/",
   "name": "datastore",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -624,7 +625,7 @@
       }
     }
   },
-  "revision": "20191201",
+  "revision": "20200216",
   "rootUrl": "https://datastore.googleapis.com/",
   "schemas": {
     "AllocateIdsRequest": {

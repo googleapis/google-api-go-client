@@ -25,6 +25,7 @@
   },
   "id": "cloudkms:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://cloudkms.mtls.googleapis.com/",
   "name": "cloudkms",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -464,7 +465,7 @@
                         "name": {
                           "description": "Required. The resource name of the CryptoKey or CryptoKeyVersion\nto use for encryption.\n\nIf a CryptoKey is specified, the server will use its\nprimary version.",
                           "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/.+$",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/.*$",
                           "required": true,
                           "type": "string"
                         }
@@ -1250,7 +1251,7 @@
       }
     }
   },
-  "revision": "20200131",
+  "revision": "20200221",
   "rootUrl": "https://cloudkms.googleapis.com/",
   "schemas": {
     "AsymmetricDecryptRequest": {

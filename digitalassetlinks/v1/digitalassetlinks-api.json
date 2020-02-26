@@ -11,6 +11,7 @@
   },
   "id": "digitalassetlinks:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://digitalassetlinks.mtls.googleapis.com/",
   "name": "digitalassetlinks",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -183,7 +184,7 @@
       }
     }
   },
-  "revision": "20190429",
+  "revision": "20200222",
   "rootUrl": "https://digitalassetlinks.googleapis.com/",
   "schemas": {
     "AndroidAppAsset": {

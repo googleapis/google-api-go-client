@@ -23,6 +23,7 @@
   },
   "id": "datastore:v1beta1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://datastore.mtls.googleapis.com/",
   "name": "datastore",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -166,7 +167,7 @@
       }
     }
   },
-  "revision": "20190804",
+  "revision": "20200216",
   "rootUrl": "https://datastore.googleapis.com/",
   "schemas": {
     "GoogleDatastoreAdminV1CommonMetadata": {

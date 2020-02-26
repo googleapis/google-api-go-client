@@ -22,6 +22,7 @@
   },
   "id": "accessapproval:v1beta1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://accessapproval.mtls.googleapis.com/",
   "name": "accessapproval",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -753,7 +754,7 @@
       }
     }
   },
-  "revision": "20191018",
+  "revision": "20200225",
   "rootUrl": "https://accessapproval.googleapis.com/",
   "schemas": {
     "AccessApprovalSettings": {

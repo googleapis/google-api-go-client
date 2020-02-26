@@ -25,6 +25,7 @@
   },
   "id": "firestore:v1beta2",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://firestore.mtls.googleapis.com/",
   "name": "firestore",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -414,7 +415,7 @@
       }
     }
   },
-  "revision": "20190804",
+  "revision": "20200215",
   "rootUrl": "https://firestore.googleapis.com/",
   "schemas": {
     "Empty": {

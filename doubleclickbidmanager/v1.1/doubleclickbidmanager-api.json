@@ -15,7 +15,7 @@
   "description": "API for viewing and managing your reports in DoubleClick Bid Manager.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/bid-manager/",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/W5tdY_k9mZiffmUcW3f8Mi--770\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/KgHbpPlGO3sdIv5ckISvodWARP8\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -281,7 +281,7 @@
       }
     }
   },
-  "revision": "20200124",
+  "revision": "20200220",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "DownloadLineItemsRequest": {
@@ -400,7 +400,7 @@
           "type": "string"
         },
         "version": {
-          "description": "SDF Version (column names, types, order) in which the entities will be returned. Default to 3.1.",
+          "description": "SDF Version (column names, types, order) in which the entities will be returned. Default to 5.",
           "type": "string"
         }
       },
@@ -695,12 +695,14 @@
             "FILTER_YOUTUBE_AD_VIDEO_ID",
             "FILTER_YOUTUBE_CHANNEL",
             "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_ADVERTISER",
+            "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_INSERTION_ORDER",
             "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_PARTNER",
             "FILTER_YOUTUBE_VIDEO",
             "FILTER_ZIP_CODE",
             "FILTER_ZIP_POSTAL_CODE"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -1291,12 +1293,14 @@
               "FILTER_YOUTUBE_AD_VIDEO_ID",
               "FILTER_YOUTUBE_CHANNEL",
               "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_ADVERTISER",
+              "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_INSERTION_ORDER",
               "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_PARTNER",
               "FILTER_YOUTUBE_VIDEO",
               "FILTER_ZIP_CODE",
               "FILTER_ZIP_POSTAL_CODE"
             ],
             "enumDescriptions": [
+              "",
               "",
               "",
               "",

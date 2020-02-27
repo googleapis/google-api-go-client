@@ -447,7 +447,7 @@
       }
     }
   },
-  "revision": "20200218",
+  "revision": "20200225",
   "rootUrl": "https://remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -1472,7 +1472,9 @@
             "DOCKER_INVALID_ULIMIT",
             "DOCKER_UNKNOWN_RUNTIME",
             "DOCKER_UNKNOWN_CAPABILITY",
-            "DOCKER_UNKNOWN_ERROR"
+            "DOCKER_UNKNOWN_ERROR",
+            "DOCKER_CREATE_COMPUTE_SYSTEM_ERROR",
+            "DOCKER_PREPARELAYER_ERROR"
           ],
           "enumDescriptions": [
             "The command succeeded.",
@@ -1503,7 +1505,9 @@
             "The docker ulimit is not valid.",
             "The docker runtime is unknown.",
             "The docker capability is unknown.",
-            "The command failed with unknown docker errors."
+            "The command failed with unknown docker errors.",
+            "Docker failed to run containers with CreateComputeSystem error.",
+            "Docker failed to run containers with hcsshim::PrepareLayer error."
           ],
           "type": "string"
         },

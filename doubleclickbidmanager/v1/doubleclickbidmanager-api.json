@@ -15,7 +15,7 @@
   "description": "API for viewing and managing your reports in DoubleClick Bid Manager.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/bid-manager/",
-  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/DbiOQpAC1VQkiHXoJ_isUi3ESE8\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/w_quvq82pzU5rXpQEUZ-IAPLomU\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -257,7 +257,7 @@
       }
     }
   },
-  "revision": "20191210",
+  "revision": "20200220",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "DownloadLineItemsRequest": {
@@ -376,7 +376,7 @@
           "type": "string"
         },
         "version": {
-          "description": "SDF Version (column names, types, order) in which the entities will be returned. Default to 3.1.",
+          "description": "SDF Version (column names, types, order) in which the entities will be returned. Default to 5.",
           "type": "string"
         }
       },

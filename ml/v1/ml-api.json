@@ -25,6 +25,7 @@
   },
   "id": "ml:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://ml.mtls.googleapis.com/",
   "name": "ml",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -121,7 +122,7 @@
             "name": {
               "description": "Required. The resource name of a model or a version.\n\nAuthorization: requires the `predict` permission on the specified resource.",
               "location": "path",
-              "pattern": "^projects/.+$",
+              "pattern": "^projects/.*$",
               "required": true,
               "type": "string"
             }
@@ -174,7 +175,7 @@
             "name": {
               "description": "Required. The resource name of a model or a version.\n\nAuthorization: requires the `predict` permission on the specified resource.",
               "location": "path",
-              "pattern": "^projects/.+$",
+              "pattern": "^projects/.*$",
               "required": true,
               "type": "string"
             }
@@ -1040,7 +1041,7 @@
       }
     }
   },
-  "revision": "20200207",
+  "revision": "20200222",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1977,7 +1978,7 @@
       "type": "object"
     },
     "GoogleCloudMlV1__TrainingInput": {
-      "description": "Represents input parameters for a training job. When using the\ngcloud command to submit your training job, you can specify\nthe input parameters as command-line arguments and/or in a YAML configuration\nfile referenced from the --config command-line argument. For\ndetails, see the guide to\n\u003ca href=\"/ml-engine/docs/tensorflow/training-jobs\"\u003esubmitting a training\njob\u003c/a\u003e.",
+      "description": "Represents input parameters for a training job. When using the gcloud command\nto submit your training job, you can specify the input parameters as\ncommand-line arguments and/or in a YAML configuration file referenced from\nthe --config command-line argument. For details, see the guide to [submitting\na training job](/ai-platform/training/docs/training-jobs).",
       "id": "GoogleCloudMlV1__TrainingInput",
       "properties": {
         "args": {
@@ -1997,7 +1998,7 @@
         },
         "masterConfig": {
           "$ref": "GoogleCloudMlV1__ReplicaConfig",
-          "description": "Optional. The configuration for your master worker.\n\nYou should only set `masterConfig.acceleratorConfig` if `masterType` is set\nto a Compute Engine machine type. Learn about [restrictions on accelerator\nconfigurations for\ntraining.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-machine-types-with-gpu)\n\nSet `masterConfig.imageUri` only if you build a custom image. Only one of\n`masterConfig.imageUri` and `runtimeVersion` should be set. Learn more about\n[configuring custom\ncontainers](/ml-engine/docs/distributed-training-containers)."
+          "description": "Optional. The configuration for your master worker.\n\nYou should only set `masterConfig.acceleratorConfig` if `masterType` is set\nto a Compute Engine machine type. Learn about [restrictions on accelerator\nconfigurations for\ntraining.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-machine-types-with-gpu)\n\nSet `masterConfig.imageUri` only if you build a custom image. Only one of\n`masterConfig.imageUri` and `runtimeVersion` should be set. Learn more\nabout [configuring custom\ncontainers](/ml-engine/docs/distributed-training-containers)."
         },
         "masterType": {
           "description": "Optional. Specifies the type of virtual machine to use for your training\njob's master worker. You must specify this field when `scaleTier` is set to\n`CUSTOM`.\n\nYou can use certain Compute Engine machine types directly in this field.\nThe following types are supported:\n\n- `n1-standard-4`\n- `n1-standard-8`\n- `n1-standard-16`\n- `n1-standard-32`\n- `n1-standard-64`\n- `n1-standard-96`\n- `n1-highmem-2`\n- `n1-highmem-4`\n- `n1-highmem-8`\n- `n1-highmem-16`\n- `n1-highmem-32`\n- `n1-highmem-64`\n- `n1-highmem-96`\n- `n1-highcpu-16`\n- `n1-highcpu-32`\n- `n1-highcpu-64`\n- `n1-highcpu-96`\n\nLearn more about [using Compute Engine machine\ntypes](/ml-engine/docs/machine-types#compute-engine-machine-types).\n\nAlternatively, you can use the following legacy machine types:\n\n- `standard`\n- `large_model`\n- `complex_model_s`\n- `complex_model_m`\n- `complex_model_l`\n- `standard_gpu`\n- `complex_model_m_gpu`\n- `complex_model_l_gpu`\n- `standard_p100`\n- `complex_model_m_p100`\n- `standard_v100`\n- `large_model_v100`\n- `complex_model_m_v100`\n- `complex_model_l_v100`\n\nLearn more about [using legacy machine\ntypes](/ml-engine/docs/machine-types#legacy-machine-types).\n\nFinally, if you want to use a TPU for training, specify `cloud_tpu` in this\nfield. Learn more about the [special configuration options for training\nwith\nTPUs](/ml-engine/docs/tensorflow/using-tpus#configuring_a_custom_tpu_machine).",
@@ -2028,15 +2029,15 @@
           "type": "string"
         },
         "pythonVersion": {
-          "description": "Optional. The version of Python used in training. If not set, the default\nversion is '2.7'. Starting [January 13,\n2020](/ml-engine/docs/release-notes#december_10_2019), this field is\nrequired.\n\nThe following Python versions are available:\n\n* Python '3.7' is available when `runtime_version` is set to '1.15' or\n  later.\n* Python '3.5' is available when `runtime_version` is set to a version\n  from '1.4' to '1.14'.\n* Python '2.7' is available when `runtime_version` is set to '1.15' or\n  earlier. (Runtime versions released [after January 1,\n  2020](/ml-engine/docs/release-notes#december_10_2019) do not support\n  Python 2.7.)\n\nRead more about the Python versions available for [each runtime\nversion](/ml-engine/docs/runtime-version-list).",
+          "description": "Optional. The version of Python used in training. You must either specify\nthis field or specify `masterConfig.imageUri`.\n\nThe following Python versions are available:\n\n* Python '3.7' is available when `runtime_version` is set to '1.15' or\n  later.\n* Python '3.5' is available when `runtime_version` is set to a version\n  from '1.4' to '1.14'.\n* Python '2.7' is available when `runtime_version` is set to '1.15' or\n  earlier.\n\nRead more about the Python versions available for [each runtime\nversion](/ml-engine/docs/runtime-version-list).",
           "type": "string"
         },
         "region": {
-          "description": "Required. The Google Compute Engine region to run the training job in.\nSee the \u003ca href=\"/ml-engine/docs/tensorflow/regions\"\u003eavailable regions\u003c/a\u003e\nfor AI Platform services.",
+          "description": "Required. The region to run the training job in. See the [available\nregions](/ai-platform/training/docs/regions) for AI Platform Training.",
           "type": "string"
         },
         "runtimeVersion": {
-          "description": "Optional. The AI Platform runtime version to use for training. If not\nset, AI Platform uses the default stable version, 1.0. Starting [January\n13, 2020](/ml-engine/docs/release-notes#december_10_2019), this field is\nrequired.\n\nFor more information, see the\n\u003ca href=\"/ml-engine/docs/runtime-version-list\"\u003eruntime version list\u003c/a\u003e\nand\n\u003ca href=\"/ml-engine/docs/versioning\"\u003ehow to manage runtime versions\u003c/a\u003e.",
+          "description": "Optional. The AI Platform runtime version to use for training. You must\neither specify this field or specify `masterConfig.imageUri`.\n\nFor more information, see the [runtime version\nlist](/ai-platform/training/docs/runtime-version-list) and learn [how to\nmanage runtime versions](/ai-platform/training/docs/versioning).",
           "type": "string"
         },
         "scaleTier": {
@@ -2217,7 +2218,7 @@
           "type": "string"
         },
         "pythonVersion": {
-          "description": "Optional. The version of Python used in prediction. If not set, the default\nversion is '2.7'. Starting [January 13,\n2020](/ml-engine/docs/release-notes#december_10_2019), this field is\nrequired.\n\nThe following Python versions are available:\n\n* Python '3.7' is available when `runtime_version` is set to '1.15' or\n  later.\n* Python '3.5' is available when `runtime_version` is set to a version\n  from '1.4' to '1.14'.\n* Python '2.7' is available when `runtime_version` is set to '1.15' or\n  earlier. (Runtime versions released [after January 1,\n  2020](/ml-engine/docs/release-notes#december_10_2019) do not support\n  Python 2.7.)\n\nRead more about the Python versions available for [each runtime\nversion](/ml-engine/docs/runtime-version-list).",
+          "description": "Required. The version of Python used in prediction.\n\nThe following Python versions are available:\n\n* Python '3.7' is available when `runtime_version` is set to '1.15' or\n  later.\n* Python '3.5' is available when `runtime_version` is set to a version\n  from '1.4' to '1.14'.\n* Python '2.7' is available when `runtime_version` is set to '1.15' or\n  earlier.\n\nRead more about the Python versions available for [each runtime\nversion](/ml-engine/docs/runtime-version-list).",
           "type": "string"
         },
         "requestLoggingConfig": {
@@ -2225,7 +2226,7 @@
           "description": "Optional. *Only* specify this field in a\nprojects.models.versions.patch\nrequest. Specifying it in a\nprojects.models.versions.create\nrequest has no effect.\n\nConfigures the request-response pair logging on predictions from this\nVersion."
         },
         "runtimeVersion": {
-          "description": "Optional. The AI Platform runtime version to use for this deployment.\nIf not set, AI Platform uses the default stable version, 1.0. Starting\n[January 13, 2020](/ml-engine/docs/release-notes#december_10_2019), this\nfield is required.\n\nFor more information, see the\n[runtime version list](/ml-engine/docs/runtime-version-list) and\n[how to manage runtime versions](/ml-engine/docs/versioning).",
+          "description": "Required. The AI Platform runtime version to use for this deployment.\n\nFor more information, see the\n[runtime version list](/ml-engine/docs/runtime-version-list) and\n[how to manage runtime versions](/ml-engine/docs/versioning).",
           "type": "string"
         },
         "serviceAccount": {

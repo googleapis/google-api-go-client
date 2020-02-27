@@ -20,7 +20,7 @@
   "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/doubleclick-advertisers/",
-  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/V35Ldow5sR30j3EuoED6Qn8EWrA\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/gQnTYlSgJfc3uOvLoj3SdrLwqnM\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
     "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
@@ -9395,7 +9395,7 @@
       }
     }
   },
-  "revision": "20191127",
+  "revision": "20200121",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -14214,10 +14214,6 @@
       "description": "DirectorySites contains properties of a website from the Site Directory. Sites need to be added to an account via the Sites resource before they can be assigned to a placement.",
       "id": "DirectorySite",
       "properties": {
-        "active": {
-          "description": "Whether this directory site is active.",
-          "type": "boolean"
-        },
         "id": {
           "description": "ID of this directory site. This is a read-only, auto-generated field.",
           "format": "int64",

@@ -122,7 +122,7 @@
             "name": {
               "description": "The name of the operation resource to be cancelled.",
               "location": "path",
-              "pattern": "^operations/.+$",
+              "pattern": "^operations/.*$",
               "required": true,
               "type": "string"
             }
@@ -151,7 +151,7 @@
             "name": {
               "description": "The name of the operation resource to be deleted.",
               "location": "path",
-              "pattern": "^operations/.+$",
+              "pattern": "^operations/.*$",
               "required": true,
               "type": "string"
             }
@@ -210,7 +210,7 @@
       }
     }
   },
-  "revision": "20200211",
+  "revision": "20200224",
   "rootUrl": "https://runtimeconfig.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {

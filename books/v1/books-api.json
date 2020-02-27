@@ -14,7 +14,7 @@
   "description": "Searches for books and manages your Google Books library.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/books/docs/v1/getting_started",
-  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/xEE7LBCAnwVFSBRzFX62Z63Rkh4\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/IJLNBRdljvLuWJUzNqsxt7enycE\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/ebooks-16.png",
     "x32": "https://www.google.com/images/icons/product/ebooks-32.png"
@@ -2480,7 +2480,7 @@
       }
     }
   },
-  "revision": "20191103",
+  "revision": "20200204",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Annotation": {
@@ -2791,6 +2791,30 @@
           "type": "string"
         },
         "volumeId": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BooksSubscriptionReleaseInfo": {
+      "id": "BooksSubscriptionReleaseInfo",
+      "properties": {
+        "amountInMicros": {
+          "description": "Amount in micros of the specified currency code.",
+          "format": "int64",
+          "type": "string"
+        },
+        "currencyCode": {
+          "description": "Currency code of the amount.",
+          "type": "string"
+        },
+        "releaseNumber": {
+          "description": "The release number of this issue/volume/book.",
+          "type": "string"
+        },
+        "releaseTimestampUs": {
+          "description": "The release date.",
+          "format": "int64",
           "type": "string"
         }
       },
@@ -3839,8 +3863,33 @@
               "isComplete": {
                 "type": "boolean"
               },
+              "seriesFormatType": {
+                "type": "string"
+              },
               "seriesId": {
                 "type": "string"
+              },
+              "seriesSubscriptionReleaseInfo": {
+                "properties": {
+                  "cancellationTimestampUs": {
+                    "description": "Cancellation date of the series subscription (or when it ends).",
+                    "format": "int64",
+                    "type": "string"
+                  },
+                  "currentReleaseInfo": {
+                    "$ref": "BooksSubscriptionReleaseInfo",
+                    "description": "Release information for the last release."
+                  },
+                  "nextReleaseInfo": {
+                    "$ref": "BooksSubscriptionReleaseInfo",
+                    "description": "Release information for the next release."
+                  },
+                  "seriesSubscriptionType": {
+                    "description": "series subscription type.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
               },
               "seriesType": {
                 "type": "string"

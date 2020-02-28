@@ -22,6 +22,7 @@
   },
   "id": "cloudasset:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://cloudasset.mtls.googleapis.com/",
   "name": "cloudasset",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -253,7 +254,7 @@
             "name": {
               "description": "The name of the operation resource.",
               "location": "path",
-              "pattern": "^[^/]+/[^/]+/operations/[^/]+/.+$",
+              "pattern": "^[^/]+/[^/]+/operations/[^/]+/.*$",
               "required": true,
               "type": "string"
             }
@@ -356,7 +357,7 @@
       }
     }
   },
-  "revision": "20200219",
+  "revision": "20200221",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "Asset": {

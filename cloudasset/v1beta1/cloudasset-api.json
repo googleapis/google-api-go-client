@@ -22,6 +22,7 @@
   },
   "id": "cloudasset:v1beta1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://cloudasset.mtls.googleapis.com/",
   "name": "cloudasset",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -150,7 +151,7 @@
                 "name": {
                   "description": "The name of the operation resource.",
                   "location": "path",
-                  "pattern": "^folders/[^/]+/operations/[^/]+/.+$",
+                  "pattern": "^folders/[^/]+/operations/[^/]+/.*$",
                   "required": true,
                   "type": "string"
                 }
@@ -266,7 +267,7 @@
                 "name": {
                   "description": "The name of the operation resource.",
                   "location": "path",
-                  "pattern": "^organizations/[^/]+/operations/[^/]+/.+$",
+                  "pattern": "^organizations/[^/]+/operations/[^/]+/.*$",
                   "required": true,
                   "type": "string"
                 }
@@ -382,7 +383,7 @@
                 "name": {
                   "description": "The name of the operation resource.",
                   "location": "path",
-                  "pattern": "^projects/[^/]+/operations/[^/]+/.+$",
+                  "pattern": "^projects/[^/]+/operations/[^/]+/.*$",
                   "required": true,
                   "type": "string"
                 }
@@ -400,7 +401,7 @@
       }
     }
   },
-  "revision": "20200219",
+  "revision": "20200221",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "Asset": {

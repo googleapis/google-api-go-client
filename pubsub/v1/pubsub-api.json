@@ -121,7 +121,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "User-provided name for this snapshot. If the name is not provided in the\nrequest, the server will assign a random name for this snapshot on the same\nproject as the subscription. Note that for REST API requests, you must\nspecify a name.  See the \u003ca\nhref=\"https://cloud.google.com/pubsub/docs/admin#resource_names\"\u003e resource\nname rules\u003c/a\u003e. Format is `projects/{project}/snapshots/{snap}`.",
+                  "description": "Required. User-provided name for this snapshot. If the name is not provided in the\nrequest, the server will assign a random name for this snapshot on the same\nproject as the subscription. Note that for REST API requests, you must\nspecify a name.  See the \u003ca\nhref=\"https://cloud.google.com/pubsub/docs/admin#resource_names\"\u003e resource\nname rules\u003c/a\u003e. Format is `projects/{project}/snapshots/{snap}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/snapshots/[^/]+$",
                   "required": true,
@@ -150,7 +150,7 @@
               ],
               "parameters": {
                 "snapshot": {
-                  "description": "The name of the snapshot to delete.\nFormat is `projects/{project}/snapshots/{snap}`.",
+                  "description": "Required. The name of the snapshot to delete.\nFormat is `projects/{project}/snapshots/{snap}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/snapshots/[^/]+$",
                   "required": true,
@@ -176,7 +176,7 @@
               ],
               "parameters": {
                 "snapshot": {
-                  "description": "The name of the snapshot to get.\nFormat is `projects/{project}/snapshots/{snap}`.",
+                  "description": "Required. The name of the snapshot to get.\nFormat is `projects/{project}/snapshots/{snap}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/snapshots/[^/]+$",
                   "required": true,
@@ -245,7 +245,7 @@
                   "type": "string"
                 },
                 "project": {
-                  "description": "The name of the project in which to list snapshots.\nFormat is `projects/{project-id}`.",
+                  "description": "Required. The name of the project in which to list snapshots.\nFormat is `projects/{project-id}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -362,7 +362,7 @@
               ],
               "parameters": {
                 "subscription": {
-                  "description": "The subscription whose message is being acknowledged.\nFormat is `projects/{project}/subscriptions/{sub}`.",
+                  "description": "Required. The subscription whose message is being acknowledged.\nFormat is `projects/{project}/subscriptions/{sub}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
                   "required": true,
@@ -391,7 +391,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The name of the subscription. It must have the format\n`\"projects/{project}/subscriptions/{subscription}\"`. `{subscription}` must\nstart with a letter, and contain only letters (`[A-Za-z]`), numbers\n(`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`),\nplus (`+`) or percent signs (`%`). It must be between 3 and 255 characters\nin length, and it must not start with `\"goog\"`.",
+                  "description": "Required. The name of the subscription. It must have the format\n`\"projects/{project}/subscriptions/{subscription}\"`. `{subscription}` must\nstart with a letter, and contain only letters (`[A-Za-z]`), numbers\n(`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`),\nplus (`+`) or percent signs (`%`). It must be between 3 and 255 characters\nin length, and it must not start with `\"goog\"`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
                   "required": true,
@@ -420,7 +420,7 @@
               ],
               "parameters": {
                 "subscription": {
-                  "description": "The subscription to delete.\nFormat is `projects/{project}/subscriptions/{sub}`.",
+                  "description": "Required. The subscription to delete.\nFormat is `projects/{project}/subscriptions/{sub}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
                   "required": true,
@@ -446,7 +446,7 @@
               ],
               "parameters": {
                 "subscription": {
-                  "description": "The name of the subscription to get.\nFormat is `projects/{project}/subscriptions/{sub}`.",
+                  "description": "Required. The name of the subscription to get.\nFormat is `projects/{project}/subscriptions/{sub}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
                   "required": true,
@@ -515,7 +515,7 @@
                   "type": "string"
                 },
                 "project": {
-                  "description": "The name of the project in which to list subscriptions.\nFormat is `projects/{project-id}`.",
+                  "description": "Required. The name of the project in which to list subscriptions.\nFormat is `projects/{project-id}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -541,7 +541,7 @@
               ],
               "parameters": {
                 "subscription": {
-                  "description": "The name of the subscription.\nFormat is `projects/{project}/subscriptions/{sub}`.",
+                  "description": "Required. The name of the subscription.\nFormat is `projects/{project}/subscriptions/{sub}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
                   "required": true,
@@ -570,7 +570,7 @@
               ],
               "parameters": {
                 "subscription": {
-                  "description": "The name of the subscription.\nFormat is `projects/{project}/subscriptions/{sub}`.",
+                  "description": "Required. The name of the subscription.\nFormat is `projects/{project}/subscriptions/{sub}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
                   "required": true,
@@ -599,7 +599,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The name of the subscription. It must have the format\n`\"projects/{project}/subscriptions/{subscription}\"`. `{subscription}` must\nstart with a letter, and contain only letters (`[A-Za-z]`), numbers\n(`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`),\nplus (`+`) or percent signs (`%`). It must be between 3 and 255 characters\nin length, and it must not start with `\"goog\"`.",
+                  "description": "Required. The name of the subscription. It must have the format\n`\"projects/{project}/subscriptions/{subscription}\"`. `{subscription}` must\nstart with a letter, and contain only letters (`[A-Za-z]`), numbers\n(`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`),\nplus (`+`) or percent signs (`%`). It must be between 3 and 255 characters\nin length, and it must not start with `\"goog\"`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
                   "required": true,
@@ -628,7 +628,7 @@
               ],
               "parameters": {
                 "subscription": {
-                  "description": "The subscription from which messages should be pulled.\nFormat is `projects/{project}/subscriptions/{sub}`.",
+                  "description": "Required. The subscription from which messages should be pulled.\nFormat is `projects/{project}/subscriptions/{sub}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
                   "required": true,
@@ -657,7 +657,7 @@
               ],
               "parameters": {
                 "subscription": {
-                  "description": "The subscription to affect.",
+                  "description": "Required. The subscription to affect.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
                   "required": true,
@@ -748,7 +748,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The name of the topic. It must have the format\n`\"projects/{project}/topics/{topic}\"`. `{topic}` must start with a letter,\nand contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`),\nunderscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent\nsigns (`%`). It must be between 3 and 255 characters in length, and it\nmust not start with `\"goog\"`.",
+                  "description": "Required. The name of the topic. It must have the format\n`\"projects/{project}/topics/{topic}\"`. `{topic}` must start with a letter,\nand contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`),\nunderscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent\nsigns (`%`). It must be between 3 and 255 characters in length, and it\nmust not start with `\"goog\"`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/topics/[^/]+$",
                   "required": true,
@@ -777,7 +777,7 @@
               ],
               "parameters": {
                 "topic": {
-                  "description": "Name of the topic to delete.\nFormat is `projects/{project}/topics/{topic}`.",
+                  "description": "Required. Name of the topic to delete.\nFormat is `projects/{project}/topics/{topic}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/topics/[^/]+$",
                   "required": true,
@@ -803,7 +803,7 @@
               ],
               "parameters": {
                 "topic": {
-                  "description": "The name of the topic to get.\nFormat is `projects/{project}/topics/{topic}`.",
+                  "description": "Required. The name of the topic to get.\nFormat is `projects/{project}/topics/{topic}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/topics/[^/]+$",
                   "required": true,
@@ -872,7 +872,7 @@
                   "type": "string"
                 },
                 "project": {
-                  "description": "The name of the project in which to list topics.\nFormat is `projects/{project-id}`.",
+                  "description": "Required. The name of the project in which to list topics.\nFormat is `projects/{project-id}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -898,7 +898,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The name of the topic. It must have the format\n`\"projects/{project}/topics/{topic}\"`. `{topic}` must start with a letter,\nand contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`),\nunderscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent\nsigns (`%`). It must be between 3 and 255 characters in length, and it\nmust not start with `\"goog\"`.",
+                  "description": "Required. The name of the topic. It must have the format\n`\"projects/{project}/topics/{topic}\"`. `{topic}` must start with a letter,\nand contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`),\nunderscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent\nsigns (`%`). It must be between 3 and 255 characters in length, and it\nmust not start with `\"goog\"`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/topics/[^/]+$",
                   "required": true,
@@ -927,7 +927,7 @@
               ],
               "parameters": {
                 "topic": {
-                  "description": "The messages in the request will be published on this topic.\nFormat is `projects/{project}/topics/{topic}`.",
+                  "description": "Required. The messages in the request will be published on this topic.\nFormat is `projects/{project}/topics/{topic}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/topics/[^/]+$",
                   "required": true,
@@ -1070,7 +1070,7 @@
                       "type": "string"
                     },
                     "topic": {
-                      "description": "The name of the topic that subscriptions are attached to.\nFormat is `projects/{project}/topics/{topic}`.",
+                      "description": "Required. The name of the topic that subscriptions are attached to.\nFormat is `projects/{project}/topics/{topic}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/topics/[^/]+$",
                       "required": true,
@@ -1093,7 +1093,7 @@
       }
     }
   },
-  "revision": "20200211",
+  "revision": "20200218",
   "rootUrl": "https://pubsub.googleapis.com/",
   "schemas": {
     "AcknowledgeRequest": {
@@ -1101,7 +1101,7 @@
       "id": "AcknowledgeRequest",
       "properties": {
         "ackIds": {
-          "description": "The acknowledgment ID for the messages being acknowledged that was returned\nby the Pub/Sub system in the `Pull` response. Must not be empty.",
+          "description": "Required. The acknowledgment ID for the messages being acknowledged that was returned\nby the Pub/Sub system in the `Pull` response. Must not be empty.",
           "items": {
             "type": "string"
           },
@@ -1144,7 +1144,7 @@
           "type": "object"
         },
         "subscription": {
-          "description": "The subscription whose backlog the snapshot retains.\nSpecifically, the created snapshot is guaranteed to retain:\n (a) The existing backlog on the subscription. More precisely, this is\n     defined as the messages in the subscription's backlog that are\n     unacknowledged upon the successful completion of the\n     `CreateSnapshot` request; as well as:\n (b) Any messages published to the subscription's topic following the\n     successful completion of the CreateSnapshot request.\nFormat is `projects/{project}/subscriptions/{sub}`.",
+          "description": "Required. The subscription whose backlog the snapshot retains.\nSpecifically, the created snapshot is guaranteed to retain:\n (a) The existing backlog on the subscription. More precisely, this is\n     defined as the messages in the subscription's backlog that are\n     unacknowledged upon the successful completion of the\n     `CreateSnapshot` request; as well as:\n (b) Any messages published to the subscription's topic following the\n     successful completion of the CreateSnapshot request.\nFormat is `projects/{project}/subscriptions/{sub}`.",
           "type": "string"
         }
       },
@@ -1315,12 +1315,12 @@
       "id": "ModifyAckDeadlineRequest",
       "properties": {
         "ackDeadlineSeconds": {
-          "description": "The new ack deadline with respect to the time this request was sent to\nthe Pub/Sub system. For example, if the value is 10, the new\nack deadline will expire 10 seconds after the `ModifyAckDeadline` call\nwas made. Specifying zero might immediately make the message available for\ndelivery to another subscriber client. This typically results in an\nincrease in the rate of message redeliveries (that is, duplicates).\nThe minimum deadline you can specify is 0 seconds.\nThe maximum deadline you can specify is 600 seconds (10 minutes).",
+          "description": "Required. The new ack deadline with respect to the time this request was sent to\nthe Pub/Sub system. For example, if the value is 10, the new\nack deadline will expire 10 seconds after the `ModifyAckDeadline` call\nwas made. Specifying zero might immediately make the message available for\ndelivery to another subscriber client. This typically results in an\nincrease in the rate of message redeliveries (that is, duplicates).\nThe minimum deadline you can specify is 0 seconds.\nThe maximum deadline you can specify is 600 seconds (10 minutes).",
           "format": "int32",
           "type": "integer"
         },
         "ackIds": {
-          "description": "List of acknowledgment IDs.",
+          "description": "Required. List of acknowledgment IDs.",
           "items": {
             "type": "string"
           },
@@ -1335,7 +1335,7 @@
       "properties": {
         "pushConfig": {
           "$ref": "PushConfig",
-          "description": "The push configuration for future deliveries.\n\nAn empty `pushConfig` indicates that the Pub/Sub system should\nstop pushing messages from the given subscription and allow\nmessages to be pulled and acknowledged - effectively pausing\nthe subscription if `Pull` or `StreamingPull` is not called."
+          "description": "Required. The push configuration for future deliveries.\n\nAn empty `pushConfig` indicates that the Pub/Sub system should\nstop pushing messages from the given subscription and allow\nmessages to be pulled and acknowledged - effectively pausing\nthe subscription if `Pull` or `StreamingPull` is not called."
         }
       },
       "type": "object"
@@ -1384,7 +1384,7 @@
       "id": "PublishRequest",
       "properties": {
         "messages": {
-          "description": "The messages to publish.",
+          "description": "Required. The messages to publish.",
           "items": {
             "$ref": "PubsubMessage"
           },
@@ -1440,7 +1440,7 @@
       "id": "PullRequest",
       "properties": {
         "maxMessages": {
-          "description": "The maximum number of messages to return for this request. Must be a\npositive integer. The Pub/Sub system may return fewer than the number\nspecified.",
+          "description": "Required. The maximum number of messages to return for this request. Must be a\npositive integer. The Pub/Sub system may return fewer than the number\nspecified.",
           "format": "int32",
           "type": "integer"
         },
@@ -1597,7 +1597,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The name of the subscription. It must have the format\n`\"projects/{project}/subscriptions/{subscription}\"`. `{subscription}` must\nstart with a letter, and contain only letters (`[A-Za-z]`), numbers\n(`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`),\nplus (`+`) or percent signs (`%`). It must be between 3 and 255 characters\nin length, and it must not start with `\"goog\"`.",
+          "description": "Required. The name of the subscription. It must have the format\n`\"projects/{project}/subscriptions/{subscription}\"`. `{subscription}` must\nstart with a letter, and contain only letters (`[A-Za-z]`), numbers\n(`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`),\nplus (`+`) or percent signs (`%`). It must be between 3 and 255 characters\nin length, and it must not start with `\"goog\"`.",
           "type": "string"
         },
         "pushConfig": {
@@ -1609,7 +1609,7 @@
           "type": "boolean"
         },
         "topic": {
-          "description": "The name of the topic from which this subscription is receiving messages.\nFormat is `projects/{project}/topics/{topic}`.\nThe value of this field will be `_deleted-topic_` if the topic has been\ndeleted.",
+          "description": "Required. The name of the topic from which this subscription is receiving messages.\nFormat is `projects/{project}/topics/{topic}`.\nThe value of this field will be `_deleted-topic_` if the topic has been\ndeleted.",
           "type": "string"
         }
       },
@@ -1663,7 +1663,7 @@
           "description": "Policy constraining the set of Google Cloud Platform regions where messages\npublished to the topic may be stored. If not present, then no constraints\nare in effect."
         },
         "name": {
-          "description": "The name of the topic. It must have the format\n`\"projects/{project}/topics/{topic}\"`. `{topic}` must start with a letter,\nand contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`),\nunderscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent\nsigns (`%`). It must be between 3 and 255 characters in length, and it\nmust not start with `\"goog\"`.",
+          "description": "Required. The name of the topic. It must have the format\n`\"projects/{project}/topics/{topic}\"`. `{topic}` must start with a letter,\nand contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`),\nunderscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent\nsigns (`%`). It must be between 3 and 255 characters in length, and it\nmust not start with `\"goog\"`.",
           "type": "string"
         }
       },
@@ -1675,10 +1675,10 @@
       "properties": {
         "snapshot": {
           "$ref": "Snapshot",
-          "description": "The updated snapshot object."
+          "description": "Required. The updated snapshot object."
         },
         "updateMask": {
-          "description": "Indicates which fields in the provided snapshot to update.\nMust be specified and non-empty.",
+          "description": "Required. Indicates which fields in the provided snapshot to update.\nMust be specified and non-empty.",
           "format": "google-fieldmask",
           "type": "string"
         }
@@ -1691,10 +1691,10 @@
       "properties": {
         "subscription": {
           "$ref": "Subscription",
-          "description": "The updated subscription object."
+          "description": "Required. The updated subscription object."
         },
         "updateMask": {
-          "description": "Indicates which fields in the provided subscription to update.\nMust be specified and non-empty.",
+          "description": "Required. Indicates which fields in the provided subscription to update.\nMust be specified and non-empty.",
           "format": "google-fieldmask",
           "type": "string"
         }
@@ -1707,10 +1707,10 @@
       "properties": {
         "topic": {
           "$ref": "Topic",
-          "description": "The updated topic object."
+          "description": "Required. The updated topic object."
         },
         "updateMask": {
-          "description": "Indicates which fields in the provided topic to update. Must be specified\nand non-empty. Note that if `update_mask` contains\n\"message_storage_policy\" then the new value will be determined based on the\npolicy configured at the project or organization level. The\n`message_storage_policy` must not be set in the `topic` provided above.",
+          "description": "Required. Indicates which fields in the provided topic to update. Must be specified\nand non-empty. Note that if `update_mask` contains\n\"message_storage_policy\" then the new value will be determined based on the\npolicy configured at the project or organization level. The\n`message_storage_policy` must not be set in the `topic` provided above.",
           "format": "google-fieldmask",
           "type": "string"
         }

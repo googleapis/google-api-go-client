@@ -2338,6 +2338,15 @@ type QuotaOperation struct {
 	// available and does not change the available quota. No lock is placed
 	// on
 	// the available quota either.
+	//   "QUERY_ONLY" - Unimplemented. When used in AllocateQuotaRequest,
+	// this returns the
+	// effective quota limit(s) in the response, and no quota check will
+	// be
+	// performed. Not supported for other requests, and even
+	// for
+	// AllocateQuotaRequest, this is currently supported only for
+	// whitelisted
+	// services.
 	QuotaMode string `json:"quotaMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConsumerId") to
@@ -3343,7 +3352,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3505,7 +3514,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3666,7 +3675,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

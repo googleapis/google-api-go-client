@@ -214,8 +214,8 @@ type ProjectsTopicsSubscriptionsService struct {
 
 // AcknowledgeRequest: Request for the Acknowledge method.
 type AcknowledgeRequest struct {
-	// AckIds: The acknowledgment ID for the messages being acknowledged
-	// that was returned
+	// AckIds: Required. The acknowledgment ID for the messages being
+	// acknowledged that was returned
 	// by the Pub/Sub system in the `Pull` response. Must not be empty.
 	AckIds []string `json:"ackIds,omitempty"`
 
@@ -353,7 +353,7 @@ type CreateSnapshotRequest struct {
 	// managing labels</a>.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Subscription: The subscription whose backlog the snapshot
+	// Subscription: Required. The subscription whose backlog the snapshot
 	// retains.
 	// Specifically, the created snapshot is guaranteed to retain:
 	//  (a) The existing backlog on the subscription. More precisely, this
@@ -833,8 +833,8 @@ func (s *MessageStoragePolicy) MarshalJSON() ([]byte, error) {
 
 // ModifyAckDeadlineRequest: Request for the ModifyAckDeadline method.
 type ModifyAckDeadlineRequest struct {
-	// AckDeadlineSeconds: The new ack deadline with respect to the time
-	// this request was sent to
+	// AckDeadlineSeconds: Required. The new ack deadline with respect to
+	// the time this request was sent to
 	// the Pub/Sub system. For example, if the value is 10, the new
 	// ack deadline will expire 10 seconds after the `ModifyAckDeadline`
 	// call
@@ -848,7 +848,7 @@ type ModifyAckDeadlineRequest struct {
 	// The maximum deadline you can specify is 600 seconds (10 minutes).
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
-	// AckIds: List of acknowledgment IDs.
+	// AckIds: Required. List of acknowledgment IDs.
 	AckIds []string `json:"ackIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AckDeadlineSeconds")
@@ -877,7 +877,8 @@ func (s *ModifyAckDeadlineRequest) MarshalJSON() ([]byte, error) {
 
 // ModifyPushConfigRequest: Request for the ModifyPushConfig method.
 type ModifyPushConfigRequest struct {
-	// PushConfig: The push configuration for future deliveries.
+	// PushConfig: Required. The push configuration for future
+	// deliveries.
 	//
 	// An empty `pushConfig` indicates that the Pub/Sub system should
 	// stop pushing messages from the given subscription and allow
@@ -1126,7 +1127,7 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 
 // PublishRequest: Request for the Publish method.
 type PublishRequest struct {
-	// Messages: The messages to publish.
+	// Messages: Required. The messages to publish.
 	Messages []*PubsubMessage `json:"messages,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Messages") to
@@ -1255,8 +1256,8 @@ func (s *PubsubMessage) MarshalJSON() ([]byte, error) {
 
 // PullRequest: Request for the `Pull` method.
 type PullRequest struct {
-	// MaxMessages: The maximum number of messages to return for this
-	// request. Must be a
+	// MaxMessages: Required. The maximum number of messages to return for
+	// this request. Must be a
 	// positive integer. The Pub/Sub system may return fewer than the
 	// number
 	// specified.
@@ -1710,7 +1711,7 @@ type Subscription struct {
 	// minutes.
 	MessageRetentionDuration string `json:"messageRetentionDuration,omitempty"`
 
-	// Name: The name of the subscription. It must have the
+	// Name: Required. The name of the subscription. It must have the
 	// format
 	// "projects/{project}/subscriptions/{subscription}". `{subscription}`
 	// must
@@ -1744,8 +1745,8 @@ type Subscription struct {
 	// Seek to a timestamp</a>.
 	RetainAckedMessages bool `json:"retainAckedMessages,omitempty"`
 
-	// Topic: The name of the topic from which this subscription is
-	// receiving messages.
+	// Topic: Required. The name of the topic from which this subscription
+	// is receiving messages.
 	// Format is `projects/{project}/topics/{topic}`.
 	// The value of this field will be `_deleted-topic_` if the topic has
 	// been
@@ -1872,7 +1873,7 @@ type Topic struct {
 	// are in effect.
 	MessageStoragePolicy *MessageStoragePolicy `json:"messageStoragePolicy,omitempty"`
 
-	// Name: The name of the topic. It must have the
+	// Name: Required. The name of the topic. It must have the
 	// format
 	// "projects/{project}/topics/{topic}". `{topic}` must start with a
 	// letter,
@@ -1914,11 +1915,11 @@ func (s *Topic) MarshalJSON() ([]byte, error) {
 
 // UpdateSnapshotRequest: Request for the UpdateSnapshot method.
 type UpdateSnapshotRequest struct {
-	// Snapshot: The updated snapshot object.
+	// Snapshot: Required. The updated snapshot object.
 	Snapshot *Snapshot `json:"snapshot,omitempty"`
 
-	// UpdateMask: Indicates which fields in the provided snapshot to
-	// update.
+	// UpdateMask: Required. Indicates which fields in the provided snapshot
+	// to update.
 	// Must be specified and non-empty.
 	UpdateMask string `json:"updateMask,omitempty"`
 
@@ -1947,11 +1948,11 @@ func (s *UpdateSnapshotRequest) MarshalJSON() ([]byte, error) {
 
 // UpdateSubscriptionRequest: Request for the UpdateSubscription method.
 type UpdateSubscriptionRequest struct {
-	// Subscription: The updated subscription object.
+	// Subscription: Required. The updated subscription object.
 	Subscription *Subscription `json:"subscription,omitempty"`
 
-	// UpdateMask: Indicates which fields in the provided subscription to
-	// update.
+	// UpdateMask: Required. Indicates which fields in the provided
+	// subscription to update.
 	// Must be specified and non-empty.
 	UpdateMask string `json:"updateMask,omitempty"`
 
@@ -1980,11 +1981,11 @@ func (s *UpdateSubscriptionRequest) MarshalJSON() ([]byte, error) {
 
 // UpdateTopicRequest: Request for the UpdateTopic method.
 type UpdateTopicRequest struct {
-	// Topic: The updated topic object.
+	// Topic: Required. The updated topic object.
 	Topic *Topic `json:"topic,omitempty"`
 
-	// UpdateMask: Indicates which fields in the provided topic to update.
-	// Must be specified
+	// UpdateMask: Required. Indicates which fields in the provided topic to
+	// update. Must be specified
 	// and non-empty. Note that if `update_mask`
 	// contains
 	// "message_storage_policy" then the new value will be determined based
@@ -2093,7 +2094,7 @@ func (c *ProjectsSnapshotsCreateCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2166,7 +2167,7 @@ func (c *ProjectsSnapshotsCreateCall) Do(opts ...googleapi.CallOption) (*Snapsho
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "User-provided name for this snapshot. If the name is not provided in the\nrequest, the server will assign a random name for this snapshot on the same\nproject as the subscription. Note that for REST API requests, you must\nspecify a name.  See the \u003ca\nhref=\"https://cloud.google.com/pubsub/docs/admin#resource_names\"\u003e resource\nname rules\u003c/a\u003e. Format is `projects/{project}/snapshots/{snap}`.",
+	//       "description": "Required. User-provided name for this snapshot. If the name is not provided in the\nrequest, the server will assign a random name for this snapshot on the same\nproject as the subscription. Note that for REST API requests, you must\nspecify a name.  See the \u003ca\nhref=\"https://cloud.google.com/pubsub/docs/admin#resource_names\"\u003e resource\nname rules\u003c/a\u003e. Format is `projects/{project}/snapshots/{snap}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/snapshots/[^/]+$",
 	//       "required": true,
@@ -2249,7 +2250,7 @@ func (c *ProjectsSnapshotsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2317,7 +2318,7 @@ func (c *ProjectsSnapshotsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	//   ],
 	//   "parameters": {
 	//     "snapshot": {
-	//       "description": "The name of the snapshot to delete.\nFormat is `projects/{project}/snapshots/{snap}`.",
+	//       "description": "Required. The name of the snapshot to delete.\nFormat is `projects/{project}/snapshots/{snap}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/snapshots/[^/]+$",
 	//       "required": true,
@@ -2400,7 +2401,7 @@ func (c *ProjectsSnapshotsGetCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2471,7 +2472,7 @@ func (c *ProjectsSnapshotsGetCall) Do(opts ...googleapi.CallOption) (*Snapshot, 
 	//   ],
 	//   "parameters": {
 	//     "snapshot": {
-	//       "description": "The name of the snapshot to get.\nFormat is `projects/{project}/snapshots/{snap}`.",
+	//       "description": "Required. The name of the snapshot to get.\nFormat is `projects/{project}/snapshots/{snap}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/snapshots/[^/]+$",
 	//       "required": true,
@@ -2566,7 +2567,7 @@ func (c *ProjectsSnapshotsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2743,7 +2744,7 @@ func (c *ProjectsSnapshotsListCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2825,7 +2826,7 @@ func (c *ProjectsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*ListSnaps
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "The name of the project in which to list snapshots.\nFormat is `projects/{project-id}`.",
+	//       "description": "Required. The name of the project in which to list snapshots.\nFormat is `projects/{project-id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2920,7 +2921,7 @@ func (c *ProjectsSnapshotsPatchCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3066,7 +3067,7 @@ func (c *ProjectsSnapshotsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3217,7 +3218,7 @@ func (c *ProjectsSnapshotsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3368,7 +3369,7 @@ func (c *ProjectsSubscriptionsAcknowledgeCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3441,7 +3442,7 @@ func (c *ProjectsSubscriptionsAcknowledgeCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "subscription": {
-	//       "description": "The subscription whose message is being acknowledged.\nFormat is `projects/{project}/subscriptions/{sub}`.",
+	//       "description": "Required. The subscription whose message is being acknowledged.\nFormat is `projects/{project}/subscriptions/{sub}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -3528,7 +3529,7 @@ func (c *ProjectsSubscriptionsCreateCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3601,7 +3602,7 @@ func (c *ProjectsSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Sub
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the subscription. It must have the format\n`\"projects/{project}/subscriptions/{subscription}\"`. `{subscription}` must\nstart with a letter, and contain only letters (`[A-Za-z]`), numbers\n(`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`),\nplus (`+`) or percent signs (`%`). It must be between 3 and 255 characters\nin length, and it must not start with `\"goog\"`.",
+	//       "description": "Required. The name of the subscription. It must have the format\n`\"projects/{project}/subscriptions/{subscription}\"`. `{subscription}` must\nstart with a letter, and contain only letters (`[A-Za-z]`), numbers\n(`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`),\nplus (`+`) or percent signs (`%`). It must be between 3 and 255 characters\nin length, and it must not start with `\"goog\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -3675,7 +3676,7 @@ func (c *ProjectsSubscriptionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3743,7 +3744,7 @@ func (c *ProjectsSubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 	//   ],
 	//   "parameters": {
 	//     "subscription": {
-	//       "description": "The subscription to delete.\nFormat is `projects/{project}/subscriptions/{sub}`.",
+	//       "description": "Required. The subscription to delete.\nFormat is `projects/{project}/subscriptions/{sub}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -3817,7 +3818,7 @@ func (c *ProjectsSubscriptionsGetCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3888,7 +3889,7 @@ func (c *ProjectsSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subscr
 	//   ],
 	//   "parameters": {
 	//     "subscription": {
-	//       "description": "The name of the subscription to get.\nFormat is `projects/{project}/subscriptions/{sub}`.",
+	//       "description": "Required. The name of the subscription to get.\nFormat is `projects/{project}/subscriptions/{sub}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -3983,7 +3984,7 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4151,7 +4152,7 @@ func (c *ProjectsSubscriptionsListCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4233,7 +4234,7 @@ func (c *ProjectsSubscriptionsListCall) Do(opts ...googleapi.CallOption) (*ListS
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "The name of the project in which to list subscriptions.\nFormat is `projects/{project-id}`.",
+	//       "description": "Required. The name of the project in which to list subscriptions.\nFormat is `projects/{project-id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -4327,7 +4328,7 @@ func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsModifyAckDeadlineCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4400,7 +4401,7 @@ func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "subscription": {
-	//       "description": "The name of the subscription.\nFormat is `projects/{project}/subscriptions/{sub}`.",
+	//       "description": "Required. The name of the subscription.\nFormat is `projects/{project}/subscriptions/{sub}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -4478,7 +4479,7 @@ func (c *ProjectsSubscriptionsModifyPushConfigCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsModifyPushConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4551,7 +4552,7 @@ func (c *ProjectsSubscriptionsModifyPushConfigCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "subscription": {
-	//       "description": "The name of the subscription.\nFormat is `projects/{project}/subscriptions/{sub}`.",
+	//       "description": "Required. The name of the subscription.\nFormat is `projects/{project}/subscriptions/{sub}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -4621,7 +4622,7 @@ func (c *ProjectsSubscriptionsPatchCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4694,7 +4695,7 @@ func (c *ProjectsSubscriptionsPatchCall) Do(opts ...googleapi.CallOption) (*Subs
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the subscription. It must have the format\n`\"projects/{project}/subscriptions/{subscription}\"`. `{subscription}` must\nstart with a letter, and contain only letters (`[A-Za-z]`), numbers\n(`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`),\nplus (`+`) or percent signs (`%`). It must be between 3 and 255 characters\nin length, and it must not start with `\"goog\"`.",
+	//       "description": "Required. The name of the subscription. It must have the format\n`\"projects/{project}/subscriptions/{subscription}\"`. `{subscription}` must\nstart with a letter, and contain only letters (`[A-Za-z]`), numbers\n(`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`),\nplus (`+`) or percent signs (`%`). It must be between 3 and 255 characters\nin length, and it must not start with `\"goog\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -4766,7 +4767,7 @@ func (c *ProjectsSubscriptionsPullCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsPullCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4839,7 +4840,7 @@ func (c *ProjectsSubscriptionsPullCall) Do(opts ...googleapi.CallOption) (*PullR
 	//   ],
 	//   "parameters": {
 	//     "subscription": {
-	//       "description": "The subscription from which messages should be pulled.\nFormat is `projects/{project}/subscriptions/{sub}`.",
+	//       "description": "Required. The subscription from which messages should be pulled.\nFormat is `projects/{project}/subscriptions/{sub}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -4920,7 +4921,7 @@ func (c *ProjectsSubscriptionsSeekCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsSeekCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4993,7 +4994,7 @@ func (c *ProjectsSubscriptionsSeekCall) Do(opts ...googleapi.CallOption) (*SeekR
 	//   ],
 	//   "parameters": {
 	//     "subscription": {
-	//       "description": "The subscription to affect.",
+	//       "description": "Required. The subscription to affect.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -5066,7 +5067,7 @@ func (c *ProjectsSubscriptionsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5217,7 +5218,7 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5362,7 +5363,7 @@ func (c *ProjectsTopicsCreateCall) Header() http.Header {
 
 func (c *ProjectsTopicsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5435,7 +5436,7 @@ func (c *ProjectsTopicsCreateCall) Do(opts ...googleapi.CallOption) (*Topic, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the topic. It must have the format\n`\"projects/{project}/topics/{topic}\"`. `{topic}` must start with a letter,\nand contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`),\nunderscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent\nsigns (`%`). It must be between 3 and 255 characters in length, and it\nmust not start with `\"goog\"`.",
+	//       "description": "Required. The name of the topic. It must have the format\n`\"projects/{project}/topics/{topic}\"`. `{topic}` must start with a letter,\nand contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`),\nunderscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent\nsigns (`%`). It must be between 3 and 255 characters in length, and it\nmust not start with `\"goog\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
 	//       "required": true,
@@ -5509,7 +5510,7 @@ func (c *ProjectsTopicsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5577,7 +5578,7 @@ func (c *ProjectsTopicsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	//   ],
 	//   "parameters": {
 	//     "topic": {
-	//       "description": "Name of the topic to delete.\nFormat is `projects/{project}/topics/{topic}`.",
+	//       "description": "Required. Name of the topic to delete.\nFormat is `projects/{project}/topics/{topic}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
 	//       "required": true,
@@ -5651,7 +5652,7 @@ func (c *ProjectsTopicsGetCall) Header() http.Header {
 
 func (c *ProjectsTopicsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5722,7 +5723,7 @@ func (c *ProjectsTopicsGetCall) Do(opts ...googleapi.CallOption) (*Topic, error)
 	//   ],
 	//   "parameters": {
 	//     "topic": {
-	//       "description": "The name of the topic to get.\nFormat is `projects/{project}/topics/{topic}`.",
+	//       "description": "Required. The name of the topic to get.\nFormat is `projects/{project}/topics/{topic}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
 	//       "required": true,
@@ -5817,7 +5818,7 @@ func (c *ProjectsTopicsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsTopicsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5985,7 +5986,7 @@ func (c *ProjectsTopicsListCall) Header() http.Header {
 
 func (c *ProjectsTopicsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6067,7 +6068,7 @@ func (c *ProjectsTopicsListCall) Do(opts ...googleapi.CallOption) (*ListTopicsRe
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "The name of the project in which to list topics.\nFormat is `projects/{project-id}`.",
+	//       "description": "Required. The name of the project in which to list topics.\nFormat is `projects/{project-id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -6155,7 +6156,7 @@ func (c *ProjectsTopicsPatchCall) Header() http.Header {
 
 func (c *ProjectsTopicsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6228,7 +6229,7 @@ func (c *ProjectsTopicsPatchCall) Do(opts ...googleapi.CallOption) (*Topic, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the topic. It must have the format\n`\"projects/{project}/topics/{topic}\"`. `{topic}` must start with a letter,\nand contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`),\nunderscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent\nsigns (`%`). It must be between 3 and 255 characters in length, and it\nmust not start with `\"goog\"`.",
+	//       "description": "Required. The name of the topic. It must have the format\n`\"projects/{project}/topics/{topic}\"`. `{topic}` must start with a letter,\nand contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`),\nunderscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent\nsigns (`%`). It must be between 3 and 255 characters in length, and it\nmust not start with `\"goog\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
 	//       "required": true,
@@ -6298,7 +6299,7 @@ func (c *ProjectsTopicsPublishCall) Header() http.Header {
 
 func (c *ProjectsTopicsPublishCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6371,7 +6372,7 @@ func (c *ProjectsTopicsPublishCall) Do(opts ...googleapi.CallOption) (*PublishRe
 	//   ],
 	//   "parameters": {
 	//     "topic": {
-	//       "description": "The messages in the request will be published on this topic.\nFormat is `projects/{project}/topics/{topic}`.",
+	//       "description": "Required. The messages in the request will be published on this topic.\nFormat is `projects/{project}/topics/{topic}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
 	//       "required": true,
@@ -6444,7 +6445,7 @@ func (c *ProjectsTopicsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsTopicsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6595,7 +6596,7 @@ func (c *ProjectsTopicsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsTopicsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6772,7 +6773,7 @@ func (c *ProjectsTopicsSnapshotsListCall) Header() http.Header {
 
 func (c *ProjectsTopicsSnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6966,7 +6967,7 @@ func (c *ProjectsTopicsSubscriptionsListCall) Header() http.Header {
 
 func (c *ProjectsTopicsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200227")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7048,7 +7049,7 @@ func (c *ProjectsTopicsSubscriptionsListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "topic": {
-	//       "description": "The name of the topic that subscriptions are attached to.\nFormat is `projects/{project}/topics/{topic}`.",
+	//       "description": "Required. The name of the topic that subscriptions are attached to.\nFormat is `projects/{project}/topics/{topic}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
 	//       "required": true,

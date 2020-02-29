@@ -22,6 +22,7 @@
   },
   "id": "cloudfunctions:v1beta2",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://cloudfunctions.mtls.googleapis.com/",
   "name": "cloudfunctions",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -452,7 +453,7 @@
       }
     }
   },
-  "revision": "20191003",
+  "revision": "20200219",
   "rootUrl": "https://cloudfunctions.googleapis.com/",
   "schemas": {
     "CallFunctionRequest": {

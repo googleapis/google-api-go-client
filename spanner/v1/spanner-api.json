@@ -1611,7 +1611,7 @@
       }
     }
   },
-  "revision": "20200208",
+  "revision": "20200224",
   "rootUrl": "https://spanner.googleapis.com/",
   "schemas": {
     "BatchCreateSessionsRequest": {
@@ -1938,6 +1938,10 @@
           ],
           "type": "string"
         },
+        "queryOptions": {
+          "$ref": "QueryOptions",
+          "description": "Query optimizer configuration to use for the given query."
+        },
         "resumeToken": {
           "description": "If this request is resuming a previously interrupted SQL statement\nexecution, `resume_token` should be copied from the last\nPartialResultSet yielded before the interruption. Doing this\nenables the new SQL statement execution to resume where the last one left\noff. The rest of the request parameters must exactly match the\nrequest that yielded this token.",
           "format": "byte",
@@ -2047,7 +2051,7 @@
           "type": "string"
         },
         "endpointUris": {
-          "description": "Output only. A set of endpoint URIs based on your instance config\nthat you can use instead of the global endpoint `spanner.googleapis.com`.\n\nFor example, if your instance config is `us-central1` (a regional config\nin Iowa), then your instance specific endpoints may include\n`us-central1-spanner.googleapis.com`. By calling these endpoints instead of\nthe global endpoint, you optimize network routing which could reduce\nnetwork latency.\n\nThe client libraries, JDBC drivers, and other SDK clients automatically\ncall these instance specific endpoints.\n\nIf you are using DNS whitelists, firewalls, or filtering to control access\nto endpoints, make sure you grant access to `*spanner.googleapis.com`.",
+          "description": "Deprecated. This field is not populated.",
           "items": {
             "type": "string"
           },
@@ -2552,6 +2556,17 @@
           "description": "Specifies the format of the policy.\n\nValid values are `0`, `1`, and `3`. Requests that specify an invalid value\nare rejected.\n\nAny operation that affects conditional role bindings must specify version\n`3`. This requirement applies to the following operations:\n\n* Getting a policy that includes a conditional role binding\n* Adding a conditional role binding to a policy\n* Changing a conditional role binding in a policy\n* Removing any role binding, with or without a condition, from a policy\n  that includes conditions\n\n**Important:** If you use IAM Conditions, you must include the `etag` field\nwhenever you call `setIamPolicy`. If you omit this field, then IAM allows\nyou to overwrite a version `3` policy with a version `1` policy, and all of\nthe conditions in the version `3` policy are lost.\n\nIf a policy does not include any conditions, operations on that policy may\nspecify any valid version or leave the field unset.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "QueryOptions": {
+      "description": "Query optimizer configuration.",
+      "id": "QueryOptions",
+      "properties": {
+        "optimizerVersion": {
+          "description": "An option to control the selection of optimizer version.\n\nThis parameter allows individual queries to pick different query\noptimizer versions.\n\nSpecifying \"latest\" as a value instructs Cloud Spanner to use the\nlatest supported query optimizer version. If not specified, Cloud Spanner\nuses optimizer version set at the database level options. Any other\npositive integer (from the list of supported optimizer versions)\noverrides the default optimizer version for query execution.\nThe list of supported optimizer versions can be queried from\nSPANNER_SYS.SUPPORTED_OPTIMIZER_VERSIONS. Executing a SQL statement\nwith an invalid optimizer version will fail with a syntax error\n(`INVALID_ARGUMENT`) status.\n\nThe `optimizer_version` statement hint has precedence over this setting.",
+          "type": "string"
         }
       },
       "type": "object"

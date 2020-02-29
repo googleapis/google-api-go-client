@@ -34,6 +34,7 @@
   },
   "id": "logging:v2",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://logging.mtls.googleapis.com/",
   "name": "logging",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -336,7 +337,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The parent resource whose buckets are to be listed:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]\"\nNote: The locations portion of the resource is required, but supplying the character - in place of LOCATION_ID will return all buckets.",
+                      "description": "Required. The parent resource whose buckets are to be listed:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]\"\nNote: The locations portion of the resource must be specified, but supplying the character - in place of LOCATION_ID will return all buckets.",
                       "location": "path",
                       "pattern": "^billingAccounts/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -1097,7 +1098,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The parent resource whose buckets are to be listed:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]\"\nNote: The locations portion of the resource is required, but supplying the character - in place of LOCATION_ID will return all buckets.",
+                      "description": "Required. The parent resource whose buckets are to be listed:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]\"\nNote: The locations portion of the resource must be specified, but supplying the character - in place of LOCATION_ID will return all buckets.",
                       "location": "path",
                       "pattern": "^folders/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -1489,7 +1490,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. The parent resource whose buckets are to be listed:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]\"\nNote: The locations portion of the resource is required, but supplying the character - in place of LOCATION_ID will return all buckets.",
+                  "description": "Required. The parent resource whose buckets are to be listed:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]\"\nNote: The locations portion of the resource must be specified, but supplying the character - in place of LOCATION_ID will return all buckets.",
                   "location": "path",
                   "pattern": "^[^/]+/[^/]+/locations/[^/]+$",
                   "required": true,
@@ -1930,7 +1931,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The parent resource whose buckets are to be listed:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]\"\nNote: The locations portion of the resource is required, but supplying the character - in place of LOCATION_ID will return all buckets.",
+                      "description": "Required. The parent resource whose buckets are to be listed:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]\"\nNote: The locations portion of the resource must be specified, but supplying the character - in place of LOCATION_ID will return all buckets.",
                       "location": "path",
                       "pattern": "^organizations/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -2485,7 +2486,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The parent resource whose buckets are to be listed:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]\"\nNote: The locations portion of the resource is required, but supplying the character - in place of LOCATION_ID will return all buckets.",
+                      "description": "Required. The parent resource whose buckets are to be listed:\n\"projects/[PROJECT_ID]/locations/[LOCATION_ID]\"\n\"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\"\n\"folders/[FOLDER_ID]/locations/[LOCATION_ID]\"\nNote: The locations portion of the resource must be specified, but supplying the character - in place of LOCATION_ID will return all buckets.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -2623,7 +2624,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "The resource name of the project in which to create the metric:\n\"projects/[PROJECT_ID]\"\nThe new metric must be provided in the request.",
+                  "description": "Required. The resource name of the project in which to create the metric:\n\"projects/[PROJECT_ID]\"\nThe new metric must be provided in the request.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -2653,7 +2654,7 @@
               ],
               "parameters": {
                 "metricName": {
-                  "description": "The resource name of the metric to delete:\n\"projects/[PROJECT_ID]/metrics/[METRIC_ID]\"\n",
+                  "description": "Required. The resource name of the metric to delete:\n\"projects/[PROJECT_ID]/metrics/[METRIC_ID]\"\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+/metrics/[^/]+$",
                   "required": true,
@@ -2680,7 +2681,7 @@
               ],
               "parameters": {
                 "metricName": {
-                  "description": "The resource name of the desired metric:\n\"projects/[PROJECT_ID]/metrics/[METRIC_ID]\"\n",
+                  "description": "Required. The resource name of the desired metric:\n\"projects/[PROJECT_ID]/metrics/[METRIC_ID]\"\n",
                   "location": "path",
                   "pattern": "^projects/[^/]+/metrics/[^/]+$",
                   "required": true,
@@ -2747,7 +2748,7 @@
               ],
               "parameters": {
                 "metricName": {
-                  "description": "The resource name of the metric to update:\n\"projects/[PROJECT_ID]/metrics/[METRIC_ID]\"\nThe updated metric must be provided in the request and it's name field must be the same as [METRIC_ID] If the metric does not exist in [PROJECT_ID], then a new metric is created.",
+                  "description": "Required. The resource name of the metric to update:\n\"projects/[PROJECT_ID]/metrics/[METRIC_ID]\"\nThe updated metric must be provided in the request and it's name field must be the same as [METRIC_ID] If the metric does not exist in [PROJECT_ID], then a new metric is created.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/metrics/[^/]+$",
                   "required": true,
@@ -3221,7 +3222,7 @@
       }
     }
   },
-  "revision": "20200221",
+  "revision": "20200222",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "BigQueryOptions": {
@@ -3267,11 +3268,11 @@
           "type": "string"
         },
         "name": {
-          "description": "Output Only. The resource name of the CMEK settings.",
+          "description": "Output only. The resource name of the CMEK settings.",
           "type": "string"
         },
         "serviceAccountId": {
-          "description": "Output Only. The service account that will be used by the Logs Router to access your Cloud KMS key.Before enabling CMEK for Logs Router, you must first assign the role roles/cloudkms.cryptoKeyEncrypterDecrypter to the service account that the Logs Router will use to access your Cloud KMS key. Use GetCmekSettings to obtain the service account ID.See Enabling CMEK for Logs Router for more information.",
+          "description": "Output only. The service account that will be used by the Logs Router to access your Cloud KMS key.Before enabling CMEK for Logs Router, you must first assign the role roles/cloudkms.cryptoKeyEncrypterDecrypter to the service account that the Logs Router will use to access your Cloud KMS key. Use GetCmekSettings to obtain the service account ID.See Enabling CMEK for Logs Router for more information.",
           "type": "string"
         }
       },
@@ -3501,7 +3502,7 @@
           "type": "string"
         },
         "projectIds": {
-          "description": "Deprecated. Use resource_names instead. One or more project identifiers or project numbers from which to retrieve log entries. Example: \"my-project-1A\".",
+          "description": "Optional. Deprecated. Use resource_names instead. One or more project identifiers or project numbers from which to retrieve log entries. Example: \"my-project-1A\".",
           "items": {
             "type": "string"
           },
@@ -3621,7 +3622,7 @@
           "type": "string"
         },
         "lifecycleState": {
-          "description": "The bucket lifecycle state.Output only.",
+          "description": "Output only. The bucket lifecycle state.",
           "enum": [
             "LIFECYCLE_STATE_UNSPECIFIED",
             "ACTIVE",
@@ -3679,12 +3680,12 @@
           "type": "object"
         },
         "logName": {
-          "description": "Required. The resource name of the log to which this log entry belongs:\n\"projects/[PROJECT_ID]/logs/[LOG_ID]\"\n\"organizations/[ORGANIZATION_ID]/logs/[LOG_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]\"\n\"folders/[FOLDER_ID]/logs/[LOG_ID]\"\nA project number may optionally be used in place of PROJECT_ID. The project number is translated to its corresponding PROJECT_ID internally and the log_name field will contain PROJECT_ID in queries and exports.[LOG_ID] must be URL-encoded within log_name. Example: \"organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity\". [LOG_ID] must be less than 512 characters long and can only include the following characters: upper and lower case alphanumeric characters, forward-slash, underscore, hyphen, and period.For backward compatibility, if log_name begins with a forward-slash, such as /projects/..., then the log entry is ingested as usual but the forward-slash is removed. Listing the log entry will not show the leading slash and filtering for a log name with a leading slash will never return any results.",
+          "description": "Required. The resource name of the log to which this log entry belongs:\n\"projects/[PROJECT_ID]/logs/[LOG_ID]\"\n\"organizations/[ORGANIZATION_ID]/logs/[LOG_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]\"\n\"folders/[FOLDER_ID]/logs/[LOG_ID]\"\nA project number may be used in place of PROJECT_ID. The project number is translated to its corresponding PROJECT_ID internally and the log_name field will contain PROJECT_ID in queries and exports.[LOG_ID] must be URL-encoded within log_name. Example: \"organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity\". [LOG_ID] must be less than 512 characters long and can only include the following characters: upper and lower case alphanumeric characters, forward-slash, underscore, hyphen, and period.For backward compatibility, if log_name begins with a forward-slash, such as /projects/..., then the log entry is ingested as usual but the forward-slash is removed. Listing the log entry will not show the leading slash and filtering for a log name with a leading slash will never return any results.",
           "type": "string"
         },
         "metadata": {
           "$ref": "MonitoredResourceMetadata",
-          "description": "Deprecated. Output only. Additional metadata about the monitored resource.Only k8s_container, k8s_pod, and k8s_node MonitoredResources have this field populated for GKE versions older than 1.12.6. For GKE versions 1.12.6 and above, the metadata field has been deprecated. The Kubernetes pod labels that used to be in metadata.userLabels will now be present in the labels field with a key prefix of k8s-pod/. The Stackdriver system labels that were present in the metadata.systemLabels field will no longer be available in the LogEntry."
+          "description": "Output only. Deprecated. Additional metadata about the monitored resource.Only k8s_container, k8s_pod, and k8s_node MonitoredResources have this field populated for GKE versions older than 1.12.6. For GKE versions 1.12.6 and above, the metadata field has been deprecated. The Kubernetes pod labels that used to be in metadata.userLabels will now be present in the labels field with a key prefix of k8s-pod/. The Stackdriver system labels that were present in the metadata.systemLabels field will no longer be available in the LogEntry."
         },
         "operation": {
           "$ref": "LogEntryOperation",
@@ -3738,7 +3739,7 @@
           "description": "Optional. Source code location information associated with the log entry, if any."
         },
         "spanId": {
-          "description": "Optional. The span ID within the trace associated with the log entry.For Trace spans, this is the same format that the Trace API v2 uses: a 16-character hexadecimal encoding of an 8-byte array, such as \u003ccode\u003e\"000000000000004a\"\u003c/code\u003e.",
+          "description": "Optional. The span ID within the trace associated with the log entry.For Trace spans, this is the same format that the Trace API v2 uses: a 16-character hexadecimal encoding of an 8-byte array, such as 000000000000004a.",
           "type": "string"
         },
         "textPayload": {
@@ -3968,11 +3969,6 @@
           "description": "Optional. If set to True, then this sink is disabled and it does not export any log entries.",
           "type": "boolean"
         },
-        "endTime": {
-          "description": "Do not use. This field is ignored.",
-          "format": "google-datetime",
-          "type": "string"
-        },
         "filter": {
           "description": "Optional. An advanced logs filter. The only exported log entries are those that are in the resource owning the sink and that match the filter. For example:\nlogName=\"projects/[PROJECT_ID]/logs/[LOG_ID]\" AND severity\u003e=ERROR\n",
           "type": "string"
@@ -3997,11 +3993,6 @@
             "LogEntry version 2 format.",
             "LogEntry version 1 format."
           ],
-          "type": "string"
-        },
-        "startTime": {
-          "description": "Do not use. This field is ignored.",
-          "format": "google-datetime",
           "type": "string"
         },
         "updateTime": {
@@ -4458,7 +4449,7 @@
           "type": "object"
         },
         "logName": {
-          "description": "Optional. A default log resource name that is assigned to all log entries in entries that do not specify a value for log_name:\n\"projects/[PROJECT_ID]/logs/[LOG_ID]\"\n\"organizations/[ORGANIZATION_ID]/logs/[LOG_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]\"\n\"folders/[FOLDER_ID]/logs/[LOG_ID]\"\n[LOG_ID] must be URL-encoded. For example:\n\"projects/my-project-id/logs/syslog\"\n\"organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity\"\nThe permission \u003ccode\u003elogging.logEntries.create\u003c/code\u003e is needed on each project, organization, billing account, or folder that is receiving new log entries, whether the resource is specified in \u003ccode\u003elogName\u003c/code\u003e or in an individual log entry.",
+          "description": "Optional. A default log resource name that is assigned to all log entries in entries that do not specify a value for log_name:\n\"projects/[PROJECT_ID]/logs/[LOG_ID]\"\n\"organizations/[ORGANIZATION_ID]/logs/[LOG_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]\"\n\"folders/[FOLDER_ID]/logs/[LOG_ID]\"\n[LOG_ID] must be URL-encoded. For example:\n\"projects/my-project-id/logs/syslog\"\n\"organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity\"\nThe permission logging.logEntries.create is needed on each project, organization, billing account, or folder that is receiving new log entries, whether the resource is specified in logName or in an individual log entry.",
           "type": "string"
         },
         "partialSuccess": {
@@ -4473,7 +4464,7 @@
       "type": "object"
     },
     "WriteLogEntriesResponse": {
-      "description": "Result returned from WriteLogEntries. empty",
+      "description": "Result returned from WriteLogEntries.",
       "id": "WriteLogEntriesResponse",
       "properties": {},
       "type": "object"

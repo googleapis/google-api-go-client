@@ -159,7 +159,7 @@
             "subscription": {
               "description": "The subscription to delete.",
               "location": "path",
-              "pattern": "^.+$",
+              "pattern": "^.*$",
               "required": true,
               "type": "string"
             }
@@ -185,7 +185,7 @@
             "subscription": {
               "description": "The name of the subscription to get.",
               "location": "path",
-              "pattern": "^.+$",
+              "pattern": "^.*$",
               "required": true,
               "type": "string"
             }
@@ -343,7 +343,7 @@
             "topic": {
               "description": "Name of the topic to delete.",
               "location": "path",
-              "pattern": "^.+$",
+              "pattern": "^.*$",
               "required": true,
               "type": "string"
             }
@@ -369,7 +369,7 @@
             "topic": {
               "description": "The name of the topic to get.",
               "location": "path",
-              "pattern": "^.+$",
+              "pattern": "^.*$",
               "required": true,
               "type": "string"
             }
@@ -457,7 +457,7 @@
       }
     }
   },
-  "revision": "20200211",
+  "revision": "20200218",
   "rootUrl": "https://pubsub.googleapis.com/",
   "schemas": {
     "AcknowledgeRequest": {

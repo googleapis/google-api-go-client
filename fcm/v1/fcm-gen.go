@@ -758,14 +758,12 @@ func (s *ApnsFcmOptions) MarshalJSON() ([]byte, error) {
 //         if (alpha_wrapper != nil) {
 //           alpha = [alpha_wrapper value];
 //         }
-//         return [UIColor colorWithRed:red green:green blue:blue
-// alpha:alpha];
+//         return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
 //      }
 //
 //      static Color* toProto(UIColor* color) {
 //          CGFloat red, green, blue, alpha;
-//          if (![color getRed:&red green:&green blue:&blue
-// alpha:&alpha]) {
+//          if (![color getRed:&red green:&green blue:&blue alpha:&alpha]) {
 //            return nil;
 //          }
 //          Color* result = [[Color alloc] init];

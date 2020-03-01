@@ -414,7 +414,7 @@
               ]
             },
             "replaceAll": {
-              "description": "Replace all existing Access Levels in an Access\nPolicy with\nthe Access Levels provided. This\nis done within one transaction. The longrunning operation from this RPC\nwill have a successful status once all replacements have propagated to\nlong-lasting storage. Replacements containing errors will result in an\nerror response for the first error encountered and the transaction will be\ncancelled. Operation.response field will contain\nReplaceAccessLevelsResponse. Removing Access Levels contained in existing\nService Perimeters will result in\nerror.",
+              "description": "Replace all existing Access Levels in an Access\nPolicy with\nthe Access Levels provided. This\nis done atomically. The longrunning operation from this RPC will have a\nsuccessful status once all replacements have propagated to long-lasting\nstorage. Replacements containing errors will result in an error response\nfor the first error encountered.  Replacement will be cancelled on error,\nexisting Access Levels will not be\naffected. Operation.response field will contain\nReplaceAccessLevelsResponse. Removing Access Levels contained in existing\nService Perimeters will result in\nerror.",
               "flatPath": "v1/accessPolicies/{accessPoliciesId}/accessLevels:replaceAll",
               "httpMethod": "POST",
               "id": "accesscontextmanager.accessPolicies.accessLevels.replaceAll",
@@ -622,7 +622,7 @@
               ]
             },
             "replaceAll": {
-              "description": "Replace all existing Service Perimeters in an\nAccess Policy\nwith the Service Perimeters provided.\nThis is done within one transaction. The longrunning operation from this\nRPC will have a successful status once all replacements have propagated to\nlong-lasting storage. Replacements containing errors will result in an\nerror response for the first error encountered and the transaction will be\ncancelled. Operation.response field will contain\nReplaceServicePerimetersResponse.",
+              "description": "Replace all existing Service Perimeters in an\nAccess Policy\nwith the Service Perimeters provided.\nThis is done atomically. The longrunning operation from this\nRPC will have a successful status once all replacements have propagated to\nlong-lasting storage. Replacements containing errors will result in an\nerror response for the first error encountered. Replacement will be\ncancelled on error, existing Service Perimeters will not be\naffected. Operation.response field will contain\nReplaceServicePerimetersResponse.",
               "flatPath": "v1/accessPolicies/{accessPoliciesId}/servicePerimeters:replaceAll",
               "httpMethod": "POST",
               "id": "accesscontextmanager.accessPolicies.servicePerimeters.replaceAll",
@@ -777,7 +777,7 @@
       }
     }
   },
-  "revision": "20200215",
+  "revision": "20200224",
   "rootUrl": "https://accesscontextmanager.googleapis.com/",
   "schemas": {
     "AccessLevel": {
@@ -1195,7 +1195,7 @@
       "type": "object"
     },
     "ReplaceAccessLevelsRequest": {
-      "description": "A request to replace all existing Access Levels in an Access Policy with\nthe Access Levels provided. This is done within one transaction.",
+      "description": "A request to replace all existing Access Levels in an Access Policy with\nthe Access Levels provided. This is done atomically.",
       "id": "ReplaceAccessLevelsRequest",
       "properties": {
         "accessLevels": {
@@ -1227,7 +1227,7 @@
       "type": "object"
     },
     "ReplaceServicePerimetersRequest": {
-      "description": "A request to replace all existing Service Perimeters in an Access Policy\nwith the Service Perimeters provided. This is done within one transaction.",
+      "description": "A request to replace all existing Service Perimeters in an Access Policy\nwith the Service Perimeters provided. This is done atomically.",
       "id": "ReplaceServicePerimetersRequest",
       "properties": {
         "etag": {
@@ -1338,7 +1338,7 @@
         },
         "vpcAccessibleServices": {
           "$ref": "VpcAccessibleServices",
-          "description": "Configuration for within Perimeter allowed APIs."
+          "description": "Configuration for APIs allowed within Perimeter."
         }
       },
       "type": "object"

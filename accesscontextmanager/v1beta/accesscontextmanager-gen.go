@@ -1019,14 +1019,9 @@ type ServicePerimeterConfig struct {
 	// "restricted_services" list, any service is treated as unrestricted.
 	UnrestrictedServices []string `json:"unrestrictedServices,omitempty"`
 
-	// VpcAccessibleServices: Beta. Configuration for within Perimeter
-	// allowed APIs.
+	// VpcAccessibleServices: Beta. Configuration for APIs allowed within
+	// Perimeter.
 	VpcAccessibleServices *VpcAccessibleServices `json:"vpcAccessibleServices,omitempty"`
-
-	// VpcServiceRestriction: Alpha. Configuration for within Perimeter
-	// allowed APIs.
-	// Deprecated. The field had been renamed to vpc_accessible_services
-	VpcServiceRestriction *VpcServiceRestriction `json:"vpcServiceRestriction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessLevels") to
 	// unconditionally include in API requests. By default, fields with
@@ -1141,46 +1136,6 @@ func (s *VpcAccessibleServices) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// VpcServiceRestriction: Alpha. Specifies how APIs are allowed to
-// communicate within the Service
-// Perimeter.
-// This message is DEPRECATED and had been renamed to
-// VpcAccessibleServices
-type VpcServiceRestriction struct {
-	// AllowedServices: The list of APIs usable within the Service
-	// Perimeter. Must be empty
-	// unless 'enable_restriction' is True.
-	AllowedServices []string `json:"allowedServices,omitempty"`
-
-	// EnableRestriction: Whether to restrict API calls within the Service
-	// Perimeter to the list of
-	// APIs specified in 'allowed_services'.
-	EnableRestriction bool `json:"enableRestriction,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AllowedServices") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowedServices") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *VpcServiceRestriction) MarshalJSON() ([]byte, error) {
-	type NoMethod VpcServiceRestriction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // method id "accesscontextmanager.accessPolicies.create":
 
 type AccessPoliciesCreateCall struct {
@@ -1233,7 +1188,7 @@ func (c *AccessPoliciesCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1362,7 +1317,7 @@ func (c *AccessPoliciesDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1503,7 +1458,7 @@ func (c *AccessPoliciesGetCall) Header() http.Header {
 
 func (c *AccessPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1673,7 +1628,7 @@ func (c *AccessPoliciesListCall) Header() http.Header {
 
 func (c *AccessPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1846,7 +1801,7 @@ func (c *AccessPoliciesPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1998,7 +1953,7 @@ func (c *AccessPoliciesAccessLevelsCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2140,7 +2095,7 @@ func (c *AccessPoliciesAccessLevelsDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2305,7 +2260,7 @@ func (c *AccessPoliciesAccessLevelsGetCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2492,7 +2447,7 @@ func (c *AccessPoliciesAccessLevelsListCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2682,7 +2637,7 @@ func (c *AccessPoliciesAccessLevelsPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2835,7 +2790,7 @@ func (c *AccessPoliciesServicePerimetersCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2977,7 +2932,7 @@ func (c *AccessPoliciesServicePerimetersDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3119,7 +3074,7 @@ func (c *AccessPoliciesServicePerimetersGetCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3280,7 +3235,7 @@ func (c *AccessPoliciesServicePerimetersListCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3461,7 +3416,7 @@ func (c *AccessPoliciesServicePerimetersPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3620,7 +3575,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

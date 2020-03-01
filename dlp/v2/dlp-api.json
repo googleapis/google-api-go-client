@@ -3131,7 +3131,7 @@
       }
     }
   },
-  "revision": "20200224",
+  "revision": "20200215",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -4610,15 +4610,6 @@
           "$ref": "GooglePrivacyDlpV2InfoType",
           "description": "The type of content that might have been found.\nProvided if `excluded_types` is false."
         },
-        "jobCreateTime": {
-          "description": "Time the job started that produced this finding.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "jobName": {
-          "description": "The job that stored the finding.",
-          "type": "string"
-        },
         "likelihood": {
           "description": "Confidence of how likely it is that the `info_type` is correct.",
           "enum": [
@@ -4643,10 +4634,6 @@
           "$ref": "GooglePrivacyDlpV2Location",
           "description": "Where the content was found."
         },
-        "name": {
-          "description": "Resource name in format projects/{id}/locations/{id}/inspectFindings/{id}\nPopulated only when viewing persisted findings.",
-          "type": "string"
-        },
         "quote": {
           "description": "The content that was found. Even if the content is not textual, it\nmay be converted to a textual representation here.\nProvided if `include_quote` is true and the finding is\nless than or equal to 4096 bytes long. If the finding exceeds 4096 bytes\nin length, the quote may be omitted.",
           "type": "string"
@@ -4654,14 +4641,6 @@
         "quoteInfo": {
           "$ref": "GooglePrivacyDlpV2QuoteInfo",
           "description": "Contains data parsed from quotes. Only populated if include_quote was set\nto true and a supported infoType was requested. Currently supported\ninfoTypes: DATE, DATE_OF_BIRTH and TIME."
-        },
-        "resourceName": {
-          "description": "The job that stored the finding.",
-          "type": "string"
-        },
-        "triggerName": {
-          "description": "Job trigger name, if applicable, for this finding.",
-          "type": "string"
         }
       },
       "type": "object"

@@ -31,6 +31,7 @@
   },
   "id": "servicemanagement:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://servicemanagement.mtls.googleapis.com/",
   "name": "servicemanagement",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -127,7 +128,7 @@
             "name": {
               "description": "The name of the operation resource.",
               "location": "path",
-              "pattern": "^operations/.+$",
+              "pattern": "^operations/.*$",
               "required": true,
               "type": "string"
             }
@@ -876,7 +877,7 @@
       }
     }
   },
-  "revision": "20200218",
+  "revision": "20200221",
   "rootUrl": "https://servicemanagement.googleapis.com/",
   "schemas": {
     "Advice": {

@@ -1018,7 +1018,7 @@ func (s *OsConstraint) MarshalJSON() ([]byte, error) {
 
 // ReplaceAccessLevelsRequest: A request to replace all existing Access
 // Levels in an Access Policy with
-// the Access Levels provided. This is done within one transaction.
+// the Access Levels provided. This is done atomically.
 type ReplaceAccessLevelsRequest struct {
 	// AccessLevels: Required. The desired Access Levels that should
 	// replace all existing Access Levels in the
@@ -1095,8 +1095,7 @@ func (s *ReplaceAccessLevelsResponse) MarshalJSON() ([]byte, error) {
 
 // ReplaceServicePerimetersRequest: A request to replace all existing
 // Service Perimeters in an Access Policy
-// with the Service Perimeters provided. This is done within one
-// transaction.
+// with the Service Perimeters provided. This is done atomically.
 type ReplaceServicePerimetersRequest struct {
 	// Etag: Optional. The etag for the version of the Access Policy that
 	// this
@@ -1331,8 +1330,8 @@ type ServicePerimeterConfig struct {
 	// access restrictions.
 	RestrictedServices []string `json:"restrictedServices,omitempty"`
 
-	// VpcAccessibleServices: Configuration for within Perimeter allowed
-	// APIs.
+	// VpcAccessibleServices: Configuration for APIs allowed within
+	// Perimeter.
 	VpcAccessibleServices *VpcAccessibleServices `json:"vpcAccessibleServices,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessLevels") to
@@ -1500,7 +1499,7 @@ func (c *AccessPoliciesCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1629,7 +1628,7 @@ func (c *AccessPoliciesDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1770,7 +1769,7 @@ func (c *AccessPoliciesGetCall) Header() http.Header {
 
 func (c *AccessPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1940,7 +1939,7 @@ func (c *AccessPoliciesListCall) Header() http.Header {
 
 func (c *AccessPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2113,7 +2112,7 @@ func (c *AccessPoliciesPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2265,7 +2264,7 @@ func (c *AccessPoliciesAccessLevelsCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2407,7 +2406,7 @@ func (c *AccessPoliciesAccessLevelsDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2572,7 +2571,7 @@ func (c *AccessPoliciesAccessLevelsGetCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2759,7 +2758,7 @@ func (c *AccessPoliciesAccessLevelsListCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2949,7 +2948,7 @@ func (c *AccessPoliciesAccessLevelsPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3063,15 +3062,16 @@ type AccessPoliciesAccessLevelsReplaceAllCall struct {
 // ReplaceAll: Replace all existing Access Levels in an Access
 // Policy with
 // the Access Levels provided. This
-// is done within one transaction. The longrunning operation from this
-// RPC
-// will have a successful status once all replacements have propagated
-// to
-// long-lasting storage. Replacements containing errors will result in
-// an
-// error response for the first error encountered and the transaction
-// will be
-// cancelled. Operation.response field will
+// is done atomically. The longrunning operation from this RPC will have
+// a
+// successful status once all replacements have propagated to
+// long-lasting
+// storage. Replacements containing errors will result in an error
+// response
+// for the first error encountered.  Replacement will be cancelled on
+// error,
+// existing Access Levels will not be
+// affected. Operation.response field will
 // contain
 // ReplaceAccessLevelsResponse. Removing Access Levels contained in
 // existing
@@ -3111,7 +3111,7 @@ func (c *AccessPoliciesAccessLevelsReplaceAllCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsReplaceAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3175,7 +3175,7 @@ func (c *AccessPoliciesAccessLevelsReplaceAllCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Replace all existing Access Levels in an Access\nPolicy with\nthe Access Levels provided. This\nis done within one transaction. The longrunning operation from this RPC\nwill have a successful status once all replacements have propagated to\nlong-lasting storage. Replacements containing errors will result in an\nerror response for the first error encountered and the transaction will be\ncancelled. Operation.response field will contain\nReplaceAccessLevelsResponse. Removing Access Levels contained in existing\nService Perimeters will result in\nerror.",
+	//   "description": "Replace all existing Access Levels in an Access\nPolicy with\nthe Access Levels provided. This\nis done atomically. The longrunning operation from this RPC will have a\nsuccessful status once all replacements have propagated to long-lasting\nstorage. Replacements containing errors will result in an error response\nfor the first error encountered.  Replacement will be cancelled on error,\nexisting Access Levels will not be\naffected. Operation.response field will contain\nReplaceAccessLevelsResponse. Removing Access Levels contained in existing\nService Perimeters will result in\nerror.",
 	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}/accessLevels:replaceAll",
 	//   "httpMethod": "POST",
 	//   "id": "accesscontextmanager.accessPolicies.accessLevels.replaceAll",
@@ -3272,7 +3272,7 @@ func (c *AccessPoliciesServicePerimetersCommitCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3419,7 +3419,7 @@ func (c *AccessPoliciesServicePerimetersCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3561,7 +3561,7 @@ func (c *AccessPoliciesServicePerimetersDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3703,7 +3703,7 @@ func (c *AccessPoliciesServicePerimetersGetCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3864,7 +3864,7 @@ func (c *AccessPoliciesServicePerimetersListCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4045,7 +4045,7 @@ func (c *AccessPoliciesServicePerimetersPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4159,15 +4159,15 @@ type AccessPoliciesServicePerimetersReplaceAllCall struct {
 // ReplaceAll: Replace all existing Service Perimeters in an
 // Access Policy
 // with the Service Perimeters provided.
-// This is done within one transaction. The longrunning operation from
-// this
+// This is done atomically. The longrunning operation from this
 // RPC will have a successful status once all replacements have
 // propagated to
 // long-lasting storage. Replacements containing errors will result in
 // an
-// error response for the first error encountered and the transaction
-// will be
-// cancelled. Operation.response field will
+// error response for the first error encountered. Replacement will
+// be
+// cancelled on error, existing Service Perimeters will not be
+// affected. Operation.response field will
 // contain
 // ReplaceServicePerimetersResponse.
 func (r *AccessPoliciesServicePerimetersService) ReplaceAll(parent string, replaceserviceperimetersrequest *ReplaceServicePerimetersRequest) *AccessPoliciesServicePerimetersReplaceAllCall {
@@ -4204,7 +4204,7 @@ func (c *AccessPoliciesServicePerimetersReplaceAllCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersReplaceAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4268,7 +4268,7 @@ func (c *AccessPoliciesServicePerimetersReplaceAllCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Replace all existing Service Perimeters in an\nAccess Policy\nwith the Service Perimeters provided.\nThis is done within one transaction. The longrunning operation from this\nRPC will have a successful status once all replacements have propagated to\nlong-lasting storage. Replacements containing errors will result in an\nerror response for the first error encountered and the transaction will be\ncancelled. Operation.response field will contain\nReplaceServicePerimetersResponse.",
+	//   "description": "Replace all existing Service Perimeters in an\nAccess Policy\nwith the Service Perimeters provided.\nThis is done atomically. The longrunning operation from this\nRPC will have a successful status once all replacements have propagated to\nlong-lasting storage. Replacements containing errors will result in an\nerror response for the first error encountered. Replacement will be\ncancelled on error, existing Service Perimeters will not be\naffected. Operation.response field will contain\nReplaceServicePerimetersResponse.",
 	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}/servicePerimeters:replaceAll",
 	//   "httpMethod": "POST",
 	//   "id": "accesscontextmanager.accessPolicies.servicePerimeters.replaceAll",
@@ -4361,7 +4361,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4505,7 +4505,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4650,7 +4650,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4831,7 +4831,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200229")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

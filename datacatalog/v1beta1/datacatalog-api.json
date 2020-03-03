@@ -1738,7 +1738,7 @@
       }
     }
   },
-  "revision": "20200218",
+  "revision": "20200225",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -2295,12 +2295,13 @@
         },
         "scope": {
           "$ref": "GoogleCloudDatacatalogV1beta1SearchCatalogRequestScope",
-          "description": "Required. The scope of this search request."
+          "description": "Required. The scope of this search request. A `scope` that has empty\n`include_org_ids`, `include_project_ids` AND false\n`include_gcp_public_datasets` is considered invalid. Data Catalog will\nreturn an error in such a case."
         }
       },
       "type": "object"
     },
     "GoogleCloudDatacatalogV1beta1SearchCatalogRequestScope": {
+      "description": "The criteria that select the subspace used for query matching.",
       "id": "GoogleCloudDatacatalogV1beta1SearchCatalogRequestScope",
       "properties": {
         "includeGcpPublicDatasets": {
@@ -2308,14 +2309,14 @@
           "type": "boolean"
         },
         "includeOrgIds": {
-          "description": "Data Catalog tries to automatically choose the right corpus of data to\nsearch through. You can ensure an organization is included by adding it\nto `include_org_ids`. You can ensure a project's org is included with\n`include_project_ids`. You must specify at least one organization\nusing `include_org_ids` or `include_project_ids` in all search requests.\n\nList of organization IDs to search within. To find your organization ID,\nfollow instructions in\nhttps://cloud.google.com/resource-manager/docs/creating-managing-organization.",
+          "description": "The list of organization IDs to search within. To find your organization\nID, follow instructions in\nhttps://cloud.google.com/resource-manager/docs/creating-managing-organization.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "includeProjectIds": {
-          "description": "List of project IDs to search within. To learn more about the\ndistinction between project names/IDs/numbers, go to\nhttps://cloud.google.com/docs/overview/#projects.",
+          "description": "The list of project IDs to search within. To learn more about the\ndistinction between project names/IDs/numbers, go to\nhttps://cloud.google.com/docs/overview/#projects.",
           "items": {
             "type": "string"
           },
@@ -2505,6 +2506,11 @@
           "$ref": "GoogleCloudDatacatalogV1beta1TagFieldEnumValue",
           "description": "Holds the value for a tag field with enum type. This value must be\none of the allowed values in the definition of this enum."
         },
+        "order": {
+          "description": "Output only. The order of this field with respect to other fields in this tag. It can be\nset in Tag. For\nexample, a higher value can indicate a more important field. The value can\nbe negative. Multiple fields can have the same order, and field orders\nwithin a tag do not have to be sequential.",
+          "format": "int32",
+          "type": "integer"
+        },
         "stringValue": {
           "description": "Holds the value for a tag field with string type.",
           "type": "string"
@@ -2565,6 +2571,11 @@
         "name": {
           "description": "Output only. The resource name of the tag template field in URL format. Example:\n\n* projects/{project_id}/locations/{location}/tagTemplates/{tag_template}/fields/{field}\n\nNote that this TagTemplateField may not actually be stored in the location\nin this name.",
           "type": "string"
+        },
+        "order": {
+          "description": "The order of this field with respect to other fields in this tag\ntemplate.  A higher value indicates a more important field. The value can\nbe negative. Multiple fields can have the same order, and field orders\nwithin a tag do not have to be sequential.",
+          "format": "int32",
+          "type": "integer"
         },
         "type": {
           "$ref": "GoogleCloudDatacatalogV1beta1FieldType",

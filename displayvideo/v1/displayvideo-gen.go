@@ -213,6 +213,7 @@ type CreateSdfDownloadTaskRequest struct {
 	//   "SDF_VERSION_4_1" - SDF version 4.1
 	//   "SDF_VERSION_4_2" - SDF version 4.2
 	//   "SDF_VERSION_5" - SDF version 5.
+	//   "SDF_VERSION_5_1" - SDF version 5.1
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
@@ -596,6 +597,7 @@ type SdfDownloadTaskMetadata struct {
 	//   "SDF_VERSION_4_1" - SDF version 4.1
 	//   "SDF_VERSION_4_2" - SDF version 4.2
 	//   "SDF_VERSION_5" - SDF version 5.
+	//   "SDF_VERSION_5_1" - SDF version 5.1
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
@@ -732,7 +734,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -901,7 +903,7 @@ func (c *SdfdownloadtasksCreateCall) Header() http.Header {
 
 func (c *SdfdownloadtasksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1039,7 +1041,7 @@ func (c *SdfdownloadtasksOperationsGetCall) Header() http.Header {
 
 func (c *SdfdownloadtasksOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

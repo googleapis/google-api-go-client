@@ -686,7 +686,7 @@ func (c *BillingAccountsBudgetsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -825,7 +825,7 @@ func (c *BillingAccountsBudgetsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -923,6 +923,14 @@ type BillingAccountsBudgetsGetCall struct {
 }
 
 // Get: Returns a budget.
+//
+// WARNING: There are some fields exposed on the Google Cloud Console
+// that
+// aren’t available on this API. When reading from the API, you will
+// not
+// see these fields in the return value, though they may have been
+// set
+// in the cloud console.
 func (r *BillingAccountsBudgetsService) Get(name string) *BillingAccountsBudgetsGetCall {
 	c := &BillingAccountsBudgetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -966,7 +974,7 @@ func (c *BillingAccountsBudgetsGetCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1029,7 +1037,7 @@ func (c *BillingAccountsBudgetsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a budget.",
+	//   "description": "Returns a budget.\n\nWARNING: There are some fields exposed on the Google Cloud Console that\naren’t available on this API. When reading from the API, you will not\nsee these fields in the return value, though they may have been set\nin the cloud console.",
 	//   "flatPath": "v1beta1/billingAccounts/{billingAccountsId}/budgets/{budgetsId}",
 	//   "httpMethod": "GET",
 	//   "id": "billingbudgets.billingAccounts.budgets.get",
@@ -1068,6 +1076,14 @@ type BillingAccountsBudgetsListCall struct {
 }
 
 // List: Returns a list of budgets for a billing account.
+//
+// WARNING: There are some fields exposed on the Google Cloud Console
+// that
+// aren’t available on this API. When reading from the API, you will
+// not
+// see these fields in the return value, though they may have been
+// set
+// in the cloud console.
 func (r *BillingAccountsBudgetsService) List(parent string) *BillingAccountsBudgetsListCall {
 	c := &BillingAccountsBudgetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1129,7 +1145,7 @@ func (c *BillingAccountsBudgetsListCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1193,7 +1209,7 @@ func (c *BillingAccountsBudgetsListCall) Do(opts ...googleapi.CallOption) (*Goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of budgets for a billing account.",
+	//   "description": "Returns a list of budgets for a billing account.\n\nWARNING: There are some fields exposed on the Google Cloud Console that\naren’t available on this API. When reading from the API, you will not\nsee these fields in the return value, though they may have been set\nin the cloud console.",
 	//   "flatPath": "v1beta1/billingAccounts/{billingAccountsId}/budgets",
 	//   "httpMethod": "GET",
 	//   "id": "billingbudgets.billingAccounts.budgets.list",
@@ -1264,6 +1280,12 @@ type BillingAccountsBudgetsPatchCall struct {
 }
 
 // Patch: Updates a budget and returns the updated budget.
+//
+// WARNING: There are some fields exposed on the Google Cloud Console
+// that
+// aren’t available on this API. Budget fields that are not exposed
+// in
+// this API will not be changed by this method.
 func (r *BillingAccountsBudgetsService) Patch(name string, googlecloudbillingbudgetsv1beta1updatebudgetrequest *GoogleCloudBillingBudgetsV1beta1UpdateBudgetRequest) *BillingAccountsBudgetsPatchCall {
 	c := &BillingAccountsBudgetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1298,7 +1320,7 @@ func (c *BillingAccountsBudgetsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1363,7 +1385,7 @@ func (c *BillingAccountsBudgetsPatchCall) Do(opts ...googleapi.CallOption) (*Goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a budget and returns the updated budget.",
+	//   "description": "Updates a budget and returns the updated budget.\n\nWARNING: There are some fields exposed on the Google Cloud Console that\naren’t available on this API. Budget fields that are not exposed in\nthis API will not be changed by this method.",
 	//   "flatPath": "v1beta1/billingAccounts/{billingAccountsId}/budgets/{budgetsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "billingbudgets.billingAccounts.budgets.patch",

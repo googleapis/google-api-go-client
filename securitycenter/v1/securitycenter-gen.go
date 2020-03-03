@@ -1653,18 +1653,26 @@ type GroupFindingsRequest struct {
 	//
 	// Possible "state_change" values when compare_duration is specified:
 	//
-	// * "CHANGED":   indicates that the finding was present at the start
-	// of
-	//                  compare_duration, but changed its state at
-	// read_time.
-	// * "UNCHANGED": indicates that the finding was present at the start
-	// of
-	//                  compare_duration and did not change state at
-	// read_time.
-	// * "ADDED":     indicates that the finding was not present at the
-	// start
-	//                  of compare_duration, but was present at
-	// read_time.
+	// * "CHANGED":   indicates that the finding was present and matched the
+	// given
+	//                  filter at the start of compare_duration, but changed
+	// its
+	//                  state at read_time.
+	// * "UNCHANGED": indicates that the finding was present and matched the
+	// given
+	//                  filter at the start of compare_duration and did not
+	// change
+	//                  state at read_time.
+	// * "ADDED":     indicates that the finding did not match the given
+	// filter or
+	//                  was not present at the start of compare_duration,
+	// but was
+	//                  present at read_time.
+	// * "REMOVED":   indicates that the finding was present and matched
+	// the
+	//                  filter at the start of compare_duration, but did not
+	// match
+	//                  the filter at read_time.
 	//
 	// If compare_duration is not specified, then the only possible
 	// state_change
@@ -2959,7 +2967,7 @@ func (c *OrganizationsGetOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3103,7 +3111,7 @@ func (c *OrganizationsUpdateOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsUpdateOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3251,7 +3259,7 @@ func (c *OrganizationsAssetsGroupCall) Header() http.Header {
 
 func (c *OrganizationsAssetsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3609,7 +3617,7 @@ func (c *OrganizationsAssetsListCall) Header() http.Header {
 
 func (c *OrganizationsAssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3812,7 +3820,7 @@ func (c *OrganizationsAssetsRunDiscoveryCall) Header() http.Header {
 
 func (c *OrganizationsAssetsRunDiscoveryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3974,7 +3982,7 @@ func (c *OrganizationsAssetsUpdateSecurityMarksCall) Header() http.Header {
 
 func (c *OrganizationsAssetsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4141,7 +4149,7 @@ func (c *OrganizationsOperationsCancelCall) Header() http.Header {
 
 func (c *OrganizationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4277,7 +4285,7 @@ func (c *OrganizationsOperationsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4422,7 +4430,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4603,7 +4611,7 @@ func (c *OrganizationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4775,7 +4783,7 @@ func (c *OrganizationsSourcesCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4924,7 +4932,7 @@ func (c *OrganizationsSourcesGetCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5059,7 +5067,7 @@ func (c *OrganizationsSourcesGetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5225,7 +5233,7 @@ func (c *OrganizationsSourcesListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5401,7 +5409,7 @@ func (c *OrganizationsSourcesPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5547,7 +5555,7 @@ func (c *OrganizationsSourcesSetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5688,7 +5696,7 @@ func (c *OrganizationsSourcesTestIamPermissionsCall) Header() http.Header {
 
 func (c *OrganizationsSourcesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5840,7 +5848,7 @@ func (c *OrganizationsSourcesFindingsCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5990,7 +5998,7 @@ func (c *OrganizationsSourcesFindingsGroupCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6149,18 +6157,26 @@ func (r *OrganizationsSourcesFindingsService) List(parent string) *Organizations
 //
 // Possible "state_change" values when compare_duration is specified:
 //
-// * "CHANGED":   indicates that the finding was present at the start
-// of
-//                  compare_duration, but changed its state at
-// read_time.
-// * "UNCHANGED": indicates that the finding was present at the start
-// of
-//                  compare_duration and did not change state at
-// read_time.
-// * "ADDED":     indicates that the finding was not present at the
-// start
-//                  of compare_duration, but was present at
-// read_time.
+// * "CHANGED":   indicates that the finding was present and matched the
+// given
+//                  filter at the start of compare_duration, but changed
+// its
+//                  state at read_time.
+// * "UNCHANGED": indicates that the finding was present and matched the
+// given
+//                  filter at the start of compare_duration and did not
+// change
+//                  state at read_time.
+// * "ADDED":     indicates that the finding did not match the given
+// filter or
+//                  was not present at the start of compare_duration,
+// but was
+//                  present at read_time.
+// * "REMOVED":   indicates that the finding was present and matched
+// the
+//                  filter at the start of compare_duration, but did not
+// match
+//                  the filter at read_time.
 //
 // If compare_duration is not specified, then the only possible
 // state_change
@@ -6332,7 +6348,7 @@ func (c *OrganizationsSourcesFindingsListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6403,7 +6419,7 @@ func (c *OrganizationsSourcesFindingsListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "compareDuration": {
-	//       "description": "When compare_duration is set, the ListFindingsResult's \"state_change\"\nattribute is updated to indicate whether the finding had its state changed,\nthe finding's state remained unchanged, or if the finding was added in any\nstate during the compare_duration period of time that precedes the\nread_time. This is the time between (read_time - compare_duration) and\nread_time.\n\nThe state_change value is derived based on the presence and state of the\nfinding at the two points in time. Intermediate state changes between the\ntwo times don't affect the result. For example, the results aren't affected\nif the finding is made inactive and then active again.\n\nPossible \"state_change\" values when compare_duration is specified:\n\n* \"CHANGED\":   indicates that the finding was present at the start of\n                 compare_duration, but changed its state at read_time.\n* \"UNCHANGED\": indicates that the finding was present at the start of\n                 compare_duration and did not change state at read_time.\n* \"ADDED\":     indicates that the finding was not present at the start\n                 of compare_duration, but was present at read_time.\n\nIf compare_duration is not specified, then the only possible state_change\nis \"UNUSED\", which will be the state_change set for all findings present at\nread_time.",
+	//       "description": "When compare_duration is set, the ListFindingsResult's \"state_change\"\nattribute is updated to indicate whether the finding had its state changed,\nthe finding's state remained unchanged, or if the finding was added in any\nstate during the compare_duration period of time that precedes the\nread_time. This is the time between (read_time - compare_duration) and\nread_time.\n\nThe state_change value is derived based on the presence and state of the\nfinding at the two points in time. Intermediate state changes between the\ntwo times don't affect the result. For example, the results aren't affected\nif the finding is made inactive and then active again.\n\nPossible \"state_change\" values when compare_duration is specified:\n\n* \"CHANGED\":   indicates that the finding was present and matched the given\n                 filter at the start of compare_duration, but changed its\n                 state at read_time.\n* \"UNCHANGED\": indicates that the finding was present and matched the given\n                 filter at the start of compare_duration and did not change\n                 state at read_time.\n* \"ADDED\":     indicates that the finding did not match the given filter or\n                 was not present at the start of compare_duration, but was\n                 present at read_time.\n* \"REMOVED\":   indicates that the finding was present and matched the\n                 filter at the start of compare_duration, but did not match\n                 the filter at read_time.\n\nIf compare_duration is not specified, then the only possible state_change\nis \"UNUSED\", which will be the state_change set for all findings present at\nread_time.",
 	//       "format": "google-duration",
 	//       "location": "query",
 	//       "type": "string"
@@ -6545,7 +6561,7 @@ func (c *OrganizationsSourcesFindingsPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6691,7 +6707,7 @@ func (c *OrganizationsSourcesFindingsSetStateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsSetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6853,7 +6869,7 @@ func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) Header() http.Head
 
 func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -5529,36 +5529,30 @@ type FilterCriteria struct {
 
 	// VisibleBackgroundColor: The background fill color to filter by; only
 	// cells with this fill color are
-	// shown. Mutually exclusive with all other filter criteria. Requests to
-	// set
-	// this field fail with a 400 error if any other filter criteria field
-	// is set.
+	// shown. Mutually exclusive with visible_foreground_color.
 	VisibleBackgroundColor *Color `json:"visibleBackgroundColor,omitempty"`
 
 	// VisibleBackgroundColorStyle: The background fill color to filter by;
 	// only cells with this fill color are
-	// shown. Mutually exclusive with all other filter criteria. Requests to
-	// set
-	// this field fail with a 400 error if any other filter criteria field
-	// is set.
-	// If visible_background_color is also set, this field takes precedence.
+	// shown. This field is mutually exclusive with
+	// visible_foreground_color,
+	// and must be set to an RGB-type color. If visible_background_color
+	// is
+	// also set, this field takes precedence.
 	VisibleBackgroundColorStyle *ColorStyle `json:"visibleBackgroundColorStyle,omitempty"`
 
-	// VisibleForegroundColor: The text color to filter by; only cells with
-	// this text color are shown.
-	// Mutually exclusive with all other filter criteria. Requests to set
-	// this
-	// field fail with a 400 error if any other filter criteria field is
-	// set.
+	// VisibleForegroundColor: The foreground color to filter by; only cells
+	// with this foreground color
+	// are shown. Mutually exclusive with visible_background_color.
 	VisibleForegroundColor *Color `json:"visibleForegroundColor,omitempty"`
 
-	// VisibleForegroundColorStyle: The text color to filter by; only cells
-	// with this text color are shown.
-	// Mutually exclusive with all other filter criteria. Requests to set
-	// this
-	// field fail with a 400 error if any other filter criteria field is
-	// set.
-	// If visible_foreground_color is also set, this field takes precedence.
+	// VisibleForegroundColorStyle: The foreground color to filter by; only
+	// cells with this foreground color
+	// are shown. This field is mutually exclusive
+	// with
+	// visible_background_color, and must be set to an RGB-type color.
+	// If
+	// visible_foreground_color is also set, this field takes precedence.
 	VisibleForegroundColorStyle *ColorStyle `json:"visibleForegroundColorStyle,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -8638,37 +8632,35 @@ func (s *SortRangeRequest) MarshalJSON() ([]byte, error) {
 
 // SortSpec: A sort order associated with a specific column or row.
 type SortSpec struct {
-	// BackgroundColor: The background fill color to sort by. Mutually
-	// exclusive with sorting by
-	// text color. Requests to set this field fail with a 400 error if
-	// foreground
-	// color is also set.
+	// BackgroundColor: The background fill color to sort by; cells with
+	// this fill color are sorted
+	// to the top. Mutually exclusive with foreground_color.
 	BackgroundColor *Color `json:"backgroundColor,omitempty"`
 
-	// BackgroundColorStyle: The background fill color to sort by. Mutually
-	// exclusive with sorting by
-	// text color. Requests to set this field fail with a 400 error if
-	// foreground
-	// color is also set.
-	// If background_color is also set, this field takes precedence.
+	// BackgroundColorStyle: The background fill color to sort by; cells
+	// with this fill color are sorted
+	// to the top. Mutually exclusive with foreground_color, and must be
+	// an
+	// RGB-type color. If background_color is also set, this field
+	// takes
+	// precedence.
 	BackgroundColorStyle *ColorStyle `json:"backgroundColorStyle,omitempty"`
 
 	// DimensionIndex: The dimension the sort should be applied to.
 	DimensionIndex int64 `json:"dimensionIndex,omitempty"`
 
-	// ForegroundColor: The text color to sort by. Mutually exclusive with
-	// sorting by background
-	// fill color. Requests to set this field fail with a 400 error if
-	// background
-	// color is also set.
+	// ForegroundColor: The foreground color to sort by; cells with this
+	// foreground color are
+	// sorted to the top. Mutually exclusive with background_color.
 	ForegroundColor *Color `json:"foregroundColor,omitempty"`
 
-	// ForegroundColorStyle: The text color to sort by. Mutually exclusive
-	// with sorting by background
-	// fill color. Requests to set this field fail with a 400 error if
-	// background
-	// color is also set.
-	// If foreground_color is also set, this field takes precedence.
+	// ForegroundColorStyle: The foreground color to sort by; cells with
+	// this foreground color are
+	// sorted to the top. Mutually exclusive with background_color, and
+	// must
+	// be an RGB-type color. If foreground_color is also set, this field
+	// takes
+	// precedence.
 	ForegroundColorStyle *ColorStyle `json:"foregroundColorStyle,omitempty"`
 
 	// SortOrder: The order data should be sorted.
@@ -10682,7 +10674,7 @@ func (c *SpreadsheetsBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10822,7 +10814,7 @@ func (c *SpreadsheetsCreateCall) Header() http.Header {
 
 func (c *SpreadsheetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10999,7 +10991,7 @@ func (c *SpreadsheetsGetCall) Header() http.Header {
 
 func (c *SpreadsheetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11175,7 +11167,7 @@ func (c *SpreadsheetsGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11330,7 +11322,7 @@ func (c *SpreadsheetsDeveloperMetadataGetCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11484,7 +11476,7 @@ func (c *SpreadsheetsDeveloperMetadataSearchCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11629,7 +11621,7 @@ func (c *SpreadsheetsSheetsCopyToCall) Header() http.Header {
 
 func (c *SpreadsheetsSheetsCopyToCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11865,7 +11857,7 @@ func (c *SpreadsheetsValuesAppendCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesAppendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12063,7 +12055,7 @@ func (c *SpreadsheetsValuesBatchClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12211,7 +12203,7 @@ func (c *SpreadsheetsValuesBatchClearByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12419,7 +12411,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12597,7 +12589,7 @@ func (c *SpreadsheetsValuesBatchGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12742,7 +12734,7 @@ func (c *SpreadsheetsValuesBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12887,7 +12879,7 @@ func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13035,7 +13027,7 @@ func (c *SpreadsheetsValuesClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13245,7 +13237,7 @@ func (c *SpreadsheetsValuesGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13483,7 +13475,7 @@ func (c *SpreadsheetsValuesUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200301")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

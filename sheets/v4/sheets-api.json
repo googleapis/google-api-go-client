@@ -810,7 +810,7 @@
       }
     }
   },
-  "revision": "20200211",
+  "revision": "20200225",
   "rootUrl": "https://sheets.googleapis.com/",
   "schemas": {
     "AddBandingRequest": {
@@ -3580,19 +3580,19 @@
         },
         "visibleBackgroundColor": {
           "$ref": "Color",
-          "description": "The background fill color to filter by; only cells with this fill color are\nshown. Mutually exclusive with all other filter criteria. Requests to set\nthis field fail with a 400 error if any other filter criteria field is set."
+          "description": "The background fill color to filter by; only cells with this fill color are\nshown. Mutually exclusive with visible_foreground_color."
         },
         "visibleBackgroundColorStyle": {
           "$ref": "ColorStyle",
-          "description": "The background fill color to filter by; only cells with this fill color are\nshown. Mutually exclusive with all other filter criteria. Requests to set\nthis field fail with a 400 error if any other filter criteria field is set.\nIf visible_background_color is also set, this field takes precedence."
+          "description": "The background fill color to filter by; only cells with this fill color are\nshown. This field is mutually exclusive with visible_foreground_color,\nand must be set to an RGB-type color. If visible_background_color is\nalso set, this field takes precedence."
         },
         "visibleForegroundColor": {
           "$ref": "Color",
-          "description": "The text color to filter by; only cells with this text color are shown.\nMutually exclusive with all other filter criteria. Requests to set this\nfield fail with a 400 error if any other filter criteria field is set."
+          "description": "The foreground color to filter by; only cells with this foreground color\nare shown. Mutually exclusive with visible_background_color."
         },
         "visibleForegroundColorStyle": {
           "$ref": "ColorStyle",
-          "description": "The text color to filter by; only cells with this text color are shown.\nMutually exclusive with all other filter criteria. Requests to set this\nfield fail with a 400 error if any other filter criteria field is set.\nIf visible_foreground_color is also set, this field takes precedence."
+          "description": "The foreground color to filter by; only cells with this foreground color\nare shown. This field is mutually exclusive with\nvisible_background_color, and must be set to an RGB-type color. If\nvisible_foreground_color is also set, this field takes precedence."
         }
       },
       "type": "object"
@@ -5520,11 +5520,11 @@
       "properties": {
         "backgroundColor": {
           "$ref": "Color",
-          "description": "The background fill color to sort by. Mutually exclusive with sorting by\ntext color. Requests to set this field fail with a 400 error if foreground\ncolor is also set."
+          "description": "The background fill color to sort by; cells with this fill color are sorted\nto the top. Mutually exclusive with foreground_color."
         },
         "backgroundColorStyle": {
           "$ref": "ColorStyle",
-          "description": "The background fill color to sort by. Mutually exclusive with sorting by\ntext color. Requests to set this field fail with a 400 error if foreground\ncolor is also set.\nIf background_color is also set, this field takes precedence."
+          "description": "The background fill color to sort by; cells with this fill color are sorted\nto the top. Mutually exclusive with foreground_color, and must be an\nRGB-type color. If background_color is also set, this field takes\nprecedence."
         },
         "dimensionIndex": {
           "description": "The dimension the sort should be applied to.",
@@ -5533,11 +5533,11 @@
         },
         "foregroundColor": {
           "$ref": "Color",
-          "description": "The text color to sort by. Mutually exclusive with sorting by background\nfill color. Requests to set this field fail with a 400 error if background\ncolor is also set."
+          "description": "The foreground color to sort by; cells with this foreground color are\nsorted to the top. Mutually exclusive with background_color."
         },
         "foregroundColorStyle": {
           "$ref": "ColorStyle",
-          "description": "The text color to sort by. Mutually exclusive with sorting by background\nfill color. Requests to set this field fail with a 400 error if background\ncolor is also set.\nIf foreground_color is also set, this field takes precedence."
+          "description": "The foreground color to sort by; cells with this foreground color are\nsorted to the top. Mutually exclusive with background_color, and must\nbe an RGB-type color. If foreground_color is also set, this field takes\nprecedence."
         },
         "sortOrder": {
           "description": "The order data should be sorted.",

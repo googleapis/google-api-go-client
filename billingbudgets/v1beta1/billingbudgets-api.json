@@ -163,7 +163,7 @@
               ]
             },
             "get": {
-              "description": "Returns a budget.",
+              "description": "Returns a budget.\n\nWARNING: There are some fields exposed on the Google Cloud Console that\naren’t available on this API. When reading from the API, you will not\nsee these fields in the return value, though they may have been set\nin the cloud console.",
               "flatPath": "v1beta1/billingAccounts/{billingAccountsId}/budgets/{budgetsId}",
               "httpMethod": "GET",
               "id": "billingbudgets.billingAccounts.budgets.get",
@@ -188,7 +188,7 @@
               ]
             },
             "list": {
-              "description": "Returns a list of budgets for a billing account.",
+              "description": "Returns a list of budgets for a billing account.\n\nWARNING: There are some fields exposed on the Google Cloud Console that\naren’t available on this API. When reading from the API, you will not\nsee these fields in the return value, though they may have been set\nin the cloud console.",
               "flatPath": "v1beta1/billingAccounts/{billingAccountsId}/budgets",
               "httpMethod": "GET",
               "id": "billingbudgets.billingAccounts.budgets.list",
@@ -224,7 +224,7 @@
               ]
             },
             "patch": {
-              "description": "Updates a budget and returns the updated budget.",
+              "description": "Updates a budget and returns the updated budget.\n\nWARNING: There are some fields exposed on the Google Cloud Console that\naren’t available on this API. Budget fields that are not exposed in\nthis API will not be changed by this method.",
               "flatPath": "v1beta1/billingAccounts/{billingAccountsId}/budgets/{budgetsId}",
               "httpMethod": "PATCH",
               "id": "billingbudgets.billingAccounts.budgets.patch",
@@ -256,7 +256,7 @@
       }
     }
   },
-  "revision": "20200215",
+  "revision": "20200229",
   "rootUrl": "https://billingbudgets.googleapis.com/",
   "schemas": {
     "GoogleCloudBillingBudgetsV1beta1AllUpdatesRule": {

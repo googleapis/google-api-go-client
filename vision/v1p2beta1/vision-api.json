@@ -25,6 +25,7 @@
   },
   "id": "vision:v1p2beta1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://vision.mtls.googleapis.com/",
   "name": "vision",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -448,7 +449,7 @@
       }
     }
   },
-  "revision": "20191105",
+  "revision": "20200229",
   "rootUrl": "https://vision.googleapis.com/",
   "schemas": {
     "AnnotateFileResponse": {

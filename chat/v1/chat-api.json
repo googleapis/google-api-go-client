@@ -13,6 +13,7 @@
   },
   "id": "chat:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://chat.mtls.googleapis.com/",
   "name": "chat",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -497,10 +498,37 @@
           "description": "The URL the bot should redirect the user to after they have completed an\nauthorization or configuration flow outside of Hangouts Chat. See the\n[Authorizing access to 3p services guide](/hangouts/chat/how-tos/auth-3p)\nfor more information.",
           "type": "string"
         },
+        "dialogEventType": {
+          "description": "The type of dialog event we have received.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "REQUEST_DIALOG",
+            "SUBMIT_DIALOG",
+            "CANCEL_DIALOG"
+          ],
+          "enumDescriptions": [
+            "This could be used when the corresponding event is not dialog related.\nFor example an @mention.",
+            "For any user action that would result in a dialog opening.",
+            "For card click events from any dialog.",
+            "For native cancellation button."
+          ],
+          "type": "string"
+        },
         "eventTime": {
           "description": "The timestamp indicating when the event was dispatched.",
           "format": "google-datetime",
           "type": "string"
+        },
+        "formInputs": {
+          "description": "The list of form inputs we will supply to the bot. These are just the\ninputs from the dialog that are populated by the user. This will only be\npopulated for CARD_CLICKED events.",
+          "items": {
+            "$ref": "FormInput"
+          },
+          "type": "array"
+        },
+        "isDialogEvent": {
+          "description": "Whether or not this event is related to dialogs request, submit or cancel.\nThis will be set to true when we want a request/submit/cancel event.",
+          "type": "boolean"
         },
         "message": {
           "$ref": "Message",
@@ -563,6 +591,21 @@
             "$ref": "ActionParameter"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "FormInput": {
+      "description": "A single user input from an editable widget from Card API.",
+      "id": "FormInput",
+      "properties": {
+        "name": {
+          "description": "The name of the editable widget.",
+          "type": "string"
+        },
+        "value": {
+          "description": "Value entered by user.",
+          "type": "string"
         }
       },
       "type": "object"

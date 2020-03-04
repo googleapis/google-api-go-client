@@ -21,7 +21,6 @@
   },
   "id": "pagespeedonline:v5",
   "kind": "discovery#restDescription",
-  "mtlsRootUrl": "https://pagespeedonline.mtls.googleapis.com/",
   "name": "pagespeedonline",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -174,7 +173,7 @@
       }
     }
   },
-  "revision": "20200227",
+  "revision": "20200303",
   "rootUrl": "https://pagespeedonline.googleapis.com/",
   "schemas": {
     "AuditRefs": {

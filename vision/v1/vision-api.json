@@ -25,6 +25,7 @@
   },
   "id": "vision:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://vision.mtls.googleapis.com/",
   "name": "vision",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -239,7 +240,7 @@
             "name": {
               "description": "The name of the operation resource to be cancelled.",
               "location": "path",
-              "pattern": "^operations/.+$",
+              "pattern": "^operations/.*$",
               "required": true,
               "type": "string"
             }
@@ -268,7 +269,7 @@
             "name": {
               "description": "The name of the operation resource to be deleted.",
               "location": "path",
-              "pattern": "^operations/.+$",
+              "pattern": "^operations/.*$",
               "required": true,
               "type": "string"
             }
@@ -1281,7 +1282,7 @@
       }
     }
   },
-  "revision": "20191213",
+  "revision": "20200229",
   "rootUrl": "https://vision.googleapis.com/",
   "schemas": {
     "AddProductToProductSetRequest": {

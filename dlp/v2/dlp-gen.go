@@ -1605,6 +1605,78 @@ func (s *GooglePrivacyDlpV2Conditions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2Container: Represents a container that may contain
+// DLP findings.
+// Examples of a container include a file, table, or database record.
+type GooglePrivacyDlpV2Container struct {
+	// FullPath: A string representation of the full container
+	// name.
+	// Examples:
+	// - BigQuery: 'Project:DataSetId.TableId'
+	// - Google Cloud Storage: 'gs://Bucket/folders/filename.txt'
+	FullPath string `json:"fullPath,omitempty"`
+
+	// ProjectId: Project where the finding was found.
+	// Can be different from the project that owns the finding.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// RelativePath: The rest of the path after the root.
+	// Examples:
+	// - For BigQuery table `project_id:dataset_id.table_id`, the relative
+	// path is
+	//  `table_id`
+	// - Google Cloud Storage file `gs://bucket/folder/filename.txt`, the
+	// relative
+	//  path is `folder/filename.txt`
+	RelativePath string `json:"relativePath,omitempty"`
+
+	// RootPath: The root of the container.
+	// Examples:
+	// - For BigQuery table `project_id:dataset_id.table_id`, the root is
+	//  `dataset_id`
+	// - For Google Cloud Storage file `gs://bucket/folder/filename.txt`,
+	// the root
+	//  is `gs://bucket`
+	RootPath string `json:"rootPath,omitempty"`
+
+	// Type: Container type, for example BigQuery or Google Cloud Storage.
+	Type string `json:"type,omitempty"`
+
+	// UpdateTime: Findings container modification timestamp, if
+	// applicable.
+	// For Google Cloud Storage contains last file modification
+	// timestamp.
+	// For BigQuery table contains last_modified_time property.
+	// For Datastore - not populated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// Version: Findings container version, if available
+	// ("generation" for Google Cloud Storage).
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FullPath") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FullPath") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2Container) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2Container
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2ContentItem: Container structure for the content to
 // inspect.
 type GooglePrivacyDlpV2ContentItem struct {
@@ -3101,6 +3173,14 @@ type GooglePrivacyDlpV2DlpJob struct {
 	//   "DONE" - The job is no longer running.
 	//   "CANCELED" - The job was canceled before it could complete.
 	//   "FAILED" - The job had an error and did not complete.
+	//   "ACTIVE" - The job is currently accepting findings via
+	// hybridInspect.
+	// A hybrid job in ACTIVE state may continue to have findings added to
+	// it
+	// through calling of hybridInspect. After the job has finished no
+	// more
+	// calls to hybridInspect may be made. ACTIVE jobs can transition to
+	// DONE.
 	State string `json:"state,omitempty"`
 
 	// Type: The type of job.
@@ -3523,6 +3603,24 @@ type GooglePrivacyDlpV2Finding struct {
 	// JobName: The job that stored the finding.
 	JobName string `json:"jobName,omitempty"`
 
+	// Labels: The labels associated with this `InspectFinding`.
+	//
+	// Label keys must be between 1 and 63 characters long and must
+	// conform
+	// to the following regular expression:
+	// \[a-z\](\[-a-z0-9\]*\[a-z0-9\])?.
+	//
+	// Label values must be between 0 and 63 characters long and must
+	// conform
+	// to the regular expression (\[a-z\](\[-a-z0-9\]*\[a-z0-9\])?)?.
+	//
+	// No more than 10 labels can be associated with a given
+	// finding.
+	//
+	// Example: <code>"environment" : "production"</code>
+	// Example: <code>"pipeline" : "etl"</code>
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Likelihood: Confidence of how likely it is that the `info_type` is
 	// correct.
 	//
@@ -3632,6 +3730,16 @@ func (s *GooglePrivacyDlpV2FindingLimits) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2FindingLimits
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2FinishDlpJobRequest: The request message for
+// finishing a DLP hybrid job.
+// Early access feature is in a pre-release state and might change or
+// have
+// limited support. For more information,
+// see
+// https://cloud.google.com/products#product-launch-stages.
+type GooglePrivacyDlpV2FinishDlpJobRequest struct {
 }
 
 // GooglePrivacyDlpV2FixedSizeBucketingConfig: Buckets values based on
@@ -3766,6 +3874,340 @@ type GooglePrivacyDlpV2HotwordRule struct {
 
 func (s *GooglePrivacyDlpV2HotwordRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2HotwordRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2HybridContentItem: An individual hybrid item to
+// inspect. Will be stored temporarily during
+// processing.
+// Early access feature is in a pre-release state and might change or
+// have
+// limited support. For more information,
+// see
+// https://cloud.google.com/products#product-launch-stages.
+type GooglePrivacyDlpV2HybridContentItem struct {
+	// FindingDetails: Supplementary information that will be added to each
+	// finding.
+	FindingDetails *GooglePrivacyDlpV2HybridFindingDetails `json:"findingDetails,omitempty"`
+
+	// Item: The item to inspect.
+	Item *GooglePrivacyDlpV2ContentItem `json:"item,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FindingDetails") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FindingDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2HybridContentItem) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2HybridContentItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2HybridFindingDetails: Populate to associate
+// additional data with each finding.
+// Early access feature is in a pre-release state and might change or
+// have
+// limited support. For more information,
+// see
+// https://cloud.google.com/products#product-launch-stages.
+type GooglePrivacyDlpV2HybridFindingDetails struct {
+	// ContainerDetails: Details about the container where the content being
+	// inspected is from.
+	ContainerDetails *GooglePrivacyDlpV2Container `json:"containerDetails,omitempty"`
+
+	// FileOffset: Offset in bytes of the line, from the beginning of the
+	// file, where the
+	// finding  is located. Populate if the item being scanned is only part
+	// of a
+	// bigger item, such as a shard of a file and you want to track the
+	// absolute
+	// position of the finding.
+	FileOffset int64 `json:"fileOffset,omitempty,string"`
+
+	// Labels: Labels to represent user provided metadata about the data
+	// being inspected.
+	// If configured by the job, some key values may be required.
+	// The labels associated with `Finding`'s produced by
+	// hybrid
+	// inspection.
+	//
+	// Label keys must be between 1 and 63 characters long and must
+	// conform
+	// to the following regular expression:
+	// \[a-z\](\[-a-z0-9\]*\[a-z0-9\])?.
+	//
+	// Label values must be between 0 and 63 characters long and must
+	// conform
+	// to the regular expression (\[a-z\](\[-a-z0-9\]*\[a-z0-9\])?)?.
+	//
+	// No more than 10 labels can be associated with a given
+	// finding.
+	//
+	// Example: <code>"environment" : "production"</code>
+	// Example: <code>"pipeline" : "etl"</code>
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// RowOffset: Offset of the row for tables. Populate if the row(s) being
+	// scanned are
+	// part of a bigger dataset and you want to keep track of their
+	// absolute
+	// position.
+	RowOffset int64 `json:"rowOffset,omitempty,string"`
+
+	// TableOptions: If the container is a table, additional information to
+	// make findings
+	// meaningful such as the columns that are primary keys. If not known
+	// ahead
+	// of time, can also be set within each inspect hybrid call and the
+	// two
+	// will be merged. Note that identifying_fields will only be stored
+	// to
+	// BigQuery, and only if the BigQuery action has been included.
+	TableOptions *GooglePrivacyDlpV2TableOptions `json:"tableOptions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContainerDetails") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContainerDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2HybridFindingDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2HybridFindingDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2HybridInspectDlpJobRequest: Request to search for
+// potentially sensitive info in a custom location.
+// Early access feature is in a pre-release state and might change or
+// have
+// limited support. For more information,
+// see
+// https://cloud.google.com/products#product-launch-stages.
+type GooglePrivacyDlpV2HybridInspectDlpJobRequest struct {
+	// HybridItem: The item to inspect.
+	HybridItem *GooglePrivacyDlpV2HybridContentItem `json:"hybridItem,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HybridItem") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HybridItem") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2HybridInspectDlpJobRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2HybridInspectDlpJobRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2HybridInspectJobTriggerRequest: Request to search
+// for potentially sensitive info in a custom location.
+// Early access feature is in a pre-release state and might change or
+// have
+// limited support. For more information,
+// see
+// https://cloud.google.com/products#product-launch-stages.
+type GooglePrivacyDlpV2HybridInspectJobTriggerRequest struct {
+	// HybridItem: The item to inspect.
+	HybridItem *GooglePrivacyDlpV2HybridContentItem `json:"hybridItem,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HybridItem") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HybridItem") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2HybridInspectJobTriggerRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2HybridInspectJobTriggerRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2HybridInspectResponse: Quota exceeded errors will
+// be thrown once quota has been met.
+// Early access feature is in a pre-release state and might change or
+// have
+// limited support. For more information,
+// see
+// https://cloud.google.com/products#product-launch-stages.
+type GooglePrivacyDlpV2HybridInspectResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+// GooglePrivacyDlpV2HybridInspectStatistics: Statistics related to
+// processing hybrid inspect requests
+// Early access feature is in a pre-release state and might change or
+// have
+// limited support. For more information,
+// see
+// https://cloud.google.com/products#product-launch-stages.
+type GooglePrivacyDlpV2HybridInspectStatistics struct {
+	// HybridRequestsAborted: The number of hybrid inspection requests
+	// aborted because the job ran
+	// out of quota or was ended before they could be processed.
+	HybridRequestsAborted int64 `json:"hybridRequestsAborted,omitempty,string"`
+
+	// HybridRequestsPending: The number of hybrid requests currently being
+	// processed. Only populated
+	// when called via method `getDlpJob`.
+	// A burst of traffic may cause hybrid inspect requests to be
+	// enqueued.
+	// Processing will take place as quickly as possible, but resource
+	// limitations
+	// may impact how long a request is enqueued for.
+	HybridRequestsPending int64 `json:"hybridRequestsPending,omitempty,string"`
+
+	// HybridRequestsProcessed: The number of hybrid inspection requests
+	// processed within this job.
+	HybridRequestsProcessed int64 `json:"hybridRequestsProcessed,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "HybridRequestsAborted") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HybridRequestsAborted") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2HybridInspectStatistics) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2HybridInspectStatistics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2HybridOptions: Configuration to control jobs where
+// the content being inspected is outside
+// of Google Cloud Platform.
+// Early access feature is in a pre-release state and might change or
+// have
+// limited support. For more information,
+// see
+// https://cloud.google.com/products#product-launch-stages.
+type GooglePrivacyDlpV2HybridOptions struct {
+	// Description: A short description of where the data is coming from.
+	// Will be stored once
+	// in the job. 256 max length.
+	Description string `json:"description,omitempty"`
+
+	// Labels: To organize findings, these labels will be added to each
+	// finding.
+	//
+	// Label keys must be between 1 and 63 characters long and must
+	// conform
+	// to the following regular expression:
+	// \[a-z\](\[-a-z0-9\]*\[a-z0-9\])?.
+	//
+	// Label values must be between 0 and 63 characters long and must
+	// conform
+	// to the regular expression (\[a-z\](\[-a-z0-9\]*\[a-z0-9\])?)?.
+	//
+	// No more than 10 labels can be associated with a given
+	// finding.
+	//
+	// Example: <code>"environment" : "production"</code>
+	// Example: <code>"pipeline" : "etl"</code>
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// RequiredFindingLabelKeys: These are labels that each inspection
+	// request must include within their
+	// 'finding_labels' map. Request may contain others, but any missing one
+	// of
+	// these will be rejected.
+	//
+	// Label keys must be between 1 and 63 characters long and must
+	// conform
+	// to the following regular expression:
+	// \[a-z\](\[-a-z0-9\]*\[a-z0-9\])?.
+	//
+	// No more than 10 keys can be required.
+	RequiredFindingLabelKeys []string `json:"requiredFindingLabelKeys,omitempty"`
+
+	// TableOptions: If the container is a table, additional information to
+	// make findings
+	// meaningful such as the columns that are primary keys.
+	TableOptions *GooglePrivacyDlpV2TableOptions `json:"tableOptions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2HybridOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2HybridOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5646,6 +6088,17 @@ func (s *GooglePrivacyDlpV2Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2Manual: Job trigger option for hybrid jobs. Jobs
+// must be manually created
+// and finished.
+// Early access feature is in a pre-release state and might change or
+// have
+// limited support. For more information,
+// see
+// https://cloud.google.com/products#product-launch-stages.
+type GooglePrivacyDlpV2Manual struct {
+}
+
 // GooglePrivacyDlpV2NumericalStatsConfig: Compute numerical stats over
 // an individual column, including
 // min, max, and quantiles.
@@ -6782,6 +7235,15 @@ func (s *GooglePrivacyDlpV2RequestedOptions) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2Result: All result fields mentioned below are
 // updated while the job is processing.
 type GooglePrivacyDlpV2Result struct {
+	// HybridStats: Statistics related to the processing of hybrid
+	// inspect.
+	// Early access feature is in a pre-release state and might change or
+	// have
+	// limited support. For more information,
+	// see
+	// https://cloud.google.com/products#product-launch-stages.
+	HybridStats *GooglePrivacyDlpV2HybridInspectStatistics `json:"hybridStats,omitempty"`
+
 	// InfoTypeStats: Statistics of how many instances of each info type
 	// were found during
 	// inspect job.
@@ -6793,7 +7255,7 @@ type GooglePrivacyDlpV2Result struct {
 	// TotalEstimatedBytes: Estimate of the number of bytes to process.
 	TotalEstimatedBytes int64 `json:"totalEstimatedBytes,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "InfoTypeStats") to
+	// ForceSendFields is a list of field names (e.g. "HybridStats") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -6801,7 +7263,7 @@ type GooglePrivacyDlpV2Result struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InfoTypeStats") to include
+	// NullFields is a list of field names (e.g. "HybridStats") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -7014,6 +7476,14 @@ type GooglePrivacyDlpV2StorageConfig struct {
 	// DatastoreOptions: Google Cloud Datastore options.
 	DatastoreOptions *GooglePrivacyDlpV2DatastoreOptions `json:"datastoreOptions,omitempty"`
 
+	// HybridOptions: Hybrid inspection options.
+	// Early access feature is in a pre-release state and might change or
+	// have
+	// limited support. For more information,
+	// see
+	// https://cloud.google.com/products#product-launch-stages.
+	HybridOptions *GooglePrivacyDlpV2HybridOptions `json:"hybridOptions,omitempty"`
+
 	TimespanConfig *GooglePrivacyDlpV2TimespanConfig `json:"timespanConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BigQueryOptions") to
@@ -7092,12 +7562,18 @@ type GooglePrivacyDlpV2StoredInfoTypeConfig struct {
 	// Description: Description of the StoredInfoType (max 256 characters).
 	Description string `json:"description,omitempty"`
 
+	// Dictionary: Store dictionary-based CustomInfoType.
+	Dictionary *GooglePrivacyDlpV2Dictionary `json:"dictionary,omitempty"`
+
 	// DisplayName: Display name of the StoredInfoType (max 256 characters).
 	DisplayName string `json:"displayName,omitempty"`
 
 	// LargeCustomDictionary: StoredInfoType where findings are defined by a
 	// dictionary of phrases.
 	LargeCustomDictionary *GooglePrivacyDlpV2LargeCustomDictionaryConfig `json:"largeCustomDictionary,omitempty"`
+
+	// Regex: Store regular expression-based StoredInfoType.
+	Regex *GooglePrivacyDlpV2Regex `json:"regex,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
@@ -7394,6 +7870,47 @@ type GooglePrivacyDlpV2TableLocation struct {
 
 func (s *GooglePrivacyDlpV2TableLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TableLocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2TableOptions: Instructions regarding the table
+// content being inspected.
+// Early access feature is in a pre-release state and might change or
+// have
+// limited support. For more information,
+// see
+// https://cloud.google.com/products#product-launch-stages.
+type GooglePrivacyDlpV2TableOptions struct {
+	// IdentifyingFields: The columns that are the primary keys for table
+	// objects included in
+	// ContentItem. A copy of this cell's value will stored alongside
+	// alongside
+	// each finding so that the finding can be traced to the specific row it
+	// came
+	// from. No more than 3 may be provided.
+	IdentifyingFields []*GooglePrivacyDlpV2FieldId `json:"identifyingFields,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IdentifyingFields")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IdentifyingFields") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2TableOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2TableOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7765,11 +8282,20 @@ func (s *GooglePrivacyDlpV2TransientCryptoKey) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2Trigger: What event needs to occur for a new job to
 // be started.
 type GooglePrivacyDlpV2Trigger struct {
+	// Manual: For use with hybrid jobs. Jobs must be manually created and
+	// finished.
+	// Early access feature is in a pre-release state and might change or
+	// have
+	// limited support. For more information,
+	// see
+	// https://cloud.google.com/products#product-launch-stages.
+	Manual *GooglePrivacyDlpV2Manual `json:"manual,omitempty"`
+
 	// Schedule: Create a job on a repeating basis based on the elapse of
 	// time.
 	Schedule *GooglePrivacyDlpV2Schedule `json:"schedule,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Schedule") to
+	// ForceSendFields is a list of field names (e.g. "Manual") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -7777,8 +8303,8 @@ type GooglePrivacyDlpV2Trigger struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Schedule") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Manual") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -8359,7 +8885,7 @@ func (c *InfoTypesListCall) Header() http.Header {
 
 func (c *InfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8528,7 +9054,7 @@ func (c *LocationsInfoTypesListCall) Header() http.Header {
 
 func (c *LocationsInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8678,7 +9204,7 @@ func (c *OrganizationsDeidentifyTemplatesCreateCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8820,7 +9346,7 @@ func (c *OrganizationsDeidentifyTemplatesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8964,7 +9490,7 @@ func (c *OrganizationsDeidentifyTemplatesGetCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9157,7 +9683,7 @@ func (c *OrganizationsDeidentifyTemplatesListCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9339,7 +9865,7 @@ func (c *OrganizationsDeidentifyTemplatesPatchCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9484,7 +10010,7 @@ func (c *OrganizationsInspectTemplatesCreateCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9625,7 +10151,7 @@ func (c *OrganizationsInspectTemplatesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9768,7 +10294,7 @@ func (c *OrganizationsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9960,7 +10486,7 @@ func (c *OrganizationsInspectTemplatesListCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10141,7 +10667,7 @@ func (c *OrganizationsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10289,7 +10815,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesCreateCall) Header() http.Head
 
 func (c *OrganizationsLocationsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10439,7 +10965,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesDeleteCall) Header() http.Head
 
 func (c *OrganizationsLocationsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10583,7 +11109,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesGetCall) Header() http.Header 
 
 func (c *OrganizationsLocationsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10770,7 +11296,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesListCall) Header() http.Header
 
 func (c *OrganizationsLocationsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10955,7 +11481,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesPatchCall) Header() http.Heade
 
 func (c *OrganizationsLocationsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11102,7 +11628,7 @@ func (c *OrganizationsLocationsInspectTemplatesCreateCall) Header() http.Header 
 
 func (c *OrganizationsLocationsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11251,7 +11777,7 @@ func (c *OrganizationsLocationsInspectTemplatesDeleteCall) Header() http.Header 
 
 func (c *OrganizationsLocationsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11394,7 +11920,7 @@ func (c *OrganizationsLocationsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11580,7 +12106,7 @@ func (c *OrganizationsLocationsInspectTemplatesListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11764,7 +12290,7 @@ func (c *OrganizationsLocationsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11911,7 +12437,7 @@ func (c *OrganizationsLocationsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12060,7 +12586,7 @@ func (c *OrganizationsLocationsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12204,7 +12730,7 @@ func (c *OrganizationsLocationsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12392,7 +12918,7 @@ func (c *OrganizationsLocationsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12579,7 +13105,7 @@ func (c *OrganizationsLocationsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12723,7 +13249,7 @@ func (c *OrganizationsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12864,7 +13390,7 @@ func (c *OrganizationsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13008,7 +13534,7 @@ func (c *OrganizationsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13202,7 +13728,7 @@ func (c *OrganizationsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13386,7 +13912,7 @@ func (c *OrganizationsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13537,7 +14063,7 @@ func (c *ProjectsContentDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsContentDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13691,7 +14217,7 @@ func (c *ProjectsContentInspectCall) Header() http.Header {
 
 func (c *ProjectsContentInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13838,7 +14364,7 @@ func (c *ProjectsContentReidentifyCall) Header() http.Header {
 
 func (c *ProjectsContentReidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13985,7 +14511,7 @@ func (c *ProjectsDeidentifyTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14127,7 +14653,7 @@ func (c *ProjectsDeidentifyTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14271,7 +14797,7 @@ func (c *ProjectsDeidentifyTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14464,7 +14990,7 @@ func (c *ProjectsDeidentifyTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14646,7 +15172,7 @@ func (c *ProjectsDeidentifyTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14795,7 +15321,7 @@ func (c *ProjectsDlpJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14946,7 +15472,7 @@ func (c *ProjectsDlpJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15092,7 +15618,7 @@ func (c *ProjectsDlpJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15237,7 +15763,7 @@ func (c *ProjectsDlpJobsGetCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15478,7 +16004,7 @@ func (c *ProjectsDlpJobsListCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15682,7 +16208,7 @@ func (c *ProjectsImageRedactCall) Header() http.Header {
 
 func (c *ProjectsImageRedactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15827,7 +16353,7 @@ func (c *ProjectsInspectTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15968,7 +16494,7 @@ func (c *ProjectsInspectTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16111,7 +16637,7 @@ func (c *ProjectsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16303,7 +16829,7 @@ func (c *ProjectsInspectTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16484,7 +17010,7 @@ func (c *ProjectsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16627,7 +17153,7 @@ func (c *ProjectsJobTriggersActivateCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16771,7 +17297,7 @@ func (c *ProjectsJobTriggersCreateCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16911,7 +17437,7 @@ func (c *ProjectsJobTriggersDeleteCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17054,7 +17580,7 @@ func (c *ProjectsJobTriggersGetCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17282,7 +17808,7 @@ func (c *ProjectsJobTriggersListCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17468,7 +17994,7 @@ func (c *ProjectsJobTriggersPatchCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17621,7 +18147,7 @@ func (c *ProjectsLocationsContentDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17785,7 +18311,7 @@ func (c *ProjectsLocationsContentInspectCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17942,7 +18468,7 @@ func (c *ProjectsLocationsContentReidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentReidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18099,7 +18625,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18249,7 +18775,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18393,7 +18919,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18580,7 +19106,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18765,7 +19291,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18914,7 +19440,7 @@ func (c *ProjectsLocationsDlpJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19067,7 +19593,7 @@ func (c *ProjectsLocationsDlpJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19221,7 +19747,7 @@ func (c *ProjectsLocationsDlpJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19307,6 +19833,153 @@ func (c *ProjectsLocationsDlpJobsDeleteCall) Do(opts ...googleapi.CallOption) (*
 
 }
 
+// method id "dlp.projects.locations.dlpJobs.finish":
+
+type ProjectsLocationsDlpJobsFinishCall struct {
+	s                                     *Service
+	name                                  string
+	googleprivacydlpv2finishdlpjobrequest *GooglePrivacyDlpV2FinishDlpJobRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Finish: Finish a running hybrid DlpJob. Triggers the finalization
+// steps and running
+// of any enabled actions that have not yet run.
+// Early access feature is in a pre-release state and might change or
+// have
+// limited support. For more information,
+// see
+// https://cloud.google.com/products#product-launch-stages.
+func (r *ProjectsLocationsDlpJobsService) Finish(name string, googleprivacydlpv2finishdlpjobrequest *GooglePrivacyDlpV2FinishDlpJobRequest) *ProjectsLocationsDlpJobsFinishCall {
+	c := &ProjectsLocationsDlpJobsFinishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleprivacydlpv2finishdlpjobrequest = googleprivacydlpv2finishdlpjobrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDlpJobsFinishCall) Fields(s ...googleapi.Field) *ProjectsLocationsDlpJobsFinishCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDlpJobsFinishCall) Context(ctx context.Context) *ProjectsLocationsDlpJobsFinishCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDlpJobsFinishCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDlpJobsFinishCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2finishdlpjobrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:finish")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.dlpJobs.finish" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDlpJobsFinishCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Finish a running hybrid DlpJob. Triggers the finalization steps and running\nof any enabled actions that have not yet run.\nEarly access feature is in a pre-release state and might change or have\nlimited support. For more information, see\nhttps://cloud.google.com/products#product-launch-stages.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/dlpJobs/{dlpJobsId}:finish",
+	//   "httpMethod": "POST",
+	//   "id": "dlp.projects.locations.dlpJobs.finish",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the DlpJob resource to be cancelled.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dlpJobs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:finish",
+	//   "request": {
+	//     "$ref": "GooglePrivacyDlpV2FinishDlpJobRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "dlp.projects.locations.dlpJobs.get":
 
 type ProjectsLocationsDlpJobsGetCall struct {
@@ -19366,7 +20039,7 @@ func (c *ProjectsLocationsDlpJobsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19447,6 +20120,155 @@ func (c *ProjectsLocationsDlpJobsGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   "path": "v2/{+name}",
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2DlpJob"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.projects.locations.dlpJobs.hybridInspect":
+
+type ProjectsLocationsDlpJobsHybridInspectCall struct {
+	s                                            *Service
+	name                                         string
+	googleprivacydlpv2hybridinspectdlpjobrequest *GooglePrivacyDlpV2HybridInspectDlpJobRequest
+	urlParams_                                   gensupport.URLParams
+	ctx_                                         context.Context
+	header_                                      http.Header
+}
+
+// HybridInspect: Inspect hybrid content and store findings to a job.
+// To review the findings inspect the job. Inspection will
+// occur
+// asynchronously.
+// Early access feature is in a pre-release state and might change or
+// have
+// limited support. For more information,
+// see
+// https://cloud.google.com/products#product-launch-stages.
+func (r *ProjectsLocationsDlpJobsService) HybridInspect(name string, googleprivacydlpv2hybridinspectdlpjobrequest *GooglePrivacyDlpV2HybridInspectDlpJobRequest) *ProjectsLocationsDlpJobsHybridInspectCall {
+	c := &ProjectsLocationsDlpJobsHybridInspectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleprivacydlpv2hybridinspectdlpjobrequest = googleprivacydlpv2hybridinspectdlpjobrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDlpJobsHybridInspectCall) Fields(s ...googleapi.Field) *ProjectsLocationsDlpJobsHybridInspectCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDlpJobsHybridInspectCall) Context(ctx context.Context) *ProjectsLocationsDlpJobsHybridInspectCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDlpJobsHybridInspectCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDlpJobsHybridInspectCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2hybridinspectdlpjobrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:hybridInspect")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.dlpJobs.hybridInspect" call.
+// Exactly one of *GooglePrivacyDlpV2HybridInspectResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GooglePrivacyDlpV2HybridInspectResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDlpJobsHybridInspectCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2HybridInspectResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2HybridInspectResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Inspect hybrid content and store findings to a job.\nTo review the findings inspect the job. Inspection will occur\nasynchronously.\nEarly access feature is in a pre-release state and might change or have\nlimited support. For more information, see\nhttps://cloud.google.com/products#product-launch-stages.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/dlpJobs/{dlpJobsId}:hybridInspect",
+	//   "httpMethod": "POST",
+	//   "id": "dlp.projects.locations.dlpJobs.hybridInspect",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the job to execute a hybrid inspect on, for example\n`projects/dlp-test-project/dlpJob/53234423`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dlpJobs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:hybridInspect",
+	//   "request": {
+	//     "$ref": "GooglePrivacyDlpV2HybridInspectDlpJobRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2HybridInspectResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -19601,7 +20423,7 @@ func (c *ProjectsLocationsDlpJobsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19810,7 +20632,7 @@ func (c *ProjectsLocationsImageRedactCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageRedactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19965,7 +20787,7 @@ func (c *ProjectsLocationsInspectTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20114,7 +20936,7 @@ func (c *ProjectsLocationsInspectTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20257,7 +21079,7 @@ func (c *ProjectsLocationsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20443,7 +21265,7 @@ func (c *ProjectsLocationsInspectTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20627,7 +21449,7 @@ func (c *ProjectsLocationsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20770,7 +21592,7 @@ func (c *ProjectsLocationsJobTriggersActivateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20916,7 +21738,7 @@ func (c *ProjectsLocationsJobTriggersCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21064,7 +21886,7 @@ func (c *ProjectsLocationsJobTriggersDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21207,7 +22029,7 @@ func (c *ProjectsLocationsJobTriggersGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21288,6 +22110,156 @@ func (c *ProjectsLocationsJobTriggersGetCall) Do(opts ...googleapi.CallOption) (
 	//   "path": "v2/{+name}",
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2JobTrigger"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.projects.locations.jobTriggers.hybridInspect":
+
+type ProjectsLocationsJobTriggersHybridInspectCall struct {
+	s                                                *Service
+	name                                             string
+	googleprivacydlpv2hybridinspectjobtriggerrequest *GooglePrivacyDlpV2HybridInspectJobTriggerRequest
+	urlParams_                                       gensupport.URLParams
+	ctx_                                             context.Context
+	header_                                          http.Header
+}
+
+// HybridInspect: Inspect hybrid content and store findings to a
+// trigger. The inspection
+// will be processed asynchronously. To review the findings monitor
+// the
+// jobs within the trigger.
+// Early access feature is in a pre-release state and might change or
+// have
+// limited support. For more information,
+// see
+// https://cloud.google.com/products#product-launch-stages.
+func (r *ProjectsLocationsJobTriggersService) HybridInspect(name string, googleprivacydlpv2hybridinspectjobtriggerrequest *GooglePrivacyDlpV2HybridInspectJobTriggerRequest) *ProjectsLocationsJobTriggersHybridInspectCall {
+	c := &ProjectsLocationsJobTriggersHybridInspectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleprivacydlpv2hybridinspectjobtriggerrequest = googleprivacydlpv2hybridinspectjobtriggerrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobTriggersHybridInspectCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobTriggersHybridInspectCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobTriggersHybridInspectCall) Context(ctx context.Context) *ProjectsLocationsJobTriggersHybridInspectCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobTriggersHybridInspectCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobTriggersHybridInspectCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2hybridinspectjobtriggerrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:hybridInspect")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.jobTriggers.hybridInspect" call.
+// Exactly one of *GooglePrivacyDlpV2HybridInspectResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GooglePrivacyDlpV2HybridInspectResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobTriggersHybridInspectCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2HybridInspectResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2HybridInspectResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Inspect hybrid content and store findings to a trigger. The inspection\nwill be processed asynchronously. To review the findings monitor the\njobs within the trigger.\nEarly access feature is in a pre-release state and might change or have\nlimited support. For more information, see\nhttps://cloud.google.com/products#product-launch-stages.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobTriggers/{jobTriggersId}:hybridInspect",
+	//   "httpMethod": "POST",
+	//   "id": "dlp.projects.locations.jobTriggers.hybridInspect",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the trigger to execute a hybrid inspect on, for example\n`projects/dlp-test-project/jobTriggers/53234423`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobTriggers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:hybridInspect",
+	//   "request": {
+	//     "$ref": "GooglePrivacyDlpV2HybridInspectJobTriggerRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2HybridInspectResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -21429,7 +22401,7 @@ func (c *ProjectsLocationsJobTriggersListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21618,7 +22590,7 @@ func (c *ProjectsLocationsJobTriggersPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21764,7 +22736,7 @@ func (c *ProjectsLocationsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21913,7 +22885,7 @@ func (c *ProjectsLocationsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22057,7 +23029,7 @@ func (c *ProjectsLocationsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22245,7 +23217,7 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22432,7 +23404,7 @@ func (c *ProjectsLocationsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22576,7 +23548,7 @@ func (c *ProjectsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22717,7 +23689,7 @@ func (c *ProjectsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22861,7 +23833,7 @@ func (c *ProjectsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23055,7 +24027,7 @@ func (c *ProjectsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23239,7 +24211,7 @@ func (c *ProjectsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

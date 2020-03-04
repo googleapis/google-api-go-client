@@ -200,8 +200,8 @@ type AnalyzeCommentRequest struct {
 	// see
 	// go/checker-models (internal)
 	// and
-	// https://github.com/conversationai/perspectiveapi/blob/master/api_r
-	// eference.md#models.
+	// https://github.com/conversationai/perspectiveapi/blob/master/2-api
+	// /models.md#all-attribute-types.
 	RequestedAttributes map[string]AttributeParameters `json:"requestedAttributes,omitempty"`
 
 	// SessionId: Session ID. Used to join related RPCs into a single
@@ -812,7 +812,7 @@ func (c *CommentsAnalyzeCall) Header() http.Header {
 
 func (c *CommentsAnalyzeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -937,7 +937,7 @@ func (c *CommentsSuggestscoreCall) Header() http.Header {
 
 func (c *CommentsSuggestscoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

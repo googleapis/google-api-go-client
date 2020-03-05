@@ -26,7 +26,6 @@
   },
   "id": "appengine:v1alpha",
   "kind": "discovery#restDescription",
-  "mtlsRootUrl": "https://appengine.mtls.googleapis.com/",
   "name": "appengine",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -695,7 +694,7 @@
       }
     }
   },
-  "revision": "20200215",
+  "revision": "20200207",
   "rootUrl": "https://appengine.googleapis.com/",
   "schemas": {
     "AuthorizedCertificate": {

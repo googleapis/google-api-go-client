@@ -26,6 +26,12 @@
         "https://www.googleapis.com/auth/classroom.coursework.students.readonly": {
           "description": "View course work and grades for students in the Google Classroom classes you teach or administer"
         },
+        "https://www.googleapis.com/auth/classroom.courseworkmaterials": {
+          "description": "See, edit, and create classwork materials in Google Classroom"
+        },
+        "https://www.googleapis.com/auth/classroom.courseworkmaterials.readonly": {
+          "description": "See all classwork materials for your Google Classroom classes"
+        },
         "https://www.googleapis.com/auth/classroom.guardianlinks.me.readonly": {
           "description": "View your Google Classroom guardians"
         },
@@ -1225,6 +1231,203 @@
             }
           }
         },
+        "courseWorkMaterials": {
+          "methods": {
+            "create": {
+              "description": "Creates a course work material.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course, create course work material in the requested course,\nshare a Drive attachment, or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed or if more than 20\n* materials are provided.\n* `NOT_FOUND` if the requested course does not exist.\n* `FAILED_PRECONDITION` for the following request error:\n    * AttachmentNotVisible",
+              "flatPath": "v1/courses/{courseId}/courseWorkMaterials",
+              "httpMethod": "POST",
+              "id": "classroom.courses.courseWorkMaterials.create",
+              "parameterOrder": [
+                "courseId"
+              ],
+              "parameters": {
+                "courseId": {
+                  "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/courses/{courseId}/courseWorkMaterials",
+              "request": {
+                "$ref": "CourseWorkMaterial"
+              },
+              "response": {
+                "$ref": "CourseWorkMaterial"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/classroom.courseworkmaterials"
+              ]
+            },
+            "delete": {
+              "description": "Deletes a course work material.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding course work material item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting developer project did not create\nthe corresponding course work material, if the requesting user is not\npermitted to delete the requested course or for access errors.\n* `FAILED_PRECONDITION` if the requested course work material has already\nbeen deleted.\n* `NOT_FOUND` if no course exists with the requested ID.",
+              "flatPath": "v1/courses/{courseId}/courseWorkMaterials/{id}",
+              "httpMethod": "DELETE",
+              "id": "classroom.courses.courseWorkMaterials.delete",
+              "parameterOrder": [
+                "courseId",
+                "id"
+              ],
+              "parameters": {
+                "courseId": {
+                  "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "id": {
+                  "description": "Identifier of the course work material to delete.\nThis identifier is a Classroom-assigned identifier.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/courses/{courseId}/courseWorkMaterials/{id}",
+              "response": {
+                "$ref": "Empty"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/classroom.courseworkmaterials"
+              ]
+            },
+            "get": {
+              "description": "Returns a course work material.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or course work material, or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course or course work material does not\nexist.",
+              "flatPath": "v1/courses/{courseId}/courseWorkMaterials/{id}",
+              "httpMethod": "GET",
+              "id": "classroom.courses.courseWorkMaterials.get",
+              "parameterOrder": [
+                "courseId",
+                "id"
+              ],
+              "parameters": {
+                "courseId": {
+                  "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "id": {
+                  "description": "Identifier of the course work material.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/courses/{courseId}/courseWorkMaterials/{id}",
+              "response": {
+                "$ref": "CourseWorkMaterial"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/classroom.courseworkmaterials",
+                "https://www.googleapis.com/auth/classroom.courseworkmaterials.readonly"
+              ]
+            },
+            "list": {
+              "description": "Returns a list of course work material that the requester is permitted to\nview.\n\nCourse students may only view `PUBLISHED` course work material. Course\nteachers and domain administrators may view all course work material.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access\nthe requested course or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course does not exist.",
+              "flatPath": "v1/courses/{courseId}/courseWorkMaterials",
+              "httpMethod": "GET",
+              "id": "classroom.courses.courseWorkMaterials.list",
+              "parameterOrder": [
+                "courseId"
+              ],
+              "parameters": {
+                "courseId": {
+                  "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "courseWorkMaterialStates": {
+                  "description": "Restriction on the work status to return. Only course work material that\nmatches is returned. If unspecified, items with a work status of\n`PUBLISHED` is returned.",
+                  "enum": [
+                    "COURSEWORK_MATERIAL_STATE_UNSPECIFIED",
+                    "PUBLISHED",
+                    "DRAFT",
+                    "DELETED"
+                  ],
+                  "location": "query",
+                  "repeated": true,
+                  "type": "string"
+                },
+                "materialDriveId": {
+                  "description": "Optional filtering for course work material with at least one Drive\nmaterial whose ID matches the provided string. If `material_link` is also\nspecified, course work material must have materials matching both filters.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "materialLink": {
+                  "description": "Optional filtering for course work material with at least one link material\nwhose URL partially matches the provided string.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "orderBy": {
+                  "description": "Optional sort ordering for results. A comma-separated list of fields with\nan optional sort direction keyword. Supported field is `updateTime`.\nSupported direction keywords are `asc` and `desc`.\nIf not specified, `updateTime desc` is the default behavior.\nExamples: `updateTime asc`, `updateTime`",
+                  "location": "query",
+                  "type": "string"
+                },
+                "pageSize": {
+                  "description": "Maximum number of items to return. Zero or unspecified indicates that the\nserver may assign a maximum.\n\nThe server may return fewer than the specified number of results.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "nextPageToken\nvalue returned from a previous\nlist call,\nindicating that the subsequent page of results should be returned.\n\nThe list request\nmust be otherwise identical to the one that resulted in this token.",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/courses/{courseId}/courseWorkMaterials",
+              "response": {
+                "$ref": "ListCourseWorkMaterialResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/classroom.courseworkmaterials",
+                "https://www.googleapis.com/auth/classroom.courseworkmaterials.readonly"
+              ]
+            },
+            "patch": {
+              "description": "Updates one or more fields of a course work material.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting developer project for\naccess errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `FAILED_PRECONDITION` if the requested course work material has already\nbeen deleted.\n* `NOT_FOUND` if the requested course or course work material does not\nexist",
+              "flatPath": "v1/courses/{courseId}/courseWorkMaterials/{id}",
+              "httpMethod": "PATCH",
+              "id": "classroom.courses.courseWorkMaterials.patch",
+              "parameterOrder": [
+                "courseId",
+                "id"
+              ],
+              "parameters": {
+                "courseId": {
+                  "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "id": {
+                  "description": "Identifier of the course work material.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "Mask that identifies which fields on the course work material to update.\nThis field is required to do an update. The update fails if invalid\nfields are specified. If a field supports empty values, it can be cleared\nby specifying it in the update mask and not in the course work material\nobject. If a field that does not support empty values is included in the\nupdate mask and not set in the course work material object, an\n`INVALID_ARGUMENT` error will be returned.\n\nThe following fields may be specified by teachers:\n\n* `title`\n* `description`\n* `state`\n* `scheduled_time`\n* `topic_id`",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/courses/{courseId}/courseWorkMaterials/{id}",
+              "request": {
+                "$ref": "CourseWorkMaterial"
+              },
+              "response": {
+                "$ref": "CourseWorkMaterial"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/classroom.courseworkmaterials"
+              ]
+            }
+          }
+        },
         "students": {
           "methods": {
             "create": {
@@ -2152,7 +2355,7 @@
       }
     }
   },
-  "revision": "20200210",
+  "revision": "20200229",
   "rootUrl": "https://classroom.googleapis.com/",
   "schemas": {
     "Announcement": {
@@ -2617,6 +2820,97 @@
       },
       "type": "object"
     },
+    "CourseWorkMaterial": {
+      "description": "Course work material created by a teacher for students of the course",
+      "id": "CourseWorkMaterial",
+      "properties": {
+        "alternateLink": {
+          "description": "Absolute link to this course work material in the Classroom web UI.\nThis is only populated if `state` is `PUBLISHED`.\n\nRead-only.",
+          "type": "string"
+        },
+        "assigneeMode": {
+          "description": "Assignee mode of the course work material.\nIf unspecified, the default value is `ALL_STUDENTS`.",
+          "enum": [
+            "ASSIGNEE_MODE_UNSPECIFIED",
+            "ALL_STUDENTS",
+            "INDIVIDUAL_STUDENTS"
+          ],
+          "enumDescriptions": [
+            "No mode specified. This is never returned.",
+            "All students can see the item.\nThis is the default state.",
+            "A subset of the students can see the item."
+          ],
+          "type": "string"
+        },
+        "courseId": {
+          "description": "Identifier of the course.\n\nRead-only.",
+          "type": "string"
+        },
+        "creationTime": {
+          "description": "Timestamp when this course work material was created.\n\nRead-only.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "creatorUserId": {
+          "description": "Identifier for the user that created the course work material.\n\nRead-only.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Optional description of this course work material.\nThe text must be a valid UTF-8 string containing no more\nthan 30,000 characters.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Classroom-assigned identifier of this course work material, unique per\ncourse.\n\nRead-only.",
+          "type": "string"
+        },
+        "individualStudentsOptions": {
+          "$ref": "IndividualStudentsOptions",
+          "description": "Identifiers of students with access to the course work material.\nThis field is set only if `assigneeMode` is `INDIVIDUAL_STUDENTS`.\nIf the `assigneeMode` is `INDIVIDUAL_STUDENTS`, then only students\nspecified in this field will be able to see the course work material."
+        },
+        "materials": {
+          "description": "Additional materials.\n\nA course work material must have no more than 20 material items.",
+          "items": {
+            "$ref": "Material"
+          },
+          "type": "array"
+        },
+        "scheduledTime": {
+          "description": "Optional timestamp when this course work material is scheduled to be\npublished.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "state": {
+          "description": "Status of this course work material.\nIf unspecified, the default state is `DRAFT`.",
+          "enum": [
+            "COURSEWORK_MATERIAL_STATE_UNSPECIFIED",
+            "PUBLISHED",
+            "DRAFT",
+            "DELETED"
+          ],
+          "enumDescriptions": [
+            "No state specified. This is never returned.",
+            "Status for course work material that has been published.\nThis is the default state.",
+            "Status for an course work material that is not yet published.\nCourse work material in this state is visible only to course teachers and\ndomain administrators.",
+            "Status for course work material that was published but is now deleted.\nCourse work material in this state is visible only to course teachers and\ndomain administrators. Course work material in this state is deleted\nafter some time."
+          ],
+          "type": "string"
+        },
+        "title": {
+          "description": "Title of this course work material.\nThe title must be a valid UTF-8 string containing between 1 and 3000\ncharacters.",
+          "type": "string"
+        },
+        "topicId": {
+          "description": "Identifier for the topic that this course work material is associated with.\nMust match an existing topic in the course.",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Timestamp of the most recent change to this course work material.\n\nRead-only.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Date": {
       "description": "Represents a whole or partial calendar date, e.g. a birthday. The time of day\nand time zone are either specified elsewhere or are not significant. The date\nis relative to the Proleptic Gregorian Calendar. This can represent:\n\n* A full date, with non-zero year, month and day values\n* A month and day value, with a zero year, e.g. an anniversary\n* A year on its own, with zero month and day values\n* A year and month value, with a zero day, e.g. a credit card expiration date\n\nRelated types are google.type.TimeOfDay and `google.protobuf.Timestamp`.",
       "id": "Date",
@@ -2957,6 +3251,24 @@
           "description": "The course aliases.",
           "items": {
             "$ref": "CourseAlias"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Token identifying the next page of results to return. If empty, no further\nresults are available.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ListCourseWorkMaterialResponse": {
+      "description": "Response when listing course work material.",
+      "id": "ListCourseWorkMaterialResponse",
+      "properties": {
+        "courseWorkMaterial": {
+          "description": "Course work material items that match the request.",
+          "items": {
+            "$ref": "CourseWorkMaterial"
           },
           "type": "array"
         },

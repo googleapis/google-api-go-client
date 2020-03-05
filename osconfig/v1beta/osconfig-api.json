@@ -22,6 +22,7 @@
   },
   "id": "osconfig:v1beta",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://osconfig.mtls.googleapis.com/",
   "name": "osconfig",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -598,7 +599,7 @@
       }
     }
   },
-  "revision": "20200207",
+  "revision": "20200226",
   "rootUrl": "https://osconfig.googleapis.com/",
   "schemas": {
     "AptRepository": {

@@ -388,7 +388,7 @@
       }
     }
   },
-  "revision": "20200225",
+  "revision": "20200303",
   "rootUrl": "https://admin-remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -1030,7 +1030,8 @@
             "DOCKER_UNKNOWN_CAPABILITY",
             "DOCKER_UNKNOWN_ERROR",
             "DOCKER_CREATE_COMPUTE_SYSTEM_ERROR",
-            "DOCKER_PREPARELAYER_ERROR"
+            "DOCKER_PREPARELAYER_ERROR",
+            "DOCKER_INCOMPATIBLE_OS_ERROR"
           ],
           "enumDescriptions": [
             "The command succeeded.",
@@ -1063,7 +1064,8 @@
             "The docker capability is unknown.",
             "The command failed with unknown docker errors.",
             "Docker failed to run containers with CreateComputeSystem error.",
-            "Docker failed to run containers with hcsshim::PrepareLayer error."
+            "Docker failed to run containers with hcsshim::PrepareLayer error.",
+            "Docker incompatible operating system error."
           ],
           "type": "string"
         },

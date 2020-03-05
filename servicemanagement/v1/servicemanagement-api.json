@@ -877,7 +877,7 @@
       }
     }
   },
-  "revision": "20200221",
+  "revision": "20200228",
   "rootUrl": "https://servicemanagement.googleapis.com/",
   "schemas": {
     "Advice": {
@@ -1014,6 +1014,13 @@
         "jwksUri": {
           "description": "URL of the provider's public key set to validate signature of the JWT. See\n[OpenID\nDiscovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).\nOptional if the key set document:\n - can be retrieved from\n   [OpenID\n   Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html of\n   the issuer.\n - can be inferred from the email domain of the issuer (e.g. a Google\n service account).\n\nExample: https://www.googleapis.com/oauth2/v1/certs",
           "type": "string"
+        },
+        "jwtLocations": {
+          "description": "Defines the locations to extract the JWT.\n\nJWT locations can be either from HTTP headers or URL query parameters.\nThe rule is that the first match wins. The checking order is: checking\nall headers first, then URL query parameters.\n\nIf not specified,  default to use following 3 locations:\n   1) Authorization: Bearer\n   2) x-goog-iap-jwt-assertion\n   3) access_token query parameter\n\nDefault locations can be specified as followings:\n   jwt_locations:\n   - header: Authorization\n     value_prefix: \"Bearer \"\n   - header: x-goog-iap-jwt-assertion\n   - query: access_token",
+          "items": {
+            "$ref": "JwtLocation"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -1950,6 +1957,25 @@
       },
       "type": "object"
     },
+    "JwtLocation": {
+      "description": "Specifies a location to extract JWT from an API request.",
+      "id": "JwtLocation",
+      "properties": {
+        "header": {
+          "description": "Specifies HTTP header name to extract JWT token.",
+          "type": "string"
+        },
+        "query": {
+          "description": "Specifies URL query parameter name to extract JWT token.",
+          "type": "string"
+        },
+        "valuePrefix": {
+          "description": "The value prefix. The value format is \"value_prefix{token}\"\nOnly applies to \"in\" header type. Must be empty for \"in\" query type.\nIf not empty, the header value has to match (case sensitive) this prefix.\nIf not matched, JWT will not be extracted. If matched, JWT will be\nextracted after the prefix is removed.\n\nFor example, for \"Authorization: Bearer {JWT}\",\nvalue_prefix=\"Bearer \" with a space at the end.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "LabelDescriptor": {
       "description": "A description of a label.",
       "id": "LabelDescriptor",
@@ -2674,7 +2700,7 @@
           "type": "string"
         },
         "createdBy": {
-          "description": "The user who created the Rollout. Readonly.",
+          "description": "This field is deprecated and will be deleted. Please remove usage of\nthis field.",
           "type": "string"
         },
         "deleteServiceStrategy": {

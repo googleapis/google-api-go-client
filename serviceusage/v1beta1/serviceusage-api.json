@@ -339,7 +339,7 @@
       }
     }
   },
-  "revision": "20200226",
+  "revision": "20200303",
   "rootUrl": "https://serviceusage.googleapis.com/",
   "schemas": {
     "Api": {
@@ -2109,7 +2109,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "If this map is nonempty, then this override applies only to specific values\nfor dimensions defined in the limit unit.\n\nFor example, an override on a limit with the unit 1/{project}/{region}\ncould contain an entry with the key \"region\" and the value \"us-east-1\";\nthe override is only applied to quota consumed in that region.\n\nThis map has the following restrictions:\n- Keys that are not defined in the limit's unit are not valid keys.\n  Any string appearing in {brackets} in the unit (besides {project} or\n  {user}) is a defined key.\n- \"project\" is not a valid key; the project is already specified in\n  the parent resource name.\n- \"user\" is not a valid key; the API does not support quota overrides\n  that apply only to a specific user.\n- If \"region\" appears as a key, its value must be a valid Cloud region.\n- If \"zone\" appears as a key, its value must be a valid Cloud zone.\n- If any valid key other than \"region\" or \"zone\" appears in the map, then\n  all valid keys other than \"region\" or \"zone\" must also appear in the map.",
+          "description": "If this map is nonempty, then this override applies only to specific values\nfor dimensions defined in the limit unit.\n\nFor example, an override on a limit with the unit 1/{project}/{region}\ncould contain an entry with the key \"region\" and the value \"us-east-1\";\nthe override is only applied to quota consumed in that region.\n\nThis map has the following restrictions:\n\n*   Keys that are not defined in the limit's unit are not valid keys.\n    Any string appearing in {brackets} in the unit (besides {project} or\n    {user}) is a defined key.\n*   \"project\" is not a valid key; the project is already specified in\n    the parent resource name.\n*   \"user\" is not a valid key; the API does not support quota overrides\n    that apply only to a specific user.\n*   If \"region\" appears as a key, its value must be a valid Cloud region.\n*   If \"zone\" appears as a key, its value must be a valid Cloud zone.\n*   If any valid key other than \"region\" or \"zone\" appears in the map, then\n    all valid keys other than \"region\" or \"zone\" must also appear in the\n    map.",
           "type": "object"
         },
         "name": {

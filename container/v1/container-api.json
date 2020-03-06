@@ -22,6 +22,7 @@
   },
   "id": "container:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://container.mtls.googleapis.com/",
   "name": "container",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -2874,6 +2875,10 @@
           "$ref": "VerticalPodAutoscaling",
           "description": "Cluster-level Vertical Pod Autoscaling configuration."
         },
+        "workloadIdentityConfig": {
+          "$ref": "WorkloadIdentityConfig",
+          "description": "Configuration for the use of Kubernetes Service Accounts in GCP IAM\npolicies."
+        },
         "zone": {
           "description": "[Output only] The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) in which the cluster\nresides.\nThis field is deprecated, use location instead.",
           "type": "string"
@@ -2984,6 +2989,10 @@
         "desiredVerticalPodAutoscaling": {
           "$ref": "VerticalPodAutoscaling",
           "description": "Cluster-level Vertical Pod Autoscaling configuration."
+        },
+        "desiredWorkloadIdentityConfig": {
+          "$ref": "WorkloadIdentityConfig",
+          "description": "Configuration for Workload Identity."
         }
       },
       "type": "object"
@@ -3535,6 +3544,31 @@
       },
       "type": "object"
     },
+    "Metric": {
+      "description": "Progress metric is (string, int|float|string) pair.",
+      "id": "Metric",
+      "properties": {
+        "doubleValue": {
+          "description": "For metrics with floating point value.",
+          "format": "double",
+          "type": "number"
+        },
+        "intValue": {
+          "description": "For metrics with integer value.",
+          "format": "int64",
+          "type": "string"
+        },
+        "name": {
+          "description": "Required. Metric name, e.g., \"nodes total\", \"percent done\".",
+          "type": "string"
+        },
+        "stringValue": {
+          "description": "For metrics with custom values (ratios, visual progress, etc.).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "NetworkConfig": {
       "description": "NetworkConfig reports the relative names of network \u0026 subnetwork.",
       "id": "NetworkConfig",
@@ -3679,6 +3713,10 @@
             "$ref": "NodeTaint"
           },
           "type": "array"
+        },
+        "workloadMetadataConfig": {
+          "$ref": "WorkloadMetadataConfig",
+          "description": "The workload metadata configuration for this node."
         }
       },
       "type": "object"
@@ -3930,6 +3968,10 @@
           ],
           "type": "string"
         },
+        "progress": {
+          "$ref": "OperationProgress",
+          "description": "Output only. [Output only] Progress information for an operation."
+        },
         "selfLink": {
           "description": "Server-defined URL for the resource.",
           "type": "string"
@@ -3957,7 +3999,7 @@
           "type": "string"
         },
         "statusMessage": {
-          "description": "If an error has occurred, a textual description of the error.",
+          "description": "Output only. If an error has occurred, a textual description of the error.",
           "type": "string"
         },
         "targetLink": {
@@ -3966,6 +4008,49 @@
         },
         "zone": {
           "description": "The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) in which the operation\nis taking place.\nThis field is deprecated, use location instead.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OperationProgress": {
+      "description": "Information about operation (or operation stage) progress.",
+      "id": "OperationProgress",
+      "properties": {
+        "metrics": {
+          "description": "Progress metric bundle, for example:\n  metrics: [{name: \"nodes done\",     int_value: 15},\n            {name: \"nodes total\",    int_value: 32}]\nor\n  metrics: [{name: \"progress\",       double_value: 0.56},\n            {name: \"progress scale\", double_value: 1.0}]",
+          "items": {
+            "$ref": "Metric"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "A non-parameterized string describing an operation stage.\nUnset for single-stage operations.",
+          "type": "string"
+        },
+        "stages": {
+          "description": "Substages of an operation or a stage.",
+          "items": {
+            "$ref": "OperationProgress"
+          },
+          "type": "array"
+        },
+        "status": {
+          "description": "Status of an operation stage.\nUnset for single-stage operations.",
+          "enum": [
+            "STATUS_UNSPECIFIED",
+            "PENDING",
+            "RUNNING",
+            "DONE",
+            "ABORTING"
+          ],
+          "enumDescriptions": [
+            "Not set.",
+            "The operation has been created.",
+            "The operation is currently running.",
+            "The operation is done, either cancelled or completed.",
+            "The operation is aborting."
+          ],
           "type": "string"
         }
       },
@@ -4038,7 +4123,7 @@
           "type": "string"
         },
         "key": {
-          "description": "Corresponds to the label key of reservation resource.",
+          "description": "Corresponds to the label key of a reservation resource. To target a\nSPECIFIC_RESERVATION by name, specify \"googleapis.com/reservation-name\" as\nthe key and specify the name of your reservation as its value.",
           "type": "string"
         },
         "values": {
@@ -4730,6 +4815,10 @@
           "$ref": "UpgradeSettings",
           "description": "Upgrade settings control disruption and speed of the upgrade."
         },
+        "workloadMetadataConfig": {
+          "$ref": "WorkloadMetadataConfig",
+          "description": "The desired workload metadata config for the node pool."
+        },
         "zone": {
           "description": "Required. Deprecated. The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) in which the cluster\nresides.\nThis field has been deprecated and replaced by the name field.",
           "type": "string"
@@ -4824,6 +4913,38 @@
         "enabled": {
           "description": "Enables vertical pod autoscaling.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "WorkloadIdentityConfig": {
+      "description": "Configuration for the use of Kubernetes Service Accounts in GCP IAM\npolicies.",
+      "id": "WorkloadIdentityConfig",
+      "properties": {
+        "workloadPool": {
+          "description": "The workload pool to attach all Kubernetes service accounts to.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "WorkloadMetadataConfig": {
+      "description": "WorkloadMetadataConfig defines the metadata configuration to expose to\nworkloads on the node pool.",
+      "id": "WorkloadMetadataConfig",
+      "properties": {
+        "mode": {
+          "description": "Mode is the configuration for how to expose metadata to workloads running\non the node pool.",
+          "enum": [
+            "MODE_UNSPECIFIED",
+            "GCE_METADATA",
+            "GKE_METADATA"
+          ],
+          "enumDescriptions": [
+            "Not set.",
+            "Expose all GCE metadata to pods.",
+            "Run the GKE Metadata Server on this node. The GKE Metadata Server exposes\na metadata API to workloads that is compatible with the V1 Compute\nMetadata APIs exposed by the Compute Engine and App Engine Metadata\nServers. This feature can only be enabled if Workload Identity is enabled\nat the cluster level."
+          ],
+          "type": "string"
         }
       },
       "type": "object"

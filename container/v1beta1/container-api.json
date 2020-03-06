@@ -22,6 +22,7 @@
   },
   "id": "container:v1beta1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://container.mtls.googleapis.com/",
   "name": "container",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -2516,7 +2517,7 @@
         },
         "gcePersistentDiskCsiDriverConfig": {
           "$ref": "GcePersistentDiskCsiDriverConfig",
-          "description": "Configuration for the GCE PD CSI driver. This option can only be enabled\nat cluster creation time."
+          "description": "Configuration for the GCP Compute Persistent Disk CSI driver."
         },
         "horizontalPodAutoscaling": {
           "$ref": "HorizontalPodAutoscaling",
@@ -3844,7 +3845,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Metric name, required.\ne.g., \"nodes total\", \"percent done\"",
+          "description": "Required. Metric name, e.g., \"nodes total\", \"percent done\".",
           "type": "string"
         },
         "stringValue": {
@@ -4259,7 +4260,7 @@
         },
         "progress": {
           "$ref": "OperationProgress",
-          "description": "[Output only] Progress information for an operation."
+          "description": "Output only. [Output only] Progress information for an operation."
         },
         "selfLink": {
           "description": "Server-defined URL for the resource.",
@@ -4288,7 +4289,7 @@
           "type": "string"
         },
         "statusMessage": {
-          "description": "If an error has occurred, a textual description of the error.",
+          "description": "Output only. If an error has occurred, a textual description of the error.",
           "type": "string"
         },
         "targetLink": {
@@ -4505,7 +4506,7 @@
           "type": "string"
         },
         "key": {
-          "description": "Corresponds to the label key of reservation resource.",
+          "description": "Corresponds to the label key of a reservation resource. To target a\nSPECIFIC_RESERVATION by name, specify \"googleapis.com/reservation-name\" as\nthe key and specify the name of your reservation as its value.",
           "type": "string"
         },
         "values": {
@@ -5270,7 +5271,7 @@
         },
         "workloadMetadataConfig": {
           "$ref": "WorkloadMetadataConfig",
-          "description": "The desired image type for the node pool."
+          "description": "The desired workload metadata config for the node pool."
         },
         "zone": {
           "description": "Required. Deprecated. The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) in which the cluster\nresides.\nThis field has been deprecated and replaced by the name field.",
@@ -5377,6 +5378,10 @@
         "identityNamespace": {
           "description": "IAM Identity Namespace to attach all Kubernetes Service Accounts to.",
           "type": "string"
+        },
+        "workloadPool": {
+          "description": "The workload pool to attach all Kubernetes service accounts to.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -5385,6 +5390,20 @@
       "description": "WorkloadMetadataConfig defines the metadata configuration to expose to\nworkloads on the node pool.",
       "id": "WorkloadMetadataConfig",
       "properties": {
+        "mode": {
+          "description": "Mode is the configuration for how to expose metadata to workloads running\non the node pool.",
+          "enum": [
+            "MODE_UNSPECIFIED",
+            "GCE_METADATA",
+            "GKE_METADATA"
+          ],
+          "enumDescriptions": [
+            "Not set.",
+            "Expose all GCE metadata to pods.",
+            "Run the GKE Metadata Server on this node. The GKE Metadata Server exposes\na metadata API to workloads that is compatible with the V1 Compute\nMetadata APIs exposed by the Compute Engine and App Engine Metadata\nServers. This feature can only be enabled if Workload Identity is enabled\nat the cluster level."
+          ],
+          "type": "string"
+        },
         "nodeMetadata": {
           "description": "NodeMetadata is the configuration for how to expose metadata to the\nworkloads running on the node.",
           "enum": [

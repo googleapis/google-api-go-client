@@ -2313,6 +2313,34 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
+                "finish": {
+                  "description": "Finish a running hybrid DlpJob. Triggers the finalization steps and running\nof any enabled actions that have not yet run.\nEarly access feature is in a pre-release state and might change or have\nlimited support. For more information, see\nhttps://cloud.google.com/products#product-launch-stages.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/dlpJobs/{dlpJobsId}:finish",
+                  "httpMethod": "POST",
+                  "id": "dlp.projects.locations.dlpJobs.finish",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the DlpJob resource to be cancelled.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/dlpJobs/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}:finish",
+                  "request": {
+                    "$ref": "GooglePrivacyDlpV2FinishDlpJobRequest"
+                  },
+                  "response": {
+                    "$ref": "GoogleProtobufEmpty"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "get": {
                   "description": "Gets the latest state of a long-running DlpJob.\nSee https://cloud.google.com/dlp/docs/inspecting-storage and\nhttps://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.",
                   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/dlpJobs/{dlpJobsId}",
@@ -2333,6 +2361,34 @@
                   "path": "v2/{+name}",
                   "response": {
                     "$ref": "GooglePrivacyDlpV2DlpJob"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "hybridInspect": {
+                  "description": "Inspect hybrid content and store findings to a job.\nTo review the findings inspect the job. Inspection will occur\nasynchronously.\nEarly access feature is in a pre-release state and might change or have\nlimited support. For more information, see\nhttps://cloud.google.com/products#product-launch-stages.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/dlpJobs/{dlpJobsId}:hybridInspect",
+                  "httpMethod": "POST",
+                  "id": "dlp.projects.locations.dlpJobs.hybridInspect",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Resource name of the job to execute a hybrid inspect on, for example\n`projects/dlp-test-project/dlpJob/53234423`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/dlpJobs/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}:hybridInspect",
+                  "request": {
+                    "$ref": "GooglePrivacyDlpV2HybridInspectDlpJobRequest"
+                  },
+                  "response": {
+                    "$ref": "GooglePrivacyDlpV2HybridInspectResponse"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -2717,6 +2773,34 @@
                   "path": "v2/{+name}",
                   "response": {
                     "$ref": "GooglePrivacyDlpV2JobTrigger"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "hybridInspect": {
+                  "description": "Inspect hybrid content and store findings to a trigger. The inspection\nwill be processed asynchronously. To review the findings monitor the\njobs within the trigger.\nEarly access feature is in a pre-release state and might change or have\nlimited support. For more information, see\nhttps://cloud.google.com/products#product-launch-stages.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobTriggers/{jobTriggersId}:hybridInspect",
+                  "httpMethod": "POST",
+                  "id": "dlp.projects.locations.jobTriggers.hybridInspect",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Resource name of the trigger to execute a hybrid inspect on, for example\n`projects/dlp-test-project/jobTriggers/53234423`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/jobTriggers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}:hybridInspect",
+                  "request": {
+                    "$ref": "GooglePrivacyDlpV2HybridInspectJobTriggerRequest"
+                  },
+                  "response": {
+                    "$ref": "GooglePrivacyDlpV2HybridInspectResponse"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -3131,7 +3215,7 @@
       }
     }
   },
-  "revision": "20200224",
+  "revision": "20200229",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -3727,6 +3811,42 @@
             "$ref": "GooglePrivacyDlpV2Condition"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2Container": {
+      "description": "Represents a container that may contain DLP findings.\nExamples of a container include a file, table, or database record.",
+      "id": "GooglePrivacyDlpV2Container",
+      "properties": {
+        "fullPath": {
+          "description": "A string representation of the full container name.\nExamples:\n- BigQuery: 'Project:DataSetId.TableId'\n- Google Cloud Storage: 'gs://Bucket/folders/filename.txt'",
+          "type": "string"
+        },
+        "projectId": {
+          "description": "Project where the finding was found.\nCan be different from the project that owns the finding.",
+          "type": "string"
+        },
+        "relativePath": {
+          "description": "The rest of the path after the root.\nExamples:\n- For BigQuery table `project_id:dataset_id.table_id`, the relative path is\n `table_id`\n- Google Cloud Storage file `gs://bucket/folder/filename.txt`, the relative\n path is `folder/filename.txt`",
+          "type": "string"
+        },
+        "rootPath": {
+          "description": "The root of the container.\nExamples:\n- For BigQuery table `project_id:dataset_id.table_id`, the root is\n `dataset_id`\n- For Google Cloud Storage file `gs://bucket/folder/filename.txt`, the root\n is `gs://bucket`",
+          "type": "string"
+        },
+        "type": {
+          "description": "Container type, for example BigQuery or Google Cloud Storage.",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Findings container modification timestamp, if applicable.\nFor Google Cloud Storage contains last file modification timestamp.\nFor BigQuery table contains last_modified_time property.\nFor Datastore - not populated.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "version": {
+          "description": "Findings container version, if available\n(\"generation\" for Google Cloud Storage).",
+          "type": "string"
         }
       },
       "type": "object"
@@ -4402,7 +4522,8 @@
             "RUNNING",
             "DONE",
             "CANCELED",
-            "FAILED"
+            "FAILED",
+            "ACTIVE"
           ],
           "enumDescriptions": [
             "Unused.",
@@ -4410,7 +4531,8 @@
             "The job is currently running. Once a job has finished it will transition\nto FAILED or DONE.",
             "The job is no longer running.",
             "The job was canceled before it could complete.",
-            "The job had an error and did not complete."
+            "The job had an error and did not complete.",
+            "The job is currently accepting findings via hybridInspect.\nA hybrid job in ACTIVE state may continue to have findings added to it\nthrough calling of hybridInspect. After the job has finished no more\ncalls to hybridInspect may be made. ACTIVE jobs can transition to DONE."
           ],
           "type": "string"
         },
@@ -4619,6 +4741,13 @@
           "description": "The job that stored the finding.",
           "type": "string"
         },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The labels associated with this `InspectFinding`.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: \\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?.\n\nLabel values must be between 0 and 63 characters long and must conform\nto the regular expression (\\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?)?.\n\nNo more than 10 labels can be associated with a given finding.\n\nExample: \u003ccode\u003e\"environment\" : \"production\"\u003c/code\u003e\nExample: \u003ccode\u003e\"pipeline\" : \"etl\"\u003c/code\u003e",
+          "type": "object"
+        },
         "likelihood": {
           "description": "Confidence of how likely it is that the `info_type` is correct.",
           "enum": [
@@ -4690,6 +4819,12 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2FinishDlpJobRequest": {
+      "description": "The request message for finishing a DLP hybrid job.\nEarly access feature is in a pre-release state and might change or have\nlimited support. For more information, see\nhttps://cloud.google.com/products#product-launch-stages.",
+      "id": "GooglePrivacyDlpV2FinishDlpJobRequest",
+      "properties": {},
+      "type": "object"
+    },
     "GooglePrivacyDlpV2FixedSizeBucketingConfig": {
       "description": "Buckets values based on fixed size ranges. The\nBucketing transformation can provide all of this functionality,\nbut requires more configuration. This message is provided as a convenience to\nthe user for simple bucketing strategies.\n\nThe transformed value will be a hyphenated string of\n{lower_bound}-{upper_bound}, i.e if lower_bound = 10 and upper_bound = 20\nall values that are within this bucket will be replaced with \"10-20\".\n\nThis can be used on data of type: double, long.\n\nIf the bound Value type differs from the type of data\nbeing transformed, we will first attempt converting the type of the data to\nbe transformed to match the type of the bound before comparing.\n\nSee https://cloud.google.com/dlp/docs/concepts-bucketing to learn more.",
       "id": "GooglePrivacyDlpV2FixedSizeBucketingConfig",
@@ -4725,6 +4860,132 @@
         "proximity": {
           "$ref": "GooglePrivacyDlpV2Proximity",
           "description": "Proximity of the finding within which the entire hotword must reside.\nThe total length of the window cannot exceed 1000 characters. Note that\nthe finding itself will be included in the window, so that hotwords may\nbe used to match substrings of the finding itself. For example, the\ncertainty of a phone number regex \"\\(\\d{3}\\) \\d{3}-\\d{4}\" could be\nadjusted upwards if the area code is known to be the local area code of\na company office using the hotword regex \"\\(xxx\\)\", where \"xxx\"\nis the area code in question."
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2HybridContentItem": {
+      "description": "An individual hybrid item to inspect. Will be stored temporarily during\nprocessing.\nEarly access feature is in a pre-release state and might change or have\nlimited support. For more information, see\nhttps://cloud.google.com/products#product-launch-stages.",
+      "id": "GooglePrivacyDlpV2HybridContentItem",
+      "properties": {
+        "findingDetails": {
+          "$ref": "GooglePrivacyDlpV2HybridFindingDetails",
+          "description": "Supplementary information that will be added to each finding."
+        },
+        "item": {
+          "$ref": "GooglePrivacyDlpV2ContentItem",
+          "description": "The item to inspect."
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2HybridFindingDetails": {
+      "description": "Populate to associate additional data with each finding.\nEarly access feature is in a pre-release state and might change or have\nlimited support. For more information, see\nhttps://cloud.google.com/products#product-launch-stages.",
+      "id": "GooglePrivacyDlpV2HybridFindingDetails",
+      "properties": {
+        "containerDetails": {
+          "$ref": "GooglePrivacyDlpV2Container",
+          "description": "Details about the container where the content being inspected is from."
+        },
+        "fileOffset": {
+          "description": "Offset in bytes of the line, from the beginning of the file, where the\nfinding  is located. Populate if the item being scanned is only part of a\nbigger item, such as a shard of a file and you want to track the absolute\nposition of the finding.",
+          "format": "int64",
+          "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Labels to represent user provided metadata about the data being inspected.\nIf configured by the job, some key values may be required.\nThe labels associated with `Finding`'s produced by hybrid\ninspection.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: \\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?.\n\nLabel values must be between 0 and 63 characters long and must conform\nto the regular expression (\\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?)?.\n\nNo more than 10 labels can be associated with a given finding.\n\nExample: \u003ccode\u003e\"environment\" : \"production\"\u003c/code\u003e\nExample: \u003ccode\u003e\"pipeline\" : \"etl\"\u003c/code\u003e",
+          "type": "object"
+        },
+        "rowOffset": {
+          "description": "Offset of the row for tables. Populate if the row(s) being scanned are\npart of a bigger dataset and you want to keep track of their absolute\nposition.",
+          "format": "int64",
+          "type": "string"
+        },
+        "tableOptions": {
+          "$ref": "GooglePrivacyDlpV2TableOptions",
+          "description": "If the container is a table, additional information to make findings\nmeaningful such as the columns that are primary keys. If not known ahead\nof time, can also be set within each inspect hybrid call and the two\nwill be merged. Note that identifying_fields will only be stored to\nBigQuery, and only if the BigQuery action has been included."
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2HybridInspectDlpJobRequest": {
+      "description": "Request to search for potentially sensitive info in a custom location.\nEarly access feature is in a pre-release state and might change or have\nlimited support. For more information, see\nhttps://cloud.google.com/products#product-launch-stages.",
+      "id": "GooglePrivacyDlpV2HybridInspectDlpJobRequest",
+      "properties": {
+        "hybridItem": {
+          "$ref": "GooglePrivacyDlpV2HybridContentItem",
+          "description": "The item to inspect."
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2HybridInspectJobTriggerRequest": {
+      "description": "Request to search for potentially sensitive info in a custom location.\nEarly access feature is in a pre-release state and might change or have\nlimited support. For more information, see\nhttps://cloud.google.com/products#product-launch-stages.",
+      "id": "GooglePrivacyDlpV2HybridInspectJobTriggerRequest",
+      "properties": {
+        "hybridItem": {
+          "$ref": "GooglePrivacyDlpV2HybridContentItem",
+          "description": "The item to inspect."
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2HybridInspectResponse": {
+      "description": "Quota exceeded errors will be thrown once quota has been met.\nEarly access feature is in a pre-release state and might change or have\nlimited support. For more information, see\nhttps://cloud.google.com/products#product-launch-stages.",
+      "id": "GooglePrivacyDlpV2HybridInspectResponse",
+      "properties": {},
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2HybridInspectStatistics": {
+      "description": "Statistics related to processing hybrid inspect requests\nEarly access feature is in a pre-release state and might change or have\nlimited support. For more information, see\nhttps://cloud.google.com/products#product-launch-stages.",
+      "id": "GooglePrivacyDlpV2HybridInspectStatistics",
+      "properties": {
+        "hybridRequestsAborted": {
+          "description": "The number of hybrid inspection requests aborted because the job ran\nout of quota or was ended before they could be processed.",
+          "format": "int64",
+          "type": "string"
+        },
+        "hybridRequestsPending": {
+          "description": "The number of hybrid requests currently being processed. Only populated\nwhen called via method `getDlpJob`.\nA burst of traffic may cause hybrid inspect requests to be enqueued.\nProcessing will take place as quickly as possible, but resource limitations\nmay impact how long a request is enqueued for.",
+          "format": "int64",
+          "type": "string"
+        },
+        "hybridRequestsProcessed": {
+          "description": "The number of hybrid inspection requests processed within this job.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2HybridOptions": {
+      "description": "Configuration to control jobs where the content being inspected is outside\nof Google Cloud Platform.\nEarly access feature is in a pre-release state and might change or have\nlimited support. For more information, see\nhttps://cloud.google.com/products#product-launch-stages.",
+      "id": "GooglePrivacyDlpV2HybridOptions",
+      "properties": {
+        "description": {
+          "description": "A short description of where the data is coming from. Will be stored once\nin the job. 256 max length.",
+          "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "To organize findings, these labels will be added to each finding.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: \\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?.\n\nLabel values must be between 0 and 63 characters long and must conform\nto the regular expression (\\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?)?.\n\nNo more than 10 labels can be associated with a given finding.\n\nExample: \u003ccode\u003e\"environment\" : \"production\"\u003c/code\u003e\nExample: \u003ccode\u003e\"pipeline\" : \"etl\"\u003c/code\u003e",
+          "type": "object"
+        },
+        "requiredFindingLabelKeys": {
+          "description": "These are labels that each inspection request must include within their\n'finding_labels' map. Request may contain others, but any missing one of\nthese will be rejected.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: \\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?.\n\nNo more than 10 keys can be required.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "tableOptions": {
+          "$ref": "GooglePrivacyDlpV2TableOptions",
+          "description": "If the container is a table, additional information to make findings\nmeaningful such as the columns that are primary keys."
         }
       },
       "type": "object"
@@ -5700,6 +5961,12 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2Manual": {
+      "description": "Job trigger option for hybrid jobs. Jobs must be manually created\nand finished.\nEarly access feature is in a pre-release state and might change or have\nlimited support. For more information, see\nhttps://cloud.google.com/products#product-launch-stages.",
+      "id": "GooglePrivacyDlpV2Manual",
+      "properties": {},
+      "type": "object"
+    },
     "GooglePrivacyDlpV2NumericalStatsConfig": {
       "description": "Compute numerical stats over an individual column, including\nmin, max, and quantiles.",
       "id": "GooglePrivacyDlpV2NumericalStatsConfig",
@@ -6247,6 +6514,10 @@
       "description": "All result fields mentioned below are updated while the job is processing.",
       "id": "GooglePrivacyDlpV2Result",
       "properties": {
+        "hybridStats": {
+          "$ref": "GooglePrivacyDlpV2HybridInspectStatistics",
+          "description": "Statistics related to the processing of hybrid inspect.\nEarly access feature is in a pre-release state and might change or have\nlimited support. For more information, see\nhttps://cloud.google.com/products#product-launch-stages."
+        },
         "infoTypeStats": {
           "description": "Statistics of how many instances of each info type were found during\ninspect job.",
           "items": {
@@ -6364,6 +6635,10 @@
           "$ref": "GooglePrivacyDlpV2DatastoreOptions",
           "description": "Google Cloud Datastore options."
         },
+        "hybridOptions": {
+          "$ref": "GooglePrivacyDlpV2HybridOptions",
+          "description": "Hybrid inspection options.\nEarly access feature is in a pre-release state and might change or have\nlimited support. For more information, see\nhttps://cloud.google.com/products#product-launch-stages."
+        },
         "timespanConfig": {
           "$ref": "GooglePrivacyDlpV2TimespanConfig"
         }
@@ -6400,6 +6675,10 @@
           "description": "Description of the StoredInfoType (max 256 characters).",
           "type": "string"
         },
+        "dictionary": {
+          "$ref": "GooglePrivacyDlpV2Dictionary",
+          "description": "Store dictionary-based CustomInfoType."
+        },
         "displayName": {
           "description": "Display name of the StoredInfoType (max 256 characters).",
           "type": "string"
@@ -6407,6 +6686,10 @@
         "largeCustomDictionary": {
           "$ref": "GooglePrivacyDlpV2LargeCustomDictionaryConfig",
           "description": "StoredInfoType where findings are defined by a dictionary of phrases."
+        },
+        "regex": {
+          "$ref": "GooglePrivacyDlpV2Regex",
+          "description": "Store regular expression-based StoredInfoType."
         }
       },
       "type": "object"
@@ -6548,6 +6831,20 @@
           "description": "The zero-based index of the row where the finding is located.",
           "format": "int64",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2TableOptions": {
+      "description": "Instructions regarding the table content being inspected.\nEarly access feature is in a pre-release state and might change or have\nlimited support. For more information, see\nhttps://cloud.google.com/products#product-launch-stages.",
+      "id": "GooglePrivacyDlpV2TableOptions",
+      "properties": {
+        "identifyingFields": {
+          "description": "The columns that are the primary keys for table objects included in\nContentItem. A copy of this cell's value will stored alongside alongside\neach finding so that the finding can be traced to the specific row it came\nfrom. No more than 3 may be provided.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2FieldId"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -6738,6 +7035,10 @@
       "description": "What event needs to occur for a new job to be started.",
       "id": "GooglePrivacyDlpV2Trigger",
       "properties": {
+        "manual": {
+          "$ref": "GooglePrivacyDlpV2Manual",
+          "description": "For use with hybrid jobs. Jobs must be manually created and finished.\nEarly access feature is in a pre-release state and might change or have\nlimited support. For more information, see\nhttps://cloud.google.com/products#product-launch-stages."
+        },
         "schedule": {
           "$ref": "GooglePrivacyDlpV2Schedule",
           "description": "Create a job on a repeating basis based on the elapse of time."

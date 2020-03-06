@@ -341,6 +341,128 @@
                     "https://www.googleapis.com/auth/bigquery",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
+                },
+                "merge": {
+                  "description": "Merges capacity commitments of the same plan into one. Resulting capacity\ncommitment has the longer commitment_end_time out of the two. Attempting to\nmerge capacity commitments of different plan will fail with the error code\n`google.rpc.Code.FAILED_PRECONDITION`.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/capacityCommitments:merge",
+                  "httpMethod": "POST",
+                  "id": "bigqueryreservation.projects.locations.capacityCommitments.merge",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Parent resource that identifies admin project and location e.g.,\nprojects/myproject/locations/us",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+parent}/capacityCommitments:merge",
+                  "request": {
+                    "$ref": "MergeCapacityCommitmentsRequest"
+                  },
+                  "response": {
+                    "$ref": "CapacityCommitment"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/bigquery",
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "patch": {
+                  "description": "Updates an existing capacity commitment.\n\nOnly renewal_plan field can be updated.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/capacityCommitments/{capacityCommitmentsId}",
+                  "httpMethod": "PATCH",
+                  "id": "bigqueryreservation.projects.locations.capacityCommitments.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Output only. The resource name of the capacity commitment, e.g.,\n   projects/myproject/locations/US/capacityCommitments/123",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/capacityCommitments/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "Standard field mask for the set of fields to be updated.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+name}",
+                  "request": {
+                    "$ref": "CapacityCommitment"
+                  },
+                  "response": {
+                    "$ref": "CapacityCommitment"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/bigquery",
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "split": {
+                  "description": "Splits capacity commitment to two commitments of the same plan and\ncommitment_end_time. A common use case to do that is to perform a downgrade\ne.g., in order to downgrade from 10000 slots to 8000, one might split 10000\ncapacity commitment to 2000 and 8000, change the plan of the first one to\nflex and then delete it.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/capacityCommitments/{capacityCommitmentsId}:split",
+                  "httpMethod": "POST",
+                  "id": "bigqueryreservation.projects.locations.capacityCommitments.split",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The resource name e.g.,:\n  projects/myproject/locations/US/capacityCommitments/123",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/capacityCommitments/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+name}:split",
+                  "request": {
+                    "$ref": "SplitCapacityCommitmentRequest"
+                  },
+                  "response": {
+                    "$ref": "SplitCapacityCommitmentResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/bigquery",
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "upgradeCapacityCommitmentPlan": {
+                  "description": "Replaces an existing commitment with a new commitment of a different plan.\nPlan can only be changed to a plan of a longer commitment period. New\ncommitment start is set to a current time. Attempting to change to a plan\nwith shorter commitment period will fail with the error code\n`google.rpc.Code.FAILED_PRECONDITION`.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/capacityCommitments/{capacityCommitmentsId}:upgradeCapacityCommitmentPlan",
+                  "httpMethod": "POST",
+                  "id": "bigqueryreservation.projects.locations.capacityCommitments.upgradeCapacityCommitmentPlan",
+                  "parameterOrder": [
+                    "capacityCommitment"
+                  ],
+                  "parameters": {
+                    "capacityCommitment": {
+                      "description": "Required. The resource name e.g.,:\n  projects/myproject/locations/US/capacityCommitments/123",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/capacityCommitments/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+capacityCommitment}:upgradeCapacityCommitmentPlan",
+                  "request": {
+                    "$ref": "UpgradeCapacityCommitmentPlanRequest"
+                  },
+                  "response": {
+                    "$ref": "CapacityCommitment"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/bigquery",
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
                 }
               }
             },
@@ -643,7 +765,7 @@
       }
     }
   },
-  "revision": "20200220",
+  "revision": "20200229",
   "rootUrl": "https://bigqueryreservation.googleapis.com/",
   "schemas": {
     "Assignment": {
@@ -711,11 +833,11 @@
       "type": "object"
     },
     "CapacityCommitment": {
-      "description": "Capacity commitment is a way to purchase compute capacity for BigQuery jobs\n(in the form of slots) with some minimum committed period of usage. Capacity\ncommitment is immutable and cannot be deleted until the end of the commitment\nperiod. After the end of the commitment period, slots are still available but\ncan be freely removed any time. Annual commitments will automatically be\ndowngraded to monthly after the commitment ends.\n\nA capacity commitment resource exists as a child resource of the admin\nproject.",
+      "description": "Capacity commitment is a way to purchase compute capacity for BigQuery jobs\n(in the form of slots) with some committed period of usage. Monthly and\nannual commitments renew by default. Only flex commitments can be removed. In\norder to remove monthly or annual commitments, their plan needs to be changed\nto flex first.\n\nA capacity commitment resource exists as a child resource of the admin\nproject.",
       "id": "CapacityCommitment",
       "properties": {
         "commitmentEndTime": {
-          "description": "Output only. The end of the commitment period. Capacity commitment cannot be\nremoved before commitment_end_time. It is applicable only for ACTIVE\ncapacity commitments and is computed as a combination of the plan and the\ntime when the capacity commitment became ACTIVE.",
+          "description": "Output only. The end of the current commitment period. It is applicable only for ACTIVE\ncapacity commitments.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -737,9 +859,25 @@
           ],
           "enumDescriptions": [
             "Invalid plan value. Requests with this value will be rejected with\nerror code `google.rpc.Code.INVALID_ARGUMENT`.",
-            "Capacity commitment can be removed at any point, even after becoming\nACTIVE.",
-            "Capacity commitment cannot be removed for 30 days after becoming ACTIVE.",
-            "Capacity commitment cannot be removed for 365 days after becoming ACTIVE.\nNote: annual commitments are automatically downgraded to monthly after\n365 days."
+            "Flex commitments have committed period of 1 minute after becoming ACTIVE.\nAfter that, they are not in a committed period anymore and can be removed\nany time.",
+            "Monthly commitments have a committed period of 30 days after becoming\nACTIVE.",
+            "Annual commitments have a committed period of 365 days after becoming\nACTIVE."
+          ],
+          "type": "string"
+        },
+        "renewalPlan": {
+          "description": "The plan this capacity commitment is converted to after commitment_end_time\npasses. Once the plan is changed, committed period is extended according to\ncommitment plan. Only applicable for MONTHLY and ANNUAL commitments.",
+          "enum": [
+            "COMMITMENT_PLAN_UNSPECIFIED",
+            "FLEX",
+            "MONTHLY",
+            "ANNUAL"
+          ],
+          "enumDescriptions": [
+            "Invalid plan value. Requests with this value will be rejected with\nerror code `google.rpc.Code.INVALID_ARGUMENT`.",
+            "Flex commitments have committed period of 1 minute after becoming ACTIVE.\nAfter that, they are not in a committed period anymore and can be removed\nany time.",
+            "Monthly commitments have a committed period of 30 days after becoming\nACTIVE.",
+            "Annual commitments have a committed period of 365 days after becoming\nACTIVE."
           ],
           "type": "string"
         },
@@ -827,6 +965,20 @@
       },
       "type": "object"
     },
+    "MergeCapacityCommitmentsRequest": {
+      "description": "The request for ReservationService.MergeCapacityCommitments.",
+      "id": "MergeCapacityCommitmentsRequest",
+      "properties": {
+        "capacityCommitmentIds": {
+          "description": "Ids of capacity commitments to merge.\nThese capacity commitments must exist under admin project and location\nspecified in the parent.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "MoveAssignmentRequest": {
       "description": "The request for\nReservationService.MoveAssignment.\nNote: \"bigquery.reservationAssignments.create\" permission is required on the\ndestination_id. Note: \"bigquery.reservationAssignments.create\" and\n\"bigquery.reservationAssignments.delete\" permission is required on the\nrelated assignee.",
       "id": "MoveAssignmentRequest",
@@ -876,6 +1028,33 @@
       },
       "type": "object"
     },
+    "SplitCapacityCommitmentRequest": {
+      "description": "The request for ReservationService.SplitCapacityCommitment.",
+      "id": "SplitCapacityCommitmentRequest",
+      "properties": {
+        "slotCount": {
+          "description": "Number of slots in the capacity commitment after the split.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SplitCapacityCommitmentResponse": {
+      "description": "The response for ReservationService.SplitCapacityCommitment.",
+      "id": "SplitCapacityCommitmentResponse",
+      "properties": {
+        "first": {
+          "$ref": "CapacityCommitment",
+          "description": "First capacity commitment, result of a split."
+        },
+        "second": {
+          "$ref": "CapacityCommitment",
+          "description": "Second capacity commitment, result of a split."
+        }
+      },
+      "type": "object"
+    },
     "Status": {
       "description": "The `Status` type defines a logical error model that is suitable for\ndifferent programming environments, including REST APIs and RPC APIs. It is\nused by [gRPC](https://github.com/grpc). Each `Status` message contains\nthree pieces of data: error code, error message, and error details.\n\nYou can find out more about this error model and how to work with it in the\n[API Design Guide](https://cloud.google.com/apis/design/errors).",
       "id": "Status",
@@ -898,6 +1077,29 @@
         },
         "message": {
           "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UpgradeCapacityCommitmentPlanRequest": {
+      "description": "The request for ReservationService.UpgradeCapacityCommitmentPlan.",
+      "id": "UpgradeCapacityCommitmentPlanRequest",
+      "properties": {
+        "plan": {
+          "description": "New capacity commitment plan.",
+          "enum": [
+            "COMMITMENT_PLAN_UNSPECIFIED",
+            "FLEX",
+            "MONTHLY",
+            "ANNUAL"
+          ],
+          "enumDescriptions": [
+            "Invalid plan value. Requests with this value will be rejected with\nerror code `google.rpc.Code.INVALID_ARGUMENT`.",
+            "Flex commitments have committed period of 1 minute after becoming ACTIVE.\nAfter that, they are not in a committed period anymore and can be removed\nany time.",
+            "Monthly commitments have a committed period of 30 days after becoming\nACTIVE.",
+            "Annual commitments have a committed period of 365 days after becoming\nACTIVE."
+          ],
           "type": "string"
         }
       },

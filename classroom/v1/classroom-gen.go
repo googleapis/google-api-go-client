@@ -109,12 +109,6 @@ const (
 	// classes you teach or administer
 	ClassroomCourseworkStudentsReadonlyScope = "https://www.googleapis.com/auth/classroom.coursework.students.readonly"
 
-	// See, edit, and create classwork materials in Google Classroom
-	ClassroomCourseworkmaterialsScope = "https://www.googleapis.com/auth/classroom.courseworkmaterials"
-
-	// See all classwork materials for your Google Classroom classes
-	ClassroomCourseworkmaterialsReadonlyScope = "https://www.googleapis.com/auth/classroom.courseworkmaterials.readonly"
-
 	// View your Google Classroom guardians
 	ClassroomGuardianlinksMeReadonlyScope = "https://www.googleapis.com/auth/classroom.guardianlinks.me.readonly"
 
@@ -165,8 +159,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/classroom.coursework.me.readonly",
 		"https://www.googleapis.com/auth/classroom.coursework.students",
 		"https://www.googleapis.com/auth/classroom.coursework.students.readonly",
-		"https://www.googleapis.com/auth/classroom.courseworkmaterials",
-		"https://www.googleapis.com/auth/classroom.courseworkmaterials.readonly",
 		"https://www.googleapis.com/auth/classroom.guardianlinks.me.readonly",
 		"https://www.googleapis.com/auth/classroom.guardianlinks.students",
 		"https://www.googleapis.com/auth/classroom.guardianlinks.students.readonly",
@@ -240,7 +232,6 @@ func NewCoursesService(s *Service) *CoursesService {
 	rs.Aliases = NewCoursesAliasesService(s)
 	rs.Announcements = NewCoursesAnnouncementsService(s)
 	rs.CourseWork = NewCoursesCourseWorkService(s)
-	rs.CourseWorkMaterials = NewCoursesCourseWorkMaterialsService(s)
 	rs.Students = NewCoursesStudentsService(s)
 	rs.Teachers = NewCoursesTeachersService(s)
 	rs.Topics = NewCoursesTopicsService(s)
@@ -255,8 +246,6 @@ type CoursesService struct {
 	Announcements *CoursesAnnouncementsService
 
 	CourseWork *CoursesCourseWorkService
-
-	CourseWorkMaterials *CoursesCourseWorkMaterialsService
 
 	Students *CoursesStudentsService
 
@@ -301,15 +290,6 @@ func NewCoursesCourseWorkStudentSubmissionsService(s *Service) *CoursesCourseWor
 }
 
 type CoursesCourseWorkStudentSubmissionsService struct {
-	s *Service
-}
-
-func NewCoursesCourseWorkMaterialsService(s *Service) *CoursesCourseWorkMaterialsService {
-	rs := &CoursesCourseWorkMaterialsService{s: s}
-	return rs
-}
-
-type CoursesCourseWorkMaterialsService struct {
 	s *Service
 }
 
@@ -1277,141 +1257,6 @@ func (s *CourseWorkChangesInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CourseWorkMaterial: Course work material created by a teacher for
-// students of the course
-type CourseWorkMaterial struct {
-	// AlternateLink: Absolute link to this course work material in the
-	// Classroom web UI.
-	// This is only populated if `state` is `PUBLISHED`.
-	//
-	// Read-only.
-	AlternateLink string `json:"alternateLink,omitempty"`
-
-	// AssigneeMode: Assignee mode of the course work material.
-	// If unspecified, the default value is `ALL_STUDENTS`.
-	//
-	// Possible values:
-	//   "ASSIGNEE_MODE_UNSPECIFIED" - No mode specified. This is never
-	// returned.
-	//   "ALL_STUDENTS" - All students can see the item.
-	// This is the default state.
-	//   "INDIVIDUAL_STUDENTS" - A subset of the students can see the item.
-	AssigneeMode string `json:"assigneeMode,omitempty"`
-
-	// CourseId: Identifier of the course.
-	//
-	// Read-only.
-	CourseId string `json:"courseId,omitempty"`
-
-	// CreationTime: Timestamp when this course work material was
-	// created.
-	//
-	// Read-only.
-	CreationTime string `json:"creationTime,omitempty"`
-
-	// CreatorUserId: Identifier for the user that created the course work
-	// material.
-	//
-	// Read-only.
-	CreatorUserId string `json:"creatorUserId,omitempty"`
-
-	// Description: Optional description of this course work material.
-	// The text must be a valid UTF-8 string containing no more
-	// than 30,000 characters.
-	Description string `json:"description,omitempty"`
-
-	// Id: Classroom-assigned identifier of this course work material,
-	// unique per
-	// course.
-	//
-	// Read-only.
-	Id string `json:"id,omitempty"`
-
-	// IndividualStudentsOptions: Identifiers of students with access to the
-	// course work material.
-	// This field is set only if `assigneeMode` is `INDIVIDUAL_STUDENTS`.
-	// If the `assigneeMode` is `INDIVIDUAL_STUDENTS`, then only
-	// students
-	// specified in this field will be able to see the course work material.
-	IndividualStudentsOptions *IndividualStudentsOptions `json:"individualStudentsOptions,omitempty"`
-
-	// Materials: Additional materials.
-	//
-	// A course work material must have no more than 20 material items.
-	Materials []*Material `json:"materials,omitempty"`
-
-	// ScheduledTime: Optional timestamp when this course work material is
-	// scheduled to be
-	// published.
-	ScheduledTime string `json:"scheduledTime,omitempty"`
-
-	// State: Status of this course work material.
-	// If unspecified, the default state is `DRAFT`.
-	//
-	// Possible values:
-	//   "COURSEWORK_MATERIAL_STATE_UNSPECIFIED" - No state specified. This
-	// is never returned.
-	//   "PUBLISHED" - Status for course work material that has been
-	// published.
-	// This is the default state.
-	//   "DRAFT" - Status for an course work material that is not yet
-	// published.
-	// Course work material in this state is visible only to course teachers
-	// and
-	// domain administrators.
-	//   "DELETED" - Status for course work material that was published but
-	// is now deleted.
-	// Course work material in this state is visible only to course teachers
-	// and
-	// domain administrators. Course work material in this state is
-	// deleted
-	// after some time.
-	State string `json:"state,omitempty"`
-
-	// Title: Title of this course work material.
-	// The title must be a valid UTF-8 string containing between 1 and
-	// 3000
-	// characters.
-	Title string `json:"title,omitempty"`
-
-	// TopicId: Identifier for the topic that this course work material is
-	// associated with.
-	// Must match an existing topic in the course.
-	TopicId string `json:"topicId,omitempty"`
-
-	// UpdateTime: Timestamp of the most recent change to this course work
-	// material.
-	//
-	// Read-only.
-	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AlternateLink") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CourseWorkMaterial) MarshalJSON() ([]byte, error) {
-	type NoMethod CourseWorkMaterial
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Date: Represents a whole or partial calendar date, e.g. a birthday.
 // The time of day
 // and time zone are either specified elsewhere or are not significant.
@@ -2106,46 +1951,6 @@ type ListCourseAliasesResponse struct {
 
 func (s *ListCourseAliasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCourseAliasesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ListCourseWorkMaterialResponse: Response when listing course work
-// material.
-type ListCourseWorkMaterialResponse struct {
-	// CourseWorkMaterial: Course work material items that match the
-	// request.
-	CourseWorkMaterial []*CourseWorkMaterial `json:"courseWorkMaterial,omitempty"`
-
-	// NextPageToken: Token identifying the next page of results to return.
-	// If empty, no further
-	// results are available.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "CourseWorkMaterial")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CourseWorkMaterial") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ListCourseWorkMaterialResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListCourseWorkMaterialResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3567,7 +3372,7 @@ func (c *CoursesCreateCall) Header() http.Header {
 
 func (c *CoursesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3699,7 +3504,7 @@ func (c *CoursesDeleteCall) Header() http.Header {
 
 func (c *CoursesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3846,7 +3651,7 @@ func (c *CoursesGetCall) Header() http.Header {
 
 func (c *CoursesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4063,7 +3868,7 @@ func (c *CoursesListCall) Header() http.Header {
 
 func (c *CoursesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4284,7 +4089,7 @@ func (c *CoursesPatchCall) Header() http.Header {
 
 func (c *CoursesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4438,7 +4243,7 @@ func (c *CoursesUpdateCall) Header() http.Header {
 
 func (c *CoursesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4589,7 +4394,7 @@ func (c *CoursesAliasesCreateCall) Header() http.Header {
 
 func (c *CoursesAliasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4739,7 +4544,7 @@ func (c *CoursesAliasesDeleteCall) Header() http.Header {
 
 func (c *CoursesAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4918,7 +4723,7 @@ func (c *CoursesAliasesListCall) Header() http.Header {
 
 func (c *CoursesAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5097,7 +4902,7 @@ func (c *CoursesAnnouncementsCreateCall) Header() http.Header {
 
 func (c *CoursesAnnouncementsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5254,7 +5059,7 @@ func (c *CoursesAnnouncementsDeleteCall) Header() http.Header {
 
 func (c *CoursesAnnouncementsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5412,7 +5217,7 @@ func (c *CoursesAnnouncementsGetCall) Header() http.Header {
 
 func (c *CoursesAnnouncementsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5629,7 +5434,7 @@ func (c *CoursesAnnouncementsListCall) Header() http.Header {
 
 func (c *CoursesAnnouncementsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5827,7 +5632,7 @@ func (c *CoursesAnnouncementsModifyAssigneesCall) Header() http.Header {
 
 func (c *CoursesAnnouncementsModifyAssigneesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6011,7 +5816,7 @@ func (c *CoursesAnnouncementsPatchCall) Header() http.Header {
 
 func (c *CoursesAnnouncementsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6187,7 +5992,7 @@ func (c *CoursesCourseWorkCreateCall) Header() http.Header {
 
 func (c *CoursesCourseWorkCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6344,7 +6149,7 @@ func (c *CoursesCourseWorkDeleteCall) Header() http.Header {
 
 func (c *CoursesCourseWorkDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6502,7 +6307,7 @@ func (c *CoursesCourseWorkGetCall) Header() http.Header {
 
 func (c *CoursesCourseWorkGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6723,7 +6528,7 @@ func (c *CoursesCourseWorkListCall) Header() http.Header {
 
 func (c *CoursesCourseWorkListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6923,7 +6728,7 @@ func (c *CoursesCourseWorkModifyAssigneesCall) Header() http.Header {
 
 func (c *CoursesCourseWorkModifyAssigneesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7127,7 +6932,7 @@ func (c *CoursesCourseWorkPatchCall) Header() http.Header {
 
 func (c *CoursesCourseWorkPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7302,7 +7107,7 @@ func (c *CoursesCourseWorkStudentSubmissionsGetCall) Header() http.Header {
 
 func (c *CoursesCourseWorkStudentSubmissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7552,7 +7357,7 @@ func (c *CoursesCourseWorkStudentSubmissionsListCall) Header() http.Header {
 
 func (c *CoursesCourseWorkStudentSubmissionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7788,7 +7593,7 @@ func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) Header() http
 
 func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7985,7 +7790,7 @@ func (c *CoursesCourseWorkStudentSubmissionsPatchCall) Header() http.Header {
 
 func (c *CoursesCourseWorkStudentSubmissionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8181,7 +7986,7 @@ func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) Header() http.Header {
 
 func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8369,7 +8174,7 @@ func (c *CoursesCourseWorkStudentSubmissionsReturnCall) Header() http.Header {
 
 func (c *CoursesCourseWorkStudentSubmissionsReturnCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8554,7 +8359,7 @@ func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) Header() http.Header {
 
 func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8663,965 +8468,6 @@ func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) Do(opts ...googleapi.Cal
 
 }
 
-// method id "classroom.courses.courseWorkMaterials.create":
-
-type CoursesCourseWorkMaterialsCreateCall struct {
-	s                  *Service
-	courseId           string
-	courseworkmaterial *CourseWorkMaterial
-	urlParams_         gensupport.URLParams
-	ctx_               context.Context
-	header_            http.Header
-}
-
-// Create: Creates a course work material.
-//
-// This method returns the following error codes:
-//
-// * `PERMISSION_DENIED` if the requesting user is not permitted to
-// access the
-// requested course, create course work material in the requested
-// course,
-// share a Drive attachment, or for access errors.
-// * `INVALID_ARGUMENT` if the request is malformed or if more than 20
-// * materials are provided.
-// * `NOT_FOUND` if the requested course does not exist.
-// * `FAILED_PRECONDITION` for the following request error:
-//     * AttachmentNotVisible
-func (r *CoursesCourseWorkMaterialsService) Create(courseId string, courseworkmaterial *CourseWorkMaterial) *CoursesCourseWorkMaterialsCreateCall {
-	c := &CoursesCourseWorkMaterialsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.courseId = courseId
-	c.courseworkmaterial = courseworkmaterial
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *CoursesCourseWorkMaterialsCreateCall) Fields(s ...googleapi.Field) *CoursesCourseWorkMaterialsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *CoursesCourseWorkMaterialsCreateCall) Context(ctx context.Context) *CoursesCourseWorkMaterialsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *CoursesCourseWorkMaterialsCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *CoursesCourseWorkMaterialsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.courseworkmaterial)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWorkMaterials")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"courseId": c.courseId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "classroom.courses.courseWorkMaterials.create" call.
-// Exactly one of *CourseWorkMaterial or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *CourseWorkMaterial.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *CoursesCourseWorkMaterialsCreateCall) Do(opts ...googleapi.CallOption) (*CourseWorkMaterial, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &CourseWorkMaterial{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates a course work material.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course, create course work material in the requested course,\nshare a Drive attachment, or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed or if more than 20\n* materials are provided.\n* `NOT_FOUND` if the requested course does not exist.\n* `FAILED_PRECONDITION` for the following request error:\n    * AttachmentNotVisible",
-	//   "flatPath": "v1/courses/{courseId}/courseWorkMaterials",
-	//   "httpMethod": "POST",
-	//   "id": "classroom.courses.courseWorkMaterials.create",
-	//   "parameterOrder": [
-	//     "courseId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWorkMaterials",
-	//   "request": {
-	//     "$ref": "CourseWorkMaterial"
-	//   },
-	//   "response": {
-	//     "$ref": "CourseWorkMaterial"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.courseworkmaterials"
-	//   ]
-	// }
-
-}
-
-// method id "classroom.courses.courseWorkMaterials.delete":
-
-type CoursesCourseWorkMaterialsDeleteCall struct {
-	s          *Service
-	courseId   string
-	id         string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes a course work material.
-//
-// This request must be made by the Developer Console project of
-// the
-// [OAuth client ID](https://support.google.com/cloud/answer/6158849)
-// used to
-// create the corresponding course work material item.
-//
-// This method returns the following error codes:
-//
-// * `PERMISSION_DENIED` if the requesting developer project did not
-// create
-// the corresponding course work material, if the requesting user is
-// not
-// permitted to delete the requested course or for access errors.
-// * `FAILED_PRECONDITION` if the requested course work material has
-// already
-// been deleted.
-// * `NOT_FOUND` if no course exists with the requested ID.
-func (r *CoursesCourseWorkMaterialsService) Delete(courseId string, id string) *CoursesCourseWorkMaterialsDeleteCall {
-	c := &CoursesCourseWorkMaterialsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.courseId = courseId
-	c.id = id
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *CoursesCourseWorkMaterialsDeleteCall) Fields(s ...googleapi.Field) *CoursesCourseWorkMaterialsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *CoursesCourseWorkMaterialsDeleteCall) Context(ctx context.Context) *CoursesCourseWorkMaterialsDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *CoursesCourseWorkMaterialsDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *CoursesCourseWorkMaterialsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWorkMaterials/{id}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"courseId": c.courseId,
-		"id":       c.id,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "classroom.courses.courseWorkMaterials.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *CoursesCourseWorkMaterialsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Empty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes a course work material.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding course work material item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting developer project did not create\nthe corresponding course work material, if the requesting user is not\npermitted to delete the requested course or for access errors.\n* `FAILED_PRECONDITION` if the requested course work material has already\nbeen deleted.\n* `NOT_FOUND` if no course exists with the requested ID.",
-	//   "flatPath": "v1/courses/{courseId}/courseWorkMaterials/{id}",
-	//   "httpMethod": "DELETE",
-	//   "id": "classroom.courses.courseWorkMaterials.delete",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the course work material to delete.\nThis identifier is a Classroom-assigned identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWorkMaterials/{id}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.courseworkmaterials"
-	//   ]
-	// }
-
-}
-
-// method id "classroom.courses.courseWorkMaterials.get":
-
-type CoursesCourseWorkMaterialsGetCall struct {
-	s            *Service
-	courseId     string
-	id           string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Returns a course work material.
-//
-// This method returns the following error codes:
-//
-// * `PERMISSION_DENIED` if the requesting user is not permitted to
-// access the
-// requested course or course work material, or for access errors.
-// * `INVALID_ARGUMENT` if the request is malformed.
-// * `NOT_FOUND` if the requested course or course work material does
-// not
-// exist.
-func (r *CoursesCourseWorkMaterialsService) Get(courseId string, id string) *CoursesCourseWorkMaterialsGetCall {
-	c := &CoursesCourseWorkMaterialsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.courseId = courseId
-	c.id = id
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *CoursesCourseWorkMaterialsGetCall) Fields(s ...googleapi.Field) *CoursesCourseWorkMaterialsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *CoursesCourseWorkMaterialsGetCall) IfNoneMatch(entityTag string) *CoursesCourseWorkMaterialsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *CoursesCourseWorkMaterialsGetCall) Context(ctx context.Context) *CoursesCourseWorkMaterialsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *CoursesCourseWorkMaterialsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *CoursesCourseWorkMaterialsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWorkMaterials/{id}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"courseId": c.courseId,
-		"id":       c.id,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "classroom.courses.courseWorkMaterials.get" call.
-// Exactly one of *CourseWorkMaterial or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *CourseWorkMaterial.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *CoursesCourseWorkMaterialsGetCall) Do(opts ...googleapi.CallOption) (*CourseWorkMaterial, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &CourseWorkMaterial{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns a course work material.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or course work material, or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course or course work material does not\nexist.",
-	//   "flatPath": "v1/courses/{courseId}/courseWorkMaterials/{id}",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.courses.courseWorkMaterials.get",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the course work material.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWorkMaterials/{id}",
-	//   "response": {
-	//     "$ref": "CourseWorkMaterial"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.courseworkmaterials",
-	//     "https://www.googleapis.com/auth/classroom.courseworkmaterials.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "classroom.courses.courseWorkMaterials.list":
-
-type CoursesCourseWorkMaterialsListCall struct {
-	s            *Service
-	courseId     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Returns a list of course work material that the requester is
-// permitted to
-// view.
-//
-// Course students may only view `PUBLISHED` course work material.
-// Course
-// teachers and domain administrators may view all course work
-// material.
-//
-// This method returns the following error codes:
-//
-// * `PERMISSION_DENIED` if the requesting user is not permitted to
-// access
-// the requested course or for access errors.
-// * `INVALID_ARGUMENT` if the request is malformed.
-// * `NOT_FOUND` if the requested course does not exist.
-func (r *CoursesCourseWorkMaterialsService) List(courseId string) *CoursesCourseWorkMaterialsListCall {
-	c := &CoursesCourseWorkMaterialsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.courseId = courseId
-	return c
-}
-
-// CourseWorkMaterialStates sets the optional parameter
-// "courseWorkMaterialStates": Restriction on the work status to return.
-// Only course work material that
-// matches is returned. If unspecified, items with a work status
-// of
-// `PUBLISHED` is returned.
-//
-// Possible values:
-//   "COURSEWORK_MATERIAL_STATE_UNSPECIFIED"
-//   "PUBLISHED"
-//   "DRAFT"
-//   "DELETED"
-func (c *CoursesCourseWorkMaterialsListCall) CourseWorkMaterialStates(courseWorkMaterialStates ...string) *CoursesCourseWorkMaterialsListCall {
-	c.urlParams_.SetMulti("courseWorkMaterialStates", append([]string{}, courseWorkMaterialStates...))
-	return c
-}
-
-// MaterialDriveId sets the optional parameter "materialDriveId":
-// Optional filtering for course work material with at least one
-// Drive
-// material whose ID matches the provided string. If `material_link` is
-// also
-// specified, course work material must have materials matching both
-// filters.
-func (c *CoursesCourseWorkMaterialsListCall) MaterialDriveId(materialDriveId string) *CoursesCourseWorkMaterialsListCall {
-	c.urlParams_.Set("materialDriveId", materialDriveId)
-	return c
-}
-
-// MaterialLink sets the optional parameter "materialLink": Optional
-// filtering for course work material with at least one link
-// material
-// whose URL partially matches the provided string.
-func (c *CoursesCourseWorkMaterialsListCall) MaterialLink(materialLink string) *CoursesCourseWorkMaterialsListCall {
-	c.urlParams_.Set("materialLink", materialLink)
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": Optional sort ordering
-// for results. A comma-separated list of fields with
-// an optional sort direction keyword. Supported field is
-// `updateTime`.
-// Supported direction keywords are `asc` and `desc`.
-// If not specified, `updateTime desc` is the default
-// behavior.
-// Examples: `updateTime asc`, `updateTime`
-func (c *CoursesCourseWorkMaterialsListCall) OrderBy(orderBy string) *CoursesCourseWorkMaterialsListCall {
-	c.urlParams_.Set("orderBy", orderBy)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// items to return. Zero or unspecified indicates that the
-// server may assign a maximum.
-//
-// The server may return fewer than the specified number of results.
-func (c *CoursesCourseWorkMaterialsListCall) PageSize(pageSize int64) *CoursesCourseWorkMaterialsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken":
-// nextPageToken
-// value returned from a previous
-// list call,
-// indicating that the subsequent page of results should be
-// returned.
-//
-// The list request
-// must be otherwise identical to the one that resulted in this token.
-func (c *CoursesCourseWorkMaterialsListCall) PageToken(pageToken string) *CoursesCourseWorkMaterialsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *CoursesCourseWorkMaterialsListCall) Fields(s ...googleapi.Field) *CoursesCourseWorkMaterialsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *CoursesCourseWorkMaterialsListCall) IfNoneMatch(entityTag string) *CoursesCourseWorkMaterialsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *CoursesCourseWorkMaterialsListCall) Context(ctx context.Context) *CoursesCourseWorkMaterialsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *CoursesCourseWorkMaterialsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *CoursesCourseWorkMaterialsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWorkMaterials")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"courseId": c.courseId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "classroom.courses.courseWorkMaterials.list" call.
-// Exactly one of *ListCourseWorkMaterialResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListCourseWorkMaterialResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *CoursesCourseWorkMaterialsListCall) Do(opts ...googleapi.CallOption) (*ListCourseWorkMaterialResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ListCourseWorkMaterialResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns a list of course work material that the requester is permitted to\nview.\n\nCourse students may only view `PUBLISHED` course work material. Course\nteachers and domain administrators may view all course work material.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access\nthe requested course or for access errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course does not exist.",
-	//   "flatPath": "v1/courses/{courseId}/courseWorkMaterials",
-	//   "httpMethod": "GET",
-	//   "id": "classroom.courses.courseWorkMaterials.list",
-	//   "parameterOrder": [
-	//     "courseId"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "courseWorkMaterialStates": {
-	//       "description": "Restriction on the work status to return. Only course work material that\nmatches is returned. If unspecified, items with a work status of\n`PUBLISHED` is returned.",
-	//       "enum": [
-	//         "COURSEWORK_MATERIAL_STATE_UNSPECIFIED",
-	//         "PUBLISHED",
-	//         "DRAFT",
-	//         "DELETED"
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "materialDriveId": {
-	//       "description": "Optional filtering for course work material with at least one Drive\nmaterial whose ID matches the provided string. If `material_link` is also\nspecified, course work material must have materials matching both filters.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "materialLink": {
-	//       "description": "Optional filtering for course work material with at least one link material\nwhose URL partially matches the provided string.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Optional sort ordering for results. A comma-separated list of fields with\nan optional sort direction keyword. Supported field is `updateTime`.\nSupported direction keywords are `asc` and `desc`.\nIf not specified, `updateTime desc` is the default behavior.\nExamples: `updateTime asc`, `updateTime`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of items to return. Zero or unspecified indicates that the\nserver may assign a maximum.\n\nThe server may return fewer than the specified number of results.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "nextPageToken\nvalue returned from a previous\nlist call,\nindicating that the subsequent page of results should be returned.\n\nThe list request\nmust be otherwise identical to the one that resulted in this token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWorkMaterials",
-	//   "response": {
-	//     "$ref": "ListCourseWorkMaterialResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.courseworkmaterials",
-	//     "https://www.googleapis.com/auth/classroom.courseworkmaterials.readonly"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *CoursesCourseWorkMaterialsListCall) Pages(ctx context.Context, f func(*ListCourseWorkMaterialResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "classroom.courses.courseWorkMaterials.patch":
-
-type CoursesCourseWorkMaterialsPatchCall struct {
-	s                  *Service
-	courseId           string
-	id                 string
-	courseworkmaterial *CourseWorkMaterial
-	urlParams_         gensupport.URLParams
-	ctx_               context.Context
-	header_            http.Header
-}
-
-// Patch: Updates one or more fields of a course work material.
-//
-// This method returns the following error codes:
-//
-// * `PERMISSION_DENIED` if the requesting developer project for
-// access errors.
-// * `INVALID_ARGUMENT` if the request is malformed.
-// * `FAILED_PRECONDITION` if the requested course work material has
-// already
-// been deleted.
-// * `NOT_FOUND` if the requested course or course work material does
-// not
-// exist
-func (r *CoursesCourseWorkMaterialsService) Patch(courseId string, id string, courseworkmaterial *CourseWorkMaterial) *CoursesCourseWorkMaterialsPatchCall {
-	c := &CoursesCourseWorkMaterialsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.courseId = courseId
-	c.id = id
-	c.courseworkmaterial = courseworkmaterial
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": Mask that
-// identifies which fields on the course work material to update.
-// This field is required to do an update. The update fails if
-// invalid
-// fields are specified. If a field supports empty values, it can be
-// cleared
-// by specifying it in the update mask and not in the course work
-// material
-// object. If a field that does not support empty values is included in
-// the
-// update mask and not set in the course work material object,
-// an
-// `INVALID_ARGUMENT` error will be returned.
-//
-// The following fields may be specified by teachers:
-//
-// * `title`
-// * `description`
-// * `state`
-// * `scheduled_time`
-// * `topic_id`
-func (c *CoursesCourseWorkMaterialsPatchCall) UpdateMask(updateMask string) *CoursesCourseWorkMaterialsPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *CoursesCourseWorkMaterialsPatchCall) Fields(s ...googleapi.Field) *CoursesCourseWorkMaterialsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *CoursesCourseWorkMaterialsPatchCall) Context(ctx context.Context) *CoursesCourseWorkMaterialsPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *CoursesCourseWorkMaterialsPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *CoursesCourseWorkMaterialsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.courseworkmaterial)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWorkMaterials/{id}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"courseId": c.courseId,
-		"id":       c.id,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "classroom.courses.courseWorkMaterials.patch" call.
-// Exactly one of *CourseWorkMaterial or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *CourseWorkMaterial.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *CoursesCourseWorkMaterialsPatchCall) Do(opts ...googleapi.CallOption) (*CourseWorkMaterial, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &CourseWorkMaterial{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates one or more fields of a course work material.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting developer project for\naccess errors.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `FAILED_PRECONDITION` if the requested course work material has already\nbeen deleted.\n* `NOT_FOUND` if the requested course or course work material does not\nexist",
-	//   "flatPath": "v1/courses/{courseId}/courseWorkMaterials/{id}",
-	//   "httpMethod": "PATCH",
-	//   "id": "classroom.courses.courseWorkMaterials.patch",
-	//   "parameterOrder": [
-	//     "courseId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "courseId": {
-	//       "description": "Identifier of the course.\nThis identifier can be either the Classroom-assigned identifier or an\nalias.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Identifier of the course work material.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Mask that identifies which fields on the course work material to update.\nThis field is required to do an update. The update fails if invalid\nfields are specified. If a field supports empty values, it can be cleared\nby specifying it in the update mask and not in the course work material\nobject. If a field that does not support empty values is included in the\nupdate mask and not set in the course work material object, an\n`INVALID_ARGUMENT` error will be returned.\n\nThe following fields may be specified by teachers:\n\n* `title`\n* `description`\n* `state`\n* `scheduled_time`\n* `topic_id`",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/courses/{courseId}/courseWorkMaterials/{id}",
-	//   "request": {
-	//     "$ref": "CourseWorkMaterial"
-	//   },
-	//   "response": {
-	//     "$ref": "CourseWorkMaterial"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/classroom.courseworkmaterials"
-	//   ]
-	// }
-
-}
-
 // method id "classroom.courses.students.create":
 
 type CoursesStudentsCreateCall struct {
@@ -9695,7 +8541,7 @@ func (c *CoursesStudentsCreateCall) Header() http.Header {
 
 func (c *CoursesStudentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9850,7 +8696,7 @@ func (c *CoursesStudentsDeleteCall) Header() http.Header {
 
 func (c *CoursesStudentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10009,7 +8855,7 @@ func (c *CoursesStudentsGetCall) Header() http.Header {
 
 func (c *CoursesStudentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10191,7 +9037,7 @@ func (c *CoursesStudentsListCall) Header() http.Header {
 
 func (c *CoursesStudentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10377,7 +9223,7 @@ func (c *CoursesTeachersCreateCall) Header() http.Header {
 
 func (c *CoursesTeachersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10530,7 +9376,7 @@ func (c *CoursesTeachersDeleteCall) Header() http.Header {
 
 func (c *CoursesTeachersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10689,7 +9535,7 @@ func (c *CoursesTeachersGetCall) Header() http.Header {
 
 func (c *CoursesTeachersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10871,7 +9717,7 @@ func (c *CoursesTeachersListCall) Header() http.Header {
 
 func (c *CoursesTeachersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11049,7 +9895,7 @@ func (c *CoursesTopicsCreateCall) Header() http.Header {
 
 func (c *CoursesTopicsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11198,7 +10044,7 @@ func (c *CoursesTopicsDeleteCall) Header() http.Header {
 
 func (c *CoursesTopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11356,7 +10202,7 @@ func (c *CoursesTopicsGetCall) Header() http.Header {
 
 func (c *CoursesTopicsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11541,7 +10387,7 @@ func (c *CoursesTopicsListCall) Header() http.Header {
 
 func (c *CoursesTopicsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11740,7 +10586,7 @@ func (c *CoursesTopicsPatchCall) Header() http.Header {
 
 func (c *CoursesTopicsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11907,7 +10753,7 @@ func (c *InvitationsAcceptCall) Header() http.Header {
 
 func (c *InvitationsAcceptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12051,7 +10897,7 @@ func (c *InvitationsCreateCall) Header() http.Header {
 
 func (c *InvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12183,7 +11029,7 @@ func (c *InvitationsDeleteCall) Header() http.Header {
 
 func (c *InvitationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12330,7 +11176,7 @@ func (c *InvitationsGetCall) Header() http.Header {
 
 func (c *InvitationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12524,7 +11370,7 @@ func (c *InvitationsListCall) Header() http.Header {
 
 func (c *InvitationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12728,7 +11574,7 @@ func (c *RegistrationsCreateCall) Header() http.Header {
 
 func (c *RegistrationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12855,7 +11701,7 @@ func (c *RegistrationsDeleteCall) Header() http.Header {
 
 func (c *RegistrationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13003,7 +11849,7 @@ func (c *UserProfilesGetCall) Header() http.Header {
 
 func (c *UserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13185,7 +12031,7 @@ func (c *UserProfilesGuardianInvitationsCreateCall) Header() http.Header {
 
 func (c *UserProfilesGuardianInvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13354,7 +12200,7 @@ func (c *UserProfilesGuardianInvitationsGetCall) Header() http.Header {
 
 func (c *UserProfilesGuardianInvitationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13576,7 +12422,7 @@ func (c *UserProfilesGuardianInvitationsListCall) Header() http.Header {
 
 func (c *UserProfilesGuardianInvitationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13803,7 +12649,7 @@ func (c *UserProfilesGuardianInvitationsPatchCall) Header() http.Header {
 
 func (c *UserProfilesGuardianInvitationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13980,7 +12826,7 @@ func (c *UserProfilesGuardiansDeleteCall) Header() http.Header {
 
 func (c *UserProfilesGuardiansDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14151,7 +12997,7 @@ func (c *UserProfilesGuardiansGetCall) Header() http.Header {
 
 func (c *UserProfilesGuardiansGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14368,7 +13214,7 @@ func (c *UserProfilesGuardiansListCall) Header() http.Header {
 
 func (c *UserProfilesGuardiansListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

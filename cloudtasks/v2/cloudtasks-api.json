@@ -675,7 +675,7 @@
       }
     }
   },
-  "revision": "20200210",
+  "revision": "20200228",
   "rootUrl": "https://cloudtasks.googleapis.com/",
   "schemas": {
     "AppEngineHttpRequest": {
@@ -1111,6 +1111,10 @@
           "$ref": "RetryConfig",
           "description": "Settings that determine the retry behavior.\n\n* For tasks created using Cloud Tasks: the queue-level retry settings\n  apply to all tasks in the queue that were created using Cloud Tasks.\n  Retry settings cannot be set on individual tasks.\n* For tasks created using the App Engine SDK: the queue-level retry\n  settings apply to all tasks in the queue which do not have retry settings\n  explicitly set on the task and were created by the App Engine SDK. See\n  [App Engine\n  documentation](https://cloud.google.com/appengine/docs/standard/python/taskqueue/push/retrying-tasks)."
         },
+        "stackdriverLoggingConfig": {
+          "$ref": "StackdriverLoggingConfig",
+          "description": "Configuration options for writing logs to\n[Stackdriver Logging](https://cloud.google.com/logging/docs/). If this\nfield is unset, then no logs are written."
+        },
         "state": {
           "description": "Output only. The state of the queue.\n\n`state` can only be changed by called\nPauseQueue,\nResumeQueue, or uploading\n[queue.yaml/xml](https://cloud.google.com/appengine/docs/python/config/queueref).\nUpdateQueue cannot be used to change `state`.",
           "enum": [
@@ -1218,6 +1222,18 @@
         "policy": {
           "$ref": "Policy",
           "description": "REQUIRED: The complete policy to be applied to the `resource`. The size of\nthe policy is limited to a few 10s of KB. An empty policy is a\nvalid policy but certain Cloud Platform services (such as Projects)\nmight reject them."
+        }
+      },
+      "type": "object"
+    },
+    "StackdriverLoggingConfig": {
+      "description": "Configuration options for writing logs to\n[Stackdriver Logging](https://cloud.google.com/logging/docs/).",
+      "id": "StackdriverLoggingConfig",
+      "properties": {
+        "samplingRatio": {
+          "description": "Specifies the fraction of operations to write to\n[Stackdriver Logging](https://cloud.google.com/logging/docs/).\nThis field may contain any value between 0.0 and 1.0, inclusive.\n0.0 is the default and means that no operations are logged.",
+          "format": "double",
+          "type": "number"
         }
       },
       "type": "object"

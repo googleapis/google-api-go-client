@@ -3358,7 +3358,7 @@
       }
     }
   },
-  "revision": "20200219",
+  "revision": "20200302",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -4291,7 +4291,7 @@
           "enumDescriptions": [
             "",
             "Do not provision an HTTPS certificate.",
-            "Automatically provisions an HTTPS certificate via LetsEncrypt."
+            "Automatically provisions an HTTPS certificate via GoogleCA or LetsEncrypt."
           ],
           "type": "string"
         },

@@ -110,6 +110,67 @@
         "v1": {
           "resources": {
             "namespaces": {
+              "methods": {
+                "get": {
+                  "description": "Rpc to get information about a namespace.",
+                  "flatPath": "api/v1/namespaces/{namespacesId}",
+                  "httpMethod": "GET",
+                  "id": "run.api.v1.namespaces.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the namespace being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+                      "location": "path",
+                      "pattern": "^namespaces/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "api/v1/{+name}",
+                  "response": {
+                    "$ref": "Namespace"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "patch": {
+                  "description": "Rpc to update a namespace.",
+                  "flatPath": "api/v1/namespaces/{namespacesId}",
+                  "httpMethod": "PATCH",
+                  "id": "run.api.v1.namespaces.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the namespace being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+                      "location": "path",
+                      "pattern": "^namespaces/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "Required. Indicates which fields in the provided namespace to update.\nThis field is currently unused.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "api/v1/{+name}",
+                  "request": {
+                    "$ref": "Namespace"
+                  },
+                  "response": {
+                    "$ref": "Namespace"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              },
               "resources": {
                 "secrets": {
                   "methods": {
@@ -1235,6 +1296,69 @@
                 }
               }
             },
+            "namespaces": {
+              "methods": {
+                "get": {
+                  "description": "Rpc to get information about a namespace.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/namespaces/{namespacesId}",
+                  "httpMethod": "GET",
+                  "id": "run.projects.locations.namespaces.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the namespace being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "Namespace"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "patch": {
+                  "description": "Rpc to update a namespace.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/namespaces/{namespacesId}",
+                  "httpMethod": "PATCH",
+                  "id": "run.projects.locations.namespaces.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the namespace being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "Required. Indicates which fields in the provided namespace to update.\nThis field is currently unused.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "request": {
+                    "$ref": "Namespace"
+                  },
+                  "response": {
+                    "$ref": "Namespace"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
             "revisions": {
               "methods": {
                 "delete": {
@@ -1818,7 +1942,7 @@
       }
     }
   },
-  "revision": "20200219",
+  "revision": "20200302",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -2199,7 +2323,7 @@
           "enumDescriptions": [
             "",
             "Do not provision an HTTPS certificate.",
-            "Automatically provisions an HTTPS certificate via LetsEncrypt."
+            "Automatically provisions an HTTPS certificate via GoogleCA or LetsEncrypt."
           ],
           "type": "string"
         },
@@ -2724,6 +2848,50 @@
         },
         "name": {
           "description": "Resource name for the location, which may vary between implementations.\nFor example: `\"projects/example-project/locations/us-east1\"`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Namespace": {
+      "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nNamespace provides a scope for Names.\nUse of multiple namespaces is optional.",
+      "id": "Namespace",
+      "properties": {
+        "metadata": {
+          "$ref": "ObjectMeta",
+          "description": "Standard object's metadata.\nMore info:\nhttps://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"
+        },
+        "spec": {
+          "$ref": "NamespaceSpec",
+          "description": "Spec defines the behavior of the Namespace.\nMore info:\nhttps://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
+        },
+        "status": {
+          "$ref": "NamespaceStatus",
+          "description": "Status describes the current status of a Namespace.\nMore info:\nhttps://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status"
+        }
+      },
+      "type": "object"
+    },
+    "NamespaceSpec": {
+      "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nNamespaceSpec describes the attributes on a Namespace.",
+      "id": "NamespaceSpec",
+      "properties": {
+        "finalizers": {
+          "description": "Finalizers is an opaque list of values that must be empty to permanently\nremove object from storage. More info:\nhttps://kubernetes.io/docs/tasks/administer-cluster/namespaces/",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "NamespaceStatus": {
+      "description": "Cloud Run fully managed: not supported\n\nCloud Run on GKE: supported\n\nNamespaceStatus is information about the current status of a Namespace.",
+      "id": "NamespaceStatus",
+      "properties": {
+        "phase": {
+          "description": "Phase is the current lifecycle phase of the namespace.\nMore info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/",
           "type": "string"
         }
       },

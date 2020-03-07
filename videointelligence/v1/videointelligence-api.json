@@ -22,6 +22,7 @@
   },
   "id": "videointelligence:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://videointelligence.mtls.googleapis.com/",
   "name": "videointelligence",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -349,7 +350,7 @@
       }
     }
   },
-  "revision": "20200122",
+  "revision": "20200226",
   "rootUrl": "https://videointelligence.googleapis.com/",
   "schemas": {
     "GoogleCloudVideointelligenceV1_AnnotateVideoProgress": {
@@ -401,7 +402,7 @@
           "type": "string"
         },
         "inputUri": {
-          "description": "Input video location. Currently, only\n[Google Cloud Storage](https://cloud.google.com/storage/) URIs are\nsupported, which must be specified in the following format:\n`gs://bucket-id/object-id` (other URI formats return\ngoogle.rpc.Code.INVALID_ARGUMENT). For more information, see\n[Request URIs](/storage/docs/reference-uris).\nA video URI may include wildcards in `object-id`, and thus identify\nmultiple videos. Supported wildcards: '*' to match 0 or more characters;\n'?' to match 1 character. If unset, the input video should be embedded\nin the request as `input_content`. If set, `input_content` should be unset.",
+          "description": "Input video location. Currently, only\n[Cloud Storage](https://cloud.google.com/storage/) URIs are\nsupported, which must be specified in the following format:\n`gs://bucket-id/object-id` (other URI formats return\ngoogle.rpc.Code.INVALID_ARGUMENT). For more information, see\n[Request URIs](/storage/docs/reference-uris).\nA video URI may include wildcards in `object-id`, and thus identify\nmultiple videos. Supported wildcards: '*' to match 0 or more characters;\n'?' to match 1 character. If unset, the input video should be embedded\nin the request as `input_content`. If set, `input_content` should be unset.",
           "type": "string"
         },
         "locationId": {
@@ -409,7 +410,7 @@
           "type": "string"
         },
         "outputUri": {
-          "description": "Optional. Location where the output (in JSON format) should be stored.\nCurrently, only [Google Cloud Storage](https://cloud.google.com/storage/)\nURIs are supported, which must be specified in the following format:\n`gs://bucket-id/object-id` (other URI formats return\ngoogle.rpc.Code.INVALID_ARGUMENT). For more information, see\n[Request URIs](/storage/docs/reference-uris).",
+          "description": "Optional. Location where the output (in JSON format) should be stored.\nCurrently, only [Cloud Storage](https://cloud.google.com/storage/)\nURIs are supported, which must be specified in the following format:\n`gs://bucket-id/object-id` (other URI formats return\ngoogle.rpc.Code.INVALID_ARGUMENT). For more information, see\n[Request URIs](/storage/docs/reference-uris).",
           "type": "string"
         },
         "videoContext": {
@@ -952,7 +953,7 @@
           "type": "string"
         },
         "inputUri": {
-          "description": "Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
+          "description": "Video file location in\n[Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
         },
         "progressPercent": {
@@ -997,7 +998,7 @@
           "type": "array"
         },
         "inputUri": {
-          "description": "Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
+          "description": "Video file location in\n[Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
         },
         "objectAnnotations": {
@@ -1538,7 +1539,7 @@
           "type": "string"
         },
         "inputUri": {
-          "description": "Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
+          "description": "Video file location in\n[Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
         },
         "progressPercent": {
@@ -1583,7 +1584,7 @@
           "type": "array"
         },
         "inputUri": {
-          "description": "Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
+          "description": "Video file location in\n[Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
         },
         "objectAnnotations": {
@@ -2086,7 +2087,7 @@
           "type": "string"
         },
         "inputUri": {
-          "description": "Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
+          "description": "Video file location in\n[Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
         },
         "progressPercent": {
@@ -2131,7 +2132,7 @@
           "type": "array"
         },
         "inputUri": {
-          "description": "Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
+          "description": "Video file location in\n[Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
         },
         "objectAnnotations": {
@@ -2634,7 +2635,7 @@
           "type": "string"
         },
         "inputUri": {
-          "description": "Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
+          "description": "Video file location in\n[Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
         },
         "progressPercent": {
@@ -2679,7 +2680,7 @@
           "type": "array"
         },
         "inputUri": {
-          "description": "Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
+          "description": "Video file location in\n[Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
         },
         "objectAnnotations": {
@@ -3272,7 +3273,7 @@
           "description": "Streaming annotation results."
         },
         "annotationResultsUri": {
-          "description": "GCS URI that stores annotation results of one streaming session.\nIt is a directory that can hold multiple files in JSON format.\nExample uri format:\ngs://bucket_id/object_id/cloud_project_name-session_id",
+          "description": "Cloud Storage URI that stores annotation results of one streaming session.\nIt is a directory that can hold multiple files in JSON format.\nExample uri format:\ngs://bucket_id/object_id/cloud_project_name-session_id",
           "type": "string"
         },
         "error": {
@@ -3466,7 +3467,7 @@
           "type": "string"
         },
         "inputUri": {
-          "description": "Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
+          "description": "Video file location in\n[Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
         },
         "progressPercent": {
@@ -3522,7 +3523,7 @@
           "type": "array"
         },
         "inputUri": {
-          "description": "Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
+          "description": "Video file location in\n[Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
         },
         "logoRecognitionAnnotations": {

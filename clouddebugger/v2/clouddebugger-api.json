@@ -424,7 +424,7 @@
       }
     }
   },
-  "revision": "20200221",
+  "revision": "20200228",
   "rootUrl": "https://clouddebugger.googleapis.com/",
   "schemas": {
     "AliasContext": {
@@ -1049,7 +1049,7 @@
     }
   },
   "servicePath": "",
-  "title": "Stackdriver Debugger API",
+  "title": "Cloud Debugger API",
   "version": "v2",
   "version_module": true
 }

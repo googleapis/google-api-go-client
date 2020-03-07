@@ -283,7 +283,7 @@ type GoogleCloudVideointelligenceV1AnnotateVideoRequest struct {
 	InputContent string `json:"inputContent,omitempty"`
 
 	// InputUri: Input video location. Currently, only
-	// [Google Cloud Storage](https://cloud.google.com/storage/) URIs
+	// [Cloud Storage](https://cloud.google.com/storage/) URIs
 	// are
 	// supported, which must be specified in the following
 	// format:
@@ -311,7 +311,7 @@ type GoogleCloudVideointelligenceV1AnnotateVideoRequest struct {
 
 	// OutputUri: Optional. Location where the output (in JSON format)
 	// should be stored.
-	// Currently, only [Google Cloud
+	// Currently, only [Cloud
 	// Storage](https://cloud.google.com/storage/)
 	// URIs are supported, which must be specified in the following
 	// format:
@@ -1526,7 +1526,7 @@ type GoogleCloudVideointelligenceV1VideoAnnotationProgress struct {
 	Feature string `json:"feature,omitempty"`
 
 	// InputUri: Video file location in
-	// [Google Cloud Storage](https://cloud.google.com/storage/).
+	// [Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ProgressPercent: Approximate percentage processed thus far.
@@ -1584,7 +1584,7 @@ type GoogleCloudVideointelligenceV1VideoAnnotationResults struct {
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
 
 	// InputUri: Video file location in
-	// [Google Cloud Storage](https://cloud.google.com/storage/).
+	// [Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ObjectAnnotations: Annotations for list of objects detected and
@@ -2676,7 +2676,7 @@ type GoogleCloudVideointelligenceV1beta2VideoAnnotationProgress struct {
 	Feature string `json:"feature,omitempty"`
 
 	// InputUri: Video file location in
-	// [Google Cloud Storage](https://cloud.google.com/storage/).
+	// [Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ProgressPercent: Approximate percentage processed thus far.
@@ -2734,7 +2734,7 @@ type GoogleCloudVideointelligenceV1beta2VideoAnnotationResults struct {
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1beta2LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
 
 	// InputUri: Video file location in
-	// [Google Cloud Storage](https://cloud.google.com/storage/).
+	// [Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ObjectAnnotations: Annotations for list of objects detected and
@@ -3773,7 +3773,7 @@ type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationProgress struct {
 	Feature string `json:"feature,omitempty"`
 
 	// InputUri: Video file location in
-	// [Google Cloud Storage](https://cloud.google.com/storage/).
+	// [Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ProgressPercent: Approximate percentage processed thus far.
@@ -3831,7 +3831,7 @@ type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationResults struct {
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1p1beta1LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
 
 	// InputUri: Video file location in
-	// [Google Cloud Storage](https://cloud.google.com/storage/).
+	// [Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ObjectAnnotations: Annotations for list of objects detected and
@@ -4870,7 +4870,7 @@ type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationProgress struct {
 	Feature string `json:"feature,omitempty"`
 
 	// InputUri: Video file location in
-	// [Google Cloud Storage](https://cloud.google.com/storage/).
+	// [Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ProgressPercent: Approximate percentage processed thus far.
@@ -4928,7 +4928,7 @@ type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationResults struct {
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1p2beta1LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
 
 	// InputUri: Video file location in
-	// [Google Cloud Storage](https://cloud.google.com/storage/).
+	// [Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ObjectAnnotations: Annotations for list of objects detected and
@@ -6201,8 +6201,8 @@ type GoogleCloudVideointelligenceV1p3beta1StreamingAnnotateVideoResponse struct 
 	// AnnotationResults: Streaming annotation results.
 	AnnotationResults *GoogleCloudVideointelligenceV1p3beta1StreamingVideoAnnotationResults `json:"annotationResults,omitempty"`
 
-	// AnnotationResultsUri: GCS URI that stores annotation results of one
-	// streaming session.
+	// AnnotationResultsUri: Cloud Storage URI that stores annotation
+	// results of one streaming session.
 	// It is a directory that can hold multiple files in JSON
 	// format.
 	// Example uri
@@ -6526,7 +6526,7 @@ type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationProgress struct {
 	Feature string `json:"feature,omitempty"`
 
 	// InputUri: Video file location in
-	// [Google Cloud Storage](https://cloud.google.com/storage/).
+	// [Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ProgressPercent: Approximate percentage processed thus far.
@@ -6590,7 +6590,7 @@ type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationResults struct {
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1p3beta1LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
 
 	// InputUri: Video file location in
-	// [Google Cloud Storage](https://cloud.google.com/storage/).
+	// [Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// LogoRecognitionAnnotations: Annotations for list of logos detected,
@@ -7047,7 +7047,7 @@ func (c *OperationsProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *OperationsProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200306")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7183,7 +7183,7 @@ func (c *OperationsProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200306")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7328,7 +7328,7 @@ func (c *OperationsProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *OperationsProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200306")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7480,7 +7480,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200306")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7624,7 +7624,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200306")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7769,7 +7769,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200306")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7950,7 +7950,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200306")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8127,7 +8127,7 @@ func (c *VideosAnnotateCall) Header() http.Header {
 
 func (c *VideosAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200305")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200306")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

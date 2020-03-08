@@ -483,7 +483,7 @@ func (c *AutnumGetCall) Header() http.Header {
 
 func (c *AutnumGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200306")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200307")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -622,7 +622,7 @@ func (c *DomainGetCall) Header() http.Header {
 
 func (c *DomainGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200306")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200307")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -765,7 +765,7 @@ func (c *EntityGetCall) Header() http.Header {
 
 func (c *EntityGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200306")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200307")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -908,7 +908,7 @@ func (c *IpGetCall) Header() http.Header {
 
 func (c *IpGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200306")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200307")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1056,7 +1056,7 @@ func (c *NameserverGetCall) Header() http.Header {
 
 func (c *NameserverGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200306")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200307")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1195,7 +1195,7 @@ func (c *V1GetDomainsCall) Header() http.Header {
 
 func (c *V1GetDomainsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200306")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200307")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1323,7 +1323,7 @@ func (c *V1GetEntitiesCall) Header() http.Header {
 
 func (c *V1GetEntitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200306")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200307")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1450,7 +1450,7 @@ func (c *V1GetHelpCall) Header() http.Header {
 
 func (c *V1GetHelpCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200306")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200307")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1578,7 +1578,7 @@ func (c *V1GetIpCall) Header() http.Header {
 
 func (c *V1GetIpCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200306")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200307")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1706,7 +1706,7 @@ func (c *V1GetNameserversCall) Header() http.Header {
 
 func (c *V1GetNameserversCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200306")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200307")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

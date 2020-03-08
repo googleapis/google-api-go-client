@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/bGk1bwI9fEY62BmDuTqYA-OcuRc\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/jKW_lZ9iDZgQCWmVQG-RLYTf3MU\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -2796,7 +2796,7 @@
           ]
         },
         "list": {
-          "description": "Lists the products in your Merchant Center account.",
+          "description": "Lists the products in your Merchant Center account. The response might contain fewer items than specified by maxResults. Rely on nextPageToken to determine if there are more items to be requested.",
           "httpMethod": "GET",
           "id": "content.products.list",
           "parameterOrder": [
@@ -3162,7 +3162,7 @@
       }
     }
   },
-  "revision": "20200219",
+  "revision": "20200226",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5808,7 +5808,7 @@
           "type": "string"
         },
         "promotions": {
-          "description": "The details of the merchant provided promotions applied to the order. More details about the program are here.",
+          "description": "The details of the merchant provided promotions applied to the order.\n\nTo determine which promotions apply to which products, check the Promotions[].Benefits[].OfferIds field against the LineItems[].Product.OfferId field for each promotion. If a promotion is applied to more than 1 offerId, divide the discount value by the number of affected offers to determine how much discount to apply to each offerId.\n\nExamples:  \n- To calculate the line item level discount for a single specific item: For each promotion, subtract the Promotions[].Benefits[].Discount.value amount from the LineItems[].Price.value. \n- To calculate the line item level discount for multiple quantity of a specific item: For each promotion, divide the Promotions[].Benefits[].Discount.value by the quantity of products and substract it from LineItems[].Product.Price.value for each quantity item.  \n\nOnly 1 promotion can be applied to an offerId in a given order. To refund an item which had a promotion applied to it, make sure to refund the amount after first subtracting the promotion discount from the item price.\n\nMore details about the program are here.",
           "items": {
             "$ref": "OrderLegacyPromotion"
           },

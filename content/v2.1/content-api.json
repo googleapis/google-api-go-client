@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/jsas8bLNaSH3hHj4JQAHY8a_-DI\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/soPJe3_6whHFxBf3W9riAeYvQHU\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -2579,7 +2579,7 @@
           ]
         },
         "list": {
-          "description": "Lists the products in your Merchant Center account.",
+          "description": "Lists the products in your Merchant Center account. The response might contain fewer items than specified by maxResults. Rely on nextPageToken to determine if there are more items to be requested.",
           "httpMethod": "GET",
           "id": "content.products.list",
           "parameterOrder": [
@@ -2705,6 +2705,61 @@
           "path": "{merchantId}/productstatuses",
           "response": {
             "$ref": "ProductstatusesListResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        }
+      }
+    },
+    "pubsubnotificationsettings": {
+      "methods": {
+        "get": {
+          "description": "Retrieves a Merchant Center account's pubsub notification settings.",
+          "httpMethod": "GET",
+          "id": "content.pubsubnotificationsettings.get",
+          "parameterOrder": [
+            "merchantId"
+          ],
+          "parameters": {
+            "merchantId": {
+              "description": "The ID of the account for which to get pubsub notification settings.",
+              "format": "uint64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{merchantId}/pubsubnotificationsettings",
+          "response": {
+            "$ref": "PubsubNotificationSettings"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        },
+        "update": {
+          "description": "Register a Merchant Center account for pubsub notifications. Note that cloud topic name should not be provided as part of the request.",
+          "httpMethod": "PUT",
+          "id": "content.pubsubnotificationsettings.update",
+          "parameterOrder": [
+            "merchantId"
+          ],
+          "parameters": {
+            "merchantId": {
+              "description": "The ID of the account.",
+              "format": "uint64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{merchantId}/pubsubnotificationsettings",
+          "request": {
+            "$ref": "PubsubNotificationSettings"
+          },
+          "response": {
+            "$ref": "PubsubNotificationSettings"
           },
           "scopes": [
             "https://www.googleapis.com/auth/content"
@@ -3233,7 +3288,7 @@
       }
     }
   },
-  "revision": "20200219",
+  "revision": "20200226",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5568,7 +5623,7 @@
           "type": "string"
         },
         "promotions": {
-          "description": "Promotions associated with the order.",
+          "description": "Promotions associated with the order.\n\nTo determine which promotions apply to which products, check the Promotions[].appliedItems[].lineItemId field against the LineItems[].id field for each promotion. If a promotion is applied to more than 1 offerId, divide the discount value by the number of affected offers to determine how much discount to apply to each offerId.\n\nExamples:  \n- To calculate price paid by the customer for a single line item including the discount: For each promotion, subtract the LineItems[].adjustments[].priceAdjustment.value amount from the LineItems[].Price.value. \n- To calculate price paid by the customer for a single line item including the discount in case of multiple quantity: For each promotion, divide the LineItems[].adjustments[].priceAdjustment.value by the quantity of products then subtract the resulting value from the LineItems[].Product.Price.value for each quantity item.  \n\nOnly 1 promotion can be applied to an offerId in a given order. To refund an item which had a promotion applied to it, make sure to refund the amount after first subtracting the promotion discount from the item price.\n\nMore details about the program are here.",
           "items": {
             "$ref": "OrderPromotion"
           },
@@ -8808,6 +8863,29 @@
         "resources": {
           "items": {
             "$ref": "ProductStatus"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "PubsubNotificationSettings": {
+      "description": "Settings for Pub/Sub notifications, all methods require that the caller is a direct user of the merchant center account.",
+      "id": "PubsubNotificationSettings",
+      "properties": {
+        "cloudTopicName": {
+          "description": "Cloud pub/sub topic to which notifications are sent (read-only).",
+          "type": "string"
+        },
+        "kind": {
+          "default": "content#pubsubNotificationSettings",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#pubsubNotificationSettings\".",
+          "type": "string"
+        },
+        "registeredEvents": {
+          "description": "List of event types. Supported event types: orderPendingShipment.",
+          "items": {
+            "type": "string"
           },
           "type": "array"
         }

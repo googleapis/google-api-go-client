@@ -25,7 +25,6 @@
   },
   "id": "bigqueryconnection:v1beta1",
   "kind": "discovery#restDescription",
-  "mtlsRootUrl": "https://bigqueryconnection.mtls.googleapis.com/",
   "name": "bigqueryconnection",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -395,7 +394,7 @@
       }
     }
   },
-  "revision": "20200303",
+  "revision": "20200220",
   "rootUrl": "https://bigqueryconnection.googleapis.com/",
   "schemas": {
     "AuditConfig": {

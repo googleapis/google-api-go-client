@@ -275,7 +275,7 @@
       }
     }
   },
-  "revision": "20200213",
+  "revision": "20200303",
   "rootUrl": "https://manufacturers.googleapis.com/",
   "schemas": {
     "Attributes": {
@@ -406,6 +406,13 @@
         "releaseDate": {
           "description": "The release date of the product. For more information, see\nhttps://support.google.com/manufacturers/answer/6124116#release.",
           "type": "string"
+        },
+        "richContent": {
+          "description": "Rich product content. For more information, see\nhttps://support.google.com/manufacturers/answer/9389865",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "scent": {
           "description": "The scent of the product. For more information, see\n https://support.google.com/manufacturers/answer/6124116#scent.",

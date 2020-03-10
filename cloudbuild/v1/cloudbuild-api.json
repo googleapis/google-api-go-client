@@ -574,7 +574,7 @@
       }
     }
   },
-  "revision": "20200229",
+  "revision": "20200308",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -1287,6 +1287,10 @@
             "Enforce that repository owners or collaborators must comment on Pull\nRequests before builds are triggered."
           ],
           "type": "string"
+        },
+        "invertRegex": {
+          "description": "If true, branches that do NOT match the git_ref will trigger a build.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -1298,6 +1302,10 @@
         "branch": {
           "description": "Regexes matching branches to build.\n\nThe syntax of the regular expressions accepted is the syntax accepted by\nRE2 and described at https://github.com/google/re2/wiki/Syntax",
           "type": "string"
+        },
+        "invertRegex": {
+          "description": "When true, only trigger a build if the revision regex does NOT match the\ngit_ref regex.",
+          "type": "boolean"
         },
         "tag": {
           "description": "Regexes matching tags to build.\n\nThe syntax of the regular expressions accepted is the syntax accepted by\nRE2 and described at https://github.com/google/re2/wiki/Syntax",
@@ -1321,6 +1329,10 @@
         "dir": {
           "description": "Directory, relative to the source root, in which to run the build.\n\nThis must be a relative path. If a step's `dir` is specified and is an\nabsolute path, this value is ignored for that step's execution.",
           "type": "string"
+        },
+        "invertRegex": {
+          "description": "Only trigger a build if the revision regex does NOT match the revision\nregex.",
+          "type": "boolean"
         },
         "projectId": {
           "description": "ID of the project that owns the Cloud Source Repository. If omitted, the\nproject ID requesting the build is assumed.",

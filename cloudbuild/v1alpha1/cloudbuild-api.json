@@ -110,7 +110,7 @@
         "workerPools": {
           "methods": {
             "create": {
-              "description": "Creates a `WorkerPool` to run the builds, and returns the new worker pool.\n\nThis API is experimental.",
+              "description": "Creates a `WorkerPool` to run the builds, and returns the new worker pool.",
               "flatPath": "v1alpha1/projects/{projectsId}/workerPools",
               "httpMethod": "POST",
               "id": "cloudbuild.projects.workerPools.create",
@@ -138,7 +138,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes a `WorkerPool` by its project ID and WorkerPool name.\n\nThis API is experimental.",
+              "description": "Deletes a `WorkerPool` by its project ID and WorkerPool name.",
               "flatPath": "v1alpha1/projects/{projectsId}/workerPools/{workerPoolsId}",
               "httpMethod": "DELETE",
               "id": "cloudbuild.projects.workerPools.delete",
@@ -163,7 +163,7 @@
               ]
             },
             "get": {
-              "description": "Returns information about a `WorkerPool`.\n\nThis API is experimental.",
+              "description": "Returns information about a `WorkerPool`.",
               "flatPath": "v1alpha1/projects/{projectsId}/workerPools/{workerPoolsId}",
               "httpMethod": "GET",
               "id": "cloudbuild.projects.workerPools.get",
@@ -188,7 +188,7 @@
               ]
             },
             "list": {
-              "description": "List project's `WorkerPool`s.\n\nThis API is experimental.",
+              "description": "List project's `WorkerPool`s.",
               "flatPath": "v1alpha1/projects/{projectsId}/workerPools",
               "httpMethod": "GET",
               "id": "cloudbuild.projects.workerPools.list",
@@ -213,7 +213,7 @@
               ]
             },
             "patch": {
-              "description": "Update a `WorkerPool`.\n\nThis API is experimental.",
+              "description": "Update a `WorkerPool`.",
               "flatPath": "v1alpha1/projects/{projectsId}/workerPools/{workerPoolsId}",
               "httpMethod": "PATCH",
               "id": "cloudbuild.projects.workerPools.patch",
@@ -245,7 +245,7 @@
       }
     }
   },
-  "revision": "20200229",
+  "revision": "20200308",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -786,6 +786,10 @@
         "dir": {
           "description": "Directory, relative to the source root, in which to run the build.\n\nThis must be a relative path. If a step's `dir` is specified and is an\nabsolute path, this value is ignored for that step's execution.",
           "type": "string"
+        },
+        "invertRegex": {
+          "description": "Only trigger a build if the revision regex does NOT match the revision\nregex.",
+          "type": "boolean"
         },
         "projectId": {
           "description": "ID of the project that owns the Cloud Source Repository. If omitted, the\nproject ID requesting the build is assumed.",

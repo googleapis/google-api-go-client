@@ -687,7 +687,7 @@
       }
     }
   },
-  "revision": "20200221",
+  "revision": "20200306",
   "rootUrl": "https://translation.googleapis.com/",
   "schemas": {
     "BatchTranslateTextRequest": {
@@ -813,7 +813,7 @@
       "id": "GcsDestination",
       "properties": {
         "outputUriPrefix": {
-          "description": "Required. There must be no files under 'output_uri_prefix'.\n'output_uri_prefix' must end with \"/\" and start with \"gs://\", otherwise an\nINVALID_ARGUMENT (400) error is returned.",
+          "description": "Required. The bucket used in 'output_uri_prefix' must exist and there must be no\nfiles under 'output_uri_prefix'. 'output_uri_prefix' must end with \"/\" and\nstart with \"gs://\". One 'output_uri_prefix' can only be used by one batch\ntranslation job at a time. Otherwise an INVALID_ARGUMENT (400) error is\n returned.",
           "type": "string"
         }
       },

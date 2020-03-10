@@ -332,6 +332,163 @@
             }
           }
         },
+        "notificationConfigs": {
+          "methods": {
+            "create": {
+              "description": "Creates a notification config.",
+              "flatPath": "v1/organizations/{organizationsId}/notificationConfigs",
+              "httpMethod": "POST",
+              "id": "securitycenter.organizations.notificationConfigs.create",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "configId": {
+                  "description": "Required.\nUnique identifier provided by the client within the parent scope.\nIt must be between 1 and 128 characters, and contains alphanumeric\ncharacters, underscores or hyphens only.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Required. Resource name of the new notification config's parent. Its format is\n\"organizations/[organization_id]\".",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/notificationConfigs",
+              "request": {
+                "$ref": "NotificationConfig"
+              },
+              "response": {
+                "$ref": "NotificationConfig"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "delete": {
+              "description": "Deletes a notification config.",
+              "flatPath": "v1/organizations/{organizationsId}/notificationConfigs/{notificationConfigsId}",
+              "httpMethod": "DELETE",
+              "id": "securitycenter.organizations.notificationConfigs.delete",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Name of the notification config to delete. Its format is\n\"organizations/[organization_id]/notificationConfigs/[config_id]\".",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+/notificationConfigs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "response": {
+                "$ref": "Empty"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "get": {
+              "description": "Gets a notification config.",
+              "flatPath": "v1/organizations/{organizationsId}/notificationConfigs/{notificationConfigsId}",
+              "httpMethod": "GET",
+              "id": "securitycenter.organizations.notificationConfigs.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Name of the notification config to get. Its format is\n\"organizations/[organization_id]/notificationConfigs/[config_id]\".",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+/notificationConfigs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "response": {
+                "$ref": "NotificationConfig"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "list": {
+              "description": "Lists notification configs.",
+              "flatPath": "v1/organizations/{organizationsId}/notificationConfigs",
+              "httpMethod": "GET",
+              "id": "securitycenter.organizations.notificationConfigs.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "pageSize": {
+                  "description": "The maximum number of results to return in a single response. Default is\n10, minimum is 1, maximum is 1000.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "The value returned by the last `ListNotificationConfigsResponse`; indicates\nthat this is a continuation of a prior `ListNotificationConfigs` call, and\nthat the system should return the next page of data.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Required. Name of the organization to list notification configs.\nIts format is \"organizations/[organization_id]\".",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/notificationConfigs",
+              "response": {
+                "$ref": "ListNotificationConfigsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "patch": {
+              "description": "\nUpdates a notification config.",
+              "flatPath": "v1/organizations/{organizationsId}/notificationConfigs/{notificationConfigsId}",
+              "httpMethod": "PATCH",
+              "id": "securitycenter.organizations.notificationConfigs.patch",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "The relative resource name of this notification config. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/notificationConfigs/notify_public_bucket\".",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+/notificationConfigs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "The FieldMask to use when updating the notification config.\n\nIf empty all mutable fields will be updated.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "request": {
+                "$ref": "NotificationConfig"
+              },
+              "response": {
+                "$ref": "NotificationConfig"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            }
+          }
+        },
         "operations": {
           "methods": {
             "cancel": {
@@ -899,7 +1056,7 @@
       }
     }
   },
-  "revision": "20200228",
+  "revision": "20200306",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -1150,6 +1307,21 @@
           "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudSecuritycenterV1NotificationMessage": {
+      "description": "Cloud SCC's Notification",
+      "id": "GoogleCloudSecuritycenterV1NotificationMessage",
+      "properties": {
+        "finding": {
+          "$ref": "Finding",
+          "description": "If it's a Finding based notification config, this field will be\npopulated."
+        },
+        "notificationConfigName": {
+          "description": "Name of the notification config that generated current notification.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1727,6 +1899,24 @@
       },
       "type": "object"
     },
+    "ListNotificationConfigsResponse": {
+      "description": "Response message for listing notification configs.",
+      "id": "ListNotificationConfigsResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "Token to retrieve the next page of results, or empty if there are no more\nresults.",
+          "type": "string"
+        },
+        "notificationConfigs": {
+          "description": "Notification configs belonging to the requested parent.",
+          "items": {
+            "$ref": "NotificationConfig"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "ListOperationsResponse": {
       "description": "The response message for Operations.ListOperations.",
       "id": "ListOperationsResponse",
@@ -1759,6 +1949,33 @@
             "$ref": "Source"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "NotificationConfig": {
+      "description": "Cloud Security Command Center (Cloud SCC) notification configs.\n\nA notification config is a Cloud SCC resource that contains the configuration\nto send notifications for create/update events of findings, assets and etc.",
+      "id": "NotificationConfig",
+      "properties": {
+        "description": {
+          "description": "The description of the notification config (max of 1024 characters).",
+          "type": "string"
+        },
+        "name": {
+          "description": "The relative resource name of this notification config. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/notificationConfigs/notify_public_bucket\".",
+          "type": "string"
+        },
+        "pubsubTopic": {
+          "description": "The PubSub topic to send notifications to. Its format is\n\"projects/[project_id]/topics/[topic]\".",
+          "type": "string"
+        },
+        "serviceAccount": {
+          "description": "Output only. The service account that needs \"pubsub.topics.publish\"\npermission to publish to the PubSub topic.",
+          "type": "string"
+        },
+        "streamingConfig": {
+          "$ref": "StreamingConfig",
+          "description": "The config for triggering streaming-based notifications."
         }
       },
       "type": "object"
@@ -2024,6 +2241,17 @@
         },
         "message": {
           "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "StreamingConfig": {
+      "description": "The config for streaming-based notifications, which send each event as soon\nas it is detected.",
+      "id": "StreamingConfig",
+      "properties": {
+        "filter": {
+          "description": "Expression that defines the filter to apply across create/update events\nof assets or findings as specified by the event type. The expression is a\nlist of zero or more restrictions combined via logical operators `AND`\nand `OR`. Parentheses are supported, and `OR` has higher precedence than\n`AND`.\n\nRestrictions have the form `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e` and may have a\n`-` character in front of them to indicate negation. The fields map to\nthose defined in the corresponding resource.\n\nThe supported operators are:\n\n* `=` for all value types.\n* `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values.\n* `:`, meaning substring matching, for strings.\n\nThe supported value types are:\n\n* string literals in quotes.\n* integer literals without quotes.\n* boolean literals `true` and `false` without quotes.",
           "type": "string"
         }
       },

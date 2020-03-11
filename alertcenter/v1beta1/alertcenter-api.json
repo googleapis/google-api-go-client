@@ -423,7 +423,7 @@
       }
     }
   },
-  "revision": "20200215",
+  "revision": "20200307",
   "rootUrl": "https://alertcenter.googleapis.com/",
   "schemas": {
     "AccountWarning": {
@@ -481,7 +481,7 @@
           "type": "array"
         },
         "supersedingAlert": {
-          "description": "Alert id superseding this alert. It is used to indicate that superseding\nalert is essentially extension of this alert and we found the relationship\nafter creating both alerts.",
+          "description": "Alert ID superseding this alert. It is used to indicate that superseding\nalert is essentially extension of this alert and we found the relationship\nafter creating both alerts.",
           "type": "string"
         },
         "threshold": {
@@ -708,7 +708,7 @@
       "id": "BatchDeleteAlertsRequest",
       "properties": {
         "alertId": {
-          "description": "Required. list of alert ids.",
+          "description": "Required. list of alert IDs.",
           "items": {
             "type": "string"
           },
@@ -733,7 +733,7 @@
           "type": "object"
         },
         "successAlertIds": {
-          "description": "The successful list of alert ids.",
+          "description": "The successful list of alert IDs.",
           "items": {
             "type": "string"
           },
@@ -747,7 +747,7 @@
       "id": "BatchUndeleteAlertsRequest",
       "properties": {
         "alertId": {
-          "description": "Required. list of alert ids.",
+          "description": "Required. list of alert IDs.",
           "items": {
             "type": "string"
           },
@@ -772,7 +772,7 @@
           "type": "object"
         },
         "successAlertIds": {
-          "description": "The successful list of alert ids.",
+          "description": "The successful list of alert IDs.",
           "items": {
             "type": "string"
           },
@@ -929,56 +929,6 @@
       },
       "type": "object"
     },
-    "DriveFile": {
-      "description": "A Drive file",
-      "id": "DriveFile",
-      "properties": {
-        "abuseType": {
-          "description": "Abuse type of the file.",
-          "enum": [
-            "DRIVE_ABUSE_TYPE_UNSPECIFIED",
-            "SUSPECTED_MALWARE"
-          ],
-          "enumDescriptions": [
-            "Not specified abuse type.",
-            "The content is detected as suspected malware."
-          ],
-          "type": "string"
-        },
-        "id": {
-          "description": "The ID of the file.",
-          "type": "string"
-        },
-        "name": {
-          "description": "The name of the file.",
-          "type": "string"
-        },
-        "numRecentDownload": {
-          "description": "The number of recent downloads of the file. This is available for the\nfollowing alert types:\n\n*Drive malware sharing detected",
-          "format": "int64",
-          "type": "string"
-        },
-        "owner": {
-          "description": "The email address of the file owner.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "DriveFileWarning": {
-      "description": "Alerts for suspicious Drive files or activities.",
-      "id": "DriveFileWarning",
-      "properties": {
-        "files": {
-          "description": "List of files in the alert.",
-          "items": {
-            "$ref": "DriveFile"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "Empty": {
       "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
       "id": "Empty",
@@ -1095,7 +1045,7 @@
           "type": "string"
         },
         "loginTime": {
-          "description": "Optional. The successful login time that is associated with the warning\nevent. This will not be present for blocked login attempts.",
+          "description": "Optional. The successful login time that is associated with the warning\nevent. This isn't present for blocked login attempts.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -1256,7 +1206,7 @@
           "type": "string"
         },
         "resourceTitle": {
-          "description": "Title of the resource, e.g. email subject, or document title.",
+          "description": "Title of the resource, for example email subject, or document title.",
           "type": "string"
         }
       },

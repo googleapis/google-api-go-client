@@ -29,6 +29,7 @@
   },
   "id": "dataflow:v1b3",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://dataflow.mtls.googleapis.com/",
   "name": "dataflow",
   "ownerDomain": "google.com",
   "ownerName": "Google",

@@ -147,6 +147,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.InsightTypes = NewProjectsLocationsInsightTypesService(s)
 	rs.Recommenders = NewProjectsLocationsRecommendersService(s)
 	return rs
 }
@@ -154,7 +155,30 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	InsightTypes *ProjectsLocationsInsightTypesService
+
 	Recommenders *ProjectsLocationsRecommendersService
+}
+
+func NewProjectsLocationsInsightTypesService(s *Service) *ProjectsLocationsInsightTypesService {
+	rs := &ProjectsLocationsInsightTypesService{s: s}
+	rs.Insights = NewProjectsLocationsInsightTypesInsightsService(s)
+	return rs
+}
+
+type ProjectsLocationsInsightTypesService struct {
+	s *Service
+
+	Insights *ProjectsLocationsInsightTypesInsightsService
+}
+
+func NewProjectsLocationsInsightTypesInsightsService(s *Service) *ProjectsLocationsInsightTypesInsightsService {
+	rs := &ProjectsLocationsInsightTypesInsightsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsInsightTypesInsightsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsRecommendersService(s *Service) *ProjectsLocationsRecommendersService {
@@ -257,6 +281,219 @@ func (s *GoogleCloudRecommenderV1beta1Impact) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecommenderV1beta1Insight: An insight along with the
+// information used to derive the insight. The insight
+// may have associated recomendations as well.
+type GoogleCloudRecommenderV1beta1Insight struct {
+	// AssociatedRecommendations: Recommendations derived from this insight.
+	AssociatedRecommendations []*GoogleCloudRecommenderV1beta1InsightRecommendationReference `json:"associatedRecommendations,omitempty"`
+
+	// Category: Category being targeted by the insight.
+	//
+	// Possible values:
+	//   "CATEGORY_UNSPECIFIED" - Unspecified category.
+	//   "COST" - The insight is related to cost.
+	//   "SECURITY" - The insight is related to security.
+	//   "PERFORMANCE" - The insight is related to performance.
+	//   "MANAGEABILITY" - This insight is related to manageability.
+	Category string `json:"category,omitempty"`
+
+	// Content: A struct of custom fields to explain the insight.
+	// Example: "grantedPermissionsCount": "1000"
+	Content googleapi.RawMessage `json:"content,omitempty"`
+
+	// Description: Free-form human readable summary in English. The maximum
+	// length is 500
+	// characters.
+	Description string `json:"description,omitempty"`
+
+	// Etag: Fingerprint of the Insight. Provides optimistic locking when
+	// updating
+	// states.
+	Etag string `json:"etag,omitempty"`
+
+	// InsightSubtype: Insight subtype. Insight content schema will be
+	// stable for a given subtype.
+	InsightSubtype string `json:"insightSubtype,omitempty"`
+
+	// LastRefreshTime: Timestamp of the latest data used to generate the
+	// insight.
+	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
+
+	// Name: Name of the insight.
+	//
+	// * A project insight is represented as
+	//
+	// projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_T
+	// YPE_ID]/insights/[insight_id]
+	Name string `json:"name,omitempty"`
+
+	// ObservationPeriod: Observation period that led to the insight. The
+	// source data used to
+	// generate the insight ends at last_refresh_time and begins
+	// at
+	// (last_refresh_time - observation_period).
+	ObservationPeriod string `json:"observationPeriod,omitempty"`
+
+	// StateInfo: Information state and metadata.
+	StateInfo *GoogleCloudRecommenderV1beta1InsightStateInfo `json:"stateInfo,omitempty"`
+
+	// TargetResources: Fully qualified resource names that this insight is
+	// targeting.
+	TargetResources []string `json:"targetResources,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AssociatedRecommendations") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AssociatedRecommendations") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1beta1Insight) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1beta1Insight
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecommenderV1beta1InsightRecommendationReference:
+// Reference to an associated recommendation.
+type GoogleCloudRecommenderV1beta1InsightRecommendationReference struct {
+	// Recommendation: Recommendation resource name,
+	// e.g.
+	// projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECO
+	// MMENDER_ID]/recommendations/[RECOMMENDATION_ID]
+	Recommendation string `json:"recommendation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Recommendation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Recommendation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1beta1InsightRecommendationReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1beta1InsightRecommendationReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecommenderV1beta1InsightStateInfo: Information related to
+// insight state.
+type GoogleCloudRecommenderV1beta1InsightStateInfo struct {
+	// State: Insight state.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "ACTIVE" - Insight is active. Content for ACTIVE insights can be
+	// updated by Google.
+	// ACTIVE insights can be marked DISMISSED OR ACCEPTED.
+	//   "ACCEPTED" - Some action has been taken based on this insight.
+	// Insights become
+	// accepted when a recommendation derived from the insight has been
+	// marked
+	// CLAIMED, SUCCEEDED, or FAILED. ACTIVE insights can also be
+	// marked
+	// ACCEPTED explicitly. Content for ACCEPTED insights is immutable.
+	// ACCEPTED
+	// insights can only be marked ACCEPTED (which may update state
+	// metadata).
+	//   "DISMISSED" - Insight is dismissed. Content for DISMISSED insights
+	// can be updated by
+	// Google. DISMISSED insights can be marked as ACTIVE.
+	State string `json:"state,omitempty"`
+
+	// StateMetadata: A map of metadata for the state, provided by user or
+	// automations systems.
+	StateMetadata map[string]string `json:"stateMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "State") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1beta1InsightStateInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1beta1InsightStateInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecommenderV1beta1ListInsightsResponse: Response to the
+// `ListInsights` method.
+type GoogleCloudRecommenderV1beta1ListInsightsResponse struct {
+	// Insights: The set of insights for the `parent` resource.
+	Insights []*GoogleCloudRecommenderV1beta1Insight `json:"insights,omitempty"`
+
+	// NextPageToken: A token that can be used to request the next page of
+	// results. This field is
+	// empty if there are no additional results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Insights") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Insights") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1beta1ListInsightsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1beta1ListInsightsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecommenderV1beta1ListRecommendationsResponse: Response to
 // the `ListRecommendations` method.
 type GoogleCloudRecommenderV1beta1ListRecommendationsResponse struct {
@@ -292,6 +529,41 @@ type GoogleCloudRecommenderV1beta1ListRecommendationsResponse struct {
 
 func (s *GoogleCloudRecommenderV1beta1ListRecommendationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1beta1ListRecommendationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecommenderV1beta1MarkInsightAcceptedRequest: Request for
+// the `MarkInsightAccepted` method.
+type GoogleCloudRecommenderV1beta1MarkInsightAcceptedRequest struct {
+	// Etag: Required. Fingerprint of the Insight. Provides optimistic
+	// locking.
+	Etag string `json:"etag,omitempty"`
+
+	// StateMetadata: Optional. State properties user wish to include with
+	// this state.  Full replace of the
+	// current state_metadata.
+	StateMetadata map[string]string `json:"stateMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Etag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1beta1MarkInsightAcceptedRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1beta1MarkInsightAcceptedRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -575,6 +847,9 @@ type GoogleCloudRecommenderV1beta1Recommendation struct {
 	// or negative.
 	AdditionalImpact []*GoogleCloudRecommenderV1beta1Impact `json:"additionalImpact,omitempty"`
 
+	// AssociatedInsights: Insights that led to this recommendation.
+	AssociatedInsights []*GoogleCloudRecommenderV1beta1RecommendationInsightReference `json:"associatedInsights,omitempty"`
+
 	// Content: Content of the recommendation describing recommended changes
 	// to resources.
 	Content *GoogleCloudRecommenderV1beta1RecommendationContent `json:"content,omitempty"`
@@ -678,6 +953,38 @@ type GoogleCloudRecommenderV1beta1RecommendationContent struct {
 
 func (s *GoogleCloudRecommenderV1beta1RecommendationContent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1beta1RecommendationContent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecommenderV1beta1RecommendationInsightReference:
+// Reference to an associated insight.
+type GoogleCloudRecommenderV1beta1RecommendationInsightReference struct {
+	// Insight: Insight resource name,
+	// e.g.
+	// projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSI
+	// GHT_TYPE_ID]/insights/[INSIGHT_ID]
+	Insight string `json:"insight,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Insight") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Insight") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1beta1RecommendationInsightReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1beta1RecommendationInsightReference
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -822,6 +1129,519 @@ func (s *GoogleTypeMoney) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "recommender.projects.locations.insightTypes.insights.get":
+
+type ProjectsLocationsInsightTypesInsightsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the requested insight. Requires the recommender.*.get IAM
+// permission
+// for the specified insight type.
+func (r *ProjectsLocationsInsightTypesInsightsService) Get(name string) *ProjectsLocationsInsightTypesInsightsGetCall {
+	c := &ProjectsLocationsInsightTypesInsightsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInsightTypesInsightsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsInsightTypesInsightsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsInsightTypesInsightsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsInsightTypesInsightsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInsightTypesInsightsGetCall) Context(ctx context.Context) *ProjectsLocationsInsightTypesInsightsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInsightTypesInsightsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInsightTypesInsightsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recommender.projects.locations.insightTypes.insights.get" call.
+// Exactly one of *GoogleCloudRecommenderV1beta1Insight or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudRecommenderV1beta1Insight.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsInsightTypesInsightsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommenderV1beta1Insight, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRecommenderV1beta1Insight{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the requested insight. Requires the recommender.*.get IAM permission\nfor the specified insight type.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/insightTypes/{insightTypesId}/insights/{insightsId}",
+	//   "httpMethod": "GET",
+	//   "id": "recommender.projects.locations.insightTypes.insights.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the insight.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/insightTypes/[^/]+/insights/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudRecommenderV1beta1Insight"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "recommender.projects.locations.insightTypes.insights.list":
+
+type ProjectsLocationsInsightTypesInsightsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists insights for a Cloud project. Requires the
+// recommender.*.list IAM
+// permission for the specified insight type.
+func (r *ProjectsLocationsInsightTypesInsightsService) List(parent string) *ProjectsLocationsInsightTypesInsightsListCall {
+	c := &ProjectsLocationsInsightTypesInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression to
+// restrict the insights returned. Supported
+// filter fields: state
+// Eg: `state:"DISMISSED" or state:"ACTIVE"
+func (c *ProjectsLocationsInsightTypesInsightsListCall) Filter(filter string) *ProjectsLocationsInsightTypesInsightsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return from this request.  Non-positive
+// values are ignored. If not specified, the server will determine the
+// number
+// of results to return.
+func (c *ProjectsLocationsInsightTypesInsightsListCall) PageSize(pageSize int64) *ProjectsLocationsInsightTypesInsightsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If present,
+// retrieves the next batch of results from the preceding call to
+// this method. `page_token` must be the value of `next_page_token` from
+// the
+// previous response. The values of other method parameters must be
+// identical
+// to those in the previous call.
+func (c *ProjectsLocationsInsightTypesInsightsListCall) PageToken(pageToken string) *ProjectsLocationsInsightTypesInsightsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInsightTypesInsightsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsInsightTypesInsightsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsInsightTypesInsightsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsInsightTypesInsightsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInsightTypesInsightsListCall) Context(ctx context.Context) *ProjectsLocationsInsightTypesInsightsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInsightTypesInsightsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInsightTypesInsightsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/insights")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recommender.projects.locations.insightTypes.insights.list" call.
+// Exactly one of *GoogleCloudRecommenderV1beta1ListInsightsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudRecommenderV1beta1ListInsightsResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsInsightTypesInsightsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommenderV1beta1ListInsightsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRecommenderV1beta1ListInsightsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists insights for a Cloud project. Requires the recommender.*.list IAM\npermission for the specified insight type.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/insightTypes/{insightTypesId}/insights",
+	//   "httpMethod": "GET",
+	//   "id": "recommender.projects.locations.insightTypes.insights.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported\nfilter fields: state\nEg: `state:\"DISMISSED\" or state:\"ACTIVE\"",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of results to return from this request.  Non-positive\nvalues are ignored. If not specified, the server will determine the number\nof results to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. If present, retrieves the next batch of results from the preceding call to\nthis method. `page_token` must be the value of `next_page_token` from the\nprevious response. The values of other method parameters must be identical\nto those in the previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The container resource on which to execute the request.\nAcceptable formats:\n\n1.\n\"projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]\",\n\nLOCATION here refers to GCP Locations:\nhttps://cloud.google.com/about/locations/",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/insightTypes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/insights",
+	//   "response": {
+	//     "$ref": "GoogleCloudRecommenderV1beta1ListInsightsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsInsightTypesInsightsListCall) Pages(ctx context.Context, f func(*GoogleCloudRecommenderV1beta1ListInsightsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "recommender.projects.locations.insightTypes.insights.markAccepted":
+
+type ProjectsLocationsInsightTypesInsightsMarkAcceptedCall struct {
+	s                                                       *Service
+	name                                                    string
+	googlecloudrecommenderv1beta1markinsightacceptedrequest *GoogleCloudRecommenderV1beta1MarkInsightAcceptedRequest
+	urlParams_                                              gensupport.URLParams
+	ctx_                                                    context.Context
+	header_                                                 http.Header
+}
+
+// MarkAccepted: Marks the Insight State as Accepted. Users can use this
+// method to
+// indicate to the Recommender API that they have applied some action
+// based
+// on the insight. This stops the insight content from being
+// updated.
+//
+// MarkInsightAccepted can be applied to insights in ACTIVE state.
+// Requires
+// the recommender.*.update IAM permission for the specified insight.
+func (r *ProjectsLocationsInsightTypesInsightsService) MarkAccepted(name string, googlecloudrecommenderv1beta1markinsightacceptedrequest *GoogleCloudRecommenderV1beta1MarkInsightAcceptedRequest) *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall {
+	c := &ProjectsLocationsInsightTypesInsightsMarkAcceptedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudrecommenderv1beta1markinsightacceptedrequest = googlecloudrecommenderv1beta1markinsightacceptedrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall) Fields(s ...googleapi.Field) *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall) Context(ctx context.Context) *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecommenderv1beta1markinsightacceptedrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:markAccepted")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recommender.projects.locations.insightTypes.insights.markAccepted" call.
+// Exactly one of *GoogleCloudRecommenderV1beta1Insight or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudRecommenderV1beta1Insight.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommenderV1beta1Insight, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRecommenderV1beta1Insight{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Marks the Insight State as Accepted. Users can use this method to\nindicate to the Recommender API that they have applied some action based\non the insight. This stops the insight content from being updated.\n\nMarkInsightAccepted can be applied to insights in ACTIVE state. Requires\nthe recommender.*.update IAM permission for the specified insight.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/insightTypes/{insightTypesId}/insights/{insightsId}:markAccepted",
+	//   "httpMethod": "POST",
+	//   "id": "recommender.projects.locations.insightTypes.insights.markAccepted",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the insight.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/insightTypes/[^/]+/insights/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:markAccepted",
+	//   "request": {
+	//     "$ref": "GoogleCloudRecommenderV1beta1MarkInsightAcceptedRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudRecommenderV1beta1Insight"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "recommender.projects.locations.recommenders.recommendations.get":
 
 type ProjectsLocationsRecommendersRecommendationsGetCall struct {
@@ -879,7 +1699,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsGetCall) Header() http.Head
 
 func (c *ProjectsLocationsRecommendersRecommendationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1058,7 +1878,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Header() http.Hea
 
 func (c *ProjectsLocationsRecommendersRecommendationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1248,7 +2068,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) Header() h
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1406,7 +2226,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) Header() ht
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1564,7 +2384,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) Header()
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

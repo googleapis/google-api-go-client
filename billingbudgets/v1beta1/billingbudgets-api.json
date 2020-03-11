@@ -163,7 +163,7 @@
               ]
             },
             "get": {
-              "description": "Returns a budget.\n\nWARNING: There are some fields exposed on the Google Cloud Console that\naren’t available on this API. When reading from the API, you will not\nsee these fields in the return value, though they may have been set\nin the cloud console.",
+              "description": "Returns a budget.\n\nWARNING: There are some fields exposed on the Google Cloud Console that\naren’t available on this API. When reading from the API, you will not\nsee these fields in the return value, though they may have been set\nin the Cloud Console.",
               "flatPath": "v1beta1/billingAccounts/{billingAccountsId}/budgets/{budgetsId}",
               "httpMethod": "GET",
               "id": "billingbudgets.billingAccounts.budgets.get",
@@ -188,7 +188,7 @@
               ]
             },
             "list": {
-              "description": "Returns a list of budgets for a billing account.\n\nWARNING: There are some fields exposed on the Google Cloud Console that\naren’t available on this API. When reading from the API, you will not\nsee these fields in the return value, though they may have been set\nin the cloud console.",
+              "description": "Returns a list of budgets for a billing account.\n\nWARNING: There are some fields exposed on the Google Cloud Console that\naren’t available on this API. When reading from the API, you will not\nsee these fields in the return value, though they may have been set\nin the Cloud Console.",
               "flatPath": "v1beta1/billingAccounts/{billingAccountsId}/budgets",
               "httpMethod": "GET",
               "id": "billingbudgets.billingAccounts.budgets.list",
@@ -256,7 +256,7 @@
       }
     }
   },
-  "revision": "20200229",
+  "revision": "20200308",
   "rootUrl": "https://billingbudgets.googleapis.com/",
   "schemas": {
     "GoogleCloudBillingBudgetsV1beta1AllUpdatesRule": {
@@ -303,7 +303,7 @@
           "type": "string"
         },
         "thresholdRules": {
-          "description": "Required. Rules that trigger alerts (notifications of thresholds\nbeing crossed) when spend exceeds the specified percentages of the budget.",
+          "description": "Optional. Rules that trigger alerts (notifications of thresholds\nbeing crossed) when spend exceeds the specified percentages of the budget.",
           "items": {
             "$ref": "GoogleCloudBillingBudgetsV1beta1ThresholdRule"
           },
@@ -357,7 +357,7 @@
           "type": "string"
         },
         "projects": {
-          "description": "Optional. A set of projects of the form `projects/{project_id}`,\nspecifying that usage from only this set of projects should be\nincluded in the budget. If omitted, the report will include all usage for\nthe billing account, regardless of which project the usage occurred on.\nOnly zero or one project can be specified currently.",
+          "description": "Optional. A set of projects of the form `projects/{project}`,\nspecifying that usage from only this set of projects should be\nincluded in the budget. If omitted, the report will include all usage for\nthe billing account, regardless of which project the usage occurred on.\nOnly zero or one project can be specified currently.",
           "items": {
             "type": "string"
           },

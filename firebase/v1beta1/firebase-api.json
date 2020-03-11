@@ -471,7 +471,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "The parent Project for which to list Apps, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
+                  "description": "The parent Project in which to create an App, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -799,7 +799,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "The parent Project for which to list Apps, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
+                  "description": "The parent Project in which to create an App, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -962,7 +962,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "The parent Project for which to list Apps, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
+                  "description": "The parent Project in which to create an App, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -1116,7 +1116,7 @@
       }
     }
   },
-  "revision": "20200215",
+  "revision": "20200309",
   "rootUrl": "https://firebase.googleapis.com/",
   "schemas": {
     "AddFirebaseRequest": {

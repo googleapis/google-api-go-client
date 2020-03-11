@@ -28,6 +28,7 @@
   },
   "id": "firebaserules:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://firebaserules.mtls.googleapis.com/",
   "name": "firebaserules",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -124,7 +125,7 @@
             "name": {
               "description": "Tests may either provide `source` or a `Ruleset` resource name.\n\nFor tests against `source`, the resource name must refer to the project:\nFormat: `projects/{project_id}`\n\nFor tests against a `Ruleset`, this must be the `Ruleset` resource name:\nFormat: `projects/{project_id}/rulesets/{ruleset_id}`",
               "location": "path",
-              "pattern": "^projects/.+$",
+              "pattern": "^projects/.*$",
               "required": true,
               "type": "string"
             }
@@ -187,7 +188,7 @@
                 "name": {
                   "description": "Resource name for the `Release` to delete.\n\nFormat: `projects/{project_id}/releases/{release_id}`",
                   "location": "path",
-                  "pattern": "^projects/[^/]+/releases/.+$",
+                  "pattern": "^projects/[^/]+/releases/.*$",
                   "required": true,
                   "type": "string"
                 }
@@ -213,7 +214,7 @@
                 "name": {
                   "description": "Resource name of the `Release`.\n\nFormat: `projects/{project_id}/releases/{release_id}`",
                   "location": "path",
-                  "pattern": "^projects/[^/]+/releases/.+$",
+                  "pattern": "^projects/[^/]+/releases/.*$",
                   "required": true,
                   "type": "string"
                 }
@@ -250,7 +251,7 @@
                 "name": {
                   "description": "Resource name of the `Release`.\n\nFormat: `projects/{project_id}/releases/{release_id}`",
                   "location": "path",
-                  "pattern": "^projects/[^/]+/releases/.+$",
+                  "pattern": "^projects/[^/]+/releases/.*$",
                   "required": true,
                   "type": "string"
                 }
@@ -320,7 +321,7 @@
                 "name": {
                   "description": "Resource name for the project which owns this `Release`.\n\nFormat: `projects/{project_id}`",
                   "location": "path",
-                  "pattern": "^projects/[^/]+/releases/.+$",
+                  "pattern": "^projects/[^/]+/releases/.*$",
                   "required": true,
                   "type": "string"
                 }
@@ -471,7 +472,7 @@
       }
     }
   },
-  "revision": "20200206",
+  "revision": "20200303",
   "rootUrl": "https://firebaserules.googleapis.com/",
   "schemas": {
     "Arg": {
@@ -847,12 +848,14 @@
           "enum": [
             "LEVEL_UNSPECIFIED",
             "NONE",
-            "FULL"
+            "FULL",
+            "VISITED"
           ],
           "enumDescriptions": [
             "No level has been specified. Defaults to \"NONE\" behavior.",
             "Do not include any additional information.",
-            "Include detailed reporting on expressions evaluated."
+            "Include detailed reporting on expressions evaluated.",
+            "Only include the expressions that were visited during evaluation."
           ],
           "type": "string"
         },

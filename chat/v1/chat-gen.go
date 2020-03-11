@@ -473,32 +473,8 @@ type DeprecatedEvent struct {
 	// for more information.
 	ConfigCompleteRedirectUrl string `json:"configCompleteRedirectUrl,omitempty"`
 
-	// DialogEventType: The type of dialog event we have received.
-	//
-	// Possible values:
-	//   "TYPE_UNSPECIFIED" - This could be used when the corresponding
-	// event is not dialog related.
-	// For example an @mention.
-	//   "REQUEST_DIALOG" - For any user action that would result in a
-	// dialog opening.
-	//   "SUBMIT_DIALOG" - For card click events from any dialog.
-	//   "CANCEL_DIALOG" - For native cancellation button.
-	DialogEventType string `json:"dialogEventType,omitempty"`
-
 	// EventTime: The timestamp indicating when the event was dispatched.
 	EventTime string `json:"eventTime,omitempty"`
-
-	// FormInputs: The list of form inputs we will supply to the bot. These
-	// are just the
-	// inputs from the dialog that are populated by the user. This will only
-	// be
-	// populated for CARD_CLICKED events.
-	FormInputs []*FormInput `json:"formInputs,omitempty"`
-
-	// IsDialogEvent: Whether or not this event is related to dialogs
-	// request, submit or cancel.
-	// This will be set to true when we want a request/submit/cancel event.
-	IsDialogEvent bool `json:"isDialogEvent,omitempty"`
 
 	// Message: The message that triggered the event, if applicable.
 	Message *Message `json:"message,omitempty"`
@@ -579,9 +555,13 @@ type Empty struct {
 // submitted.
 // For example, an Apps Script can be invoked to handle the form.
 type FormAction struct {
-	// ActionMethodName: Apps Script function to invoke when the containing
-	// element is
-	// clicked/activated.
+	// ActionMethodName: The method name is used to identify which part of
+	// the form triggered the
+	// form submission. This information is echoed back to the bot as part
+	// of
+	// the card click event. The same method name can be used for
+	// several
+	// elements that trigger a common behavior if desired.
 	ActionMethodName string `json:"actionMethodName,omitempty"`
 
 	// Parameters: List of action parameters.
@@ -607,37 +587,6 @@ type FormAction struct {
 
 func (s *FormAction) MarshalJSON() ([]byte, error) {
 	type NoMethod FormAction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// FormInput: A single user input from an editable widget from Card API.
-type FormInput struct {
-	// Name: The name of the editable widget.
-	Name string `json:"name,omitempty"`
-
-	// Value: Value entered by user.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *FormInput) MarshalJSON() ([]byte, error) {
-	type NoMethod FormInput
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1479,7 +1428,7 @@ func (c *SpacesGetCall) Header() http.Header {
 
 func (c *SpacesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1634,7 +1583,7 @@ func (c *SpacesListCall) Header() http.Header {
 
 func (c *SpacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1795,7 +1744,7 @@ func (c *SpacesMembersGetCall) Header() http.Header {
 
 func (c *SpacesMembersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1952,7 +1901,7 @@ func (c *SpacesMembersListCall) Header() http.Header {
 
 func (c *SpacesMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2135,7 +2084,7 @@ func (c *SpacesMessagesCreateCall) Header() http.Header {
 
 func (c *SpacesMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2275,7 +2224,7 @@ func (c *SpacesMessagesDeleteCall) Header() http.Header {
 
 func (c *SpacesMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2413,7 +2362,7 @@ func (c *SpacesMessagesGetCall) Header() http.Header {
 
 func (c *SpacesMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2558,7 +2507,7 @@ func (c *SpacesMessagesUpdateCall) Header() http.Header {
 
 func (c *SpacesMessagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

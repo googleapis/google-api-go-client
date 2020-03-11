@@ -317,7 +317,7 @@
       }
     }
   },
-  "revision": "20200219",
+  "revision": "20200304",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {
@@ -498,37 +498,10 @@
           "description": "The URL the bot should redirect the user to after they have completed an\nauthorization or configuration flow outside of Hangouts Chat. See the\n[Authorizing access to 3p services guide](/hangouts/chat/how-tos/auth-3p)\nfor more information.",
           "type": "string"
         },
-        "dialogEventType": {
-          "description": "The type of dialog event we have received.",
-          "enum": [
-            "TYPE_UNSPECIFIED",
-            "REQUEST_DIALOG",
-            "SUBMIT_DIALOG",
-            "CANCEL_DIALOG"
-          ],
-          "enumDescriptions": [
-            "This could be used when the corresponding event is not dialog related.\nFor example an @mention.",
-            "For any user action that would result in a dialog opening.",
-            "For card click events from any dialog.",
-            "For native cancellation button."
-          ],
-          "type": "string"
-        },
         "eventTime": {
           "description": "The timestamp indicating when the event was dispatched.",
           "format": "google-datetime",
           "type": "string"
-        },
-        "formInputs": {
-          "description": "The list of form inputs we will supply to the bot. These are just the\ninputs from the dialog that are populated by the user. This will only be\npopulated for CARD_CLICKED events.",
-          "items": {
-            "$ref": "FormInput"
-          },
-          "type": "array"
-        },
-        "isDialogEvent": {
-          "description": "Whether or not this event is related to dialogs request, submit or cancel.\nThis will be set to true when we want a request/submit/cancel event.",
-          "type": "boolean"
         },
         "message": {
           "$ref": "Message",
@@ -582,7 +555,7 @@
       "id": "FormAction",
       "properties": {
         "actionMethodName": {
-          "description": "Apps Script function to invoke when the containing element is\nclicked/activated.",
+          "description": "The method name is used to identify which part of the form triggered the\nform submission. This information is echoed back to the bot as part of\nthe card click event. The same method name can be used for several\nelements that trigger a common behavior if desired.",
           "type": "string"
         },
         "parameters": {
@@ -591,21 +564,6 @@
             "$ref": "ActionParameter"
           },
           "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "FormInput": {
-      "description": "A single user input from an editable widget from Card API.",
-      "id": "FormInput",
-      "properties": {
-        "name": {
-          "description": "The name of the editable widget.",
-          "type": "string"
-        },
-        "value": {
-          "description": "Value entered by user.",
-          "type": "string"
         }
       },
       "type": "object"

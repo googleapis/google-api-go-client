@@ -232,7 +232,7 @@ type ActivityRule struct {
 	// relationship after creating these alerts.
 	SupersededAlerts []string `json:"supersededAlerts,omitempty"`
 
-	// SupersedingAlert: Alert id superseding this alert. It is used to
+	// SupersedingAlert: Alert ID superseding this alert. It is used to
 	// indicate that superseding
 	// alert is essentially extension of this alert and we found the
 	// relationship
@@ -631,7 +631,7 @@ func (s *BadWhitelist) MarshalJSON() ([]byte, error) {
 // BatchDeleteAlertsRequest: A request to perform batch delete on
 // alerts.
 type BatchDeleteAlertsRequest struct {
-	// AlertId: Required. list of alert ids.
+	// AlertId: Required. list of alert IDs.
 	AlertId []string `json:"alertId,omitempty"`
 
 	// CustomerId: Optional. The unique identifier of the G Suite
@@ -668,7 +668,7 @@ type BatchDeleteAlertsResponse struct {
 	// FailedAlertStatus: The status details for each failed alert_id.
 	FailedAlertStatus map[string]Status `json:"failedAlertStatus,omitempty"`
 
-	// SuccessAlertIds: The successful list of alert ids.
+	// SuccessAlertIds: The successful list of alert IDs.
 	SuccessAlertIds []string `json:"successAlertIds,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -702,7 +702,7 @@ func (s *BatchDeleteAlertsResponse) MarshalJSON() ([]byte, error) {
 // BatchUndeleteAlertsRequest: A request to perform batch undelete on
 // alerts.
 type BatchUndeleteAlertsRequest struct {
-	// AlertId: Required. list of alert ids.
+	// AlertId: Required. list of alert IDs.
 	AlertId []string `json:"alertId,omitempty"`
 
 	// CustomerId: Optional. The unique identifier of the G Suite
@@ -739,7 +739,7 @@ type BatchUndeleteAlertsResponse struct {
 	// FailedAlertStatus: The status details for each failed alert_id.
 	FailedAlertStatus map[string]Status `json:"failedAlertStatus,omitempty"`
 
-	// SuccessAlertIds: The successful list of alert ids.
+	// SuccessAlertIds: The successful list of alert IDs.
 	SuccessAlertIds []string `json:"successAlertIds,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1065,82 +1065,6 @@ func (s *DomainWideTakeoutInitiated) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DriveFile: A Drive file
-type DriveFile struct {
-	// AbuseType: Abuse type of the file.
-	//
-	// Possible values:
-	//   "DRIVE_ABUSE_TYPE_UNSPECIFIED" - Not specified abuse type.
-	//   "SUSPECTED_MALWARE" - The content is detected as suspected malware.
-	AbuseType string `json:"abuseType,omitempty"`
-
-	// Id: The ID of the file.
-	Id string `json:"id,omitempty"`
-
-	// Name: The name of the file.
-	Name string `json:"name,omitempty"`
-
-	// NumRecentDownload: The number of recent downloads of the file. This
-	// is available for the
-	// following alert types:
-	//
-	// *Drive malware sharing detected
-	NumRecentDownload int64 `json:"numRecentDownload,omitempty,string"`
-
-	// Owner: The email address of the file owner.
-	Owner string `json:"owner,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AbuseType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AbuseType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DriveFile) MarshalJSON() ([]byte, error) {
-	type NoMethod DriveFile
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// DriveFileWarning: Alerts for suspicious Drive files or activities.
-type DriveFileWarning struct {
-	// Files: List of files in the alert.
-	Files []*DriveFile `json:"files,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Files") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Files") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DriveFileWarning) MarshalJSON() ([]byte, error) {
-	type NoMethod DriveFileWarning
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated
 // empty messages in your APIs. A typical example is to use it as the
@@ -1344,7 +1268,7 @@ type LoginDetails struct {
 
 	// LoginTime: Optional. The successful login time that is associated
 	// with the warning
-	// event. This will not be present for blocked login attempts.
+	// event. This isn't present for blocked login attempts.
 	LoginTime string `json:"loginTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IpAddress") to
@@ -1643,8 +1567,8 @@ type ResourceInfo struct {
 	// DocumentId: Drive file ID.
 	DocumentId string `json:"documentId,omitempty"`
 
-	// ResourceTitle: Title of the resource, e.g. email subject, or document
-	// title.
+	// ResourceTitle: Title of the resource, for example email subject, or
+	// document title.
 	ResourceTitle string `json:"resourceTitle,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DocumentId") to
@@ -2129,7 +2053,7 @@ func (c *AlertsBatchDeleteCall) Header() http.Header {
 
 func (c *AlertsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2254,7 +2178,7 @@ func (c *AlertsBatchUndeleteCall) Header() http.Header {
 
 func (c *AlertsBatchUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2395,7 +2319,7 @@ func (c *AlertsDeleteCall) Header() http.Header {
 
 func (c *AlertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2551,7 +2475,7 @@ func (c *AlertsGetCall) Header() http.Header {
 
 func (c *AlertsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2710,7 +2634,7 @@ func (c *AlertsGetMetadataCall) Header() http.Header {
 
 func (c *AlertsGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2913,7 +2837,7 @@ func (c *AlertsListCall) Header() http.Header {
 
 func (c *AlertsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3092,7 +3016,7 @@ func (c *AlertsUndeleteCall) Header() http.Header {
 
 func (c *AlertsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3246,7 +3170,7 @@ func (c *AlertsFeedbackCreateCall) Header() http.Header {
 
 func (c *AlertsFeedbackCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3425,7 +3349,7 @@ func (c *AlertsFeedbackListCall) Header() http.Header {
 
 func (c *AlertsFeedbackListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3585,7 +3509,7 @@ func (c *V1beta1GetSettingsCall) Header() http.Header {
 
 func (c *V1beta1GetSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3720,7 +3644,7 @@ func (c *V1beta1UpdateSettingsCall) Header() http.Header {
 
 func (c *V1beta1UpdateSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

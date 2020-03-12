@@ -550,7 +550,7 @@
       }
     }
   },
-  "revision": "20200303",
+  "revision": "20200308",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "EntityKey": {
@@ -564,6 +564,27 @@
         "namespace": {
           "description": "The namespace in which the entity exists.\n\nIf not specified, the `EntityKey` represents a Google-managed entity such\nas a Google user or a Google Group.\n\nIf specified, the `EntityKey` represents an external-identity-mapped group.\nThe namespace must correspond to an identity source created in Admin\nConsole. Must be of the form `identitysources/{identity_source_id}.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GetMembershipGraphResponse": {
+      "description": "The response message for MembershipsService.GetMembershipGraph.",
+      "id": "GetMembershipGraphResponse",
+      "properties": {
+        "adjacencyList": {
+          "description": "The membership graph's path information represented as an adjacency list.",
+          "items": {
+            "$ref": "MembershipAdjacencyList"
+          },
+          "type": "array"
+        },
+        "groups": {
+          "description": "The resources representing each group in the adjacency list. Each\ngroup in this list can be correlated to a 'group' of the\nMembershipAdjacencyList using the 'name' of the Group resource.",
+          "items": {
+            "$ref": "Group"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -708,6 +729,24 @@
         "updateTime": {
           "description": "Output only. The time when the `Membership` was last updated.",
           "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "MembershipAdjacencyList": {
+      "description": "Membership graph's path information as an adjacency list.",
+      "id": "MembershipAdjacencyList",
+      "properties": {
+        "edges": {
+          "description": "Each edge contains information about the member that belongs to this group.",
+          "items": {
+            "$ref": "Membership"
+          },
+          "type": "array"
+        },
+        "group": {
+          "description": "Resource name of the group that the members belong to.",
           "type": "string"
         }
       },

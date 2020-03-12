@@ -232,6 +232,21 @@ type BuildBazelRemoteExecutionV2Action struct {
 	// ContentAddressableStorage.
 	InputRootDigest *BuildBazelRemoteExecutionV2Digest `json:"inputRootDigest,omitempty"`
 
+	// OutputNodeProperties: List of required supported NodeProperty
+	// keys. In order to ensure that equivalent `Action`s always hash to the
+	// same
+	// value, the supported node properties MUST be lexicographically sorted
+	// by name.
+	// Sorting of strings is done by code point, equivalently, by the UTF-8
+	// bytes.
+	//
+	// The interpretation of these properties is server-dependent. If a
+	// property is
+	// not recognized by the server, the server will return an
+	// `INVALID_ARGUMENT`
+	// error.
+	OutputNodeProperties []string `json:"outputNodeProperties,omitempty"`
+
 	// Timeout: A timeout after which the execution should be killed. If the
 	// timeout is
 	// absent, then the client is specifying that the execution should
@@ -297,11 +312,12 @@ type BuildBazelRemoteExecutionV2ActionResult struct {
 
 	// OutputDirectories: The output directories of the action. For each
 	// output directory requested
-	// in the `output_directories` field of the Action, if the
-	// corresponding
-	// directory existed after the action completed, a single entry will
-	// be
-	// present in the output list, which will contain the digest of a
+	// in the `output_directories` or `output_paths` field of the Action, if
+	// the
+	// corresponding directory existed after the action completed, a single
+	// entry
+	// will be present in the output list, which will contain the digest of
+	// a
 	// Tree message containing the
 	// directory tree, and the path equal exactly to the corresponding
 	// Action
@@ -362,8 +378,9 @@ type BuildBazelRemoteExecutionV2ActionResult struct {
 	//   }
 	// }
 	// ```
-	// If an output of the same name was found, but was not a directory,
-	// the
+	// If an output of the same name as listed in `output_files` of
+	// the Command was found in `output_directories`, but was not a
+	// directory, the
 	// server will return a FAILED_PRECONDITION.
 	OutputDirectories []*BuildBazelRemoteExecutionV2OutputDirectory `json:"outputDirectories,omitempty"`
 
@@ -394,6 +411,10 @@ type BuildBazelRemoteExecutionV2ActionResult struct {
 	// output
 	// list as desired; clients MUST NOT assume that the output list is
 	// sorted.
+	//
+	// DEPRECATED as of v2.1. Servers that wish to be compatible with v2.0
+	// API
+	// should still populate this field in addition to `output_symlinks`.
 	OutputDirectorySymlinks []*BuildBazelRemoteExecutionV2OutputSymlink `json:"outputDirectorySymlinks,omitempty"`
 
 	// OutputFileSymlinks: The output files of the action that are symbolic
@@ -403,37 +424,43 @@ type BuildBazelRemoteExecutionV2ActionResult struct {
 	// outside of the working directory, if the server
 	// supports
 	// SymlinkAbsolutePathStrategy.ALLOWED.
-	// For each output file requested in the `output_files` field of the
-	// Action,
-	// if the corresponding file existed after
+	// For each output file requested in the `output_files` or
+	// `output_paths`
+	// field of the Action, if the corresponding file existed after
 	// the action completed, a single entry will be present either in this
 	// field,
 	// or in the `output_files` field, if the file was not a symbolic
 	// link.
 	//
-	// If an output symbolic link of the same name was found, but its
-	// target
-	// type was not a regular file, the server will return a
-	// FAILED_PRECONDITION.
+	// If an output symbolic link of the same name as listed in
+	// `output_files` of
+	// the Command was found, but its target type was not a regular file,
+	// the
+	// server will return a FAILED_PRECONDITION.
 	// If the action does not produce the requested output, then that
 	// output
 	// will be omitted from the list. The server is free to arrange the
 	// output
 	// list as desired; clients MUST NOT assume that the output list is
 	// sorted.
+	//
+	// DEPRECATED as of v2.1. Servers that wish to be compatible with v2.0
+	// API
+	// should still populate this field in addition to `output_symlinks`.
 	OutputFileSymlinks []*BuildBazelRemoteExecutionV2OutputSymlink `json:"outputFileSymlinks,omitempty"`
 
 	// OutputFiles: The output files of the action. For each output file
 	// requested in the
-	// `output_files` field of the Action, if the corresponding file existed
-	// after
-	// the action completed, a single entry will be present either in this
-	// field,
-	// or the `output_file_symlinks` field if the file was a symbolic link
-	// to
-	// another file.
+	// `output_files` or `output_paths` field of the Action, if the
+	// corresponding
+	// file existed after the action completed, a single entry will be
+	// present
+	// either in this field, or the `output_file_symlinks` field if the file
+	// was
+	// a symbolic link to another file (`output_symlinks` field after
+	// v2.1).
 	//
-	// If an output of the same name was found, but was a directory
+	// If an output listed in `output_files` was found, but was a directory
 	// rather
 	// than a regular file, the server will return a FAILED_PRECONDITION.
 	// If the action does not produce the requested output, then that
@@ -443,6 +470,30 @@ type BuildBazelRemoteExecutionV2ActionResult struct {
 	// list as desired; clients MUST NOT assume that the output list is
 	// sorted.
 	OutputFiles []*BuildBazelRemoteExecutionV2OutputFile `json:"outputFiles,omitempty"`
+
+	// OutputSymlinks: New in v2.1: this field will only be populated if the
+	// command
+	// `output_paths` field was used, and not the pre v2.1 `output_files`
+	// or
+	// `output_directories` fields.
+	// The output paths of the action that are symbolic links to other
+	// paths. Those
+	// may be links to other outputs, or inputs, or even absolute
+	// paths
+	// outside of the working directory, if the server
+	// supports
+	// SymlinkAbsolutePathStrategy.ALLOWED.
+	// A single entry for each output requested in `output_paths`
+	// field of the Action, if the corresponding path existed after
+	// the action completed and was a symbolic link.
+	//
+	// If the action does not produce a requested output, then that
+	// output
+	// will be omitted from the list. The server is free to arrange the
+	// output
+	// list as desired; clients MUST NOT assume that the output list is
+	// sorted.
+	OutputSymlinks []*BuildBazelRemoteExecutionV2OutputSymlink `json:"outputSymlinks,omitempty"`
 
 	// StderrDigest: The digest for a blob containing the standard error of
 	// the action, which
@@ -576,6 +627,8 @@ type BuildBazelRemoteExecutionV2Command struct {
 	// directories themselves) are created by the worker prior to execution,
 	// even
 	// if they are not explicitly part of the input root.
+	//
+	// DEPRECATED since 2.1: Use `output_paths` instead.
 	OutputDirectories []string `json:"outputDirectories,omitempty"`
 
 	// OutputFiles: A list of the output files that the client expects to
@@ -610,8 +663,57 @@ type BuildBazelRemoteExecutionV2Command struct {
 	//
 	// Directories leading up to the output files are created by the worker
 	// prior
-	// to execution, even if they are not explicitly part of the input root.
+	// to execution, even if they are not explicitly part of the input
+	// root.
+	//
+	// DEPRECATED since v2.1: Use `output_paths` instead.
 	OutputFiles []string `json:"outputFiles,omitempty"`
+
+	// OutputPaths: A list of the output paths that the client expects to
+	// retrieve from the
+	// action. Only the listed paths will be returned to the client as
+	// output.
+	// The type of the output (file or directory) is not specified, and will
+	// be
+	// determined by the server after action execution. If the resulting
+	// path is
+	// a file, it will be returned in an
+	// OutputFile) typed field.
+	// If the path is a directory, the entire directory structure will be
+	// returned
+	// as a Tree message digest, see
+	// OutputDirectory)
+	// Other files or directories that may be created during command
+	// execution
+	// are discarded.
+	//
+	// The paths are relative to the working directory of the action
+	// execution.
+	// The paths are specified using a single forward slash (`/`) as a
+	// path
+	// separator, even if the execution platform natively uses a
+	// different
+	// separator. The path MUST NOT include a trailing slash, nor a leading
+	// slash,
+	// being a relative path.
+	//
+	// In order to ensure consistent hashing of the same Action, the output
+	// paths
+	// MUST be deduplicated and sorted lexicographically by code point
+	// (or,
+	// equivalently, by UTF-8 bytes).
+	//
+	// Directories leading up to the output paths are created by the worker
+	// prior
+	// to execution, even if they are not explicitly part of the input
+	// root.
+	//
+	// New in v2.1: this field supersedes the DEPRECATED `output_files`
+	// and
+	// `output_directories` fields. If `output_paths` is used,
+	// `output_files` and
+	// `output_directories` will be ignored!
+	OutputPaths []string `json:"outputPaths,omitempty"`
 
 	// Platform: The platform requirements for the execution environment.
 	// The server MAY
@@ -690,9 +792,8 @@ func (s *BuildBazelRemoteExecutionV2CommandEnvironmentVariable) MarshalJSON() ([
 
 // BuildBazelRemoteExecutionV2Digest: A content digest. A digest for a
 // given blob consists of the size of the blob
-// and its hash. The hash algorithm to use is defined by the server, but
-// servers
-// SHOULD use SHA-256.
+// and its hash. The hash algorithm to use is defined by the
+// server.
 //
 // The size is considered to be an integral part of the digest and
 // cannot be
@@ -808,6 +909,10 @@ func (s *BuildBazelRemoteExecutionV2Digest) MarshalJSON() ([]byte, error) {
 //   in lexicographical order by path. The path strings must be sorted
 // by code
 //   point, equivalently, by UTF-8 bytes.
+// * The NodeProperties of files,
+//   directories, and symlinks must be sorted in lexicographical order
+// by
+//   property name.
 //
 // A `Directory` that obeys the restrictions is said to be in canonical
 // form.
@@ -827,7 +932,13 @@ func (s *BuildBazelRemoteExecutionV2Digest) MarshalJSON() ([]byte, error) {
 //       digest: {
 //         hash: "4a73bc9d03...",
 //         size: 65534
-//       }
+//       },
+//       node_properties: [
+//         {
+//           "name": "MTime",
+//           "value": "2017-01-15T01:30:15.01Z"
+//         }
+//       ]
 //     }
 //   ],
 //   directories: [
@@ -861,6 +972,9 @@ type BuildBazelRemoteExecutionV2Directory struct {
 
 	// Files: The files in the directory.
 	Files []*BuildBazelRemoteExecutionV2FileNode `json:"files,omitempty"`
+
+	// NodeProperties: The node properties of the Directory.
+	NodeProperties []*BuildBazelRemoteExecutionV2NodeProperty `json:"nodeProperties,omitempty"`
 
 	// Symlinks: The symlinks in the directory.
 	Symlinks []*BuildBazelRemoteExecutionV2SymlinkNode `json:"symlinks,omitempty"`
@@ -1136,6 +1250,9 @@ type BuildBazelRemoteExecutionV2FileNode struct {
 	// Name: The name of the file.
 	Name string `json:"name,omitempty"`
 
+	// NodeProperties: The node properties of the FileNode.
+	NodeProperties []*BuildBazelRemoteExecutionV2NodeProperty `json:"nodeProperties,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Digest") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1195,6 +1312,43 @@ type BuildBazelRemoteExecutionV2LogFile struct {
 
 func (s *BuildBazelRemoteExecutionV2LogFile) MarshalJSON() ([]byte, error) {
 	type NoMethod BuildBazelRemoteExecutionV2LogFile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BuildBazelRemoteExecutionV2NodeProperty: A single property for
+// FileNodes,
+// DirectoryNodes, and
+// SymlinkNodes. The server is
+// responsible for specifying the property `name`s that it accepts.
+// If
+// permitted by the server, the same `name` may occur multiple times.
+type BuildBazelRemoteExecutionV2NodeProperty struct {
+	// Name: The property name.
+	Name string `json:"name,omitempty"`
+
+	// Value: The property value.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BuildBazelRemoteExecutionV2NodeProperty) MarshalJSON() ([]byte, error) {
+	type NoMethod BuildBazelRemoteExecutionV2NodeProperty
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1263,6 +1417,10 @@ type BuildBazelRemoteExecutionV2OutputFile struct {
 	// IsExecutable: True if file is executable, false otherwise.
 	IsExecutable bool `json:"isExecutable,omitempty"`
 
+	// NodeProperties: The supported node properties of the OutputFile, if
+	// requested by the Action.
+	NodeProperties []*BuildBazelRemoteExecutionV2NodeProperty `json:"nodeProperties,omitempty"`
+
 	// Path: The full path of the file relative to the working directory,
 	// including the
 	// filename. The path separator is a forward slash `/`. Since this is
@@ -1300,6 +1458,11 @@ func (s *BuildBazelRemoteExecutionV2OutputFile) MarshalJSON() ([]byte, error) {
 //
 // `OutputSymlink` is binary-compatible with `SymlinkNode`.
 type BuildBazelRemoteExecutionV2OutputSymlink struct {
+	// NodeProperties: The supported node properties of the OutputSymlink,
+	// if requested by the
+	// Action.
+	NodeProperties []*BuildBazelRemoteExecutionV2NodeProperty `json:"nodeProperties,omitempty"`
+
 	// Path: The full path of the symlink relative to the working directory,
 	// including the
 	// filename. The path separator is a forward slash `/`. Since this is
@@ -1319,7 +1482,7 @@ type BuildBazelRemoteExecutionV2OutputSymlink struct {
 	// path. `..` components are allowed anywhere in the target path.
 	Target string `json:"target,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Path") to
+	// ForceSendFields is a list of field names (e.g. "NodeProperties") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1327,12 +1490,13 @@ type BuildBazelRemoteExecutionV2OutputSymlink struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Path") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NodeProperties") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1510,6 +1674,9 @@ func (s *BuildBazelRemoteExecutionV2RequestMetadata) MarshalJSON() ([]byte, erro
 type BuildBazelRemoteExecutionV2SymlinkNode struct {
 	// Name: The name of the symlink.
 	Name string `json:"name,omitempty"`
+
+	// NodeProperties: The node properties of the SymlinkNode.
+	NodeProperties []*BuildBazelRemoteExecutionV2NodeProperty `json:"nodeProperties,omitempty"`
 
 	// Target: The target path of the symlink. The path separator is a
 	// forward slash `/`.
@@ -3580,7 +3747,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3773,7 +3940,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3970,7 +4137,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4114,7 +4281,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4292,7 +4459,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4478,7 +4645,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

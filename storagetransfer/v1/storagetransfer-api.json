@@ -396,7 +396,7 @@
       }
     }
   },
-  "revision": "20200215",
+  "revision": "20200310",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AwsAccessKey": {
@@ -622,6 +622,16 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "lastModifiedBefore": {
+          "description": "If specified, only objects with a \"last modification time\" before this\ntimestamp and objects that don't have a \"last modification time\" will be\ntransferred.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "lastModifiedSince": {
+          "description": "If specified, only objects with a \"last modification time\" on or after\nthis timestamp and objects that don't have a \"last modification time\" are\ntransferred.\n\nThe `last_modified_since` and `last_modified_before` fields can be used\ntogether for chunked data processing. For example, consider a script that\nprocesses each day's worth of data at a time. For that you'd set each\nof the fields as follows:\n\n*  `last_modified_since` to the start of the day\n\n*  `last_modified_before` to the end of the day",
+          "format": "google-datetime",
+          "type": "string"
         },
         "maxTimeElapsedSinceLastModification": {
           "description": "If specified, only objects with a \"last modification time\" on or after\n`NOW` - `max_time_elapsed_since_last_modification` and objects that don't\nhave a \"last modification time\" are transferred.\n\nFor each TransferOperation started by this TransferJob,\n`NOW` refers to the start_time of the\n`TransferOperation`.",
@@ -867,7 +877,7 @@
           "type": "string"
         },
         "name": {
-          "description": "A unique name (within the transfer project) assigned when the job is\ncreated.\nIf this field is left empty in a CreateTransferJobRequest, Storage Transfer\nService will assign a unique name. Otherwise, the supplied name is used as\nthe unique name for this job.\n\nThis name must start with `\"transferJobs/\"` prefix and end with a letter or\na number, and should be no more than 128 characters.\nExample of a valid format : `\"transferJobs/[A-Za-z0-9-._~]*[A-Za-z0-9]$\"`\n\n**Note:** If the supplied name is already in use, the creation request\nresults in an ALREADY_EXISTS error and\nthe transfer job will not be created.  Invalid job names will return an\nINVALID_ARGUMENT error and the job will\nnot be created.",
+          "description": "A unique name (within the transfer project) assigned when the job is\ncreated.  If this field is empty in a CreateTransferJobRequest, Storage\nTransfer Service will assign a unique name. Otherwise, the specified name\nis used as the unique name for this job.\n\nIf the specified name is in use by a job, the creation request fails with\nan ALREADY_EXISTS error.\n\nThis name must start with `\"transferJobs/\"` prefix and end with a letter or\na number, and should be no more than 128 characters.\nExample: `\"transferJobs/[A-Za-z0-9-._~]*[A-Za-z0-9]$\"`\n\nInvalid job names will fail with an\nINVALID_ARGUMENT error.",
           "type": "string"
         },
         "projectId": {

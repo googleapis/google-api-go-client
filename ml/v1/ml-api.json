@@ -562,6 +562,367 @@
                   ]
                 }
               }
+            },
+            "studies": {
+              "methods": {
+                "create": {
+                  "description": "Creates a study.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies",
+                  "httpMethod": "POST",
+                  "id": "ml.projects.locations.studies.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. The project and location that the study belongs to.\nFormat: projects/{project}/locations/{location}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "studyId": {
+                      "description": "Required. The ID to use for the study, which will become the final component of\nthe study's resource name.",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/studies",
+                  "request": {
+                    "$ref": "GoogleCloudMlV1__Study"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudMlV1__Study"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "delete": {
+                  "description": "Deletes a study.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}",
+                  "httpMethod": "DELETE",
+                  "id": "ml.projects.locations.studies.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The study name.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "GoogleProtobuf__Empty"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Gets a study.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}",
+                  "httpMethod": "GET",
+                  "id": "ml.projects.locations.studies.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The study name.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "GoogleCloudMlV1__Study"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Lists all the studies in a region for an associated project.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies",
+                  "httpMethod": "GET",
+                  "id": "ml.projects.locations.studies.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. The project and location that the study belongs to.\nFormat: projects/{project}/locations/{location}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/studies",
+                  "response": {
+                    "$ref": "GoogleCloudMlV1__ListStudiesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              },
+              "resources": {
+                "trials": {
+                  "methods": {
+                    "addMeasurement": {
+                      "description": "Adds a measurement of the objective metrics to a Trial. This measurement\nis assumed to have been taken before the Trial is complete.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}:addMeasurement",
+                      "httpMethod": "POST",
+                      "id": "ml.projects.locations.studies.trials.addMeasurement",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The trial name.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+/trials/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:addMeasurement",
+                      "request": {
+                        "$ref": "GoogleCloudMlV1__AddTrialMeasurementRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudMlV1__Trial"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "checkEarlyStoppingState": {
+                      "description": "Checks whether a trial should stop or not.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}:checkEarlyStoppingState",
+                      "httpMethod": "POST",
+                      "id": "ml.projects.locations.studies.trials.checkEarlyStoppingState",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The trial name.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+/trials/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:checkEarlyStoppingState",
+                      "request": {
+                        "$ref": "GoogleCloudMlV1__CheckTrialEarlyStoppingStateRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleLongrunning__Operation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "complete": {
+                      "description": "Marks a Trial as complete.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}:complete",
+                      "httpMethod": "POST",
+                      "id": "ml.projects.locations.studies.trials.complete",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The trial name.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+/trials/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:complete",
+                      "request": {
+                        "$ref": "GoogleCloudMlV1__CompleteTrialRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudMlV1__Trial"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "create": {
+                      "description": "Adds a user provided trial to a Study.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials",
+                      "httpMethod": "POST",
+                      "id": "ml.projects.locations.studies.trials.create",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Required. The name of the study that the trial belongs to.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+parent}/trials",
+                      "request": {
+                        "$ref": "GoogleCloudMlV1__Trial"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudMlV1__Trial"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "delete": {
+                      "description": "Deletes a Trial.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}",
+                      "httpMethod": "DELETE",
+                      "id": "ml.projects.locations.studies.trials.delete",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The trial name.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+/trials/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}",
+                      "response": {
+                        "$ref": "GoogleProtobuf__Empty"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "get": {
+                      "description": "Gets a Trial.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}",
+                      "httpMethod": "GET",
+                      "id": "ml.projects.locations.studies.trials.get",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The trial name.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+/trials/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}",
+                      "response": {
+                        "$ref": "GoogleCloudMlV1__Trial"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "list": {
+                      "description": "Lists the trials associated with a Study.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials",
+                      "httpMethod": "GET",
+                      "id": "ml.projects.locations.studies.trials.list",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Required. The name of the study that the trial belongs to.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+parent}/trials",
+                      "response": {
+                        "$ref": "GoogleCloudMlV1__ListTrialsResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "stop": {
+                      "description": "Stops a trial.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}:stop",
+                      "httpMethod": "POST",
+                      "id": "ml.projects.locations.studies.trials.stop",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The trial name.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+/trials/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:stop",
+                      "request": {
+                        "$ref": "GoogleCloudMlV1__StopTrialRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudMlV1__Trial"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "suggest": {
+                      "description": "Returns a long-running operation associated with the generation of trial\nsuggestions.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials:suggest",
+                      "httpMethod": "POST",
+                      "id": "ml.projects.locations.studies.trials.suggest",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Required. The name of the study that the trial belongs to.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+parent}/trials:suggest",
+                      "request": {
+                        "$ref": "GoogleCloudMlV1__SuggestTrialsRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleLongrunning__Operation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    }
+                  }
+                }
+              }
             }
           }
         },
@@ -1097,7 +1458,7 @@
       }
     }
   },
-  "revision": "20200229",
+  "revision": "20200307",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1127,6 +1488,27 @@
       },
       "type": "object"
     },
+    "GoogleCloudMlV1_AutomatedStoppingConfig_DecayCurveAutomatedStoppingConfig": {
+      "id": "GoogleCloudMlV1_AutomatedStoppingConfig_DecayCurveAutomatedStoppingConfig",
+      "properties": {
+        "useElapsedTime": {
+          "description": "True if measurement.elapsed_time is used as the x-axis of each\nTrials Decay Curve. Otherwise, Measurement.steps will be used as the\nx-axis.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1_AutomatedStoppingConfig_MedianAutomatedStoppingConfig": {
+      "description": "The median automated stopping rule stops a pending trial if the trial's\nbest objective_value is strictly below the median 'performance' of all\ncompleted trials reported up to the trial's last measurement.\nCurrently, 'performance' refers to the running average of the objective\nvalues reported by the trial in each measurement.",
+      "id": "GoogleCloudMlV1_AutomatedStoppingConfig_MedianAutomatedStoppingConfig",
+      "properties": {
+        "useElapsedTime": {
+          "description": "True if median automated stopping rule applies on\nmeasurement.use_elapsed_time. it means that elapsed_time field of\nlatest measurement of current trial is used to compute median objective\nvalue for each completed trials.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudMlV1_HyperparameterOutput_HyperparameterMetric": {
       "description": "An observed value of a metric.",
       "id": "GoogleCloudMlV1_HyperparameterOutput_HyperparameterMetric",
@@ -1139,6 +1521,252 @@
         "trainingStep": {
           "description": "The global training step for this metric.",
           "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1_Measurement_Metric": {
+      "description": "A message representing a metric in the measurement.",
+      "id": "GoogleCloudMlV1_Measurement_Metric",
+      "properties": {
+        "metric": {
+          "description": "Required. Metric name.",
+          "type": "string"
+        },
+        "value": {
+          "description": "Required. The value for this metric.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1_StudyConfigParameterSpec_CategoricalValueSpec": {
+      "id": "GoogleCloudMlV1_StudyConfigParameterSpec_CategoricalValueSpec",
+      "properties": {
+        "values": {
+          "description": "Must be specified if type is `CATEGORICAL`.\nThe list of possible categories.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1_StudyConfigParameterSpec_DiscreteValueSpec": {
+      "id": "GoogleCloudMlV1_StudyConfigParameterSpec_DiscreteValueSpec",
+      "properties": {
+        "values": {
+          "description": "Must be specified if type is `DISCRETE`.\nA list of feasible points.\nThe list should be in strictly increasing order. For instance, this\nparameter might have possible settings of 1.5, 2.5, and 4.0. This list\nshould not contain more than 1,000 values.",
+          "items": {
+            "format": "double",
+            "type": "number"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1_StudyConfigParameterSpec_DoubleValueSpec": {
+      "id": "GoogleCloudMlV1_StudyConfigParameterSpec_DoubleValueSpec",
+      "properties": {
+        "maxValue": {
+          "description": "Must be specified if type is `DOUBLE`. Maximum value of the parameter.",
+          "format": "double",
+          "type": "number"
+        },
+        "minValue": {
+          "description": "Must be specified if type is `DOUBLE`. Minimum value of the parameter.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1_StudyConfigParameterSpec_IntegerValueSpec": {
+      "id": "GoogleCloudMlV1_StudyConfigParameterSpec_IntegerValueSpec",
+      "properties": {
+        "maxValue": {
+          "description": "Must be specified if type is `INTEGER`. Maximum value of the parameter.",
+          "format": "int64",
+          "type": "string"
+        },
+        "minValue": {
+          "description": "Must be specified if type is `INTEGER`. Minimum value of the parameter.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1_StudyConfigParameterSpec_MatchingParentCategoricalValueSpec": {
+      "description": "Represents the spec to match categorical values from parent parameter.",
+      "id": "GoogleCloudMlV1_StudyConfigParameterSpec_MatchingParentCategoricalValueSpec",
+      "properties": {
+        "values": {
+          "description": "Matches values of the parent parameter with type 'CATEGORICAL'.\nAll values must exist in `categorical_value_spec` of parent parameter.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1_StudyConfigParameterSpec_MatchingParentDiscreteValueSpec": {
+      "description": "Represents the spec to match discrete values from parent parameter.",
+      "id": "GoogleCloudMlV1_StudyConfigParameterSpec_MatchingParentDiscreteValueSpec",
+      "properties": {
+        "values": {
+          "description": "Matches values of the parent parameter with type 'DISCRETE'.\nAll values must exist in `discrete_value_spec` of parent parameter.",
+          "items": {
+            "format": "double",
+            "type": "number"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1_StudyConfigParameterSpec_MatchingParentIntValueSpec": {
+      "description": "Represents the spec to match integer values from parent parameter.",
+      "id": "GoogleCloudMlV1_StudyConfigParameterSpec_MatchingParentIntValueSpec",
+      "properties": {
+        "values": {
+          "description": "Matches values of the parent parameter with type 'INTEGER'.\nAll values must lie in `integer_value_spec` of parent parameter.",
+          "items": {
+            "format": "int64",
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1_StudyConfig_MetricSpec": {
+      "description": "Represents a metric to optimize.",
+      "id": "GoogleCloudMlV1_StudyConfig_MetricSpec",
+      "properties": {
+        "goal": {
+          "description": "Required. The optimization goal of the metric.",
+          "enum": [
+            "GOAL_TYPE_UNSPECIFIED",
+            "MAXIMIZE",
+            "MINIMIZE"
+          ],
+          "enumDescriptions": [
+            "Goal Type will default to maximize.",
+            "Maximize the goal metric.",
+            "Minimize the goal metric."
+          ],
+          "type": "string"
+        },
+        "metric": {
+          "description": "Required. The name of the metric.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1_StudyConfig_ParameterSpec": {
+      "description": "Represents a single parameter to optimize.",
+      "id": "GoogleCloudMlV1_StudyConfig_ParameterSpec",
+      "properties": {
+        "categoricalValueSpec": {
+          "$ref": "GoogleCloudMlV1_StudyConfigParameterSpec_CategoricalValueSpec",
+          "description": "The value spec for a 'CATEGORICAL' parameter."
+        },
+        "childParameterSpecs": {
+          "description": "A child node is active if the parameter's value matches the child node's\nmatching_parent_values.\n\nIf two items in child_parameter_specs have the same name, they must have\ndisjoint matching_parent_values.",
+          "items": {
+            "$ref": "GoogleCloudMlV1_StudyConfig_ParameterSpec"
+          },
+          "type": "array"
+        },
+        "discreteValueSpec": {
+          "$ref": "GoogleCloudMlV1_StudyConfigParameterSpec_DiscreteValueSpec",
+          "description": "The value spec for a 'DISCRETE' parameter."
+        },
+        "doubleValueSpec": {
+          "$ref": "GoogleCloudMlV1_StudyConfigParameterSpec_DoubleValueSpec",
+          "description": "The value spec for a 'DOUBLE' parameter."
+        },
+        "integerValueSpec": {
+          "$ref": "GoogleCloudMlV1_StudyConfigParameterSpec_IntegerValueSpec",
+          "description": "The value spec for an 'INTEGER' parameter."
+        },
+        "parameter": {
+          "description": "Required. The parameter name must be unique amongst all ParameterSpecs.",
+          "type": "string"
+        },
+        "parentCategoricalValues": {
+          "$ref": "GoogleCloudMlV1_StudyConfigParameterSpec_MatchingParentCategoricalValueSpec"
+        },
+        "parentDiscreteValues": {
+          "$ref": "GoogleCloudMlV1_StudyConfigParameterSpec_MatchingParentDiscreteValueSpec"
+        },
+        "parentIntValues": {
+          "$ref": "GoogleCloudMlV1_StudyConfigParameterSpec_MatchingParentIntValueSpec"
+        },
+        "scaleType": {
+          "description": "How the parameter should be scaled.\nLeave unset for categorical parameters.",
+          "enum": [
+            "SCALE_TYPE_UNSPECIFIED",
+            "UNIT_LINEAR_SCALE",
+            "UNIT_LOG_SCALE",
+            "UNIT_REVERSE_LOG_SCALE"
+          ],
+          "enumDescriptions": [
+            "By default, no scaling is applied.",
+            "Scales the feasible space to (0, 1) linearly.",
+            "Scales the feasible space logarithmically to (0, 1). The entire\nfeasible space must be strictly positive.",
+            "Scales the feasible space \"reverse\" logarithmically to (0, 1). The\nresult is that values close to the top of the feasible space are spread\nout more than points near the bottom. The entire feasible space must be\nstrictly positive."
+          ],
+          "type": "string"
+        },
+        "type": {
+          "description": "Required. The type of the parameter.",
+          "enum": [
+            "PARAMETER_TYPE_UNSPECIFIED",
+            "DOUBLE",
+            "INTEGER",
+            "CATEGORICAL",
+            "DISCRETE"
+          ],
+          "enumDescriptions": [
+            "You must specify a valid type. Using this unspecified type will result\nin an error.",
+            "Type for real-valued parameters.",
+            "Type for integral parameters.",
+            "The parameter is categorical, with a value chosen from the categories\nfield.",
+            "The parameter is real valued, with a fixed set of feasible points. If\n`type==DISCRETE`, feasible_points must be provided, and\n{`min_value`, `max_value`} will be ignored."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1_Trial_Parameter": {
+      "description": "A message representing a parameter to be tuned.",
+      "id": "GoogleCloudMlV1_Trial_Parameter",
+      "properties": {
+        "floatValue": {
+          "description": "Must be set if ParameterType is DOUBLE or DISCRETE.",
+          "format": "double",
+          "type": "number"
+        },
+        "intValue": {
+          "description": "Must be set if ParameterType is INTEGER",
+          "format": "int64",
+          "type": "string"
+        },
+        "parameter": {
+          "description": "The name of the parameter.",
+          "type": "string"
+        },
+        "stringValue": {
+          "description": "Must be set if ParameterTypeis CATEGORICAL",
           "type": "string"
         }
       },
@@ -1180,6 +1808,17 @@
       },
       "type": "object"
     },
+    "GoogleCloudMlV1__AddTrialMeasurementRequest": {
+      "description": "The request message for the AddTrialMeasurement service method.",
+      "id": "GoogleCloudMlV1__AddTrialMeasurementRequest",
+      "properties": {
+        "measurement": {
+          "$ref": "GoogleCloudMlV1__Measurement",
+          "description": "Required. The measurement to be added to a trial."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudMlV1__AutoScaling": {
       "description": "Options for automatically scaling a model.",
       "id": "GoogleCloudMlV1__AutoScaling",
@@ -1188,6 +1827,19 @@
           "description": "Optional. The minimum number of nodes to allocate for this model. These\nnodes are always up, starting from the time the model is deployed.\nTherefore, the cost of operating this model will be at least\n`rate` * `min_nodes` * number of hours since last billing cycle,\nwhere `rate` is the cost per node-hour as documented in the\n[pricing guide](/ml-engine/docs/pricing),\neven if no predictions are performed. There is additional cost for each\nprediction performed.\n\nUnlike manual scaling, if the load gets too heavy for the nodes\nthat are up, the service will automatically add nodes to handle the\nincreased load as well as scale back as traffic drops, always maintaining\nat least `min_nodes`. You will be charged for the time in which additional\nnodes are used.\n\nIf `min_nodes` is not specified and AutoScaling is used with a [legacy\n(MLS1) machine type](/ml-engine/docs/machine-types-online-prediction),\n`min_nodes` defaults to 0, in which case, when traffic to a model stops\n(and after a cool-down period), nodes will be shut down and no charges will\nbe incurred until traffic to the model resumes.\n\nIf `min_nodes` is not specified and AutoScaling is used with a [Compute\nEngine (N1) machine type](/ml-engine/docs/machine-types-online-prediction),\n`min_nodes` defaults to 1. `min_nodes` must be at least 1 for use with a\nCompute Engine machine type.\n\nNote that you cannot use AutoScaling if your version uses\n[GPUs](#Version.FIELDS.accelerator_config). Instead, you must use\nManualScaling.\n\nYou can set `min_nodes` when creating the model version, and you can also\nupdate `min_nodes` for an existing version:\n\u003cpre\u003e\nupdate_body.json:\n{\n  'autoScaling': {\n    'minNodes': 5\n  }\n}\n\u003c/pre\u003e\nHTTP request:\n\u003cpre style=\"max-width: 626px;\"\u003e\nPATCH\nhttps://ml.googleapis.com/v1/{name=projects/*/models/*/versions/*}?update_mask=autoScaling.minNodes\n-d @./update_body.json\n\u003c/pre\u003e",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1__AutomatedStoppingConfig": {
+      "description": "Configuration for Automated Early Stopping of Trials. If no\nimplementation_config is set, automated early stopping will not be run.",
+      "id": "GoogleCloudMlV1__AutomatedStoppingConfig",
+      "properties": {
+        "decayCurveStoppingConfig": {
+          "$ref": "GoogleCloudMlV1_AutomatedStoppingConfig_DecayCurveAutomatedStoppingConfig"
+        },
+        "medianAutomatedStoppingConfig": {
+          "$ref": "GoogleCloudMlV1_AutomatedStoppingConfig_MedianAutomatedStoppingConfig"
         }
       },
       "type": "object"
@@ -1269,6 +1921,72 @@
       },
       "type": "object"
     },
+    "GoogleCloudMlV1__CheckTrialEarlyStoppingStateMetatdata": {
+      "description": "This message will be placed in the metadata field of a\ngoogle.longrunning.Operation associated with a CheckTrialEarlyStoppingState\nrequest.",
+      "id": "GoogleCloudMlV1__CheckTrialEarlyStoppingStateMetatdata",
+      "properties": {
+        "createTime": {
+          "description": "The time operation was submitted.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "study": {
+          "description": "The name of the study that the trial belongs to.",
+          "type": "string"
+        },
+        "trial": {
+          "description": "The Trial name.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1__CheckTrialEarlyStoppingStateRequest": {
+      "description": "The request message for the CheckTrialEarlyStoppingState service method.",
+      "id": "GoogleCloudMlV1__CheckTrialEarlyStoppingStateRequest",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudMlV1__CheckTrialEarlyStoppingStateResponse": {
+      "description": "The message will be placed in the response field of a completed\ngoogle.longrunning.Operation associated with a CheckTrialEarlyStoppingState\nrequest.",
+      "id": "GoogleCloudMlV1__CheckTrialEarlyStoppingStateResponse",
+      "properties": {
+        "endTime": {
+          "description": "The time operation processing completed.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "shouldStop": {
+          "description": "True if the Trial should stop.",
+          "type": "boolean"
+        },
+        "startTime": {
+          "description": "The time operation was started.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1__CompleteTrialRequest": {
+      "description": "The request message for the CompleteTrial service method.",
+      "id": "GoogleCloudMlV1__CompleteTrialRequest",
+      "properties": {
+        "finalMeasurement": {
+          "$ref": "GoogleCloudMlV1__Measurement",
+          "description": "Optional. If provided, it will be used as the completed trial's\nfinal_measurement; Otherwise, the service will auto-select a\npreviously reported measurement as the final-measurement"
+        },
+        "infeasibleReason": {
+          "description": "Optional. A human readable reason why the Trial was infeasible. This should\nonly be provided if `trial_infeasible` is true.",
+          "type": "string"
+        },
+        "trialInfeasible": {
+          "description": "Optional. True if the trial cannot be run with the given Parameter, and\nfinal_measurement will be ignored.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudMlV1__Config": {
       "id": "GoogleCloudMlV1__Config",
       "properties": {
@@ -1302,14 +2020,20 @@
       "type": "object"
     },
     "GoogleCloudMlV1__ExplanationConfig": {
-      "description": "Message holding configuration options for explaining model predictions.\nThere are two feature attribution methods supported for TensorFlow models:\nintegrated gradients and sampled Shapley.\n\u003ca href=\"/ml-engine/docs/ai-explanations/overview\"\u003eLearn more about feature\nattributions\u003c/a\u003e.",
+      "description": "Message holding configuration options for explaining model predictions.\nThere are two feature attribution methods supported for TensorFlow models:\nintegrated gradients and sampled Shapley.\n[Learn more about feature\nattributions.](/ml-engine/docs/ai-explanations/overview)",
       "id": "GoogleCloudMlV1__ExplanationConfig",
       "properties": {
         "integratedGradientsAttribution": {
-          "$ref": "GoogleCloudMlV1__IntegratedGradientsAttribution"
+          "$ref": "GoogleCloudMlV1__IntegratedGradientsAttribution",
+          "description": "Attributes credit by computing the Aumann-Shapley value taking advantage\nof the model's fully differentiable structure. Refer to this paper for\nmore details: http://proceedings.mlr.press/v70/sundararajan17a.html"
         },
         "sampledShapleyAttribution": {
-          "$ref": "GoogleCloudMlV1__SampledShapleyAttribution"
+          "$ref": "GoogleCloudMlV1__SampledShapleyAttribution",
+          "description": "An attribution method that approximates Shapley values for features that\ncontribute to the label being predicted. A sampling strategy is used to\napproximate the value rather than considering all subsets of features."
+        },
+        "xraiAttribution": {
+          "$ref": "GoogleCloudMlV1__XraiAttribution",
+          "description": "Attributes credit by computing the XRAI taking advantage\nof the model's fully differentiable structure. Refer to this paper for\nmore details: https://arxiv.org/abs/1906.02825\nCurrently only implemented for models with natural image inputs."
         }
       },
       "type": "object"
@@ -1620,6 +2344,33 @@
       },
       "type": "object"
     },
+    "GoogleCloudMlV1__ListStudiesResponse": {
+      "id": "GoogleCloudMlV1__ListStudiesResponse",
+      "properties": {
+        "studies": {
+          "description": "The Studies associated with the project.",
+          "items": {
+            "$ref": "GoogleCloudMlV1__Study"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1__ListTrialsResponse": {
+      "description": "The response message for the ListTrials method.",
+      "id": "GoogleCloudMlV1__ListTrialsResponse",
+      "properties": {
+        "trials": {
+          "description": "The trials associated with the study.",
+          "items": {
+            "$ref": "GoogleCloudMlV1__Trial"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudMlV1__ListVersionsResponse": {
       "description": "Response message for the ListVersions method.",
       "id": "GoogleCloudMlV1__ListVersionsResponse",
@@ -1662,6 +2413,30 @@
           "description": "The number of nodes to allocate for this model. These nodes are always up,\nstarting from the time the model is deployed, so the cost of operating\nthis model will be proportional to `nodes` * number of hours since\nlast billing cycle plus the cost for each prediction performed.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1__Measurement": {
+      "description": "A message representing a Measurement.",
+      "id": "GoogleCloudMlV1__Measurement",
+      "properties": {
+        "elapsedTime": {
+          "description": "Time that the Trial has been running at the point of this Measurement.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "metrics": {
+          "description": "Provides a list of metrics that act as inputs into the objective\nfunction.",
+          "items": {
+            "$ref": "GoogleCloudMlV1_Measurement_Metric"
+          },
+          "type": "array"
+        },
+        "stepCount": {
+          "description": "The number of steps a machine learning model has been trained for.\nMust be non-negative.",
+          "format": "int64",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2044,6 +2819,172 @@
       "properties": {},
       "type": "object"
     },
+    "GoogleCloudMlV1__StopTrialRequest": {
+      "id": "GoogleCloudMlV1__StopTrialRequest",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudMlV1__Study": {
+      "description": "A message representing a Study.",
+      "id": "GoogleCloudMlV1__Study",
+      "properties": {
+        "createTime": {
+          "description": "Output only. Time that the study was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "inactiveReason": {
+          "description": "Output only. A human readable reason why the Study is inactive.\nThis should be empty if a study is ACTIVE or COMPLETED.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. The name of a study.",
+          "type": "string"
+        },
+        "state": {
+          "description": "Output only. The detailed state of a study.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "ACTIVE",
+            "INACTIVE",
+            "COMPLETED"
+          ],
+          "enumDescriptions": [
+            "The study state is unspecified.",
+            "The study is active.",
+            "The study is stopped due to an internal error.",
+            "The study is done when the service exhausts the parameter search space\nor max_trial_count is reached."
+          ],
+          "type": "string"
+        },
+        "studyConfig": {
+          "$ref": "GoogleCloudMlV1__StudyConfig",
+          "description": "Required. Configuration of the study."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1__StudyConfig": {
+      "description": "Represents configuration of a study.",
+      "id": "GoogleCloudMlV1__StudyConfig",
+      "properties": {
+        "algorithm": {
+          "description": "The search algorithm specified for the study.",
+          "enum": [
+            "ALGORITHM_UNSPECIFIED",
+            "GAUSSIAN_PROCESS_BANDIT",
+            "GRID_SEARCH",
+            "RANDOM_SEARCH"
+          ],
+          "enumDescriptions": [
+            "The default algorithm used by the Cloud AI Platform Optimization service.",
+            "Gaussian Process Bandit.",
+            "Simple grid search within the feasible space. To use grid search,\nall parameters must be `INTEGER`, `CATEGORICAL`, or `DISCRETE`.",
+            "Simple random search within the feasible space."
+          ],
+          "type": "string"
+        },
+        "automatedStoppingConfig": {
+          "$ref": "GoogleCloudMlV1__AutomatedStoppingConfig",
+          "description": "Configuration for automated stopping of unpromising Trials."
+        },
+        "metrics": {
+          "items": {
+            "$ref": "GoogleCloudMlV1_StudyConfig_MetricSpec"
+          },
+          "type": "array"
+        },
+        "parameters": {
+          "description": "Required. The set of parameters to tune.",
+          "items": {
+            "$ref": "GoogleCloudMlV1_StudyConfig_ParameterSpec"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1__SuggestTrialsMetadata": {
+      "description": "Metadata field of a google.longrunning.Operation associated\nwith a SuggestTrialsRequest.",
+      "id": "GoogleCloudMlV1__SuggestTrialsMetadata",
+      "properties": {
+        "clientId": {
+          "description": "The identifier of the client that is requesting the suggestion.",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "The time operation was submitted.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "study": {
+          "description": "The name of the study that the trial belongs to.",
+          "type": "string"
+        },
+        "suggestionCount": {
+          "description": "The number of suggestions requested.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1__SuggestTrialsRequest": {
+      "description": "The request message for the SuggestTrial service method.",
+      "id": "GoogleCloudMlV1__SuggestTrialsRequest",
+      "properties": {
+        "clientId": {
+          "description": "Required. The identifier of the client that is requesting the suggestion.\n\nIf multiple SuggestTrialsRequests have the same `client_id`,\nthe service will return the identical suggested trial if the trial is\npending, and provide a new trial if the last suggested trial was completed.",
+          "type": "string"
+        },
+        "suggestionCount": {
+          "description": "Required. The number of suggestions requested.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1__SuggestTrialsResponse": {
+      "description": "This message will be placed in the response field of a completed\ngoogle.longrunning.Operation associated with a SuggestTrials request.",
+      "id": "GoogleCloudMlV1__SuggestTrialsResponse",
+      "properties": {
+        "endTime": {
+          "description": "The time operation processing completed.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "startTime": {
+          "description": "The time operation was started.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "studyState": {
+          "description": "The state of the study.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "ACTIVE",
+            "INACTIVE",
+            "COMPLETED"
+          ],
+          "enumDescriptions": [
+            "The study state is unspecified.",
+            "The study is active.",
+            "The study is stopped due to an internal error.",
+            "The study is done when the service exhausts the parameter search space\nor max_trial_count is reached."
+          ],
+          "type": "string"
+        },
+        "trials": {
+          "description": "A list of Trials.",
+          "items": {
+            "$ref": "GoogleCloudMlV1__Trial"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudMlV1__TrainingInput": {
       "description": "Represents input parameters for a training job. When using the gcloud command\nto submit your training job, you can specify the input parameters as\ncommand-line arguments and/or in a YAML configuration file referenced from\nthe --config command-line argument. For details, see the guide to [submitting\na training job](/ai-platform/training/docs/training-jobs).",
       "id": "GoogleCloudMlV1__TrainingInput",
@@ -2195,6 +3136,75 @@
       },
       "type": "object"
     },
+    "GoogleCloudMlV1__Trial": {
+      "description": "A message representing a Trial.",
+      "id": "GoogleCloudMlV1__Trial",
+      "properties": {
+        "clientId": {
+          "description": "Output only. The identifier of the client that originally requested this trial.",
+          "type": "string"
+        },
+        "endTime": {
+          "description": "Output only. Time the Trial's status changed to COMPLETED.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "finalMeasurement": {
+          "$ref": "GoogleCloudMlV1__Measurement",
+          "description": "The final Measurement containing the objective value."
+        },
+        "infeasibleReason": {
+          "description": "Output only. A human readable string describing why the Trial is\ninfeasible. This should only be set if trial_infeasible is true.",
+          "type": "string"
+        },
+        "measurements": {
+          "description": "A list of measurements that are strictly lexicographically\nordered by their induced tuples (steps, elapsed_time).\nThese are used for early stopping computations.",
+          "items": {
+            "$ref": "GoogleCloudMlV1__Measurement"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "Output only. Name of the trial assigned by the service.",
+          "type": "string"
+        },
+        "parameters": {
+          "description": "The parameters of the Trial.",
+          "items": {
+            "$ref": "GoogleCloudMlV1_Trial_Parameter"
+          },
+          "type": "array"
+        },
+        "startTime": {
+          "description": "Output only. Time the Trial was started.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "state": {
+          "description": "The detailed state of a trial.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "REQUESTED",
+            "ACTIVE",
+            "COMPLETED",
+            "STOPPING"
+          ],
+          "enumDescriptions": [
+            "The trial state is unspecified.",
+            "Indicates that a specific Trial has been requested, but it has not yet\nbeen suggested by the service.",
+            "Indicates that the Trial has been suggested.",
+            "Indicates that the Trial is done, and either has a final_measurement\nset, or is marked as trial_infeasible.",
+            "Indicates that the Trial should stop according to the service."
+          ],
+          "type": "string"
+        },
+        "trialInfeasible": {
+          "description": "Output only. True if the parameters in this trial should not be attempted again.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudMlV1__Version": {
       "description": "Represents a version of the model.\n\nEach version is a trained model deployed in the cloud, ready to handle\nprediction requests. A model can have multiple versions. You can get\ninformation about all of the versions of a given model by calling\nprojects.models.versions.list.",
       "id": "GoogleCloudMlV1__Version",
@@ -2323,6 +3333,18 @@
             "The version is being updated. New UpdateVersion and DeleteVersion\nrequests will fail if a version is in the UPDATING state."
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1__XraiAttribution": {
+      "description": "Attributes credit by computing the XRAI taking advantage\nof the model's fully differentiable structure. Refer to this paper for\nmore details: https://arxiv.org/abs/1906.02825\nCurrently only implemented for models with natural image inputs.",
+      "id": "GoogleCloudMlV1__XraiAttribution",
+      "properties": {
+        "numIntegralSteps": {
+          "description": "Number of steps for approximating the path integral.\nA good value to start is 50 and gradually increase until the\nsum to diff property is met within the desired error range.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"

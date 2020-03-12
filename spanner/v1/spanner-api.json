@@ -429,10 +429,142 @@
             }
           },
           "resources": {
+            "backupOperations": {
+              "methods": {
+                "list": {
+                  "description": "Lists the backup long-running operations in\nthe given instance. A backup operation has a name of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/\u003cbackup\u003e/operations/\u003coperation\u003e`.\nThe long-running operation\nmetadata field type\n`metadata.type_url` describes the type of the metadata. Operations returned\ninclude those that have completed/failed/canceled within the last 7 days,\nand pending operations. Operations returned are ordered by\n`operation.metadata.value.progress.start_time` in descending order starting\nfrom the most recently started operation.",
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backupOperations",
+                  "httpMethod": "GET",
+                  "id": "spanner.projects.instances.backupOperations.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "filter": {
+                      "description": "A filter expression that filters what operations are returned in the\nresponse.\n\nThe filter expression must specify the field name of an operation, a\ncomparison operator, and the value that you want to use for filtering.\nThe value must be a string, a number, or a boolean. The comparison operator\nmust be\n\u003c, \u003e, \u003c=, \u003e=, !=, =, or :. Colon ‘:’ represents a HAS operator which is\nroughly synonymous with equality. Filter rules are case insensitive.\n\nThe long-running operation fields eligible for filtering are:\n  * `name` --\u003e The name of the long-running operation\n  * `done` --\u003e False if the operation is in progress, else true.\n  * `metadata.type_url` (using filter string `metadata.@type`) and fields\n     in `metadata.value` (using filter string `metadata.\u003cfield_name\u003e`,\n     where \u003cfield_name\u003e is a field in metadata.value) are eligible for\n     filtering.\n  * `error` --\u003e Error associated with the long-running operation.\n  * `response.type_url` (using filter string `response.@type`) and fields\n     in `response.value` (using filter string `response.\u003cfield_name\u003e`,\n     where \u003cfield_name\u003e is a field in response.value) are eligible for\n     filtering.\n\nTo filter on multiple expressions, provide each separate expression within\nparentheses. By default, each expression is an AND expression. However,\nyou can include AND, OR, and NOT expressions explicitly.\n\nSome examples of using filters are:\n\n  * `done:true` --\u003e The operation is complete.\n  * `metadata.database:prod`\n         --\u003e The database the backup was taken from has a name containing\n             the string \"prod\".\n  * `(metadata.@type:type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata)\n     AND (metadata.name:howl)\n     AND (metadata.progress.start_time \u003c \\\"2018-03-28T14:50:00Z\\\")\n     AND (error:*)`\n         --\u003e Return CreateBackup operations where the created backup name\n             contains the string \"howl\", the progress.start_time of the\n             backup operation is before 2018-03-28T14:50:00Z, and the\n             operation returned an error.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "pageSize": {
+                      "description": "Number of operations to be returned in the response. If 0 or\nless, defaults to the server's maximum allowed page size.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "If non-empty, `page_token` should contain a\nnext_page_token\nfrom a previous ListBackupOperationsResponse to the\nsame `parent` and with the same `filter`.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The instance of the backup operations. Values are of\nthe form `projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/instances/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/backupOperations",
+                  "response": {
+                    "$ref": "ListBackupOperationsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ]
+                }
+              }
+            },
             "backups": {
               "methods": {
+                "create": {
+                  "description": "Starts creating a new Cloud Spanner Backup.\nThe returned backup long-running operation\nwill have a name of the format\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/\u003cbackup\u003e/operations/\u003coperation_id\u003e`\nand can be used to track creation of the backup. The\nmetadata field type is\nCreateBackupMetadata. The\nresponse field type is\nBackup, if successful. Cancelling the returned operation will stop the\ncreation and delete the backup.\nThere can be only one pending backup creation per database. Backup creation\nof different databases can run concurrently.",
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups",
+                  "httpMethod": "POST",
+                  "id": "spanner.projects.instances.backups.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "backupId": {
+                      "description": "Required. The id of the backup to be created. The `backup_id` appended to\n`parent` forms the full backup name of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/\u003cbackup_id\u003e`.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The name of the instance in which the backup will be\ncreated. This must be the same instance that contains the database the\nbackup will be created from. The backup will be stored in the\nlocation(s) specified in the instance configuration of this\ninstance. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/instances/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/backups",
+                  "request": {
+                    "$ref": "Backup"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ]
+                },
+                "delete": {
+                  "description": "Deletes a pending or completed Backup.",
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}",
+                  "httpMethod": "DELETE",
+                  "id": "spanner.projects.instances.backups.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the backup to delete.\nValues are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/\u003cbackup\u003e`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "Empty"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ]
+                },
+                "get": {
+                  "description": "Gets metadata on a pending or completed Backup.",
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}",
+                  "httpMethod": "GET",
+                  "id": "spanner.projects.instances.backups.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the backup.\nValues are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/\u003cbackup\u003e`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "Backup"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ]
+                },
                 "getIamPolicy": {
-                  "description": "Gets the access control policy for a database resource.\nReturns an empty policy if a database exists but does\nnot have a policy set.\n\nAuthorization requires `spanner.databases.getIamPolicy` permission on\nresource.",
+                  "description": "Gets the access control policy for a database or backup resource.\nReturns an empty policy if a database or backup exists but does not have a\npolicy set.\n\nAuthorization requires `spanner.databases.getIamPolicy` permission on\nresource.\nFor backups, authorization requires `spanner.backups.getIamPolicy`\npermission on resource.",
                   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}:getIamPolicy",
                   "httpMethod": "POST",
                   "id": "spanner.projects.instances.backups.getIamPolicy",
@@ -460,8 +592,85 @@
                     "https://www.googleapis.com/auth/spanner.admin"
                   ]
                 },
+                "list": {
+                  "description": "Lists completed and pending backups.\nBackups returned are ordered by `create_time` in descending order,\nstarting from the most recent `create_time`.",
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups",
+                  "httpMethod": "GET",
+                  "id": "spanner.projects.instances.backups.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "filter": {
+                      "description": "A filter expression that filters backups listed in the response.\nThe expression must specify the field name, a comparison operator,\nand the value that you want to use for filtering. The value must be a\nstring, a number, or a boolean. The comparison operator must be\n\u003c, \u003e, \u003c=, \u003e=, !=, =, or :. Colon ‘:’ represents a HAS operator which is\nroughly synonymous with equality. Filter rules are case insensitive.\n\nThe fields eligible for filtering are:\n  * `name`\n  * `database`\n  * `state`\n  * `create_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ)\n  * `expire_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ)\n  * `size_bytes`\n\nTo filter on multiple expressions, provide each separate expression within\nparentheses. By default, each expression is an AND expression. However,\nyou can include AND, OR, and NOT expressions explicitly.\n\nSome examples of using filters are:\n\n  * `name:Howl` --\u003e The backup's name contains the string \"howl\".\n  * `database:prod`\n         --\u003e The database's name contains the string \"prod\".\n  * `state:CREATING` --\u003e The backup is pending creation.\n  * `state:READY` --\u003e The backup is fully created and ready for use.\n  * `(name:howl) AND (create_time \u003c \\\"2018-03-28T14:50:00Z\\\")`\n         --\u003e The backup name contains the string \"howl\" and `create_time`\n             of the backup is before 2018-03-28T14:50:00Z.\n  * `expire_time \u003c \\\"2018-03-28T14:50:00Z\\\"`\n         --\u003e The backup `expire_time` is before 2018-03-28T14:50:00Z.\n  * `size_bytes \u003e 10000000000` --\u003e The backup's size is greater than 10GB",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "pageSize": {
+                      "description": "Number of backups to be returned in the response. If 0 or\nless, defaults to the server's maximum allowed page size.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "If non-empty, `page_token` should contain a\nnext_page_token from a\nprevious ListBackupsResponse to the same `parent` and with the same\n`filter`.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The instance to list backups from.  Values are of the\nform `projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/instances/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/backups",
+                  "response": {
+                    "$ref": "ListBackupsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ]
+                },
+                "patch": {
+                  "description": "Updates a pending or completed Backup.",
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}",
+                  "httpMethod": "PATCH",
+                  "id": "spanner.projects.instances.backups.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Output only for the CreateBackup][DatabaseAdmin.CreateBackup] operation.\nRequired for the UpdateBackup operation.\n\nA globally unique identifier for the backup which cannot be\nchanged. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/a-z*[a-z0-9]`\nThe final segment of the name must be between 2 and 60 characters\nin length.\n\nThe backup is stored in the location(s) specified in the instance\nconfiguration of the instance containing the backup, identified\nby the prefix of the backup name of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "Required. A mask specifying which fields (e.g. `expire_time`) in the\nBackup resource should be updated. This mask is relative to the Backup\nresource, not to the request message. The field mask must always be\nspecified; this prevents any future fields from being erased accidentally\nby clients that do not know about them.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "request": {
+                    "$ref": "Backup"
+                  },
+                  "response": {
+                    "$ref": "Backup"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ]
+                },
                 "setIamPolicy": {
-                  "description": "Sets the access control policy on a database resource.\nReplaces any existing policy.\n\nAuthorization requires `spanner.databases.setIamPolicy`\npermission on resource.",
+                  "description": "Sets the access control policy on a database or backup resource.\nReplaces any existing policy.\n\nAuthorization requires `spanner.databases.setIamPolicy`\npermission on resource.\nFor backups, authorization requires `spanner.backups.setIamPolicy`\npermission on resource.",
                   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}:setIamPolicy",
                   "httpMethod": "POST",
                   "id": "spanner.projects.instances.backups.setIamPolicy",
@@ -490,7 +699,7 @@
                   ]
                 },
                 "testIamPermissions": {
-                  "description": "Returns permissions that the caller has on the specified database resource.\n\nAttempting this RPC on a non-existent Cloud Spanner database will\nresult in a NOT_FOUND error if the user has\n`spanner.databases.list` permission on the containing Cloud\nSpanner instance. Otherwise returns an empty set of permissions.",
+                  "description": "Returns permissions that the caller has on the specified database or backup\nresource.\n\nAttempting this RPC on a non-existent Cloud Spanner database will\nresult in a NOT_FOUND error if the user has\n`spanner.databases.list` permission on the containing Cloud\nSpanner instance. Otherwise returns an empty set of permissions.\nCalling this method on a backup that does not exist will\nresult in a NOT_FOUND error if the user has\n`spanner.backups.list` permission on the containing instance.",
                   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}:testIamPermissions",
                   "httpMethod": "POST",
                   "id": "spanner.projects.instances.backups.testIamPermissions",
@@ -646,6 +855,52 @@
                 }
               }
             },
+            "databaseOperations": {
+              "methods": {
+                "list": {
+                  "description": "Lists database longrunning-operations.\nA database operation has a name of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/databases/\u003cdatabase\u003e/operations/\u003coperation\u003e`.\nThe long-running operation\nmetadata field type\n`metadata.type_url` describes the type of the metadata. Operations returned\ninclude those that have completed/failed/canceled within the last 7 days,\nand pending operations.",
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databaseOperations",
+                  "httpMethod": "GET",
+                  "id": "spanner.projects.instances.databaseOperations.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "filter": {
+                      "description": "A filter expression that filters what operations are returned in the\nresponse.\n\nThe filter expression must specify the field name, a comparison operator,\nand the value that you want to use for filtering. The value must be a\nstring, a number, or a boolean. The comparison operator must be\n\u003c, \u003e, \u003c=, \u003e=, !=, =, or :. Colon ‘:’ represents a HAS operator which is\nroughly synonymous with equality. Filter rules are case insensitive.\n\nThe long-running operation fields eligible for filtering are:\n  * `name` --\u003e The name of the long-running operation\n  * `done` --\u003e False if the operation is in progress, else true.\n  * `metadata.type_url` (using filter string `metadata.@type`) and fields\n     in `metadata.value` (using filter string `metadata.\u003cfield_name\u003e`,\n     where \u003cfield_name\u003e is a field in metadata.value) are eligible for\n     filtering.\n  * `error` --\u003e Error associated with the long-running operation.\n  * `response.type_url` (using filter string `response.@type`) and fields\n     in `response.value` (using filter string `response.\u003cfield_name\u003e`,\n     where \u003cfield_name\u003e is a field in response.value) are eligible for\n     filtering.\n\nTo filter on multiple expressions, provide each separate expression within\nparentheses. By default, each expression is an AND expression. However,\nyou can include AND, OR, and NOT expressions explicitly.\n\nSome examples of using filters are:\n\n  * `done:true` --\u003e The operation is complete.\n  * `(metadata.@type:type.googleapis.com/google.spanner.admin.database.v1.RestoreDatabaseMetadata)\n     AND (metadata.source_type:BACKUP)\n     AND (metadata.backup_info.backup:backup_howl)\n     AND (metadata.name:restored_howl)\n     AND (metadata.progress.start_time \u003c \\\"2018-03-28T14:50:00Z\\\")\n     AND (error:*)`\n         --\u003e Return RestoreDatabase operations from backups whose name\n             contains \"backup_howl\", where the created database name\n             contains the string \"restored_howl\", the start_time of the\n             restore operation is before 2018-03-28T14:50:00Z,\n             and the operation returned an error.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "pageSize": {
+                      "description": "Number of operations to be returned in the response. If 0 or\nless, defaults to the server's maximum allowed page size.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "If non-empty, `page_token` should contain a\nnext_page_token\nfrom a previous ListDatabaseOperationsResponse to the\nsame `parent` and with the same `filter`.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The instance of the database operations.\nValues are of the form `projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/instances/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/databaseOperations",
+                  "response": {
+                    "$ref": "ListDatabaseOperationsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ]
+                }
+              }
+            },
             "databases": {
               "methods": {
                 "create": {
@@ -678,7 +933,7 @@
                   ]
                 },
                 "dropDatabase": {
-                  "description": "Drops (aka deletes) a Cloud Spanner database.",
+                  "description": "Drops (aka deletes) a Cloud Spanner database.\nCompleted backups for the database will be retained according to their\n`expire_time`.",
                   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}",
                   "httpMethod": "DELETE",
                   "id": "spanner.projects.instances.databases.dropDatabase",
@@ -756,7 +1011,7 @@
                   ]
                 },
                 "getIamPolicy": {
-                  "description": "Gets the access control policy for a database resource.\nReturns an empty policy if a database exists but does\nnot have a policy set.\n\nAuthorization requires `spanner.databases.getIamPolicy` permission on\nresource.",
+                  "description": "Gets the access control policy for a database or backup resource.\nReturns an empty policy if a database or backup exists but does not have a\npolicy set.\n\nAuthorization requires `spanner.databases.getIamPolicy` permission on\nresource.\nFor backups, authorization requires `spanner.backups.getIamPolicy`\npermission on resource.",
                   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:getIamPolicy",
                   "httpMethod": "POST",
                   "id": "spanner.projects.instances.databases.getIamPolicy",
@@ -821,8 +1076,37 @@
                     "https://www.googleapis.com/auth/spanner.admin"
                   ]
                 },
+                "restore": {
+                  "description": "Create a new database by restoring from a completed backup. The new\ndatabase must be in the same project and in an instance with the same\ninstance configuration as the instance containing\nthe backup. The returned database long-running\noperation has a name of the format\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/databases/\u003cdatabase\u003e/operations/\u003coperation_id\u003e`,\nand can be used to track the progress of the operation, and to cancel it.\nThe metadata field type is\nRestoreDatabaseMetadata.\nThe response type\nis Database, if\nsuccessful. Cancelling the returned operation will stop the restore and\ndelete the database.\nThere can be only one database being restored into an instance at a time.\nOnce the restore operation completes, a new restore operation can be\ninitiated, without waiting for the optimize operation associated with the\nfirst restore to complete.",
+                  "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases:restore",
+                  "httpMethod": "POST",
+                  "id": "spanner.projects.instances.databases.restore",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. The name of the instance in which to create the\nrestored database. This instance must be in the same project and\nhave the same instance configuration as the instance containing\nthe source backup. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/instances/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/databases:restore",
+                  "request": {
+                    "$ref": "RestoreDatabaseRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/spanner.admin"
+                  ]
+                },
                 "setIamPolicy": {
-                  "description": "Sets the access control policy on a database resource.\nReplaces any existing policy.\n\nAuthorization requires `spanner.databases.setIamPolicy`\npermission on resource.",
+                  "description": "Sets the access control policy on a database or backup resource.\nReplaces any existing policy.\n\nAuthorization requires `spanner.databases.setIamPolicy`\npermission on resource.\nFor backups, authorization requires `spanner.backups.setIamPolicy`\npermission on resource.",
                   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:setIamPolicy",
                   "httpMethod": "POST",
                   "id": "spanner.projects.instances.databases.setIamPolicy",
@@ -851,7 +1135,7 @@
                   ]
                 },
                 "testIamPermissions": {
-                  "description": "Returns permissions that the caller has on the specified database resource.\n\nAttempting this RPC on a non-existent Cloud Spanner database will\nresult in a NOT_FOUND error if the user has\n`spanner.databases.list` permission on the containing Cloud\nSpanner instance. Otherwise returns an empty set of permissions.",
+                  "description": "Returns permissions that the caller has on the specified database or backup\nresource.\n\nAttempting this RPC on a non-existent Cloud Spanner database will\nresult in a NOT_FOUND error if the user has\n`spanner.databases.list` permission on the containing Cloud\nSpanner instance. Otherwise returns an empty set of permissions.\nCalling this method on a backup that does not exist will\nresult in a NOT_FOUND error if the user has\n`spanner.backups.list` permission on the containing instance.",
                   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:testIamPermissions",
                   "httpMethod": "POST",
                   "id": "spanner.projects.instances.databases.testIamPermissions",
@@ -1611,9 +1895,80 @@
       }
     }
   },
-  "revision": "20200224",
+  "revision": "20200309",
   "rootUrl": "https://spanner.googleapis.com/",
   "schemas": {
+    "Backup": {
+      "description": "A backup of a Cloud Spanner database.",
+      "id": "Backup",
+      "properties": {
+        "createTime": {
+          "description": "Output only. The backup will contain an externally consistent\ncopy of the database at the timestamp specified by\n`create_time`. `create_time` is approximately the time the\nCreateBackup request is received.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "database": {
+          "description": "Required for the CreateBackup operation.\nName of the database from which this backup was\ncreated. This needs to be in the same instance as the backup.\nValues are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/databases/\u003cdatabase\u003e`.",
+          "type": "string"
+        },
+        "expireTime": {
+          "description": "Required for the CreateBackup\noperation. The expiration time of the backup, with microseconds\ngranularity that must be at least 6 hours and at most 366 days\nfrom the time the CreateBackup request is processed. Once the `expire_time`\nhas passed, the backup is eligible to be automatically deleted by Cloud\nSpanner to free the resources used by the backup.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only for the CreateBackup][DatabaseAdmin.CreateBackup] operation.\nRequired for the UpdateBackup operation.\n\nA globally unique identifier for the backup which cannot be\nchanged. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/a-z*[a-z0-9]`\nThe final segment of the name must be between 2 and 60 characters\nin length.\n\nThe backup is stored in the location(s) specified in the instance\nconfiguration of the instance containing the backup, identified\nby the prefix of the backup name of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+          "type": "string"
+        },
+        "referencingDatabases": {
+          "description": "Output only. The names of the restored databases that reference the backup.\nThe database names are of\nthe form `projects/\u003cproject\u003e/instances/\u003cinstance\u003e/databases/\u003cdatabase\u003e`.\nReferencing databases may exist in different instances. The existence of\nany referencing database prevents the backup from being deleted. When a\nrestored database from the backup enters the `READY` state, the reference\nto the backup is removed.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "sizeBytes": {
+          "description": "Output only. Size of the backup in bytes.",
+          "format": "int64",
+          "type": "string"
+        },
+        "state": {
+          "description": "Output only. The current state of the backup.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "CREATING",
+            "READY"
+          ],
+          "enumDescriptions": [
+            "Not specified.",
+            "The pending backup is still being created. Operations on the\nbackup may fail with `FAILED_PRECONDITION` in this state.",
+            "The backup is complete and ready for use."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BackupInfo": {
+      "description": "Information about a backup.",
+      "id": "BackupInfo",
+      "properties": {
+        "backup": {
+          "description": "Name of the backup.",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "The backup contains an externally consistent copy of `source_database` at\nthe timestamp specified by `create_time`.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "sourceDatabase": {
+          "description": "Name of the database the backup was created from.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "BatchCreateSessionsRequest": {
       "description": "The request for BatchCreateSessions.",
       "id": "BatchCreateSessionsRequest",
@@ -1732,6 +2087,30 @@
       },
       "type": "object"
     },
+    "CreateBackupMetadata": {
+      "description": "Metadata type for the operation returned by\nCreateBackup.",
+      "id": "CreateBackupMetadata",
+      "properties": {
+        "cancelTime": {
+          "description": "The time at which cancellation of this operation was received.\nOperations.CancelOperation\nstarts asynchronous cancellation on a long-running operation. The server\nmakes a best effort to cancel the operation, but success is not guaranteed.\nClients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "database": {
+          "description": "The name of the database the backup is created from.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the backup being created.",
+          "type": "string"
+        },
+        "progress": {
+          "$ref": "OperationProgress",
+          "description": "The progress of the\nCreateBackup operation."
+        }
+      },
+      "type": "object"
+    },
     "CreateDatabaseMetadata": {
       "description": "Metadata type for the operation returned by\nCreateDatabase.",
       "id": "CreateDatabaseMetadata",
@@ -1752,7 +2131,7 @@
           "type": "string"
         },
         "extraStatements": {
-          "description": "An optional list of DDL statements to run inside the newly created\ndatabase. Statements can create tables, indexes, etc. These\nstatements execute atomically with the creation of the database:\nif there is an error in any statement, the database is not created.",
+          "description": "Optional. A list of DDL statements to run inside the newly created\ndatabase. Statements can create tables, indexes, etc. These\nstatements execute atomically with the creation of the database:\nif there is an error in any statement, the database is not created.",
           "items": {
             "type": "string"
           },
@@ -1817,21 +2196,32 @@
       "description": "A Cloud Spanner database.",
       "id": "Database",
       "properties": {
+        "createTime": {
+          "description": "Output only. If exists, the time at which the database creation started.",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "name": {
           "description": "Required. The name of the database. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/databases/\u003cdatabase\u003e`,\nwhere `\u003cdatabase\u003e` is as specified in the `CREATE DATABASE`\nstatement. This name can be passed to other API methods to\nidentify the database.",
           "type": "string"
+        },
+        "restoreInfo": {
+          "$ref": "RestoreInfo",
+          "description": "Output only. Applicable only for restored databases. Contains information\nabout the restore source."
         },
         "state": {
           "description": "Output only. The current database state.",
           "enum": [
             "STATE_UNSPECIFIED",
             "CREATING",
-            "READY"
+            "READY",
+            "READY_OPTIMIZING"
           ],
           "enumDescriptions": [
             "Not specified.",
             "The database is still being created. Operations on the database may fail\nwith `FAILED_PRECONDITION` in this state.",
-            "The database is fully created and ready for use."
+            "The database is fully created and ready for use.",
+            "The database is fully created and ready for use, but is still\nbeing optimized for performance and cannot handle full load.\n\nIn this state, the database still references the backup\nit was restore from, preventing the backup\nfrom being deleted. When optimizations are complete, the full performance\nof the database will be restored, and the database will transition to\n`READY` state."
           ],
           "type": "string"
         }
@@ -2175,6 +2565,60 @@
       },
       "type": "object"
     },
+    "ListBackupOperationsResponse": {
+      "description": "The response for\nListBackupOperations.",
+      "id": "ListBackupOperationsResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "`next_page_token` can be sent in a subsequent\nListBackupOperations\ncall to fetch more of the matching metadata.",
+          "type": "string"
+        },
+        "operations": {
+          "description": "The list of matching backup long-running\noperations. Each operation's name will be\nprefixed by the backup's name and the operation's\nmetadata will be of type\nCreateBackupMetadata. Operations returned include those that are\npending or have completed/failed/canceled within the last 7 days.\nOperations returned are ordered by\n`operation.metadata.value.progress.start_time` in descending order starting\nfrom the most recently started operation.",
+          "items": {
+            "$ref": "Operation"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ListBackupsResponse": {
+      "description": "The response for ListBackups.",
+      "id": "ListBackupsResponse",
+      "properties": {
+        "backups": {
+          "description": "The list of matching backups. Backups returned are ordered by `create_time`\nin descending order, starting from the most recent `create_time`.",
+          "items": {
+            "$ref": "Backup"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "`next_page_token` can be sent in a subsequent\nListBackups call to fetch more\nof the matching backups.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ListDatabaseOperationsResponse": {
+      "description": "The response for\nListDatabaseOperations.",
+      "id": "ListDatabaseOperationsResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "`next_page_token` can be sent in a subsequent\nListDatabaseOperations\ncall to fetch more of the matching metadata.",
+          "type": "string"
+        },
+        "operations": {
+          "description": "The list of matching database long-running\noperations. Each operation's name will be\nprefixed by the database's name. The operation's\nmetadata field type\n`metadata.type_url` describes the type of the metadata.",
+          "items": {
+            "$ref": "Operation"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "ListDatabasesResponse": {
       "description": "The response for ListDatabases.",
       "id": "ListDatabasesResponse",
@@ -2323,6 +2767,43 @@
           },
           "description": "The normal response of the operation in case of success.  If the original\nmethod returns no data on success, such as `Delete`, the response is\n`google.protobuf.Empty`.  If the original method is standard\n`Get`/`Create`/`Update`, the response should be the resource.  For other\nmethods, the response should have the type `XxxResponse`, where `Xxx`\nis the original method name.  For example, if the original method name\nis `TakeSnapshot()`, the inferred response type is\n`TakeSnapshotResponse`.",
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "OperationProgress": {
+      "description": "Encapsulates progress related information for a Cloud Spanner long\nrunning operation.",
+      "id": "OperationProgress",
+      "properties": {
+        "endTime": {
+          "description": "If set, the time at which this operation failed or was completed\nsuccessfully.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "progressPercent": {
+          "description": "Percent completion of the operation.\nValues are between 0 and 100 inclusive.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "startTime": {
+          "description": "Time the request was received.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OptimizeRestoredDatabaseMetadata": {
+      "description": "Metadata type for the long-running operation used to track the progress\nof optimizations performed on a newly restored database. This long-running\noperation is automatically created by the system after the successful\ncompletion of a database restore, and cannot be cancelled.",
+      "id": "OptimizeRestoredDatabaseMetadata",
+      "properties": {
+        "name": {
+          "description": "Name of the restored database being optimized.",
+          "type": "string"
+        },
+        "progress": {
+          "$ref": "OperationProgress",
+          "description": "The progress of the post-restore optimizations."
         }
       },
       "type": "object"
@@ -2695,6 +3176,84 @@
             "Read-write replicas support both reads and writes. These replicas:\n\n* Maintain a full copy of your data.\n* Serve reads.\n* Can vote whether to commit a write.\n* Participate in leadership election.\n* Are eligible to become a leader.",
             "Read-only replicas only support reads (not writes). Read-only replicas:\n\n* Maintain a full copy of your data.\n* Serve reads.\n* Do not participate in voting to commit writes.\n* Are not eligible to become a leader.",
             "Witness replicas don't support reads but do participate in voting to\ncommit writes. Witness replicas:\n\n* Do not maintain a full copy of data.\n* Do not serve reads.\n* Vote whether to commit writes.\n* Participate in leader election but are not eligible to become leader."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RestoreDatabaseMetadata": {
+      "description": "Metadata type for the long-running operation returned by\nRestoreDatabase.",
+      "id": "RestoreDatabaseMetadata",
+      "properties": {
+        "backupInfo": {
+          "$ref": "BackupInfo",
+          "description": "Information about the backup used to restore the database."
+        },
+        "cancelTime": {
+          "description": "The time at which cancellation of this operation was received.\nOperations.CancelOperation\nstarts asynchronous cancellation on a long-running operation. The server\nmakes a best effort to cancel the operation, but success is not guaranteed.\nClients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the database being created and restored to.",
+          "type": "string"
+        },
+        "optimizeDatabaseOperationName": {
+          "description": "If exists, the name of the long-running operation that will be used to\ntrack the post-restore optimization process to optimize the performance of\nthe restored database, and remove the dependency on the restore source.\nThe name is of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/databases/\u003cdatabase\u003e/operations/\u003coperation\u003e\nwhere the \u003cdatabase\u003e is the name of database being created and restored to.\nThe metadata type of the  long-running operation is\nOptimizeRestoredDatabaseMetadata. This long-running operation will be\nautomatically created by the system after the RestoreDatabase long-running\noperation completes successfully. This operation will not be created if the\nrestore was not successful.",
+          "type": "string"
+        },
+        "progress": {
+          "$ref": "OperationProgress",
+          "description": "The progress of the\nRestoreDatabase\noperation."
+        },
+        "sourceType": {
+          "description": "The type of the restore source.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "BACKUP"
+          ],
+          "enumDescriptions": [
+            "No restore associated.",
+            "A backup was used as the source of the restore."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RestoreDatabaseRequest": {
+      "description": "The request for\nRestoreDatabase.",
+      "id": "RestoreDatabaseRequest",
+      "properties": {
+        "backup": {
+          "description": "Name of the backup from which to restore.  Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/\u003cbackup\u003e`.",
+          "type": "string"
+        },
+        "databaseId": {
+          "description": "Required. The id of the database to create and restore to. This\ndatabase must not already exist. The `database_id` appended to\n`parent` forms the full database name of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/databases/\u003cdatabase_id\u003e`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RestoreInfo": {
+      "description": "Information about the database restore.",
+      "id": "RestoreInfo",
+      "properties": {
+        "backupInfo": {
+          "$ref": "BackupInfo",
+          "description": "Information about the backup used to restore the database. The backup\nmay no longer exist."
+        },
+        "sourceType": {
+          "description": "The type of the restore source.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "BACKUP"
+          ],
+          "enumDescriptions": [
+            "No restore associated.",
+            "A backup was used as the source of the restore."
           ],
           "type": "string"
         }

@@ -336,10 +336,476 @@
             "https://www.googleapis.com/auth/cloud-platform.read-only"
           ]
         }
+      },
+      "resources": {
+        "consumerQuotaMetrics": {
+          "methods": {
+            "get": {
+              "description": "Retrieves a summary of quota information for a specific quota metric",
+              "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}",
+              "httpMethod": "GET",
+              "id": "serviceusage.services.consumerQuotaMetrics.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "The resource name of the quota limit.\n\nAn example name would be:\nprojects/123/services/serviceusage.googleapis.com/quotas/metrics/serviceusage.googleapis.com%2Fmutate_requests",
+                  "location": "path",
+                  "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "view": {
+                  "description": "Specifies the level of detail for quota information in the response.",
+                  "enum": [
+                    "QUOTA_VIEW_UNSPECIFIED",
+                    "BASIC",
+                    "FULL"
+                  ],
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+name}",
+              "response": {
+                "$ref": "ConsumerQuotaMetric"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only"
+              ]
+            },
+            "list": {
+              "description": "Retrieves a summary of all quota information visible to the service\nconsumer, organized by service metric. Each metric includes information\nabout all of its defined limits. Each limit includes the limit\nconfiguration (quota unit, preciseness, default value), the current\neffective limit value, and all of the overrides applied to the limit.",
+              "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics",
+              "httpMethod": "GET",
+              "id": "serviceusage.services.consumerQuotaMetrics.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "pageSize": {
+                  "description": "Requested size of the next page of data.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "Token identifying which result to start with; returned by a previous list\ncall.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Parent of the quotas resource.\n\nSome example names would be:\nprojects/123/services/serviceconsumermanagement.googleapis.com\nfolders/345/services/serviceconsumermanagement.googleapis.com\norganizations/456/services/serviceconsumermanagement.googleapis.com",
+                  "location": "path",
+                  "pattern": "^[^/]+/[^/]+/services/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "view": {
+                  "description": "Specifies the level of detail for quota information in the response.",
+                  "enum": [
+                    "QUOTA_VIEW_UNSPECIFIED",
+                    "BASIC",
+                    "FULL"
+                  ],
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+parent}/consumerQuotaMetrics",
+              "response": {
+                "$ref": "ListConsumerQuotaMetricsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only"
+              ]
+            }
+          },
+          "resources": {
+            "limits": {
+              "methods": {
+                "get": {
+                  "description": "Retrieves a summary of quota information for a specific quota limit.",
+                  "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}",
+                  "httpMethod": "GET",
+                  "id": "serviceusage.services.consumerQuotaMetrics.limits.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "The resource name of the quota limit.\n\nUse the quota limit resource name returned by previous\nListConsumerQuotaMetrics and GetConsumerQuotaMetric API calls.",
+                      "location": "path",
+                      "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "view": {
+                      "description": "Specifies the level of detail for quota information in the response.",
+                      "enum": [
+                        "QUOTA_VIEW_UNSPECIFIED",
+                        "BASIC",
+                        "FULL"
+                      ],
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+name}",
+                  "response": {
+                    "$ref": "ConsumerQuotaLimit"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only"
+                  ]
+                }
+              },
+              "resources": {
+                "adminOverrides": {
+                  "methods": {
+                    "create": {
+                      "description": "Creates an admin override.\nAn admin override is applied by an administrator of a parent folder or\nparent organization of the consumer receiving the override. An admin\noverride is intended to limit the amount of quota the consumer can use out\nof the total quota pool allocated to all children of the folder or\norganization.",
+                      "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/adminOverrides",
+                      "httpMethod": "POST",
+                      "id": "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.create",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "force": {
+                          "description": "Whether to force the creation of the quota override.\nIf creating an override would cause the effective quota for the consumer to\ndecrease by more than 10 percent, the call is rejected, as a safety measure\nto avoid accidentally decreasing quota too quickly. Setting the force\nparameter to true ignores this restriction.",
+                          "location": "query",
+                          "type": "boolean"
+                        },
+                        "parent": {
+                          "description": "The resource name of the parent quota limit, returned by a\nListConsumerQuotaMetrics or GetConsumerQuotaMetric call.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`",
+                          "location": "path",
+                          "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+parent}/adminOverrides",
+                      "request": {
+                        "$ref": "QuotaOverride"
+                      },
+                      "response": {
+                        "$ref": "Operation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/service.management"
+                      ]
+                    },
+                    "delete": {
+                      "description": "Deletes an admin override.",
+                      "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/adminOverrides/{adminOverridesId}",
+                      "httpMethod": "DELETE",
+                      "id": "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.delete",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "force": {
+                          "description": "Whether to force the deletion of the quota override.\nIf deleting an override would cause the effective quota for the consumer to\ndecrease by more than 10 percent, the call is rejected, as a safety measure\nto avoid accidentally decreasing quota too quickly. Setting the force\nparameter to true ignores this restriction.",
+                          "location": "query",
+                          "type": "boolean"
+                        },
+                        "name": {
+                          "description": "The resource name of the override to delete.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/adminOverrides/4a3f2c1d`",
+                          "location": "path",
+                          "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+/adminOverrides/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+name}",
+                      "response": {
+                        "$ref": "Operation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/service.management"
+                      ]
+                    },
+                    "list": {
+                      "description": "Lists all admin overrides on this limit.",
+                      "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/adminOverrides",
+                      "httpMethod": "GET",
+                      "id": "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.list",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "pageSize": {
+                          "description": "Requested size of the next page of data.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "Token identifying which result to start with; returned by a previous list\ncall.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "The resource name of the parent quota limit, returned by a\nListConsumerQuotaMetrics or GetConsumerQuotaMetric call.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`",
+                          "location": "path",
+                          "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+parent}/adminOverrides",
+                      "response": {
+                        "$ref": "ListAdminOverridesResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/cloud-platform.read-only"
+                      ]
+                    },
+                    "patch": {
+                      "description": "Updates an admin override.",
+                      "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/adminOverrides/{adminOverridesId}",
+                      "httpMethod": "PATCH",
+                      "id": "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.patch",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "force": {
+                          "description": "Whether to force the update of the quota override.\nIf updating an override would cause the effective quota for the consumer to\ndecrease by more than 10 percent, the call is rejected, as a safety measure\nto avoid accidentally decreasing quota too quickly. Setting the force\nparameter to true ignores this restriction.",
+                          "location": "query",
+                          "type": "boolean"
+                        },
+                        "name": {
+                          "description": "The resource name of the override to update.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/adminOverrides/4a3f2c1d`",
+                          "location": "path",
+                          "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+/adminOverrides/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "updateMask": {
+                          "description": "Update only the specified fields of the override.\nIf unset, all fields will be updated.",
+                          "format": "google-fieldmask",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+name}",
+                      "request": {
+                        "$ref": "QuotaOverride"
+                      },
+                      "response": {
+                        "$ref": "Operation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/service.management"
+                      ]
+                    }
+                  }
+                },
+                "consumerOverrides": {
+                  "methods": {
+                    "create": {
+                      "description": "Creates a consumer override.\nA consumer override is applied to the consumer on its own authority to\nlimit its own quota usage. Consumer overrides cannot be used to grant more\nquota than would be allowed by admin overrides, producer overrides, or the\ndefault limit of the service.",
+                      "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/consumerOverrides",
+                      "httpMethod": "POST",
+                      "id": "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.create",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "force": {
+                          "description": "Whether to force the creation of the quota override.\nIf creating an override would cause the effective quota for the consumer to\ndecrease by more than 10 percent, the call is rejected, as a safety measure\nto avoid accidentally decreasing quota too quickly. Setting the force\nparameter to true ignores this restriction.",
+                          "location": "query",
+                          "type": "boolean"
+                        },
+                        "parent": {
+                          "description": "The resource name of the parent quota limit, returned by a\nListConsumerQuotaMetrics or GetConsumerQuotaMetric call.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`",
+                          "location": "path",
+                          "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+parent}/consumerOverrides",
+                      "request": {
+                        "$ref": "QuotaOverride"
+                      },
+                      "response": {
+                        "$ref": "Operation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/service.management"
+                      ]
+                    },
+                    "delete": {
+                      "description": "Deletes a consumer override.",
+                      "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/consumerOverrides/{consumerOverridesId}",
+                      "httpMethod": "DELETE",
+                      "id": "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.delete",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "force": {
+                          "description": "Whether to force the deletion of the quota override.\nIf deleting an override would cause the effective quota for the consumer to\ndecrease by more than 10 percent, the call is rejected, as a safety measure\nto avoid accidentally decreasing quota too quickly. Setting the force\nparameter to true ignores this restriction.",
+                          "location": "query",
+                          "type": "boolean"
+                        },
+                        "name": {
+                          "description": "The resource name of the override to delete.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/consumerOverrides/4a3f2c1d`",
+                          "location": "path",
+                          "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+/consumerOverrides/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+name}",
+                      "response": {
+                        "$ref": "Operation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/service.management"
+                      ]
+                    },
+                    "list": {
+                      "description": "Lists all consumer overrides on this limit.",
+                      "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/consumerOverrides",
+                      "httpMethod": "GET",
+                      "id": "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.list",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "pageSize": {
+                          "description": "Requested size of the next page of data.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "Token identifying which result to start with; returned by a previous list\ncall.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "The resource name of the parent quota limit, returned by a\nListConsumerQuotaMetrics or GetConsumerQuotaMetric call.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`",
+                          "location": "path",
+                          "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+parent}/consumerOverrides",
+                      "response": {
+                        "$ref": "ListConsumerOverridesResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/cloud-platform.read-only"
+                      ]
+                    },
+                    "patch": {
+                      "description": "Updates a consumer override.",
+                      "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/consumerOverrides/{consumerOverridesId}",
+                      "httpMethod": "PATCH",
+                      "id": "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.patch",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "force": {
+                          "description": "Whether to force the update of the quota override.\nIf updating an override would cause the effective quota for the consumer to\ndecrease by more than 10 percent, the call is rejected, as a safety measure\nto avoid accidentally decreasing quota too quickly. Setting the force\nparameter to true ignores this restriction.",
+                          "location": "query",
+                          "type": "boolean"
+                        },
+                        "name": {
+                          "description": "The resource name of the override to update.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/consumerOverrides/4a3f2c1d`",
+                          "location": "path",
+                          "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+/consumerOverrides/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "updateMask": {
+                          "description": "Update only the specified fields of the override.\nIf unset, all fields will be updated.",
+                          "format": "google-fieldmask",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+name}",
+                      "request": {
+                        "$ref": "QuotaOverride"
+                      },
+                      "response": {
+                        "$ref": "Operation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/service.management"
+                      ]
+                    }
+                  }
+                },
+                "producerOverrides": {
+                  "methods": {
+                    "list": {
+                      "description": "Lists all producer overrides on this limit.\nUnlike other types of overrides, producer overrides are under the control\nof the service producer and cannot be modified using this API.",
+                      "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/producerOverrides",
+                      "httpMethod": "GET",
+                      "id": "serviceusage.services.consumerQuotaMetrics.limits.producerOverrides.list",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "pageSize": {
+                          "description": "Requested size of the next page of data.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "Token identifying which result to start with; returned by a previous list\ncall.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "The resource name of the parent quota limit, returned by a\nListConsumerQuotaMetrics or GetConsumerQuotaMetric call.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`",
+                          "location": "path",
+                          "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+parent}/producerOverrides",
+                      "response": {
+                        "$ref": "ListProducerOverridesResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/cloud-platform.read-only"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
-  "revision": "20200305",
+  "revision": "20200310",
   "rootUrl": "https://serviceusage.googleapis.com/",
   "schemas": {
     "Api": {
@@ -649,6 +1115,66 @@
         },
         "monitoredResource": {
           "description": "The monitored resource type. The type must be defined in\nService.monitored_resources section.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ConsumerQuotaLimit": {
+      "description": "Consumer quota settings for a quota limit.",
+      "id": "ConsumerQuotaLimit",
+      "properties": {
+        "allowsAdminOverrides": {
+          "description": "Whether admin overrides are allowed on this limit",
+          "type": "boolean"
+        },
+        "isPrecise": {
+          "description": "Whether this limit is precise or imprecise.",
+          "type": "boolean"
+        },
+        "metric": {
+          "description": "The name of the parent metric of this limit.\n\nAn example name would be:\n`compute.googleapis.com/cpus`",
+          "type": "string"
+        },
+        "name": {
+          "description": "The resource name of the quota limit.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`\n\nThe resource name is intended to be opaque and should not be parsed for\nits component strings, since its representation could change in the future.",
+          "type": "string"
+        },
+        "quotaBuckets": {
+          "description": "Summary of the enforced quota buckets, organized by quota dimension,\nordered from least specific to most specific (for example, the global\ndefault bucket, with no quota dimensions, will always appear first).",
+          "items": {
+            "$ref": "QuotaBucket"
+          },
+          "type": "array"
+        },
+        "unit": {
+          "description": "The limit unit.\n\nAn example unit would be\n`1/{project}/{region}`\nNote that `{project}` and `{region}` are not placeholders in this example;\nthe literal characters `{` and `}` occur in the string.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ConsumerQuotaMetric": {
+      "description": "Consumer quota settings for a quota metric.",
+      "id": "ConsumerQuotaMetric",
+      "properties": {
+        "consumerQuotaLimits": {
+          "description": "The consumer quota for each quota limit defined on the metric.",
+          "items": {
+            "$ref": "ConsumerQuotaLimit"
+          },
+          "type": "array"
+        },
+        "displayName": {
+          "description": "The display name of the metric.\n\nAn example name would be:\n\"CPUs\"",
+          "type": "string"
+        },
+        "metric": {
+          "description": "The name of the metric.\n\nAn example name would be:\n`compute.googleapis.com/cpus`",
+          "type": "string"
+        },
+        "name": {
+          "description": "The resource name of the quota settings on this metric for this consumer.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus\n\nThe resource name is intended to be opaque and should not be parsed for\nits component strings, since its representation could change in the future.",
           "type": "string"
         }
       },
@@ -1515,6 +2041,60 @@
       },
       "type": "object"
     },
+    "ListAdminOverridesResponse": {
+      "description": "Response message for ListAdminOverrides.",
+      "id": "ListAdminOverridesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "Token identifying which result to start with; returned by a previous list\ncall.",
+          "type": "string"
+        },
+        "overrides": {
+          "description": "Admin overrides on this limit.",
+          "items": {
+            "$ref": "QuotaOverride"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ListConsumerOverridesResponse": {
+      "description": "Response message for ListConsumerOverrides.",
+      "id": "ListConsumerOverridesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "Token identifying which result to start with; returned by a previous list\ncall.",
+          "type": "string"
+        },
+        "overrides": {
+          "description": "Consumer overrides on this limit.",
+          "items": {
+            "$ref": "QuotaOverride"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ListConsumerQuotaMetricsResponse": {
+      "description": "Response message for ListConsumerQuotaMetrics",
+      "id": "ListConsumerQuotaMetricsResponse",
+      "properties": {
+        "metrics": {
+          "description": "Quota settings for the consumer, organized by quota metric.",
+          "items": {
+            "$ref": "ConsumerQuotaMetric"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Token identifying which result to start with; returned by a previous list\ncall.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ListOperationsResponse": {
       "description": "The response message for Operations.ListOperations.",
       "id": "ListOperationsResponse",
@@ -1527,6 +2107,24 @@
           "description": "A list of operations that matches the specified filter in the request.",
           "items": {
             "$ref": "Operation"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ListProducerOverridesResponse": {
+      "description": "Response message for ListProducerOverrides.",
+      "id": "ListProducerOverridesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "Token identifying which result to start with; returned by a previous list\ncall.",
+          "type": "string"
+        },
+        "overrides": {
+          "description": "Producer overrides on this limit.",
+          "items": {
+            "$ref": "QuotaOverride"
           },
           "type": "array"
         }
@@ -2043,6 +2641,42 @@
             "$ref": "MetricRule"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "QuotaBucket": {
+      "description": "A quota bucket is a quota provisioning unit for a specific set of dimensions.",
+      "id": "QuotaBucket",
+      "properties": {
+        "adminOverride": {
+          "$ref": "QuotaOverride",
+          "description": "Admin override on this quota bucket."
+        },
+        "consumerOverride": {
+          "$ref": "QuotaOverride",
+          "description": "Consumer override on this quota bucket."
+        },
+        "defaultLimit": {
+          "description": "The default limit of this quota bucket, as specified by the service\nconfiguration.",
+          "format": "int64",
+          "type": "string"
+        },
+        "dimensions": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The dimensions of this quota bucket.\n\nIf this map is empty, this is the global bucket, which is the default quota\nvalue applied to all requests that do not have a more specific override.\n\nIf this map is nonempty, the default limit, effective limit, and quota\noverrides apply only to requests that have the dimensions given in the map.\n\nFor example, if the map has key \"region\" and value \"us-east-1\", then the\nspecified effective limit is only effective in that region, and the\nspecified overrides apply only in that region.",
+          "type": "object"
+        },
+        "effectiveLimit": {
+          "description": "The effective limit of this quota bucket. Equal to default_limit if there\nare no overrides.",
+          "format": "int64",
+          "type": "string"
+        },
+        "producerOverride": {
+          "$ref": "QuotaOverride",
+          "description": "Producer override on this quota bucket."
         }
       },
       "type": "object"

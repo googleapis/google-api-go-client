@@ -2198,6 +2198,11 @@ type FileCapabilities struct {
 	// folder. This is always false when the item is not a folder.
 	CanAddChildren bool `json:"canAddChildren,omitempty"`
 
+	// CanAddMyDriveParent: Whether the current user can add a parent for
+	// the item without removing an existing parent in the same request. Not
+	// populated for shared drive files.
+	CanAddMyDriveParent bool `json:"canAddMyDriveParent,omitempty"`
+
 	// CanChangeCopyRequiresWriterPermission: Whether the current user can
 	// change the copyRequiresWriterPermission restriction of this file.
 	CanChangeCopyRequiresWriterPermission bool `json:"canChangeCopyRequiresWriterPermission,omitempty"`
@@ -2301,6 +2306,11 @@ type FileCapabilities struct {
 	// a folder in a shared drive, use canDeleteChildren or canTrashChildren
 	// instead.
 	CanRemoveChildren bool `json:"canRemoveChildren,omitempty"`
+
+	// CanRemoveMyDriveParent: Whether the current user can remove a parent
+	// from the item without adding another parent in the same request. Not
+	// populated for shared drive files.
+	CanRemoveMyDriveParent bool `json:"canRemoveMyDriveParent,omitempty"`
 
 	// CanRename: Whether the current user can rename this file.
 	CanRename bool `json:"canRename,omitempty"`
@@ -3905,7 +3915,7 @@ func (c *AboutGetCall) Header() http.Header {
 
 func (c *AboutGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4060,7 +4070,7 @@ func (c *AppsGetCall) Header() http.Header {
 
 func (c *AppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4236,7 +4246,7 @@ func (c *AppsListCall) Header() http.Header {
 
 func (c *AppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4415,7 +4425,7 @@ func (c *ChangesGetCall) Header() http.Header {
 
 func (c *ChangesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4617,7 +4627,7 @@ func (c *ChangesGetStartPageTokenCall) Header() http.Header {
 
 func (c *ChangesGetStartPageTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4884,7 +4894,7 @@ func (c *ChangesListCall) Header() http.Header {
 
 func (c *ChangesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5218,7 +5228,7 @@ func (c *ChangesWatchCall) Header() http.Header {
 
 func (c *ChangesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5427,7 +5437,7 @@ func (c *ChannelsStopCall) Header() http.Header {
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5504,6 +5514,17 @@ func (r *ChildrenService) Delete(folderId string, childId string) *ChildrenDelet
 	return c
 }
 
+// EnforceSingleParent sets the optional parameter
+// "enforceSingleParent": Set to true to opt in to API behavior that
+// aims for all items to have exactly one parent. This parameter will
+// only take effect if the item is not in a shared drive. If the item's
+// last parent is removed, the item will be placed under its owner's
+// root.
+func (c *ChildrenDeleteCall) EnforceSingleParent(enforceSingleParent bool) *ChildrenDeleteCall {
+	c.urlParams_.Set("enforceSingleParent", fmt.Sprint(enforceSingleParent))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5531,7 +5552,7 @@ func (c *ChildrenDeleteCall) Header() http.Header {
 
 func (c *ChildrenDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5579,6 +5600,12 @@ func (c *ChildrenDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "enforceSingleParent": {
+	//       "default": "false",
+	//       "description": "Set to true to opt in to API behavior that aims for all items to have exactly one parent. This parameter will only take effect if the item is not in a shared drive. If the item's last parent is removed, the item will be placed under its owner's root.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "folderId": {
 	//       "description": "The ID of the folder.",
@@ -5653,7 +5680,7 @@ func (c *ChildrenGetCall) Header() http.Header {
 
 func (c *ChildrenGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5773,6 +5800,20 @@ func (r *ChildrenService) Insert(folderId string, childreference *ChildReference
 	return c
 }
 
+// EnforceSingleParent sets the optional parameter
+// "enforceSingleParent": Set to true to opt in to API behavior that
+// aims for all items to have exactly one parent. This parameter will
+// only take effect if the item is not in a shared drive. If the child's
+// owner makes the request, the child will be removed from all current
+// folders and placed in the requested folder. Any other requests that
+// increase the number of the child's parents will fail, except when the
+// canAddMyDriveParent file capability is true and a single parent is
+// being added.
+func (c *ChildrenInsertCall) EnforceSingleParent(enforceSingleParent bool) *ChildrenInsertCall {
+	c.urlParams_.Set("enforceSingleParent", fmt.Sprint(enforceSingleParent))
+	return c
+}
+
 // SupportsAllDrives sets the optional parameter "supportsAllDrives":
 // Deprecated - Whether the requesting application supports both My
 // Drives and shared drives. This parameter will only be effective until
@@ -5817,7 +5858,7 @@ func (c *ChildrenInsertCall) Header() http.Header {
 
 func (c *ChildrenInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5888,6 +5929,12 @@ func (c *ChildrenInsertCall) Do(opts ...googleapi.CallOption) (*ChildReference, 
 	//     "folderId"
 	//   ],
 	//   "parameters": {
+	//     "enforceSingleParent": {
+	//       "default": "false",
+	//       "description": "Set to true to opt in to API behavior that aims for all items to have exactly one parent. This parameter will only take effect if the item is not in a shared drive. If the child's owner makes the request, the child will be removed from all current folders and placed in the requested folder. Any other requests that increase the number of the child's parents will fail, except when the canAddMyDriveParent file capability is true and a single parent is being added.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "folderId": {
 	//       "description": "The ID of the folder.",
 	//       "location": "path",
@@ -6013,7 +6060,7 @@ func (c *ChildrenListCall) Header() http.Header {
 
 func (c *ChildrenListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6196,7 +6243,7 @@ func (c *CommentsDeleteCall) Header() http.Header {
 
 func (c *CommentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6326,7 +6373,7 @@ func (c *CommentsGetCall) Header() http.Header {
 
 func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6475,7 +6522,7 @@ func (c *CommentsInsertCall) Header() http.Header {
 
 func (c *CommentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6655,7 +6702,7 @@ func (c *CommentsListCall) Header() http.Header {
 
 func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6838,7 +6885,7 @@ func (c *CommentsPatchCall) Header() http.Header {
 
 func (c *CommentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6987,7 +7034,7 @@ func (c *CommentsUpdateCall) Header() http.Header {
 
 func (c *CommentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7133,7 +7180,7 @@ func (c *DrivesDeleteCall) Header() http.Header {
 
 func (c *DrivesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7253,7 +7300,7 @@ func (c *DrivesGetCall) Header() http.Header {
 
 func (c *DrivesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7391,7 +7438,7 @@ func (c *DrivesHideCall) Header() http.Header {
 
 func (c *DrivesHideCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7520,7 +7567,7 @@ func (c *DrivesInsertCall) Header() http.Header {
 
 func (c *DrivesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7692,7 +7739,7 @@ func (c *DrivesListCall) Header() http.Header {
 
 func (c *DrivesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7858,7 +7905,7 @@ func (c *DrivesUnhideCall) Header() http.Header {
 
 func (c *DrivesUnhideCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7997,7 +8044,7 @@ func (c *DrivesUpdateCall) Header() http.Header {
 
 func (c *DrivesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8121,6 +8168,16 @@ func (c *FilesCopyCall) Convert(convert bool) *FilesCopyCall {
 	return c
 }
 
+// EnforceSingleParent sets the optional parameter
+// "enforceSingleParent": Set to true to opt in to API behavior that
+// aims for all items to have exactly one parent. This parameter will
+// only take effect if the item is not in a shared drive. Requests that
+// specify more than one parent will fail.
+func (c *FilesCopyCall) EnforceSingleParent(enforceSingleParent bool) *FilesCopyCall {
+	c.urlParams_.Set("enforceSingleParent", fmt.Sprint(enforceSingleParent))
+	return c
+}
+
 // Ocr sets the optional parameter "ocr": Whether to attempt OCR on
 // .jpg, .png, .gif, or .pdf uploads.
 func (c *FilesCopyCall) Ocr(ocr bool) *FilesCopyCall {
@@ -8214,7 +8271,7 @@ func (c *FilesCopyCall) Header() http.Header {
 
 func (c *FilesCopyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8288,6 +8345,12 @@ func (c *FilesCopyCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     "convert": {
 	//       "default": "false",
 	//       "description": "Whether to convert this file to the corresponding Google Docs format.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "enforceSingleParent": {
+	//       "default": "false",
+	//       "description": "Set to true to opt in to API behavior that aims for all items to have exactly one parent. This parameter will only take effect if the item is not in a shared drive. Requests that specify more than one parent will fail.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -8432,7 +8495,7 @@ func (c *FilesDeleteCall) Header() http.Header {
 
 func (c *FilesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8544,7 +8607,7 @@ func (c *FilesEmptyTrashCall) Header() http.Header {
 
 func (c *FilesEmptyTrashCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8644,7 +8707,7 @@ func (c *FilesExportCall) Header() http.Header {
 
 func (c *FilesExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8798,7 +8861,7 @@ func (c *FilesGenerateIdsCall) Header() http.Header {
 
 func (c *FilesGenerateIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8997,7 +9060,7 @@ func (c *FilesGetCall) Header() http.Header {
 
 func (c *FilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9176,6 +9239,16 @@ func (c *FilesInsertCall) Convert(convert bool) *FilesInsertCall {
 	return c
 }
 
+// EnforceSingleParent sets the optional parameter
+// "enforceSingleParent": Set to true to opt in to API behavior that
+// aims for all items to have exactly one parent. This parameter will
+// only take effect if the item is not in a shared drive. Requests that
+// specify more than one parent will fail.
+func (c *FilesInsertCall) EnforceSingleParent(enforceSingleParent bool) *FilesInsertCall {
+	c.urlParams_.Set("enforceSingleParent", fmt.Sprint(enforceSingleParent))
+	return c
+}
+
 // Ocr sets the optional parameter "ocr": Whether to attempt OCR on
 // .jpg, .png, .gif, or .pdf uploads.
 func (c *FilesInsertCall) Ocr(ocr bool) *FilesInsertCall {
@@ -9315,7 +9388,7 @@ func (c *FilesInsertCall) Header() http.Header {
 
 func (c *FilesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9427,6 +9500,12 @@ func (c *FilesInsertCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     "convert": {
 	//       "default": "false",
 	//       "description": "Whether to convert this file to the corresponding Google Docs format.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "enforceSingleParent": {
+	//       "default": "false",
+	//       "description": "Set to true to opt in to API behavior that aims for all items to have exactly one parent. This parameter will only take effect if the item is not in a shared drive. Requests that specify more than one parent will fail.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -9686,7 +9765,7 @@ func (c *FilesListCall) Header() http.Header {
 
 func (c *FilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9916,6 +9995,20 @@ func (c *FilesPatchCall) Convert(convert bool) *FilesPatchCall {
 	return c
 }
 
+// EnforceSingleParent sets the optional parameter
+// "enforceSingleParent": Set to true to opt in to API behavior that
+// aims for all items to have exactly one parent. This parameter will
+// only take effect if the item is not in a shared drive. If the item's
+// owner makes a request to add a single parent, the item will be
+// removed from all current folders and placed in the requested folder.
+// Other requests that increase the number of parents will fail, except
+// when the canAddMyDriveParent file capability is true and a single
+// parent is being added.
+func (c *FilesPatchCall) EnforceSingleParent(enforceSingleParent bool) *FilesPatchCall {
+	c.urlParams_.Set("enforceSingleParent", fmt.Sprint(enforceSingleParent))
+	return c
+}
+
 // ModifiedDateBehavior sets the optional parameter
 // "modifiedDateBehavior": Determines the behavior in which modifiedDate
 // is updated. This overrides setModifiedDate.
@@ -10061,7 +10154,7 @@ func (c *FilesPatchCall) Header() http.Header {
 
 func (c *FilesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10140,6 +10233,12 @@ func (c *FilesPatchCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     "convert": {
 	//       "default": "false",
 	//       "description": "This parameter is deprecated and has no function.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "enforceSingleParent": {
+	//       "default": "false",
+	//       "description": "Set to true to opt in to API behavior that aims for all items to have exactly one parent. This parameter will only take effect if the item is not in a shared drive. If the item's owner makes a request to add a single parent, the item will be removed from all current folders and placed in the requested folder. Other requests that increase the number of parents will fail, except when the canAddMyDriveParent file capability is true and a single parent is being added.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -10319,7 +10418,7 @@ func (c *FilesTouchCall) Header() http.Header {
 
 func (c *FilesTouchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10482,7 +10581,7 @@ func (c *FilesTrashCall) Header() http.Header {
 
 func (c *FilesTrashCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10642,7 +10741,7 @@ func (c *FilesUntrashCall) Header() http.Header {
 
 func (c *FilesUntrashCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10772,6 +10871,20 @@ func (c *FilesUpdateCall) AddParents(addParents string) *FilesUpdateCall {
 // deprecated and has no function.
 func (c *FilesUpdateCall) Convert(convert bool) *FilesUpdateCall {
 	c.urlParams_.Set("convert", fmt.Sprint(convert))
+	return c
+}
+
+// EnforceSingleParent sets the optional parameter
+// "enforceSingleParent": Set to true to opt in to API behavior that
+// aims for all items to have exactly one parent. This parameter will
+// only take effect if the item is not in a shared drive. If the item's
+// owner makes a request to add a single parent, the item will be
+// removed from all current folders and placed in the requested folder.
+// Other requests that increase the number of parents will fail, except
+// when the canAddMyDriveParent file capability is true and a single
+// parent is being added.
+func (c *FilesUpdateCall) EnforceSingleParent(enforceSingleParent bool) *FilesUpdateCall {
+	c.urlParams_.Set("enforceSingleParent", fmt.Sprint(enforceSingleParent))
 	return c
 }
 
@@ -10959,7 +11072,7 @@ func (c *FilesUpdateCall) Header() http.Header {
 
 func (c *FilesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11082,6 +11195,12 @@ func (c *FilesUpdateCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     "convert": {
 	//       "default": "false",
 	//       "description": "This parameter is deprecated and has no function.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "enforceSingleParent": {
+	//       "default": "false",
+	//       "description": "Set to true to opt in to API behavior that aims for all items to have exactly one parent. This parameter will only take effect if the item is not in a shared drive. If the item's owner makes a request to add a single parent, the item will be removed from all current folders and placed in the requested folder. Other requests that increase the number of parents will fail, except when the canAddMyDriveParent file capability is true and a single parent is being added.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -11299,7 +11418,7 @@ func (c *FilesWatchCall) Header() http.Header {
 
 func (c *FilesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11478,6 +11597,17 @@ func (r *ParentsService) Delete(fileId string, parentId string) *ParentsDeleteCa
 	return c
 }
 
+// EnforceSingleParent sets the optional parameter
+// "enforceSingleParent": Set to true to opt in to API behavior that
+// aims for all items to have exactly one parent. This parameter will
+// only take effect if the item is not in a shared drive. If the item's
+// last parent is removed, the item will be placed under its owner's
+// root.
+func (c *ParentsDeleteCall) EnforceSingleParent(enforceSingleParent bool) *ParentsDeleteCall {
+	c.urlParams_.Set("enforceSingleParent", fmt.Sprint(enforceSingleParent))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -11505,7 +11635,7 @@ func (c *ParentsDeleteCall) Header() http.Header {
 
 func (c *ParentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11548,6 +11678,12 @@ func (c *ParentsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//     "parentId"
 	//   ],
 	//   "parameters": {
+	//     "enforceSingleParent": {
+	//       "default": "false",
+	//       "description": "Set to true to opt in to API behavior that aims for all items to have exactly one parent. This parameter will only take effect if the item is not in a shared drive. If the item's last parent is removed, the item will be placed under its owner's root.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "fileId": {
 	//       "description": "The ID of the file.",
 	//       "location": "path",
@@ -11627,7 +11763,7 @@ func (c *ParentsGetCall) Header() http.Header {
 
 func (c *ParentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11747,6 +11883,20 @@ func (r *ParentsService) Insert(fileId string, parentreference *ParentReference)
 	return c
 }
 
+// EnforceSingleParent sets the optional parameter
+// "enforceSingleParent": Set to true to opt in to API behavior that
+// aims for all items to have exactly one parent. This parameter will
+// only take effect if the item is not in a shared drive. If the child's
+// owner makes the request, the child will be removed from all current
+// folders and placed in the requested folder. Any other requests that
+// increase the number of the child's parents will fail, except when the
+// canAddMyDriveParent file capability is true and a single parent is
+// being added.
+func (c *ParentsInsertCall) EnforceSingleParent(enforceSingleParent bool) *ParentsInsertCall {
+	c.urlParams_.Set("enforceSingleParent", fmt.Sprint(enforceSingleParent))
+	return c
+}
+
 // SupportsAllDrives sets the optional parameter "supportsAllDrives":
 // Deprecated - Whether the requesting application supports both My
 // Drives and shared drives. This parameter will only be effective until
@@ -11791,7 +11941,7 @@ func (c *ParentsInsertCall) Header() http.Header {
 
 func (c *ParentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11862,6 +12012,12 @@ func (c *ParentsInsertCall) Do(opts ...googleapi.CallOption) (*ParentReference, 
 	//     "fileId"
 	//   ],
 	//   "parameters": {
+	//     "enforceSingleParent": {
+	//       "default": "false",
+	//       "description": "Set to true to opt in to API behavior that aims for all items to have exactly one parent. This parameter will only take effect if the item is not in a shared drive. If the child's owner makes the request, the child will be removed from all current folders and placed in the requested folder. Any other requests that increase the number of the child's parents will fail, except when the canAddMyDriveParent file capability is true and a single parent is being added.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "fileId": {
 	//       "description": "The ID of the file.",
 	//       "location": "path",
@@ -11952,7 +12108,7 @@ func (c *ParentsListCall) Header() http.Header {
 
 func (c *ParentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12118,7 +12274,7 @@ func (c *PermissionsDeleteCall) Header() http.Header {
 
 func (c *PermissionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12285,7 +12441,7 @@ func (c *PermissionsGetCall) Header() http.Header {
 
 func (c *PermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12458,7 +12614,7 @@ func (c *PermissionsGetIdForEmailCall) Header() http.Header {
 
 func (c *PermissionsGetIdForEmailCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12578,6 +12734,31 @@ func (c *PermissionsInsertCall) EmailMessage(emailMessage string) *PermissionsIn
 	return c
 }
 
+// EnforceSingleParent sets the optional parameter
+// "enforceSingleParent": Set to true to opt in to API behavior that
+// aims for all items to have exactly one parent. This parameter will
+// only take effect if the item is not in a shared drive. See
+// moveToNewOwnersRoot for details.
+func (c *PermissionsInsertCall) EnforceSingleParent(enforceSingleParent bool) *PermissionsInsertCall {
+	c.urlParams_.Set("enforceSingleParent", fmt.Sprint(enforceSingleParent))
+	return c
+}
+
+// MoveToNewOwnersRoot sets the optional parameter
+// "moveToNewOwnersRoot": This parameter will only take effect if the
+// item is not in a shared drive and the request is attempting to
+// transfer the ownership of the item. When set to true, the item will
+// be moved to the new owner's My Drive root folder and all prior
+// parents removed. If set to false, when enforceSingleParent=true,
+// parents are not changed. If set to false, when
+// enforceSingleParent=false, existing parents are not changed; however,
+// the file will be added to the new owner's My Drive root folder,
+// unless it is already in the new owner's My Drive.
+func (c *PermissionsInsertCall) MoveToNewOwnersRoot(moveToNewOwnersRoot bool) *PermissionsInsertCall {
+	c.urlParams_.Set("moveToNewOwnersRoot", fmt.Sprint(moveToNewOwnersRoot))
+	return c
+}
+
 // SendNotificationEmails sets the optional parameter
 // "sendNotificationEmails": Whether to send notification emails when
 // sharing to users or groups. This parameter is ignored and an email is
@@ -12641,7 +12822,7 @@ func (c *PermissionsInsertCall) Header() http.Header {
 
 func (c *PermissionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12717,11 +12898,23 @@ func (c *PermissionsInsertCall) Do(opts ...googleapi.CallOption) (*Permission, e
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "enforceSingleParent": {
+	//       "default": "false",
+	//       "description": "Set to true to opt in to API behavior that aims for all items to have exactly one parent. This parameter will only take effect if the item is not in a shared drive. See moveToNewOwnersRoot for details.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "fileId": {
 	//       "description": "The ID for the file or shared drive.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "moveToNewOwnersRoot": {
+	//       "default": "false",
+	//       "description": "This parameter will only take effect if the item is not in a shared drive and the request is attempting to transfer the ownership of the item. When set to true, the item will be moved to the new owner's My Drive root folder and all prior parents removed. If set to false, when enforceSingleParent=true, parents are not changed. If set to false, when enforceSingleParent=false, existing parents are not changed; however, the file will be added to the new owner's My Drive root folder, unless it is already in the new owner's My Drive.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "sendNotificationEmails": {
 	//       "default": "true",
@@ -12863,7 +13056,7 @@ func (c *PermissionsListCall) Header() http.Header {
 
 func (c *PermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13097,7 +13290,7 @@ func (c *PermissionsPatchCall) Header() http.Header {
 
 func (c *PermissionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13318,7 +13511,7 @@ func (c *PermissionsUpdateCall) Header() http.Header {
 
 func (c *PermissionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13502,7 +13695,7 @@ func (c *PropertiesDeleteCall) Header() http.Header {
 
 func (c *PropertiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13639,7 +13832,7 @@ func (c *PropertiesGetCall) Header() http.Header {
 
 func (c *PropertiesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13793,7 +13986,7 @@ func (c *PropertiesInsertCall) Header() http.Header {
 
 func (c *PropertiesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13943,7 +14136,7 @@ func (c *PropertiesListCall) Header() http.Header {
 
 func (c *PropertiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14092,7 +14285,7 @@ func (c *PropertiesPatchCall) Header() http.Header {
 
 func (c *PropertiesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14257,7 +14450,7 @@ func (c *PropertiesUpdateCall) Header() http.Header {
 
 func (c *PropertiesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14414,7 +14607,7 @@ func (c *RepliesDeleteCall) Header() http.Header {
 
 func (c *RepliesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14553,7 +14746,7 @@ func (c *RepliesGetCall) Header() http.Header {
 
 func (c *RepliesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14712,7 +14905,7 @@ func (c *RepliesInsertCall) Header() http.Header {
 
 func (c *RepliesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14894,7 +15087,7 @@ func (c *RepliesListCall) Header() http.Header {
 
 func (c *RepliesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15082,7 +15275,7 @@ func (c *RepliesPatchCall) Header() http.Header {
 
 func (c *RepliesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15241,7 +15434,7 @@ func (c *RepliesUpdateCall) Header() http.Header {
 
 func (c *RepliesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15399,7 +15592,7 @@ func (c *RevisionsDeleteCall) Header() http.Header {
 
 func (c *RevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15522,7 +15715,7 @@ func (c *RevisionsGetCall) Header() http.Header {
 
 func (c *RevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15693,7 +15886,7 @@ func (c *RevisionsListCall) Header() http.Header {
 
 func (c *RevisionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15869,7 +16062,7 @@ func (c *RevisionsPatchCall) Header() http.Header {
 
 func (c *RevisionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16019,7 +16212,7 @@ func (c *RevisionsUpdateCall) Header() http.Header {
 
 func (c *RevisionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16165,7 +16358,7 @@ func (c *TeamdrivesDeleteCall) Header() http.Header {
 
 func (c *TeamdrivesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16285,7 +16478,7 @@ func (c *TeamdrivesGetCall) Header() http.Header {
 
 func (c *TeamdrivesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16424,7 +16617,7 @@ func (c *TeamdrivesInsertCall) Header() http.Header {
 
 func (c *TeamdrivesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16596,7 +16789,7 @@ func (c *TeamdrivesListCall) Header() http.Header {
 
 func (c *TeamdrivesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16773,7 +16966,7 @@ func (c *TeamdrivesUpdateCall) Header() http.Header {
 
 func (c *TeamdrivesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

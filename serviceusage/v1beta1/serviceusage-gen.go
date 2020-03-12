@@ -159,10 +159,70 @@ type OperationsService struct {
 
 func NewServicesService(s *APIService) *ServicesService {
 	rs := &ServicesService{s: s}
+	rs.ConsumerQuotaMetrics = NewServicesConsumerQuotaMetricsService(s)
 	return rs
 }
 
 type ServicesService struct {
+	s *APIService
+
+	ConsumerQuotaMetrics *ServicesConsumerQuotaMetricsService
+}
+
+func NewServicesConsumerQuotaMetricsService(s *APIService) *ServicesConsumerQuotaMetricsService {
+	rs := &ServicesConsumerQuotaMetricsService{s: s}
+	rs.Limits = NewServicesConsumerQuotaMetricsLimitsService(s)
+	return rs
+}
+
+type ServicesConsumerQuotaMetricsService struct {
+	s *APIService
+
+	Limits *ServicesConsumerQuotaMetricsLimitsService
+}
+
+func NewServicesConsumerQuotaMetricsLimitsService(s *APIService) *ServicesConsumerQuotaMetricsLimitsService {
+	rs := &ServicesConsumerQuotaMetricsLimitsService{s: s}
+	rs.AdminOverrides = NewServicesConsumerQuotaMetricsLimitsAdminOverridesService(s)
+	rs.ConsumerOverrides = NewServicesConsumerQuotaMetricsLimitsConsumerOverridesService(s)
+	rs.ProducerOverrides = NewServicesConsumerQuotaMetricsLimitsProducerOverridesService(s)
+	return rs
+}
+
+type ServicesConsumerQuotaMetricsLimitsService struct {
+	s *APIService
+
+	AdminOverrides *ServicesConsumerQuotaMetricsLimitsAdminOverridesService
+
+	ConsumerOverrides *ServicesConsumerQuotaMetricsLimitsConsumerOverridesService
+
+	ProducerOverrides *ServicesConsumerQuotaMetricsLimitsProducerOverridesService
+}
+
+func NewServicesConsumerQuotaMetricsLimitsAdminOverridesService(s *APIService) *ServicesConsumerQuotaMetricsLimitsAdminOverridesService {
+	rs := &ServicesConsumerQuotaMetricsLimitsAdminOverridesService{s: s}
+	return rs
+}
+
+type ServicesConsumerQuotaMetricsLimitsAdminOverridesService struct {
+	s *APIService
+}
+
+func NewServicesConsumerQuotaMetricsLimitsConsumerOverridesService(s *APIService) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesService {
+	rs := &ServicesConsumerQuotaMetricsLimitsConsumerOverridesService{s: s}
+	return rs
+}
+
+type ServicesConsumerQuotaMetricsLimitsConsumerOverridesService struct {
+	s *APIService
+}
+
+func NewServicesConsumerQuotaMetricsLimitsProducerOverridesService(s *APIService) *ServicesConsumerQuotaMetricsLimitsProducerOverridesService {
+	rs := &ServicesConsumerQuotaMetricsLimitsProducerOverridesService{s: s}
+	return rs
+}
+
+type ServicesConsumerQuotaMetricsLimitsProducerOverridesService struct {
 	s *APIService
 }
 
@@ -1000,6 +1060,139 @@ type BillingDestination struct {
 
 func (s *BillingDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod BillingDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConsumerQuotaLimit: Consumer quota settings for a quota limit.
+type ConsumerQuotaLimit struct {
+	// AllowsAdminOverrides: Whether admin overrides are allowed on this
+	// limit
+	AllowsAdminOverrides bool `json:"allowsAdminOverrides,omitempty"`
+
+	// IsPrecise: Whether this limit is precise or imprecise.
+	IsPrecise bool `json:"isPrecise,omitempty"`
+
+	// Metric: The name of the parent metric of this limit.
+	//
+	// An example name would be:
+	// `compute.googleapis.com/cpus`
+	Metric string `json:"metric,omitempty"`
+
+	// Name: The resource name of the quota limit.
+	//
+	// An example name would
+	// be:
+	// `projects/123/services/compute.googleapis.com/consumerQuotaMetrics
+	// /compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`
+	//
+	// The resource name is intended to be opaque and should not be parsed
+	// for
+	// its component strings, since its representation could change in the
+	// future.
+	Name string `json:"name,omitempty"`
+
+	// QuotaBuckets: Summary of the enforced quota buckets, organized by
+	// quota dimension,
+	// ordered from least specific to most specific (for example, the
+	// global
+	// default bucket, with no quota dimensions, will always appear first).
+	QuotaBuckets []*QuotaBucket `json:"quotaBuckets,omitempty"`
+
+	// Unit: The limit unit.
+	//
+	// An example unit would be
+	// `1/{project}/{region}`
+	// Note that `{project}` and `{region}` are not placeholders in this
+	// example;
+	// the literal characters `{` and `}` occur in the string.
+	Unit string `json:"unit,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowsAdminOverrides") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowsAdminOverrides") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConsumerQuotaLimit) MarshalJSON() ([]byte, error) {
+	type NoMethod ConsumerQuotaLimit
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConsumerQuotaMetric: Consumer quota settings for a quota metric.
+type ConsumerQuotaMetric struct {
+	// ConsumerQuotaLimits: The consumer quota for each quota limit defined
+	// on the metric.
+	ConsumerQuotaLimits []*ConsumerQuotaLimit `json:"consumerQuotaLimits,omitempty"`
+
+	// DisplayName: The display name of the metric.
+	//
+	// An example name would be:
+	// "CPUs"
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Metric: The name of the metric.
+	//
+	// An example name would be:
+	// `compute.googleapis.com/cpus`
+	Metric string `json:"metric,omitempty"`
+
+	// Name: The resource name of the quota settings on this metric for this
+	// consumer.
+	//
+	// An example name would
+	// be:
+	// `projects/123/services/compute.googleapis.com/consumerQuotaMetrics
+	// /compute.googleapis.com%2Fcpus
+	//
+	// The resource name is intended to be opaque and should not be parsed
+	// for
+	// its component strings, since its representation could change in the
+	// future.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsumerQuotaLimits")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsumerQuotaLimits") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConsumerQuotaMetric) MarshalJSON() ([]byte, error) {
+	type NoMethod ConsumerQuotaMetric
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2941,6 +3134,119 @@ func (s *LabelDescriptor) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListAdminOverridesResponse: Response message for ListAdminOverrides.
+type ListAdminOverridesResponse struct {
+	// NextPageToken: Token identifying which result to start with; returned
+	// by a previous list
+	// call.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Overrides: Admin overrides on this limit.
+	Overrides []*QuotaOverride `json:"overrides,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAdminOverridesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAdminOverridesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListConsumerOverridesResponse: Response message for
+// ListConsumerOverrides.
+type ListConsumerOverridesResponse struct {
+	// NextPageToken: Token identifying which result to start with; returned
+	// by a previous list
+	// call.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Overrides: Consumer overrides on this limit.
+	Overrides []*QuotaOverride `json:"overrides,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListConsumerOverridesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListConsumerOverridesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListConsumerQuotaMetricsResponse: Response message for
+// ListConsumerQuotaMetrics
+type ListConsumerQuotaMetricsResponse struct {
+	// Metrics: Quota settings for the consumer, organized by quota metric.
+	Metrics []*ConsumerQuotaMetric `json:"metrics,omitempty"`
+
+	// NextPageToken: Token identifying which result to start with; returned
+	// by a previous list
+	// call.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Metrics") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metrics") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListConsumerQuotaMetricsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListConsumerQuotaMetricsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListOperationsResponse: The response message for
 // Operations.ListOperations.
 type ListOperationsResponse struct {
@@ -2974,6 +3280,44 @@ type ListOperationsResponse struct {
 
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListProducerOverridesResponse: Response message for
+// ListProducerOverrides.
+type ListProducerOverridesResponse struct {
+	// NextPageToken: Token identifying which result to start with; returned
+	// by a previous list
+	// call.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Overrides: Producer overrides on this limit.
+	Overrides []*QuotaOverride `json:"overrides,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListProducerOverridesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListProducerOverridesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4412,6 +4756,70 @@ func (s *Quota) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QuotaBucket: A quota bucket is a quota provisioning unit for a
+// specific set of dimensions.
+type QuotaBucket struct {
+	// AdminOverride: Admin override on this quota bucket.
+	AdminOverride *QuotaOverride `json:"adminOverride,omitempty"`
+
+	// ConsumerOverride: Consumer override on this quota bucket.
+	ConsumerOverride *QuotaOverride `json:"consumerOverride,omitempty"`
+
+	// DefaultLimit: The default limit of this quota bucket, as specified by
+	// the service
+	// configuration.
+	DefaultLimit int64 `json:"defaultLimit,omitempty,string"`
+
+	// Dimensions: The dimensions of this quota bucket.
+	//
+	// If this map is empty, this is the global bucket, which is the default
+	// quota
+	// value applied to all requests that do not have a more specific
+	// override.
+	//
+	// If this map is nonempty, the default limit, effective limit, and
+	// quota
+	// overrides apply only to requests that have the dimensions given in
+	// the map.
+	//
+	// For example, if the map has key "region" and value "us-east-1", then
+	// the
+	// specified effective limit is only effective in that region, and
+	// the
+	// specified overrides apply only in that region.
+	Dimensions map[string]string `json:"dimensions,omitempty"`
+
+	// EffectiveLimit: The effective limit of this quota bucket. Equal to
+	// default_limit if there
+	// are no overrides.
+	EffectiveLimit int64 `json:"effectiveLimit,omitempty,string"`
+
+	// ProducerOverride: Producer override on this quota bucket.
+	ProducerOverride *QuotaOverride `json:"producerOverride,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdminOverride") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdminOverride") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QuotaBucket) MarshalJSON() ([]byte, error) {
+	type NoMethod QuotaBucket
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // QuotaLimit: `QuotaLimit` defines a specific limit that applies over a
 // specified duration
 // for a limit type. There can be at most one limit for a duration and
@@ -5304,7 +5712,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5491,7 +5899,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5662,7 +6070,7 @@ func (c *ServicesBatchEnableCall) Header() http.Header {
 
 func (c *ServicesBatchEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5815,7 +6223,7 @@ func (c *ServicesDisableCall) Header() http.Header {
 
 func (c *ServicesDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5959,7 +6367,7 @@ func (c *ServicesEnableCall) Header() http.Header {
 
 func (c *ServicesEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6110,7 +6518,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6291,7 +6699,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6401,6 +6809,2127 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ServicesListCall) Pages(ctx context.Context, f func(*ListServicesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "serviceusage.services.consumerQuotaMetrics.get":
+
+type ServicesConsumerQuotaMetricsGetCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a summary of quota information for a specific quota
+// metric
+func (r *ServicesConsumerQuotaMetricsService) Get(name string) *ServicesConsumerQuotaMetricsGetCall {
+	c := &ServicesConsumerQuotaMetricsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// View sets the optional parameter "view": Specifies the level of
+// detail for quota information in the response.
+//
+// Possible values:
+//   "QUOTA_VIEW_UNSPECIFIED"
+//   "BASIC"
+//   "FULL"
+func (c *ServicesConsumerQuotaMetricsGetCall) View(view string) *ServicesConsumerQuotaMetricsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesConsumerQuotaMetricsGetCall) Fields(s ...googleapi.Field) *ServicesConsumerQuotaMetricsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ServicesConsumerQuotaMetricsGetCall) IfNoneMatch(entityTag string) *ServicesConsumerQuotaMetricsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesConsumerQuotaMetricsGetCall) Context(ctx context.Context) *ServicesConsumerQuotaMetricsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesConsumerQuotaMetricsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesConsumerQuotaMetricsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceusage.services.consumerQuotaMetrics.get" call.
+// Exactly one of *ConsumerQuotaMetric or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ConsumerQuotaMetric.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ServicesConsumerQuotaMetricsGetCall) Do(opts ...googleapi.CallOption) (*ConsumerQuotaMetric, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ConsumerQuotaMetric{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a summary of quota information for a specific quota metric",
+	//   "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}",
+	//   "httpMethod": "GET",
+	//   "id": "serviceusage.services.consumerQuotaMetrics.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the quota limit.\n\nAn example name would be:\nprojects/123/services/serviceusage.googleapis.com/quotas/metrics/serviceusage.googleapis.com%2Fmutate_requests",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies the level of detail for quota information in the response.",
+	//       "enum": [
+	//         "QUOTA_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "ConsumerQuotaMetric"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "serviceusage.services.consumerQuotaMetrics.list":
+
+type ServicesConsumerQuotaMetricsListCall struct {
+	s            *APIService
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves a summary of all quota information visible to the
+// service
+// consumer, organized by service metric. Each metric includes
+// information
+// about all of its defined limits. Each limit includes the
+// limit
+// configuration (quota unit, preciseness, default value), the
+// current
+// effective limit value, and all of the overrides applied to the limit.
+func (r *ServicesConsumerQuotaMetricsService) List(parent string) *ServicesConsumerQuotaMetricsListCall {
+	c := &ServicesConsumerQuotaMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested size of
+// the next page of data.
+func (c *ServicesConsumerQuotaMetricsListCall) PageSize(pageSize int64) *ServicesConsumerQuotaMetricsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token identifying
+// which result to start with; returned by a previous list
+// call.
+func (c *ServicesConsumerQuotaMetricsListCall) PageToken(pageToken string) *ServicesConsumerQuotaMetricsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Specifies the level of
+// detail for quota information in the response.
+//
+// Possible values:
+//   "QUOTA_VIEW_UNSPECIFIED"
+//   "BASIC"
+//   "FULL"
+func (c *ServicesConsumerQuotaMetricsListCall) View(view string) *ServicesConsumerQuotaMetricsListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesConsumerQuotaMetricsListCall) Fields(s ...googleapi.Field) *ServicesConsumerQuotaMetricsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ServicesConsumerQuotaMetricsListCall) IfNoneMatch(entityTag string) *ServicesConsumerQuotaMetricsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesConsumerQuotaMetricsListCall) Context(ctx context.Context) *ServicesConsumerQuotaMetricsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesConsumerQuotaMetricsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesConsumerQuotaMetricsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/consumerQuotaMetrics")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceusage.services.consumerQuotaMetrics.list" call.
+// Exactly one of *ListConsumerQuotaMetricsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListConsumerQuotaMetricsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ServicesConsumerQuotaMetricsListCall) Do(opts ...googleapi.CallOption) (*ListConsumerQuotaMetricsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListConsumerQuotaMetricsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a summary of all quota information visible to the service\nconsumer, organized by service metric. Each metric includes information\nabout all of its defined limits. Each limit includes the limit\nconfiguration (quota unit, preciseness, default value), the current\neffective limit value, and all of the overrides applied to the limit.",
+	//   "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics",
+	//   "httpMethod": "GET",
+	//   "id": "serviceusage.services.consumerQuotaMetrics.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Requested size of the next page of data.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token identifying which result to start with; returned by a previous list\ncall.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Parent of the quotas resource.\n\nSome example names would be:\nprojects/123/services/serviceconsumermanagement.googleapis.com\nfolders/345/services/serviceconsumermanagement.googleapis.com\norganizations/456/services/serviceconsumermanagement.googleapis.com",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies the level of detail for quota information in the response.",
+	//       "enum": [
+	//         "QUOTA_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/consumerQuotaMetrics",
+	//   "response": {
+	//     "$ref": "ListConsumerQuotaMetricsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ServicesConsumerQuotaMetricsListCall) Pages(ctx context.Context, f func(*ListConsumerQuotaMetricsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "serviceusage.services.consumerQuotaMetrics.limits.get":
+
+type ServicesConsumerQuotaMetricsLimitsGetCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a summary of quota information for a specific quota
+// limit.
+func (r *ServicesConsumerQuotaMetricsLimitsService) Get(name string) *ServicesConsumerQuotaMetricsLimitsGetCall {
+	c := &ServicesConsumerQuotaMetricsLimitsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// View sets the optional parameter "view": Specifies the level of
+// detail for quota information in the response.
+//
+// Possible values:
+//   "QUOTA_VIEW_UNSPECIFIED"
+//   "BASIC"
+//   "FULL"
+func (c *ServicesConsumerQuotaMetricsLimitsGetCall) View(view string) *ServicesConsumerQuotaMetricsLimitsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesConsumerQuotaMetricsLimitsGetCall) Fields(s ...googleapi.Field) *ServicesConsumerQuotaMetricsLimitsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ServicesConsumerQuotaMetricsLimitsGetCall) IfNoneMatch(entityTag string) *ServicesConsumerQuotaMetricsLimitsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesConsumerQuotaMetricsLimitsGetCall) Context(ctx context.Context) *ServicesConsumerQuotaMetricsLimitsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesConsumerQuotaMetricsLimitsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesConsumerQuotaMetricsLimitsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceusage.services.consumerQuotaMetrics.limits.get" call.
+// Exactly one of *ConsumerQuotaLimit or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ConsumerQuotaLimit.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ServicesConsumerQuotaMetricsLimitsGetCall) Do(opts ...googleapi.CallOption) (*ConsumerQuotaLimit, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ConsumerQuotaLimit{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a summary of quota information for a specific quota limit.",
+	//   "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}",
+	//   "httpMethod": "GET",
+	//   "id": "serviceusage.services.consumerQuotaMetrics.limits.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the quota limit.\n\nUse the quota limit resource name returned by previous\nListConsumerQuotaMetrics and GetConsumerQuotaMetric API calls.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies the level of detail for quota information in the response.",
+	//       "enum": [
+	//         "QUOTA_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "ConsumerQuotaLimit"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.create":
+
+type ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall struct {
+	s             *APIService
+	parent        string
+	quotaoverride *QuotaOverride
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Create: Creates an admin override.
+// An admin override is applied by an administrator of a parent folder
+// or
+// parent organization of the consumer receiving the override. An
+// admin
+// override is intended to limit the amount of quota the consumer can
+// use out
+// of the total quota pool allocated to all children of the folder
+// or
+// organization.
+func (r *ServicesConsumerQuotaMetricsLimitsAdminOverridesService) Create(parent string, quotaoverride *QuotaOverride) *ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall {
+	c := &ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.quotaoverride = quotaoverride
+	return c
+}
+
+// Force sets the optional parameter "force": Whether to force the
+// creation of the quota override.
+// If creating an override would cause the effective quota for the
+// consumer to
+// decrease by more than 10 percent, the call is rejected, as a safety
+// measure
+// to avoid accidentally decreasing quota too quickly. Setting the
+// force
+// parameter to true ignores this restriction.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall) Force(force bool) *ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall) Fields(s ...googleapi.Field) *ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall) Context(ctx context.Context) *ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.quotaoverride)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/adminOverrides")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an admin override.\nAn admin override is applied by an administrator of a parent folder or\nparent organization of the consumer receiving the override. An admin\noverride is intended to limit the amount of quota the consumer can use out\nof the total quota pool allocated to all children of the folder or\norganization.",
+	//   "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/adminOverrides",
+	//   "httpMethod": "POST",
+	//   "id": "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "force": {
+	//       "description": "Whether to force the creation of the quota override.\nIf creating an override would cause the effective quota for the consumer to\ndecrease by more than 10 percent, the call is rejected, as a safety measure\nto avoid accidentally decreasing quota too quickly. Setting the force\nparameter to true ignores this restriction.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "parent": {
+	//       "description": "The resource name of the parent quota limit, returned by a\nListConsumerQuotaMetrics or GetConsumerQuotaMetric call.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/adminOverrides",
+	//   "request": {
+	//     "$ref": "QuotaOverride"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/service.management"
+	//   ]
+	// }
+
+}
+
+// method id "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.delete":
+
+type ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall struct {
+	s          *APIService
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an admin override.
+func (r *ServicesConsumerQuotaMetricsLimitsAdminOverridesService) Delete(name string) *ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall {
+	c := &ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Force sets the optional parameter "force": Whether to force the
+// deletion of the quota override.
+// If deleting an override would cause the effective quota for the
+// consumer to
+// decrease by more than 10 percent, the call is rejected, as a safety
+// measure
+// to avoid accidentally decreasing quota too quickly. Setting the
+// force
+// parameter to true ignores this restriction.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall) Force(force bool) *ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall) Fields(s ...googleapi.Field) *ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall) Context(ctx context.Context) *ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an admin override.",
+	//   "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/adminOverrides/{adminOverridesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "force": {
+	//       "description": "Whether to force the deletion of the quota override.\nIf deleting an override would cause the effective quota for the consumer to\ndecrease by more than 10 percent, the call is rejected, as a safety measure\nto avoid accidentally decreasing quota too quickly. Setting the force\nparameter to true ignores this restriction.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "The resource name of the override to delete.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/adminOverrides/4a3f2c1d`",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+/adminOverrides/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/service.management"
+	//   ]
+	// }
+
+}
+
+// method id "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.list":
+
+type ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall struct {
+	s            *APIService
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all admin overrides on this limit.
+func (r *ServicesConsumerQuotaMetricsLimitsAdminOverridesService) List(parent string) *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall {
+	c := &ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested size of
+// the next page of data.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall) PageSize(pageSize int64) *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token identifying
+// which result to start with; returned by a previous list
+// call.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall) PageToken(pageToken string) *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall) Fields(s ...googleapi.Field) *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall) IfNoneMatch(entityTag string) *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall) Context(ctx context.Context) *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/adminOverrides")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.list" call.
+// Exactly one of *ListAdminOverridesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAdminOverridesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall) Do(opts ...googleapi.CallOption) (*ListAdminOverridesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListAdminOverridesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all admin overrides on this limit.",
+	//   "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/adminOverrides",
+	//   "httpMethod": "GET",
+	//   "id": "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Requested size of the next page of data.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token identifying which result to start with; returned by a previous list\ncall.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "The resource name of the parent quota limit, returned by a\nListConsumerQuotaMetrics or GetConsumerQuotaMetric call.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/adminOverrides",
+	//   "response": {
+	//     "$ref": "ListAdminOverridesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall) Pages(ctx context.Context, f func(*ListAdminOverridesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.patch":
+
+type ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall struct {
+	s             *APIService
+	name          string
+	quotaoverride *QuotaOverride
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Patch: Updates an admin override.
+func (r *ServicesConsumerQuotaMetricsLimitsAdminOverridesService) Patch(name string, quotaoverride *QuotaOverride) *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall {
+	c := &ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.quotaoverride = quotaoverride
+	return c
+}
+
+// Force sets the optional parameter "force": Whether to force the
+// update of the quota override.
+// If updating an override would cause the effective quota for the
+// consumer to
+// decrease by more than 10 percent, the call is rejected, as a safety
+// measure
+// to avoid accidentally decreasing quota too quickly. Setting the
+// force
+// parameter to true ignores this restriction.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall) Force(force bool) *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Update only the
+// specified fields of the override.
+// If unset, all fields will be updated.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall) UpdateMask(updateMask string) *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall) Fields(s ...googleapi.Field) *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall) Context(ctx context.Context) *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.quotaoverride)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an admin override.",
+	//   "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/adminOverrides/{adminOverridesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "serviceusage.services.consumerQuotaMetrics.limits.adminOverrides.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "force": {
+	//       "description": "Whether to force the update of the quota override.\nIf updating an override would cause the effective quota for the consumer to\ndecrease by more than 10 percent, the call is rejected, as a safety measure\nto avoid accidentally decreasing quota too quickly. Setting the force\nparameter to true ignores this restriction.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "The resource name of the override to update.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/adminOverrides/4a3f2c1d`",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+/adminOverrides/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Update only the specified fields of the override.\nIf unset, all fields will be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "request": {
+	//     "$ref": "QuotaOverride"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/service.management"
+	//   ]
+	// }
+
+}
+
+// method id "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.create":
+
+type ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall struct {
+	s             *APIService
+	parent        string
+	quotaoverride *QuotaOverride
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Create: Creates a consumer override.
+// A consumer override is applied to the consumer on its own authority
+// to
+// limit its own quota usage. Consumer overrides cannot be used to grant
+// more
+// quota than would be allowed by admin overrides, producer overrides,
+// or the
+// default limit of the service.
+func (r *ServicesConsumerQuotaMetricsLimitsConsumerOverridesService) Create(parent string, quotaoverride *QuotaOverride) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall {
+	c := &ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.quotaoverride = quotaoverride
+	return c
+}
+
+// Force sets the optional parameter "force": Whether to force the
+// creation of the quota override.
+// If creating an override would cause the effective quota for the
+// consumer to
+// decrease by more than 10 percent, the call is rejected, as a safety
+// measure
+// to avoid accidentally decreasing quota too quickly. Setting the
+// force
+// parameter to true ignores this restriction.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall) Force(force bool) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall) Fields(s ...googleapi.Field) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall) Context(ctx context.Context) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.quotaoverride)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/consumerOverrides")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a consumer override.\nA consumer override is applied to the consumer on its own authority to\nlimit its own quota usage. Consumer overrides cannot be used to grant more\nquota than would be allowed by admin overrides, producer overrides, or the\ndefault limit of the service.",
+	//   "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/consumerOverrides",
+	//   "httpMethod": "POST",
+	//   "id": "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "force": {
+	//       "description": "Whether to force the creation of the quota override.\nIf creating an override would cause the effective quota for the consumer to\ndecrease by more than 10 percent, the call is rejected, as a safety measure\nto avoid accidentally decreasing quota too quickly. Setting the force\nparameter to true ignores this restriction.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "parent": {
+	//       "description": "The resource name of the parent quota limit, returned by a\nListConsumerQuotaMetrics or GetConsumerQuotaMetric call.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/consumerOverrides",
+	//   "request": {
+	//     "$ref": "QuotaOverride"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/service.management"
+	//   ]
+	// }
+
+}
+
+// method id "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.delete":
+
+type ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall struct {
+	s          *APIService
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a consumer override.
+func (r *ServicesConsumerQuotaMetricsLimitsConsumerOverridesService) Delete(name string) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall {
+	c := &ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Force sets the optional parameter "force": Whether to force the
+// deletion of the quota override.
+// If deleting an override would cause the effective quota for the
+// consumer to
+// decrease by more than 10 percent, the call is rejected, as a safety
+// measure
+// to avoid accidentally decreasing quota too quickly. Setting the
+// force
+// parameter to true ignores this restriction.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall) Force(force bool) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall) Fields(s ...googleapi.Field) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall) Context(ctx context.Context) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a consumer override.",
+	//   "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/consumerOverrides/{consumerOverridesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "force": {
+	//       "description": "Whether to force the deletion of the quota override.\nIf deleting an override would cause the effective quota for the consumer to\ndecrease by more than 10 percent, the call is rejected, as a safety measure\nto avoid accidentally decreasing quota too quickly. Setting the force\nparameter to true ignores this restriction.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "The resource name of the override to delete.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/consumerOverrides/4a3f2c1d`",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+/consumerOverrides/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/service.management"
+	//   ]
+	// }
+
+}
+
+// method id "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.list":
+
+type ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall struct {
+	s            *APIService
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all consumer overrides on this limit.
+func (r *ServicesConsumerQuotaMetricsLimitsConsumerOverridesService) List(parent string) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall {
+	c := &ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested size of
+// the next page of data.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall) PageSize(pageSize int64) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token identifying
+// which result to start with; returned by a previous list
+// call.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall) PageToken(pageToken string) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall) Fields(s ...googleapi.Field) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall) IfNoneMatch(entityTag string) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall) Context(ctx context.Context) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/consumerOverrides")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.list" call.
+// Exactly one of *ListConsumerOverridesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListConsumerOverridesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall) Do(opts ...googleapi.CallOption) (*ListConsumerOverridesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListConsumerOverridesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all consumer overrides on this limit.",
+	//   "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/consumerOverrides",
+	//   "httpMethod": "GET",
+	//   "id": "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Requested size of the next page of data.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token identifying which result to start with; returned by a previous list\ncall.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "The resource name of the parent quota limit, returned by a\nListConsumerQuotaMetrics or GetConsumerQuotaMetric call.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/consumerOverrides",
+	//   "response": {
+	//     "$ref": "ListConsumerOverridesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall) Pages(ctx context.Context, f func(*ListConsumerOverridesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.patch":
+
+type ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall struct {
+	s             *APIService
+	name          string
+	quotaoverride *QuotaOverride
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Patch: Updates a consumer override.
+func (r *ServicesConsumerQuotaMetricsLimitsConsumerOverridesService) Patch(name string, quotaoverride *QuotaOverride) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall {
+	c := &ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.quotaoverride = quotaoverride
+	return c
+}
+
+// Force sets the optional parameter "force": Whether to force the
+// update of the quota override.
+// If updating an override would cause the effective quota for the
+// consumer to
+// decrease by more than 10 percent, the call is rejected, as a safety
+// measure
+// to avoid accidentally decreasing quota too quickly. Setting the
+// force
+// parameter to true ignores this restriction.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall) Force(force bool) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Update only the
+// specified fields of the override.
+// If unset, all fields will be updated.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall) UpdateMask(updateMask string) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall) Fields(s ...googleapi.Field) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall) Context(ctx context.Context) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.quotaoverride)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a consumer override.",
+	//   "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/consumerOverrides/{consumerOverridesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "serviceusage.services.consumerQuotaMetrics.limits.consumerOverrides.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "force": {
+	//       "description": "Whether to force the update of the quota override.\nIf updating an override would cause the effective quota for the consumer to\ndecrease by more than 10 percent, the call is rejected, as a safety measure\nto avoid accidentally decreasing quota too quickly. Setting the force\nparameter to true ignores this restriction.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "The resource name of the override to update.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/consumerOverrides/4a3f2c1d`",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+/consumerOverrides/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Update only the specified fields of the override.\nIf unset, all fields will be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "request": {
+	//     "$ref": "QuotaOverride"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/service.management"
+	//   ]
+	// }
+
+}
+
+// method id "serviceusage.services.consumerQuotaMetrics.limits.producerOverrides.list":
+
+type ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall struct {
+	s            *APIService
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all producer overrides on this limit.
+// Unlike other types of overrides, producer overrides are under the
+// control
+// of the service producer and cannot be modified using this API.
+func (r *ServicesConsumerQuotaMetricsLimitsProducerOverridesService) List(parent string) *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall {
+	c := &ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested size of
+// the next page of data.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) PageSize(pageSize int64) *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token identifying
+// which result to start with; returned by a previous list
+// call.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) PageToken(pageToken string) *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) Fields(s ...googleapi.Field) *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) IfNoneMatch(entityTag string) *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) Context(ctx context.Context) *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/producerOverrides")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceusage.services.consumerQuotaMetrics.limits.producerOverrides.list" call.
+// Exactly one of *ListProducerOverridesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListProducerOverridesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) Do(opts ...googleapi.CallOption) (*ListProducerOverridesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListProducerOverridesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all producer overrides on this limit.\nUnlike other types of overrides, producer overrides are under the control\nof the service producer and cannot be modified using this API.",
+	//   "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/producerOverrides",
+	//   "httpMethod": "GET",
+	//   "id": "serviceusage.services.consumerQuotaMetrics.limits.producerOverrides.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Requested size of the next page of data.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token identifying which result to start with; returned by a previous list\ncall.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "The resource name of the parent quota limit, returned by a\nListConsumerQuotaMetrics or GetConsumerQuotaMetric call.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/producerOverrides",
+	//   "response": {
+	//     "$ref": "ListProducerOverridesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) Pages(ctx context.Context, f func(*ListProducerOverridesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

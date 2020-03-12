@@ -147,6 +147,168 @@
               ]
             }
           }
+        },
+        "sites": {
+          "resources": {
+            "channels": {
+              "resources": {
+                "releases": {
+                  "methods": {
+                    "create": {
+                      "description": "Creates a new release which makes the content of the specified version\nactively display on the appropriate URL(s).",
+                      "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/channels/{channelsId}/releases",
+                      "httpMethod": "POST",
+                      "id": "firebasehosting.projects.sites.channels.releases.create",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "The site that the release belongs to, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/sites/[^/]+/channels/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "versionName": {
+                          "description": "The unique identifier for a version, in the format:\n\u003ccode\u003e/sites/\u003cvar\u003esite-name\u003c/var\u003e/versions/\u003cvar\u003eversionID\u003c/var\u003e\u003c/code\u003e\nThe \u003cvar\u003esite-name\u003c/var\u003e in this version identifier must match the\n\u003cvar\u003esite-name\u003c/var\u003e in the `parent` parameter.\n\u003cbr\u003e\n\u003cbr\u003eThis query parameter must be empty if the `type` field in the\nrequest body is `SITE_DISABLE`.",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+parent}/releases",
+                      "request": {
+                        "$ref": "Release"
+                      },
+                      "response": {
+                        "$ref": "Release"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/firebase"
+                      ]
+                    },
+                    "list": {
+                      "description": "Lists the releases that have been created on the specified site.",
+                      "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/channels/{channelsId}/releases",
+                      "httpMethod": "GET",
+                      "id": "firebasehosting.projects.sites.channels.releases.list",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "pageSize": {
+                          "description": "The page size to return. Defaults to 100.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "The next_page_token from a previous request, if provided.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. The parent for which to list files, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/sites/[^/]+/channels/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+parent}/releases",
+                      "response": {
+                        "$ref": "ListReleasesResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/cloud-platform.read-only",
+                        "https://www.googleapis.com/auth/firebase",
+                        "https://www.googleapis.com/auth/firebase.readonly"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "releases": {
+              "methods": {
+                "create": {
+                  "description": "Creates a new release which makes the content of the specified version\nactively display on the appropriate URL(s).",
+                  "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/releases",
+                  "httpMethod": "POST",
+                  "id": "firebasehosting.projects.sites.releases.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "The site that the release belongs to, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/sites/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "versionName": {
+                      "description": "The unique identifier for a version, in the format:\n\u003ccode\u003e/sites/\u003cvar\u003esite-name\u003c/var\u003e/versions/\u003cvar\u003eversionID\u003c/var\u003e\u003c/code\u003e\nThe \u003cvar\u003esite-name\u003c/var\u003e in this version identifier must match the\n\u003cvar\u003esite-name\u003c/var\u003e in the `parent` parameter.\n\u003cbr\u003e\n\u003cbr\u003eThis query parameter must be empty if the `type` field in the\nrequest body is `SITE_DISABLE`.",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+parent}/releases",
+                  "request": {
+                    "$ref": "Release"
+                  },
+                  "response": {
+                    "$ref": "Release"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase"
+                  ]
+                },
+                "list": {
+                  "description": "Lists the releases that have been created on the specified site.",
+                  "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/releases",
+                  "httpMethod": "GET",
+                  "id": "firebasehosting.projects.sites.releases.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "The page size to return. Defaults to 100.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "The next_page_token from a previous request, if provided.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent for which to list files, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/sites/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+parent}/releases",
+                  "response": {
+                    "$ref": "ListReleasesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only",
+                    "https://www.googleapis.com/auth/firebase",
+                    "https://www.googleapis.com/auth/firebase.readonly"
+                  ]
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -217,6 +379,87 @@
         }
       },
       "resources": {
+        "channels": {
+          "resources": {
+            "releases": {
+              "methods": {
+                "create": {
+                  "description": "Creates a new release which makes the content of the specified version\nactively display on the appropriate URL(s).",
+                  "flatPath": "v1beta1/sites/{sitesId}/channels/{channelsId}/releases",
+                  "httpMethod": "POST",
+                  "id": "firebasehosting.sites.channels.releases.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "The site that the release belongs to, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+                      "location": "path",
+                      "pattern": "^sites/[^/]+/channels/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "versionName": {
+                      "description": "The unique identifier for a version, in the format:\n\u003ccode\u003e/sites/\u003cvar\u003esite-name\u003c/var\u003e/versions/\u003cvar\u003eversionID\u003c/var\u003e\u003c/code\u003e\nThe \u003cvar\u003esite-name\u003c/var\u003e in this version identifier must match the\n\u003cvar\u003esite-name\u003c/var\u003e in the `parent` parameter.\n\u003cbr\u003e\n\u003cbr\u003eThis query parameter must be empty if the `type` field in the\nrequest body is `SITE_DISABLE`.",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+parent}/releases",
+                  "request": {
+                    "$ref": "Release"
+                  },
+                  "response": {
+                    "$ref": "Release"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase"
+                  ]
+                },
+                "list": {
+                  "description": "Lists the releases that have been created on the specified site.",
+                  "flatPath": "v1beta1/sites/{sitesId}/channels/{channelsId}/releases",
+                  "httpMethod": "GET",
+                  "id": "firebasehosting.sites.channels.releases.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "The page size to return. Defaults to 100.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "The next_page_token from a previous request, if provided.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent for which to list files, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+                      "location": "path",
+                      "pattern": "^sites/[^/]+/channels/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+parent}/releases",
+                  "response": {
+                    "$ref": "ListReleasesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only",
+                    "https://www.googleapis.com/auth/firebase",
+                    "https://www.googleapis.com/auth/firebase.readonly"
+                  ]
+                }
+              }
+            }
+          }
+        },
         "domains": {
           "methods": {
             "create": {
@@ -375,7 +618,7 @@
         "releases": {
           "methods": {
             "create": {
-              "description": "Creates a new release which makes the content of the specified version\nactively display on the site.",
+              "description": "Creates a new release which makes the content of the specified version\nactively display on the appropriate URL(s).",
               "flatPath": "v1beta1/sites/{sitesId}/releases",
               "httpMethod": "POST",
               "id": "firebasehosting.sites.releases.create",
@@ -704,7 +947,7 @@
       }
     }
   },
-  "revision": "20200224",
+  "revision": "20200309",
   "rootUrl": "https://firebasehosting.googleapis.com/",
   "schemas": {
     "ActingUser": {

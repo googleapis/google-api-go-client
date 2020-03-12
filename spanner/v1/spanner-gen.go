@@ -173,7 +173,9 @@ type ProjectsInstanceConfigsService struct {
 
 func NewProjectsInstancesService(s *Service) *ProjectsInstancesService {
 	rs := &ProjectsInstancesService{s: s}
+	rs.BackupOperations = NewProjectsInstancesBackupOperationsService(s)
 	rs.Backups = NewProjectsInstancesBackupsService(s)
+	rs.DatabaseOperations = NewProjectsInstancesDatabaseOperationsService(s)
 	rs.Databases = NewProjectsInstancesDatabasesService(s)
 	rs.Operations = NewProjectsInstancesOperationsService(s)
 	return rs
@@ -182,11 +184,24 @@ func NewProjectsInstancesService(s *Service) *ProjectsInstancesService {
 type ProjectsInstancesService struct {
 	s *Service
 
+	BackupOperations *ProjectsInstancesBackupOperationsService
+
 	Backups *ProjectsInstancesBackupsService
+
+	DatabaseOperations *ProjectsInstancesDatabaseOperationsService
 
 	Databases *ProjectsInstancesDatabasesService
 
 	Operations *ProjectsInstancesOperationsService
+}
+
+func NewProjectsInstancesBackupOperationsService(s *Service) *ProjectsInstancesBackupOperationsService {
+	rs := &ProjectsInstancesBackupOperationsService{s: s}
+	return rs
+}
+
+type ProjectsInstancesBackupOperationsService struct {
+	s *Service
 }
 
 func NewProjectsInstancesBackupsService(s *Service) *ProjectsInstancesBackupsService {
@@ -207,6 +222,15 @@ func NewProjectsInstancesBackupsOperationsService(s *Service) *ProjectsInstances
 }
 
 type ProjectsInstancesBackupsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsInstancesDatabaseOperationsService(s *Service) *ProjectsInstancesDatabaseOperationsService {
+	rs := &ProjectsInstancesDatabaseOperationsService{s: s}
+	return rs
+}
+
+type ProjectsInstancesDatabaseOperationsService struct {
 	s *Service
 }
 
@@ -250,6 +274,146 @@ func NewProjectsInstancesOperationsService(s *Service) *ProjectsInstancesOperati
 
 type ProjectsInstancesOperationsService struct {
 	s *Service
+}
+
+// Backup: A backup of a Cloud Spanner database.
+type Backup struct {
+	// CreateTime: Output only. The backup will contain an externally
+	// consistent
+	// copy of the database at the timestamp specified by
+	// `create_time`. `create_time` is approximately the time
+	// the
+	// CreateBackup request is received.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Database: Required for the CreateBackup operation.
+	// Name of the database from which this backup was
+	// created. This needs to be in the same instance as the backup.
+	// Values are of the
+	// form
+	// `projects/<project>/instances/<instance>/databases/<database>`.
+	Database string `json:"database,omitempty"`
+
+	// ExpireTime: Required for the CreateBackup
+	// operation. The expiration time of the backup, with
+	// microseconds
+	// granularity that must be at least 6 hours and at most 366 days
+	// from the time the CreateBackup request is processed. Once the
+	// `expire_time`
+	// has passed, the backup is eligible to be automatically deleted by
+	// Cloud
+	// Spanner to free the resources used by the backup.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// Name: Output only for the CreateBackup][DatabaseAdmin.CreateBackup]
+	// operation.
+	// Required for the UpdateBackup operation.
+	//
+	// A globally unique identifier for the backup which cannot be
+	// changed. Values are of the
+	// form
+	// `projects/<project>/instances/<instance>/backups/a-z*[a-z0-9]`
+	// Th
+	// e final segment of the name must be between 2 and 60 characters
+	// in length.
+	//
+	// The backup is stored in the location(s) specified in the
+	// instance
+	// configuration of the instance containing the backup, identified
+	// by the prefix of the backup name of the
+	// form
+	// `projects/<project>/instances/<instance>`.
+	Name string `json:"name,omitempty"`
+
+	// ReferencingDatabases: Output only. The names of the restored
+	// databases that reference the backup.
+	// The database names are of
+	// the form
+	// `projects/<project>/instances/<instance>/databases/<database>`.
+	// Refere
+	// ncing databases may exist in different instances. The existence
+	// of
+	// any referencing database prevents the backup from being deleted. When
+	// a
+	// restored database from the backup enters the `READY` state, the
+	// reference
+	// to the backup is removed.
+	ReferencingDatabases []string `json:"referencingDatabases,omitempty"`
+
+	// SizeBytes: Output only. Size of the backup in bytes.
+	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
+
+	// State: Output only. The current state of the backup.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not specified.
+	//   "CREATING" - The pending backup is still being created. Operations
+	// on the
+	// backup may fail with `FAILED_PRECONDITION` in this state.
+	//   "READY" - The backup is complete and ready for use.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Backup) MarshalJSON() ([]byte, error) {
+	type NoMethod Backup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BackupInfo: Information about a backup.
+type BackupInfo struct {
+	// Backup: Name of the backup.
+	Backup string `json:"backup,omitempty"`
+
+	// CreateTime: The backup contains an externally consistent copy of
+	// `source_database` at
+	// the timestamp specified by `create_time`.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// SourceDatabase: Name of the database the backup was created from.
+	SourceDatabase string `json:"sourceDatabase,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Backup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Backup") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BackupInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // BatchCreateSessionsRequest: The request for BatchCreateSessions.
@@ -590,6 +754,63 @@ func (s *CommitResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CreateBackupMetadata: Metadata type for the operation returned
+// by
+// CreateBackup.
+type CreateBackupMetadata struct {
+	// CancelTime: The time at which cancellation of this operation was
+	// received.
+	// Operations.CancelOperation
+	// starts asynchronous cancellation on a long-running operation. The
+	// server
+	// makes a best effort to cancel the operation, but success is not
+	// guaranteed.
+	// Clients can use
+	// Operations.GetOperation or
+	// other methods to check whether the cancellation succeeded or whether
+	// the
+	// operation completed despite cancellation. On successful
+	// cancellation,
+	// the operation is not deleted; instead, it becomes an operation
+	// with
+	// an Operation.error value with a google.rpc.Status.code of
+	// 1,
+	// corresponding to `Code.CANCELLED`.
+	CancelTime string `json:"cancelTime,omitempty"`
+
+	// Database: The name of the database the backup is created from.
+	Database string `json:"database,omitempty"`
+
+	// Name: The name of the backup being created.
+	Name string `json:"name,omitempty"`
+
+	// Progress: The progress of the
+	// CreateBackup operation.
+	Progress *OperationProgress `json:"progress,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CancelTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CancelTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateBackupMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateBackupMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CreateDatabaseMetadata: Metadata type for the operation returned
 // by
 // CreateDatabase.
@@ -632,7 +853,7 @@ type CreateDatabaseRequest struct {
 	// database ID must be enclosed in backticks (`` ` ``).
 	CreateStatement string `json:"createStatement,omitempty"`
 
-	// ExtraStatements: An optional list of DDL statements to run inside the
+	// ExtraStatements: Optional. A list of DDL statements to run inside the
 	// newly created
 	// database. Statements can create tables, indexes, etc.
 	// These
@@ -777,6 +998,10 @@ func (s *CreateSessionRequest) MarshalJSON() ([]byte, error) {
 
 // Database: A Cloud Spanner database.
 type Database struct {
+	// CreateTime: Output only. If exists, the time at which the database
+	// creation started.
+	CreateTime string `json:"createTime,omitempty"`
+
 	// Name: Required. The name of the database. Values are of the
 	// form
 	// `projects/<project>/instances/<instance>/databases/<database>`,
@@ -786,6 +1011,11 @@ type Database struct {
 	// identify the database.
 	Name string `json:"name,omitempty"`
 
+	// RestoreInfo: Output only. Applicable only for restored databases.
+	// Contains information
+	// about the restore source.
+	RestoreInfo *RestoreInfo `json:"restoreInfo,omitempty"`
+
 	// State: Output only. The current database state.
 	//
 	// Possible values:
@@ -794,13 +1024,24 @@ type Database struct {
 	// database may fail
 	// with `FAILED_PRECONDITION` in this state.
 	//   "READY" - The database is fully created and ready for use.
+	//   "READY_OPTIMIZING" - The database is fully created and ready for
+	// use, but is still
+	// being optimized for performance and cannot handle full load.
+	//
+	// In this state, the database still references the backup
+	// it was restore from, preventing the backup
+	// from being deleted. When optimizations are complete, the full
+	// performance
+	// of the database will be restored, and the database will transition
+	// to
+	// `READY` state.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -808,8 +1049,8 @@ type Database struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1751,6 +1992,141 @@ func (s *KeySet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListBackupOperationsResponse: The response for
+// ListBackupOperations.
+type ListBackupOperationsResponse struct {
+	// NextPageToken: `next_page_token` can be sent in a
+	// subsequent
+	// ListBackupOperations
+	// call to fetch more of the matching metadata.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Operations: The list of matching backup long-running
+	// operations. Each operation's name will be
+	// prefixed by the backup's name and the operation's
+	// metadata will be of type
+	// CreateBackupMetadata. Operations returned include those that
+	// are
+	// pending or have completed/failed/canceled within the last 7
+	// days.
+	// Operations returned are ordered
+	// by
+	// `operation.metadata.value.progress.start_time` in descending order
+	// starting
+	// from the most recently started operation.
+	Operations []*Operation `json:"operations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListBackupOperationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListBackupOperationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListBackupsResponse: The response for ListBackups.
+type ListBackupsResponse struct {
+	// Backups: The list of matching backups. Backups returned are ordered
+	// by `create_time`
+	// in descending order, starting from the most recent `create_time`.
+	Backups []*Backup `json:"backups,omitempty"`
+
+	// NextPageToken: `next_page_token` can be sent in a
+	// subsequent
+	// ListBackups call to fetch more
+	// of the matching backups.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Backups") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Backups") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListBackupsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListBackupsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListDatabaseOperationsResponse: The response
+// for
+// ListDatabaseOperations.
+type ListDatabaseOperationsResponse struct {
+	// NextPageToken: `next_page_token` can be sent in a
+	// subsequent
+	// ListDatabaseOperations
+	// call to fetch more of the matching metadata.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Operations: The list of matching database long-running
+	// operations. Each operation's name will be
+	// prefixed by the database's name. The operation's
+	// metadata field type
+	// `metadata.type_url` describes the type of the metadata.
+	Operations []*Operation `json:"operations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListDatabaseOperationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDatabaseOperationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListDatabasesResponse: The response for ListDatabases.
 type ListDatabasesResponse struct {
 	// Databases: Databases that matched the request.
@@ -2082,6 +2458,82 @@ type Operation struct {
 
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OperationProgress: Encapsulates progress related information for a
+// Cloud Spanner long
+// running operation.
+type OperationProgress struct {
+	// EndTime: If set, the time at which this operation failed or was
+	// completed
+	// successfully.
+	EndTime string `json:"endTime,omitempty"`
+
+	// ProgressPercent: Percent completion of the operation.
+	// Values are between 0 and 100 inclusive.
+	ProgressPercent int64 `json:"progressPercent,omitempty"`
+
+	// StartTime: Time the request was received.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperationProgress) MarshalJSON() ([]byte, error) {
+	type NoMethod OperationProgress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OptimizeRestoredDatabaseMetadata: Metadata type for the long-running
+// operation used to track the progress
+// of optimizations performed on a newly restored database. This
+// long-running
+// operation is automatically created by the system after the
+// successful
+// completion of a database restore, and cannot be cancelled.
+type OptimizeRestoredDatabaseMetadata struct {
+	// Name: Name of the restored database being optimized.
+	Name string `json:"name,omitempty"`
+
+	// Progress: The progress of the post-restore optimizations.
+	Progress *OperationProgress `json:"progress,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OptimizeRestoredDatabaseMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod OptimizeRestoredDatabaseMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3102,6 +3554,173 @@ type ReplicaInfo struct {
 
 func (s *ReplicaInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplicaInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RestoreDatabaseMetadata: Metadata type for the long-running operation
+// returned by
+// RestoreDatabase.
+type RestoreDatabaseMetadata struct {
+	// BackupInfo: Information about the backup used to restore the
+	// database.
+	BackupInfo *BackupInfo `json:"backupInfo,omitempty"`
+
+	// CancelTime: The time at which cancellation of this operation was
+	// received.
+	// Operations.CancelOperation
+	// starts asynchronous cancellation on a long-running operation. The
+	// server
+	// makes a best effort to cancel the operation, but success is not
+	// guaranteed.
+	// Clients can use
+	// Operations.GetOperation or
+	// other methods to check whether the cancellation succeeded or whether
+	// the
+	// operation completed despite cancellation. On successful
+	// cancellation,
+	// the operation is not deleted; instead, it becomes an operation
+	// with
+	// an Operation.error value with a google.rpc.Status.code of
+	// 1,
+	// corresponding to `Code.CANCELLED`.
+	CancelTime string `json:"cancelTime,omitempty"`
+
+	// Name: Name of the database being created and restored to.
+	Name string `json:"name,omitempty"`
+
+	// OptimizeDatabaseOperationName: If exists, the name of the
+	// long-running operation that will be used to
+	// track the post-restore optimization process to optimize the
+	// performance of
+	// the restored database, and remove the dependency on the restore
+	// source.
+	// The name is of the
+	// form
+	// `projects/<project>/instances/<instance>/databases/<database>/ope
+	// rations/<operation>
+	// where the <database> is the name of database being created and
+	// restored to.
+	// The metadata type of the  long-running operation
+	// is
+	// OptimizeRestoredDatabaseMetadata. This long-running operation will
+	// be
+	// automatically created by the system after the RestoreDatabase
+	// long-running
+	// operation completes successfully. This operation will not be created
+	// if the
+	// restore was not successful.
+	OptimizeDatabaseOperationName string `json:"optimizeDatabaseOperationName,omitempty"`
+
+	// Progress: The progress of the
+	// RestoreDatabase
+	// operation.
+	Progress *OperationProgress `json:"progress,omitempty"`
+
+	// SourceType: The type of the restore source.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - No restore associated.
+	//   "BACKUP" - A backup was used as the source of the restore.
+	SourceType string `json:"sourceType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RestoreDatabaseMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod RestoreDatabaseMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RestoreDatabaseRequest: The request for
+// RestoreDatabase.
+type RestoreDatabaseRequest struct {
+	// Backup: Name of the backup from which to restore.  Values are of the
+	// form
+	// `projects/<project>/instances/<instance>/backups/<backup>`.
+	Backup string `json:"backup,omitempty"`
+
+	// DatabaseId: Required. The id of the database to create and restore
+	// to. This
+	// database must not already exist. The `database_id` appended
+	// to
+	// `parent` forms the full database name of the
+	// form
+	// `projects/<project>/instances/<instance>/databases/<database_id>`
+	// .
+	DatabaseId string `json:"databaseId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Backup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Backup") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RestoreDatabaseRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RestoreDatabaseRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RestoreInfo: Information about the database restore.
+type RestoreInfo struct {
+	// BackupInfo: Information about the backup used to restore the
+	// database. The backup
+	// may no longer exist.
+	BackupInfo *BackupInfo `json:"backupInfo,omitempty"`
+
+	// SourceType: The type of the restore source.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - No restore associated.
+	//   "BACKUP" - A backup was used as the source of the restore.
+	SourceType string `json:"sourceType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RestoreInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod RestoreInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4540,7 +5159,7 @@ func (c *ProjectsInstanceConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsInstanceConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4703,7 +5322,7 @@ func (c *ProjectsInstanceConfigsListCall) Header() http.Header {
 
 func (c *ProjectsInstanceConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4911,7 +5530,7 @@ func (c *ProjectsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5061,7 +5680,7 @@ func (c *ProjectsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5212,7 +5831,7 @@ func (c *ProjectsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5360,7 +5979,7 @@ func (c *ProjectsInstancesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5555,7 +6174,7 @@ func (c *ProjectsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5776,7 +6395,7 @@ func (c *ProjectsInstancesPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5922,7 +6541,7 @@ func (c *ProjectsInstancesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6072,7 +6691,7 @@ func (c *ProjectsInstancesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsInstancesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6167,6 +6786,734 @@ func (c *ProjectsInstancesTestIamPermissionsCall) Do(opts ...googleapi.CallOptio
 
 }
 
+// method id "spanner.projects.instances.backupOperations.list":
+
+type ProjectsInstancesBackupOperationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the backup long-running operations in
+// the given instance. A backup operation has a name of the
+// form
+// `projects/<project>/instances/<instance>/backups/<backup>/operati
+// ons/<operation>`.
+// The long-running operation
+// metadata field type
+// `metadata.type_url` describes the type of the metadata. Operations
+// returned
+// include those that have completed/failed/canceled within the last 7
+// days,
+// and pending operations. Operations returned are ordered
+// by
+// `operation.metadata.value.progress.start_time` in descending order
+// starting
+// from the most recently started operation.
+func (r *ProjectsInstancesBackupOperationsService) List(parent string) *ProjectsInstancesBackupOperationsListCall {
+	c := &ProjectsInstancesBackupOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters what operations are returned in the
+// response.
+//
+// The filter expression must specify the field name of an operation,
+// a
+// comparison operator, and the value that you want to use for
+// filtering.
+// The value must be a string, a number, or a boolean. The comparison
+// operator
+// must be
+// <, >, <=, >=, !=, =, or :. Colon ‘:’ represents a HAS operator
+// which is
+// roughly synonymous with equality. Filter rules are case
+// insensitive.
+//
+// The long-running operation fields eligible for filtering are:
+//   * `name` --> The name of the long-running operation
+//   * `done` --> False if the operation is in progress, else true.
+//   * `metadata.type_url` (using filter string `metadata.@type`) and
+// fields
+//      in `metadata.value` (using filter string
+// `metadata.<field_name>`,
+//      where <field_name> is a field in metadata.value) are eligible
+// for
+//      filtering.
+//   * `error` --> Error associated with the long-running operation.
+//   * `response.type_url` (using filter string `response.@type`) and
+// fields
+//      in `response.value` (using filter string
+// `response.<field_name>`,
+//      where <field_name> is a field in response.value) are eligible
+// for
+//      filtering.
+//
+// To filter on multiple expressions, provide each separate expression
+// within
+// parentheses. By default, each expression is an AND expression.
+// However,
+// you can include AND, OR, and NOT expressions explicitly.
+//
+// Some examples of using filters are:
+//
+//   * `done:true` --> The operation is complete.
+//   * `metadata.database:prod`
+//          --> The database the backup was taken from has a name
+// containing
+//              the string "prod".
+//   *
+// `(metadata.@type:type.googleapis.com/google.spanner.admin.database.v1.
+// CreateBackupMetadata)
+//      AND (metadata.name:howl)
+//      AND (metadata.progress.start_time < \"2018-03-28T14:50:00Z\")
+//      AND (error:*)`
+//          --> Return CreateBackup operations where the created backup
+// name
+//              contains the string "howl", the progress.start_time of
+// the
+//              backup operation is before 2018-03-28T14:50:00Z, and
+// the
+//              operation returned an error.
+func (c *ProjectsInstancesBackupOperationsListCall) Filter(filter string) *ProjectsInstancesBackupOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of operations
+// to be returned in the response. If 0 or
+// less, defaults to the server's maximum allowed page size.
+func (c *ProjectsInstancesBackupOperationsListCall) PageSize(pageSize int64) *ProjectsInstancesBackupOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If non-empty,
+// `page_token` should contain a
+// next_page_token
+// from a previous ListBackupOperationsResponse to the
+// same `parent` and with the same `filter`.
+func (c *ProjectsInstancesBackupOperationsListCall) PageToken(pageToken string) *ProjectsInstancesBackupOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesBackupOperationsListCall) Fields(s ...googleapi.Field) *ProjectsInstancesBackupOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsInstancesBackupOperationsListCall) IfNoneMatch(entityTag string) *ProjectsInstancesBackupOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesBackupOperationsListCall) Context(ctx context.Context) *ProjectsInstancesBackupOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesBackupOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesBackupOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/backupOperations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.backupOperations.list" call.
+// Exactly one of *ListBackupOperationsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListBackupOperationsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsInstancesBackupOperationsListCall) Do(opts ...googleapi.CallOption) (*ListBackupOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListBackupOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the backup long-running operations in\nthe given instance. A backup operation has a name of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/\u003cbackup\u003e/operations/\u003coperation\u003e`.\nThe long-running operation\nmetadata field type\n`metadata.type_url` describes the type of the metadata. Operations returned\ninclude those that have completed/failed/canceled within the last 7 days,\nand pending operations. Operations returned are ordered by\n`operation.metadata.value.progress.start_time` in descending order starting\nfrom the most recently started operation.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backupOperations",
+	//   "httpMethod": "GET",
+	//   "id": "spanner.projects.instances.backupOperations.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "A filter expression that filters what operations are returned in the\nresponse.\n\nThe filter expression must specify the field name of an operation, a\ncomparison operator, and the value that you want to use for filtering.\nThe value must be a string, a number, or a boolean. The comparison operator\nmust be\n\u003c, \u003e, \u003c=, \u003e=, !=, =, or :. Colon ‘:’ represents a HAS operator which is\nroughly synonymous with equality. Filter rules are case insensitive.\n\nThe long-running operation fields eligible for filtering are:\n  * `name` --\u003e The name of the long-running operation\n  * `done` --\u003e False if the operation is in progress, else true.\n  * `metadata.type_url` (using filter string `metadata.@type`) and fields\n     in `metadata.value` (using filter string `metadata.\u003cfield_name\u003e`,\n     where \u003cfield_name\u003e is a field in metadata.value) are eligible for\n     filtering.\n  * `error` --\u003e Error associated with the long-running operation.\n  * `response.type_url` (using filter string `response.@type`) and fields\n     in `response.value` (using filter string `response.\u003cfield_name\u003e`,\n     where \u003cfield_name\u003e is a field in response.value) are eligible for\n     filtering.\n\nTo filter on multiple expressions, provide each separate expression within\nparentheses. By default, each expression is an AND expression. However,\nyou can include AND, OR, and NOT expressions explicitly.\n\nSome examples of using filters are:\n\n  * `done:true` --\u003e The operation is complete.\n  * `metadata.database:prod`\n         --\u003e The database the backup was taken from has a name containing\n             the string \"prod\".\n  * `(metadata.@type:type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata)\n     AND (metadata.name:howl)\n     AND (metadata.progress.start_time \u003c \\\"2018-03-28T14:50:00Z\\\")\n     AND (error:*)`\n         --\u003e Return CreateBackup operations where the created backup name\n             contains the string \"howl\", the progress.start_time of the\n             backup operation is before 2018-03-28T14:50:00Z, and the\n             operation returned an error.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Number of operations to be returned in the response. If 0 or\nless, defaults to the server's maximum allowed page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "If non-empty, `page_token` should contain a\nnext_page_token\nfrom a previous ListBackupOperationsResponse to the\nsame `parent` and with the same `filter`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The instance of the backup operations. Values are of\nthe form `projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/backupOperations",
+	//   "response": {
+	//     "$ref": "ListBackupOperationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsInstancesBackupOperationsListCall) Pages(ctx context.Context, f func(*ListBackupOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "spanner.projects.instances.backups.create":
+
+type ProjectsInstancesBackupsCreateCall struct {
+	s          *Service
+	parent     string
+	backup     *Backup
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Starts creating a new Cloud Spanner Backup.
+// The returned backup long-running operation
+// will have a name of the
+// format
+// `projects/<project>/instances/<instance>/backups/<backup>/opera
+// tions/<operation_id>`
+// and can be used to track creation of the backup. The
+// metadata field type is
+// CreateBackupMetadata. The
+// response field type is
+// Backup, if successful. Cancelling the returned operation will stop
+// the
+// creation and delete the backup.
+// There can be only one pending backup creation per database. Backup
+// creation
+// of different databases can run concurrently.
+func (r *ProjectsInstancesBackupsService) Create(parent string, backup *Backup) *ProjectsInstancesBackupsCreateCall {
+	c := &ProjectsInstancesBackupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.backup = backup
+	return c
+}
+
+// BackupId sets the optional parameter "backupId": Required. The id of
+// the backup to be created. The `backup_id` appended to
+// `parent` forms the full backup name of the
+// form
+// `projects/<project>/instances/<instance>/backups/<backup_id>`.
+func (c *ProjectsInstancesBackupsCreateCall) BackupId(backupId string) *ProjectsInstancesBackupsCreateCall {
+	c.urlParams_.Set("backupId", backupId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesBackupsCreateCall) Fields(s ...googleapi.Field) *ProjectsInstancesBackupsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesBackupsCreateCall) Context(ctx context.Context) *ProjectsInstancesBackupsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesBackupsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesBackupsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.backup)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/backups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.backups.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesBackupsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Starts creating a new Cloud Spanner Backup.\nThe returned backup long-running operation\nwill have a name of the format\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/\u003cbackup\u003e/operations/\u003coperation_id\u003e`\nand can be used to track creation of the backup. The\nmetadata field type is\nCreateBackupMetadata. The\nresponse field type is\nBackup, if successful. Cancelling the returned operation will stop the\ncreation and delete the backup.\nThere can be only one pending backup creation per database. Backup creation\nof different databases can run concurrently.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups",
+	//   "httpMethod": "POST",
+	//   "id": "spanner.projects.instances.backups.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "backupId": {
+	//       "description": "Required. The id of the backup to be created. The `backup_id` appended to\n`parent` forms the full backup name of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/\u003cbackup_id\u003e`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the instance in which the backup will be\ncreated. This must be the same instance that contains the database the\nbackup will be created from. The backup will be stored in the\nlocation(s) specified in the instance configuration of this\ninstance. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/backups",
+	//   "request": {
+	//     "$ref": "Backup"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
+}
+
+// method id "spanner.projects.instances.backups.delete":
+
+type ProjectsInstancesBackupsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a pending or completed Backup.
+func (r *ProjectsInstancesBackupsService) Delete(name string) *ProjectsInstancesBackupsDeleteCall {
+	c := &ProjectsInstancesBackupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesBackupsDeleteCall) Fields(s ...googleapi.Field) *ProjectsInstancesBackupsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesBackupsDeleteCall) Context(ctx context.Context) *ProjectsInstancesBackupsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesBackupsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesBackupsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.backups.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsInstancesBackupsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a pending or completed Backup.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "spanner.projects.instances.backups.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the backup to delete.\nValues are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/\u003cbackup\u003e`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
+}
+
+// method id "spanner.projects.instances.backups.get":
+
+type ProjectsInstancesBackupsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets metadata on a pending or completed Backup.
+func (r *ProjectsInstancesBackupsService) Get(name string) *ProjectsInstancesBackupsGetCall {
+	c := &ProjectsInstancesBackupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesBackupsGetCall) Fields(s ...googleapi.Field) *ProjectsInstancesBackupsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsInstancesBackupsGetCall) IfNoneMatch(entityTag string) *ProjectsInstancesBackupsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesBackupsGetCall) Context(ctx context.Context) *ProjectsInstancesBackupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesBackupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesBackupsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.backups.get" call.
+// Exactly one of *Backup or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Backup.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsInstancesBackupsGetCall) Do(opts ...googleapi.CallOption) (*Backup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Backup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets metadata on a pending or completed Backup.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}",
+	//   "httpMethod": "GET",
+	//   "id": "spanner.projects.instances.backups.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the backup.\nValues are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/\u003cbackup\u003e`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Backup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
+}
+
 // method id "spanner.projects.instances.backups.getIamPolicy":
 
 type ProjectsInstancesBackupsGetIamPolicyCall struct {
@@ -6178,14 +7525,18 @@ type ProjectsInstancesBackupsGetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a database
+// GetIamPolicy: Gets the access control policy for a database or backup
 // resource.
-// Returns an empty policy if a database exists but does
-// not have a policy set.
+// Returns an empty policy if a database or backup exists but does not
+// have a
+// policy set.
 //
 // Authorization requires `spanner.databases.getIamPolicy` permission
 // on
 // resource.
+// For backups, authorization requires
+// `spanner.backups.getIamPolicy`
+// permission on resource.
 func (r *ProjectsInstancesBackupsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesBackupsGetIamPolicyCall {
 	c := &ProjectsInstancesBackupsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6220,7 +7571,7 @@ func (c *ProjectsInstancesBackupsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6284,7 +7635,7 @@ func (c *ProjectsInstancesBackupsGetIamPolicyCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a database resource.\nReturns an empty policy if a database exists but does\nnot have a policy set.\n\nAuthorization requires `spanner.databases.getIamPolicy` permission on\nresource.",
+	//   "description": "Gets the access control policy for a database or backup resource.\nReturns an empty policy if a database or backup exists but does not have a\npolicy set.\n\nAuthorization requires `spanner.databases.getIamPolicy` permission on\nresource.\nFor backups, authorization requires `spanner.backups.getIamPolicy`\npermission on resource.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.backups.getIamPolicy",
@@ -6315,6 +7666,420 @@ func (c *ProjectsInstancesBackupsGetIamPolicyCall) Do(opts ...googleapi.CallOpti
 
 }
 
+// method id "spanner.projects.instances.backups.list":
+
+type ProjectsInstancesBackupsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists completed and pending backups.
+// Backups returned are ordered by `create_time` in descending
+// order,
+// starting from the most recent `create_time`.
+func (r *ProjectsInstancesBackupsService) List(parent string) *ProjectsInstancesBackupsListCall {
+	c := &ProjectsInstancesBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters backups listed in the response.
+// The expression must specify the field name, a comparison
+// operator,
+// and the value that you want to use for filtering. The value must be
+// a
+// string, a number, or a boolean. The comparison operator must be
+// <, >, <=, >=, !=, =, or :. Colon ‘:’ represents a HAS operator
+// which is
+// roughly synonymous with equality. Filter rules are case
+// insensitive.
+//
+// The fields eligible for filtering are:
+//   * `name`
+//   * `database`
+//   * `state`
+//   * `create_time` (and values are of the format
+// YYYY-MM-DDTHH:MM:SSZ)
+//   * `expire_time` (and values are of the format
+// YYYY-MM-DDTHH:MM:SSZ)
+//   * `size_bytes`
+//
+// To filter on multiple expressions, provide each separate expression
+// within
+// parentheses. By default, each expression is an AND expression.
+// However,
+// you can include AND, OR, and NOT expressions explicitly.
+//
+// Some examples of using filters are:
+//
+//   * `name:Howl` --> The backup's name contains the string "howl".
+//   * `database:prod`
+//          --> The database's name contains the string "prod".
+//   * `state:CREATING` --> The backup is pending creation.
+//   * `state:READY` --> The backup is fully created and ready for use.
+//   * `(name:howl) AND (create_time < \"2018-03-28T14:50:00Z\")`
+//          --> The backup name contains the string "howl" and
+// `create_time`
+//              of the backup is before 2018-03-28T14:50:00Z.
+//   * `expire_time < \"2018-03-28T14:50:00Z\"
+//          --> The backup `expire_time` is before
+// 2018-03-28T14:50:00Z.
+//   * `size_bytes > 10000000000` --> The backup's size is greater than
+// 10GB
+func (c *ProjectsInstancesBackupsListCall) Filter(filter string) *ProjectsInstancesBackupsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of backups to
+// be returned in the response. If 0 or
+// less, defaults to the server's maximum allowed page size.
+func (c *ProjectsInstancesBackupsListCall) PageSize(pageSize int64) *ProjectsInstancesBackupsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If non-empty,
+// `page_token` should contain a
+// next_page_token from a
+// previous ListBackupsResponse to the same `parent` and with the
+// same
+// `filter`.
+func (c *ProjectsInstancesBackupsListCall) PageToken(pageToken string) *ProjectsInstancesBackupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesBackupsListCall) Fields(s ...googleapi.Field) *ProjectsInstancesBackupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsInstancesBackupsListCall) IfNoneMatch(entityTag string) *ProjectsInstancesBackupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesBackupsListCall) Context(ctx context.Context) *ProjectsInstancesBackupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesBackupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesBackupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/backups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.backups.list" call.
+// Exactly one of *ListBackupsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListBackupsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsInstancesBackupsListCall) Do(opts ...googleapi.CallOption) (*ListBackupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListBackupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists completed and pending backups.\nBackups returned are ordered by `create_time` in descending order,\nstarting from the most recent `create_time`.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups",
+	//   "httpMethod": "GET",
+	//   "id": "spanner.projects.instances.backups.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "A filter expression that filters backups listed in the response.\nThe expression must specify the field name, a comparison operator,\nand the value that you want to use for filtering. The value must be a\nstring, a number, or a boolean. The comparison operator must be\n\u003c, \u003e, \u003c=, \u003e=, !=, =, or :. Colon ‘:’ represents a HAS operator which is\nroughly synonymous with equality. Filter rules are case insensitive.\n\nThe fields eligible for filtering are:\n  * `name`\n  * `database`\n  * `state`\n  * `create_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ)\n  * `expire_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ)\n  * `size_bytes`\n\nTo filter on multiple expressions, provide each separate expression within\nparentheses. By default, each expression is an AND expression. However,\nyou can include AND, OR, and NOT expressions explicitly.\n\nSome examples of using filters are:\n\n  * `name:Howl` --\u003e The backup's name contains the string \"howl\".\n  * `database:prod`\n         --\u003e The database's name contains the string \"prod\".\n  * `state:CREATING` --\u003e The backup is pending creation.\n  * `state:READY` --\u003e The backup is fully created and ready for use.\n  * `(name:howl) AND (create_time \u003c \\\"2018-03-28T14:50:00Z\\\")`\n         --\u003e The backup name contains the string \"howl\" and `create_time`\n             of the backup is before 2018-03-28T14:50:00Z.\n  * `expire_time \u003c \\\"2018-03-28T14:50:00Z\\\"`\n         --\u003e The backup `expire_time` is before 2018-03-28T14:50:00Z.\n  * `size_bytes \u003e 10000000000` --\u003e The backup's size is greater than 10GB",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Number of backups to be returned in the response. If 0 or\nless, defaults to the server's maximum allowed page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "If non-empty, `page_token` should contain a\nnext_page_token from a\nprevious ListBackupsResponse to the same `parent` and with the same\n`filter`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The instance to list backups from.  Values are of the\nform `projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/backups",
+	//   "response": {
+	//     "$ref": "ListBackupsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsInstancesBackupsListCall) Pages(ctx context.Context, f func(*ListBackupsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "spanner.projects.instances.backups.patch":
+
+type ProjectsInstancesBackupsPatchCall struct {
+	s          *Service
+	nameid     string
+	backup     *Backup
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a pending or completed Backup.
+func (r *ProjectsInstancesBackupsService) Patch(nameid string, backup *Backup) *ProjectsInstancesBackupsPatchCall {
+	c := &ProjectsInstancesBackupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.backup = backup
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. A mask
+// specifying which fields (e.g. `expire_time`) in the
+// Backup resource should be updated. This mask is relative to the
+// Backup
+// resource, not to the request message. The field mask must always
+// be
+// specified; this prevents any future fields from being erased
+// accidentally
+// by clients that do not know about them.
+func (c *ProjectsInstancesBackupsPatchCall) UpdateMask(updateMask string) *ProjectsInstancesBackupsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesBackupsPatchCall) Fields(s ...googleapi.Field) *ProjectsInstancesBackupsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesBackupsPatchCall) Context(ctx context.Context) *ProjectsInstancesBackupsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesBackupsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesBackupsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.backup)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.backups.patch" call.
+// Exactly one of *Backup or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Backup.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsInstancesBackupsPatchCall) Do(opts ...googleapi.CallOption) (*Backup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Backup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a pending or completed Backup.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "spanner.projects.instances.backups.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only for the CreateBackup][DatabaseAdmin.CreateBackup] operation.\nRequired for the UpdateBackup operation.\n\nA globally unique identifier for the backup which cannot be\nchanged. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/a-z*[a-z0-9]`\nThe final segment of the name must be between 2 and 60 characters\nin length.\n\nThe backup is stored in the location(s) specified in the instance\nconfiguration of the instance containing the backup, identified\nby the prefix of the backup name of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. A mask specifying which fields (e.g. `expire_time`) in the\nBackup resource should be updated. This mask is relative to the Backup\nresource, not to the request message. The field mask must always be\nspecified; this prevents any future fields from being erased accidentally\nby clients that do not know about them.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "Backup"
+	//   },
+	//   "response": {
+	//     "$ref": "Backup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
+}
+
 // method id "spanner.projects.instances.backups.setIamPolicy":
 
 type ProjectsInstancesBackupsSetIamPolicyCall struct {
@@ -6326,11 +8091,14 @@ type ProjectsInstancesBackupsSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy on a database
+// SetIamPolicy: Sets the access control policy on a database or backup
 // resource.
 // Replaces any existing policy.
 //
 // Authorization requires `spanner.databases.setIamPolicy`
+// permission on resource.
+// For backups, authorization requires
+// `spanner.backups.setIamPolicy`
 // permission on resource.
 func (r *ProjectsInstancesBackupsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesBackupsSetIamPolicyCall {
 	c := &ProjectsInstancesBackupsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6366,7 +8134,7 @@ func (c *ProjectsInstancesBackupsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6430,7 +8198,7 @@ func (c *ProjectsInstancesBackupsSetIamPolicyCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on a database resource.\nReplaces any existing policy.\n\nAuthorization requires `spanner.databases.setIamPolicy`\npermission on resource.",
+	//   "description": "Sets the access control policy on a database or backup resource.\nReplaces any existing policy.\n\nAuthorization requires `spanner.databases.setIamPolicy`\npermission on resource.\nFor backups, authorization requires `spanner.backups.setIamPolicy`\npermission on resource.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.backups.setIamPolicy",
@@ -6473,13 +8241,18 @@ type ProjectsInstancesBackupsTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that the caller has on the
-// specified database resource.
+// specified database or backup
+// resource.
 //
 // Attempting this RPC on a non-existent Cloud Spanner database
 // will
 // result in a NOT_FOUND error if the user has
 // `spanner.databases.list` permission on the containing Cloud
-// Spanner instance. Otherwise returns an empty set of permissions.
+// Spanner instance. Otherwise returns an empty set of
+// permissions.
+// Calling this method on a backup that does not exist will
+// result in a NOT_FOUND error if the user has
+// `spanner.backups.list` permission on the containing instance.
 func (r *ProjectsInstancesBackupsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesBackupsTestIamPermissionsCall {
 	c := &ProjectsInstancesBackupsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6514,7 +8287,7 @@ func (c *ProjectsInstancesBackupsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6578,7 +8351,7 @@ func (c *ProjectsInstancesBackupsTestIamPermissionsCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that the caller has on the specified database resource.\n\nAttempting this RPC on a non-existent Cloud Spanner database will\nresult in a NOT_FOUND error if the user has\n`spanner.databases.list` permission on the containing Cloud\nSpanner instance. Otherwise returns an empty set of permissions.",
+	//   "description": "Returns permissions that the caller has on the specified database or backup\nresource.\n\nAttempting this RPC on a non-existent Cloud Spanner database will\nresult in a NOT_FOUND error if the user has\n`spanner.databases.list` permission on the containing Cloud\nSpanner instance. Otherwise returns an empty set of permissions.\nCalling this method on a backup that does not exist will\nresult in a NOT_FOUND error if the user has\n`spanner.backups.list` permission on the containing instance.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.backups.testIamPermissions",
@@ -6670,7 +8443,7 @@ func (c *ProjectsInstancesBackupsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6807,7 +8580,7 @@ func (c *ProjectsInstancesBackupsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6953,7 +8726,7 @@ func (c *ProjectsInstancesBackupsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7135,7 +8908,7 @@ func (c *ProjectsInstancesBackupsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7262,6 +9035,279 @@ func (c *ProjectsInstancesBackupsOperationsListCall) Pages(ctx context.Context, 
 	}
 }
 
+// method id "spanner.projects.instances.databaseOperations.list":
+
+type ProjectsInstancesDatabaseOperationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists database longrunning-operations.
+// A database operation has a name of the
+// form
+// `projects/<project>/instances/<instance>/databases/<database>/ope
+// rations/<operation>`.
+// The long-running operation
+// metadata field type
+// `metadata.type_url` describes the type of the metadata. Operations
+// returned
+// include those that have completed/failed/canceled within the last 7
+// days,
+// and pending operations.
+func (r *ProjectsInstancesDatabaseOperationsService) List(parent string) *ProjectsInstancesDatabaseOperationsListCall {
+	c := &ProjectsInstancesDatabaseOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters what operations are returned in the
+// response.
+//
+// The filter expression must specify the field name, a comparison
+// operator,
+// and the value that you want to use for filtering. The value must be
+// a
+// string, a number, or a boolean. The comparison operator must be
+// <, >, <=, >=, !=, =, or :. Colon ‘:’ represents a HAS operator
+// which is
+// roughly synonymous with equality. Filter rules are case
+// insensitive.
+//
+// The long-running operation fields eligible for filtering are:
+//   * `name` --> The name of the long-running operation
+//   * `done` --> False if the operation is in progress, else true.
+//   * `metadata.type_url` (using filter string `metadata.@type`) and
+// fields
+//      in `metadata.value` (using filter string
+// `metadata.<field_name>`,
+//      where <field_name> is a field in metadata.value) are eligible
+// for
+//      filtering.
+//   * `error` --> Error associated with the long-running operation.
+//   * `response.type_url` (using filter string `response.@type`) and
+// fields
+//      in `response.value` (using filter string
+// `response.<field_name>`,
+//      where <field_name> is a field in response.value) are eligible
+// for
+//      filtering.
+//
+// To filter on multiple expressions, provide each separate expression
+// within
+// parentheses. By default, each expression is an AND expression.
+// However,
+// you can include AND, OR, and NOT expressions explicitly.
+//
+// Some examples of using filters are:
+//
+//   * `done:true` --> The operation is complete.
+//   *
+// `(metadata.@type:type.googleapis.com/google.spanner.admin.database.v1.
+// RestoreDatabaseMetadata)
+//      AND (metadata.source_type:BACKUP)
+//      AND (metadata.backup_info.backup:backup_howl)
+//      AND (metadata.name:restored_howl)
+//      AND (metadata.progress.start_time < \"2018-03-28T14:50:00Z\")
+//      AND (error:*)`
+//          --> Return RestoreDatabase operations from backups whose
+// name
+//              contains "backup_howl", where the created database name
+//              contains the string "restored_howl", the start_time of
+// the
+//              restore operation is before 2018-03-28T14:50:00Z,
+//              and the operation returned an error.
+func (c *ProjectsInstancesDatabaseOperationsListCall) Filter(filter string) *ProjectsInstancesDatabaseOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of operations
+// to be returned in the response. If 0 or
+// less, defaults to the server's maximum allowed page size.
+func (c *ProjectsInstancesDatabaseOperationsListCall) PageSize(pageSize int64) *ProjectsInstancesDatabaseOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If non-empty,
+// `page_token` should contain a
+// next_page_token
+// from a previous ListDatabaseOperationsResponse to the
+// same `parent` and with the same `filter`.
+func (c *ProjectsInstancesDatabaseOperationsListCall) PageToken(pageToken string) *ProjectsInstancesDatabaseOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesDatabaseOperationsListCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabaseOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsInstancesDatabaseOperationsListCall) IfNoneMatch(entityTag string) *ProjectsInstancesDatabaseOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesDatabaseOperationsListCall) Context(ctx context.Context) *ProjectsInstancesDatabaseOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesDatabaseOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabaseOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/databaseOperations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databaseOperations.list" call.
+// Exactly one of *ListDatabaseOperationsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListDatabaseOperationsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabaseOperationsListCall) Do(opts ...googleapi.CallOption) (*ListDatabaseOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListDatabaseOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists database longrunning-operations.\nA database operation has a name of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/databases/\u003cdatabase\u003e/operations/\u003coperation\u003e`.\nThe long-running operation\nmetadata field type\n`metadata.type_url` describes the type of the metadata. Operations returned\ninclude those that have completed/failed/canceled within the last 7 days,\nand pending operations.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databaseOperations",
+	//   "httpMethod": "GET",
+	//   "id": "spanner.projects.instances.databaseOperations.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "A filter expression that filters what operations are returned in the\nresponse.\n\nThe filter expression must specify the field name, a comparison operator,\nand the value that you want to use for filtering. The value must be a\nstring, a number, or a boolean. The comparison operator must be\n\u003c, \u003e, \u003c=, \u003e=, !=, =, or :. Colon ‘:’ represents a HAS operator which is\nroughly synonymous with equality. Filter rules are case insensitive.\n\nThe long-running operation fields eligible for filtering are:\n  * `name` --\u003e The name of the long-running operation\n  * `done` --\u003e False if the operation is in progress, else true.\n  * `metadata.type_url` (using filter string `metadata.@type`) and fields\n     in `metadata.value` (using filter string `metadata.\u003cfield_name\u003e`,\n     where \u003cfield_name\u003e is a field in metadata.value) are eligible for\n     filtering.\n  * `error` --\u003e Error associated with the long-running operation.\n  * `response.type_url` (using filter string `response.@type`) and fields\n     in `response.value` (using filter string `response.\u003cfield_name\u003e`,\n     where \u003cfield_name\u003e is a field in response.value) are eligible for\n     filtering.\n\nTo filter on multiple expressions, provide each separate expression within\nparentheses. By default, each expression is an AND expression. However,\nyou can include AND, OR, and NOT expressions explicitly.\n\nSome examples of using filters are:\n\n  * `done:true` --\u003e The operation is complete.\n  * `(metadata.@type:type.googleapis.com/google.spanner.admin.database.v1.RestoreDatabaseMetadata)\n     AND (metadata.source_type:BACKUP)\n     AND (metadata.backup_info.backup:backup_howl)\n     AND (metadata.name:restored_howl)\n     AND (metadata.progress.start_time \u003c \\\"2018-03-28T14:50:00Z\\\")\n     AND (error:*)`\n         --\u003e Return RestoreDatabase operations from backups whose name\n             contains \"backup_howl\", where the created database name\n             contains the string \"restored_howl\", the start_time of the\n             restore operation is before 2018-03-28T14:50:00Z,\n             and the operation returned an error.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Number of operations to be returned in the response. If 0 or\nless, defaults to the server's maximum allowed page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "If non-empty, `page_token` should contain a\nnext_page_token\nfrom a previous ListDatabaseOperationsResponse to the\nsame `parent` and with the same `filter`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The instance of the database operations.\nValues are of the form `projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/databaseOperations",
+	//   "response": {
+	//     "$ref": "ListDatabaseOperationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsInstancesDatabaseOperationsListCall) Pages(ctx context.Context, f func(*ListDatabaseOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "spanner.projects.instances.databases.create":
 
 type ProjectsInstancesDatabasesCreateCall struct {
@@ -7317,7 +9363,7 @@ func (c *ProjectsInstancesDatabasesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7423,6 +9469,9 @@ type ProjectsInstancesDatabasesDropDatabaseCall struct {
 }
 
 // DropDatabase: Drops (aka deletes) a Cloud Spanner database.
+// Completed backups for the database will be retained according to
+// their
+// `expire_time`.
 func (r *ProjectsInstancesDatabasesService) DropDatabase(database string) *ProjectsInstancesDatabasesDropDatabaseCall {
 	c := &ProjectsInstancesDatabasesDropDatabaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -7456,7 +9505,7 @@ func (c *ProjectsInstancesDatabasesDropDatabaseCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesDropDatabaseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7515,7 +9564,7 @@ func (c *ProjectsInstancesDatabasesDropDatabaseCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Drops (aka deletes) a Cloud Spanner database.",
+	//   "description": "Drops (aka deletes) a Cloud Spanner database.\nCompleted backups for the database will be retained according to their\n`expire_time`.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "spanner.projects.instances.databases.dropDatabase",
@@ -7598,7 +9647,7 @@ func (c *ProjectsInstancesDatabasesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7747,7 +9796,7 @@ func (c *ProjectsInstancesDatabasesGetDdlCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesGetDdlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7848,14 +9897,18 @@ type ProjectsInstancesDatabasesGetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a database
+// GetIamPolicy: Gets the access control policy for a database or backup
 // resource.
-// Returns an empty policy if a database exists but does
-// not have a policy set.
+// Returns an empty policy if a database or backup exists but does not
+// have a
+// policy set.
 //
 // Authorization requires `spanner.databases.getIamPolicy` permission
 // on
 // resource.
+// For backups, authorization requires
+// `spanner.backups.getIamPolicy`
+// permission on resource.
 func (r *ProjectsInstancesDatabasesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesDatabasesGetIamPolicyCall {
 	c := &ProjectsInstancesDatabasesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7890,7 +9943,7 @@ func (c *ProjectsInstancesDatabasesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7954,7 +10007,7 @@ func (c *ProjectsInstancesDatabasesGetIamPolicyCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a database resource.\nReturns an empty policy if a database exists but does\nnot have a policy set.\n\nAuthorization requires `spanner.databases.getIamPolicy` permission on\nresource.",
+	//   "description": "Gets the access control policy for a database or backup resource.\nReturns an empty policy if a database or backup exists but does not have a\npolicy set.\n\nAuthorization requires `spanner.databases.getIamPolicy` permission on\nresource.\nFor backups, authorization requires `spanner.backups.getIamPolicy`\npermission on resource.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.getIamPolicy",
@@ -8057,7 +10110,7 @@ func (c *ProjectsInstancesDatabasesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8179,6 +10232,172 @@ func (c *ProjectsInstancesDatabasesListCall) Pages(ctx context.Context, f func(*
 	}
 }
 
+// method id "spanner.projects.instances.databases.restore":
+
+type ProjectsInstancesDatabasesRestoreCall struct {
+	s                      *Service
+	parent                 string
+	restoredatabaserequest *RestoreDatabaseRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Restore: Create a new database by restoring from a completed backup.
+// The new
+// database must be in the same project and in an instance with the
+// same
+// instance configuration as the instance containing
+// the backup. The returned database long-running
+// operation has a name of the
+// format
+// `projects/<project>/instances/<instance>/databases/<database>/o
+// perations/<operation_id>`,
+// and can be used to track the progress of the operation, and to cancel
+// it.
+// The metadata field type is
+// RestoreDatabaseMetadata.
+// The response type
+// is Database, if
+// successful. Cancelling the returned operation will stop the restore
+// and
+// delete the database.
+// There can be only one database being restored into an instance at a
+// time.
+// Once the restore operation completes, a new restore operation can
+// be
+// initiated, without waiting for the optimize operation associated with
+// the
+// first restore to complete.
+func (r *ProjectsInstancesDatabasesService) Restore(parent string, restoredatabaserequest *RestoreDatabaseRequest) *ProjectsInstancesDatabasesRestoreCall {
+	c := &ProjectsInstancesDatabasesRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.restoredatabaserequest = restoredatabaserequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesDatabasesRestoreCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesRestoreCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesDatabasesRestoreCall) Context(ctx context.Context) *ProjectsInstancesDatabasesRestoreCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesDatabasesRestoreCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesRestoreCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.restoredatabaserequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/databases:restore")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.restore" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesRestoreCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a new database by restoring from a completed backup. The new\ndatabase must be in the same project and in an instance with the same\ninstance configuration as the instance containing\nthe backup. The returned database long-running\noperation has a name of the format\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/databases/\u003cdatabase\u003e/operations/\u003coperation_id\u003e`,\nand can be used to track the progress of the operation, and to cancel it.\nThe metadata field type is\nRestoreDatabaseMetadata.\nThe response type\nis Database, if\nsuccessful. Cancelling the returned operation will stop the restore and\ndelete the database.\nThere can be only one database being restored into an instance at a time.\nOnce the restore operation completes, a new restore operation can be\ninitiated, without waiting for the optimize operation associated with the\nfirst restore to complete.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases:restore",
+	//   "httpMethod": "POST",
+	//   "id": "spanner.projects.instances.databases.restore",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the instance in which to create the\nrestored database. This instance must be in the same project and\nhave the same instance configuration as the instance containing\nthe source backup. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/databases:restore",
+	//   "request": {
+	//     "$ref": "RestoreDatabaseRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
+}
+
 // method id "spanner.projects.instances.databases.setIamPolicy":
 
 type ProjectsInstancesDatabasesSetIamPolicyCall struct {
@@ -8190,11 +10409,14 @@ type ProjectsInstancesDatabasesSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy on a database
+// SetIamPolicy: Sets the access control policy on a database or backup
 // resource.
 // Replaces any existing policy.
 //
 // Authorization requires `spanner.databases.setIamPolicy`
+// permission on resource.
+// For backups, authorization requires
+// `spanner.backups.setIamPolicy`
 // permission on resource.
 func (r *ProjectsInstancesDatabasesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesDatabasesSetIamPolicyCall {
 	c := &ProjectsInstancesDatabasesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8230,7 +10452,7 @@ func (c *ProjectsInstancesDatabasesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8294,7 +10516,7 @@ func (c *ProjectsInstancesDatabasesSetIamPolicyCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on a database resource.\nReplaces any existing policy.\n\nAuthorization requires `spanner.databases.setIamPolicy`\npermission on resource.",
+	//   "description": "Sets the access control policy on a database or backup resource.\nReplaces any existing policy.\n\nAuthorization requires `spanner.databases.setIamPolicy`\npermission on resource.\nFor backups, authorization requires `spanner.backups.setIamPolicy`\npermission on resource.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.setIamPolicy",
@@ -8337,13 +10559,18 @@ type ProjectsInstancesDatabasesTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that the caller has on the
-// specified database resource.
+// specified database or backup
+// resource.
 //
 // Attempting this RPC on a non-existent Cloud Spanner database
 // will
 // result in a NOT_FOUND error if the user has
 // `spanner.databases.list` permission on the containing Cloud
-// Spanner instance. Otherwise returns an empty set of permissions.
+// Spanner instance. Otherwise returns an empty set of
+// permissions.
+// Calling this method on a backup that does not exist will
+// result in a NOT_FOUND error if the user has
+// `spanner.backups.list` permission on the containing instance.
 func (r *ProjectsInstancesDatabasesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesDatabasesTestIamPermissionsCall {
 	c := &ProjectsInstancesDatabasesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8378,7 +10605,7 @@ func (c *ProjectsInstancesDatabasesTestIamPermissionsCall) Header() http.Header 
 
 func (c *ProjectsInstancesDatabasesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8442,7 +10669,7 @@ func (c *ProjectsInstancesDatabasesTestIamPermissionsCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that the caller has on the specified database resource.\n\nAttempting this RPC on a non-existent Cloud Spanner database will\nresult in a NOT_FOUND error if the user has\n`spanner.databases.list` permission on the containing Cloud\nSpanner instance. Otherwise returns an empty set of permissions.",
+	//   "description": "Returns permissions that the caller has on the specified database or backup\nresource.\n\nAttempting this RPC on a non-existent Cloud Spanner database will\nresult in a NOT_FOUND error if the user has\n`spanner.databases.list` permission on the containing Cloud\nSpanner instance. Otherwise returns an empty set of permissions.\nCalling this method on a backup that does not exist will\nresult in a NOT_FOUND error if the user has\n`spanner.backups.list` permission on the containing instance.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.testIamPermissions",
@@ -8528,7 +10755,7 @@ func (c *ProjectsInstancesDatabasesUpdateDdlCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesUpdateDdlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8684,7 +10911,7 @@ func (c *ProjectsInstancesDatabasesOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8821,7 +11048,7 @@ func (c *ProjectsInstancesDatabasesOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8967,7 +11194,7 @@ func (c *ProjectsInstancesDatabasesOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9149,7 +11376,7 @@ func (c *ProjectsInstancesDatabasesOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9327,7 +11554,7 @@ func (c *ProjectsInstancesDatabasesSessionsBatchCreateCall) Header() http.Header
 
 func (c *ProjectsInstancesDatabasesSessionsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9472,7 +11699,7 @@ func (c *ProjectsInstancesDatabasesSessionsBeginTransactionCall) Header() http.H
 
 func (c *ProjectsInstancesDatabasesSessionsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9624,7 +11851,7 @@ func (c *ProjectsInstancesDatabasesSessionsCommitCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9794,7 +12021,7 @@ func (c *ProjectsInstancesDatabasesSessionsCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9937,7 +12164,7 @@ func (c *ProjectsInstancesDatabasesSessionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10086,7 +12313,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall) Header() http.He
 
 func (c *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10240,7 +12467,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteSqlCall) Header() http.Header 
 
 func (c *ProjectsInstancesDatabasesSessionsExecuteSqlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10386,7 +12613,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall) Header() htt
 
 func (c *ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10540,7 +12767,7 @@ func (c *ProjectsInstancesDatabasesSessionsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10719,7 +12946,7 @@ func (c *ProjectsInstancesDatabasesSessionsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10910,7 +13137,7 @@ func (c *ProjectsInstancesDatabasesSessionsPartitionQueryCall) Header() http.Hea
 
 func (c *ProjectsInstancesDatabasesSessionsPartitionQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11073,7 +13300,7 @@ func (c *ProjectsInstancesDatabasesSessionsPartitionReadCall) Header() http.Head
 
 func (c *ProjectsInstancesDatabasesSessionsPartitionReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11229,7 +13456,7 @@ func (c *ProjectsInstancesDatabasesSessionsReadCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11379,7 +13606,7 @@ func (c *ProjectsInstancesDatabasesSessionsRollbackCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11524,7 +13751,7 @@ func (c *ProjectsInstancesDatabasesSessionsStreamingReadCall) Header() http.Head
 
 func (c *ProjectsInstancesDatabasesSessionsStreamingReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11680,7 +13907,7 @@ func (c *ProjectsInstancesOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11817,7 +14044,7 @@ func (c *ProjectsInstancesOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11963,7 +14190,7 @@ func (c *ProjectsInstancesOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12145,7 +14372,7 @@ func (c *ProjectsInstancesOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

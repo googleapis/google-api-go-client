@@ -892,7 +892,7 @@
       "id": "clouddebugger:v2",
       "name": "clouddebugger",
       "version": "v2",
-      "title": "Stackdriver Debugger API",
+      "title": "Cloud Debugger API",
       "description": "Examines the call stack and variables of a running application without stopping or slowing it down.",
       "discoveryRestUrl": "https://clouddebugger.googleapis.com/$discovery/rest?version=v2",
       "icons": {
@@ -907,7 +907,7 @@
       "id": "clouderrorreporting:v1beta1",
       "name": "clouderrorreporting",
       "version": "v1beta1",
-      "title": "Stackdriver Error Reporting API",
+      "title": "Error Reporting API",
       "description": "Groups and counts similar errors from cloud services and applications, reports new errors, and provides access to error groups and their associated errors.",
       "discoveryRestUrl": "https://clouderrorreporting.googleapis.com/$discovery/rest?version=v1beta1",
       "icons": {
@@ -1020,36 +1020,6 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/kms/",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "cloudprivatecatalog:v1beta1",
-      "name": "cloudprivatecatalog",
-      "version": "v1beta1",
-      "title": "Cloud Private Catalog API",
-      "description": "Enable cloud users to discover enterprise catalogs and products in their organizations.",
-      "discoveryRestUrl": "https://cloudprivatecatalog.googleapis.com/$discovery/rest?version=v1beta1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/private-catalog/",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "cloudprivatecatalogproducer:v1beta1",
-      "name": "cloudprivatecatalogproducer",
-      "version": "v1beta1",
-      "title": "Cloud Private Catalog Producer API",
-      "description": "Enables cloud users to manage and share enterprise catalogs intheir organizations.",
-      "discoveryRestUrl": "https://cloudprivatecatalogproducer.googleapis.com/$discovery/rest?version=v1beta1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/private-catalog/",
       "preferred": true
     },
     {
@@ -1253,7 +1223,7 @@
       "name": "cloudtrace",
       "version": "v1",
       "title": "Cloud Trace API",
-      "description": "Sends application trace data to Cloud Trace for viewing. Trace data is collected for all App Engine applications by default. Trace data from other applications can be provided using this API. This library is used to interact with the Trace API directly. If you are looking to instrument your application for Cloud Trace, we recommend using OpenCensus.",
+      "description": "Sends application trace data to Cloud Trace for viewing. Trace data is collected for all App Engine applications by default. Trace data from other applications can be provided using this API. This library is used to interact with the Cloud Trace API directly. If you are looking to instrument your application for Cloud Trace, we recommend using OpenCensus.",
       "discoveryRestUrl": "https://cloudtrace.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1268,7 +1238,7 @@
       "name": "cloudtrace",
       "version": "v2",
       "title": "Cloud Trace API",
-      "description": "Sends application trace data to Cloud Trace for viewing. Trace data is collected for all App Engine applications by default. Trace data from other applications can be provided using this API. This library is used to interact with the Trace API directly. If you are looking to instrument your application for Cloud Trace, we recommend using OpenCensus.",
+      "description": "Sends application trace data to Cloud Trace for viewing. Trace data is collected for all App Engine applications by default. Trace data from other applications can be provided using this API. This library is used to interact with the Cloud Trace API directly. If you are looking to instrument your application for Cloud Trace, we recommend using OpenCensus.",
       "discoveryRestUrl": "https://cloudtrace.googleapis.com/$discovery/rest?version=v2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1283,7 +1253,7 @@
       "name": "cloudtrace",
       "version": "v2beta1",
       "title": "Cloud Trace API",
-      "description": "Sends application trace data to Cloud Trace for viewing. Trace data is collected for all App Engine applications by default. Trace data from other applications can be provided using this API. This library is used to interact with the Trace API directly. If you are looking to instrument your application for Cloud Trace, we recommend using OpenCensus.",
+      "description": "Sends application trace data to Cloud Trace for viewing. Trace data is collected for all App Engine applications by default. Trace data from other applications can be provided using this API. This library is used to interact with the Cloud Trace API directly. If you are looking to instrument your application for Cloud Trace, we recommend using OpenCensus.",
       "discoveryRestUrl": "https://cloudtrace.googleapis.com/$discovery/rest?version=v2beta1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2562,8 +2532,8 @@
       "id": "logging:v2",
       "name": "logging",
       "version": "v2",
-      "title": "Stackdriver Logging API",
-      "description": "Writes log entries and manages your Stackdriver Logging configuration. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the Stackdriver Logging documentation \u003chttps://cloud.google.com/logging/docs\u003e.",
+      "title": "Cloud Logging API",
+      "description": "Writes log entries and manages your Cloud Logging configuration. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the Cloud Logging documentation \u003chttps://cloud.google.com/logging/docs\u003e.",
       "discoveryRestUrl": "https://logging.googleapis.com/$discovery/rest?version=v2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2771,7 +2741,7 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/",
-      "preferred": true
+      "preferred": false
     },
     {
       "kind": "discovery#directoryItem",
@@ -2787,6 +2757,21 @@
       },
       "documentationLink": "https://cloud.google.com/",
       "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "osconfig:v1",
+      "name": "osconfig",
+      "version": "v1",
+      "title": "Cloud OS Config API",
+      "description": "OS management tools that can be used for patch management, patch compliance, and configuration management on VM instances.",
+      "discoveryRestUrl": "https://osconfig.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/",
+      "preferred": true
     },
     {
       "kind": "discovery#directoryItem",

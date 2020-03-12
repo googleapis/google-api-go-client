@@ -174,6 +174,7 @@ type ProjectsJobsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.Studies = NewProjectsLocationsStudiesService(s)
 	return rs
 }
 
@@ -181,6 +182,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	Operations *ProjectsLocationsOperationsService
+
+	Studies *ProjectsLocationsStudiesService
 }
 
 func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperationsService {
@@ -189,6 +192,27 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 }
 
 type ProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsStudiesService(s *Service) *ProjectsLocationsStudiesService {
+	rs := &ProjectsLocationsStudiesService{s: s}
+	rs.Trials = NewProjectsLocationsStudiesTrialsService(s)
+	return rs
+}
+
+type ProjectsLocationsStudiesService struct {
+	s *Service
+
+	Trials *ProjectsLocationsStudiesTrialsService
+}
+
+func NewProjectsLocationsStudiesTrialsService(s *Service) *ProjectsLocationsStudiesTrialsService {
+	rs := &ProjectsLocationsStudiesTrialsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsStudiesTrialsService struct {
 	s *Service
 }
 
@@ -308,6 +332,82 @@ func (s *GoogleApi__HttpBody) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type GoogleCloudMlV1AutomatedStoppingConfigDecayCurveAutomatedStoppingConfig struct {
+	// UseElapsedTime: True if measurement.elapsed_time is used as the
+	// x-axis of each
+	// Trials Decay Curve. Otherwise, Measurement.steps will be used as
+	// the
+	// x-axis.
+	UseElapsedTime bool `json:"useElapsedTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "UseElapsedTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UseElapsedTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1AutomatedStoppingConfigDecayCurveAutomatedStoppingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1AutomatedStoppingConfigDecayCurveAutomatedStoppingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1AutomatedStoppingConfigMedianAutomatedStoppingConfig:
+// The median automated stopping rule stops a pending trial if the
+// trial's
+// best objective_value is strictly below the median 'performance' of
+// all
+// completed trials reported up to the trial's last
+// measurement.
+// Currently, 'performance' refers to the running average of the
+// objective
+// values reported by the trial in each measurement.
+type GoogleCloudMlV1AutomatedStoppingConfigMedianAutomatedStoppingConfig struct {
+	// UseElapsedTime: True if median automated stopping rule applies
+	// on
+	// measurement.use_elapsed_time. it means that elapsed_time field
+	// of
+	// latest measurement of current trial is used to compute median
+	// objective
+	// value for each completed trials.
+	UseElapsedTime bool `json:"useElapsedTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "UseElapsedTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UseElapsedTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1AutomatedStoppingConfigMedianAutomatedStoppingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1AutomatedStoppingConfigMedianAutomatedStoppingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudMlV1HyperparameterOutputHyperparameterMetric: An observed
 // value of a metric.
 type GoogleCloudMlV1HyperparameterOutputHyperparameterMetric struct {
@@ -352,6 +452,471 @@ func (s *GoogleCloudMlV1HyperparameterOutputHyperparameterMetric) UnmarshalJSON(
 		return err
 	}
 	s.ObjectiveValue = float64(s1.ObjectiveValue)
+	return nil
+}
+
+// GoogleCloudMlV1MeasurementMetric: A message representing a metric in
+// the measurement.
+type GoogleCloudMlV1MeasurementMetric struct {
+	// Metric: Required. Metric name.
+	Metric string `json:"metric,omitempty"`
+
+	// Value: Required. The value for this metric.
+	Value float64 `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Metric") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metric") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1MeasurementMetric) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1MeasurementMetric
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudMlV1MeasurementMetric) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudMlV1MeasurementMetric
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
+}
+
+type GoogleCloudMlV1StudyConfigParameterSpecCategoricalValueSpec struct {
+	// Values: Must be specified if type is `CATEGORICAL`.
+	// The list of possible categories.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Values") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1StudyConfigParameterSpecCategoricalValueSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1StudyConfigParameterSpecCategoricalValueSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudMlV1StudyConfigParameterSpecDiscreteValueSpec struct {
+	// Values: Must be specified if type is `DISCRETE`.
+	// A list of feasible points.
+	// The list should be in strictly increasing order. For instance,
+	// this
+	// parameter might have possible settings of 1.5, 2.5, and 4.0. This
+	// list
+	// should not contain more than 1,000 values.
+	Values []float64 `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Values") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1StudyConfigParameterSpecDiscreteValueSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1StudyConfigParameterSpecDiscreteValueSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudMlV1StudyConfigParameterSpecDoubleValueSpec struct {
+	// MaxValue: Must be specified if type is `DOUBLE`. Maximum value of the
+	// parameter.
+	MaxValue float64 `json:"maxValue,omitempty"`
+
+	// MinValue: Must be specified if type is `DOUBLE`. Minimum value of the
+	// parameter.
+	MinValue float64 `json:"minValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxValue") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1StudyConfigParameterSpecDoubleValueSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1StudyConfigParameterSpecDoubleValueSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudMlV1StudyConfigParameterSpecDoubleValueSpec) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudMlV1StudyConfigParameterSpecDoubleValueSpec
+	var s1 struct {
+		MaxValue gensupport.JSONFloat64 `json:"maxValue"`
+		MinValue gensupport.JSONFloat64 `json:"minValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.MaxValue = float64(s1.MaxValue)
+	s.MinValue = float64(s1.MinValue)
+	return nil
+}
+
+type GoogleCloudMlV1StudyConfigParameterSpecIntegerValueSpec struct {
+	// MaxValue: Must be specified if type is `INTEGER`. Maximum value of
+	// the parameter.
+	MaxValue int64 `json:"maxValue,omitempty,string"`
+
+	// MinValue: Must be specified if type is `INTEGER`. Minimum value of
+	// the parameter.
+	MinValue int64 `json:"minValue,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxValue") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1StudyConfigParameterSpecIntegerValueSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1StudyConfigParameterSpecIntegerValueSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1StudyConfigParameterSpecMatchingParentCategoricalValueS
+// pec: Represents the spec to match categorical values from parent
+// parameter.
+type GoogleCloudMlV1StudyConfigParameterSpecMatchingParentCategoricalValueSpec struct {
+	// Values: Matches values of the parent parameter with type
+	// 'CATEGORICAL'.
+	// All values must exist in `categorical_value_spec` of parent
+	// parameter.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Values") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1StudyConfigParameterSpecMatchingParentCategoricalValueSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1StudyConfigParameterSpecMatchingParentCategoricalValueSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1StudyConfigParameterSpecMatchingParentDiscreteValueSpec
+// : Represents the spec to match discrete values from parent parameter.
+type GoogleCloudMlV1StudyConfigParameterSpecMatchingParentDiscreteValueSpec struct {
+	// Values: Matches values of the parent parameter with type
+	// 'DISCRETE'.
+	// All values must exist in `discrete_value_spec` of parent parameter.
+	Values []float64 `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Values") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1StudyConfigParameterSpecMatchingParentDiscreteValueSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1StudyConfigParameterSpecMatchingParentDiscreteValueSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1StudyConfigParameterSpecMatchingParentIntValueSpec:
+// Represents the spec to match integer values from parent parameter.
+type GoogleCloudMlV1StudyConfigParameterSpecMatchingParentIntValueSpec struct {
+	// Values: Matches values of the parent parameter with type
+	// 'INTEGER'.
+	// All values must lie in `integer_value_spec` of parent parameter.
+	Values googleapi.Int64s `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Values") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1StudyConfigParameterSpecMatchingParentIntValueSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1StudyConfigParameterSpecMatchingParentIntValueSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1StudyConfigMetricSpec: Represents a metric to
+// optimize.
+type GoogleCloudMlV1StudyConfigMetricSpec struct {
+	// Goal: Required. The optimization goal of the metric.
+	//
+	// Possible values:
+	//   "GOAL_TYPE_UNSPECIFIED" - Goal Type will default to maximize.
+	//   "MAXIMIZE" - Maximize the goal metric.
+	//   "MINIMIZE" - Minimize the goal metric.
+	Goal string `json:"goal,omitempty"`
+
+	// Metric: Required. The name of the metric.
+	Metric string `json:"metric,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Goal") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Goal") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1StudyConfigMetricSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1StudyConfigMetricSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1StudyConfigParameterSpec: Represents a single
+// parameter to optimize.
+type GoogleCloudMlV1StudyConfigParameterSpec struct {
+	// CategoricalValueSpec: The value spec for a 'CATEGORICAL' parameter.
+	CategoricalValueSpec *GoogleCloudMlV1StudyConfigParameterSpecCategoricalValueSpec `json:"categoricalValueSpec,omitempty"`
+
+	// ChildParameterSpecs: A child node is active if the parameter's value
+	// matches the child node's
+	// matching_parent_values.
+	//
+	// If two items in child_parameter_specs have the same name, they must
+	// have
+	// disjoint matching_parent_values.
+	ChildParameterSpecs []*GoogleCloudMlV1StudyConfigParameterSpec `json:"childParameterSpecs,omitempty"`
+
+	// DiscreteValueSpec: The value spec for a 'DISCRETE' parameter.
+	DiscreteValueSpec *GoogleCloudMlV1StudyConfigParameterSpecDiscreteValueSpec `json:"discreteValueSpec,omitempty"`
+
+	// DoubleValueSpec: The value spec for a 'DOUBLE' parameter.
+	DoubleValueSpec *GoogleCloudMlV1StudyConfigParameterSpecDoubleValueSpec `json:"doubleValueSpec,omitempty"`
+
+	// IntegerValueSpec: The value spec for an 'INTEGER' parameter.
+	IntegerValueSpec *GoogleCloudMlV1StudyConfigParameterSpecIntegerValueSpec `json:"integerValueSpec,omitempty"`
+
+	// Parameter: Required. The parameter name must be unique amongst all
+	// ParameterSpecs.
+	Parameter string `json:"parameter,omitempty"`
+
+	ParentCategoricalValues *GoogleCloudMlV1StudyConfigParameterSpecMatchingParentCategoricalValueSpec `json:"parentCategoricalValues,omitempty"`
+
+	ParentDiscreteValues *GoogleCloudMlV1StudyConfigParameterSpecMatchingParentDiscreteValueSpec `json:"parentDiscreteValues,omitempty"`
+
+	ParentIntValues *GoogleCloudMlV1StudyConfigParameterSpecMatchingParentIntValueSpec `json:"parentIntValues,omitempty"`
+
+	// ScaleType: How the parameter should be scaled.
+	// Leave unset for categorical parameters.
+	//
+	// Possible values:
+	//   "SCALE_TYPE_UNSPECIFIED" - By default, no scaling is applied.
+	//   "UNIT_LINEAR_SCALE" - Scales the feasible space to (0, 1) linearly.
+	//   "UNIT_LOG_SCALE" - Scales the feasible space logarithmically to (0,
+	// 1). The entire
+	// feasible space must be strictly positive.
+	//   "UNIT_REVERSE_LOG_SCALE" - Scales the feasible space "reverse"
+	// logarithmically to (0, 1). The
+	// result is that values close to the top of the feasible space are
+	// spread
+	// out more than points near the bottom. The entire feasible space must
+	// be
+	// strictly positive.
+	ScaleType string `json:"scaleType,omitempty"`
+
+	// Type: Required. The type of the parameter.
+	//
+	// Possible values:
+	//   "PARAMETER_TYPE_UNSPECIFIED" - You must specify a valid type. Using
+	// this unspecified type will result
+	// in an error.
+	//   "DOUBLE" - Type for real-valued parameters.
+	//   "INTEGER" - Type for integral parameters.
+	//   "CATEGORICAL" - The parameter is categorical, with a value chosen
+	// from the categories
+	// field.
+	//   "DISCRETE" - The parameter is real valued, with a fixed set of
+	// feasible points. If
+	// `type==DISCRETE`, feasible_points must be provided, and
+	// {`min_value`, `max_value`} will be ignored.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CategoricalValueSpec") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CategoricalValueSpec") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1StudyConfigParameterSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1StudyConfigParameterSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1TrialParameter: A message representing a parameter to
+// be tuned.
+type GoogleCloudMlV1TrialParameter struct {
+	// FloatValue: Must be set if ParameterType is DOUBLE or DISCRETE.
+	FloatValue float64 `json:"floatValue,omitempty"`
+
+	// IntValue: Must be set if ParameterType is INTEGER
+	IntValue int64 `json:"intValue,omitempty,string"`
+
+	// Parameter: The name of the parameter.
+	Parameter string `json:"parameter,omitempty"`
+
+	// StringValue: Must be set if ParameterTypeis CATEGORICAL
+	StringValue string `json:"stringValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FloatValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FloatValue") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1TrialParameter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1TrialParameter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudMlV1TrialParameter) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudMlV1TrialParameter
+	var s1 struct {
+		FloatValue gensupport.JSONFloat64 `json:"floatValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FloatValue = float64(s1.FloatValue)
 	return nil
 }
 
@@ -403,6 +968,35 @@ type GoogleCloudMlV1__AcceleratorConfig struct {
 
 func (s *GoogleCloudMlV1__AcceleratorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudMlV1__AcceleratorConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1__AddTrialMeasurementRequest: The request message for
+// the AddTrialMeasurement service method.
+type GoogleCloudMlV1__AddTrialMeasurementRequest struct {
+	// Measurement: Required. The measurement to be added to a trial.
+	Measurement *GoogleCloudMlV1__Measurement `json:"measurement,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Measurement") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Measurement") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__AddTrialMeasurementRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__AddTrialMeasurementRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -501,6 +1095,40 @@ func (s *GoogleCloudMlV1__AutoScaling) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudMlV1__AutomatedStoppingConfig: Configuration for Automated
+// Early Stopping of Trials. If no
+// implementation_config is set, automated early stopping will not be
+// run.
+type GoogleCloudMlV1__AutomatedStoppingConfig struct {
+	DecayCurveStoppingConfig *GoogleCloudMlV1AutomatedStoppingConfigDecayCurveAutomatedStoppingConfig `json:"decayCurveStoppingConfig,omitempty"`
+
+	MedianAutomatedStoppingConfig *GoogleCloudMlV1AutomatedStoppingConfigMedianAutomatedStoppingConfig `json:"medianAutomatedStoppingConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DecayCurveStoppingConfig") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DecayCurveStoppingConfig")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__AutomatedStoppingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__AutomatedStoppingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudMlV1__BuiltInAlgorithmOutput: Represents output related to
 // a built-in algorithm Job.
 type GoogleCloudMlV1__BuiltInAlgorithmOutput struct {
@@ -594,6 +1222,133 @@ type GoogleCloudMlV1__Capability struct {
 
 func (s *GoogleCloudMlV1__Capability) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudMlV1__Capability
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1__CheckTrialEarlyStoppingStateMetatdata: This message
+// will be placed in the metadata field of
+// a
+// google.longrunning.Operation associated with a
+// CheckTrialEarlyStoppingState
+// request.
+type GoogleCloudMlV1__CheckTrialEarlyStoppingStateMetatdata struct {
+	// CreateTime: The time operation was submitted.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Study: The name of the study that the trial belongs to.
+	Study string `json:"study,omitempty"`
+
+	// Trial: The Trial name.
+	Trial string `json:"trial,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__CheckTrialEarlyStoppingStateMetatdata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__CheckTrialEarlyStoppingStateMetatdata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1__CheckTrialEarlyStoppingStateRequest: The request
+// message for the CheckTrialEarlyStoppingState service method.
+type GoogleCloudMlV1__CheckTrialEarlyStoppingStateRequest struct {
+}
+
+// GoogleCloudMlV1__CheckTrialEarlyStoppingStateResponse: The message
+// will be placed in the response field of a
+// completed
+// google.longrunning.Operation associated with a
+// CheckTrialEarlyStoppingState
+// request.
+type GoogleCloudMlV1__CheckTrialEarlyStoppingStateResponse struct {
+	// EndTime: The time operation processing completed.
+	EndTime string `json:"endTime,omitempty"`
+
+	// ShouldStop: True if the Trial should stop.
+	ShouldStop bool `json:"shouldStop,omitempty"`
+
+	// StartTime: The time operation was started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__CheckTrialEarlyStoppingStateResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__CheckTrialEarlyStoppingStateResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1__CompleteTrialRequest: The request message for the
+// CompleteTrial service method.
+type GoogleCloudMlV1__CompleteTrialRequest struct {
+	// FinalMeasurement: Optional. If provided, it will be used as the
+	// completed trial's
+	// final_measurement; Otherwise, the service will auto-select
+	// a
+	// previously reported measurement as the final-measurement
+	FinalMeasurement *GoogleCloudMlV1__Measurement `json:"finalMeasurement,omitempty"`
+
+	// InfeasibleReason: Optional. A human readable reason why the Trial was
+	// infeasible. This should
+	// only be provided if `trial_infeasible` is true.
+	InfeasibleReason string `json:"infeasibleReason,omitempty"`
+
+	// TrialInfeasible: Optional. True if the trial cannot be run with the
+	// given Parameter, and
+	// final_measurement will be ignored.
+	TrialInfeasible bool `json:"trialInfeasible,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FinalMeasurement") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FinalMeasurement") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__CompleteTrialRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__CompleteTrialRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -697,13 +1452,32 @@ func (s *GoogleCloudMlV1__ExplainRequest) MarshalJSON() ([]byte, error) {
 // There are two feature attribution methods supported for TensorFlow
 // models:
 // integrated gradients and sampled Shapley.
-// <a href="/ml-engine/docs/ai-explanations/overview">Learn more about
+// [Learn more about
 // feature
-// attributions</a>.
+// attributions.](/ml-engine/docs/ai-explanations/overview)
 type GoogleCloudMlV1__ExplanationConfig struct {
+	// IntegratedGradientsAttribution: Attributes credit by computing the
+	// Aumann-Shapley value taking advantage
+	// of the model's fully differentiable structure. Refer to this paper
+	// for
+	// more details: http://proceedings.mlr.press/v70/sundararajan17a.html
 	IntegratedGradientsAttribution *GoogleCloudMlV1__IntegratedGradientsAttribution `json:"integratedGradientsAttribution,omitempty"`
 
+	// SampledShapleyAttribution: An attribution method that approximates
+	// Shapley values for features that
+	// contribute to the label being predicted. A sampling strategy is used
+	// to
+	// approximate the value rather than considering all subsets of
+	// features.
 	SampledShapleyAttribution *GoogleCloudMlV1__SampledShapleyAttribution `json:"sampledShapleyAttribution,omitempty"`
+
+	// XraiAttribution: Attributes credit by computing the XRAI taking
+	// advantage
+	// of the model's fully differentiable structure. Refer to this paper
+	// for
+	// more details: https://arxiv.org/abs/1906.02825
+	// Currently only implemented for models with natural image inputs.
+	XraiAttribution *GoogleCloudMlV1__XraiAttribution `json:"xraiAttribution,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "IntegratedGradientsAttribution") to unconditionally include in API
@@ -1208,6 +1982,70 @@ func (s *GoogleCloudMlV1__ListModelsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type GoogleCloudMlV1__ListStudiesResponse struct {
+	// Studies: The Studies associated with the project.
+	Studies []*GoogleCloudMlV1__Study `json:"studies,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Studies") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Studies") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__ListStudiesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__ListStudiesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1__ListTrialsResponse: The response message for the
+// ListTrials method.
+type GoogleCloudMlV1__ListTrialsResponse struct {
+	// Trials: The trials associated with the study.
+	Trials []*GoogleCloudMlV1__Trial `json:"trials,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Trials") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Trials") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__ListTrialsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__ListTrialsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudMlV1__ListVersionsResponse: Response message for the
 // ListVersions method.
 type GoogleCloudMlV1__ListVersionsResponse struct {
@@ -1309,6 +2147,45 @@ type GoogleCloudMlV1__ManualScaling struct {
 
 func (s *GoogleCloudMlV1__ManualScaling) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudMlV1__ManualScaling
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1__Measurement: A message representing a Measurement.
+type GoogleCloudMlV1__Measurement struct {
+	// ElapsedTime: Time that the Trial has been running at the point of
+	// this Measurement.
+	ElapsedTime string `json:"elapsedTime,omitempty"`
+
+	// Metrics: Provides a list of metrics that act as inputs into the
+	// objective
+	// function.
+	Metrics []*GoogleCloudMlV1MeasurementMetric `json:"metrics,omitempty"`
+
+	// StepCount: The number of steps a machine learning model has been
+	// trained for.
+	// Must be non-negative.
+	StepCount int64 `json:"stepCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "ElapsedTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ElapsedTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__Measurement) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__Measurement
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2112,6 +2989,235 @@ func (s *GoogleCloudMlV1__Scheduling) MarshalJSON() ([]byte, error) {
 type GoogleCloudMlV1__SetDefaultVersionRequest struct {
 }
 
+type GoogleCloudMlV1__StopTrialRequest struct {
+}
+
+// GoogleCloudMlV1__Study: A message representing a Study.
+type GoogleCloudMlV1__Study struct {
+	// CreateTime: Output only. Time that the study was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// InactiveReason: Output only. A human readable reason why the Study is
+	// inactive.
+	// This should be empty if a study is ACTIVE or COMPLETED.
+	InactiveReason string `json:"inactiveReason,omitempty"`
+
+	// Name: Output only. The name of a study.
+	Name string `json:"name,omitempty"`
+
+	// State: Output only. The detailed state of a study.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The study state is unspecified.
+	//   "ACTIVE" - The study is active.
+	//   "INACTIVE" - The study is stopped due to an internal error.
+	//   "COMPLETED" - The study is done when the service exhausts the
+	// parameter search space
+	// or max_trial_count is reached.
+	State string `json:"state,omitempty"`
+
+	// StudyConfig: Required. Configuration of the study.
+	StudyConfig *GoogleCloudMlV1__StudyConfig `json:"studyConfig,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__Study) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__Study
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1__StudyConfig: Represents configuration of a study.
+type GoogleCloudMlV1__StudyConfig struct {
+	// Algorithm: The search algorithm specified for the study.
+	//
+	// Possible values:
+	//   "ALGORITHM_UNSPECIFIED" - The default algorithm used by the Cloud
+	// AI Platform Optimization service.
+	//   "GAUSSIAN_PROCESS_BANDIT" - Gaussian Process Bandit.
+	//   "GRID_SEARCH" - Simple grid search within the feasible space. To
+	// use grid search,
+	// all parameters must be `INTEGER`, `CATEGORICAL`, or `DISCRETE`.
+	//   "RANDOM_SEARCH" - Simple random search within the feasible space.
+	Algorithm string `json:"algorithm,omitempty"`
+
+	// AutomatedStoppingConfig: Configuration for automated stopping of
+	// unpromising Trials.
+	AutomatedStoppingConfig *GoogleCloudMlV1__AutomatedStoppingConfig `json:"automatedStoppingConfig,omitempty"`
+
+	Metrics []*GoogleCloudMlV1StudyConfigMetricSpec `json:"metrics,omitempty"`
+
+	// Parameters: Required. The set of parameters to tune.
+	Parameters []*GoogleCloudMlV1StudyConfigParameterSpec `json:"parameters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Algorithm") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Algorithm") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__StudyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__StudyConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1__SuggestTrialsMetadata: Metadata field of a
+// google.longrunning.Operation associated
+// with a SuggestTrialsRequest.
+type GoogleCloudMlV1__SuggestTrialsMetadata struct {
+	// ClientId: The identifier of the client that is requesting the
+	// suggestion.
+	ClientId string `json:"clientId,omitempty"`
+
+	// CreateTime: The time operation was submitted.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Study: The name of the study that the trial belongs to.
+	Study string `json:"study,omitempty"`
+
+	// SuggestionCount: The number of suggestions requested.
+	SuggestionCount int64 `json:"suggestionCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClientId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__SuggestTrialsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__SuggestTrialsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1__SuggestTrialsRequest: The request message for the
+// SuggestTrial service method.
+type GoogleCloudMlV1__SuggestTrialsRequest struct {
+	// ClientId: Required. The identifier of the client that is requesting
+	// the suggestion.
+	//
+	// If multiple SuggestTrialsRequests have the same `client_id`,
+	// the service will return the identical suggested trial if the trial
+	// is
+	// pending, and provide a new trial if the last suggested trial was
+	// completed.
+	ClientId string `json:"clientId,omitempty"`
+
+	// SuggestionCount: Required. The number of suggestions requested.
+	SuggestionCount int64 `json:"suggestionCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClientId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__SuggestTrialsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__SuggestTrialsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1__SuggestTrialsResponse: This message will be placed
+// in the response field of a completed
+// google.longrunning.Operation associated with a SuggestTrials request.
+type GoogleCloudMlV1__SuggestTrialsResponse struct {
+	// EndTime: The time operation processing completed.
+	EndTime string `json:"endTime,omitempty"`
+
+	// StartTime: The time operation was started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// StudyState: The state of the study.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The study state is unspecified.
+	//   "ACTIVE" - The study is active.
+	//   "INACTIVE" - The study is stopped due to an internal error.
+	//   "COMPLETED" - The study is done when the service exhausts the
+	// parameter search space
+	// or max_trial_count is reached.
+	StudyState string `json:"studyState,omitempty"`
+
+	// Trials: A list of Trials.
+	Trials []*GoogleCloudMlV1__Trial `json:"trials,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__SuggestTrialsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__SuggestTrialsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudMlV1__TrainingInput: Represents input parameters for a
 // training job. When using the gcloud command
 // to submit your training job, you can specify the input parameters
@@ -2550,6 +3656,85 @@ func (s *GoogleCloudMlV1__TrainingOutput) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// GoogleCloudMlV1__Trial: A message representing a Trial.
+type GoogleCloudMlV1__Trial struct {
+	// ClientId: Output only. The identifier of the client that originally
+	// requested this trial.
+	ClientId string `json:"clientId,omitempty"`
+
+	// EndTime: Output only. Time the Trial's status changed to COMPLETED.
+	EndTime string `json:"endTime,omitempty"`
+
+	// FinalMeasurement: The final Measurement containing the objective
+	// value.
+	FinalMeasurement *GoogleCloudMlV1__Measurement `json:"finalMeasurement,omitempty"`
+
+	// InfeasibleReason: Output only. A human readable string describing why
+	// the Trial is
+	// infeasible. This should only be set if trial_infeasible is true.
+	InfeasibleReason string `json:"infeasibleReason,omitempty"`
+
+	// Measurements: A list of measurements that are strictly
+	// lexicographically
+	// ordered by their induced tuples (steps, elapsed_time).
+	// These are used for early stopping computations.
+	Measurements []*GoogleCloudMlV1__Measurement `json:"measurements,omitempty"`
+
+	// Name: Output only. Name of the trial assigned by the service.
+	Name string `json:"name,omitempty"`
+
+	// Parameters: The parameters of the Trial.
+	Parameters []*GoogleCloudMlV1TrialParameter `json:"parameters,omitempty"`
+
+	// StartTime: Output only. Time the Trial was started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// State: The detailed state of a trial.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The trial state is unspecified.
+	//   "REQUESTED" - Indicates that a specific Trial has been requested,
+	// but it has not yet
+	// been suggested by the service.
+	//   "ACTIVE" - Indicates that the Trial has been suggested.
+	//   "COMPLETED" - Indicates that the Trial is done, and either has a
+	// final_measurement
+	// set, or is marked as trial_infeasible.
+	//   "STOPPING" - Indicates that the Trial should stop according to the
+	// service.
+	State string `json:"state,omitempty"`
+
+	// TrialInfeasible: Output only. True if the parameters in this trial
+	// should not be attempted again.
+	TrialInfeasible bool `json:"trialInfeasible,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClientId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__Trial) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__Trial
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudMlV1__Version: Represents a version of the model.
 //
 // Each version is a trained model deployed in the cloud, ready to
@@ -2928,6 +4113,43 @@ type GoogleCloudMlV1__Version struct {
 
 func (s *GoogleCloudMlV1__Version) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudMlV1__Version
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudMlV1__XraiAttribution: Attributes credit by computing the
+// XRAI taking advantage
+// of the model's fully differentiable structure. Refer to this paper
+// for
+// more details: https://arxiv.org/abs/1906.02825
+// Currently only implemented for models with natural image inputs.
+type GoogleCloudMlV1__XraiAttribution struct {
+	// NumIntegralSteps: Number of steps for approximating the path
+	// integral.
+	// A good value to start is 50 and gradually increase until the
+	// sum to diff property is met within the desired error range.
+	NumIntegralSteps int64 `json:"numIntegralSteps,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NumIntegralSteps") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NumIntegralSteps") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__XraiAttribution) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__XraiAttribution
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3788,7 +5010,7 @@ func (c *ProjectsExplainCall) Header() http.Header {
 
 func (c *ProjectsExplainCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3943,7 +5165,7 @@ func (c *ProjectsGetConfigCall) Header() http.Header {
 
 func (c *ProjectsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4083,7 +5305,7 @@ func (c *ProjectsPredictCall) Header() http.Header {
 
 func (c *ProjectsPredictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4228,7 +5450,7 @@ func (c *ProjectsJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4368,7 +5590,7 @@ func (c *ProjectsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4517,7 +5739,7 @@ func (c *ProjectsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4683,7 +5905,7 @@ func (c *ProjectsJobsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4880,7 +6102,7 @@ func (c *ProjectsJobsListCall) Header() http.Header {
 
 func (c *ProjectsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5085,7 +6307,7 @@ func (c *ProjectsJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5236,7 +6458,7 @@ func (c *ProjectsJobsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5386,7 +6608,7 @@ func (c *ProjectsJobsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsJobsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5538,7 +6760,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5707,7 +6929,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5891,7 +7113,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6036,7 +7258,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6125,6 +7347,1841 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 
 }
 
+// method id "ml.projects.locations.studies.create":
+
+type ProjectsLocationsStudiesCreateCall struct {
+	s                      *Service
+	parent                 string
+	googlecloudmlv1__study *GoogleCloudMlV1__Study
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Create: Creates a study.
+func (r *ProjectsLocationsStudiesService) Create(parent string, googlecloudmlv1__study *GoogleCloudMlV1__Study) *ProjectsLocationsStudiesCreateCall {
+	c := &ProjectsLocationsStudiesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudmlv1__study = googlecloudmlv1__study
+	return c
+}
+
+// StudyId sets the optional parameter "studyId": Required. The ID to
+// use for the study, which will become the final component of
+// the study's resource name.
+func (c *ProjectsLocationsStudiesCreateCall) StudyId(studyId string) *ProjectsLocationsStudiesCreateCall {
+	c.urlParams_.Set("studyId", studyId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStudiesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsStudiesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStudiesCreateCall) Context(ctx context.Context) *ProjectsLocationsStudiesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStudiesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStudiesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmlv1__study)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/studies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ml.projects.locations.studies.create" call.
+// Exactly one of *GoogleCloudMlV1__Study or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleCloudMlV1__Study.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsStudiesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV1__Study, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudMlV1__Study{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a study.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies",
+	//   "httpMethod": "POST",
+	//   "id": "ml.projects.locations.studies.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The project and location that the study belongs to.\nFormat: projects/{project}/locations/{location}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "studyId": {
+	//       "description": "Required. The ID to use for the study, which will become the final component of\nthe study's resource name.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/studies",
+	//   "request": {
+	//     "$ref": "GoogleCloudMlV1__Study"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudMlV1__Study"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "ml.projects.locations.studies.delete":
+
+type ProjectsLocationsStudiesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a study.
+func (r *ProjectsLocationsStudiesService) Delete(name string) *ProjectsLocationsStudiesDeleteCall {
+	c := &ProjectsLocationsStudiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStudiesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsStudiesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStudiesDeleteCall) Context(ctx context.Context) *ProjectsLocationsStudiesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStudiesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStudiesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ml.projects.locations.studies.delete" call.
+// Exactly one of *GoogleProtobuf__Empty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobuf__Empty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsStudiesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobuf__Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobuf__Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a study.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "ml.projects.locations.studies.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The study name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobuf__Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "ml.projects.locations.studies.get":
+
+type ProjectsLocationsStudiesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a study.
+func (r *ProjectsLocationsStudiesService) Get(name string) *ProjectsLocationsStudiesGetCall {
+	c := &ProjectsLocationsStudiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStudiesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsStudiesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsStudiesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsStudiesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStudiesGetCall) Context(ctx context.Context) *ProjectsLocationsStudiesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStudiesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStudiesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ml.projects.locations.studies.get" call.
+// Exactly one of *GoogleCloudMlV1__Study or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleCloudMlV1__Study.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsStudiesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV1__Study, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudMlV1__Study{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a study.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}",
+	//   "httpMethod": "GET",
+	//   "id": "ml.projects.locations.studies.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The study name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudMlV1__Study"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "ml.projects.locations.studies.list":
+
+type ProjectsLocationsStudiesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the studies in a region for an associated project.
+func (r *ProjectsLocationsStudiesService) List(parent string) *ProjectsLocationsStudiesListCall {
+	c := &ProjectsLocationsStudiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStudiesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsStudiesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsStudiesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsStudiesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStudiesListCall) Context(ctx context.Context) *ProjectsLocationsStudiesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStudiesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStudiesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/studies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ml.projects.locations.studies.list" call.
+// Exactly one of *GoogleCloudMlV1__ListStudiesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudMlV1__ListStudiesResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsStudiesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV1__ListStudiesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudMlV1__ListStudiesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all the studies in a region for an associated project.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies",
+	//   "httpMethod": "GET",
+	//   "id": "ml.projects.locations.studies.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The project and location that the study belongs to.\nFormat: projects/{project}/locations/{location}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/studies",
+	//   "response": {
+	//     "$ref": "GoogleCloudMlV1__ListStudiesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "ml.projects.locations.studies.trials.addMeasurement":
+
+type ProjectsLocationsStudiesTrialsAddMeasurementCall struct {
+	s                                           *Service
+	name                                        string
+	googlecloudmlv1__addtrialmeasurementrequest *GoogleCloudMlV1__AddTrialMeasurementRequest
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// AddMeasurement: Adds a measurement of the objective metrics to a
+// Trial. This measurement
+// is assumed to have been taken before the Trial is complete.
+func (r *ProjectsLocationsStudiesTrialsService) AddMeasurement(name string, googlecloudmlv1__addtrialmeasurementrequest *GoogleCloudMlV1__AddTrialMeasurementRequest) *ProjectsLocationsStudiesTrialsAddMeasurementCall {
+	c := &ProjectsLocationsStudiesTrialsAddMeasurementCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudmlv1__addtrialmeasurementrequest = googlecloudmlv1__addtrialmeasurementrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStudiesTrialsAddMeasurementCall) Fields(s ...googleapi.Field) *ProjectsLocationsStudiesTrialsAddMeasurementCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStudiesTrialsAddMeasurementCall) Context(ctx context.Context) *ProjectsLocationsStudiesTrialsAddMeasurementCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStudiesTrialsAddMeasurementCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStudiesTrialsAddMeasurementCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmlv1__addtrialmeasurementrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:addMeasurement")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ml.projects.locations.studies.trials.addMeasurement" call.
+// Exactly one of *GoogleCloudMlV1__Trial or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleCloudMlV1__Trial.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsStudiesTrialsAddMeasurementCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV1__Trial, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudMlV1__Trial{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds a measurement of the objective metrics to a Trial. This measurement\nis assumed to have been taken before the Trial is complete.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}:addMeasurement",
+	//   "httpMethod": "POST",
+	//   "id": "ml.projects.locations.studies.trials.addMeasurement",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The trial name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+/trials/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:addMeasurement",
+	//   "request": {
+	//     "$ref": "GoogleCloudMlV1__AddTrialMeasurementRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudMlV1__Trial"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "ml.projects.locations.studies.trials.checkEarlyStoppingState":
+
+type ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall struct {
+	s                                                    *Service
+	name                                                 string
+	googlecloudmlv1__checktrialearlystoppingstaterequest *GoogleCloudMlV1__CheckTrialEarlyStoppingStateRequest
+	urlParams_                                           gensupport.URLParams
+	ctx_                                                 context.Context
+	header_                                              http.Header
+}
+
+// CheckEarlyStoppingState: Checks whether a trial should stop or not.
+func (r *ProjectsLocationsStudiesTrialsService) CheckEarlyStoppingState(name string, googlecloudmlv1__checktrialearlystoppingstaterequest *GoogleCloudMlV1__CheckTrialEarlyStoppingStateRequest) *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall {
+	c := &ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudmlv1__checktrialearlystoppingstaterequest = googlecloudmlv1__checktrialearlystoppingstaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall) Fields(s ...googleapi.Field) *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall) Context(ctx context.Context) *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmlv1__checktrialearlystoppingstaterequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:checkEarlyStoppingState")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ml.projects.locations.studies.trials.checkEarlyStoppingState" call.
+// Exactly one of *GoogleLongrunning__Operation or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleLongrunning__Operation.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunning__Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunning__Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Checks whether a trial should stop or not.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}:checkEarlyStoppingState",
+	//   "httpMethod": "POST",
+	//   "id": "ml.projects.locations.studies.trials.checkEarlyStoppingState",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The trial name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+/trials/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:checkEarlyStoppingState",
+	//   "request": {
+	//     "$ref": "GoogleCloudMlV1__CheckTrialEarlyStoppingStateRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunning__Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "ml.projects.locations.studies.trials.complete":
+
+type ProjectsLocationsStudiesTrialsCompleteCall struct {
+	s                                     *Service
+	name                                  string
+	googlecloudmlv1__completetrialrequest *GoogleCloudMlV1__CompleteTrialRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Complete: Marks a Trial as complete.
+func (r *ProjectsLocationsStudiesTrialsService) Complete(name string, googlecloudmlv1__completetrialrequest *GoogleCloudMlV1__CompleteTrialRequest) *ProjectsLocationsStudiesTrialsCompleteCall {
+	c := &ProjectsLocationsStudiesTrialsCompleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudmlv1__completetrialrequest = googlecloudmlv1__completetrialrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStudiesTrialsCompleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsStudiesTrialsCompleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStudiesTrialsCompleteCall) Context(ctx context.Context) *ProjectsLocationsStudiesTrialsCompleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStudiesTrialsCompleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStudiesTrialsCompleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmlv1__completetrialrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:complete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ml.projects.locations.studies.trials.complete" call.
+// Exactly one of *GoogleCloudMlV1__Trial or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleCloudMlV1__Trial.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsStudiesTrialsCompleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV1__Trial, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudMlV1__Trial{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Marks a Trial as complete.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}:complete",
+	//   "httpMethod": "POST",
+	//   "id": "ml.projects.locations.studies.trials.complete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The trial name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+/trials/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:complete",
+	//   "request": {
+	//     "$ref": "GoogleCloudMlV1__CompleteTrialRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudMlV1__Trial"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "ml.projects.locations.studies.trials.create":
+
+type ProjectsLocationsStudiesTrialsCreateCall struct {
+	s                      *Service
+	parent                 string
+	googlecloudmlv1__trial *GoogleCloudMlV1__Trial
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Create: Adds a user provided trial to a Study.
+func (r *ProjectsLocationsStudiesTrialsService) Create(parent string, googlecloudmlv1__trial *GoogleCloudMlV1__Trial) *ProjectsLocationsStudiesTrialsCreateCall {
+	c := &ProjectsLocationsStudiesTrialsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudmlv1__trial = googlecloudmlv1__trial
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStudiesTrialsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsStudiesTrialsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStudiesTrialsCreateCall) Context(ctx context.Context) *ProjectsLocationsStudiesTrialsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStudiesTrialsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStudiesTrialsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmlv1__trial)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/trials")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ml.projects.locations.studies.trials.create" call.
+// Exactly one of *GoogleCloudMlV1__Trial or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleCloudMlV1__Trial.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsStudiesTrialsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV1__Trial, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudMlV1__Trial{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds a user provided trial to a Study.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials",
+	//   "httpMethod": "POST",
+	//   "id": "ml.projects.locations.studies.trials.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the study that the trial belongs to.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/trials",
+	//   "request": {
+	//     "$ref": "GoogleCloudMlV1__Trial"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudMlV1__Trial"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "ml.projects.locations.studies.trials.delete":
+
+type ProjectsLocationsStudiesTrialsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a Trial.
+func (r *ProjectsLocationsStudiesTrialsService) Delete(name string) *ProjectsLocationsStudiesTrialsDeleteCall {
+	c := &ProjectsLocationsStudiesTrialsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStudiesTrialsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsStudiesTrialsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStudiesTrialsDeleteCall) Context(ctx context.Context) *ProjectsLocationsStudiesTrialsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStudiesTrialsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStudiesTrialsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ml.projects.locations.studies.trials.delete" call.
+// Exactly one of *GoogleProtobuf__Empty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobuf__Empty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsStudiesTrialsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobuf__Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobuf__Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a Trial.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "ml.projects.locations.studies.trials.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The trial name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+/trials/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobuf__Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "ml.projects.locations.studies.trials.get":
+
+type ProjectsLocationsStudiesTrialsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a Trial.
+func (r *ProjectsLocationsStudiesTrialsService) Get(name string) *ProjectsLocationsStudiesTrialsGetCall {
+	c := &ProjectsLocationsStudiesTrialsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStudiesTrialsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsStudiesTrialsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsStudiesTrialsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsStudiesTrialsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStudiesTrialsGetCall) Context(ctx context.Context) *ProjectsLocationsStudiesTrialsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStudiesTrialsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStudiesTrialsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ml.projects.locations.studies.trials.get" call.
+// Exactly one of *GoogleCloudMlV1__Trial or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleCloudMlV1__Trial.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsStudiesTrialsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV1__Trial, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudMlV1__Trial{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a Trial.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}",
+	//   "httpMethod": "GET",
+	//   "id": "ml.projects.locations.studies.trials.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The trial name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+/trials/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudMlV1__Trial"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "ml.projects.locations.studies.trials.list":
+
+type ProjectsLocationsStudiesTrialsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the trials associated with a Study.
+func (r *ProjectsLocationsStudiesTrialsService) List(parent string) *ProjectsLocationsStudiesTrialsListCall {
+	c := &ProjectsLocationsStudiesTrialsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStudiesTrialsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsStudiesTrialsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsStudiesTrialsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsStudiesTrialsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStudiesTrialsListCall) Context(ctx context.Context) *ProjectsLocationsStudiesTrialsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStudiesTrialsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStudiesTrialsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/trials")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ml.projects.locations.studies.trials.list" call.
+// Exactly one of *GoogleCloudMlV1__ListTrialsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudMlV1__ListTrialsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsStudiesTrialsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV1__ListTrialsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudMlV1__ListTrialsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the trials associated with a Study.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials",
+	//   "httpMethod": "GET",
+	//   "id": "ml.projects.locations.studies.trials.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the study that the trial belongs to.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/trials",
+	//   "response": {
+	//     "$ref": "GoogleCloudMlV1__ListTrialsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "ml.projects.locations.studies.trials.stop":
+
+type ProjectsLocationsStudiesTrialsStopCall struct {
+	s                                 *Service
+	name                              string
+	googlecloudmlv1__stoptrialrequest *GoogleCloudMlV1__StopTrialRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Stop: Stops a trial.
+func (r *ProjectsLocationsStudiesTrialsService) Stop(name string, googlecloudmlv1__stoptrialrequest *GoogleCloudMlV1__StopTrialRequest) *ProjectsLocationsStudiesTrialsStopCall {
+	c := &ProjectsLocationsStudiesTrialsStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudmlv1__stoptrialrequest = googlecloudmlv1__stoptrialrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStudiesTrialsStopCall) Fields(s ...googleapi.Field) *ProjectsLocationsStudiesTrialsStopCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStudiesTrialsStopCall) Context(ctx context.Context) *ProjectsLocationsStudiesTrialsStopCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStudiesTrialsStopCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStudiesTrialsStopCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmlv1__stoptrialrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:stop")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ml.projects.locations.studies.trials.stop" call.
+// Exactly one of *GoogleCloudMlV1__Trial or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleCloudMlV1__Trial.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsStudiesTrialsStopCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV1__Trial, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudMlV1__Trial{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Stops a trial.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}:stop",
+	//   "httpMethod": "POST",
+	//   "id": "ml.projects.locations.studies.trials.stop",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The trial name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+/trials/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:stop",
+	//   "request": {
+	//     "$ref": "GoogleCloudMlV1__StopTrialRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudMlV1__Trial"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "ml.projects.locations.studies.trials.suggest":
+
+type ProjectsLocationsStudiesTrialsSuggestCall struct {
+	s                                     *Service
+	parent                                string
+	googlecloudmlv1__suggesttrialsrequest *GoogleCloudMlV1__SuggestTrialsRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Suggest: Returns a long-running operation associated with the
+// generation of trial
+// suggestions.
+func (r *ProjectsLocationsStudiesTrialsService) Suggest(parent string, googlecloudmlv1__suggesttrialsrequest *GoogleCloudMlV1__SuggestTrialsRequest) *ProjectsLocationsStudiesTrialsSuggestCall {
+	c := &ProjectsLocationsStudiesTrialsSuggestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudmlv1__suggesttrialsrequest = googlecloudmlv1__suggesttrialsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStudiesTrialsSuggestCall) Fields(s ...googleapi.Field) *ProjectsLocationsStudiesTrialsSuggestCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStudiesTrialsSuggestCall) Context(ctx context.Context) *ProjectsLocationsStudiesTrialsSuggestCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStudiesTrialsSuggestCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStudiesTrialsSuggestCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmlv1__suggesttrialsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/trials:suggest")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ml.projects.locations.studies.trials.suggest" call.
+// Exactly one of *GoogleLongrunning__Operation or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleLongrunning__Operation.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsStudiesTrialsSuggestCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunning__Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunning__Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a long-running operation associated with the generation of trial\nsuggestions.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials:suggest",
+	//   "httpMethod": "POST",
+	//   "id": "ml.projects.locations.studies.trials.suggest",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the study that the trial belongs to.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/trials:suggest",
+	//   "request": {
+	//     "$ref": "GoogleCloudMlV1__SuggestTrialsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunning__Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "ml.projects.models.create":
 
 type ProjectsModelsCreateCall struct {
@@ -6177,7 +9234,7 @@ func (c *ProjectsModelsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6320,7 +9377,7 @@ func (c *ProjectsModelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6465,7 +9522,7 @@ func (c *ProjectsModelsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6631,7 +9688,7 @@ func (c *ProjectsModelsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6819,7 +9876,7 @@ func (c *ProjectsModelsListCall) Header() http.Header {
 
 func (c *ProjectsModelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7022,7 +10079,7 @@ func (c *ProjectsModelsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7173,7 +10230,7 @@ func (c *ProjectsModelsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7323,7 +10380,7 @@ func (c *ProjectsModelsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsModelsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7477,7 +10534,7 @@ func (c *ProjectsModelsVersionsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7623,7 +10680,7 @@ func (c *ProjectsModelsVersionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7771,7 +10828,7 @@ func (c *ProjectsModelsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7955,7 +11012,7 @@ func (c *ProjectsModelsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8163,7 +11220,7 @@ func (c *ProjectsModelsVersionsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8320,7 +11377,7 @@ func (c *ProjectsModelsVersionsSetDefaultCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsSetDefaultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8475,7 +11532,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8620,7 +11677,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8801,7 +11858,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

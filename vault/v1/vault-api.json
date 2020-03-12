@@ -25,6 +25,7 @@
   },
   "id": "vault:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://vault.mtls.googleapis.com/",
   "name": "vault",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -1037,7 +1038,7 @@
             "name": {
               "description": "The name of the operation resource to be deleted.",
               "location": "path",
-              "pattern": "^operations/.+$",
+              "pattern": "^operations/.*$",
               "required": true,
               "type": "string"
             }
@@ -1050,7 +1051,7 @@
       }
     }
   },
-  "revision": "20190918",
+  "revision": "20200305",
   "rootUrl": "https://vault.googleapis.com/",
   "schemas": {
     "AccountInfo": {

@@ -15,7 +15,6 @@
   "description": "Generates performance reports, generates ad codes, and provides publisher management capabilities for AdSense Hosts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/adsense/host/",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/If0V9L4pmPkkj2sELYO6XWB1RF0\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/adsense-16.png",
     "x32": "https://www.google.com/images/icons/product/adsense-32.png"
@@ -633,6 +632,11 @@
             "websiteUrl"
           ],
           "parameters": {
+            "callbackUrl": {
+              "description": "The URL to redirect the user to once association is completed. It receives a token parameter that can then be used to retrieve the associated account.",
+              "location": "query",
+              "type": "string"
+            },
             "productCode": {
               "description": "Products to associate with the user.",
               "enum": [
@@ -1072,7 +1076,7 @@
       }
     }
   },
-  "revision": "20180429",
+  "revision": "20200311",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {

@@ -490,12 +490,12 @@ type BooleanOperatorOptions struct {
 	// the
 	// property's name is *isClosed*, then queries
 	// like
-	// *closed:&lt;value&gt;* will show results only where the value of
+	// *closed:&lt;value&gt;* show results only where the value of
 	// the
 	// property named *isClosed* matches *&lt;value&gt;*. By contrast,
 	// a
-	// search that uses the same *&lt;value&gt;* without an operator will
-	// return
+	// search that uses the same *&lt;value&gt;* without an operator
+	// returns
 	// all items where *&lt;value&gt;* matches the value of any
 	// String properties or text within the content field for the item.
 	// The operator name can only contain lowercase letters (a-z).
@@ -982,7 +982,7 @@ type DateOperatorOptions struct {
 	// if
 	// greaterThanOperatorName is *closedafter* and the property's name
 	// is
-	// *closeDate*, then queries like *closedafter:&lt;value&gt;* will
+	// *closeDate*, then queries like *closedafter:&lt;value&gt;*
 	// show results only where the value of the property named *closeDate*
 	// is
 	// later than *&lt;value&gt;*.
@@ -996,7 +996,7 @@ type DateOperatorOptions struct {
 	// if
 	// lessThanOperatorName is *closedbefore* and the property's name
 	// is
-	// *closeDate*, then queries like *closedbefore:&lt;value&gt;* will
+	// *closeDate*, then queries like *closedbefore:&lt;value&gt;*
 	// show results only where the value of the property named *closeDate*
 	// is
 	// earlier than *&lt;value&gt;*.
@@ -1012,11 +1012,11 @@ type DateOperatorOptions struct {
 	// an
 	// operatorName of *closedon*. For searches on that data, queries
 	// like
-	// *closedon:&lt;value&gt;* will show results only where the value of
+	// *closedon:&lt;value&gt;* show results only where the value of
 	// the
 	// *closeDate* property matches *&lt;value&gt;*. By contrast, a
-	// search that uses the same *&lt;value&gt;* without an operator will
-	// return
+	// search that uses the same *&lt;value&gt;* without an operator
+	// returns
 	// all items where *&lt;value&gt;* matches the value of any
 	// String
 	// properties or text within the content field for the indexed
@@ -1175,19 +1175,19 @@ func (s *DeleteQueueItemsRequest) MarshalJSON() ([]byte, error) {
 
 // DisplayedProperty: A reference to a top-level property within the
 // object that should be
-// displayed in search results. The values of the chosen properties will
-// be
+// displayed in search results. The values of the chosen properties
+// is
 // displayed in the search results along with the
-// dislpay label
+// display label
 // for that property if one is specified. If a display label is not
 // specified,
-// only the values will be shown.
+// only the values is shown.
 type DisplayedProperty struct {
 	// PropertyName: The name of the top-level property as defined in a
 	// property definition
 	// for the object. If the name is not a defined property in the schema,
 	// an
-	// error will be given when attempting to update the schema.
+	// error is given when attempting to update the schema.
 	PropertyName string `json:"propertyName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PropertyName") to
@@ -1485,8 +1485,8 @@ func (s *EmailAddress) MarshalJSON() ([]byte, error) {
 // provide no
 // operator for a *priority* enum property with possible values *p0* and
 // *p1*,
-// a query that contains the term *p0* will return items that have *p0*
-// as the
+// a query that contains the term *p0* returns items that have *p0* as
+// the
 // value of the *priority* property, as well as any items that contain
 // the
 // string *p0* in other fields. If you provide an operator name for the
@@ -1503,12 +1503,12 @@ type EnumOperatorOptions struct {
 	// the
 	// property's name is *priorityVal*, then queries
 	// like
-	// *priority:&lt;value&gt;* will show results only where the value of
+	// *priority:&lt;value&gt;* show results only where the value of
 	// the
 	// property named *priorityVal* matches *&lt;value&gt;*. By contrast,
 	// a
-	// search that uses the same *&lt;value&gt;* without an operator will
-	// return
+	// search that uses the same *&lt;value&gt;* without an operator
+	// returns
 	// all items where *&lt;value&gt;* matches the value of any
 	// String
 	// properties or text within the content field for the item.
@@ -1572,7 +1572,7 @@ type EnumPropertyOptions struct {
 	//
 	// Possible values:
 	//   "NO_ORDER" - There is no ranking order for the property. Results
-	// will not be adjusted
+	// aren't adjusted
 	// by this property's value.
 	//   "ASCENDING" - This property is ranked in ascending order. Lower
 	// values indicate lower
@@ -2047,8 +2047,7 @@ type FreshnessOptions struct {
 	// as the freshness indicator.
 	// The maximum length is 256 characters.
 	//
-	// When a property is used to calculate fresheness, the value
-	// defaults
+	// When a property is used to calculate freshness, the value defaults
 	// to 2 years from the current time.
 	FreshnessProperty string `json:"freshnessProperty,omitempty"`
 
@@ -2367,11 +2366,11 @@ type HtmlOperatorOptions struct {
 	// the
 	// property's name is *subjectLine*, then queries
 	// like
-	// *subject:&lt;value&gt;* will show results only where the value of
+	// *subject:&lt;value&gt;* show results only where the value of
 	// the
 	// property named *subjectLine* matches *&lt;value&gt;*. By contrast,
 	// a
-	// search that uses the same *&lt;value&gt;* without an operator will
+	// search that uses the same *&lt;value&gt;* without an operator
 	// return
 	// all items where *&lt;value&gt;* matches the value of any
 	// html properties or text within the content field for the item.
@@ -2560,7 +2559,6 @@ type IntegerOperatorOptions struct {
 	// greaterThanOperatorName is *priorityabove* and the property's name
 	// is
 	// *priorityVal*, then queries like *priorityabove:&lt;value&gt;*
-	// will
 	// show results only where the value of the property named *priorityVal*
 	// is
 	// greater than *&lt;value&gt;*.
@@ -2575,7 +2573,6 @@ type IntegerOperatorOptions struct {
 	// lessThanOperatorName is *prioritybelow* and the property's name
 	// is
 	// *priorityVal*, then queries like *prioritybelow:&lt;value&gt;*
-	// will
 	// show results only where the value of the property named *priorityVal*
 	// is
 	// less than *&lt;value&gt;*.
@@ -2589,12 +2586,12 @@ type IntegerOperatorOptions struct {
 	// the
 	// property's name is *priorityVal*, then queries
 	// like
-	// *priority:&lt;value&gt;* will show results only where the value of
+	// *priority:&lt;value&gt;* show results only where the value of
 	// the
 	// property named *priorityVal* matches *&lt;value&gt;*. By contrast,
 	// a
-	// search that uses the same *&lt;value&gt;* without an operator will
-	// return
+	// search that uses the same *&lt;value&gt;* without an operator
+	// returns
 	// all items where *&lt;value&gt;* matches the value of any
 	// String
 	// properties or text within the content field for the item.
@@ -2658,7 +2655,7 @@ type IntegerPropertyOptions struct {
 	//
 	// Possible values:
 	//   "NO_ORDER" - There is no ranking order for the property. Results
-	// will not be adjusted
+	// are not adjusted
 	// by this property's value.
 	//   "ASCENDING" - This property is ranked in ascending order. Lower
 	// values indicate lower
@@ -3590,7 +3587,7 @@ func (s *Metadata) MarshalJSON() ([]byte, error) {
 // result to provide context.
 type Metaline struct {
 	// Properties: The list of displayed properties for the metaline. The
-	// maxiumum number of
+	// maximum number of
 	// properties is 5.
 	Properties []*DisplayedProperty `json:"properties,omitempty"`
 
@@ -3750,26 +3747,26 @@ func (s *ObjectDefinition) MarshalJSON() ([]byte, error) {
 
 // ObjectDisplayOptions: The display options for an object.
 type ObjectDisplayOptions struct {
-	// Metalines: Defines the properties that will be displayed in the
-	// metalines of the
-	// search results. The property values will be displayed in the order
+	// Metalines: Defines the properties that are displayed in the metalines
+	// of the
+	// search results. The property values are displayed in the order
 	// given
-	// here. If a property holds multiple values, all of the values will
-	// be
-	// diplayed before the next properties. For this reason, it is a good
-	// practice
-	// to specify singular properties before repeated properties in this
-	// list. All
-	// of the properties must set
+	// here. If a property holds multiple values, all of the values
+	// are
+	// displayed before the next properties. For this reason, it is a
+	// good
+	// practice to specify singular properties before repeated properties in
+	// this
+	// list. All of the properties must set
 	// is_returnable
 	// to true. The maximum number of metalines is 3.
 	Metalines []*Metaline `json:"metalines,omitempty"`
 
 	// ObjectDisplayLabel: The user friendly label to display in the search
-	// result to inidicate the
-	// type of the item. This is OPTIONAL; if not given, an object label
-	// will not
-	// be displayed on the context line of the search results. The maximum
+	// result to indicate the
+	// type of the item. This is OPTIONAL; if not provided, an object label
+	// isn't
+	// displayed on the context line of the search results. The maximum
 	// length
 	// is 32 characters.
 	ObjectDisplayLabel string `json:"objectDisplayLabel,omitempty"`
@@ -4304,8 +4301,8 @@ type PropertyDefinition struct {
 	// document only has one description but can have multiple comments.
 	// Cannot be
 	// true for properties whose type is a boolean.
-	// If set to false, properties that contain more than one value will
-	// cause the
+	// If set to false, properties that contain more than one value cause
+	// the
 	// indexing request for that item to be rejected.
 	IsRepeatable bool `json:"isRepeatable,omitempty"`
 
@@ -4399,22 +4396,21 @@ func (s *PropertyDefinition) MarshalJSON() ([]byte, error) {
 
 // PropertyDisplayOptions: The display options for a property.
 type PropertyDisplayOptions struct {
-	// DisplayLabel: The user friendly label for the property that will be
-	// used if the property
-	// is specified to be displayed in ObjectDisplayOptions. If given, the
-	// display
-	// label will be shown in front of the property values when the property
-	// is
+	// DisplayLabel: The user friendly label for the property that is used
+	// if the property
+	// is specified to be displayed in ObjectDisplayOptions. If provided,
+	// the
+	// display label is shown in front of the property values when the
+	// property is
 	// part of the object display options. For example, if the property
 	// value is
 	// '1', the value by itself may not be useful context for the user. If
 	// the
-	// display name given was 'priority', then the user will see 'priority :
-	// 1' in
-	// the search results which provides clear conext to search users. This
+	// display name given was 'priority', then the user sees 'priority : 1'
+	// in
+	// the search results which provides clear context to search users. This
 	// is
-	// OPTIONAL; if not given, only the property values will be
-	// displayed.
+	// OPTIONAL; if not given, only the property values are displayed.
 	// The maximum length is 32 characters.
 	DisplayLabel string `json:"displayLabel,omitempty"`
 
@@ -6426,21 +6422,21 @@ func (s *SuggestResult) MarshalJSON() ([]byte, error) {
 // relevant
 // to the type of item being searched.
 type TextOperatorOptions struct {
-	// ExactMatchWithOperator: If true, the text value will be tokenized as
-	// one atomic value in
+	// ExactMatchWithOperator: If true, the text value is tokenized as one
+	// atomic value in
 	// operator searches and facet matches. For example, if the operator
 	// name is
 	// "genre" and the value is "science-fiction" the query
 	// restrictions
-	// "genre:science" and "genre:fiction" will not match the
+	// "genre:science" and "genre:fiction" doesn't match the
 	// item;
-	// "genre:science-fiction" will. Value matching is case-sensitive
+	// "genre:science-fiction" does. Value matching is case-sensitive
 	// and does not remove special characters.
-	// If false, the text will be tokenized. For example, if the value
+	// If false, the text is tokenized. For example, if the value
 	// is
-	// "science-fiction" the queries "genre:science" and "genre:fiction"
-	// will
-	// match the item.
+	// "science-fiction" the queries "genre:science" and
+	// "genre:fiction"
+	// matches the item.
 	ExactMatchWithOperator bool `json:"exactMatchWithOperator,omitempty"`
 
 	// OperatorName: Indicates the operator name required in the query in
@@ -6449,12 +6445,12 @@ type TextOperatorOptions struct {
 	// the
 	// property's name is *subjectLine*, then queries
 	// like
-	// *subject:&lt;value&gt;* will show results only where the value of
+	// *subject:&lt;value&gt;* show results only where the value of
 	// the
 	// property named *subjectLine* matches *&lt;value&gt;*. By contrast,
 	// a
-	// search that uses the same *&lt;value&gt;* without an operator will
-	// return
+	// search that uses the same *&lt;value&gt;* without an operator
+	// returns
 	// all items where *&lt;value&gt;* matches the value of any
 	// text properties or text within the content field for the item.
 	// The operator name can only contain lowercase letters (a-z).
@@ -6562,7 +6558,7 @@ type TimestampOperatorOptions struct {
 	// if
 	// greaterThanOperatorName is *closedafter* and the property's name
 	// is
-	// *closeDate*, then queries like *closedafter:&lt;value&gt;* will
+	// *closeDate*, then queries like *closedafter:&lt;value&gt;*
 	// show results only where the value of the property named *closeDate*
 	// is
 	// later than *&lt;value&gt;*.
@@ -6576,7 +6572,7 @@ type TimestampOperatorOptions struct {
 	// if
 	// lessThanOperatorName is *closedbefore* and the property's name
 	// is
-	// *closeDate*, then queries like *closedbefore:&lt;value&gt;* will
+	// *closeDate*, then queries like *closedbefore:&lt;value&gt;*
 	// show results only where the value of the property named *closeDate*
 	// is
 	// earlier than *&lt;value&gt;*.
@@ -6590,12 +6586,12 @@ type TimestampOperatorOptions struct {
 	// the
 	// property's name is *closeDate*, then queries
 	// like
-	// *closedon:&lt;value&gt;* will show results only where the value of
+	// *closedon:&lt;value&gt;* show results only where the value of
 	// the
 	// property named *closeDate* matches *&lt;value&gt;*. By contrast,
 	// a
-	// search that uses the same *&lt;value&gt;* without an operator will
-	// return
+	// search that uses the same *&lt;value&gt;* without an operator
+	// returns
 	// all items where *&lt;value&gt;* matches the value of any
 	// String
 	// properties or text within the content field for the item. The
@@ -7024,7 +7020,7 @@ func (c *DebugDatasourcesItemsCheckAccessCall) Header() http.Header {
 
 func (c *DebugDatasourcesItemsCheckAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7174,7 +7170,7 @@ func (c *DebugDatasourcesItemsSearchByViewUrlCall) Header() http.Header {
 
 func (c *DebugDatasourcesItemsSearchByViewUrlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7371,7 +7367,7 @@ func (c *DebugDatasourcesItemsUnmappedidsListCall) Header() http.Header {
 
 func (c *DebugDatasourcesItemsUnmappedidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7592,7 +7588,7 @@ func (c *DebugIdentitysourcesItemsListForunmappedidentityCall) Header() http.Hea
 
 func (c *DebugIdentitysourcesItemsListForunmappedidentityCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7826,7 +7822,7 @@ func (c *DebugIdentitysourcesUnmappedidsListCall) Header() http.Header {
 
 func (c *DebugIdentitysourcesUnmappedidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8021,7 +8017,7 @@ func (c *IndexingDatasourcesDeleteSchemaCall) Header() http.Header {
 
 func (c *IndexingDatasourcesDeleteSchemaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8180,7 +8176,7 @@ func (c *IndexingDatasourcesGetSchemaCall) Header() http.Header {
 
 func (c *IndexingDatasourcesGetSchemaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8328,7 +8324,7 @@ func (c *IndexingDatasourcesUpdateSchemaCall) Header() http.Header {
 
 func (c *IndexingDatasourcesUpdateSchemaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8517,7 +8513,7 @@ func (c *IndexingDatasourcesItemsDeleteCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8682,7 +8678,7 @@ func (c *IndexingDatasourcesItemsDeleteQueueItemsCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsDeleteQueueItemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8853,7 +8849,7 @@ func (c *IndexingDatasourcesItemsGetCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9008,7 +9004,7 @@ func (c *IndexingDatasourcesItemsIndexCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsIndexCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9228,7 +9224,7 @@ func (c *IndexingDatasourcesItemsListCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9442,7 +9438,7 @@ func (c *IndexingDatasourcesItemsPollCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsPollCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9588,7 +9584,7 @@ func (c *IndexingDatasourcesItemsPushCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsPushCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9736,7 +9732,7 @@ func (c *IndexingDatasourcesItemsUnreserveCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsUnreserveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9885,7 +9881,7 @@ func (c *IndexingDatasourcesItemsUploadCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10096,7 +10092,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10210,7 +10206,7 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*Media, error) {
 	//     "resourceName": {
 	//       "description": "Name of the media that is being downloaded.  See\nReadRequest.resource_name.",
 	//       "location": "path",
-	//       "pattern": "^.+$",
+	//       "pattern": "^.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -10290,7 +10286,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10363,7 +10359,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//     "name": {
 	//       "description": "The name of the operation resource.",
 	//       "location": "path",
-	//       "pattern": "^operations/.+$",
+	//       "pattern": "^operations/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -10443,7 +10439,7 @@ func (c *QuerySearchCall) Header() http.Header {
 
 func (c *QuerySearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10579,7 +10575,7 @@ func (c *QuerySuggestCall) Header() http.Header {
 
 func (c *QuerySuggestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10792,7 +10788,7 @@ func (c *QuerySourcesListCall) Header() http.Header {
 
 func (c *QuerySourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10962,7 +10958,7 @@ func (c *SettingsDatasourcesCreateCall) Header() http.Header {
 
 func (c *SettingsDatasourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11100,7 +11096,7 @@ func (c *SettingsDatasourcesDeleteCall) Header() http.Header {
 
 func (c *SettingsDatasourcesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11259,7 +11255,7 @@ func (c *SettingsDatasourcesGetCall) Header() http.Header {
 
 func (c *SettingsDatasourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11435,7 +11431,7 @@ func (c *SettingsDatasourcesListCall) Header() http.Header {
 
 func (c *SettingsDatasourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11599,7 +11595,7 @@ func (c *SettingsDatasourcesUpdateCall) Header() http.Header {
 
 func (c *SettingsDatasourcesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11741,7 +11737,7 @@ func (c *SettingsSearchapplicationsCreateCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11879,7 +11875,7 @@ func (c *SettingsSearchapplicationsDeleteCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12038,7 +12034,7 @@ func (c *SettingsSearchapplicationsGetCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12214,7 +12210,7 @@ func (c *SettingsSearchapplicationsListCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12380,7 +12376,7 @@ func (c *SettingsSearchapplicationsResetCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12524,7 +12520,7 @@ func (c *SettingsSearchapplicationsUpdateCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12721,7 +12717,7 @@ func (c *StatsGetIndexCall) Header() http.Header {
 
 func (c *StatsGetIndexCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12933,7 +12929,7 @@ func (c *StatsGetQueryCall) Header() http.Header {
 
 func (c *StatsGetQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13147,7 +13143,7 @@ func (c *StatsGetSessionCall) Header() http.Header {
 
 func (c *StatsGetSessionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13359,7 +13355,7 @@ func (c *StatsGetUserCall) Header() http.Header {
 
 func (c *StatsGetUserCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13574,7 +13570,7 @@ func (c *StatsIndexDatasourcesGetCall) Header() http.Header {
 
 func (c *StatsIndexDatasourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13800,7 +13796,7 @@ func (c *StatsQuerySearchapplicationsGetCall) Header() http.Header {
 
 func (c *StatsQuerySearchapplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14029,7 +14025,7 @@ func (c *StatsSessionSearchapplicationsGetCall) Header() http.Header {
 
 func (c *StatsSessionSearchapplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14257,7 +14253,7 @@ func (c *StatsUserSearchapplicationsGetCall) Header() http.Header {
 
 func (c *StatsUserSearchapplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

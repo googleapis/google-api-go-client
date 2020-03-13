@@ -877,7 +877,7 @@
       }
     }
   },
-  "revision": "20200228",
+  "revision": "20200310",
   "rootUrl": "https://servicemanagement.googleapis.com/",
   "schemas": {
     "Advice": {
@@ -2768,7 +2768,7 @@
           "description": "Billing configuration."
         },
         "configVersion": {
-          "description": "The semantic version of the service configuration. The config version\naffects the interpretation of the service configuration. For example,\ncertain features are enabled by default for certain config versions.\nThe latest config version is `3`.",
+          "description": "The semantic version of the service configuration. The config version\naffects the interpretation of the service configuration. For example,\ncertain features are enabled by default for certain config versions.\n\nThe latest config version is `3`.",
           "format": "uint32",
           "type": "integer"
         },

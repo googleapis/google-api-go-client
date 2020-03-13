@@ -46,6 +46,7 @@
   },
   "id": "cloudsearch:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://cloudsearch.mtls.googleapis.com/",
   "name": "cloudsearch",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -815,7 +816,7 @@
             "resourceName": {
               "description": "Name of the media that is being downloaded.  See\nReadRequest.resource_name.",
               "location": "path",
-              "pattern": "^.+$",
+              "pattern": "^.*$",
               "required": true,
               "type": "string"
             }
@@ -849,7 +850,7 @@
             "name": {
               "description": "The name of the operation resource.",
               "location": "path",
-              "pattern": "^operations/.+$",
+              "pattern": "^operations/.*$",
               "required": true,
               "type": "string"
             }
@@ -1804,7 +1805,7 @@
       }
     }
   },
-  "revision": "20200212",
+  "revision": "20200303",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -1812,7 +1813,7 @@
       "id": "BooleanOperatorOptions",
       "properties": {
         "operatorName": {
-          "description": "Indicates the operator name required in the query in order to isolate the\nboolean property. For example, if operatorName is *closed* and the\nproperty's name is *isClosed*, then queries like\n*closed:\u0026lt;value\u0026gt;* will show results only where the value of the\nproperty named *isClosed* matches *\u0026lt;value\u0026gt;*. By contrast, a\nsearch that uses the same *\u0026lt;value\u0026gt;* without an operator will return\nall items where *\u0026lt;value\u0026gt;* matches the value of any\nString properties or text within the content field for the item.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
+          "description": "Indicates the operator name required in the query in order to isolate the\nboolean property. For example, if operatorName is *closed* and the\nproperty's name is *isClosed*, then queries like\n*closed:\u0026lt;value\u0026gt;* show results only where the value of the\nproperty named *isClosed* matches *\u0026lt;value\u0026gt;*. By contrast, a\nsearch that uses the same *\u0026lt;value\u0026gt;* without an operator returns\nall items where *\u0026lt;value\u0026gt;* matches the value of any\nString properties or text within the content field for the item.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
           "type": "string"
         }
       },
@@ -2051,15 +2052,15 @@
       "id": "DateOperatorOptions",
       "properties": {
         "greaterThanOperatorName": {
-          "description": "Indicates the operator name required in the query in order to isolate the\ndate property using the greater-than operator. For example, if\ngreaterThanOperatorName is *closedafter* and the property's name is\n*closeDate*, then queries like *closedafter:\u0026lt;value\u0026gt;* will\nshow results only where the value of the property named *closeDate* is\nlater than *\u0026lt;value\u0026gt;*.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
+          "description": "Indicates the operator name required in the query in order to isolate the\ndate property using the greater-than operator. For example, if\ngreaterThanOperatorName is *closedafter* and the property's name is\n*closeDate*, then queries like *closedafter:\u0026lt;value\u0026gt;*\nshow results only where the value of the property named *closeDate* is\nlater than *\u0026lt;value\u0026gt;*.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
           "type": "string"
         },
         "lessThanOperatorName": {
-          "description": "Indicates the operator name required in the query in order to isolate the\ndate property using the less-than operator. For example, if\nlessThanOperatorName is *closedbefore* and the property's name is\n*closeDate*, then queries like *closedbefore:\u0026lt;value\u0026gt;* will\nshow results only where the value of the property named *closeDate* is\nearlier than *\u0026lt;value\u0026gt;*.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
+          "description": "Indicates the operator name required in the query in order to isolate the\ndate property using the less-than operator. For example, if\nlessThanOperatorName is *closedbefore* and the property's name is\n*closeDate*, then queries like *closedbefore:\u0026lt;value\u0026gt;*\nshow results only where the value of the property named *closeDate* is\nearlier than *\u0026lt;value\u0026gt;*.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
           "type": "string"
         },
         "operatorName": {
-          "description": "Indicates the actual string required in the query in order to isolate the\ndate property. For example, suppose an issue tracking schema object\nhas a property named *closeDate* that specifies an operator with an\noperatorName of *closedon*. For searches on that data, queries like\n*closedon:\u0026lt;value\u0026gt;* will show results only where the value of the\n*closeDate* property matches *\u0026lt;value\u0026gt;*. By contrast, a\nsearch that uses the same *\u0026lt;value\u0026gt;* without an operator will return\nall items where *\u0026lt;value\u0026gt;* matches the value of any String\nproperties or text within the content field for the indexed datasource.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
+          "description": "Indicates the actual string required in the query in order to isolate the\ndate property. For example, suppose an issue tracking schema object\nhas a property named *closeDate* that specifies an operator with an\noperatorName of *closedon*. For searches on that data, queries like\n*closedon:\u0026lt;value\u0026gt;* show results only where the value of the\n*closeDate* property matches *\u0026lt;value\u0026gt;*. By contrast, a\nsearch that uses the same *\u0026lt;value\u0026gt;* without an operator returns\nall items where *\u0026lt;value\u0026gt;* matches the value of any String\nproperties or text within the content field for the indexed datasource.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
           "type": "string"
         }
       },
@@ -2119,11 +2120,11 @@
       "type": "object"
     },
     "DisplayedProperty": {
-      "description": "A reference to a top-level property within the object that should be\ndisplayed in search results. The values of the chosen properties will be\ndisplayed in the search results along with the\ndislpay label\nfor that property if one is specified. If a display label is not specified,\nonly the values will be shown.",
+      "description": "A reference to a top-level property within the object that should be\ndisplayed in search results. The values of the chosen properties is\ndisplayed in the search results along with the\ndisplay label\nfor that property if one is specified. If a display label is not specified,\nonly the values is shown.",
       "id": "DisplayedProperty",
       "properties": {
         "propertyName": {
-          "description": "The name of the top-level property as defined in a property definition\nfor the object. If the name is not a defined property in the schema, an\nerror will be given when attempting to update the schema.",
+          "description": "The name of the top-level property as defined in a property definition\nfor the object. If the name is not a defined property in the schema, an\nerror is given when attempting to update the schema.",
           "type": "string"
         }
       },
@@ -2287,11 +2288,11 @@
       "type": "object"
     },
     "EnumOperatorOptions": {
-      "description": "Used to provide a search operator for enum properties. This is\noptional. Search operators let users restrict the query to specific fields\nrelevant to the type of item being searched. For example, if you provide no\noperator for a *priority* enum property with possible values *p0* and *p1*,\na query that contains the term *p0* will return items that have *p0* as the\nvalue of the *priority* property, as well as any items that contain the\nstring *p0* in other fields. If you provide an operator name for the enum,\nsuch as *priority*, then search users can use that operator to refine\nresults to only items that have *p0* as this property's value, with the\nquery *priority:p0*.",
+      "description": "Used to provide a search operator for enum properties. This is\noptional. Search operators let users restrict the query to specific fields\nrelevant to the type of item being searched. For example, if you provide no\noperator for a *priority* enum property with possible values *p0* and *p1*,\na query that contains the term *p0* returns items that have *p0* as the\nvalue of the *priority* property, as well as any items that contain the\nstring *p0* in other fields. If you provide an operator name for the enum,\nsuch as *priority*, then search users can use that operator to refine\nresults to only items that have *p0* as this property's value, with the\nquery *priority:p0*.",
       "id": "EnumOperatorOptions",
       "properties": {
         "operatorName": {
-          "description": "Indicates the operator name required in the query in order to isolate the\nenum property. For example, if operatorName is *priority* and the\nproperty's name is *priorityVal*, then queries like\n*priority:\u0026lt;value\u0026gt;* will show results only where the value of the\nproperty named *priorityVal* matches *\u0026lt;value\u0026gt;*. By contrast, a\nsearch that uses the same *\u0026lt;value\u0026gt;* without an operator will return\nall items where *\u0026lt;value\u0026gt;* matches the value of any String\nproperties or text within the content field for the item.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
+          "description": "Indicates the operator name required in the query in order to isolate the\nenum property. For example, if operatorName is *priority* and the\nproperty's name is *priorityVal*, then queries like\n*priority:\u0026lt;value\u0026gt;* show results only where the value of the\nproperty named *priorityVal* matches *\u0026lt;value\u0026gt;*. By contrast, a\nsearch that uses the same *\u0026lt;value\u0026gt;* without an operator returns\nall items where *\u0026lt;value\u0026gt;* matches the value of any String\nproperties or text within the content field for the item.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
           "type": "string"
         }
       },
@@ -2313,7 +2314,7 @@
             "DESCENDING"
           ],
           "enumDescriptions": [
-            "There is no ranking order for the property. Results will not be adjusted\nby this property's value.",
+            "There is no ranking order for the property. Results aren't adjusted\nby this property's value.",
             "This property is ranked in ascending order. Lower values indicate lower\nranking.",
             "This property is ranked in descending order. Lower values indicate\nhigher ranking."
           ],
@@ -2507,7 +2508,7 @@
           "type": "string"
         },
         "freshnessProperty": {
-          "description": "This property indicates the freshness level of the object in the index.\nIf set, this property must be a top-level property within the\nproperty definitions\nand it must be a\ntimestamp type\nor\ndate type.\nOtherwise, the Indexing API uses\nupdateTime\nas the freshness indicator.\nThe maximum length is 256 characters.\n\nWhen a property is used to calculate fresheness, the value defaults\nto 2 years from the current time.",
+          "description": "This property indicates the freshness level of the object in the index.\nIf set, this property must be a top-level property within the\nproperty definitions\nand it must be a\ntimestamp type\nor\ndate type.\nOtherwise, the Indexing API uses\nupdateTime\nas the freshness indicator.\nThe maximum length is 256 characters.\n\nWhen a property is used to calculate freshness, the value defaults\nto 2 years from the current time.",
           "type": "string"
         }
       },
@@ -2634,7 +2635,7 @@
       "id": "HtmlOperatorOptions",
       "properties": {
         "operatorName": {
-          "description": "Indicates the operator name required in the query in order to isolate the\nhtml property. For example, if operatorName is *subject* and the\nproperty's name is *subjectLine*, then queries like\n*subject:\u0026lt;value\u0026gt;* will show results only where the value of the\nproperty named *subjectLine* matches *\u0026lt;value\u0026gt;*. By contrast, a\nsearch that uses the same *\u0026lt;value\u0026gt;* without an operator will return\nall items where *\u0026lt;value\u0026gt;* matches the value of any\nhtml properties or text within the content field for the item.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
+          "description": "Indicates the operator name required in the query in order to isolate the\nhtml property. For example, if operatorName is *subject* and the\nproperty's name is *subjectLine*, then queries like\n*subject:\u0026lt;value\u0026gt;* show results only where the value of the\nproperty named *subjectLine* matches *\u0026lt;value\u0026gt;*. By contrast, a\nsearch that uses the same *\u0026lt;value\u0026gt;* without an operator return\nall items where *\u0026lt;value\u0026gt;* matches the value of any\nhtml properties or text within the content field for the item.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
           "type": "string"
         }
       },
@@ -2719,15 +2720,15 @@
       "id": "IntegerOperatorOptions",
       "properties": {
         "greaterThanOperatorName": {
-          "description": "Indicates the operator name required in the query in order to isolate the\ninteger property using the greater-than operator. For example, if\ngreaterThanOperatorName is *priorityabove* and the property's name is\n*priorityVal*, then queries like *priorityabove:\u0026lt;value\u0026gt;* will\nshow results only where the value of the property named *priorityVal* is\ngreater than *\u0026lt;value\u0026gt;*.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
+          "description": "Indicates the operator name required in the query in order to isolate the\ninteger property using the greater-than operator. For example, if\ngreaterThanOperatorName is *priorityabove* and the property's name is\n*priorityVal*, then queries like *priorityabove:\u0026lt;value\u0026gt;*\nshow results only where the value of the property named *priorityVal* is\ngreater than *\u0026lt;value\u0026gt;*.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
           "type": "string"
         },
         "lessThanOperatorName": {
-          "description": "Indicates the operator name required in the query in order to isolate the\ninteger property using the less-than operator. For example, if\nlessThanOperatorName is *prioritybelow* and the property's name is\n*priorityVal*, then queries like *prioritybelow:\u0026lt;value\u0026gt;* will\nshow results only where the value of the property named *priorityVal* is\nless than *\u0026lt;value\u0026gt;*.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
+          "description": "Indicates the operator name required in the query in order to isolate the\ninteger property using the less-than operator. For example, if\nlessThanOperatorName is *prioritybelow* and the property's name is\n*priorityVal*, then queries like *prioritybelow:\u0026lt;value\u0026gt;*\nshow results only where the value of the property named *priorityVal* is\nless than *\u0026lt;value\u0026gt;*.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
           "type": "string"
         },
         "operatorName": {
-          "description": "Indicates the operator name required in the query in order to isolate the\ninteger property. For example, if operatorName is *priority* and the\nproperty's name is *priorityVal*, then queries like\n*priority:\u0026lt;value\u0026gt;* will show results only where the value of the\nproperty named *priorityVal* matches *\u0026lt;value\u0026gt;*. By contrast, a\nsearch that uses the same *\u0026lt;value\u0026gt;* without an operator will return\nall items where *\u0026lt;value\u0026gt;* matches the value of any String\nproperties or text within the content field for the item.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
+          "description": "Indicates the operator name required in the query in order to isolate the\ninteger property. For example, if operatorName is *priority* and the\nproperty's name is *priorityVal*, then queries like\n*priority:\u0026lt;value\u0026gt;* show results only where the value of the\nproperty named *priorityVal* matches *\u0026lt;value\u0026gt;*. By contrast, a\nsearch that uses the same *\u0026lt;value\u0026gt;* without an operator returns\nall items where *\u0026lt;value\u0026gt;* matches the value of any String\nproperties or text within the content field for the item.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
           "type": "string"
         }
       },
@@ -2759,7 +2760,7 @@
             "DESCENDING"
           ],
           "enumDescriptions": [
-            "There is no ranking order for the property. Results will not be adjusted\nby this property's value.",
+            "There is no ranking order for the property. Results are not adjusted\nby this property's value.",
             "This property is ranked in ascending order. Lower values indicate lower\nranking.",
             "This property is ranked in descending order. Lower values indicate\nhigher ranking."
           ],
@@ -3274,7 +3275,7 @@
       "id": "Metaline",
       "properties": {
         "properties": {
-          "description": "The list of displayed properties for the metaline. The maxiumum number of\nproperties is 5.",
+          "description": "The list of displayed properties for the metaline. The maximum number of\nproperties is 5.",
           "items": {
             "$ref": "DisplayedProperty"
           },
@@ -3359,14 +3360,14 @@
       "id": "ObjectDisplayOptions",
       "properties": {
         "metalines": {
-          "description": "Defines the properties that will be displayed in the metalines of the\nsearch results. The property values will be displayed in the order given\nhere. If a property holds multiple values, all of the values will be\ndiplayed before the next properties. For this reason, it is a good practice\nto specify singular properties before repeated properties in this list. All\nof the properties must set\nis_returnable\nto true. The maximum number of metalines is 3.",
+          "description": "Defines the properties that are displayed in the metalines of the\nsearch results. The property values are displayed in the order given\nhere. If a property holds multiple values, all of the values are\ndisplayed before the next properties. For this reason, it is a good\npractice to specify singular properties before repeated properties in this\nlist. All of the properties must set\nis_returnable\nto true. The maximum number of metalines is 3.",
           "items": {
             "$ref": "Metaline"
           },
           "type": "array"
         },
         "objectDisplayLabel": {
-          "description": "The user friendly label to display in the search result to inidicate the\ntype of the item. This is OPTIONAL; if not given, an object label will not\nbe displayed on the context line of the search results. The maximum length\nis 32 characters.",
+          "description": "The user friendly label to display in the search result to indicate the\ntype of the item. This is OPTIONAL; if not provided, an object label isn't\ndisplayed on the context line of the search results. The maximum length\nis 32 characters.",
           "type": "string"
         }
       },
@@ -3649,7 +3650,7 @@
           "type": "boolean"
         },
         "isRepeatable": {
-          "description": "Indicates that multiple values are allowed for the property. For example, a\ndocument only has one description but can have multiple comments. Cannot be\ntrue for properties whose type is a boolean.\nIf set to false, properties that contain more than one value will cause the\nindexing request for that item to be rejected.",
+          "description": "Indicates that multiple values are allowed for the property. For example, a\ndocument only has one description but can have multiple comments. Cannot be\ntrue for properties whose type is a boolean.\nIf set to false, properties that contain more than one value cause the\nindexing request for that item to be rejected.",
           "type": "boolean"
         },
         "isReturnable": {
@@ -3689,7 +3690,7 @@
       "id": "PropertyDisplayOptions",
       "properties": {
         "displayLabel": {
-          "description": "The user friendly label for the property that will be used if the property\nis specified to be displayed in ObjectDisplayOptions. If given, the display\nlabel will be shown in front of the property values when the property is\npart of the object display options. For example, if the property value is\n'1', the value by itself may not be useful context for the user. If the\ndisplay name given was 'priority', then the user will see 'priority : 1' in\nthe search results which provides clear conext to search users. This is\nOPTIONAL; if not given, only the property values will be displayed.\nThe maximum length is 32 characters.",
+          "description": "The user friendly label for the property that is used if the property\nis specified to be displayed in ObjectDisplayOptions. If provided, the\ndisplay label is shown in front of the property values when the property is\npart of the object display options. For example, if the property value is\n'1', the value by itself may not be useful context for the user. If the\ndisplay name given was 'priority', then the user sees 'priority : 1' in\nthe search results which provides clear context to search users. This is\nOPTIONAL; if not given, only the property values are displayed.\nThe maximum length is 32 characters.",
           "type": "string"
         }
       },
@@ -4798,11 +4799,11 @@
       "id": "TextOperatorOptions",
       "properties": {
         "exactMatchWithOperator": {
-          "description": "If true, the text value will be tokenized as one atomic value in\noperator searches and facet matches. For example, if the operator name is\n\"genre\" and the value is \"science-fiction\" the query restrictions\n\"genre:science\" and \"genre:fiction\" will not match the item;\n\"genre:science-fiction\" will. Value matching is case-sensitive\nand does not remove special characters.\nIf false, the text will be tokenized. For example, if the value is\n\"science-fiction\" the queries \"genre:science\" and \"genre:fiction\" will\nmatch the item.",
+          "description": "If true, the text value is tokenized as one atomic value in\noperator searches and facet matches. For example, if the operator name is\n\"genre\" and the value is \"science-fiction\" the query restrictions\n\"genre:science\" and \"genre:fiction\" doesn't match the item;\n\"genre:science-fiction\" does. Value matching is case-sensitive\nand does not remove special characters.\nIf false, the text is tokenized. For example, if the value is\n\"science-fiction\" the queries \"genre:science\" and \"genre:fiction\"\nmatches the item.",
           "type": "boolean"
         },
         "operatorName": {
-          "description": "Indicates the operator name required in the query in order to isolate the\ntext property. For example, if operatorName is *subject* and the\nproperty's name is *subjectLine*, then queries like\n*subject:\u0026lt;value\u0026gt;* will show results only where the value of the\nproperty named *subjectLine* matches *\u0026lt;value\u0026gt;*. By contrast, a\nsearch that uses the same *\u0026lt;value\u0026gt;* without an operator will return\nall items where *\u0026lt;value\u0026gt;* matches the value of any\ntext properties or text within the content field for the item.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
+          "description": "Indicates the operator name required in the query in order to isolate the\ntext property. For example, if operatorName is *subject* and the\nproperty's name is *subjectLine*, then queries like\n*subject:\u0026lt;value\u0026gt;* show results only where the value of the\nproperty named *subjectLine* matches *\u0026lt;value\u0026gt;*. By contrast, a\nsearch that uses the same *\u0026lt;value\u0026gt;* without an operator returns\nall items where *\u0026lt;value\u0026gt;* matches the value of any\ntext properties or text within the content field for the item.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
           "type": "string"
         }
       },
@@ -4842,15 +4843,15 @@
       "id": "TimestampOperatorOptions",
       "properties": {
         "greaterThanOperatorName": {
-          "description": "Indicates the operator name required in the query in order to isolate the\ntimestamp property using the greater-than operator. For example, if\ngreaterThanOperatorName is *closedafter* and the property's name is\n*closeDate*, then queries like *closedafter:\u0026lt;value\u0026gt;* will\nshow results only where the value of the property named *closeDate* is\nlater than *\u0026lt;value\u0026gt;*.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
+          "description": "Indicates the operator name required in the query in order to isolate the\ntimestamp property using the greater-than operator. For example, if\ngreaterThanOperatorName is *closedafter* and the property's name is\n*closeDate*, then queries like *closedafter:\u0026lt;value\u0026gt;*\nshow results only where the value of the property named *closeDate* is\nlater than *\u0026lt;value\u0026gt;*.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
           "type": "string"
         },
         "lessThanOperatorName": {
-          "description": "Indicates the operator name required in the query in order to isolate the\ntimestamp property using the less-than operator. For example, if\nlessThanOperatorName is *closedbefore* and the property's name is\n*closeDate*, then queries like *closedbefore:\u0026lt;value\u0026gt;* will\nshow results only where the value of the property named *closeDate* is\nearlier than *\u0026lt;value\u0026gt;*.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
+          "description": "Indicates the operator name required in the query in order to isolate the\ntimestamp property using the less-than operator. For example, if\nlessThanOperatorName is *closedbefore* and the property's name is\n*closeDate*, then queries like *closedbefore:\u0026lt;value\u0026gt;*\nshow results only where the value of the property named *closeDate* is\nearlier than *\u0026lt;value\u0026gt;*.\nThe operator name can only contain lowercase letters (a-z).\nThe maximum length is 32 characters.",
           "type": "string"
         },
         "operatorName": {
-          "description": "Indicates the operator name required in the query in order to isolate the\ntimestamp property. For example, if operatorName is *closedon* and the\nproperty's name is *closeDate*, then queries like\n*closedon:\u0026lt;value\u0026gt;* will show results only where the value of the\nproperty named *closeDate* matches *\u0026lt;value\u0026gt;*. By contrast, a\nsearch that uses the same *\u0026lt;value\u0026gt;* without an operator will return\nall items where *\u0026lt;value\u0026gt;* matches the value of any String\nproperties or text within the content field for the item. The operator\nname can only contain lowercase letters (a-z). The maximum length is 32\ncharacters.",
+          "description": "Indicates the operator name required in the query in order to isolate the\ntimestamp property. For example, if operatorName is *closedon* and the\nproperty's name is *closeDate*, then queries like\n*closedon:\u0026lt;value\u0026gt;* show results only where the value of the\nproperty named *closeDate* matches *\u0026lt;value\u0026gt;*. By contrast, a\nsearch that uses the same *\u0026lt;value\u0026gt;* without an operator returns\nall items where *\u0026lt;value\u0026gt;* matches the value of any String\nproperties or text within the content field for the item. The operator\nname can only contain lowercase letters (a-z). The maximum length is 32\ncharacters.",
           "type": "string"
         }
       },

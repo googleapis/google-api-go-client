@@ -253,7 +253,7 @@
               "type": "string"
             },
             "groupKey.namespace": {
-              "description": "The namespace in which the entity exists.\n\nIf not specified, the `EntityKey` represents a Google-managed entity such\nas a Google user or a Google Group.\n\nIf specified, the `EntityKey` represents an external-identity-mapped group.\nThe namespace must correspond to an identity source created in Admin\nConsole. Must be of the form `identitysources/{identity_source_id}.",
+              "description": "The namespace in which the entity exists.\n\nIf not specified, the `EntityKey` represents a Google-managed entity such\nas a Google user or a Google Group.\n\nIf specified, the `EntityKey` represents an external-identity-mapped group.\nThe namespace must correspond to an identity source created in Admin\nConsole and must be in the form of `identitysources/{identity_source_id}.",
               "location": "query",
               "type": "string"
             }
@@ -494,7 +494,7 @@
                   "type": "string"
                 },
                 "memberKey.namespace": {
-                  "description": "The namespace in which the entity exists.\n\nIf not specified, the `EntityKey` represents a Google-managed entity such\nas a Google user or a Google Group.\n\nIf specified, the `EntityKey` represents an external-identity-mapped group.\nThe namespace must correspond to an identity source created in Admin\nConsole. Must be of the form `identitysources/{identity_source_id}.",
+                  "description": "The namespace in which the entity exists.\n\nIf not specified, the `EntityKey` represents a Google-managed entity such\nas a Google user or a Google Group.\n\nIf specified, the `EntityKey` represents an external-identity-mapped group.\nThe namespace must correspond to an identity source created in Admin\nConsole and must be in the form of `identitysources/{identity_source_id}.",
                   "location": "query",
                   "type": "string"
                 },
@@ -550,7 +550,7 @@
       }
     }
   },
-  "revision": "20200308",
+  "revision": "20200310",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "EntityKey": {
@@ -562,7 +562,7 @@
           "type": "string"
         },
         "namespace": {
-          "description": "The namespace in which the entity exists.\n\nIf not specified, the `EntityKey` represents a Google-managed entity such\nas a Google user or a Google Group.\n\nIf specified, the `EntityKey` represents an external-identity-mapped group.\nThe namespace must correspond to an identity source created in Admin\nConsole. Must be of the form `identitysources/{identity_source_id}.",
+          "description": "The namespace in which the entity exists.\n\nIf not specified, the `EntityKey` represents a Google-managed entity such\nas a Google user or a Google Group.\n\nIf specified, the `EntityKey` represents an external-identity-mapped group.\nThe namespace must correspond to an identity source created in Admin\nConsole and must be in the form of `identitysources/{identity_source_id}.",
           "type": "string"
         }
       },
@@ -590,7 +590,7 @@
       "type": "object"
     },
     "Group": {
-      "description": "A group within the Cloud Identity Groups API.\n\nA `Group` is a collection of entities, where each entity is either a user or\nanother group or a service account.",
+      "description": "A group within the Cloud Identity Groups API.\n\nA `Group` is a collection of entities, where each entity is either a user,\nanother group or a service account.",
       "id": "Group",
       "properties": {
         "additionalGroupKeys": {

@@ -201,7 +201,8 @@ type EntityKey struct {
 	// group.
 	// The namespace must correspond to an identity source created in
 	// Admin
-	// Console. Must be of the form `identitysources/{identity_source_id}.
+	// Console and must be in the form of
+	// `identitysources/{identity_source_id}.
 	Namespace string `json:"namespace,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -267,7 +268,7 @@ func (s *GetMembershipGraphResponse) MarshalJSON() ([]byte, error) {
 // Group: A group within the Cloud Identity Groups API.
 //
 // A `Group` is a collection of entities, where each entity is either a
-// user or
+// user,
 // another group or a service account.
 type Group struct {
 	// AdditionalGroupKeys: Additional entity key aliases for a Group.
@@ -990,7 +991,7 @@ func (c *GroupsCreateCall) Header() http.Header {
 
 func (c *GroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1127,7 +1128,7 @@ func (c *GroupsDeleteCall) Header() http.Header {
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1269,7 +1270,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1468,7 +1469,7 @@ func (c *GroupsListCall) Header() http.Header {
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1642,7 +1643,8 @@ func (c *GroupsLookupCall) GroupKeyId(groupKeyId string) *GroupsLookupCall {
 // group.
 // The namespace must correspond to an identity source created in
 // Admin
-// Console. Must be of the form `identitysources/{identity_source_id}.
+// Console and must be in the form of
+// `identitysources/{identity_source_id}.
 func (c *GroupsLookupCall) GroupKeyNamespace(groupKeyNamespace string) *GroupsLookupCall {
 	c.urlParams_.Set("groupKey.namespace", groupKeyNamespace)
 	return c
@@ -1685,7 +1687,7 @@ func (c *GroupsLookupCall) Header() http.Header {
 
 func (c *GroupsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1756,7 +1758,7 @@ func (c *GroupsLookupCall) Do(opts ...googleapi.CallOption) (*LookupGroupNameRes
 	//       "type": "string"
 	//     },
 	//     "groupKey.namespace": {
-	//       "description": "The namespace in which the entity exists.\n\nIf not specified, the `EntityKey` represents a Google-managed entity such\nas a Google user or a Google Group.\n\nIf specified, the `EntityKey` represents an external-identity-mapped group.\nThe namespace must correspond to an identity source created in Admin\nConsole. Must be of the form `identitysources/{identity_source_id}.",
+	//       "description": "The namespace in which the entity exists.\n\nIf not specified, the `EntityKey` represents a Google-managed entity such\nas a Google user or a Google Group.\n\nIf specified, the `EntityKey` represents an external-identity-mapped group.\nThe namespace must correspond to an identity source created in Admin\nConsole and must be in the form of `identitysources/{identity_source_id}.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1829,7 +1831,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2045,7 +2047,7 @@ func (c *GroupsSearchCall) Header() http.Header {
 
 func (c *GroupsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2216,7 +2218,7 @@ func (c *GroupsMembershipsCreateCall) Header() http.Header {
 
 func (c *GroupsMembershipsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2355,7 +2357,7 @@ func (c *GroupsMembershipsDeleteCall) Header() http.Header {
 
 func (c *GroupsMembershipsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2497,7 +2499,7 @@ func (c *GroupsMembershipsGetCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2688,7 +2690,7 @@ func (c *GroupsMembershipsListCall) Header() http.Header {
 
 func (c *GroupsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2870,7 +2872,8 @@ func (c *GroupsMembershipsLookupCall) MemberKeyId(memberKeyId string) *GroupsMem
 // group.
 // The namespace must correspond to an identity source created in
 // Admin
-// Console. Must be of the form `identitysources/{identity_source_id}.
+// Console and must be in the form of
+// `identitysources/{identity_source_id}.
 func (c *GroupsMembershipsLookupCall) MemberKeyNamespace(memberKeyNamespace string) *GroupsMembershipsLookupCall {
 	c.urlParams_.Set("memberKey.namespace", memberKeyNamespace)
 	return c
@@ -2913,7 +2916,7 @@ func (c *GroupsMembershipsLookupCall) Header() http.Header {
 
 func (c *GroupsMembershipsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2989,7 +2992,7 @@ func (c *GroupsMembershipsLookupCall) Do(opts ...googleapi.CallOption) (*LookupM
 	//       "type": "string"
 	//     },
 	//     "memberKey.namespace": {
-	//       "description": "The namespace in which the entity exists.\n\nIf not specified, the `EntityKey` represents a Google-managed entity such\nas a Google user or a Google Group.\n\nIf specified, the `EntityKey` represents an external-identity-mapped group.\nThe namespace must correspond to an identity source created in Admin\nConsole. Must be of the form `identitysources/{identity_source_id}.",
+	//       "description": "The namespace in which the entity exists.\n\nIf not specified, the `EntityKey` represents a Google-managed entity such\nas a Google user or a Google Group.\n\nIf specified, the `EntityKey` represents an external-identity-mapped group.\nThe namespace must correspond to an identity source created in Admin\nConsole and must be in the form of `identitysources/{identity_source_id}.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3061,7 +3064,7 @@ func (c *GroupsMembershipsModifyMembershipRolesCall) Header() http.Header {
 
 func (c *GroupsMembershipsModifyMembershipRolesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

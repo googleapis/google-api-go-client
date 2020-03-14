@@ -599,7 +599,7 @@
       }
     }
   },
-  "revision": "20200226",
+  "revision": "20200305",
   "rootUrl": "https://osconfig.googleapis.com/",
   "schemas": {
     "AptRepository": {
@@ -1257,7 +1257,7 @@
       "type": "object"
     },
     "PatchDeployment": {
-      "description": "Patch deployments are configurations that individual patch jobs use to\ncomplete a patch. These configurations include instance filter, package\nrepository settings, and a schedule.",
+      "description": "Patch deployments are configurations that individual patch jobs use to\ncomplete a patch. These configurations include instance filter, package\nrepository settings, and a schedule. For more information about creating and\nmanaging patch deployments, see [Scheduling patch\njobs](/compute/docs/os-patch-management/schedule-patch-jobs).",
       "id": "PatchDeployment",
       "properties": {
         "createTime": {
@@ -1361,7 +1361,7 @@
       "type": "object"
     },
     "PatchJob": {
-      "description": "A high level representation of a patch job that is either in progress\nor has completed.\n\nInstances details are not included in the job. To paginate through instance\ndetails, use ListPatchJobInstanceDetails.",
+      "description": "A high level representation of a patch job that is either in progress\nor has completed.\n\nInstances details are not included in the job. To paginate through instance\ndetails, use ListPatchJobInstanceDetails.\n\nFor more information about patch jobs, see\n[Creating patch jobs](/compute/docs/os-patch-management/create-patch-job).",
       "id": "PatchJob",
       "properties": {
         "createTime": {
@@ -1448,7 +1448,7 @@
       "type": "object"
     },
     "PatchJobInstanceDetails": {
-      "description": "Patch details for a VM instance.",
+      "description": "Patch details for a VM instance. For more information about reviewing VM\ninstance details, see\n[Listing all VM instance details for a specific patch\njob](/compute/docs/os-patch-management/manage-patch-jobs#list-instance-details).",
       "id": "PatchJobInstanceDetails",
       "properties": {
         "attemptCount": {

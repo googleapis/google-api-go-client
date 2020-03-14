@@ -76,8 +76,19 @@ const apiName = "osconfig"
 const apiVersion = "v1"
 const basePath = "https://osconfig.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// View and manage your data across Google Cloud Platform services
+	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+)
+
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := option.WithScopes(
+		"https://www.googleapis.com/auth/cloud-platform",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
@@ -103,6 +114,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Projects = NewProjectsService(s)
 	return s, nil
 }
 
@@ -110,6 +122,8 @@ type Service struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
+
+	Projects *ProjectsService
 }
 
 func (s *Service) userAgent() string {
@@ -117,4 +131,2925 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewProjectsService(s *Service) *ProjectsService {
+	rs := &ProjectsService{s: s}
+	rs.PatchDeployments = NewProjectsPatchDeploymentsService(s)
+	rs.PatchJobs = NewProjectsPatchJobsService(s)
+	return rs
+}
+
+type ProjectsService struct {
+	s *Service
+
+	PatchDeployments *ProjectsPatchDeploymentsService
+
+	PatchJobs *ProjectsPatchJobsService
+}
+
+func NewProjectsPatchDeploymentsService(s *Service) *ProjectsPatchDeploymentsService {
+	rs := &ProjectsPatchDeploymentsService{s: s}
+	return rs
+}
+
+type ProjectsPatchDeploymentsService struct {
+	s *Service
+}
+
+func NewProjectsPatchJobsService(s *Service) *ProjectsPatchJobsService {
+	rs := &ProjectsPatchJobsService{s: s}
+	rs.InstanceDetails = NewProjectsPatchJobsInstanceDetailsService(s)
+	return rs
+}
+
+type ProjectsPatchJobsService struct {
+	s *Service
+
+	InstanceDetails *ProjectsPatchJobsInstanceDetailsService
+}
+
+func NewProjectsPatchJobsInstanceDetailsService(s *Service) *ProjectsPatchJobsInstanceDetailsService {
+	rs := &ProjectsPatchJobsInstanceDetailsService{s: s}
+	return rs
+}
+
+type ProjectsPatchJobsInstanceDetailsService struct {
+	s *Service
+}
+
+// AptSettings: Apt patching is completed by executing `apt-get update
+// && apt-get
+// upgrade`. Additional options can be set to control how this is
+// executed.
+type AptSettings struct {
+	// Excludes: List of packages to exclude from update. These packages
+	// will be excluded
+	Excludes []string `json:"excludes,omitempty"`
+
+	// ExclusivePackages: An exclusive list of packages to be updated. These
+	// are the only packages
+	// that will be updated. If these packages are not installed, they will
+	// be
+	// ignored. This field cannot be specified with any other patch
+	// configuration
+	// fields.
+	ExclusivePackages []string `json:"exclusivePackages,omitempty"`
+
+	// Type: By changing the type to DIST, the patching is performed
+	// using `apt-get dist-upgrade` instead.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - By default, upgrade will be performed.
+	//   "DIST" - Runs `apt-get dist-upgrade`.
+	//   "UPGRADE" - Runs `apt-get upgrade`.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Excludes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Excludes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AptSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod AptSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CancelPatchJobRequest: Message for canceling a patch job.
+type CancelPatchJobRequest struct {
+}
+
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated
+// empty messages in your APIs. A typical example is to use it as the
+// request
+// or the response type of an API method. For instance:
+//
+//     service Foo {
+//       rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty);
+//     }
+//
+// The JSON representation for `Empty` is empty JSON object `{}`.
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+// ExecStep: A step that runs an executable for a PatchJob.
+type ExecStep struct {
+	// LinuxExecStepConfig: The ExecStepConfig for all Linux VMs targeted by
+	// the PatchJob.
+	LinuxExecStepConfig *ExecStepConfig `json:"linuxExecStepConfig,omitempty"`
+
+	// WindowsExecStepConfig: The ExecStepConfig for all Windows VMs
+	// targeted by the PatchJob.
+	WindowsExecStepConfig *ExecStepConfig `json:"windowsExecStepConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LinuxExecStepConfig")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LinuxExecStepConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExecStep) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecStep
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExecStepConfig: Common configurations for an ExecStep.
+type ExecStepConfig struct {
+	// AllowedSuccessCodes: Defaults to [0]. A list of possible return
+	// values that the
+	// execution can return to indicate a success.
+	AllowedSuccessCodes []int64 `json:"allowedSuccessCodes,omitempty"`
+
+	// GcsObject: A Google Cloud Storage object containing the executable.
+	GcsObject *GcsObject `json:"gcsObject,omitempty"`
+
+	// Interpreter: The script interpreter to use to run the script. If no
+	// interpreter is
+	// specified the script will be executed directly, which will
+	// likely
+	// only succeed for scripts with [shebang
+	// lines]
+	// (https://en.wikipedia.org/wiki/Shebang_\(Unix\)).
+	//
+	// Possible values:
+	//   "INTERPRETER_UNSPECIFIED" - Invalid for a Windows ExecStepConfig.
+	// For a Linux ExecStepConfig, the
+	// interpreter will be parsed from the shebang line of the script
+	// if
+	// unspecified.
+	//   "SHELL" - Indicates that the script is run with `/bin/sh` on Linux
+	// and `cmd`
+	// on Windows.
+	//   "POWERSHELL" - Indicates that the file is run with PowerShell
+	// flags
+	// `-NonInteractive`, `-NoProfile`, and `-ExecutionPolicy Bypass`.
+	Interpreter string `json:"interpreter,omitempty"`
+
+	// LocalPath: An absolute path to the executable on the VM.
+	LocalPath string `json:"localPath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowedSuccessCodes")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedSuccessCodes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExecStepConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecStepConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExecutePatchJobRequest: A request message to initiate patching across
+// Google Compute Engine
+// instances.
+type ExecutePatchJobRequest struct {
+	// Description: Description of the patch job. Length of the description
+	// is limited
+	// to 1024 characters.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Display name for this patch job. This does not have to
+	// be unique.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// DryRun: If this patch is a dry-run only, instances are contacted
+	// but
+	// will do nothing.
+	DryRun bool `json:"dryRun,omitempty"`
+
+	// Duration: Duration of the patch job. After the duration ends, the
+	// patch job
+	// times out.
+	Duration string `json:"duration,omitempty"`
+
+	// InstanceFilter: Required. Instances to patch, either explicitly or
+	// filtered by some criteria such
+	// as zone or labels.
+	InstanceFilter *PatchInstanceFilter `json:"instanceFilter,omitempty"`
+
+	// PatchConfig: Patch configuration being applied. If omitted, instances
+	// are
+	// patched using the default configurations.
+	PatchConfig *PatchConfig `json:"patchConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExecutePatchJobRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecutePatchJobRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GcsObject: Google Cloud Storage object representation.
+type GcsObject struct {
+	// Bucket: Required. Bucket of the Google Cloud Storage object.
+	Bucket string `json:"bucket,omitempty"`
+
+	// GenerationNumber: Required. Generation number of the Google Cloud
+	// Storage object. This is used to
+	// ensure that the ExecStep specified by this PatchJob does not change.
+	GenerationNumber int64 `json:"generationNumber,omitempty,string"`
+
+	// Object: Required. Name of the Google Cloud Storage object.
+	Object string `json:"object,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bucket") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GcsObject) MarshalJSON() ([]byte, error) {
+	type NoMethod GcsObject
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooSettings: Googet patching is performed by running `googet update`.
+type GooSettings struct {
+}
+
+// ListPatchDeploymentsResponse: A response message for listing patch
+// deployments.
+type ListPatchDeploymentsResponse struct {
+	// NextPageToken: A pagination token that can be used to get the next
+	// page of patch
+	// deployments.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PatchDeployments: The list of patch deployments.
+	PatchDeployments []*PatchDeployment `json:"patchDeployments,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPatchDeploymentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPatchDeploymentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListPatchJobInstanceDetailsResponse: A response message for listing
+// the instances details for a patch job.
+type ListPatchJobInstanceDetailsResponse struct {
+	// NextPageToken: A pagination token that can be used to get the next
+	// page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PatchJobInstanceDetails: A list of instance status.
+	PatchJobInstanceDetails []*PatchJobInstanceDetails `json:"patchJobInstanceDetails,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPatchJobInstanceDetailsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPatchJobInstanceDetailsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListPatchJobsResponse: A response message for listing patch jobs.
+type ListPatchJobsResponse struct {
+	// NextPageToken: A pagination token that can be used to get the next
+	// page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PatchJobs: The list of patch jobs.
+	PatchJobs []*PatchJob `json:"patchJobs,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPatchJobsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPatchJobsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MonthlySchedule: Represents a monthly schedule. An example of a valid
+// monthly schedule is
+// "on the third Tuesday of the month" or "on the 15th of the month".
+type MonthlySchedule struct {
+	// MonthDay: Required. One day of the month. 1-31 indicates the 1st to
+	// the 31st day. -1
+	// indicates the last day of the month.
+	// Months without the target day will be skipped. For example, a
+	// schedule to
+	// run "every month on the 31st" will not run in February, April, June,
+	// etc.
+	MonthDay int64 `json:"monthDay,omitempty"`
+
+	// WeekDayOfMonth: Required. Week day in a month.
+	WeekDayOfMonth *WeekDayOfMonth `json:"weekDayOfMonth,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MonthDay") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MonthDay") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MonthlySchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod MonthlySchedule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OneTimeSchedule: Sets the time for a one time patch deployment.
+// Timestamp is in
+// <a href="https://www.ietf.org/rfc/rfc3339.txt"
+// target="_blank">RFC3339</a>
+// text format.
+type OneTimeSchedule struct {
+	// ExecuteTime: Required. The desired patch job execution time.
+	ExecuteTime string `json:"executeTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExecuteTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExecuteTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OneTimeSchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod OneTimeSchedule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PatchConfig: Patch configuration specifications. Contains details on
+// how to apply the
+// patch(es) to a VM instance.
+type PatchConfig struct {
+	// Apt: Apt update settings. Use this setting to override the default
+	// `apt` patch
+	// rules.
+	Apt *AptSettings `json:"apt,omitempty"`
+
+	// Goo: Goo update settings. Use this setting to override the default
+	// `goo` patch
+	// rules.
+	Goo *GooSettings `json:"goo,omitempty"`
+
+	// PostStep: The `ExecStep` to run after the patch update.
+	PostStep *ExecStep `json:"postStep,omitempty"`
+
+	// PreStep: The `ExecStep` to run before the patch update.
+	PreStep *ExecStep `json:"preStep,omitempty"`
+
+	// RebootConfig: Post-patch reboot settings.
+	//
+	// Possible values:
+	//   "REBOOT_CONFIG_UNSPECIFIED" - The default behavior is DEFAULT.
+	//   "DEFAULT" - The agent decides if a reboot is necessary by checking
+	// signals such as
+	// registry keys on Windows or `/var/run/reboot-required` on APT
+	// based
+	// systems. On RPM based systems, a set of core system package install
+	// times
+	// are compared with system boot time.
+	//   "ALWAYS" - Always reboot the machine after the update completes.
+	//   "NEVER" - Never reboot the machine after the update completes.
+	RebootConfig string `json:"rebootConfig,omitempty"`
+
+	// WindowsUpdate: Windows update settings. Use this override the default
+	// windows patch rules.
+	WindowsUpdate *WindowsUpdateSettings `json:"windowsUpdate,omitempty"`
+
+	// Yum: Yum update settings. Use this setting to override the default
+	// `yum` patch
+	// rules.
+	Yum *YumSettings `json:"yum,omitempty"`
+
+	// Zypper: Zypper update settings. Use this setting to override the
+	// default `zypper`
+	// patch rules.
+	Zypper *ZypperSettings `json:"zypper,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Apt") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Apt") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PatchConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PatchConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PatchDeployment: Patch deployments are configurations that individual
+// patch jobs use to
+// complete a patch. These configurations include instance filter,
+// package
+// repository settings, and a schedule. For more information about
+// creating and
+// managing patch deployments, see [Scheduling
+// patch
+// jobs](/compute/docs/os-patch-management/schedule-patch-jobs).
+type PatchDeployment struct {
+	// CreateTime: Output only. Time the patch deployment was created.
+	// Timestamp is in
+	// <a href="https://www.ietf.org/rfc/rfc3339.txt"
+	// target="_blank">RFC3339</a>
+	// text format.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Optional. Description of the patch deployment. Length of
+	// the description is limited
+	// to 1024 characters.
+	Description string `json:"description,omitempty"`
+
+	// Duration: Optional. Duration of the patch. After the duration ends,
+	// the patch times out.
+	Duration string `json:"duration,omitempty"`
+
+	// InstanceFilter: Required. VM instances to patch.
+	InstanceFilter *PatchInstanceFilter `json:"instanceFilter,omitempty"`
+
+	// LastExecuteTime: Output only. The last time a patch job was started
+	// by this deployment.
+	// Timestamp is in
+	// <a href="https://www.ietf.org/rfc/rfc3339.txt"
+	// target="_blank">RFC3339</a>
+	// text format.
+	LastExecuteTime string `json:"lastExecuteTime,omitempty"`
+
+	// Name: Unique name for the patch deployment resource in a project. The
+	// patch
+	// deployment name is in the
+	// form:
+	// `projects/{project_id}/patchDeployments/{patch_deployment_id}`.
+	//
+	// This field is ignored when you create a new patch deployment.
+	Name string `json:"name,omitempty"`
+
+	// OneTimeSchedule: Required. Schedule a one-time execution.
+	OneTimeSchedule *OneTimeSchedule `json:"oneTimeSchedule,omitempty"`
+
+	// PatchConfig: Optional. Patch configuration that is applied.
+	PatchConfig *PatchConfig `json:"patchConfig,omitempty"`
+
+	// RecurringSchedule: Required. Schedule recurring executions.
+	RecurringSchedule *RecurringSchedule `json:"recurringSchedule,omitempty"`
+
+	// UpdateTime: Output only. Time the patch deployment was last updated.
+	// Timestamp is in
+	// <a href="https://www.ietf.org/rfc/rfc3339.txt"
+	// target="_blank">RFC3339</a>
+	// text format.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PatchDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod PatchDeployment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PatchInstanceFilter: A filter to target VM instances for patching.
+// The targeted
+// VMs must meet all criteria specified. So if both labels and zones
+// are
+// specified, the patch job targets only VMs with those labels and in
+// those
+// zones.
+type PatchInstanceFilter struct {
+	// All: Target all VM instances in the project. If true, no other
+	// criteria is
+	// permitted.
+	All bool `json:"all,omitempty"`
+
+	// GroupLabels: Targets VM instances matching at least one of these
+	// label sets. This allows
+	// targeting of disparate groups, for example "env=prod or env=staging".
+	GroupLabels []*PatchInstanceFilterGroupLabel `json:"groupLabels,omitempty"`
+
+	// InstanceNamePrefixes: Targets VMs whose name starts with one of these
+	// prefixes. Similar to
+	// labels, this is another way to group VMs when targeting configs,
+	// for
+	// example prefix="prod-".
+	InstanceNamePrefixes []string `json:"instanceNamePrefixes,omitempty"`
+
+	// Instances: Targets any of the VM instances specified. Instances are
+	// specified by their
+	// URI in the form
+	// `zones/[ZONE]/instances/[INSTANCE_NAME],
+	// `projects/[PROJECT_ID]/zones/
+	// [ZONE]/instances/[INSTANCE_NAME]`,
+	// or
+	// `https://www.googleapis.com/compute/v1/projects/[PROJECT_ID]/zones/
+	// [ZONE]/instances/[INSTANCE_NAME]`
+	Instances []string `json:"instances,omitempty"`
+
+	// Zones: Targets VM instances in ANY of these zones. Leave empty to
+	// target VM
+	// instances in any zone.
+	Zones []string `json:"zones,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "All") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "All") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PatchInstanceFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod PatchInstanceFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PatchInstanceFilterGroupLabel: Represents a group of VMs that can be
+// identified as having all these
+// labels, for example "env=prod and app=web".
+type PatchInstanceFilterGroupLabel struct {
+	// Labels: Google Compute Engine instance labels that must be present
+	// for a VM
+	// instance to be targeted by this filter.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Labels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PatchInstanceFilterGroupLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod PatchInstanceFilterGroupLabel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PatchJob: A high level representation of a patch job that is either
+// in progress
+// or has completed.
+//
+// Instances details are not included in the job. To paginate through
+// instance
+// details, use ListPatchJobInstanceDetails.
+//
+// For more information about patch jobs, see
+// [Creating patch
+// jobs](/compute/docs/os-patch-management/create-patch-job).
+type PatchJob struct {
+	// CreateTime: Time this patch job was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Description of the patch job. Length of the description
+	// is limited
+	// to 1024 characters.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Display name for this patch job. This is not a unique
+	// identifier.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// DryRun: If this patch job is a dry run, the agent reports that it
+	// has
+	// finished without running any updates on the VM instance.
+	DryRun bool `json:"dryRun,omitempty"`
+
+	// Duration: Duration of the patch job. After the duration ends,
+	// the
+	// patch job times out.
+	Duration string `json:"duration,omitempty"`
+
+	// ErrorMessage: If this patch job failed, this message provides
+	// information about the
+	// failure.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// InstanceDetailsSummary: Summary of instance details.
+	InstanceDetailsSummary *PatchJobInstanceDetailsSummary `json:"instanceDetailsSummary,omitempty"`
+
+	// InstanceFilter: Instances to patch.
+	InstanceFilter *PatchInstanceFilter `json:"instanceFilter,omitempty"`
+
+	// Name: Unique identifier for this patch job in the
+	// form
+	// `projects/*/patchJobs/*`
+	Name string `json:"name,omitempty"`
+
+	// PatchConfig: Patch configuration being applied.
+	PatchConfig *PatchConfig `json:"patchConfig,omitempty"`
+
+	// PatchDeployment: Output only. Name of the patch deployment that
+	// created this patch job.
+	PatchDeployment string `json:"patchDeployment,omitempty"`
+
+	// PercentComplete: Reflects the overall progress of the patch job in
+	// the range of
+	// 0.0 being no progress to 100.0 being complete.
+	PercentComplete float64 `json:"percentComplete,omitempty"`
+
+	// State: The current state of the PatchJob .
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State must be specified.
+	//   "STARTED" - The patch job was successfully initiated.
+	//   "INSTANCE_LOOKUP" - The patch job is looking up instances to run
+	// the patch on.
+	//   "PATCHING" - Instances are being patched.
+	//   "SUCCEEDED" - Patch job completed successfully.
+	//   "COMPLETED_WITH_ERRORS" - Patch job completed but there were
+	// errors.
+	//   "CANCELED" - The patch job was canceled.
+	//   "TIMED_OUT" - The patch job timed out.
+	State string `json:"state,omitempty"`
+
+	// UpdateTime: Last time this patch job was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PatchJob) MarshalJSON() ([]byte, error) {
+	type NoMethod PatchJob
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *PatchJob) UnmarshalJSON(data []byte) error {
+	type NoMethod PatchJob
+	var s1 struct {
+		PercentComplete gensupport.JSONFloat64 `json:"percentComplete"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.PercentComplete = float64(s1.PercentComplete)
+	return nil
+}
+
+// PatchJobInstanceDetails: Patch details for a VM instance. For more
+// information about reviewing VM
+// instance details, see
+// [Listing all VM instance details for a specific
+// patch
+// job](/compute/docs/os-patch-management/manage-patch-jobs#list-in
+// stance-details).
+type PatchJobInstanceDetails struct {
+	// AttemptCount: The number of times the agent that the agent attempts
+	// to apply the patch.
+	AttemptCount int64 `json:"attemptCount,omitempty,string"`
+
+	// FailureReason: If the patch fails, this field provides the reason.
+	FailureReason string `json:"failureReason,omitempty"`
+
+	// InstanceSystemId: The unique identifier for the instance. This
+	// identifier is
+	// defined by the server.
+	InstanceSystemId string `json:"instanceSystemId,omitempty"`
+
+	// Name: The instance name in the form `projects/*/zones/*/instances/*`
+	Name string `json:"name,omitempty"`
+
+	// State: Current state of instance patch.
+	//
+	// Possible values:
+	//   "PATCH_STATE_UNSPECIFIED" - Unspecified.
+	//   "PENDING" - The instance is not yet notified.
+	//   "INACTIVE" - Instance is inactive and cannot be patched.
+	//   "NOTIFIED" - The instance is notified that it should be patched.
+	//   "STARTED" - The instance has started the patching process.
+	//   "DOWNLOADING_PATCHES" - The instance is downloading patches.
+	//   "APPLYING_PATCHES" - The instance is applying patches.
+	//   "REBOOTING" - The instance is rebooting.
+	//   "SUCCEEDED" - The instance has completed applying patches.
+	//   "SUCCEEDED_REBOOT_REQUIRED" - The instance has completed applying
+	// patches but a reboot is required.
+	//   "FAILED" - The instance has failed to apply the patch.
+	//   "ACKED" - The instance acked the notification and will start
+	// shortly.
+	//   "TIMED_OUT" - The instance exceeded the time out while applying the
+	// patch.
+	//   "RUNNING_PRE_PATCH_STEP" - The instance is running the pre-patch
+	// step.
+	//   "RUNNING_POST_PATCH_STEP" - The instance is running the post-patch
+	// step.
+	//   "NO_AGENT_DETECTED" - The service could not detect the presence of
+	// the agent. Check to ensure
+	// that the agent is installed, running, and able to communicate with
+	// the
+	// service.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttemptCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttemptCount") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PatchJobInstanceDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod PatchJobInstanceDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PatchJobInstanceDetailsSummary: A summary of the current patch state
+// across all instances that this patch
+// job affects. Contains counts of instances in different states. These
+// states
+// map to `InstancePatchState`. List patch job instance details to see
+// the
+// specific states of each instance.
+type PatchJobInstanceDetailsSummary struct {
+	// AckedInstanceCount: Number of instances that have acked and will
+	// start shortly.
+	AckedInstanceCount int64 `json:"ackedInstanceCount,omitempty,string"`
+
+	// ApplyingPatchesInstanceCount: Number of instances that are applying
+	// patches.
+	ApplyingPatchesInstanceCount int64 `json:"applyingPatchesInstanceCount,omitempty,string"`
+
+	// DownloadingPatchesInstanceCount: Number of instances that are
+	// downloading patches.
+	DownloadingPatchesInstanceCount int64 `json:"downloadingPatchesInstanceCount,omitempty,string"`
+
+	// FailedInstanceCount: Number of instances that failed.
+	FailedInstanceCount int64 `json:"failedInstanceCount,omitempty,string"`
+
+	// InactiveInstanceCount: Number of instances that are inactive.
+	InactiveInstanceCount int64 `json:"inactiveInstanceCount,omitempty,string"`
+
+	// NoAgentDetectedInstanceCount: Number of instances that do not appear
+	// to be running the agent. Check to
+	// ensure that the agent is installed, running, and able to communicate
+	// with
+	// the service.
+	NoAgentDetectedInstanceCount int64 `json:"noAgentDetectedInstanceCount,omitempty,string"`
+
+	// NotifiedInstanceCount: Number of instances notified about patch job.
+	NotifiedInstanceCount int64 `json:"notifiedInstanceCount,omitempty,string"`
+
+	// PendingInstanceCount: Number of instances pending patch job.
+	PendingInstanceCount int64 `json:"pendingInstanceCount,omitempty,string"`
+
+	// PostPatchStepInstanceCount: Number of instances that are running the
+	// post-patch step.
+	PostPatchStepInstanceCount int64 `json:"postPatchStepInstanceCount,omitempty,string"`
+
+	// PrePatchStepInstanceCount: Number of instances that are running the
+	// pre-patch step.
+	PrePatchStepInstanceCount int64 `json:"prePatchStepInstanceCount,omitempty,string"`
+
+	// RebootingInstanceCount: Number of instances rebooting.
+	RebootingInstanceCount int64 `json:"rebootingInstanceCount,omitempty,string"`
+
+	// StartedInstanceCount: Number of instances that have started.
+	StartedInstanceCount int64 `json:"startedInstanceCount,omitempty,string"`
+
+	// SucceededInstanceCount: Number of instances that have completed
+	// successfully.
+	SucceededInstanceCount int64 `json:"succeededInstanceCount,omitempty,string"`
+
+	// SucceededRebootRequiredInstanceCount: Number of instances that
+	// require reboot.
+	SucceededRebootRequiredInstanceCount int64 `json:"succeededRebootRequiredInstanceCount,omitempty,string"`
+
+	// TimedOutInstanceCount: Number of instances that exceeded the time out
+	// while applying the patch.
+	TimedOutInstanceCount int64 `json:"timedOutInstanceCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AckedInstanceCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AckedInstanceCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PatchJobInstanceDetailsSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod PatchJobInstanceDetailsSummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RecurringSchedule: Sets the time for recurring patch deployments.
+type RecurringSchedule struct {
+	// EndTime: Optional. The end time at which a recurring patch deployment
+	// schedule is no longer
+	// active.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Frequency: Required. The frequency unit of this recurring schedule.
+	//
+	// Possible values:
+	//   "FREQUENCY_UNSPECIFIED" - Invalid. A frequency must be specified.
+	//   "WEEKLY" - Indicates that the frequency should be expressed in
+	// terms of
+	// weeks.
+	//   "MONTHLY" - Indicates that the frequency should be expressed in
+	// terms of
+	// months.
+	Frequency string `json:"frequency,omitempty"`
+
+	// LastExecuteTime: Output only. The time the last patch job ran
+	// successfully.
+	LastExecuteTime string `json:"lastExecuteTime,omitempty"`
+
+	// Monthly: Required. Schedule with monthly executions.
+	Monthly *MonthlySchedule `json:"monthly,omitempty"`
+
+	// NextExecuteTime: Output only. The time the next patch job is
+	// scheduled to run.
+	NextExecuteTime string `json:"nextExecuteTime,omitempty"`
+
+	// StartTime: Optional. The time that the recurring schedule becomes
+	// effective.
+	// Defaults to `create_time` of the patch deployment.
+	StartTime string `json:"startTime,omitempty"`
+
+	// TimeOfDay: Required. Time of the day to run a recurring deployment.
+	TimeOfDay *TimeOfDay `json:"timeOfDay,omitempty"`
+
+	// TimeZone: Required. Defines the time zone that `time_of_day` is
+	// relative to.
+	// The rules for daylight saving time are determined by the chosen time
+	// zone.
+	TimeZone *TimeZone `json:"timeZone,omitempty"`
+
+	// Weekly: Required. Schedule with weekly executions.
+	Weekly *WeeklySchedule `json:"weekly,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RecurringSchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod RecurringSchedule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TimeOfDay: Represents a time of day. The date and time zone are
+// either not significant
+// or are specified elsewhere. An API may choose to allow leap seconds.
+// Related
+// types are google.type.Date and `google.protobuf.Timestamp`.
+type TimeOfDay struct {
+	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API
+	// may choose
+	// to allow the value "24:00:00" for scenarios like business closing
+	// time.
+	Hours int64 `json:"hours,omitempty"`
+
+	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	Minutes int64 `json:"minutes,omitempty"`
+
+	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to
+	// 999,999,999.
+	Nanos int64 `json:"nanos,omitempty"`
+
+	// Seconds: Seconds of minutes of the time. Must normally be from 0 to
+	// 59. An API may
+	// allow the value 60 if it allows leap-seconds.
+	Seconds int64 `json:"seconds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Hours") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Hours") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeOfDay
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TimeZone: Represents a time zone from the
+// [IANA Time Zone Database](https://www.iana.org/time-zones).
+type TimeZone struct {
+	// Id: IANA Time Zone Database time zone, e.g. "America/New_York".
+	Id string `json:"id,omitempty"`
+
+	// Version: Optional. IANA Time Zone Database version number, e.g.
+	// "2019a".
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeZone) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeZone
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WeekDayOfMonth: Represents one week day in a month. An example is
+// "the 4th Sunday".
+type WeekDayOfMonth struct {
+	// DayOfWeek: Required. A day of the week.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The unspecified day-of-week.
+	//   "MONDAY" - The day-of-week of Monday.
+	//   "TUESDAY" - The day-of-week of Tuesday.
+	//   "WEDNESDAY" - The day-of-week of Wednesday.
+	//   "THURSDAY" - The day-of-week of Thursday.
+	//   "FRIDAY" - The day-of-week of Friday.
+	//   "SATURDAY" - The day-of-week of Saturday.
+	//   "SUNDAY" - The day-of-week of Sunday.
+	DayOfWeek string `json:"dayOfWeek,omitempty"`
+
+	// WeekOrdinal: Required. Week number in a month. 1-4 indicates the 1st
+	// to 4th week of the month. -1
+	// indicates the last week of the month.
+	WeekOrdinal int64 `json:"weekOrdinal,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DayOfWeek") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DayOfWeek") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WeekDayOfMonth) MarshalJSON() ([]byte, error) {
+	type NoMethod WeekDayOfMonth
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WeeklySchedule: Represents a weekly schedule.
+type WeeklySchedule struct {
+	// DayOfWeek: Required. Day of the week.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The unspecified day-of-week.
+	//   "MONDAY" - The day-of-week of Monday.
+	//   "TUESDAY" - The day-of-week of Tuesday.
+	//   "WEDNESDAY" - The day-of-week of Wednesday.
+	//   "THURSDAY" - The day-of-week of Thursday.
+	//   "FRIDAY" - The day-of-week of Friday.
+	//   "SATURDAY" - The day-of-week of Saturday.
+	//   "SUNDAY" - The day-of-week of Sunday.
+	DayOfWeek string `json:"dayOfWeek,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DayOfWeek") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DayOfWeek") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WeeklySchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod WeeklySchedule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WindowsUpdateSettings: Windows patching is performed using the
+// Windows Update Agent.
+type WindowsUpdateSettings struct {
+	// Classifications: Only apply updates of these windows update
+	// classifications. If empty, all
+	// updates are applied.
+	//
+	// Possible values:
+	//   "CLASSIFICATION_UNSPECIFIED" - Invalid. If classifications are
+	// included, they must be specified.
+	//   "CRITICAL" - "A widely released fix for a specific problem that
+	// addresses a critical,
+	// non-security-related bug." [1]
+	//   "SECURITY" - "A widely released fix for a product-specific,
+	// security-related
+	// vulnerability. Security vulnerabilities are rated by their severity.
+	// The
+	// severity rating is indicated in the Microsoft security bulletin
+	// as
+	// critical, important, moderate, or low." [1]
+	//   "DEFINITION" - "A widely released and frequent software update that
+	// contains additions
+	// to a product's definition database. Definition databases are often
+	// used
+	// to detect objects that have specific attributes, such as malicious
+	// code,
+	// phishing websites, or junk mail." [1]
+	//   "DRIVER" - "Software that controls the input and output of a
+	// device." [1]
+	//   "FEATURE_PACK" - "New product functionality that is first
+	// distributed outside the context
+	// of a product release and that is typically included in the next
+	// full
+	// product release." [1]
+	//   "SERVICE_PACK" - "A tested, cumulative set of all hotfixes,
+	// security updates, critical
+	// updates, and updates. Additionally, service packs may contain
+	// additional
+	// fixes for problems that are found internally since the release of
+	// the
+	// product. Service packs my also contain a limited number
+	// of
+	// customer-requested design changes or features." [1]
+	//   "TOOL" - "A utility or feature that helps complete a task or set of
+	// tasks." [1]
+	//   "UPDATE_ROLLUP" - "A tested, cumulative set of hotfixes, security
+	// updates, critical
+	// updates, and updates that are packaged together for easy deployment.
+	// A
+	// rollup generally targets a specific area, such as security, or
+	// a
+	// component of a product, such as Internet Information Services (IIS)."
+	// [1]
+	//   "UPDATE" - "A widely released fix for a specific problem. An update
+	// addresses a
+	// noncritical, non-security-related bug." [1]
+	Classifications []string `json:"classifications,omitempty"`
+
+	// Excludes: List of KBs to exclude from update.
+	Excludes []string `json:"excludes,omitempty"`
+
+	// ExclusivePatches: An exclusive list of kbs to be updated. These are
+	// the only patches
+	// that will be updated. This field must not be used with other
+	// patch configurations.
+	ExclusivePatches []string `json:"exclusivePatches,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Classifications") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Classifications") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WindowsUpdateSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod WindowsUpdateSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// YumSettings: Yum patching is performed by executing `yum update`.
+// Additional options
+// can be set to control how this is executed.
+//
+// Note that not all settings are supported on all platforms.
+type YumSettings struct {
+	// Excludes: List of packages to exclude from update. These packages are
+	// excluded by
+	// using the yum `--exclude` flag.
+	Excludes []string `json:"excludes,omitempty"`
+
+	// ExclusivePackages: An exclusive list of packages to be updated. These
+	// are the only packages
+	// that will be updated. If these packages are not installed, they will
+	// be
+	// ignored. This field must not be specified with any other
+	// patch
+	// configuration fields.
+	ExclusivePackages []string `json:"exclusivePackages,omitempty"`
+
+	// Minimal: Will cause patch to run `yum update-minimal` instead.
+	Minimal bool `json:"minimal,omitempty"`
+
+	// Security: Adds the `--security` flag to `yum update`. Not supported
+	// on
+	// all platforms.
+	Security bool `json:"security,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Excludes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Excludes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *YumSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod YumSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ZypperSettings: Zypper patching is performed by running `zypper
+// patch`.
+// See also https://en.opensuse.org/SDB:Zypper_manual.
+type ZypperSettings struct {
+	// Categories: Install only patches with these categories.
+	// Common categories include security, recommended, and feature.
+	Categories []string `json:"categories,omitempty"`
+
+	// Excludes: List of patches to exclude from update.
+	Excludes []string `json:"excludes,omitempty"`
+
+	// ExclusivePatches: An exclusive list of patches to be updated. These
+	// are the only patches
+	// that will be installed using 'zypper patch patch:<patch_name>'
+	// command.
+	// This field must not be used with any other patch configuration
+	// fields.
+	ExclusivePatches []string `json:"exclusivePatches,omitempty"`
+
+	// Severities: Install only patches with these severities.
+	// Common severities include critical, important, moderate, and low.
+	Severities []string `json:"severities,omitempty"`
+
+	// WithOptional: Adds the `--with-optional` flag to `zypper patch`.
+	WithOptional bool `json:"withOptional,omitempty"`
+
+	// WithUpdate: Adds the `--with-update` flag, to `zypper patch`.
+	WithUpdate bool `json:"withUpdate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Categories") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Categories") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ZypperSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ZypperSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "osconfig.projects.patchDeployments.create":
+
+type ProjectsPatchDeploymentsCreateCall struct {
+	s               *Service
+	parent          string
+	patchdeployment *PatchDeployment
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Create: Create an OS Config patch deployment.
+func (r *ProjectsPatchDeploymentsService) Create(parent string, patchdeployment *PatchDeployment) *ProjectsPatchDeploymentsCreateCall {
+	c := &ProjectsPatchDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.patchdeployment = patchdeployment
+	return c
+}
+
+// PatchDeploymentId sets the optional parameter "patchDeploymentId":
+// Required. A name for the patch deployment in the project. When
+// creating a name
+// the following rules apply:
+// * Must contain only lowercase letters, numbers, and hyphens.
+// * Must start with a letter.
+// * Must be between 1-63 characters.
+// * Must end with a number or a letter.
+// * Must be unique within the project.
+func (c *ProjectsPatchDeploymentsCreateCall) PatchDeploymentId(patchDeploymentId string) *ProjectsPatchDeploymentsCreateCall {
+	c.urlParams_.Set("patchDeploymentId", patchDeploymentId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsPatchDeploymentsCreateCall) Fields(s ...googleapi.Field) *ProjectsPatchDeploymentsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsPatchDeploymentsCreateCall) Context(ctx context.Context) *ProjectsPatchDeploymentsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsPatchDeploymentsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPatchDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.patchdeployment)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/patchDeployments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.patchDeployments.create" call.
+// Exactly one of *PatchDeployment or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *PatchDeployment.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsPatchDeploymentsCreateCall) Do(opts ...googleapi.CallOption) (*PatchDeployment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PatchDeployment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create an OS Config patch deployment.",
+	//   "flatPath": "v1/projects/{projectsId}/patchDeployments",
+	//   "httpMethod": "POST",
+	//   "id": "osconfig.projects.patchDeployments.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The project to apply this patch deployment to in the form `projects/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "patchDeploymentId": {
+	//       "description": "Required. A name for the patch deployment in the project. When creating a name\nthe following rules apply:\n* Must contain only lowercase letters, numbers, and hyphens.\n* Must start with a letter.\n* Must be between 1-63 characters.\n* Must end with a number or a letter.\n* Must be unique within the project.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/patchDeployments",
+	//   "request": {
+	//     "$ref": "PatchDeployment"
+	//   },
+	//   "response": {
+	//     "$ref": "PatchDeployment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "osconfig.projects.patchDeployments.delete":
+
+type ProjectsPatchDeploymentsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete an OS Config patch deployment.
+func (r *ProjectsPatchDeploymentsService) Delete(name string) *ProjectsPatchDeploymentsDeleteCall {
+	c := &ProjectsPatchDeploymentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsPatchDeploymentsDeleteCall) Fields(s ...googleapi.Field) *ProjectsPatchDeploymentsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsPatchDeploymentsDeleteCall) Context(ctx context.Context) *ProjectsPatchDeploymentsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsPatchDeploymentsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPatchDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.patchDeployments.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsPatchDeploymentsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Delete an OS Config patch deployment.",
+	//   "flatPath": "v1/projects/{projectsId}/patchDeployments/{patchDeploymentsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "osconfig.projects.patchDeployments.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the patch deployment in the form\n`projects/*/patchDeployments/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/patchDeployments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "osconfig.projects.patchDeployments.get":
+
+type ProjectsPatchDeploymentsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get an OS Config patch deployment.
+func (r *ProjectsPatchDeploymentsService) Get(name string) *ProjectsPatchDeploymentsGetCall {
+	c := &ProjectsPatchDeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsPatchDeploymentsGetCall) Fields(s ...googleapi.Field) *ProjectsPatchDeploymentsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsPatchDeploymentsGetCall) IfNoneMatch(entityTag string) *ProjectsPatchDeploymentsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsPatchDeploymentsGetCall) Context(ctx context.Context) *ProjectsPatchDeploymentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsPatchDeploymentsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPatchDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.patchDeployments.get" call.
+// Exactly one of *PatchDeployment or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *PatchDeployment.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsPatchDeploymentsGetCall) Do(opts ...googleapi.CallOption) (*PatchDeployment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PatchDeployment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get an OS Config patch deployment.",
+	//   "flatPath": "v1/projects/{projectsId}/patchDeployments/{patchDeploymentsId}",
+	//   "httpMethod": "GET",
+	//   "id": "osconfig.projects.patchDeployments.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the patch deployment in the form\n`projects/*/patchDeployments/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/patchDeployments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "PatchDeployment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "osconfig.projects.patchDeployments.list":
+
+type ProjectsPatchDeploymentsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Get a page of OS Config patch deployments.
+func (r *ProjectsPatchDeploymentsService) List(parent string) *ProjectsPatchDeploymentsListCall {
+	c := &ProjectsPatchDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of patch deployments to return. Default is 100.
+func (c *ProjectsPatchDeploymentsListCall) PageSize(pageSize int64) *ProjectsPatchDeploymentsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A pagination token
+// returned from a previous call to ListPatchDeployments
+// that indicates where this listing should continue from.
+func (c *ProjectsPatchDeploymentsListCall) PageToken(pageToken string) *ProjectsPatchDeploymentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsPatchDeploymentsListCall) Fields(s ...googleapi.Field) *ProjectsPatchDeploymentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsPatchDeploymentsListCall) IfNoneMatch(entityTag string) *ProjectsPatchDeploymentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsPatchDeploymentsListCall) Context(ctx context.Context) *ProjectsPatchDeploymentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsPatchDeploymentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPatchDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/patchDeployments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.patchDeployments.list" call.
+// Exactly one of *ListPatchDeploymentsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListPatchDeploymentsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsPatchDeploymentsListCall) Do(opts ...googleapi.CallOption) (*ListPatchDeploymentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListPatchDeploymentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a page of OS Config patch deployments.",
+	//   "flatPath": "v1/projects/{projectsId}/patchDeployments",
+	//   "httpMethod": "GET",
+	//   "id": "osconfig.projects.patchDeployments.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of patch deployments to return. Default is 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A pagination token returned from a previous call to ListPatchDeployments\nthat indicates where this listing should continue from.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the parent in the form `projects/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/patchDeployments",
+	//   "response": {
+	//     "$ref": "ListPatchDeploymentsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsPatchDeploymentsListCall) Pages(ctx context.Context, f func(*ListPatchDeploymentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "osconfig.projects.patchJobs.cancel":
+
+type ProjectsPatchJobsCancelCall struct {
+	s                     *Service
+	name                  string
+	cancelpatchjobrequest *CancelPatchJobRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Cancel: Cancel a patch job. The patch job must be active. Canceled
+// patch jobs
+// cannot be restarted.
+func (r *ProjectsPatchJobsService) Cancel(name string, cancelpatchjobrequest *CancelPatchJobRequest) *ProjectsPatchJobsCancelCall {
+	c := &ProjectsPatchJobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.cancelpatchjobrequest = cancelpatchjobrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsPatchJobsCancelCall) Fields(s ...googleapi.Field) *ProjectsPatchJobsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsPatchJobsCancelCall) Context(ctx context.Context) *ProjectsPatchJobsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsPatchJobsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPatchJobsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cancelpatchjobrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.patchJobs.cancel" call.
+// Exactly one of *PatchJob or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *PatchJob.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsPatchJobsCancelCall) Do(opts ...googleapi.CallOption) (*PatchJob, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PatchJob{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Cancel a patch job. The patch job must be active. Canceled patch jobs\ncannot be restarted.",
+	//   "flatPath": "v1/projects/{projectsId}/patchJobs/{patchJobsId}:cancel",
+	//   "httpMethod": "POST",
+	//   "id": "osconfig.projects.patchJobs.cancel",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the patch in the form `projects/*/patchJobs/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/patchJobs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:cancel",
+	//   "request": {
+	//     "$ref": "CancelPatchJobRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PatchJob"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "osconfig.projects.patchJobs.execute":
+
+type ProjectsPatchJobsExecuteCall struct {
+	s                      *Service
+	parent                 string
+	executepatchjobrequest *ExecutePatchJobRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Execute: Patch VM instances by creating and running a patch job.
+func (r *ProjectsPatchJobsService) Execute(parent string, executepatchjobrequest *ExecutePatchJobRequest) *ProjectsPatchJobsExecuteCall {
+	c := &ProjectsPatchJobsExecuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.executepatchjobrequest = executepatchjobrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsPatchJobsExecuteCall) Fields(s ...googleapi.Field) *ProjectsPatchJobsExecuteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsPatchJobsExecuteCall) Context(ctx context.Context) *ProjectsPatchJobsExecuteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsPatchJobsExecuteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPatchJobsExecuteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.executepatchjobrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/patchJobs:execute")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.patchJobs.execute" call.
+// Exactly one of *PatchJob or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *PatchJob.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsPatchJobsExecuteCall) Do(opts ...googleapi.CallOption) (*PatchJob, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PatchJob{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Patch VM instances by creating and running a patch job.",
+	//   "flatPath": "v1/projects/{projectsId}/patchJobs:execute",
+	//   "httpMethod": "POST",
+	//   "id": "osconfig.projects.patchJobs.execute",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The project in which to run this patch in the form `projects/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/patchJobs:execute",
+	//   "request": {
+	//     "$ref": "ExecutePatchJobRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PatchJob"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "osconfig.projects.patchJobs.get":
+
+type ProjectsPatchJobsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the patch job. This can be used to track the progress of
+// an
+// ongoing patch job or review the details of completed jobs.
+func (r *ProjectsPatchJobsService) Get(name string) *ProjectsPatchJobsGetCall {
+	c := &ProjectsPatchJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsPatchJobsGetCall) Fields(s ...googleapi.Field) *ProjectsPatchJobsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsPatchJobsGetCall) IfNoneMatch(entityTag string) *ProjectsPatchJobsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsPatchJobsGetCall) Context(ctx context.Context) *ProjectsPatchJobsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsPatchJobsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPatchJobsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.patchJobs.get" call.
+// Exactly one of *PatchJob or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *PatchJob.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsPatchJobsGetCall) Do(opts ...googleapi.CallOption) (*PatchJob, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PatchJob{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the patch job. This can be used to track the progress of an\nongoing patch job or review the details of completed jobs.",
+	//   "flatPath": "v1/projects/{projectsId}/patchJobs/{patchJobsId}",
+	//   "httpMethod": "GET",
+	//   "id": "osconfig.projects.patchJobs.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the patch in the form `projects/*/patchJobs/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/patchJobs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "PatchJob"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "osconfig.projects.patchJobs.list":
+
+type ProjectsPatchJobsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Get a list of patch jobs.
+func (r *ProjectsPatchJobsService) List(parent string) *ProjectsPatchJobsListCall {
+	c := &ProjectsPatchJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": If provided, this field
+// specifies the criteria that must be met by patch
+// jobs to be included in the response.
+// Currently, filtering is only available on the patch_deployment field.
+func (c *ProjectsPatchJobsListCall) Filter(filter string) *ProjectsPatchJobsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of instance status to return.
+func (c *ProjectsPatchJobsListCall) PageSize(pageSize int64) *ProjectsPatchJobsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A pagination token
+// returned from a previous call
+// that indicates where this listing should continue from.
+func (c *ProjectsPatchJobsListCall) PageToken(pageToken string) *ProjectsPatchJobsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsPatchJobsListCall) Fields(s ...googleapi.Field) *ProjectsPatchJobsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsPatchJobsListCall) IfNoneMatch(entityTag string) *ProjectsPatchJobsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsPatchJobsListCall) Context(ctx context.Context) *ProjectsPatchJobsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsPatchJobsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPatchJobsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/patchJobs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.patchJobs.list" call.
+// Exactly one of *ListPatchJobsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListPatchJobsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsPatchJobsListCall) Do(opts ...googleapi.CallOption) (*ListPatchJobsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListPatchJobsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a list of patch jobs.",
+	//   "flatPath": "v1/projects/{projectsId}/patchJobs",
+	//   "httpMethod": "GET",
+	//   "id": "osconfig.projects.patchJobs.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "If provided, this field specifies the criteria that must be met by patch\njobs to be included in the response.\nCurrently, filtering is only available on the patch_deployment field.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of instance status to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A pagination token returned from a previous call\nthat indicates where this listing should continue from.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. In the form of `projects/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/patchJobs",
+	//   "response": {
+	//     "$ref": "ListPatchJobsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsPatchJobsListCall) Pages(ctx context.Context, f func(*ListPatchJobsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "osconfig.projects.patchJobs.instanceDetails.list":
+
+type ProjectsPatchJobsInstanceDetailsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Get a list of instance details for a given patch job.
+func (r *ProjectsPatchJobsInstanceDetailsService) List(parent string) *ProjectsPatchJobsInstanceDetailsListCall {
+	c := &ProjectsPatchJobsInstanceDetailsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters results listed in the response. This
+// field supports filtering results by instance zone, name, state,
+// or
+// `failure_reason`.
+func (c *ProjectsPatchJobsInstanceDetailsListCall) Filter(filter string) *ProjectsPatchJobsInstanceDetailsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of instance details records to return.  Default is 100.
+func (c *ProjectsPatchJobsInstanceDetailsListCall) PageSize(pageSize int64) *ProjectsPatchJobsInstanceDetailsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A pagination token
+// returned from a previous call
+// that indicates where this listing should continue from.
+func (c *ProjectsPatchJobsInstanceDetailsListCall) PageToken(pageToken string) *ProjectsPatchJobsInstanceDetailsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsPatchJobsInstanceDetailsListCall) Fields(s ...googleapi.Field) *ProjectsPatchJobsInstanceDetailsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsPatchJobsInstanceDetailsListCall) IfNoneMatch(entityTag string) *ProjectsPatchJobsInstanceDetailsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsPatchJobsInstanceDetailsListCall) Context(ctx context.Context) *ProjectsPatchJobsInstanceDetailsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsPatchJobsInstanceDetailsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPatchJobsInstanceDetailsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/instanceDetails")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.patchJobs.instanceDetails.list" call.
+// Exactly one of *ListPatchJobInstanceDetailsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListPatchJobInstanceDetailsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsPatchJobsInstanceDetailsListCall) Do(opts ...googleapi.CallOption) (*ListPatchJobInstanceDetailsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListPatchJobInstanceDetailsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a list of instance details for a given patch job.",
+	//   "flatPath": "v1/projects/{projectsId}/patchJobs/{patchJobsId}/instanceDetails",
+	//   "httpMethod": "GET",
+	//   "id": "osconfig.projects.patchJobs.instanceDetails.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "A filter expression that filters results listed in the response. This\nfield supports filtering results by instance zone, name, state, or\n`failure_reason`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of instance details records to return.  Default is 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A pagination token returned from a previous call\nthat indicates where this listing should continue from.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent for the instances are in the form of `projects/*/patchJobs/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/patchJobs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/instanceDetails",
+	//   "response": {
+	//     "$ref": "ListPatchJobInstanceDetailsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsPatchJobsInstanceDetailsListCall) Pages(ctx context.Context, f func(*ListPatchJobInstanceDetailsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

@@ -1029,7 +1029,7 @@
                       "type": "string"
                     },
                     "topic": {
-                      "description": "The name of the topic that snapshots are attached to.\nFormat is `projects/{project}/topics/{topic}`.",
+                      "description": "Required. The name of the topic that snapshots are attached to.\nFormat is `projects/{project}/topics/{topic}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/topics/[^/]+$",
                       "required": true,
@@ -1093,7 +1093,7 @@
       }
     }
   },
-  "revision": "20200218",
+  "revision": "20200303",
   "rootUrl": "https://pubsub.googleapis.com/",
   "schemas": {
     "AcknowledgeRequest": {
@@ -1445,7 +1445,7 @@
           "type": "integer"
         },
         "returnImmediately": {
-          "description": "If this field set to true, the system will respond immediately even if\nit there are no messages available to return in the `Pull` response.\nOtherwise, the system may wait (for a bounded amount of time) until at\nleast one message is available, rather than returning no messages.",
+          "description": "Optional. If this field set to true, the system will respond immediately even if\nit there are no messages available to return in the `Pull` response.\nOtherwise, the system may wait (for a bounded amount of time) until at\nleast one message is available, rather than returning no messages. Warning:\nsetting this field to `true` is discouraged because it adversely impacts\nthe performance of `Pull` operations. We recommend that users do not set\nthis field.",
           "type": "boolean"
         }
       },

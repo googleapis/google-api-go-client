@@ -22,6 +22,7 @@
   },
   "id": "iap:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://iap.mtls.googleapis.com/",
   "name": "iap",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -352,7 +353,7 @@
             "resource": {
               "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
               "location": "path",
-              "pattern": "^.+$",
+              "pattern": "^.*$",
               "required": true,
               "type": "string"
             }
@@ -380,7 +381,7 @@
             "name": {
               "description": "Required. The resource name for which to retrieve the settings.\nAuthorization: Requires the `getSettings` permission for the associated\nresource.",
               "location": "path",
-              "pattern": "^.+$",
+              "pattern": "^.*$",
               "required": true,
               "type": "string"
             }
@@ -405,7 +406,7 @@
             "resource": {
               "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
               "location": "path",
-              "pattern": "^.+$",
+              "pattern": "^.*$",
               "required": true,
               "type": "string"
             }
@@ -433,7 +434,7 @@
             "resource": {
               "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
               "location": "path",
-              "pattern": "^.+$",
+              "pattern": "^.*$",
               "required": true,
               "type": "string"
             }
@@ -461,7 +462,7 @@
             "name": {
               "description": "Required. The resource name of the IAP protected resource.",
               "location": "path",
-              "pattern": "^.+$",
+              "pattern": "^.*$",
               "required": true,
               "type": "string"
             },
@@ -486,7 +487,7 @@
       }
     }
   },
-  "revision": "20200207",
+  "revision": "20200309",
   "rootUrl": "https://iap.googleapis.com/",
   "schemas": {
     "AccessSettings": {

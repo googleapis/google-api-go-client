@@ -166,53 +166,86 @@ type V1Service struct {
 	s *Service
 }
 
-// Asset: Cloud asset. This includes all Google Cloud Platform
-// resources,
-// Cloud IAM policies, and other non-GCP assets.
+// Asset: An asset in Google Cloud. An asset can be any resource in the
+// Google
+// Cloud
+// [resource
+// hierarchy](https://cloud.google.com/resource-manager/d
+// ocs/cloud-platform-resource-hierarchy),
+// a resource outside the Google Cloud resource hierarchy (such as
+// Google
+// Kubernetes Engine clusters and objects), or a Cloud IAM policy.
 type Asset struct {
 	AccessLevel *GoogleIdentityAccesscontextmanagerV1AccessLevel `json:"accessLevel,omitempty"`
 
 	AccessPolicy *GoogleIdentityAccesscontextmanagerV1AccessPolicy `json:"accessPolicy,omitempty"`
 
-	// Ancestors: Asset's ancestry path in Cloud Resource Manager (CRM)
-	// hierarchy,
-	// represented as a list of relative resource names. Ancestry path
-	// starts with
-	// the closest CRM ancestor and ends at root. If the asset is a
-	// CRM
-	// project/folder/organization, this starts from the asset
-	// itself.
+	// Ancestors: The ancestry path of an asset in Google Cloud
+	// [resource
+	// hierarchy](https://cloud.google.com/resource-manager/docs/cl
+	// oud-platform-resource-hierarchy),
+	// represented as a list of relative resource names. An ancestry path
+	// starts
+	// with the closest ancestor in the hierarchy and ends at root. If the
+	// asset
+	// is a project, folder, or organization, the ancestry path starts from
+	// the
+	// asset itself.
 	//
-	// Example: ["projects/123456789", "folders/5432", "organizations/1234"]
+	// For example: `["projects/123456789", "folders/5432",
+	// "organizations/1234"]`
 	Ancestors []string `json:"ancestors,omitempty"`
 
-	// AssetType: Type of the asset. Example: "compute.googleapis.com/Disk".
+	// AssetType: The type of the asset. For example:
+	// "compute.googleapis.com/Disk"
+	//
+	// See [Supported
+	// asset
+	// types](https://cloud.google.com/asset-inventory/docs/supported-a
+	// sset-types)
+	// for more information.
 	AssetType string `json:"assetType,omitempty"`
 
-	// IamPolicy: Representation of the actual Cloud IAM policy set on a
-	// cloud resource. For
-	// each resource, there must be at most one Cloud IAM policy set on it.
+	// IamPolicy: A representation of the Cloud IAM policy set on a Google
+	// Cloud resource.
+	// There can be a maximum of one Cloud IAM policy set on any given
+	// resource.
+	// In addition, Cloud IAM policies inherit their granted access scope
+	// from any
+	// policies set on parent resources in the resource hierarchy.
+	// Therefore, the
+	// effectively policy is the union of both the policy set on this
+	// resource
+	// and each policy set on all of the resource's ancestry resource levels
+	// in
+	// the hierarchy. See
+	// [this topic](https://cloud.google.com/iam/docs/policies#inheritance)
+	// for
+	// more information.
 	IamPolicy *Policy `json:"iamPolicy,omitempty"`
 
 	// Name: The full name of the asset. For
 	// example:
-	// `//compute.googleapis.com/projects/my_project_123/zones/zone1
-	// /instances/instance1`.
+	// "//compute.googleapis.com/projects/my_project_123/zones/zone1
+	// /instances/instance1"
+	//
 	// See
 	// [Resource
-	// Names](https://cloud.google.com/apis/design/resource_names#f
+	// names](https://cloud.google.com/apis/design/resource_names#f
 	// ull_resource_name)
 	// for more information.
 	Name string `json:"name,omitempty"`
 
-	// OrgPolicy: Representation of the Cloud Organization Policy set on an
-	// asset. For each
-	// asset, there could be multiple Organization policies with
-	// different
-	// constraints.
+	// OrgPolicy: A representation of an
+	// [organization
+	// policy](https://cloud.google.com/resource-manager/docs/o
+	// rganization-policy/overview#organization_policy).
+	// There can be more than one organization policy with different
+	// constraints
+	// set on a given resource.
 	OrgPolicy []*GoogleCloudOrgpolicyV1Policy `json:"orgPolicy,omitempty"`
 
-	// Resource: Representation of the resource.
+	// Resource: A representation of the resource.
 	Resource *Resource `json:"resource,omitempty"`
 
 	ServicePerimeter *GoogleIdentityAccesscontextmanagerV1ServicePerimeter `json:"servicePerimeter,omitempty"`
@@ -671,13 +704,13 @@ type ExportAssetsRequest struct {
 
 	// ReadTime: Timestamp to take an asset snapshot. This can only be set
 	// to a timestamp
-	// between 2018-10-02 UTC (inclusive) and the current time. If not
-	// specified,
-	// the current time will be used. Due to delays in resource data
-	// collection
-	// and indexing, there is a volatile window during which running the
-	// same
-	// query may get different results.
+	// between the current time and the current time minus 35 days
+	// (inclusive).
+	// If not specified, the current time will be used. Due to delays in
+	// resource
+	// data collection and indexing, there is a volatile window during
+	// which
+	// running the same query may get different results.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AssetTypes") to
@@ -1392,7 +1425,9 @@ type GoogleIdentityAccesscontextmanagerV1AccessLevel struct {
 	// component
 	// must begin with a letter and only include alphanumeric and '_'.
 	// Format:
-	// `accessPolicies/{policy_id}/accessLevels/{short_name}`
+	// `accessPolicies/{policy_id}/accessLevels/{short_name}`. The maximum
+	// length
+	// of the `short_name` component is 50 characters.
 	Name string `json:"name,omitempty"`
 
 	// Title: Human readable title. Must be unique within the Policy.
@@ -1437,6 +1472,16 @@ func (s *GoogleIdentityAccesscontextmanagerV1AccessLevel) MarshalJSON() ([]byte,
 type GoogleIdentityAccesscontextmanagerV1AccessPolicy struct {
 	// CreateTime: Output only. Time the `AccessPolicy` was created in UTC.
 	CreateTime string `json:"createTime,omitempty"`
+
+	// Etag: Output only. An opaque identifier for the current version of
+	// the
+	// `AccessPolicy`. This will always be a strongly validated etag,
+	// meaning that
+	// two Access Polices will be identical if and only if their etags
+	// are
+	// identical. Clients should not expect this to be in any specific
+	// format.
+	Etag string `json:"etag,omitempty"`
 
 	// Name: Output only. Resource name of the `AccessPolicy`.
 	// Format:
@@ -1946,8 +1991,8 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig struct {
 	// access restrictions.
 	RestrictedServices []string `json:"restrictedServices,omitempty"`
 
-	// VpcAccessibleServices: Configuration for within Perimeter allowed
-	// APIs.
+	// VpcAccessibleServices: Configuration for APIs allowed within
+	// Perimeter.
 	VpcAccessibleServices *GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices `json:"vpcAccessibleServices,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessLevels") to
@@ -2348,29 +2393,32 @@ func (s *PubsubDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Resource: Representation of a cloud resource.
+// Resource: A representation of a Google Cloud resource.
 type Resource struct {
 	// Data: The content of the resource, in which some sensitive fields are
-	// scrubbed
-	// away and may not be present.
+	// removed
+	// and may not be present.
 	Data googleapi.RawMessage `json:"data,omitempty"`
 
 	// DiscoveryDocumentUri: The URL of the discovery document containing
 	// the resource's JSON schema.
 	// For
 	// example:
-	// "https://www.googleapis.com/discovery/v1/apis/compute/v1/res
-	// t".
-	// It will be left unspecified for resources without a discovery-based
-	// API,
-	// such as Cloud Bigtable.
+	// "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest
+	// "
+	//
+	// This value is unspecified for resources that do not have an API based
+	// on a
+	// discovery document, such as Cloud Bigtable.
 	DiscoveryDocumentUri string `json:"discoveryDocumentUri,omitempty"`
 
-	// DiscoveryName: The JSON schema name listed in the discovery
-	// document.
-	// Example: "Project". It will be left unspecified for resources (such
-	// as
-	// Cloud Bigtable) without a discovery-based API.
+	// DiscoveryName: The JSON schema name listed in the discovery document.
+	// For example:
+	// "Project"
+	//
+	// This value is unspecified for resources that do not have an API based
+	// on a
+	// discovery document, such as Cloud Bigtable.
 	DiscoveryName string `json:"discoveryName,omitempty"`
 
 	// Parent: The full name of the immediate parent of this resource.
@@ -2380,29 +2428,31 @@ type Resource struct {
 	// es#full_resource_name)
 	// for more information.
 	//
-	// For GCP assets, it is the parent resource defined in the [Cloud IAM
+	// For Google Cloud assets, this value is the parent resource defined in
+	// the
+	// [Cloud IAM
 	// policy
 	// hierarchy](https://cloud.google.com/iam/docs/overview#policy_hi
 	// erarchy).
 	// For
 	// example:
-	// "//cloudresourcemanager.googleapis.com/projects/my_project_1
-	// 23".
+	// "//cloudresourcemanager.googleapis.com/projects/my_project_12
+	// 3"
 	//
-	// For third-party assets, it is up to the users to define.
+	// For third-party assets, this field may be set differently.
 	Parent string `json:"parent,omitempty"`
 
-	// ResourceUrl: The REST URL for accessing the resource. An HTTP GET
-	// operation using this
-	// URL returns the resource
-	// itself.
-	// Example:
-	// `https://cloudresourcemanager.googleapis.com/v1/proje
-	// cts/my-project-123`.
-	// It will be left unspecified for resources without a REST API.
+	// ResourceUrl: The REST URL for accessing the resource. An HTTP `GET`
+	// request using this
+	// URL returns the resource itself. For
+	// example:
+	// "https://cloudresourcemanager.googleapis.com/v1/projects/my-p
+	// roject-123"
+	//
+	// This value is unspecified for resources without a REST API.
 	ResourceUrl string `json:"resourceUrl,omitempty"`
 
-	// Version: The API version. Example: "v1".
+	// Version: The API version. For example: "v1"
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Data") to
@@ -2480,14 +2530,14 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TemporalAsset: Temporal asset. In addition to the asset, the temporal
-// asset includes the
-// status of the asset and valid from and to time of it.
+// TemporalAsset: An asset in Google Cloud and its temporal metadata,
+// including the time window
+// when it was observed and its status during that window.
 type TemporalAsset struct {
-	// Asset: Asset.
+	// Asset: An asset in Google Cloud.
 	Asset *Asset `json:"asset,omitempty"`
 
-	// Deleted: If the asset is deleted or not.
+	// Deleted: Whether the asset has been deleted or not.
 	Deleted bool `json:"deleted,omitempty"`
 
 	// Window: The time window when the asset data and state was observed.
@@ -2516,10 +2566,12 @@ func (s *TemporalAsset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TimeWindow: A time window of (start_time, end_time].
+// TimeWindow: A time window specified by its "start_time" and
+// "end_time".
 type TimeWindow struct {
-	// EndTime: End time of the time window (inclusive).
-	// Current timestamp if not specified.
+	// EndTime: End time of the time window (inclusive). If not specified,
+	// the current
+	// timestamp is used instead.
 	EndTime string `json:"endTime,omitempty"`
 
 	// StartTime: Start time of the time window (exclusive).
@@ -2639,7 +2691,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2777,7 +2829,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2918,7 +2970,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3062,7 +3114,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3197,7 +3249,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3350,7 +3402,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3506,9 +3558,9 @@ func (c *V1BatchGetAssetsHistoryCall) ContentType(contentType string) *V1BatchGe
 }
 
 // ReadTimeWindowEndTime sets the optional parameter
-// "readTimeWindow.endTime": End time of the time window
-// (inclusive).
-// Current timestamp if not specified.
+// "readTimeWindow.endTime": End time of the time window (inclusive). If
+// not specified, the current
+// timestamp is used instead.
 func (c *V1BatchGetAssetsHistoryCall) ReadTimeWindowEndTime(readTimeWindowEndTime string) *V1BatchGetAssetsHistoryCall {
 	c.urlParams_.Set("readTimeWindow.endTime", readTimeWindowEndTime)
 	return c
@@ -3559,7 +3611,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3655,7 +3707,7 @@ func (c *V1BatchGetAssetsHistoryCall) Do(opts ...googleapi.CallOption) (*BatchGe
 	//       "type": "string"
 	//     },
 	//     "readTimeWindow.endTime": {
-	//       "description": "End time of the time window (inclusive).\nCurrent timestamp if not specified.",
+	//       "description": "End time of the time window (inclusive). If not specified, the current\ntimestamp is used instead.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -3729,7 +3781,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200312")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200313")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

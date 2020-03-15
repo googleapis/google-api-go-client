@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/soPJe3_6whHFxBf3W9riAeYvQHU\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/tQFcbBCt4CJWdiNSdoc_10f4ff8\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1252,6 +1252,59 @@
           },
           "response": {
             "$ref": "LiaSettings"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        }
+      }
+    },
+    "localinventory": {
+      "methods": {
+        "custombatch": {
+          "description": "Updates local inventory for multiple products or stores in a single request.",
+          "httpMethod": "POST",
+          "id": "content.localinventory.custombatch",
+          "path": "localinventory/batch",
+          "request": {
+            "$ref": "LocalinventoryCustomBatchRequest"
+          },
+          "response": {
+            "$ref": "LocalinventoryCustomBatchResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        },
+        "insert": {
+          "description": "Update the local inventory of a product in your Merchant Center account.",
+          "httpMethod": "POST",
+          "id": "content.localinventory.insert",
+          "parameterOrder": [
+            "merchantId",
+            "productId"
+          ],
+          "parameters": {
+            "merchantId": {
+              "description": "The ID of the account that contains the product. This account cannot be a multi-client account.",
+              "format": "uint64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "productId": {
+              "description": "The REST ID of the product for which to update local inventory.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{merchantId}/products/{productId}/localinventory",
+          "request": {
+            "$ref": "LocalInventory"
+          },
+          "response": {
+            "$ref": "LocalInventory"
           },
           "scopes": [
             "https://www.googleapis.com/auth/content"
@@ -3288,7 +3341,7 @@
       }
     }
   },
-  "revision": "20200226",
+  "revision": "20200303",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5451,6 +5504,136 @@
             "$ref": "LinkService"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "LocalInventory": {
+      "description": "Local inventory resource. For accepted attribute values, see the local product inventory feed specification.",
+      "id": "LocalInventory",
+      "properties": {
+        "availability": {
+          "description": "Availability of the product.",
+          "type": "string"
+        },
+        "instoreProductLocation": {
+          "description": "In-store product location.",
+          "type": "string"
+        },
+        "kind": {
+          "default": "content#localInventory",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#localInventory\".",
+          "type": "string"
+        },
+        "pickupMethod": {
+          "description": "Supported pickup method for this offer. Unless the value is \"not supported\", this field must be submitted together with pickupSla.",
+          "type": "string"
+        },
+        "pickupSla": {
+          "description": "Expected date that an order will be ready for pickup relative to the order date. Must be submitted together with pickupMethod.",
+          "type": "string"
+        },
+        "price": {
+          "$ref": "Price",
+          "description": "Price of the product."
+        },
+        "quantity": {
+          "description": "Quantity of the product. Must be nonnegative.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "salePrice": {
+          "$ref": "Price",
+          "description": "Sale price of the product. Mandatory if sale_price_effective_date is defined."
+        },
+        "salePriceEffectiveDate": {
+          "description": "A date range represented by a pair of ISO 8601 dates separated by a space, comma, or slash. Both dates may be specified as 'null' if undecided.",
+          "type": "string"
+        },
+        "storeCode": {
+          "description": "Store code of this local inventory resource.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LocalinventoryCustomBatchRequest": {
+      "id": "LocalinventoryCustomBatchRequest",
+      "properties": {
+        "entries": {
+          "description": "The request entries to be processed in the batch.",
+          "items": {
+            "$ref": "LocalinventoryCustomBatchRequestEntry"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "LocalinventoryCustomBatchRequestEntry": {
+      "description": "Batch entry encoding a single local inventory update request.",
+      "id": "LocalinventoryCustomBatchRequestEntry",
+      "properties": {
+        "batchId": {
+          "description": "An entry ID, unique within the batch request.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "localInventory": {
+          "$ref": "LocalInventory",
+          "description": "Local inventory of the product."
+        },
+        "merchantId": {
+          "description": "The ID of the managing account.",
+          "format": "uint64",
+          "type": "string"
+        },
+        "method": {
+          "description": "Method of the batch request entry.",
+          "type": "string"
+        },
+        "productId": {
+          "description": "The ID of the product for which to update local inventory.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LocalinventoryCustomBatchResponse": {
+      "id": "LocalinventoryCustomBatchResponse",
+      "properties": {
+        "entries": {
+          "description": "The result of the execution of the batch requests.",
+          "items": {
+            "$ref": "LocalinventoryCustomBatchResponseEntry"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "default": "content#localinventoryCustomBatchResponse",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#localinventoryCustomBatchResponse\".",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LocalinventoryCustomBatchResponseEntry": {
+      "description": "Batch entry encoding a single local inventory update response.",
+      "id": "LocalinventoryCustomBatchResponseEntry",
+      "properties": {
+        "batchId": {
+          "description": "The ID of the request entry this entry responds to.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "errors": {
+          "$ref": "Errors",
+          "description": "A list of errors defined if and only if the request failed."
+        },
+        "kind": {
+          "default": "content#localinventoryCustomBatchResponseEntry",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#localinventoryCustomBatchResponseEntry\".",
+          "type": "string"
         }
       },
       "type": "object"

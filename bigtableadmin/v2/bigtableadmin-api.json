@@ -46,6 +46,7 @@
   },
   "id": "bigtableadmin:v2",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://bigtableadmin.mtls.googleapis.com/",
   "name": "bigtableadmin",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -294,7 +295,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "The unique name of the project in which to create the new instance.\nValues are of the form `projects/\u003cproject\u003e`.",
+                  "description": "Required. The unique name of the project in which to create the new instance.\nValues are of the form `projects/{project}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -327,7 +328,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The unique name of the instance to be deleted.\nValues are of the form `projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+                  "description": "Required. The unique name of the instance to be deleted.\nValues are of the form `projects/{project}/instances/{instance}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/instances/[^/]+$",
                   "required": true,
@@ -357,7 +358,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The unique name of the requested instance. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+                  "description": "Required. The unique name of the requested instance. Values are of the form\n`projects/{project}/instances/{instance}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/instances/[^/]+$",
                   "required": true,
@@ -426,7 +427,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "The unique name of the project for which a list of instances is requested.\nValues are of the form `projects/\u003cproject\u003e`.",
+                  "description": "Required. The unique name of the project for which a list of instances is requested.\nValues are of the form `projects/{project}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -457,14 +458,14 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "(`OutputOnly`)\nThe unique name of the instance. Values are of the form\n`projects/\u003cproject\u003e/instances/a-z+[a-z0-9]`.",
+                  "description": "Required. (`OutputOnly`)\nThe unique name of the instance. Values are of the form\n`projects/{project}/instances/a-z+[a-z0-9]`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/instances/[^/]+$",
                   "required": true,
                   "type": "string"
                 },
                 "updateMask": {
-                  "description": "The subset of Instance fields which should be replaced.\nMust be explicitly set.",
+                  "description": "Required. The subset of Instance fields which should be replaced.\nMust be explicitly set.",
                   "format": "google-fieldmask",
                   "location": "query",
                   "type": "string"
@@ -562,7 +563,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "(`OutputOnly`)\nThe unique name of the instance. Values are of the form\n`projects/\u003cproject\u003e/instances/a-z+[a-z0-9]`.",
+                  "description": "Required. (`OutputOnly`)\nThe unique name of the instance. Values are of the form\n`projects/{project}/instances/a-z+[a-z0-9]`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/instances/[^/]+$",
                   "required": true,
@@ -599,7 +600,7 @@
                   ],
                   "parameters": {
                     "appProfileId": {
-                      "description": "The ID to be used when referring to the new app profile within its\ninstance, e.g., just `myprofile` rather than\n`projects/myproject/instances/myinstance/appProfiles/myprofile`.",
+                      "description": "Required. The ID to be used when referring to the new app profile within its\ninstance, e.g., just `myprofile` rather than\n`projects/myproject/instances/myinstance/appProfiles/myprofile`.",
                       "location": "query",
                       "type": "string"
                     },
@@ -609,7 +610,7 @@
                       "type": "boolean"
                     },
                     "parent": {
-                      "description": "The unique name of the instance in which to create the new app profile.\nValues are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+                      "description": "Required. The unique name of the instance in which to create the new app profile.\nValues are of the form\n`projects/{project}/instances/{instance}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/instances/[^/]+$",
                       "required": true,
@@ -642,12 +643,12 @@
                   ],
                   "parameters": {
                     "ignoreWarnings": {
-                      "description": "If true, ignore safety checks when deleting the app profile.",
+                      "description": "Required. If true, ignore safety checks when deleting the app profile.",
                       "location": "query",
                       "type": "boolean"
                     },
                     "name": {
-                      "description": "The unique name of the app profile to be deleted. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/appProfiles/\u003capp_profile\u003e`.",
+                      "description": "Required. The unique name of the app profile to be deleted. Values are of the form\n`projects/{project}/instances/{instance}/appProfiles/{app_profile}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/instances/[^/]+/appProfiles/[^/]+$",
                       "required": true,
@@ -677,7 +678,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The unique name of the requested app profile. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/appProfiles/\u003capp_profile\u003e`.",
+                      "description": "Required. The unique name of the requested app profile. Values are of the form\n`projects/{project}/instances/{instance}/appProfiles/{app_profile}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/instances/[^/]+/appProfiles/[^/]+$",
                       "required": true,
@@ -719,7 +720,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "The unique name of the instance for which a list of app profiles is\nrequested. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.\nUse `\u003cinstance\u003e = '-'` to list AppProfiles for all Instances in a project,\ne.g., `projects/myproject/instances/-`.",
+                      "description": "Required. The unique name of the instance for which a list of app profiles is\nrequested. Values are of the form\n`projects/{project}/instances/{instance}`.\nUse `{instance} = '-'` to list AppProfiles for all Instances in a project,\ne.g., `projects/myproject/instances/-`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/instances/[^/]+$",
                       "required": true,
@@ -761,7 +762,7 @@
                       "type": "string"
                     },
                     "updateMask": {
-                      "description": "The subset of app profile fields which should be replaced.\nIf unset, all fields will be replaced.",
+                      "description": "Required. The subset of app profile fields which should be replaced.\nIf unset, all fields will be replaced.",
                       "format": "google-fieldmask",
                       "location": "query",
                       "type": "string"
@@ -797,12 +798,12 @@
                   ],
                   "parameters": {
                     "clusterId": {
-                      "description": "The ID to be used when referring to the new cluster within its instance,\ne.g., just `mycluster` rather than\n`projects/myproject/instances/myinstance/clusters/mycluster`.",
+                      "description": "Required. The ID to be used when referring to the new cluster within its instance,\ne.g., just `mycluster` rather than\n`projects/myproject/instances/myinstance/clusters/mycluster`.",
                       "location": "query",
                       "type": "string"
                     },
                     "parent": {
-                      "description": "The unique name of the instance in which to create the new cluster.\nValues are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+                      "description": "Required. The unique name of the instance in which to create the new cluster.\nValues are of the form\n`projects/{project}/instances/{instance}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/instances/[^/]+$",
                       "required": true,
@@ -835,7 +836,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The unique name of the cluster to be deleted. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/clusters/\u003ccluster\u003e`.",
+                      "description": "Required. The unique name of the cluster to be deleted. Values are of the form\n`projects/{project}/instances/{instance}/clusters/{cluster}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+$",
                       "required": true,
@@ -865,7 +866,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The unique name of the requested cluster. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/clusters/\u003ccluster\u003e`.",
+                      "description": "Required. The unique name of the requested cluster. Values are of the form\n`projects/{project}/instances/{instance}/clusters/{cluster}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+$",
                       "required": true,
@@ -901,7 +902,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "The unique name of the instance for which a list of clusters is requested.\nValues are of the form `projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.\nUse `\u003cinstance\u003e = '-'` to list Clusters for all Instances in a project,\ne.g., `projects/myproject/instances/-`.",
+                      "description": "Required. The unique name of the instance for which a list of clusters is requested.\nValues are of the form `projects/{project}/instances/{instance}`.\nUse `{instance} = '-'` to list Clusters for all Instances in a project,\ne.g., `projects/myproject/instances/-`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/instances/[^/]+$",
                       "required": true,
@@ -932,7 +933,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "(`OutputOnly`)\nThe unique name of the cluster. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/clusters/a-z*`.",
+                      "description": "Required. (`OutputOnly`)\nThe unique name of the cluster. Values are of the form\n`projects/{project}/instances/{instance}/clusters/a-z*`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+$",
                       "required": true,
@@ -1022,6 +1023,38 @@
                         "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
+                    },
+                    "testIamPermissions": {
+                      "description": "Returns permissions that the caller has on the specified table resource.",
+                      "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}/backups/{backupsId}:testIamPermissions",
+                      "httpMethod": "POST",
+                      "id": "bigtableadmin.projects.instances.clusters.backups.testIamPermissions",
+                      "parameterOrder": [
+                        "resource"
+                      ],
+                      "parameters": {
+                        "resource": {
+                          "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+/backups/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v2/{+resource}:testIamPermissions",
+                      "request": {
+                        "$ref": "TestIamPermissionsRequest"
+                      },
+                      "response": {
+                        "$ref": "TestIamPermissionsResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/bigtable.admin",
+                        "https://www.googleapis.com/auth/bigtable.admin.table",
+                        "https://www.googleapis.com/auth/cloud-bigtable.admin",
+                        "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
                     }
                   }
                 }
@@ -1039,7 +1072,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The unique name of the Table for which to check replication consistency.\nValues are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/tables/\u003ctable\u003e`.",
+                      "description": "Required. The unique name of the Table for which to check replication consistency.\nValues are of the form\n`projects/{project}/instances/{instance}/tables/{table}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+$",
                       "required": true,
@@ -1071,7 +1104,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "The unique name of the instance in which to create the table.\nValues are of the form `projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+                      "description": "Required. The unique name of the instance in which to create the table.\nValues are of the form `projects/{project}/instances/{instance}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/instances/[^/]+$",
                       "required": true,
@@ -1103,7 +1136,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The unique name of the table to be deleted.\nValues are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/tables/\u003ctable\u003e`.",
+                      "description": "Required. The unique name of the table to be deleted.\nValues are of the form\n`projects/{project}/instances/{instance}/tables/{table}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+$",
                       "required": true,
@@ -1132,7 +1165,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The unique name of the table on which to drop a range of rows.\nValues are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/tables/\u003ctable\u003e`.",
+                      "description": "Required. The unique name of the table on which to drop a range of rows.\nValues are of the form\n`projects/{project}/instances/{instance}/tables/{table}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+$",
                       "required": true,
@@ -1164,7 +1197,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The unique name of the Table for which to create a consistency token.\nValues are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/tables/\u003ctable\u003e`.",
+                      "description": "Required. The unique name of the Table for which to create a consistency token.\nValues are of the form\n`projects/{project}/instances/{instance}/tables/{table}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+$",
                       "required": true,
@@ -1196,7 +1229,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The unique name of the requested table.\nValues are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/tables/\u003ctable\u003e`.",
+                      "description": "Required. The unique name of the requested table.\nValues are of the form\n`projects/{project}/instances/{instance}/tables/{table}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+$",
                       "required": true,
@@ -1281,7 +1314,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "The unique name of the instance for which tables should be listed.\nValues are of the form `projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+                      "description": "Required. The unique name of the instance for which tables should be listed.\nValues are of the form `projects/{project}/instances/{instance}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/instances/[^/]+$",
                       "required": true,
@@ -1323,7 +1356,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The unique name of the table whose families should be modified.\nValues are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/tables/\u003ctable\u003e`.",
+                      "description": "Required. The unique name of the table whose families should be modified.\nValues are of the form\n`projects/{project}/instances/{instance}/tables/{table}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+$",
                       "required": true,
@@ -1498,7 +1531,7 @@
       }
     }
   },
-  "revision": "20200204",
+  "revision": "20200211",
   "rootUrl": "https://bigtableadmin.googleapis.com/",
   "schemas": {
     "AppProfile": {
@@ -1603,7 +1636,7 @@
       "id": "CheckConsistencyRequest",
       "properties": {
         "consistencyToken": {
-          "description": "The token created using GenerateConsistencyToken for the Table.",
+          "description": "Required. The token created using GenerateConsistencyToken for the Table.",
           "type": "string"
         }
       },
@@ -1639,15 +1672,15 @@
           "type": "string"
         },
         "location": {
-          "description": "(`CreationOnly`)\nThe location where this cluster's nodes and storage reside. For best\nperformance, clients should be located as close as possible to this\ncluster. Currently only zones are supported, so values should be of the\nform `projects/\u003cproject\u003e/locations/\u003czone\u003e`.",
+          "description": "(`CreationOnly`)\nThe location where this cluster's nodes and storage reside. For best\nperformance, clients should be located as close as possible to this\ncluster. Currently only zones are supported, so values should be of the\nform `projects/{project}/locations/{zone}`.",
           "type": "string"
         },
         "name": {
-          "description": "(`OutputOnly`)\nThe unique name of the cluster. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/clusters/a-z*`.",
+          "description": "Required. (`OutputOnly`)\nThe unique name of the cluster. Values are of the form\n`projects/{project}/instances/{instance}/clusters/a-z*`.",
           "type": "string"
         },
         "serveNodes": {
-          "description": "The number of nodes allocated to this cluster. More nodes enable higher\nthroughput and more consistent performance.",
+          "description": "Required. The number of nodes allocated to this cluster. More nodes enable higher\nthroughput and more consistent performance.",
           "format": "int32",
           "type": "integer"
         },
@@ -1742,14 +1775,14 @@
       "properties": {
         "cluster": {
           "$ref": "Cluster",
-          "description": "The cluster to be created.\nFields marked `OutputOnly` must be left blank."
+          "description": "Required. The cluster to be created.\nFields marked `OutputOnly` must be left blank."
         },
         "clusterId": {
-          "description": "The ID to be used when referring to the new cluster within its instance,\ne.g., just `mycluster` rather than\n`projects/myproject/instances/myinstance/clusters/mycluster`.",
+          "description": "Required. The ID to be used when referring to the new cluster within its instance,\ne.g., just `mycluster` rather than\n`projects/myproject/instances/myinstance/clusters/mycluster`.",
           "type": "string"
         },
         "parent": {
-          "description": "The unique name of the instance in which to create the new cluster.\nValues are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+          "description": "Required. The unique name of the instance in which to create the new cluster.\nValues are of the form\n`projects/{project}/instances/{instance}`.",
           "type": "string"
         }
       },
@@ -1784,19 +1817,19 @@
           "additionalProperties": {
             "$ref": "Cluster"
           },
-          "description": "The clusters to be created within the instance, mapped by desired\ncluster ID, e.g., just `mycluster` rather than\n`projects/myproject/instances/myinstance/clusters/mycluster`.\nFields marked `OutputOnly` must be left blank.\nCurrently, at most four clusters can be specified.",
+          "description": "Required. The clusters to be created within the instance, mapped by desired\ncluster ID, e.g., just `mycluster` rather than\n`projects/myproject/instances/myinstance/clusters/mycluster`.\nFields marked `OutputOnly` must be left blank.\nCurrently, at most four clusters can be specified.",
           "type": "object"
         },
         "instance": {
           "$ref": "Instance",
-          "description": "The instance to create.\nFields marked `OutputOnly` must be left blank."
+          "description": "Required. The instance to create.\nFields marked `OutputOnly` must be left blank."
         },
         "instanceId": {
-          "description": "The ID to be used when referring to the new instance within its project,\ne.g., just `myinstance` rather than\n`projects/myproject/instances/myinstance`.",
+          "description": "Required. The ID to be used when referring to the new instance within its project,\ne.g., just `myinstance` rather than\n`projects/myproject/instances/myinstance`.",
           "type": "string"
         },
         "parent": {
-          "description": "The unique name of the project in which to create the new instance.\nValues are of the form `projects/\u003cproject\u003e`.",
+          "description": "Required. The unique name of the project in which to create the new instance.\nValues are of the form `projects/{project}`.",
           "type": "string"
         }
       },
@@ -1815,10 +1848,10 @@
         },
         "table": {
           "$ref": "Table",
-          "description": "The Table to create."
+          "description": "Required. The Table to create."
         },
         "tableId": {
-          "description": "The name by which the new table should be referred to within the parent\ninstance, e.g., `foobar` rather than `\u003cparent\u003e/tables/foobar`.\nMaximum 50 characters.",
+          "description": "Required. The name by which the new table should be referred to within the parent\ninstance, e.g., `foobar` rather than `{parent}/tables/foobar`.\nMaximum 50 characters.",
           "type": "string"
         }
       },
@@ -1939,18 +1972,18 @@
       "id": "Instance",
       "properties": {
         "displayName": {
-          "description": "The descriptive name for this instance as it appears in UIs.\nCan be changed at any time, but should be kept globally unique\nto avoid confusion.",
+          "description": "Required. The descriptive name for this instance as it appears in UIs.\nCan be changed at any time, but should be kept globally unique\nto avoid confusion.",
           "type": "string"
         },
         "labels": {
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels are a flexible and lightweight mechanism for organizing cloud\nresources into groups that reflect a customer's organizational needs and\ndeployment strategies. They can be used to filter resources and aggregate\nmetrics.\n\n* Label keys must be between 1 and 63 characters long and must conform to\n  the regular expression: `\\p{Ll}\\p{Lo}{0,62}`.\n* Label values must be between 0 and 63 characters long and must conform to\n  the regular expression: `[\\p{Ll}\\p{Lo}\\p{N}_-]{0,63}`.\n* No more than 64 labels can be associated with a given resource.\n* Keys and values must both be under 128 bytes.",
+          "description": "Required. Labels are a flexible and lightweight mechanism for organizing cloud\nresources into groups that reflect a customer's organizational needs and\ndeployment strategies. They can be used to filter resources and aggregate\nmetrics.\n\n* Label keys must be between 1 and 63 characters long and must conform to\n  the regular expression: `\\p{Ll}\\p{Lo}{0,62}`.\n* Label values must be between 0 and 63 characters long and must conform to\n  the regular expression: `[\\p{Ll}\\p{Lo}\\p{N}_-]{0,63}`.\n* No more than 64 labels can be associated with a given resource.\n* Keys and values must both be under 128 bytes.",
           "type": "object"
         },
         "name": {
-          "description": "(`OutputOnly`)\nThe unique name of the instance. Values are of the form\n`projects/\u003cproject\u003e/instances/a-z+[a-z0-9]`.",
+          "description": "Required. (`OutputOnly`)\nThe unique name of the instance. Values are of the form\n`projects/{project}/instances/a-z+[a-z0-9]`.",
           "type": "string"
         },
         "state": {
@@ -1968,7 +2001,7 @@
           "type": "string"
         },
         "type": {
-          "description": "The type of the instance. Defaults to `PRODUCTION`.",
+          "description": "Required. The type of the instance. Defaults to `PRODUCTION`.",
           "enum": [
             "TYPE_UNSPECIFIED",
             "PRODUCTION",
@@ -2189,7 +2222,7 @@
       "id": "ModifyColumnFamiliesRequest",
       "properties": {
         "modifications": {
-          "description": "Modifications to be atomically applied to the specified table's families.\nEntries are applied in order, meaning that earlier modifications can be\nmasked by later ones (in the case of repeated updates to the same family,\nfor example).",
+          "description": "Required. Modifications to be atomically applied to the specified table's families.\nEntries are applied in order, meaning that earlier modifications can be\nmasked by later ones (in the case of repeated updates to the same family,\nfor example).",
           "items": {
             "$ref": "Modification"
           },
@@ -2245,10 +2278,10 @@
       "properties": {
         "instance": {
           "$ref": "Instance",
-          "description": "The Instance which will (partially) replace the current value."
+          "description": "Required. The Instance which will (partially) replace the current value."
         },
         "updateMask": {
-          "description": "The subset of Instance fields which should be replaced.\nMust be explicitly set.",
+          "description": "Required. The subset of Instance fields which should be replaced.\nMust be explicitly set.",
           "format": "google-fieldmask",
           "type": "string"
         }

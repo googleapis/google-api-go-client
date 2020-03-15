@@ -20,7 +20,7 @@
   "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/doubleclick-advertisers/",
-  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/fzUoAicHtsdBHIuiyOwY0Z80r3c\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/2DXbE-BPrSqdiwxL8mZiY5h8A4U\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
     "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
@@ -1147,7 +1147,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "Advertiser group ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -1375,7 +1374,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "Landing page ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -1621,7 +1619,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "Advertiser ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -1994,7 +1991,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "Campaign ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -2582,7 +2578,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "Content category ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -3011,7 +3006,7 @@
           ]
         },
         "patch": {
-          "description": "Updates an existing creative field value. This method supports patch semantics.",
+          "description": "Updates an existing creative field. This method supports patch semantics.",
           "httpMethod": "PATCH",
           "id": "dfareporting.creativeFieldValues.patch",
           "parameterOrder": [
@@ -3028,7 +3023,6 @@
               "type": "string"
             },
             "id": {
-              "description": "Creative Field Value ID",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -3275,7 +3269,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "Creative Field ID",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -3493,7 +3486,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "Creative group ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -3812,7 +3804,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "Creative ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -4430,7 +4421,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "Event tag ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -4858,7 +4848,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "Floodlight activity ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -5086,7 +5075,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "Floodlight activity Group ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -5215,7 +5203,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "Floodlight configuration ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -6299,7 +6286,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "Placement group ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -6531,7 +6517,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "Placement strategy ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -6957,7 +6942,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "Placement ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -7330,7 +7314,6 @@
               "type": "string"
             },
             "remarketingListId": {
-              "description": "Remarketing list ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -7538,7 +7521,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "Remarketing list ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -8225,7 +8207,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "Site ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -8543,7 +8524,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "Subaccount ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -8872,7 +8852,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "Targeting template ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -9284,7 +9263,6 @@
           ],
           "parameters": {
             "id": {
-              "description": "User role ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -9399,7 +9377,7 @@
       }
     }
   },
-  "revision": "20191112",
+  "revision": "20200306",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -12431,7 +12409,7 @@
           "description": "ID of the creative asset. This is a required field."
         },
         "clickTags": {
-          "description": "List of detected click tags for assets. This is a read-only auto-generated field.",
+          "description": "List of detected click tags for assets. This is a read-only, auto-generated field. This field is empty for a rich media asset.",
           "items": {
             "$ref": "ClickTag"
           },
@@ -19560,7 +19538,7 @@
       "type": "object"
     },
     "UserProfile": {
-      "description": "Represents a UserProfile resource.",
+      "description": "A UserProfile resource lets you list all DFA user profiles that are associated with a Google user account. The profile_id needs to be specified in other API requests. ",
       "id": "UserProfile",
       "properties": {
         "accountId": {
@@ -19573,12 +19551,12 @@
           "type": "string"
         },
         "etag": {
-          "description": "The eTag of this response for caching purposes.",
+          "description": "Etag of this resource.",
           "type": "string"
         },
         "kind": {
           "default": "dfareporting#userProfile",
-          "description": "The kind of resource this is, in this case dfareporting#userProfile.",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#userProfile\".",
           "type": "string"
         },
         "profileId": {
@@ -19607,7 +19585,7 @@
       "id": "UserProfileList",
       "properties": {
         "etag": {
-          "description": "The eTag of this response for caching purposes.",
+          "description": "Etag of this resource.",
           "type": "string"
         },
         "items": {
@@ -19619,7 +19597,7 @@
         },
         "kind": {
           "default": "dfareporting#userProfileList",
-          "description": "The kind of list this is, in this case dfareporting#userProfileList.",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#userProfileList\".",
           "type": "string"
         }
       },

@@ -128,7 +128,7 @@
       }
     }
   },
-  "revision": "20200226",
+  "revision": "20200310",
   "rootUrl": "https://videointelligence.googleapis.com/",
   "schemas": {
     "GoogleCloudVideointelligenceV1_AnnotateVideoProgress": {
@@ -155,6 +155,46 @@
             "$ref": "GoogleCloudVideointelligenceV1_VideoAnnotationResults"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1_DetectedAttribute": {
+      "description": "A generic detected attribute represented by name in string format.",
+      "id": "GoogleCloudVideointelligenceV1_DetectedAttribute",
+      "properties": {
+        "confidence": {
+          "description": "Detected attribute confidence. Range [0, 1].",
+          "format": "float",
+          "type": "number"
+        },
+        "name": {
+          "description": "The name of the attribute, i.e. glasses, dark_glasses, mouth_open etc.\nA full list of supported type names will be provided in the document.",
+          "type": "string"
+        },
+        "value": {
+          "description": "Text value of the detection result. For example, the value for \"HairColor\"\ncan be \"black\", \"blonde\", etc.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1_DetectedLandmark": {
+      "description": "A generic detected landmark represented by name in string format and a 2D\nlocation.",
+      "id": "GoogleCloudVideointelligenceV1_DetectedLandmark",
+      "properties": {
+        "confidence": {
+          "description": "The confidence score of the detected landmark. Range [0, 1].",
+          "format": "float",
+          "type": "number"
+        },
+        "name": {
+          "description": "The name of this landmark, i.e. left_hand, right_shoulder.",
+          "type": "string"
+        },
+        "point": {
+          "$ref": "GoogleCloudVideointelligenceV1_NormalizedVertex",
+          "description": "The 2D point of the detected landmark using the normalized image\ncoordindate system. The normalized coordinates have the range from 0 to 1."
         }
       },
       "type": "object"
@@ -285,6 +325,31 @@
         "segment": {
           "$ref": "GoogleCloudVideointelligenceV1_VideoSegment",
           "description": "Video segment where a label was detected."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1_LogoRecognitionAnnotation": {
+      "description": "Annotation corresponding to one detected, tracked and recognized logo class.",
+      "id": "GoogleCloudVideointelligenceV1_LogoRecognitionAnnotation",
+      "properties": {
+        "entity": {
+          "$ref": "GoogleCloudVideointelligenceV1_Entity",
+          "description": "Entity category information to specify the logo class that all the logo\ntracks within this LogoRecognitionAnnotation are recognized as."
+        },
+        "segments": {
+          "description": "All video segments where the recognized logo appears. There might be\nmultiple instances of the same logo class appearing in one VideoSegment.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1_VideoSegment"
+          },
+          "type": "array"
+        },
+        "tracks": {
+          "description": "All logo tracks where the recognized logo appears. Each track corresponds\nto one logo instance appearing in consecutive frames.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1_Track"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -493,6 +558,66 @@
       },
       "type": "object"
     },
+    "GoogleCloudVideointelligenceV1_TimestampedObject": {
+      "description": "For tracking related features.\nAn object at time_offset with attributes, and located with\nnormalized_bounding_box.",
+      "id": "GoogleCloudVideointelligenceV1_TimestampedObject",
+      "properties": {
+        "attributes": {
+          "description": "Optional. The attributes of the object in the bounding box.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1_DetectedAttribute"
+          },
+          "type": "array"
+        },
+        "landmarks": {
+          "description": "Optional. The detected landmarks.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1_DetectedLandmark"
+          },
+          "type": "array"
+        },
+        "normalizedBoundingBox": {
+          "$ref": "GoogleCloudVideointelligenceV1_NormalizedBoundingBox",
+          "description": "Normalized Bounding box in a frame, where the object is located."
+        },
+        "timeOffset": {
+          "description": "Time-offset, relative to the beginning of the video,\ncorresponding to the video frame for this object.",
+          "format": "google-duration",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1_Track": {
+      "description": "A track of an object instance.",
+      "id": "GoogleCloudVideointelligenceV1_Track",
+      "properties": {
+        "attributes": {
+          "description": "Optional. Attributes in the track level.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1_DetectedAttribute"
+          },
+          "type": "array"
+        },
+        "confidence": {
+          "description": "Optional. The confidence score of the tracked object.",
+          "format": "float",
+          "type": "number"
+        },
+        "segment": {
+          "$ref": "GoogleCloudVideointelligenceV1_VideoSegment",
+          "description": "Video segment of a track."
+        },
+        "timestampedObjects": {
+          "description": "The object with timestamp and attributes per frame in the track.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1_TimestampedObject"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudVideointelligenceV1_VideoAnnotationProgress": {
       "description": "Annotation progress for a single video.",
       "id": "GoogleCloudVideointelligenceV1_VideoAnnotationProgress",
@@ -506,7 +631,8 @@
             "EXPLICIT_CONTENT_DETECTION",
             "SPEECH_TRANSCRIPTION",
             "TEXT_DETECTION",
-            "OBJECT_TRACKING"
+            "OBJECT_TRACKING",
+            "LOGO_RECOGNITION"
           ],
           "enumDescriptions": [
             "Unspecified.",
@@ -515,7 +641,8 @@
             "Explicit content detection.",
             "Speech transcription.",
             "OCR text detection and tracking.",
-            "Object detection and tracking."
+            "Object detection and tracking.",
+            "Logo detection, tracking, and recognition."
           ],
           "type": "string"
         },
@@ -567,6 +694,13 @@
         "inputUri": {
           "description": "Video file location in\n[Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
+        },
+        "logoRecognitionAnnotations": {
+          "description": "Annotations for list of logos detected, tracked and recognized in video.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1_LogoRecognitionAnnotation"
+          },
+          "type": "array"
         },
         "objectAnnotations": {
           "description": "Annotations for list of objects detected and tracked in video.",
@@ -707,6 +841,46 @@
       },
       "type": "object"
     },
+    "GoogleCloudVideointelligenceV1beta2_DetectedAttribute": {
+      "description": "A generic detected attribute represented by name in string format.",
+      "id": "GoogleCloudVideointelligenceV1beta2_DetectedAttribute",
+      "properties": {
+        "confidence": {
+          "description": "Detected attribute confidence. Range [0, 1].",
+          "format": "float",
+          "type": "number"
+        },
+        "name": {
+          "description": "The name of the attribute, i.e. glasses, dark_glasses, mouth_open etc.\nA full list of supported type names will be provided in the document.",
+          "type": "string"
+        },
+        "value": {
+          "description": "Text value of the detection result. For example, the value for \"HairColor\"\ncan be \"black\", \"blonde\", etc.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1beta2_DetectedLandmark": {
+      "description": "A generic detected landmark represented by name in string format and a 2D\nlocation.",
+      "id": "GoogleCloudVideointelligenceV1beta2_DetectedLandmark",
+      "properties": {
+        "confidence": {
+          "description": "The confidence score of the detected landmark. Range [0, 1].",
+          "format": "float",
+          "type": "number"
+        },
+        "name": {
+          "description": "The name of this landmark, i.e. left_hand, right_shoulder.",
+          "type": "string"
+        },
+        "point": {
+          "$ref": "GoogleCloudVideointelligenceV1beta2_NormalizedVertex",
+          "description": "The 2D point of the detected landmark using the normalized image\ncoordindate system. The normalized coordinates have the range from 0 to 1."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudVideointelligenceV1beta2_Entity": {
       "description": "Detected entity from video analysis.",
       "id": "GoogleCloudVideointelligenceV1beta2_Entity",
@@ -833,6 +1007,31 @@
         "segment": {
           "$ref": "GoogleCloudVideointelligenceV1beta2_VideoSegment",
           "description": "Video segment where a label was detected."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1beta2_LogoRecognitionAnnotation": {
+      "description": "Annotation corresponding to one detected, tracked and recognized logo class.",
+      "id": "GoogleCloudVideointelligenceV1beta2_LogoRecognitionAnnotation",
+      "properties": {
+        "entity": {
+          "$ref": "GoogleCloudVideointelligenceV1beta2_Entity",
+          "description": "Entity category information to specify the logo class that all the logo\ntracks within this LogoRecognitionAnnotation are recognized as."
+        },
+        "segments": {
+          "description": "All video segments where the recognized logo appears. There might be\nmultiple instances of the same logo class appearing in one VideoSegment.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1beta2_VideoSegment"
+          },
+          "type": "array"
+        },
+        "tracks": {
+          "description": "All logo tracks where the recognized logo appears. Each track corresponds\nto one logo instance appearing in consecutive frames.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1beta2_Track"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -1041,6 +1240,66 @@
       },
       "type": "object"
     },
+    "GoogleCloudVideointelligenceV1beta2_TimestampedObject": {
+      "description": "For tracking related features.\nAn object at time_offset with attributes, and located with\nnormalized_bounding_box.",
+      "id": "GoogleCloudVideointelligenceV1beta2_TimestampedObject",
+      "properties": {
+        "attributes": {
+          "description": "Optional. The attributes of the object in the bounding box.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1beta2_DetectedAttribute"
+          },
+          "type": "array"
+        },
+        "landmarks": {
+          "description": "Optional. The detected landmarks.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1beta2_DetectedLandmark"
+          },
+          "type": "array"
+        },
+        "normalizedBoundingBox": {
+          "$ref": "GoogleCloudVideointelligenceV1beta2_NormalizedBoundingBox",
+          "description": "Normalized Bounding box in a frame, where the object is located."
+        },
+        "timeOffset": {
+          "description": "Time-offset, relative to the beginning of the video,\ncorresponding to the video frame for this object.",
+          "format": "google-duration",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1beta2_Track": {
+      "description": "A track of an object instance.",
+      "id": "GoogleCloudVideointelligenceV1beta2_Track",
+      "properties": {
+        "attributes": {
+          "description": "Optional. Attributes in the track level.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1beta2_DetectedAttribute"
+          },
+          "type": "array"
+        },
+        "confidence": {
+          "description": "Optional. The confidence score of the tracked object.",
+          "format": "float",
+          "type": "number"
+        },
+        "segment": {
+          "$ref": "GoogleCloudVideointelligenceV1beta2_VideoSegment",
+          "description": "Video segment of a track."
+        },
+        "timestampedObjects": {
+          "description": "The object with timestamp and attributes per frame in the track.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1beta2_TimestampedObject"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudVideointelligenceV1beta2_VideoAnnotationProgress": {
       "description": "Annotation progress for a single video.",
       "id": "GoogleCloudVideointelligenceV1beta2_VideoAnnotationProgress",
@@ -1054,7 +1313,8 @@
             "EXPLICIT_CONTENT_DETECTION",
             "SPEECH_TRANSCRIPTION",
             "TEXT_DETECTION",
-            "OBJECT_TRACKING"
+            "OBJECT_TRACKING",
+            "LOGO_RECOGNITION"
           ],
           "enumDescriptions": [
             "Unspecified.",
@@ -1063,7 +1323,8 @@
             "Explicit content detection.",
             "Speech transcription.",
             "OCR text detection and tracking.",
-            "Object detection and tracking."
+            "Object detection and tracking.",
+            "Logo detection, tracking, and recognition."
           ],
           "type": "string"
         },
@@ -1115,6 +1376,13 @@
         "inputUri": {
           "description": "Video file location in\n[Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
+        },
+        "logoRecognitionAnnotations": {
+          "description": "Annotations for list of logos detected, tracked and recognized in video.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1beta2_LogoRecognitionAnnotation"
+          },
+          "type": "array"
         },
         "objectAnnotations": {
           "description": "Annotations for list of objects detected and tracked in video.",
@@ -1255,6 +1523,46 @@
       },
       "type": "object"
     },
+    "GoogleCloudVideointelligenceV1p1beta1_DetectedAttribute": {
+      "description": "A generic detected attribute represented by name in string format.",
+      "id": "GoogleCloudVideointelligenceV1p1beta1_DetectedAttribute",
+      "properties": {
+        "confidence": {
+          "description": "Detected attribute confidence. Range [0, 1].",
+          "format": "float",
+          "type": "number"
+        },
+        "name": {
+          "description": "The name of the attribute, i.e. glasses, dark_glasses, mouth_open etc.\nA full list of supported type names will be provided in the document.",
+          "type": "string"
+        },
+        "value": {
+          "description": "Text value of the detection result. For example, the value for \"HairColor\"\ncan be \"black\", \"blonde\", etc.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1p1beta1_DetectedLandmark": {
+      "description": "A generic detected landmark represented by name in string format and a 2D\nlocation.",
+      "id": "GoogleCloudVideointelligenceV1p1beta1_DetectedLandmark",
+      "properties": {
+        "confidence": {
+          "description": "The confidence score of the detected landmark. Range [0, 1].",
+          "format": "float",
+          "type": "number"
+        },
+        "name": {
+          "description": "The name of this landmark, i.e. left_hand, right_shoulder.",
+          "type": "string"
+        },
+        "point": {
+          "$ref": "GoogleCloudVideointelligenceV1p1beta1_NormalizedVertex",
+          "description": "The 2D point of the detected landmark using the normalized image\ncoordindate system. The normalized coordinates have the range from 0 to 1."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudVideointelligenceV1p1beta1_Entity": {
       "description": "Detected entity from video analysis.",
       "id": "GoogleCloudVideointelligenceV1p1beta1_Entity",
@@ -1381,6 +1689,31 @@
         "segment": {
           "$ref": "GoogleCloudVideointelligenceV1p1beta1_VideoSegment",
           "description": "Video segment where a label was detected."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1p1beta1_LogoRecognitionAnnotation": {
+      "description": "Annotation corresponding to one detected, tracked and recognized logo class.",
+      "id": "GoogleCloudVideointelligenceV1p1beta1_LogoRecognitionAnnotation",
+      "properties": {
+        "entity": {
+          "$ref": "GoogleCloudVideointelligenceV1p1beta1_Entity",
+          "description": "Entity category information to specify the logo class that all the logo\ntracks within this LogoRecognitionAnnotation are recognized as."
+        },
+        "segments": {
+          "description": "All video segments where the recognized logo appears. There might be\nmultiple instances of the same logo class appearing in one VideoSegment.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p1beta1_VideoSegment"
+          },
+          "type": "array"
+        },
+        "tracks": {
+          "description": "All logo tracks where the recognized logo appears. Each track corresponds\nto one logo instance appearing in consecutive frames.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p1beta1_Track"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -1589,6 +1922,66 @@
       },
       "type": "object"
     },
+    "GoogleCloudVideointelligenceV1p1beta1_TimestampedObject": {
+      "description": "For tracking related features.\nAn object at time_offset with attributes, and located with\nnormalized_bounding_box.",
+      "id": "GoogleCloudVideointelligenceV1p1beta1_TimestampedObject",
+      "properties": {
+        "attributes": {
+          "description": "Optional. The attributes of the object in the bounding box.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p1beta1_DetectedAttribute"
+          },
+          "type": "array"
+        },
+        "landmarks": {
+          "description": "Optional. The detected landmarks.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p1beta1_DetectedLandmark"
+          },
+          "type": "array"
+        },
+        "normalizedBoundingBox": {
+          "$ref": "GoogleCloudVideointelligenceV1p1beta1_NormalizedBoundingBox",
+          "description": "Normalized Bounding box in a frame, where the object is located."
+        },
+        "timeOffset": {
+          "description": "Time-offset, relative to the beginning of the video,\ncorresponding to the video frame for this object.",
+          "format": "google-duration",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1p1beta1_Track": {
+      "description": "A track of an object instance.",
+      "id": "GoogleCloudVideointelligenceV1p1beta1_Track",
+      "properties": {
+        "attributes": {
+          "description": "Optional. Attributes in the track level.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p1beta1_DetectedAttribute"
+          },
+          "type": "array"
+        },
+        "confidence": {
+          "description": "Optional. The confidence score of the tracked object.",
+          "format": "float",
+          "type": "number"
+        },
+        "segment": {
+          "$ref": "GoogleCloudVideointelligenceV1p1beta1_VideoSegment",
+          "description": "Video segment of a track."
+        },
+        "timestampedObjects": {
+          "description": "The object with timestamp and attributes per frame in the track.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p1beta1_TimestampedObject"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudVideointelligenceV1p1beta1_VideoAnnotationProgress": {
       "description": "Annotation progress for a single video.",
       "id": "GoogleCloudVideointelligenceV1p1beta1_VideoAnnotationProgress",
@@ -1602,7 +1995,8 @@
             "EXPLICIT_CONTENT_DETECTION",
             "SPEECH_TRANSCRIPTION",
             "TEXT_DETECTION",
-            "OBJECT_TRACKING"
+            "OBJECT_TRACKING",
+            "LOGO_RECOGNITION"
           ],
           "enumDescriptions": [
             "Unspecified.",
@@ -1611,7 +2005,8 @@
             "Explicit content detection.",
             "Speech transcription.",
             "OCR text detection and tracking.",
-            "Object detection and tracking."
+            "Object detection and tracking.",
+            "Logo detection, tracking, and recognition."
           ],
           "type": "string"
         },
@@ -1663,6 +2058,13 @@
         "inputUri": {
           "description": "Video file location in\n[Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
+        },
+        "logoRecognitionAnnotations": {
+          "description": "Annotations for list of logos detected, tracked and recognized in video.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p1beta1_LogoRecognitionAnnotation"
+          },
+          "type": "array"
         },
         "objectAnnotations": {
           "description": "Annotations for list of objects detected and tracked in video.",
@@ -1803,6 +2205,46 @@
       },
       "type": "object"
     },
+    "GoogleCloudVideointelligenceV1p2beta1_DetectedAttribute": {
+      "description": "A generic detected attribute represented by name in string format.",
+      "id": "GoogleCloudVideointelligenceV1p2beta1_DetectedAttribute",
+      "properties": {
+        "confidence": {
+          "description": "Detected attribute confidence. Range [0, 1].",
+          "format": "float",
+          "type": "number"
+        },
+        "name": {
+          "description": "The name of the attribute, i.e. glasses, dark_glasses, mouth_open etc.\nA full list of supported type names will be provided in the document.",
+          "type": "string"
+        },
+        "value": {
+          "description": "Text value of the detection result. For example, the value for \"HairColor\"\ncan be \"black\", \"blonde\", etc.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1p2beta1_DetectedLandmark": {
+      "description": "A generic detected landmark represented by name in string format and a 2D\nlocation.",
+      "id": "GoogleCloudVideointelligenceV1p2beta1_DetectedLandmark",
+      "properties": {
+        "confidence": {
+          "description": "The confidence score of the detected landmark. Range [0, 1].",
+          "format": "float",
+          "type": "number"
+        },
+        "name": {
+          "description": "The name of this landmark, i.e. left_hand, right_shoulder.",
+          "type": "string"
+        },
+        "point": {
+          "$ref": "GoogleCloudVideointelligenceV1p2beta1_NormalizedVertex",
+          "description": "The 2D point of the detected landmark using the normalized image\ncoordindate system. The normalized coordinates have the range from 0 to 1."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudVideointelligenceV1p2beta1_Entity": {
       "description": "Detected entity from video analysis.",
       "id": "GoogleCloudVideointelligenceV1p2beta1_Entity",
@@ -1929,6 +2371,31 @@
         "segment": {
           "$ref": "GoogleCloudVideointelligenceV1p2beta1_VideoSegment",
           "description": "Video segment where a label was detected."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1p2beta1_LogoRecognitionAnnotation": {
+      "description": "Annotation corresponding to one detected, tracked and recognized logo class.",
+      "id": "GoogleCloudVideointelligenceV1p2beta1_LogoRecognitionAnnotation",
+      "properties": {
+        "entity": {
+          "$ref": "GoogleCloudVideointelligenceV1p2beta1_Entity",
+          "description": "Entity category information to specify the logo class that all the logo\ntracks within this LogoRecognitionAnnotation are recognized as."
+        },
+        "segments": {
+          "description": "All video segments where the recognized logo appears. There might be\nmultiple instances of the same logo class appearing in one VideoSegment.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p2beta1_VideoSegment"
+          },
+          "type": "array"
+        },
+        "tracks": {
+          "description": "All logo tracks where the recognized logo appears. Each track corresponds\nto one logo instance appearing in consecutive frames.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p2beta1_Track"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -2137,6 +2604,66 @@
       },
       "type": "object"
     },
+    "GoogleCloudVideointelligenceV1p2beta1_TimestampedObject": {
+      "description": "For tracking related features.\nAn object at time_offset with attributes, and located with\nnormalized_bounding_box.",
+      "id": "GoogleCloudVideointelligenceV1p2beta1_TimestampedObject",
+      "properties": {
+        "attributes": {
+          "description": "Optional. The attributes of the object in the bounding box.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p2beta1_DetectedAttribute"
+          },
+          "type": "array"
+        },
+        "landmarks": {
+          "description": "Optional. The detected landmarks.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p2beta1_DetectedLandmark"
+          },
+          "type": "array"
+        },
+        "normalizedBoundingBox": {
+          "$ref": "GoogleCloudVideointelligenceV1p2beta1_NormalizedBoundingBox",
+          "description": "Normalized Bounding box in a frame, where the object is located."
+        },
+        "timeOffset": {
+          "description": "Time-offset, relative to the beginning of the video,\ncorresponding to the video frame for this object.",
+          "format": "google-duration",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1p2beta1_Track": {
+      "description": "A track of an object instance.",
+      "id": "GoogleCloudVideointelligenceV1p2beta1_Track",
+      "properties": {
+        "attributes": {
+          "description": "Optional. Attributes in the track level.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p2beta1_DetectedAttribute"
+          },
+          "type": "array"
+        },
+        "confidence": {
+          "description": "Optional. The confidence score of the tracked object.",
+          "format": "float",
+          "type": "number"
+        },
+        "segment": {
+          "$ref": "GoogleCloudVideointelligenceV1p2beta1_VideoSegment",
+          "description": "Video segment of a track."
+        },
+        "timestampedObjects": {
+          "description": "The object with timestamp and attributes per frame in the track.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p2beta1_TimestampedObject"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudVideointelligenceV1p2beta1_VideoAnnotationProgress": {
       "description": "Annotation progress for a single video.",
       "id": "GoogleCloudVideointelligenceV1p2beta1_VideoAnnotationProgress",
@@ -2150,7 +2677,8 @@
             "EXPLICIT_CONTENT_DETECTION",
             "SPEECH_TRANSCRIPTION",
             "TEXT_DETECTION",
-            "OBJECT_TRACKING"
+            "OBJECT_TRACKING",
+            "LOGO_RECOGNITION"
           ],
           "enumDescriptions": [
             "Unspecified.",
@@ -2159,7 +2687,8 @@
             "Explicit content detection.",
             "Speech transcription.",
             "OCR text detection and tracking.",
-            "Object detection and tracking."
+            "Object detection and tracking.",
+            "Logo detection, tracking, and recognition."
           ],
           "type": "string"
         },
@@ -2211,6 +2740,13 @@
         "inputUri": {
           "description": "Video file location in\n[Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
+        },
+        "logoRecognitionAnnotations": {
+          "description": "Annotations for list of logos detected, tracked and recognized in video.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p2beta1_LogoRecognitionAnnotation"
+          },
+          "type": "array"
         },
         "objectAnnotations": {
           "description": "Annotations for list of objects detected and tracked in video.",
@@ -2380,7 +2916,7 @@
           "type": "string"
         },
         "inputUri": {
-          "description": "Input video location. Currently, only\n[Cloud Storage](https://cloud.google.com/storage/) URIs are\nsupported, which must be specified in the following format:\n`gs://bucket-id/object-id` (other URI formats return\ngoogle.rpc.Code.INVALID_ARGUMENT). For more information, see\n[Request URIs](/storage/docs/reference-uris).\nA video URI may include wildcards in `object-id`, and thus identify\nmultiple videos. Supported wildcards: '*' to match 0 or more characters;\n'?' to match 1 character. If unset, the input video should be embedded\nin the request as `input_content`. If set, `input_content` should be unset.",
+          "description": "Input video location. Currently, only\n[Cloud Storage](https://cloud.google.com/storage/) URIs are\nsupported, which must be specified in the following format:\n`gs://bucket-id/object-id` (other URI formats return\ngoogle.rpc.Code.INVALID_ARGUMENT). For more information, see\n[Request URIs](https://cloud.google.com/storage/docs/request-endpoints).\nA video URI may include wildcards in `object-id`, and thus identify\nmultiple videos. Supported wildcards: '*' to match 0 or more characters;\n'?' to match 1 character. If unset, the input video should be embedded\nin the request as `input_content`. If set, `input_content` should be unset.",
           "type": "string"
         },
         "locationId": {
@@ -2388,7 +2924,7 @@
           "type": "string"
         },
         "outputUri": {
-          "description": "Optional. Location where the output (in JSON format) should be stored.\nCurrently, only [Cloud Storage](https://cloud.google.com/storage/)\nURIs are supported, which must be specified in the following format:\n`gs://bucket-id/object-id` (other URI formats return\ngoogle.rpc.Code.INVALID_ARGUMENT). For more information, see\n[Request URIs](/storage/docs/reference-uris).",
+          "description": "Optional. Location where the output (in JSON format) should be stored.\nCurrently, only [Cloud Storage](https://cloud.google.com/storage/)\nURIs are supported, which must be specified in the following format:\n`gs://bucket-id/object-id` (other URI formats return\ngoogle.rpc.Code.INVALID_ARGUMENT). For more information, see\n[Request URIs](https://cloud.google.com/storage/docs/request-endpoints).",
           "type": "string"
         },
         "videoContext": {

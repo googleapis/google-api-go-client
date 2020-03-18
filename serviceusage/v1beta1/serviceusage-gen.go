@@ -185,7 +185,6 @@ func NewServicesConsumerQuotaMetricsLimitsService(s *APIService) *ServicesConsum
 	rs := &ServicesConsumerQuotaMetricsLimitsService{s: s}
 	rs.AdminOverrides = NewServicesConsumerQuotaMetricsLimitsAdminOverridesService(s)
 	rs.ConsumerOverrides = NewServicesConsumerQuotaMetricsLimitsConsumerOverridesService(s)
-	rs.ProducerOverrides = NewServicesConsumerQuotaMetricsLimitsProducerOverridesService(s)
 	return rs
 }
 
@@ -195,8 +194,6 @@ type ServicesConsumerQuotaMetricsLimitsService struct {
 	AdminOverrides *ServicesConsumerQuotaMetricsLimitsAdminOverridesService
 
 	ConsumerOverrides *ServicesConsumerQuotaMetricsLimitsConsumerOverridesService
-
-	ProducerOverrides *ServicesConsumerQuotaMetricsLimitsProducerOverridesService
 }
 
 func NewServicesConsumerQuotaMetricsLimitsAdminOverridesService(s *APIService) *ServicesConsumerQuotaMetricsLimitsAdminOverridesService {
@@ -214,15 +211,6 @@ func NewServicesConsumerQuotaMetricsLimitsConsumerOverridesService(s *APIService
 }
 
 type ServicesConsumerQuotaMetricsLimitsConsumerOverridesService struct {
-	s *APIService
-}
-
-func NewServicesConsumerQuotaMetricsLimitsProducerOverridesService(s *APIService) *ServicesConsumerQuotaMetricsLimitsProducerOverridesService {
-	rs := &ServicesConsumerQuotaMetricsLimitsProducerOverridesService{s: s}
-	return rs
-}
-
-type ServicesConsumerQuotaMetricsLimitsProducerOverridesService struct {
 	s *APIService
 }
 
@@ -3284,44 +3272,6 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListProducerOverridesResponse: Response message for
-// ListProducerOverrides.
-type ListProducerOverridesResponse struct {
-	// NextPageToken: Token identifying which result to start with; returned
-	// by a previous list
-	// call.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Overrides: Producer overrides on this limit.
-	Overrides []*QuotaOverride `json:"overrides,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ListProducerOverridesResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListProducerOverridesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ListServicesResponse: Response message for the `ListServices` method.
 type ListServicesResponse struct {
 	// NextPageToken: Token that can be passed to `ListServices` to resume a
@@ -5712,7 +5662,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5899,7 +5849,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6070,7 +6020,7 @@ func (c *ServicesBatchEnableCall) Header() http.Header {
 
 func (c *ServicesBatchEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6223,7 +6173,7 @@ func (c *ServicesDisableCall) Header() http.Header {
 
 func (c *ServicesDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6367,7 +6317,7 @@ func (c *ServicesEnableCall) Header() http.Header {
 
 func (c *ServicesEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6518,7 +6468,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6699,7 +6649,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6894,7 +6844,7 @@ func (c *ServicesConsumerQuotaMetricsGetCall) Header() http.Header {
 
 func (c *ServicesConsumerQuotaMetricsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7084,7 +7034,7 @@ func (c *ServicesConsumerQuotaMetricsListCall) Header() http.Header {
 
 func (c *ServicesConsumerQuotaMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7284,7 +7234,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsGetCall) Header() http.Header {
 
 func (c *ServicesConsumerQuotaMetricsLimitsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7453,7 +7403,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall) Header() ht
 
 func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7611,7 +7561,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall) Header() ht
 
 func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7773,7 +7723,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall) Header() http
 
 func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7963,7 +7913,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall) Header() htt
 
 func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8136,7 +8086,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall) Header()
 
 func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8294,7 +8244,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall) Header()
 
 func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8456,7 +8406,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall) Header() h
 
 func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8646,7 +8596,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall) Header() 
 
 func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8750,199 +8700,4 @@ func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall) Do(opts .
 	//   ]
 	// }
 
-}
-
-// method id "serviceusage.services.consumerQuotaMetrics.limits.producerOverrides.list":
-
-type ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall struct {
-	s            *APIService
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists all producer overrides on this limit.
-// Unlike other types of overrides, producer overrides are under the
-// control
-// of the service producer and cannot be modified using this API.
-func (r *ServicesConsumerQuotaMetricsLimitsProducerOverridesService) List(parent string) *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall {
-	c := &ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Requested size of
-// the next page of data.
-func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) PageSize(pageSize int64) *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Token identifying
-// which result to start with; returned by a previous list
-// call.
-func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) PageToken(pageToken string) *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) Fields(s ...googleapi.Field) *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) IfNoneMatch(entityTag string) *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) Context(ctx context.Context) *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/producerOverrides")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "serviceusage.services.consumerQuotaMetrics.limits.producerOverrides.list" call.
-// Exactly one of *ListProducerOverridesResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListProducerOverridesResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) Do(opts ...googleapi.CallOption) (*ListProducerOverridesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ListProducerOverridesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists all producer overrides on this limit.\nUnlike other types of overrides, producer overrides are under the control\nof the service producer and cannot be modified using this API.",
-	//   "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/producerOverrides",
-	//   "httpMethod": "GET",
-	//   "id": "serviceusage.services.consumerQuotaMetrics.limits.producerOverrides.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Requested size of the next page of data.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Token identifying which result to start with; returned by a previous list\ncall.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The resource name of the parent quota limit, returned by a\nListConsumerQuotaMetrics or GetConsumerQuotaMetric call.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`",
-	//       "location": "path",
-	//       "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/producerOverrides",
-	//   "response": {
-	//     "$ref": "ListProducerOverridesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) Pages(ctx context.Context, f func(*ListProducerOverridesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
 }

@@ -825,7 +825,7 @@
       }
     }
   },
-  "revision": "20200215",
+  "revision": "20200311",
   "rootUrl": "https://androiddeviceprovisioning.googleapis.com/",
   "schemas": {
     "ClaimDeviceRequest": {
@@ -1762,13 +1762,13 @@
       "properties": {
         "deviceMetadata": {
           "$ref": "DeviceMetadata",
-          "description": "Required. The metdata to attach to the device."
+          "description": "Required. The metadata to attach to the device."
         }
       },
       "type": "object"
     },
     "UpdateMetadataArguments": {
-      "description": "Identifies metdata updates to one device.",
+      "description": "Identifies metadata updates to one device.",
       "id": "UpdateMetadataArguments",
       "properties": {
         "deviceId": {

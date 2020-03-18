@@ -321,11 +321,6 @@ type GoogleCloudRecommenderV1beta1Insight struct {
 	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
 
 	// Name: Name of the insight.
-	//
-	// * A project insight is represented as
-	//
-	// projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_T
-	// YPE_ID]/insights/[insight_id]
 	Name string `json:"name,omitempty"`
 
 	// ObservationPeriod: Observation period that led to the insight. The
@@ -608,7 +603,8 @@ func (s *GoogleCloudRecommenderV1beta1MarkRecommendationClaimedRequest) MarshalJ
 // GoogleCloudRecommenderV1beta1MarkRecommendationFailedRequest: Request
 // for the `MarkRecommendationFailed` Method.
 type GoogleCloudRecommenderV1beta1MarkRecommendationFailedRequest struct {
-	// Etag: Fingerprint of the Recommendation. Provides optimistic locking.
+	// Etag: Required. Fingerprint of the Recommendation. Provides
+	// optimistic locking.
 	Etag string `json:"etag,omitempty"`
 
 	// StateMetadata: State properties to include with this state.
@@ -1186,7 +1182,7 @@ func (c *ProjectsLocationsInsightTypesInsightsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInsightTypesInsightsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1364,7 +1360,7 @@ func (c *ProjectsLocationsInsightTypesInsightsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInsightTypesInsightsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1547,7 +1543,7 @@ func (c *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall) Header() http.He
 
 func (c *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1699,7 +1695,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsGetCall) Header() http.Head
 
 func (c *ProjectsLocationsRecommendersRecommendationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1878,7 +1874,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Header() http.Hea
 
 func (c *ProjectsLocationsRecommendersRecommendationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2068,7 +2064,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) Header() h
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2226,7 +2222,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) Header() ht
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2384,7 +2380,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) Header()
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

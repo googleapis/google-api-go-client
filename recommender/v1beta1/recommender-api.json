@@ -374,7 +374,7 @@
       }
     }
   },
-  "revision": "20200308",
+  "revision": "20200313",
   "rootUrl": "https://recommender.googleapis.com/",
   "schemas": {
     "GoogleCloudRecommenderV1beta1CostProjection": {
@@ -477,7 +477,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Name of the insight.\n\n* A project insight is represented as\n  projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/insights/[insight_id]",
+          "description": "Name of the insight.",
           "type": "string"
         },
         "observationPeriod": {
@@ -617,7 +617,7 @@
       "id": "GoogleCloudRecommenderV1beta1MarkRecommendationFailedRequest",
       "properties": {
         "etag": {
-          "description": "Fingerprint of the Recommendation. Provides optimistic locking.",
+          "description": "Required. Fingerprint of the Recommendation. Provides optimistic locking.",
           "type": "string"
         },
         "stateMetadata": {

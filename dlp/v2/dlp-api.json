@@ -3215,7 +3215,7 @@
       }
     }
   },
-  "revision": "20200308",
+  "revision": "20200315",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -3493,6 +3493,8 @@
             "IMAGE_PNG",
             "IMAGE_SVG",
             "TEXT_UTF8",
+            "WORD_DOCUMENT",
+            "PDF",
             "AVRO"
           ],
           "enumDescriptions": [
@@ -3503,6 +3505,8 @@
             "png",
             "svg",
             "plain text",
+            "docx, docm, dotx, dotm",
+            "pdf",
             "avro"
           ],
           "type": "string"
@@ -3898,6 +3902,10 @@
         "imageLocation": {
           "$ref": "GooglePrivacyDlpV2ImageLocation",
           "description": "Location within an image's pixels."
+        },
+        "metadataLocation": {
+          "$ref": "GooglePrivacyDlpV2MetadataLocation",
+          "description": "Location within the metadata for inspected content."
         },
         "recordLocation": {
           "$ref": "GooglePrivacyDlpV2RecordLocation",
@@ -5955,6 +5963,10 @@
           "$ref": "GooglePrivacyDlpV2Range",
           "description": "Unicode character offsets delimiting the finding.\nThese are relative to the finding's containing element.\nProvided when the content is text."
         },
+        "container": {
+          "$ref": "GooglePrivacyDlpV2Container",
+          "description": "Information about the container where this finding occurred, if available."
+        },
         "contentLocations": {
           "description": "List of nested objects pointing to the precise location of the finding\nwithin the file or record.",
           "items": {
@@ -5969,6 +5981,29 @@
       "description": "Job trigger option for hybrid jobs. Jobs must be manually created\nand finished.",
       "id": "GooglePrivacyDlpV2Manual",
       "properties": {},
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2MetadataLocation": {
+      "description": "Metadata Location",
+      "id": "GooglePrivacyDlpV2MetadataLocation",
+      "properties": {
+        "storageLabel": {
+          "$ref": "GooglePrivacyDlpV2StorageMetadataLabel",
+          "description": "Storage metadata."
+        },
+        "type": {
+          "description": "Type of metadata containing the finding.",
+          "enum": [
+            "METADATATYPE_UNSPECIFIED",
+            "STORAGE_METADATA"
+          ],
+          "enumDescriptions": [
+            "Unused",
+            "General file metadata provided by GCS."
+          ],
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "GooglePrivacyDlpV2NumericalStatsConfig": {
@@ -6645,6 +6680,16 @@
         },
         "timespanConfig": {
           "$ref": "GooglePrivacyDlpV2TimespanConfig"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2StorageMetadataLabel": {
+      "description": "Storage metadata label to indicate which metadata entry contains findings.",
+      "id": "GooglePrivacyDlpV2StorageMetadataLabel",
+      "properties": {
+        "key": {
+          "type": "string"
         }
       },
       "type": "object"

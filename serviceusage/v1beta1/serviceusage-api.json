@@ -756,47 +756,6 @@
                       ]
                     }
                   }
-                },
-                "producerOverrides": {
-                  "methods": {
-                    "list": {
-                      "description": "Lists all producer overrides on this limit.\nUnlike other types of overrides, producer overrides are under the control\nof the service producer and cannot be modified using this API.",
-                      "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}/consumerQuotaMetrics/{consumerQuotaMetricsId}/limits/{limitsId}/producerOverrides",
-                      "httpMethod": "GET",
-                      "id": "serviceusage.services.consumerQuotaMetrics.limits.producerOverrides.list",
-                      "parameterOrder": [
-                        "parent"
-                      ],
-                      "parameters": {
-                        "pageSize": {
-                          "description": "Requested size of the next page of data.",
-                          "format": "int32",
-                          "location": "query",
-                          "type": "integer"
-                        },
-                        "pageToken": {
-                          "description": "Token identifying which result to start with; returned by a previous list\ncall.",
-                          "location": "query",
-                          "type": "string"
-                        },
-                        "parent": {
-                          "description": "The resource name of the parent quota limit, returned by a\nListConsumerQuotaMetrics or GetConsumerQuotaMetric call.\n\nAn example name would be:\n`projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`",
-                          "location": "path",
-                          "pattern": "^[^/]+/[^/]+/services/[^/]+/consumerQuotaMetrics/[^/]+/limits/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1beta1/{+parent}/producerOverrides",
-                      "response": {
-                        "$ref": "ListProducerOverridesResponse"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/cloud-platform.read-only"
-                      ]
-                    }
-                  }
                 }
               }
             }
@@ -805,7 +764,7 @@
       }
     }
   },
-  "revision": "20200310",
+  "revision": "20200316",
   "rootUrl": "https://serviceusage.googleapis.com/",
   "schemas": {
     "Api": {
@@ -2107,24 +2066,6 @@
           "description": "A list of operations that matches the specified filter in the request.",
           "items": {
             "$ref": "Operation"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "ListProducerOverridesResponse": {
-      "description": "Response message for ListProducerOverrides.",
-      "id": "ListProducerOverridesResponse",
-      "properties": {
-        "nextPageToken": {
-          "description": "Token identifying which result to start with; returned by a previous list\ncall.",
-          "type": "string"
-        },
-        "overrides": {
-          "description": "Producer overrides on this limit.",
-          "items": {
-            "$ref": "QuotaOverride"
           },
           "type": "array"
         }

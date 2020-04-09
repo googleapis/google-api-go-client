@@ -953,8 +953,8 @@ type CheckResponse struct {
 	// ServiceConfigId: The actual config id used to process the request.
 	ServiceConfigId string `json:"serviceConfigId,omitempty"`
 
-	// ServiceRolloutId: Unimplemented. The current service rollout id used
-	// to process the request.
+	// ServiceRolloutId: The current service rollout id used to process the
+	// request.
 	ServiceRolloutId string `json:"serviceRolloutId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2575,8 +2575,8 @@ type ReportResponse struct {
 	// ServiceConfigId: The actual config id used to process the request.
 	ServiceConfigId string `json:"serviceConfigId,omitempty"`
 
-	// ServiceRolloutId: Unimplemented. The current service rollout id used
-	// to process the request.
+	// ServiceRolloutId: The current service rollout id used to process the
+	// request.
 	ServiceRolloutId string `json:"serviceRolloutId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3352,7 +3352,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3514,7 +3514,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3675,7 +3675,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

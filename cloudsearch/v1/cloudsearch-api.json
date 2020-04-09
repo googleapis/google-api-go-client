@@ -1805,7 +1805,7 @@
       }
     }
   },
-  "revision": "20200303",
+  "revision": "20200331",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -3033,7 +3033,7 @@
           "description": "Additional search quality metadata of the item"
         },
         "sourceRepositoryUrl": {
-          "description": "Link to the source repository serving the data.  \u0026#83;earch results apply\nthis link to the title.\nThe maximum length is 2048 characters.",
+          "description": "Link to the source repository serving the data.  \u0026#83;earch results apply\nthis link to the title.\nWhitespace or special characters may cause Cloud \u0026#83;earch result links to\ntrigger a redirect notice; to avoid this, encode the URL.\nThe maximum length is 2048 characters.",
           "type": "string"
         },
         "title": {

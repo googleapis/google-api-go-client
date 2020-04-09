@@ -12,7 +12,7 @@
   "baseUrl": "https://securitycenter.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Security Command Center",
-  "description": "Cloud Security Command Center API provides access to temporal views of assets and findings within an organization.",
+  "description": "Security Command Center API provides access to temporal views of assets and findings within an organization.",
   "discoveryVersion": "v1",
   "documentationLink": "https://console.cloud.google.com/apis/api/securitycenter.googleapis.com/overview",
   "fullyEncodeReservedExpansion": true,
@@ -1056,21 +1056,21 @@
       }
     }
   },
-  "revision": "20200313",
+  "revision": "20200406",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Asset": {
-      "description": "Cloud Security Command Center's (Cloud SCC) representation of a Google Cloud\nPlatform (GCP) resource.\n\nThe Asset is a Cloud SCC resource that captures information about a single\nGCP resource. All modifications to an Asset are only within the context of\nCloud SCC and don't affect the referenced GCP resource.",
+      "description": "Security Command Center representation of a Google Cloud\nresource.\n\nThe Asset is a Security Command Center resource that captures information\nabout a single Google Cloud resource. All modifications to an Asset are only\nwithin the context of Security Command Center and don't affect the referenced\nGoogle Cloud resource.",
       "id": "Asset",
       "properties": {
         "createTime": {
-          "description": "The time at which the asset was created in Cloud SCC.",
+          "description": "The time at which the asset was created in Security Command Center.",
           "format": "google-datetime",
           "type": "string"
         },
         "iamPolicy": {
           "$ref": "IamPolicy",
-          "description": "IAM Policy information associated with the GCP resource described by the\nCloud SCC asset. This information is managed and defined by the GCP\nresource and cannot be modified by the user."
+          "description": "Cloud IAM Policy information associated with the Google Cloud resource\ndescribed by the Security Command Center asset. This information is managed\nand defined by the Google Cloud resource and cannot be modified by the\nuser."
         },
         "name": {
           "description": "The relative resource name of this asset. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/assets/{asset_id}\".",
@@ -1080,19 +1080,19 @@
           "additionalProperties": {
             "type": "any"
           },
-          "description": "Resource managed properties. These properties are managed and defined by\nthe GCP resource and cannot be modified by the user.",
+          "description": "Resource managed properties. These properties are managed and defined by\nthe Google Cloud resource and cannot be modified by the user.",
           "type": "object"
         },
         "securityCenterProperties": {
           "$ref": "SecurityCenterProperties",
-          "description": "Cloud SCC managed properties. These properties are managed by\nCloud SCC and cannot be modified by the user."
+          "description": "Security Command Center managed properties. These properties are managed by\nSecurity Command Center and cannot be modified by the user."
         },
         "securityMarks": {
           "$ref": "SecurityMarks",
           "description": "User specified security marks. These marks are entirely managed by the user\nand come from the SecurityMarks resource that belongs to the asset."
         },
         "updateTime": {
-          "description": "The time at which the asset was last updated, added, or deleted in Cloud\nSCC.",
+          "description": "The time at which the asset was last updated, added, or deleted in Security\nCommand Center.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -1227,7 +1227,7 @@
       "type": "object"
     },
     "Finding": {
-      "description": "Cloud Security Command Center (Cloud SCC) finding.\n\nA finding is a record of assessment data like security, risk, health, or\nprivacy, that is ingested into Cloud SCC for presentation, notification,\nanalysis, policy testing, and enforcement. For example, a\ncross-site scripting (XSS) vulnerability in an App Engine application is a\nfinding.",
+      "description": "Security Command Center finding.\n\nA finding is a record of assessment data like security, risk, health, or\nprivacy, that is ingested into Security Command Center for presentation,\nnotification, analysis, policy testing, and enforcement. For example, a\ncross-site scripting (XSS) vulnerability in an App Engine application is a\nfinding.\n\nWhen adding a new field hidden behind a visibility label, ensure it is also\nhidden from Notifications:\nhttp://google3/java/com/google/cloud/security/riskdashboard/notification/actions/streaming/FindingTranslator.java?l=26",
       "id": "Finding",
       "properties": {
         "category": {
@@ -1235,7 +1235,7 @@
           "type": "string"
         },
         "createTime": {
-          "description": "The time at which the finding was created in Cloud SCC.",
+          "description": "The time at which the finding was created in Security Command Center.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -1245,7 +1245,7 @@
           "type": "string"
         },
         "externalUri": {
-          "description": "The URI that, if available, points to a web page outside of Cloud SCC\nwhere additional information about the finding can be found. This field is\nguaranteed to be either empty or a well formed URL.",
+          "description": "The URI that, if available, points to a web page outside of Security\nCommand Center where additional information about the finding can be found.\nThis field is guaranteed to be either empty or a well formed URL.",
           "type": "string"
         },
         "name": {
@@ -1257,7 +1257,7 @@
           "type": "string"
         },
         "resourceName": {
-          "description": "For findings on Google Cloud Platform (GCP) resources, the full resource\nname of the GCP resource this finding is for. See:\nhttps://cloud.google.com/apis/design/resource_names#full_resource_name\nWhen the finding is for a non-GCP resource, the resourceName can be a\ncustomer or partner defined string.\nThis field is immutable after creation time.",
+          "description": "For findings on Google Cloud resources, the full resource\nname of the Google Cloud resource this finding is for. See:\nhttps://cloud.google.com/apis/design/resource_names#full_resource_name\nWhen the finding is for a non-Google Cloud resource, the resourceName can\nbe a customer or partner defined string. This field is immutable after\ncreation time.",
           "type": "string"
         },
         "securityMarks": {
@@ -1383,17 +1383,17 @@
       "type": "object"
     },
     "GoogleCloudSecuritycenterV1p1beta1Asset": {
-      "description": "Cloud Security Command Center's (Cloud SCC) representation of a Google Cloud\nPlatform (GCP) resource.\n\nThe Asset is a Cloud SCC resource that captures information about a single\nGCP resource. All modifications to an Asset are only within the context of\nCloud SCC and don't affect the referenced GCP resource.",
+      "description": "Security Command Center representation of a Google Cloud\nresource.\n\nThe Asset is a Security Command Center resource that captures information\nabout a single Google Cloud resource. All modifications to an Asset are only\nwithin the context of Security Command Center and don't affect the referenced\nGoogle Cloud resource.",
       "id": "GoogleCloudSecuritycenterV1p1beta1Asset",
       "properties": {
         "createTime": {
-          "description": "The time at which the asset was created in Cloud SCC.",
+          "description": "The time at which the asset was created in Security Command Center.",
           "format": "google-datetime",
           "type": "string"
         },
         "iamPolicy": {
           "$ref": "GoogleCloudSecuritycenterV1p1beta1IamPolicy",
-          "description": "IAM Policy information associated with the GCP resource described by the\nCloud SCC asset. This information is managed and defined by the GCP\nresource and cannot be modified by the user."
+          "description": "Cloud IAM Policy information associated with the Google Cloud resource\ndescribed by the Security Command Center asset. This information is managed\nand defined by the Google Cloud resource and cannot be modified by the\nuser."
         },
         "name": {
           "description": "The relative resource name of this asset. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/assets/{asset_id}\".",
@@ -1403,12 +1403,12 @@
           "additionalProperties": {
             "type": "any"
           },
-          "description": "Resource managed properties. These properties are managed and defined by\nthe GCP resource and cannot be modified by the user.",
+          "description": "Resource managed properties. These properties are managed and defined by\nthe Google Cloud resource and cannot be modified by the user.",
           "type": "object"
         },
         "securityCenterProperties": {
           "$ref": "GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties",
-          "description": "Cloud SCC managed properties. These properties are managed by\nCloud SCC and cannot be modified by the user."
+          "description": "Security Command Center managed properties. These properties are managed by\nSecurity Command Center and cannot be modified by the user."
         },
         "securityMarks": {
           "$ref": "GoogleCloudSecuritycenterV1p1beta1SecurityMarks",
@@ -1423,7 +1423,7 @@
       "type": "object"
     },
     "GoogleCloudSecuritycenterV1p1beta1Finding": {
-      "description": "Cloud Security Command Center (Cloud SCC) finding.\n\nA finding is a record of assessment data (security, risk, health or privacy)\ningested into Cloud SCC for presentation, notification, analysis,\npolicy testing, and enforcement. For example, an XSS vulnerability in an\nApp Engine application is a finding.",
+      "description": "Security Command Center finding.\n\nA finding is a record of assessment data (security, risk, health or privacy)\ningested into Security Command Center for presentation, notification,\nanalysis, policy testing, and enforcement. For example, an XSS vulnerability\nin an App Engine application is a finding.",
       "id": "GoogleCloudSecuritycenterV1p1beta1Finding",
       "properties": {
         "category": {
@@ -1431,7 +1431,7 @@
           "type": "string"
         },
         "createTime": {
-          "description": "The time at which the finding was created in Cloud SCC.",
+          "description": "The time at which the finding was created in Security Command Center.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -1441,7 +1441,7 @@
           "type": "string"
         },
         "externalUri": {
-          "description": "The URI that, if available, points to a web page outside of Cloud SCC\nwhere additional information about the finding can be found. This field is\nguaranteed to be either empty or a well formed URL.",
+          "description": "The URI that, if available, points to a web page outside of Security\nCommand Center where additional information about the finding can be found.\nThis field is guaranteed to be either empty or a well formed URL.",
           "type": "string"
         },
         "name": {
@@ -1453,7 +1453,7 @@
           "type": "string"
         },
         "resourceName": {
-          "description": "For findings on Google Cloud Platform (GCP) resources, the full resource\nname of the GCP resource this finding is for. See:\nhttps://cloud.google.com/apis/design/resource_names#full_resource_name\nWhen the finding is for a non-GCP resource, the resourceName can be a\ncustomer or partner defined string.\nThis field is immutable after creation time.",
+          "description": "For findings on Google Cloud resources, the full resource\nname of the Google Cloud resource this finding is for. See:\nhttps://cloud.google.com/apis/design/resource_names#full_resource_name\nWhen the finding is for a non-Google Cloud resource, the resourceName can\nbe a customer or partner defined string. This field is immutable after\ncreation time.",
           "type": "string"
         },
         "securityMarks": {
@@ -1485,18 +1485,18 @@
       "type": "object"
     },
     "GoogleCloudSecuritycenterV1p1beta1IamPolicy": {
-      "description": "IAM Policy information associated with the GCP resource described by the\nCloud SCC asset. This information is managed and defined by the GCP\nresource and cannot be modified by the user.",
+      "description": "Cloud IAM Policy information associated with the Google Cloud resource\ndescribed by the Security Command Center asset. This information is managed\nand defined by the Google Cloud resource and cannot be modified by the\nuser.",
       "id": "GoogleCloudSecuritycenterV1p1beta1IamPolicy",
       "properties": {
         "policyBlob": {
-          "description": "The JSON representation of the Policy associated with the asset.\nSee https://cloud.google.com/iam/reference/rest/v1p1beta1/Policy for\nformat details.",
+          "description": "The JSON representation of the Policy associated with the asset.\nSee https://cloud.google.com/iam/docs/reference/rest/v1/Policy for\nformat details.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "GoogleCloudSecuritycenterV1p1beta1NotificationMessage": {
-      "description": "Cloud SCC's Notification",
+      "description": "Security Command Center's Notification",
       "id": "GoogleCloudSecuritycenterV1p1beta1NotificationMessage",
       "properties": {
         "finding": {
@@ -1543,7 +1543,7 @@
       "type": "object"
     },
     "GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties": {
-      "description": "Cloud SCC managed properties. These properties are managed by Cloud SCC and\ncannot be modified by the user.",
+      "description": "Security Command Center managed properties. These properties are managed by\nSecurity Command Center and cannot be modified by the user.",
       "id": "GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties",
       "properties": {
         "resourceDisplayName": {
@@ -1551,7 +1551,7 @@
           "type": "string"
         },
         "resourceName": {
-          "description": "The full resource name of the GCP resource this asset\nrepresents. This field is immutable after create time. See:\nhttps://cloud.google.com/apis/design/resource_names#full_resource_name",
+          "description": "The full resource name of the Google Cloud resource this asset\nrepresents. This field is immutable after create time. See:\nhttps://cloud.google.com/apis/design/resource_names#full_resource_name",
           "type": "string"
         },
         "resourceOwners": {
@@ -1578,14 +1578,14 @@
           "type": "string"
         },
         "resourceType": {
-          "description": "The type of the GCP resource. Examples include: APPLICATION,\nPROJECT, and ORGANIZATION. This is a case insensitive field defined by\nCloud SCC and/or the producer of the resource and is immutable\nafter create time.",
+          "description": "The type of the Google Cloud resource. Examples include: APPLICATION,\nPROJECT, and ORGANIZATION. This is a case insensitive field defined by\nSecurity Command Center and/or the producer of the resource and is\nimmutable after create time.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "GoogleCloudSecuritycenterV1p1beta1SecurityMarks": {
-      "description": "User specified security marks that are attached to the parent Cloud Security\nCommand Center (Cloud SCC) resource. Security marks are scoped within a Cloud\nSCC organization -- they can be modified and viewed by all users who have\nproper permissions on the organization.",
+      "description": "User specified security marks that are attached to the parent Security\nCommand Center resource. Security marks are scoped within a Security Command\nCenter organization -- they can be modified and viewed by all users who have\nproper permissions on the organization.",
       "id": "GoogleCloudSecuritycenterV1p1beta1SecurityMarks",
       "properties": {
         "marks": {
@@ -1773,7 +1773,7 @@
       "type": "object"
     },
     "IamPolicy": {
-      "description": "IAM Policy information associated with the GCP resource described by the\nCloud SCC asset. This information is managed and defined by the GCP\nresource and cannot be modified by the user.",
+      "description": "Cloud IAM Policy information associated with the Google Cloud resource\ndescribed by the Security Command Center asset. This information is managed\nand defined by the Google Cloud resource and cannot be modified by the\nuser.",
       "id": "IamPolicy",
       "properties": {
         "policyBlob": {
@@ -2016,7 +2016,7 @@
       "type": "object"
     },
     "OrganizationSettings": {
-      "description": "User specified settings that are attached to the Cloud Security Command\nCenter (Cloud SCC) organization.",
+      "description": "User specified settings that are attached to the Security Command\nCenter organization.",
       "id": "OrganizationSettings",
       "properties": {
         "assetDiscoveryConfig": {
@@ -2066,7 +2066,7 @@
       "type": "object"
     },
     "Resource": {
-      "description": "Information related to the Google Cloud Platform (GCP) resource that is\nassociated with this finding.",
+      "description": "Information related to the Google Cloud resource that is\nassociated with this finding.",
       "id": "Resource",
       "properties": {
         "name": {
@@ -2099,7 +2099,7 @@
       "type": "object"
     },
     "SecurityCenterProperties": {
-      "description": "Cloud SCC managed properties. These properties are managed by Cloud SCC and\ncannot be modified by the user.",
+      "description": "Security Command Center managed properties. These properties are managed by\nSecurity Command Center and cannot be modified by the user.",
       "id": "SecurityCenterProperties",
       "properties": {
         "resourceDisplayName": {
@@ -2107,7 +2107,7 @@
           "type": "string"
         },
         "resourceName": {
-          "description": "The full resource name of the GCP resource this asset\nrepresents. This field is immutable after create time. See:\nhttps://cloud.google.com/apis/design/resource_names#full_resource_name",
+          "description": "The full resource name of the Google Cloud resource this asset\nrepresents. This field is immutable after create time. See:\nhttps://cloud.google.com/apis/design/resource_names#full_resource_name",
           "type": "string"
         },
         "resourceOwners": {
@@ -2134,14 +2134,14 @@
           "type": "string"
         },
         "resourceType": {
-          "description": "The type of the GCP resource. Examples include: APPLICATION,\nPROJECT, and ORGANIZATION. This is a case insensitive field defined by\nCloud SCC and/or the producer of the resource and is immutable\nafter create time.",
+          "description": "The type of the Google Cloud resource. Examples include: APPLICATION,\nPROJECT, and ORGANIZATION. This is a case insensitive field defined by\nSecurity Command Center and/or the producer of the resource and is\nimmutable after create time.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "SecurityMarks": {
-      "description": "User specified security marks that are attached to the parent Cloud Security\nCommand Center (Cloud SCC) resource. Security marks are scoped within a Cloud\nSCC organization -- they can be modified and viewed by all users who have\nproper permissions on the organization.",
+      "description": "User specified security marks that are attached to the parent Security\nCommand Center resource. Security marks are scoped within a Security Command\nCenter organization -- they can be modified and viewed by all users who have\nproper permissions on the organization.",
       "id": "SecurityMarks",
       "properties": {
         "marks": {
@@ -2201,7 +2201,7 @@
       "type": "object"
     },
     "Source": {
-      "description": "Cloud Security Command Center's (Cloud SCC) finding source. A finding source\nis an entity or a mechanism that can produce a finding. A source is like a\ncontainer of findings that come from the same scanner, logger, monitor, and\nother tools.",
+      "description": "Security Command Center finding source. A finding source\nis an entity or a mechanism that can produce a finding. A source is like a\ncontainer of findings that come from the same scanner, logger, monitor, and\nother tools.",
       "id": "Source",
       "properties": {
         "description": {
@@ -2287,7 +2287,7 @@
     }
   },
   "servicePath": "",
-  "title": "Cloud Security Command Center API",
+  "title": "Security Command Center API",
   "version": "v1",
   "version_module": true
 }

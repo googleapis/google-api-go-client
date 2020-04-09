@@ -277,15 +277,17 @@ type AuthProvider struct {
 	// token-32#section-4.1.3).
 	// that are allowed to access. A JWT containing any of these audiences
 	// will
-	// be accepted. When this setting is absent, only JWTs with
-	// audience
-	// "https://Service_name/API_name"
-	// will be accepted. For example, if no audiences are in the
-	// setting,
-	// LibraryService API will only accept JWTs with the following
-	// audience
-	// "https://library-example.googleapis.com/google.example.librar
-	// y.v1.LibraryService".
+	// be accepted. When this setting is absent, JWTs with audiences:
+	//   - "https://[service.name]/[google.protobuf.Api.name]"
+	//   - "https://[service.name]/"
+	// will be accepted.
+	// For example, if no audiences are in the setting, LibraryService API
+	// will
+	// accept JWTs with the following audiences:
+	//   -
+	//
+	// https://library-example.googleapis.com/google.example.library.v1.LibraryService
+	//   - https://library-example.googleapis.com/
 	//
 	// Example:
 	//
@@ -721,6 +723,54 @@ type BackendRule struct {
 	// for more details on the supported values.
 	Protocol string `json:"protocol,omitempty"`
 
+	// RenameTo: Unimplemented. Do not use.
+	//
+	// The new name the selected proto elements should be renamed to.
+	//
+	// The package, the service and the method can all be renamed.
+	// The backend server should implement the renamed proto. However,
+	// clients
+	// should call the original method, and ESF routes the traffic to the
+	// renamed
+	// method.
+	//
+	// HTTP clients should call the URL mapped to the original method.
+	// gRPC and Stubby clients should call the original method with package
+	// name.
+	//
+	// For legacy reasons, ESF allows Stubby clients to call with the
+	// short name (without the package name). However, for API
+	// Versioning(or
+	// multiple methods mapped to the same short name), all Stubby clients
+	// must
+	// call the method's full name with the package name, otherwise the
+	// first one
+	// (selector) wins.
+	//
+	// If this `rename_to` is specified with a trailing `*`, the `selector`
+	// must
+	// be specified with a trailing `*` as well. The all element short
+	// names
+	// matched by the `*` in the selector will be kept in the
+	// `rename_to`.
+	//
+	// For example,
+	//     rename_rules:
+	//     - selector: |-
+	//         google.example.library.v1.*
+	//       rename_to: google.example.library.*
+	//
+	// The selector matches `google.example.library.v1.Library.CreateShelf`
+	// and
+	// `google.example.library.v1.Library.CreateBook`, they will be renamed
+	// to
+	// `google.example.library.Library.CreateShelf`
+	// and
+	// `google.example.library.Library.CreateBook`. It essentially renames
+	// the
+	// proto package name section of the matched proto service and methods.
+	RenameTo string `json:"renameTo,omitempty"`
+
 	// Selector: Selects the methods to which this rule applies.
 	//
 	// Refer to selector for syntax details.
@@ -901,6 +951,39 @@ type BatchEnableServicesResponse struct {
 
 func (s *BatchEnableServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchEnableServicesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchGetServicesResponse: Response message for the `BatchGetServices`
+// method.
+type BatchGetServicesResponse struct {
+	// Services: The requested Service states.
+	Services []*GoogleApiServiceusageV1Service `json:"services,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Services") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Services") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchGetServicesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchGetServicesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2899,6 +2982,64 @@ func (s *HttpRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ImportAdminOverridesResponse: Response message for
+// ImportAdminOverrides
+type ImportAdminOverridesResponse struct {
+	// Overrides: The overrides that were created from the imported data.
+	Overrides []*QuotaOverride `json:"overrides,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Overrides") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Overrides") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImportAdminOverridesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportAdminOverridesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ImportConsumerOverridesResponse: Response message for
+// ImportConsumerOverrides
+type ImportConsumerOverridesResponse struct {
+	// Overrides: The overrides that were created from the imported data.
+	Overrides []*QuotaOverride `json:"overrides,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Overrides") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Overrides") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImportConsumerOverridesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportConsumerOverridesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // JwtLocation: Specifies a location to extract JWT from an API request.
 type JwtLocation struct {
 	// Header: Specifies HTTP header name to extract JWT token.
@@ -3312,6 +3453,10 @@ type MetricDescriptor struct {
 	//
 	// Possible values:
 	//   "LAUNCH_STAGE_UNSPECIFIED" - Do not use this default value.
+	//   "UNIMPLEMENTED" - The feature is not yet implemented. Users can not
+	// use it.
+	//   "PRELAUNCH" - Prelaunch features are hidden from users and are only
+	// visible internally.
 	//   "EARLY_ACCESS" - Early Access features are limited to a closed
 	// group of testers. To use
 	// these features, you must sign up in advance and sign a Trusted
@@ -3589,6 +3734,10 @@ type MetricDescriptorMetadata struct {
 	//
 	// Possible values:
 	//   "LAUNCH_STAGE_UNSPECIFIED" - Do not use this default value.
+	//   "UNIMPLEMENTED" - The feature is not yet implemented. Users can not
+	// use it.
+	//   "PRELAUNCH" - Prelaunch features are hidden from users and are only
+	// visible internally.
 	//   "EARLY_ACCESS" - Early Access features are limited to a closed
 	// group of testers. To use
 	// these features, you must sign up in advance and sign a Trusted
@@ -3870,6 +4019,10 @@ type MonitoredResourceDescriptor struct {
 	//
 	// Possible values:
 	//   "LAUNCH_STAGE_UNSPECIFIED" - Do not use this default value.
+	//   "UNIMPLEMENTED" - The feature is not yet implemented. Users can not
+	// use it.
+	//   "PRELAUNCH" - Prelaunch features are hidden from users and are only
+	// visible internally.
 	//   "EARLY_ACCESS" - Early Access features are limited to a closed
 	// group of testers. To use
 	// these features, you must sign up in advance and sign a Trusted
@@ -4626,6 +4779,12 @@ type QuotaOverride struct {
 	//     map.
 	Dimensions map[string]string `json:"dimensions,omitempty"`
 
+	// Metric: The name of the metric to which this override applies.
+	//
+	// An example name would be:
+	// `compute.googleapis.com/cpus`
+	Metric string `json:"metric,omitempty"`
+
 	// Name: The resource name of the override.
 	// This name is generated by the server when the override is
 	// created.
@@ -4648,6 +4807,15 @@ type QuotaOverride struct {
 	// OverrideValue: The overriding quota limit value.
 	// Can be any nonnegative integer, or -1 (unlimited quota).
 	OverrideValue int64 `json:"overrideValue,omitempty,string"`
+
+	// Unit: The limit unit of the limit to which this override applies.
+	//
+	// An example unit would be:
+	// `1/{project}/{region}`
+	// Note that `{project}` and `{region}` are not placeholders in this
+	// example;
+	// the literal characters `{` and `}` occur in the string.
+	Unit string `json:"unit,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Dimensions") to
 	// unconditionally include in API requests. By default, fields with
@@ -5226,7 +5394,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5371,7 +5539,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5517,7 +5685,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5704,7 +5872,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5874,7 +6042,7 @@ func (c *ServicesBatchEnableCall) Header() http.Header {
 
 func (c *ServicesBatchEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5969,6 +6137,173 @@ func (c *ServicesBatchEnableCall) Do(opts ...googleapi.CallOption) (*Operation, 
 
 }
 
+// method id "serviceusage.services.batchGet":
+
+type ServicesBatchGetCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// BatchGet: Returns the service configurations and enabled states for a
+// given list of
+// services.
+func (r *ServicesService) BatchGet(parent string) *ServicesBatchGetCall {
+	c := &ServicesBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Names sets the optional parameter "names": Names of the services to
+// retrieve.
+//
+// An example name would
+// be:
+// `projects/123/services/serviceusage.googleapis.com` where `123` is
+// the
+// project number.
+// A single request can get a maximum of 20 services at a time.
+func (c *ServicesBatchGetCall) Names(names ...string) *ServicesBatchGetCall {
+	c.urlParams_.SetMulti("names", append([]string{}, names...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesBatchGetCall) Fields(s ...googleapi.Field) *ServicesBatchGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ServicesBatchGetCall) IfNoneMatch(entityTag string) *ServicesBatchGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesBatchGetCall) Context(ctx context.Context) *ServicesBatchGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesBatchGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesBatchGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/services:batchGet")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceusage.services.batchGet" call.
+// Exactly one of *BatchGetServicesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchGetServicesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ServicesBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetServicesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchGetServicesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the service configurations and enabled states for a given list of\nservices.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}/services:batchGet",
+	//   "httpMethod": "GET",
+	//   "id": "serviceusage.services.batchGet",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "names": {
+	//       "description": "Names of the services to retrieve.\n\nAn example name would be:\n`projects/123/services/serviceusage.googleapis.com` where `123` is the\nproject number.\nA single request can get a maximum of 20 services at a time.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Parent to retrieve services from.\nIf this is set, the parent of all of the services specified in `names` must\nmatch this field. An example name would be: `projects/123` where `123` is\nthe project number. The `BatchGetServices` method currently only supports\nprojects.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/services:batchGet",
+	//   "response": {
+	//     "$ref": "BatchGetServicesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
 // method id "serviceusage.services.disable":
 
 type ServicesDisableCall struct {
@@ -6025,7 +6360,7 @@ func (c *ServicesDisableCall) Header() http.Header {
 
 func (c *ServicesDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6166,7 +6501,7 @@ func (c *ServicesEnableCall) Header() http.Header {
 
 func (c *ServicesEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6317,7 +6652,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6498,7 +6833,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

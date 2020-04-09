@@ -1994,6 +1994,11 @@ type EvaluationMetrics struct {
 	// classification/classifier models.
 	MultiClassClassificationMetrics *MultiClassClassificationMetrics `json:"multiClassClassificationMetrics,omitempty"`
 
+	// RankingMetrics: [Alpha] Populated for implicit feedback type matrix
+	// factorization
+	// models.
+	RankingMetrics *RankingMetrics `json:"rankingMetrics,omitempty"`
+
 	// RegressionMetrics: Populated for regression models and explicit
 	// feedback type matrix
 	// factorization models.
@@ -2792,13 +2797,14 @@ type JobConfigurationExtract struct {
 	// Compression: [Optional] The compression type to use for exported
 	// files. Possible values include GZIP, DEFLATE, SNAPPY, and NONE. The
 	// default value is NONE. DEFLATE and SNAPPY are only supported for
-	// Avro.
+	// Avro. Not applicable when extracting models.
 	Compression string `json:"compression,omitempty"`
 
 	// DestinationFormat: [Optional] The exported file format. Possible
-	// values include CSV, NEWLINE_DELIMITED_JSON and AVRO. The default
-	// value is CSV. Tables with nested or repeated fields cannot be
-	// exported as CSV.
+	// values include CSV, NEWLINE_DELIMITED_JSON or AVRO for tables and
+	// ML_TF_SAVED_MODEL or ML_XGBOOST_BOOSTER for models. The default value
+	// for tables is CSV. Tables with nested or repeated fields cannot be
+	// exported as CSV. The default value for models is ML_TF_SAVED_MODEL.
 	DestinationFormat string `json:"destinationFormat,omitempty"`
 
 	// DestinationUri: [Pick one] DEPRECATED: Use destinationUris instead,
@@ -2811,11 +2817,11 @@ type JobConfigurationExtract struct {
 	DestinationUris []string `json:"destinationUris,omitempty"`
 
 	// FieldDelimiter: [Optional] Delimiter to use between fields in the
-	// exported data. Default is ','
+	// exported data. Default is ','. Not applicable when extracting models.
 	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
 
 	// PrintHeader: [Optional] Whether to print out a header row in the
-	// results. Default is true.
+	// results. Default is true. Not applicable when extracting models.
 	//
 	// Default: true
 	PrintHeader *bool `json:"printHeader,omitempty"`
@@ -2830,7 +2836,7 @@ type JobConfigurationExtract struct {
 	// "AVRO", this flag indicates whether to enable extracting applicable
 	// column types (such as TIMESTAMP) to their corresponding AVRO logical
 	// types (timestamp-micros), instead of only using their raw types
-	// (avro-long).
+	// (avro-long). Not applicable when extracting models.
 	UseAvroLogicalTypes bool `json:"useAvroLogicalTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Compression") to
@@ -3083,6 +3089,9 @@ type JobConfigurationQuery struct {
 	// table. Must be specified with time-based partitioning, data in the
 	// table will be first partitioned and subsequently clustered.
 	Clustering *Clustering `json:"clustering,omitempty"`
+
+	// ConnectionProperties: Connection properties.
+	ConnectionProperties []interface{} `json:"connectionProperties,omitempty"`
 
 	// CreateDisposition: [Optional] Specifies whether the job is allowed to
 	// create new tables. The following values are supported:
@@ -3472,6 +3481,10 @@ type JobStatistics struct {
 	// used to execute this job.
 	ReservationId string `json:"reservation_id,omitempty"`
 
+	// RowLevelSecurityStatistics: [Output-only] [Preview] Statistics for
+	// row-level security. Present only for query and extract jobs.
+	RowLevelSecurityStatistics *RowLevelSecurityStatistics `json:"rowLevelSecurityStatistics,omitempty"`
+
 	// ScriptStatistics: [Output-only] Statistics for a child job of a
 	// script.
 	ScriptStatistics *ScriptStatistics `json:"scriptStatistics,omitempty"`
@@ -3566,6 +3579,11 @@ type JobStatistics2 struct {
 	// query cache.
 	CacheHit bool `json:"cacheHit,omitempty"`
 
+	// DdlAffectedRowAccessPolicyCount: [Output-only] [Preview] The number
+	// of row access policies affected by a DDL statement. Present only for
+	// DROP ALL ROW ACCESS POLICIES queries.
+	DdlAffectedRowAccessPolicyCount int64 `json:"ddlAffectedRowAccessPolicyCount,omitempty,string"`
+
 	// DdlOperationPerformed: The DDL operation performed, possibly
 	// dependent on the pre-existence of the DDL target. Possible values
 	// (new values might be added in the future): "CREATE": The query
@@ -3581,8 +3599,13 @@ type JobStatistics2 struct {
 	// CREATE/DROP FUNCTION/PROCEDURE queries.
 	DdlTargetRoutine *RoutineReference `json:"ddlTargetRoutine,omitempty"`
 
-	// DdlTargetTable: The DDL target table. Present only for CREATE/DROP
-	// TABLE/VIEW queries.
+	// DdlTargetRowAccessPolicy: [Output-only] [Preview] The DDL target row
+	// access policy. Present only for CREATE/DROP ROW ACCESS POLICY
+	// queries.
+	DdlTargetRowAccessPolicy *RowAccessPolicyReference `json:"ddlTargetRowAccessPolicy,omitempty"`
+
+	// DdlTargetTable: [Output-only] The DDL target table. Present only for
+	// CREATE/DROP TABLE/VIEW and DROP ALL ROW ACCESS POLICIES queries.
 	DdlTargetTable *TableReference `json:"ddlTargetTable,omitempty"`
 
 	// EstimatedBytesProcessed: [Output-only] The original estimate of bytes
@@ -4069,7 +4092,14 @@ type Model struct {
 	//   "LOGISTIC_REGRESSION" - Logistic regression based classification
 	// model.
 	//   "KMEANS" - K-means clustering model.
+	//   "MATRIX_FACTORIZATION" - Matrix factorization model.
+	//   "DNN_CLASSIFIER" - DNN classifier model.
 	//   "TENSORFLOW" - [Beta] An imported TensorFlow model.
+	//   "DNN_REGRESSOR" - DNN regressor model.
+	//   "BOOSTED_TREE_REGRESSOR" - Boosted tree regressor model.
+	//   "BOOSTED_TREE_CLASSIFIER" - Boosted tree classifier model.
+	//   "AUTOML_REGRESSOR" - AutoML Tables regression model.
+	//   "AUTOML_CLASSIFIER" - AutoML Tables classification model.
 	ModelType string `json:"modelType,omitempty"`
 
 	// TrainingRuns: Output only. Information for all training runs in
@@ -4489,6 +4519,9 @@ func (s *QueryParameterValue) MarshalJSON() ([]byte, error) {
 }
 
 type QueryRequest struct {
+	// ConnectionProperties: Connection properties.
+	ConnectionProperties []interface{} `json:"connectionProperties,omitempty"`
+
 	// DefaultDataset: [Optional] Specifies the default datasetId and
 	// projectId to assume for any unqualified table names in the query. If
 	// not set, all table names in the query string must be qualified in the
@@ -4559,15 +4592,16 @@ type QueryRequest struct {
 	// Default: true
 	UseQueryCache *bool `json:"useQueryCache,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DefaultDataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ConnectionProperties") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DefaultDataset") to
+	// NullFields is a list of field names (e.g. "ConnectionProperties") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -4773,6 +4807,79 @@ func (s *RangePartitioningRange) MarshalJSON() ([]byte, error) {
 	type NoMethod RangePartitioningRange
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RankingMetrics: Evaluation metrics used by weighted-ALS models
+// specified by
+// feedback_type=implicit.
+type RankingMetrics struct {
+	// AverageRank: Determines the goodness of a ranking by computing the
+	// percentile rank
+	// from the predicted confidence and dividing it by the original rank.
+	AverageRank float64 `json:"averageRank,omitempty"`
+
+	// MeanAveragePrecision: Calculates a precision per user for all the
+	// items by ranking them and
+	// then averages all the precisions across all the users.
+	MeanAveragePrecision float64 `json:"meanAveragePrecision,omitempty"`
+
+	// MeanSquaredError: Similar to the mean squared error computed in
+	// regression and explicit
+	// recommendation models except instead of computing the rating
+	// directly,
+	// the output from evaluate is computed against a preference which is 1
+	// or 0
+	// depending on if the rating exists or not.
+	MeanSquaredError float64 `json:"meanSquaredError,omitempty"`
+
+	// NormalizedDiscountedCumulativeGain: A metric to determine the
+	// goodness of a ranking calculated from the
+	// predicted confidence by comparing it to an ideal rank measured by
+	// the
+	// original ratings.
+	NormalizedDiscountedCumulativeGain float64 `json:"normalizedDiscountedCumulativeGain,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AverageRank") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AverageRank") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RankingMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod RankingMetrics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *RankingMetrics) UnmarshalJSON(data []byte) error {
+	type NoMethod RankingMetrics
+	var s1 struct {
+		AverageRank                        gensupport.JSONFloat64 `json:"averageRank"`
+		MeanAveragePrecision               gensupport.JSONFloat64 `json:"meanAveragePrecision"`
+		MeanSquaredError                   gensupport.JSONFloat64 `json:"meanSquaredError"`
+		NormalizedDiscountedCumulativeGain gensupport.JSONFloat64 `json:"normalizedDiscountedCumulativeGain"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AverageRank = float64(s1.AverageRank)
+	s.MeanAveragePrecision = float64(s1.MeanAveragePrecision)
+	s.MeanSquaredError = float64(s1.MeanSquaredError)
+	s.NormalizedDiscountedCumulativeGain = float64(s1.NormalizedDiscountedCumulativeGain)
+	return nil
 }
 
 // RegressionMetrics: Evaluation metrics for regression and explicit
@@ -5043,6 +5150,77 @@ type Row struct {
 
 func (s *Row) MarshalJSON() ([]byte, error) {
 	type NoMethod Row
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type RowAccessPolicyReference struct {
+	// DatasetId: [Required] The ID of the dataset containing this row
+	// access policy.
+	DatasetId string `json:"datasetId,omitempty"`
+
+	// PolicyId: [Required] The ID of the row access policy. The ID must
+	// contain only letters (a-z, A-Z), numbers (0-9), or underscores (_).
+	// The maximum length is 256 characters.
+	PolicyId string `json:"policyId,omitempty"`
+
+	// ProjectId: [Required] The ID of the project containing this row
+	// access policy.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// TableId: [Required] The ID of the table containing this row access
+	// policy.
+	TableId string `json:"tableId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatasetId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RowAccessPolicyReference) MarshalJSON() ([]byte, error) {
+	type NoMethod RowAccessPolicyReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type RowLevelSecurityStatistics struct {
+	// RowLevelSecurityApplied: [Output-only] [Preview] Whether any accessed
+	// data was protected by row access policies.
+	RowLevelSecurityApplied bool `json:"rowLevelSecurityApplied,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "RowLevelSecurityApplied") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RowLevelSecurityApplied")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RowLevelSecurityStatistics) MarshalJSON() ([]byte, error) {
+	type NoMethod RowLevelSecurityStatistics
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6061,6 +6239,9 @@ func (s *TimePartitioning) MarshalJSON() ([]byte, error) {
 }
 
 type TrainingOptions struct {
+	// BatchSize: Batch size for dnn models.
+	BatchSize int64 `json:"batchSize,omitempty,string"`
+
 	// DataSplitColumn: The column to split data with. This column won't be
 	// used as a
 	// feature.
@@ -6111,12 +6292,28 @@ type TrainingOptions struct {
 	//   "COSINE" - Cosine distance.
 	DistanceType string `json:"distanceType,omitempty"`
 
+	// Dropout: Dropout probability for dnn models.
+	Dropout float64 `json:"dropout,omitempty"`
+
 	// EarlyStop: Whether to stop early when the loss doesn't improve
 	// significantly
 	// any more (compared to min_relative_progress). Used only for
 	// iterative
 	// training algorithms.
 	EarlyStop bool `json:"earlyStop,omitempty"`
+
+	// FeedbackType: Feedback type that specifies which algorithm to run for
+	// matrix
+	// factorization.
+	//
+	// Possible values:
+	//   "FEEDBACK_TYPE_UNSPECIFIED"
+	//   "IMPLICIT" - Use weighted-als for implicit feedback problems.
+	//   "EXPLICIT" - Use nonweighted-als for explicit feedback problems.
+	FeedbackType string `json:"feedbackType,omitempty"`
+
+	// HiddenUnits: Hidden units for dnn models.
+	HiddenUnits googleapi.Int64s `json:"hiddenUnits,omitempty"`
 
 	// InitialLearnRate: Specifies the initial learning rate for the line
 	// search learn rate
@@ -6125,6 +6322,9 @@ type TrainingOptions struct {
 
 	// InputLabelColumns: Name of input label columns in training data.
 	InputLabelColumns []string `json:"inputLabelColumns,omitempty"`
+
+	// ItemColumn: Item column specified for matrix factorization models.
+	ItemColumn string `json:"itemColumn,omitempty"`
 
 	// KmeansInitializationColumn: The column used to provide the initial
 	// centroids for kmeans algorithm
@@ -6181,12 +6381,18 @@ type TrainingOptions struct {
 	// training algorithms.
 	MaxIterations int64 `json:"maxIterations,omitempty,string"`
 
+	// MaxTreeDepth: Maximum depth of a tree for boosted tree models.
+	MaxTreeDepth int64 `json:"maxTreeDepth,omitempty,string"`
+
 	// MinRelativeProgress: When early_stop is true, stops training when
 	// accuracy improvement is
 	// less than 'min_relative_progress'. Used only for iterative
 	// training
 	// algorithms.
 	MinRelativeProgress float64 `json:"minRelativeProgress,omitempty"`
+
+	// MinSplitLoss: Minimum split loss for boosted tree models.
+	MinSplitLoss float64 `json:"minSplitLoss,omitempty"`
 
 	// ModelUri: [Beta] Google Cloud Storage URI from which the model was
 	// imported. Only
@@ -6195,6 +6401,9 @@ type TrainingOptions struct {
 
 	// NumClusters: Number of clusters for clustering models.
 	NumClusters int64 `json:"numClusters,omitempty,string"`
+
+	// NumFactors: Num factors specified for matrix factorization models.
+	NumFactors int64 `json:"numFactors,omitempty,string"`
 
 	// OptimizationStrategy: Optimization strategy for training linear
 	// regression models.
@@ -6207,10 +6416,23 @@ type TrainingOptions struct {
 	// regression problem.
 	OptimizationStrategy string `json:"optimizationStrategy,omitempty"`
 
+	// Subsample: Subsample fraction of the training data to grow tree to
+	// prevent
+	// overfitting for boosted tree models.
+	Subsample float64 `json:"subsample,omitempty"`
+
+	// UserColumn: User column specified for matrix factorization models.
+	UserColumn string `json:"userColumn,omitempty"`
+
+	// WalsAlpha: Hyperparameter for matrix factoration when implicit
+	// feedback type is
+	// specified.
+	WalsAlpha float64 `json:"walsAlpha,omitempty"`
+
 	// WarmStart: Whether to train a model from the last checkpoint.
 	WarmStart bool `json:"warmStart,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DataSplitColumn") to
+	// ForceSendFields is a list of field names (e.g. "BatchSize") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -6218,13 +6440,12 @@ type TrainingOptions struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DataSplitColumn") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BatchSize") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -6238,11 +6459,15 @@ func (s *TrainingOptions) UnmarshalJSON(data []byte) error {
 	type NoMethod TrainingOptions
 	var s1 struct {
 		DataSplitEvalFraction gensupport.JSONFloat64 `json:"dataSplitEvalFraction"`
+		Dropout               gensupport.JSONFloat64 `json:"dropout"`
 		InitialLearnRate      gensupport.JSONFloat64 `json:"initialLearnRate"`
 		L1Regularization      gensupport.JSONFloat64 `json:"l1Regularization"`
 		L2Regularization      gensupport.JSONFloat64 `json:"l2Regularization"`
 		LearnRate             gensupport.JSONFloat64 `json:"learnRate"`
 		MinRelativeProgress   gensupport.JSONFloat64 `json:"minRelativeProgress"`
+		MinSplitLoss          gensupport.JSONFloat64 `json:"minSplitLoss"`
+		Subsample             gensupport.JSONFloat64 `json:"subsample"`
+		WalsAlpha             gensupport.JSONFloat64 `json:"walsAlpha"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -6250,11 +6475,15 @@ func (s *TrainingOptions) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.DataSplitEvalFraction = float64(s1.DataSplitEvalFraction)
+	s.Dropout = float64(s1.Dropout)
 	s.InitialLearnRate = float64(s1.InitialLearnRate)
 	s.L1Regularization = float64(s1.L1Regularization)
 	s.L2Regularization = float64(s1.L2Regularization)
 	s.LearnRate = float64(s1.LearnRate)
 	s.MinRelativeProgress = float64(s1.MinRelativeProgress)
+	s.MinSplitLoss = float64(s1.MinSplitLoss)
+	s.Subsample = float64(s1.Subsample)
+	s.WalsAlpha = float64(s1.WalsAlpha)
 	return nil
 }
 
@@ -6436,7 +6665,7 @@ func (c *DatasetsDeleteCall) Header() http.Header {
 
 func (c *DatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6563,7 +6792,7 @@ func (c *DatasetsGetCall) Header() http.Header {
 
 func (c *DatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6707,7 +6936,7 @@ func (c *DatasetsInsertCall) Header() http.Header {
 
 func (c *DatasetsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6887,7 +7116,7 @@ func (c *DatasetsListCall) Header() http.Header {
 
 func (c *DatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7070,7 +7299,7 @@ func (c *DatasetsPatchCall) Header() http.Header {
 
 func (c *DatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7221,7 +7450,7 @@ func (c *DatasetsUpdateCall) Header() http.Header {
 
 func (c *DatasetsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7379,7 +7608,7 @@ func (c *JobsCancelCall) Header() http.Header {
 
 func (c *JobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7544,7 +7773,7 @@ func (c *JobsGetCall) Header() http.Header {
 
 func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7743,7 +7972,7 @@ func (c *JobsGetQueryResultsCall) Header() http.Header {
 
 func (c *JobsGetQueryResultsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7977,7 +8206,7 @@ func (c *JobsInsertCall) Header() http.Header {
 
 func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8244,7 +8473,7 @@ func (c *JobsListCall) Header() http.Header {
 
 func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8464,7 +8693,7 @@ func (c *JobsQueryCall) Header() http.Header {
 
 func (c *JobsQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8607,7 +8836,7 @@ func (c *ModelsDeleteCall) Header() http.Header {
 
 func (c *ModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8743,7 +8972,7 @@ func (c *ModelsGetCall) Header() http.Header {
 
 func (c *ModelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8928,7 +9157,7 @@ func (c *ModelsListCall) Header() http.Header {
 
 func (c *ModelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9111,7 +9340,7 @@ func (c *ModelsPatchCall) Header() http.Header {
 
 func (c *ModelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9280,7 +9509,7 @@ func (c *ProjectsGetServiceAccountCall) Header() http.Header {
 
 func (c *ProjectsGetServiceAccountCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9438,7 +9667,7 @@ func (c *ProjectsListCall) Header() http.Header {
 
 func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9596,7 +9825,7 @@ func (c *RoutinesDeleteCall) Header() http.Header {
 
 func (c *RoutinesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9740,7 +9969,7 @@ func (c *RoutinesGetCall) Header() http.Header {
 
 func (c *RoutinesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9904,7 +10133,7 @@ func (c *RoutinesInsertCall) Header() http.Header {
 
 func (c *RoutinesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10108,7 +10337,7 @@ func (c *RoutinesListCall) Header() http.Header {
 
 func (c *RoutinesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10304,7 +10533,7 @@ func (c *RoutinesUpdateCall) Header() http.Header {
 
 func (c *RoutinesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10468,7 +10697,7 @@ func (c *TabledataInsertAllCall) Header() http.Header {
 
 func (c *TabledataInsertAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10667,7 +10896,7 @@ func (c *TabledataListCall) Header() http.Header {
 
 func (c *TabledataListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10865,7 +11094,7 @@ func (c *TablesDeleteCall) Header() http.Header {
 
 func (c *TablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11007,7 +11236,7 @@ func (c *TablesGetCall) Header() http.Header {
 
 func (c *TablesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11166,7 +11395,7 @@ func (c *TablesInsertCall) Header() http.Header {
 
 func (c *TablesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11339,7 +11568,7 @@ func (c *TablesListCall) Header() http.Header {
 
 func (c *TablesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11522,7 +11751,7 @@ func (c *TablesPatchCall) Header() http.Header {
 
 func (c *TablesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11683,7 +11912,7 @@ func (c *TablesUpdateCall) Header() http.Header {
 
 func (c *TablesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -288,7 +288,7 @@
       }
     }
   },
-  "revision": "20200224",
+  "revision": "20200405",
   "rootUrl": "https://cloudshell.googleapis.com/",
   "schemas": {
     "AuthorizeEnvironmentRequest": {
@@ -496,6 +496,7 @@
             "STARTING",
             "UNARCHIVING_DISK",
             "AWAITING_VM",
+            "AWAITING_COMPUTE_RESOURCES",
             "FINISHED"
           ],
           "enumDescriptions": [
@@ -503,6 +504,7 @@
             "The environment is in the process of being started, but no additional\ndetails are available.",
             "Startup is waiting for the user's disk to be unarchived. This can happen\nwhen the user returns to Cloud Shell after not having used it for a\nwhile, and suggests that startup will take longer than normal.",
             "Startup is waiting for a VM to be assigned to the environment. This\nshould normally happen very quickly, but an environment might stay in\nthis state for an extended period of time if the system is experiencing\nheavy load.",
+            "Startup is waiting for compute resources to be assigned to the\nenvironment. This should normally happen very quickly, but an environment\nmight stay in this state for an extended period of time if the system is\nexperiencing heavy load.",
             "Startup is complete and the user should be able to establish an SSH\nconnection to their environment."
           ],
           "type": "string"

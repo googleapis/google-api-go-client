@@ -2242,7 +2242,7 @@
       }
     }
   },
-  "revision": "20200310",
+  "revision": "20200323",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2442,6 +2442,10 @@
         "gceClusterConfig": {
           "$ref": "GceClusterConfig",
           "description": "Optional. The shared Compute Engine config settings for all instances in a cluster."
+        },
+        "gkeClusterConfig": {
+          "$ref": "GkeClusterConfig",
+          "description": "Optional. The Kubernetes Engine config for Dataproc clusters deployed to Kubernetes. Setting this is considered mutually exclusive with Compute Engine-based options such as gce_cluster_config, master_config, worker_config, secondary_worker_config, and autoscaling_config."
         },
         "initializationActions": {
           "description": "Optional. Commands to execute on each node after config is completed. By default, executables are run on master and all worker nodes. You can test a node's \u003ccode\u003erole\u003c/code\u003e metadata to run an executable on a master or worker node, as shown below using curl (you can also use wget):\nROLE=$(curl -H Metadata-Flavor:Google\nhttp://metadata/computeMetadata/v1beta2/instance/attributes/dataproc-role)\nif [[ \"${ROLE}\" == 'Master' ]]; then\n  ... master specific actions ...\nelse\n  ... worker specific actions ...\nfi\n",
@@ -2842,6 +2846,17 @@
       },
       "type": "object"
     },
+    "GkeClusterConfig": {
+      "description": "The GKE config for this cluster.",
+      "id": "GkeClusterConfig",
+      "properties": {
+        "namespacedGkeDeploymentTarget": {
+          "$ref": "NamespacedGkeDeploymentTarget",
+          "description": "Optional. A target for the deployment."
+        }
+      },
+      "type": "object"
+    },
     "HadoopJob": {
       "description": "A Dataproc job for running Apache Hadoop MapReduce (https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html) jobs on Apache Hadoop YARN (https://hadoop.apache.org/docs/r2.7.1/hadoop-yarn/hadoop-yarn-site/YARN.html).",
       "id": "HadoopJob",
@@ -2985,7 +3000,7 @@
           "type": "array"
         },
         "isPreemptible": {
-          "description": "Optional. Specifies that this instance group contains preemptible instances.",
+          "description": "Output only. Specifies that this instance group contains preemptible instances.",
           "type": "boolean"
         },
         "machineTypeUri": {
@@ -3006,7 +3021,7 @@
           "type": "integer"
         },
         "preemptibility": {
-          "description": "Optional. Specifies the preemptibility of the instance group.",
+          "description": "Optional. Specifies the preemptibility of the instance group.The default value for master and worker groups is NON_PREEMPTIBLE. This default cannot be changed.The default value for secondary instances is PREEMPTIBLE.",
           "enum": [
             "PREEMPTIBILITY_UNSPECIFIED",
             "NON_PREEMPTIBLE",
@@ -3015,7 +3030,7 @@
           "enumDescriptions": [
             "Preemptibility is unspecified, the system will choose the appropriate setting for each instance group.",
             "Instances are non-preemptible.This option is allowed for all instance groups and is the only valid value for Master and Worker instance groups.",
-            "Instances are preemptible.This option is allowed only for secondary worker group."
+            "Instances are preemptible.This option is allowed only for secondary worker groups."
           ],
           "type": "string"
         }
@@ -3510,6 +3525,21 @@
       },
       "type": "object"
     },
+    "NamespacedGkeDeploymentTarget": {
+      "description": "A full, namespace-isolated deployment target for an existing GKE cluster.",
+      "id": "NamespacedGkeDeploymentTarget",
+      "properties": {
+        "clusterNamespace": {
+          "description": "Optional. A namespace within the GKE cluster to deploy into.",
+          "type": "string"
+        },
+        "targetGkeCluster": {
+          "description": "Optional. The target GKE cluster to deploy to. Format: 'projects/{project}/locations/{location}/clusters/{cluster_id}'",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "NodeInitializationAction": {
       "description": "Specifies an executable to run on a fully configured node and a timeout period for executable completion.",
       "id": "NodeInitializationAction",
@@ -3588,6 +3618,10 @@
           },
           "type": "array"
         },
+        "prestoJob": {
+          "$ref": "PrestoJob",
+          "description": "Presto job"
+        },
         "pysparkJob": {
           "$ref": "PySparkJob"
         },
@@ -3597,6 +3631,10 @@
         },
         "sparkJob": {
           "$ref": "SparkJob"
+        },
+        "sparkRJob": {
+          "$ref": "SparkRJob",
+          "description": "Spark R job"
         },
         "sparkSqlJob": {
           "$ref": "SparkSqlJob"
@@ -3887,30 +3925,30 @@
             "Unspecified component.",
             "The Anaconda python distribution.",
             "The Druid query engine.",
+            "HBase.",
             "The Hive Web HCatalog (the REST service for accessing HCatalog).",
             "The Jupyter Notebook.",
             "The Kerberos security feature.",
             "The Presto query engine.",
-            "The Zeppelin notebook.",
-            "The Zookeeper service.",
+            "The Ranger service.",
             "The Solr service.",
-            "HBase.",
-            "The Ranger service."
+            "The Zeppelin notebook.",
+            "The Zookeeper service."
           ],
           "items": {
             "enum": [
               "COMPONENT_UNSPECIFIED",
               "ANACONDA",
               "DRUID",
+              "HBASE",
               "HIVE_WEBHCAT",
               "JUPYTER",
               "KERBEROS",
               "PRESTO",
-              "ZEPPELIN",
-              "ZOOKEEPER",
+              "RANGER",
               "SOLR",
-              "HBASE",
-              "RANGER"
+              "ZEPPELIN",
+              "ZOOKEEPER"
             ],
             "type": "string"
           },

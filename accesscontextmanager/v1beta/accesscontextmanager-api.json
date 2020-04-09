@@ -389,7 +389,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name for the Access Level. The `short_name` component\nmust begin with a letter and only include alphanumeric and '_'. Format:\n`accessPolicies/{policy_id}/accessLevels/{short_name}`",
+                  "description": "Required. Resource name for the Access Level. The `short_name` component\nmust begin with a letter and only include alphanumeric and '_'. Format:\n`accessPolicies/{policy_id}/accessLevels/{short_name}`. The maximum length\n // of the `short_name` component is 50 characters.",
                   "location": "path",
                   "pattern": "^accessPolicies/[^/]+/accessLevels/[^/]+$",
                   "required": true,
@@ -418,7 +418,7 @@
         "servicePerimeters": {
           "methods": {
             "create": {
-              "description": "Create an Service Perimeter. The\nlongrunning operation from this RPC will have a successful status once the\nService Perimeter has\npropagated to long-lasting storage. Service Perimeters containing\nerrors will result in an error response for the first error encountered.",
+              "description": "Create a Service Perimeter. The\nlongrunning operation from this RPC will have a successful status once the\nService Perimeter has\npropagated to long-lasting storage. Service Perimeters containing\nerrors will result in an error response for the first error encountered.",
               "flatPath": "v1beta/accessPolicies/{accessPoliciesId}/servicePerimeters",
               "httpMethod": "POST",
               "id": "accesscontextmanager.accessPolicies.servicePerimeters.create",
@@ -446,7 +446,7 @@
               ]
             },
             "delete": {
-              "description": "Delete an Service Perimeter by resource\nname. The longrunning operation from this RPC will have a successful status\nonce the Service Perimeter has been\nremoved from long-lasting storage.",
+              "description": "Delete a Service Perimeter by resource\nname. The longrunning operation from this RPC will have a successful status\nonce the Service Perimeter has been\nremoved from long-lasting storage.",
               "flatPath": "v1beta/accessPolicies/{accessPoliciesId}/servicePerimeters/{servicePerimetersId}",
               "httpMethod": "DELETE",
               "id": "accesscontextmanager.accessPolicies.servicePerimeters.delete",
@@ -471,7 +471,7 @@
               ]
             },
             "get": {
-              "description": "Get an Service Perimeter by resource\nname.",
+              "description": "Get a Service Perimeter by resource\nname.",
               "flatPath": "v1beta/accessPolicies/{accessPoliciesId}/servicePerimeters/{servicePerimetersId}",
               "httpMethod": "GET",
               "id": "accesscontextmanager.accessPolicies.servicePerimeters.get",
@@ -532,7 +532,7 @@
               ]
             },
             "patch": {
-              "description": "Update an Service Perimeter. The\nlongrunning operation from this RPC will have a successful status once the\nchanges to the Service Perimeter have\npropagated to long-lasting storage. Service Perimeter containing\nerrors will result in an error response for the first error encountered.",
+              "description": "Update a Service Perimeter. The\nlongrunning operation from this RPC will have a successful status once the\nchanges to the Service Perimeter have\npropagated to long-lasting storage. Service Perimeter containing\nerrors will result in an error response for the first error encountered.",
               "flatPath": "v1beta/accessPolicies/{accessPoliciesId}/servicePerimeters/{servicePerimetersId}",
               "httpMethod": "PATCH",
               "id": "accesscontextmanager.accessPolicies.servicePerimeters.patch",
@@ -599,7 +599,7 @@
       }
     }
   },
-  "revision": "20200224",
+  "revision": "20200323",
   "rootUrl": "https://accesscontextmanager.googleapis.com/",
   "schemas": {
     "AccessLevel": {
@@ -624,7 +624,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Required. Resource name for the Access Level. The `short_name` component\nmust begin with a letter and only include alphanumeric and '_'. Format:\n`accessPolicies/{policy_id}/accessLevels/{short_name}`",
+          "description": "Required. Resource name for the Access Level. The `short_name` component\nmust begin with a letter and only include alphanumeric and '_'. Format:\n`accessPolicies/{policy_id}/accessLevels/{short_name}`. The maximum length\n // of the `short_name` component is 50 characters.",
           "type": "string"
         },
         "title": {

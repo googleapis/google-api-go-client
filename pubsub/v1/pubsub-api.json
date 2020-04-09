@@ -1093,7 +1093,7 @@
       }
     }
   },
-  "revision": "20200303",
+  "revision": "20200403",
   "rootUrl": "https://pubsub.googleapis.com/",
   "schemas": {
     "AcknowledgeRequest": {
@@ -1710,7 +1710,7 @@
           "description": "Required. The updated topic object."
         },
         "updateMask": {
-          "description": "Required. Indicates which fields in the provided topic to update. Must be specified\nand non-empty. Note that if `update_mask` contains\n\"message_storage_policy\" then the new value will be determined based on the\npolicy configured at the project or organization level. The\n`message_storage_policy` must not be set in the `topic` provided above.",
+          "description": "Required. Indicates which fields in the provided topic to update. Must be specified\nand non-empty. Note that if `update_mask` contains\n\"message_storage_policy\" but the `message_storage_policy` is not set in\nthe `topic` provided above, then the updated value is determined by the\npolicy configured at the project or organization level.",
           "format": "google-fieldmask",
           "type": "string"
         }

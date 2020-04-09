@@ -472,7 +472,7 @@
                   ]
                 },
                 "setLocations": {
-                  "description": "Sets the locations for a specific cluster.\nDeprecated. Use\n[projects.locations.clusters.update](/kubernetes-engine/docs/reference/rest/v1beta1/projects.locations.clusters.update)\ninstead.",
+                  "description": "Sets the locations for a specific cluster.\nDeprecated. Use\n[projects.locations.clusters.update](/kubernetes-engine/docs/reference/rest/v1beta1/projects.locations.clusters/update)\ninstead.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:setLocations",
                   "httpMethod": "POST",
                   "id": "container.projects.locations.clusters.setLocations",
@@ -1514,7 +1514,7 @@
                   ]
                 },
                 "locations": {
-                  "description": "Sets the locations for a specific cluster.\nDeprecated. Use\n[projects.locations.clusters.update](/kubernetes-engine/docs/reference/rest/v1beta1/projects.locations.clusters.update)\ninstead.",
+                  "description": "Sets the locations for a specific cluster.\nDeprecated. Use\n[projects.locations.clusters.update](/kubernetes-engine/docs/reference/rest/v1beta1/projects.locations.clusters/update)\ninstead.",
                   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/locations",
                   "httpMethod": "POST",
                   "id": "container.projects.zones.clusters.locations",
@@ -2484,7 +2484,7 @@
       }
     }
   },
-  "revision": "20200214",
+  "revision": "20200324",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2772,7 +2772,7 @@
           "type": "boolean"
         },
         "enableTpu": {
-          "description": "Enable the ability to use Cloud TPUs in this cluster.",
+          "description": "Enable the ability to use Cloud TPUs in this cluster.\nThis field is deprecated, use tpu_config.enabled instead.",
           "type": "boolean"
         },
         "endpoint": {
@@ -2823,7 +2823,7 @@
           "type": "array"
         },
         "loggingService": {
-          "description": "The logging service the cluster should use to write logs.\nCurrently available options:\n\n* `logging.googleapis.com` - the Google Cloud Logging service.\n* `none` - no logs will be exported from the cluster.\n* if left as an empty string,`logging.googleapis.com` will be used.",
+          "description": "The logging service the cluster should use to write logs.\nCurrently available options:\n\n* `logging.googleapis.com/kubernetes` - The Cloud Logging\nservice with a Kubernetes-native resource model\n* `logging.googleapis.com` - The legacy Cloud Logging service (no longer\n  available as of GKE 1.15).\n* `none` - no logs will be exported from the cluster.\n\nIf left as an empty string,`logging.googleapis.com/kubernetes` will be\nused for GKE 1.14+ or `logging.googleapis.com` for earlier versions.",
           "type": "string"
         },
         "maintenancePolicy": {
@@ -2843,7 +2843,7 @@
           "type": "string"
         },
         "monitoringService": {
-          "description": "The monitoring service the cluster should use to write metrics.\nCurrently available options:\n\n* `monitoring.googleapis.com` - the Google Cloud Monitoring service.\n* `none` - no metrics will be exported from the cluster.\n* if left as an empty string, `monitoring.googleapis.com` will be used.",
+          "description": "The monitoring service the cluster should use to write metrics.\nCurrently available options:\n\n* \"monitoring.googleapis.com/kubernetes\" - The Cloud Monitoring\nservice with a Kubernetes-native resource model\n* `monitoring.googleapis.com` - The legacy Cloud Monitoring service (no\n  longer available as of GKE 1.15).\n* `none` - No metrics will be exported from the cluster.\n\nIf left as an empty string,`monitoring.googleapis.com/kubernetes` will be\nused for GKE 1.14+ or `monitoring.googleapis.com` for earlier versions.",
           "type": "string"
         },
         "name": {
@@ -2947,9 +2947,9 @@
           "description": "The name of the Google Compute Engine\n[subnetwork](/compute/docs/subnetworks) to which the\ncluster is connected. On output this shows the subnetwork ID instead of\nthe name.",
           "type": "string"
         },
-        "tierSettings": {
-          "$ref": "TierSettings",
-          "description": "Cluster tier settings."
+        "tpuConfig": {
+          "$ref": "TpuConfig",
+          "description": "Configuration for Cloud TPU support;"
         },
         "tpuIpv4CidrBlock": {
           "description": "[Output only] The IP address range of the Cloud TPUs in this cluster, in\n[CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)\nnotation (e.g. `1.2.3.4/29`).",
@@ -3076,7 +3076,7 @@
           "type": "array"
         },
         "desiredLoggingService": {
-          "description": "The logging service the cluster should use to write metrics.\nCurrently available options:\n\n* \"logging.googleapis.com/kubernetes\" - the Google Cloud Logging\nservice with Kubernetes-native resource model\n* \"logging.googleapis.com\" - the Google Cloud Logging service\n* \"none\" - no logs will be exported from the cluster",
+          "description": "The logging service the cluster should use to write logs.\nCurrently available options:\n\n* `logging.googleapis.com/kubernetes` - The Cloud Logging\nservice with a Kubernetes-native resource model\n* `logging.googleapis.com` - The legacy Cloud Logging service (no longer\n  available as of GKE 1.15).\n* `none` - no logs will be exported from the cluster.\n\nIf left as an empty string,`logging.googleapis.com/kubernetes` will be\nused for GKE 1.14+ or `logging.googleapis.com` for earlier versions.",
           "type": "string"
         },
         "desiredMasterAuthorizedNetworksConfig": {
@@ -3088,7 +3088,7 @@
           "type": "string"
         },
         "desiredMonitoringService": {
-          "description": "The monitoring service the cluster should use to write metrics.\nCurrently available options:\n\n* \"monitoring.googleapis.com/kubernetes\" - the Google Cloud Monitoring\nservice with Kubernetes-native resource model\n* \"monitoring.googleapis.com\" - the Google Cloud Monitoring service\n* \"none\" - no metrics will be exported from the cluster",
+          "description": "The monitoring service the cluster should use to write metrics.\nCurrently available options:\n\n* \"monitoring.googleapis.com/kubernetes\" - The Cloud Monitoring\nservice with a Kubernetes-native resource model\n* `monitoring.googleapis.com` - The legacy Cloud Monitoring service (no\n  longer available as of GKE 1.15).\n* `none` - No metrics will be exported from the cluster.\n\nIf left as an empty string,`monitoring.googleapis.com/kubernetes` will be\nused for GKE 1.14+ or `monitoring.googleapis.com` for earlier versions.",
           "type": "string"
         },
         "desiredNodePoolAutoscaling": {
@@ -3122,6 +3122,10 @@
         "desiredShieldedNodes": {
           "$ref": "ShieldedNodes",
           "description": "Configuration for Shielded Nodes."
+        },
+        "desiredTpuConfig": {
+          "$ref": "TpuConfig",
+          "description": "The desired Cloud TPU configuration."
         },
         "desiredVerticalPodAutoscaling": {
           "$ref": "VerticalPodAutoscaling",
@@ -3251,7 +3255,7 @@
           "enumDescriptions": [
             "Should never be set",
             "Secrets in etcd are encrypted.",
-            "Secrets in etcd are stored in plain text (at etcd level) - this is\nunrelated to Google Compute Engine level full disk encryption."
+            "Secrets in etcd are stored in plain text (at etcd level) - this is\nunrelated to Compute Engine level full disk encryption."
           ],
           "type": "string"
         }
@@ -3275,55 +3279,12 @@
       "properties": {},
       "type": "object"
     },
-    "FeatureConfig": {
-      "description": "FeatureConfig is the configuration for a specific feature including the\ndefinition of the feature as well as the tier in which it resides.",
-      "id": "FeatureConfig",
-      "properties": {
-        "feature": {
-          "description": "The feature that is being configured with this value.",
-          "enum": [
-            "DEFAULT_FEATURE",
-            "VERTICAL_POD_AUTOSCALER",
-            "NODE_AUTO_PROVISIONING",
-            "BINARY_AUTHORIZATION",
-            "RESOURCE_LABELS",
-            "USAGE_METERING",
-            "CLOUD_RUN_ON_GKE"
-          ],
-          "enumDescriptions": [
-            "DEFAULT_FEATURE is the default zero value of the Feature.  This value is\nvalid.",
-            "The vertical pod autoscaling feature.",
-            "The node auto provisioning feature.",
-            "The binary authorization feature.",
-            "The resource labels feature.",
-            "The GKE usage metering feature.",
-            "The Cloud Run on GKE feature."
-          ],
-          "type": "string"
-        },
-        "tier": {
-          "description": "The tier in which the configured feature resides.",
-          "enum": [
-            "TIER_UNSPECIFIED",
-            "STANDARD",
-            "ADVANCED"
-          ],
-          "enumDescriptions": [
-            "TIER_UNSPECIFIED is the default value. If this value is set during create\nor update, it defaults to the project level tier setting.",
-            "Represents the standard tier or base Google Kubernetes Engine offering.",
-            "Represents the advanced tier."
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "GcePersistentDiskCsiDriverConfig": {
-      "description": "Configuration for the GCE PD CSI driver. This option can only be enabled\nat cluster creation time.",
+      "description": "Configuration for the Compute Engine PD CSI driver. This option can only be\nenabled at cluster creation time.",
       "id": "GcePersistentDiskCsiDriverConfig",
       "properties": {
         "enabled": {
-          "description": "Whether the GCE PD CSI driver is enabled for this cluster.",
+          "description": "Whether the Compute Engine PD CSI driver is enabled for this cluster.",
           "type": "boolean"
         }
       },
@@ -3492,7 +3453,7 @@
           "type": "string"
         },
         "tpuIpv4CidrBlock": {
-          "description": "The IP address range of the Cloud TPUs in this cluster. If unspecified, a\nrange will be automatically chosen with the default size.\n\nThis field is only applicable when `use_ip_aliases` is true.\n\nIf unspecified, the range will use the default size.\n\nSet to /netmask (e.g. `/14`) to have a range chosen with a specific\nnetmask.\n\nSet to a\n[CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)\nnotation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks (e.g.\n`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific range\nto use.",
+          "description": "The IP address range of the Cloud TPUs in this cluster. If unspecified, a\nrange will be automatically chosen with the default size.\n\nThis field is only applicable when `use_ip_aliases` is true.\n\nIf unspecified, the range will use the default size.\n\nSet to /netmask (e.g. `/14`) to have a range chosen with a specific\nnetmask.\n\nSet to a\n[CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)\nnotation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks (e.g.\n`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific range\nto use.\nThis field is deprecated, use cluster.tpu_config.ipv4_cidr_block instead.",
           "type": "string"
         },
         "useIpAliases": {
@@ -4357,35 +4318,10 @@
       },
       "type": "object"
     },
-    "PremiumConfig": {
-      "description": "PremiumConfig is the configuration for all premium features and tiers.",
-      "id": "PremiumConfig",
-      "properties": {
-        "features": {
-          "description": "The features that GKE provides.",
-          "items": {
-            "$ref": "FeatureConfig"
-          },
-          "type": "array"
-        },
-        "tiers": {
-          "description": "The tiers that are part of the premium offering.",
-          "items": {
-            "$ref": "TierConfig"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "PrivateClusterConfig": {
       "description": "Configuration options for private clusters.",
       "id": "PrivateClusterConfig",
       "properties": {
-        "enablePeeringRouteSharing": {
-          "description": "Whether to enable route sharing over the network peering.",
-          "type": "boolean"
-        },
         "enablePrivateEndpoint": {
           "description": "Whether the master's internal IP address is used as the cluster endpoint.",
           "type": "boolean"
@@ -4628,10 +4564,6 @@
           "description": "Default image type.",
           "type": "string"
         },
-        "premiumConfig": {
-          "$ref": "PremiumConfig",
-          "description": "Premium configuration for service."
-        },
         "validImageTypes": {
           "description": "List of valid image types.",
           "items": {
@@ -4783,7 +4715,7 @@
           "type": "string"
         },
         "loggingService": {
-          "description": "Required. The logging service the cluster should use to write metrics.\nCurrently available options:\n\n* \"logging.googleapis.com\" - the Google Cloud Logging service\n* \"none\" - no metrics will be exported from the cluster",
+          "description": "Required. The logging service the cluster should use to write logs.\nCurrently available options:\n\n* `logging.googleapis.com/kubernetes` - The Cloud Logging\nservice with a Kubernetes-native resource model\n* `logging.googleapis.com` - The legacy Cloud Logging service (no longer\n  available as of GKE 1.15).\n* `none` - no logs will be exported from the cluster.\n\nIf left as an empty string,`logging.googleapis.com/kubernetes` will be\nused for GKE 1.14+ or `logging.googleapis.com` for earlier versions.",
           "type": "string"
         },
         "name": {
@@ -4880,7 +4812,7 @@
           "type": "string"
         },
         "monitoringService": {
-          "description": "Required. The monitoring service the cluster should use to write metrics.\nCurrently available options:\n\n* \"monitoring.googleapis.com\" - the Google Cloud Monitoring service\n* \"none\" - no metrics will be exported from the cluster",
+          "description": "Required. The monitoring service the cluster should use to write metrics.\nCurrently available options:\n\n* \"monitoring.googleapis.com/kubernetes\" - The Cloud Monitoring\nservice with a Kubernetes-native resource model\n* `monitoring.googleapis.com` - The legacy Cloud Monitoring service (no\n  longer available as of GKE 1.15).\n* `none` - No metrics will be exported from the cluster.\n\nIf left as an empty string,`monitoring.googleapis.com/kubernetes` will be\nused for GKE 1.14+ or `monitoring.googleapis.com` for earlier versions.",
           "type": "string"
         },
         "name": {
@@ -5103,62 +5035,6 @@
       },
       "type": "object"
     },
-    "TierConfig": {
-      "description": "TierConfig is the configuration for a tier offering.  For example the GKE\nstandard or advanced offerings which contain different levels of\nfunctionality and possibly cost.",
-      "id": "TierConfig",
-      "properties": {
-        "parent": {
-          "description": "The tier from which the tier being configured inherits.  The configured\ntier will inherit all the features from its parent tier.",
-          "enum": [
-            "TIER_UNSPECIFIED",
-            "STANDARD",
-            "ADVANCED"
-          ],
-          "enumDescriptions": [
-            "TIER_UNSPECIFIED is the default value. If this value is set during create\nor update, it defaults to the project level tier setting.",
-            "Represents the standard tier or base Google Kubernetes Engine offering.",
-            "Represents the advanced tier."
-          ],
-          "type": "string"
-        },
-        "tier": {
-          "description": "The tier that is being configured with this value.",
-          "enum": [
-            "TIER_UNSPECIFIED",
-            "STANDARD",
-            "ADVANCED"
-          ],
-          "enumDescriptions": [
-            "TIER_UNSPECIFIED is the default value. If this value is set during create\nor update, it defaults to the project level tier setting.",
-            "Represents the standard tier or base Google Kubernetes Engine offering.",
-            "Represents the advanced tier."
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "TierSettings": {
-      "description": "Cluster tier settings.",
-      "id": "TierSettings",
-      "properties": {
-        "tier": {
-          "description": "Cluster tier.",
-          "enum": [
-            "TIER_UNSPECIFIED",
-            "STANDARD",
-            "ADVANCED"
-          ],
-          "enumDescriptions": [
-            "TIER_UNSPECIFIED is the default value. If this value is set during create\nor update, it defaults to the project level tier setting.",
-            "Represents the standard tier or base Google Kubernetes Engine offering.",
-            "Represents the advanced tier."
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "TimeWindow": {
       "description": "Represents an arbitrary window of time.",
       "id": "TimeWindow",
@@ -5172,6 +5048,25 @@
           "description": "The time that the window first starts.",
           "format": "google-datetime",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TpuConfig": {
+      "description": "Configuration for Cloud TPU.",
+      "id": "TpuConfig",
+      "properties": {
+        "enabled": {
+          "description": "Whether Cloud TPU integration is enabled or not.",
+          "type": "boolean"
+        },
+        "ipv4CidrBlock": {
+          "description": "IPv4 CIDR block reserved for Cloud TPU in the VPC.",
+          "type": "string"
+        },
+        "useServiceNetworking": {
+          "description": "Whether to use service networking for Cloud TPU or not.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -5399,7 +5294,7 @@
           ],
           "enumDescriptions": [
             "Not set.",
-            "Expose all GCE metadata to pods.",
+            "Expose all Compute Engine metadata to pods.",
             "Run the GKE Metadata Server on this node. The GKE Metadata Server exposes\na metadata API to workloads that is compatible with the V1 Compute\nMetadata APIs exposed by the Compute Engine and App Engine Metadata\nServers. This feature can only be enabled if Workload Identity is enabled\nat the cluster level."
           ],
           "type": "string"

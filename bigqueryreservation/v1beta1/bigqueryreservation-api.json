@@ -372,7 +372,7 @@
                   ]
                 },
                 "patch": {
-                  "description": "Updates an existing capacity commitment.\n\nOnly renewal_plan field can be updated.",
+                  "description": "Updates an existing capacity commitment.\n\nOnly plan and renewal_plan fields can be updated.\nPlan can only be changed to a plan of a longer commitment period.\nAttempting to change to a plan with shorter commitment period will fail\nwith the error code `google.rpc.Code.FAILED_PRECONDITION`.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/capacityCommitments/{capacityCommitmentsId}",
                   "httpMethod": "PATCH",
                   "id": "bigqueryreservation.projects.locations.capacityCommitments.patch",
@@ -429,35 +429,6 @@
                   },
                   "response": {
                     "$ref": "SplitCapacityCommitmentResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/bigquery",
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "upgradeCapacityCommitmentPlan": {
-                  "description": "Replaces an existing commitment with a new commitment of a different plan.\nPlan can only be changed to a plan of a longer commitment period. New\ncommitment start is set to a current time. Attempting to change to a plan\nwith shorter commitment period will fail with the error code\n`google.rpc.Code.FAILED_PRECONDITION`.",
-                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/capacityCommitments/{capacityCommitmentsId}:upgradeCapacityCommitmentPlan",
-                  "httpMethod": "POST",
-                  "id": "bigqueryreservation.projects.locations.capacityCommitments.upgradeCapacityCommitmentPlan",
-                  "parameterOrder": [
-                    "capacityCommitment"
-                  ],
-                  "parameters": {
-                    "capacityCommitment": {
-                      "description": "Required. The resource name e.g.,:\n  projects/myproject/locations/US/capacityCommitments/123",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+/capacityCommitments/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1beta1/{+capacityCommitment}:upgradeCapacityCommitmentPlan",
-                  "request": {
-                    "$ref": "UpgradeCapacityCommitmentPlanRequest"
-                  },
-                  "response": {
-                    "$ref": "CapacityCommitment"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/bigquery",
@@ -765,7 +736,7 @@
       }
     }
   },
-  "revision": "20200229",
+  "revision": "20200403",
   "rootUrl": "https://bigqueryreservation.googleapis.com/",
   "schemas": {
     "Assignment": {
@@ -806,6 +777,23 @@
             "Queries from assignee will be executed as on-demand, if related\nassignment is pending.",
             "Assignment is ready."
           ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Autoscale": {
+      "description": "Auto scaling settings and current situation.\nSystem will create a dedicated FLEX capacity commitment to hold the slots\nfor auto-scale. Users won't be able to manage it,to avoid conflicts.\nScale-up will happen, if there are always pending tasks for the past 10\nminutes.\nScale-down will happen, if the system knows that scale-up won't be\ntriggered again.\nNote this is an alpha feature.",
+      "id": "Autoscale",
+      "properties": {
+        "currentSlots": {
+          "description": "Output only. The slot capacity added to this reservation when autoscale happens. Will\nbe between [0, max_slots].",
+          "format": "int64",
+          "type": "string"
+        },
+        "maxSlots": {
+          "description": "Number of slots to be scaled when needed.",
+          "format": "int64",
           "type": "string"
         }
       },
@@ -866,7 +854,7 @@
           "type": "string"
         },
         "renewalPlan": {
-          "description": "The plan this capacity commitment is converted to after commitment_end_time\npasses. Once the plan is changed, committed period is extended according to\ncommitment plan. Only applicable for MONTHLY and ANNUAL commitments.",
+          "description": "The plan this capacity commitment is converted to after commitment_end_time\npasses. Once the plan is changed, committed period is extended according to\ncommitment plan. Only applicable for ANNUAL commitments.",
           "enum": [
             "COMMITMENT_PLAN_UNSPECIFIED",
             "FLEX",
@@ -900,6 +888,17 @@
             "Once slots are provisioned, capacity commitment becomes active.\nslot_count is added to the parent's slot_capacity.",
             "Capacity commitment is failed to be activated by the backend."
           ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CreateSlotPoolMetadata": {
+      "description": "The metadata for operation returned from\nReservationService.CreateSlotPool.",
+      "id": "CreateSlotPoolMetadata",
+      "properties": {
+        "slotPool": {
+          "description": "Resource name of the slot pool that is being created. E.g.,\nprojects/myproject/locations/us-central1/reservations/foo/slotPools/123",
           "type": "string"
         }
       },
@@ -994,6 +993,10 @@
       "description": "A reservation is a mechanism used to guarantee slots to users.",
       "id": "Reservation",
       "properties": {
+        "autoscale": {
+          "$ref": "Autoscale",
+          "description": "The configuration parameters for the auto scaling feature. Note this is an\nalpha feature."
+        },
         "ignoreIdleSlots": {
           "description": "If false, any query using this reservation will use idle slots from other\nreservations within the same admin project. If true, a query using this\nreservation will execute with the slot capacity specified above at most.",
           "type": "boolean"
@@ -1077,29 +1080,6 @@
         },
         "message": {
           "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "UpgradeCapacityCommitmentPlanRequest": {
-      "description": "The request for ReservationService.UpgradeCapacityCommitmentPlan.",
-      "id": "UpgradeCapacityCommitmentPlanRequest",
-      "properties": {
-        "plan": {
-          "description": "New capacity commitment plan.",
-          "enum": [
-            "COMMITMENT_PLAN_UNSPECIFIED",
-            "FLEX",
-            "MONTHLY",
-            "ANNUAL"
-          ],
-          "enumDescriptions": [
-            "Invalid plan value. Requests with this value will be rejected with\nerror code `google.rpc.Code.INVALID_ARGUMENT`.",
-            "Flex commitments have committed period of 1 minute after becoming ACTIVE.\nAfter that, they are not in a committed period anymore and can be removed\nany time.",
-            "Monthly commitments have a committed period of 30 days after becoming\nACTIVE.",
-            "Annual commitments have a committed period of 365 days after becoming\nACTIVE."
-          ],
           "type": "string"
         }
       },

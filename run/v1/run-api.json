@@ -1942,7 +1942,7 @@
       }
     }
   },
-  "revision": "20200302",
+  "revision": "20200327",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -2222,7 +2222,7 @@
           "type": "string"
         },
         "ports": {
-          "description": "(Optional)\n\nCloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nList of ports to expose from the container. Exposing a port here gives\nthe system additional information about the network connections a\ncontainer uses, but is primarily informational. Not specifying a port here\nDOES NOT prevent that port from being exposed. Any port which is\nlistening on the default \"0.0.0.0\" address inside a container will be\naccessible from the network.",
+          "description": "(Optional)\n\nList of ports to expose from the container. Only a single port can be\nspecified. The specified ports must be listening on all interfaces\n(0.0.0.0) within the container to be accessible.\n\nIf omitted, a port number will be chosen and passed to the container\nthrough the PORT environment variable for the container to listen on.",
           "items": {
             "$ref": "ContainerPort"
           },
@@ -2263,11 +2263,11 @@
       "type": "object"
     },
     "ContainerPort": {
-      "description": "Cloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nContainerPort represents a network port in a single container.",
+      "description": "ContainerPort represents a network port in a single container.",
       "id": "ContainerPort",
       "properties": {
         "containerPort": {
-          "description": "(Optional)\n\nCloud Run fully managed: supported\n\nCloud Run for Anthos: supported\n\nPort number the container listens on.\nThis must be a valid port number, 0 \u003c x \u003c 65536.",
+          "description": "(Optional)\n\nPort number the container listens on.\nThis must be a valid port number, 0 \u003c x \u003c 65536.",
           "format": "int32",
           "type": "integer"
         },
@@ -2276,7 +2276,7 @@
           "type": "string"
         },
         "protocol": {
-          "description": "(Optional)\n\nCloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nProtocol for port. Must be TCP.\nDefaults to \"TCP\".",
+          "description": "(Optional)\n\nCloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nProtocol for port. Must be \"TCP\".\nDefaults to \"TCP\".",
           "type": "string"
         }
       },

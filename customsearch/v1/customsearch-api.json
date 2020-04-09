@@ -1,30 +1,57 @@
 {
-  "basePath": "/customsearch/",
-  "baseUrl": "https://www.googleapis.com/customsearch/",
-  "batchPath": "batch/customsearch/v1",
+  "basePath": "",
+  "baseUrl": "https://customsearch.googleapis.com/",
+  "batchPath": "batch",
   "description": "Searches over a website or collection of websites",
   "discoveryVersion": "v1",
-  "documentationLink": "https://developers.google.com/custom-search/v1/using_rest",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/2iWcS6EAVqIO3py2_4I7tTajAB4\"",
+  "documentationLink": "https://developers.google.com/custom-search/v1/introduction",
   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
   },
   "id": "customsearch:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://customsearch.mtls.googleapis.com/",
   "name": "customsearch",
   "ownerDomain": "google.com",
   "ownerName": "Google",
   "parameters": {
-    "alt": {
-      "default": "json",
-      "description": "Data format for the response.",
+    "$.xgafv": {
+      "description": "V1 error format.",
       "enum": [
-        "json"
+        "1",
+        "2"
       ],
       "enumDescriptions": [
-        "Responses with Content-Type of application/json"
+        "v1 error format",
+        "v2 error format"
       ],
+      "location": "query",
+      "type": "string"
+    },
+    "access_token": {
+      "description": "OAuth access token.",
+      "location": "query",
+      "type": "string"
+    },
+    "alt": {
+      "default": "json",
+      "description": "Data format for response.",
+      "enum": [
+        "json",
+        "media",
+        "proto"
+      ],
+      "enumDescriptions": [
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf"
+      ],
+      "location": "query",
+      "type": "string"
+    },
+    "callback": {
+      "description": "JSONP",
       "location": "query",
       "type": "string"
     },
@@ -50,12 +77,17 @@
       "type": "boolean"
     },
     "quotaUser": {
-      "description": "An opaque string that represents a user for quota purposes. Must not exceed 40 characters.",
+      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
       "location": "query",
       "type": "string"
     },
-    "userIp": {
-      "description": "Deprecated. Please use quotaUser instead.",
+    "uploadType": {
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      "location": "query",
+      "type": "string"
+    },
+    "upload_protocol": {
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
       "location": "query",
       "type": "string"
     }
@@ -65,12 +97,11 @@
     "cse": {
       "methods": {
         "list": {
-          "description": "Returns metadata about the search performed, metadata about the custom search engine used for the search, and the search results.",
+          "description": "Returns metadata about the search performed, metadata about the custom\nsearch engine used for the search, and the search results.",
+          "flatPath": "customsearch/v1",
           "httpMethod": "GET",
           "id": "search.cse.list",
-          "parameterOrder": [
-            "q"
-          ],
+          "parameterOrder": [],
           "parameters": {
             "c2coff": {
               "description": "Turns off the translation between zh-CN and zh-TW.",
@@ -98,25 +129,17 @@
               "type": "string"
             },
             "excludeTerms": {
-              "description": "Identifies a word or phrase that should not appear in any documents in the search results",
+              "description": "Identifies a word or phrase that should not appear in any documents in the\nsearch results",
               "location": "query",
               "type": "string"
             },
             "fileType": {
-              "description": "Returns images of a specified type. Some of the allowed values are: bmp, gif, png, jpg, svg, pdf, ...",
+              "description": "Returns images of a specified type. Some of the allowed values are: bmp,\ngif, png, jpg, svg, pdf, ...",
               "location": "query",
               "type": "string"
             },
             "filter": {
-              "description": "Controls turning on or off the duplicate content filter.",
-              "enum": [
-                "0",
-                "1"
-              ],
-              "enumDescriptions": [
-                "Turns off duplicate content filter.",
-                "Turns on duplicate content filter."
-              ],
+              "description": "Controls turning on (1) or off (0) the duplicate content filter.",
               "location": "query",
               "type": "string"
             },
@@ -131,7 +154,7 @@
               "type": "string"
             },
             "highRange": {
-              "description": "Creates a range in form as_nlo value..as_nhi value and attempts to append it to query",
+              "description": "Creates a range in form as_nlo value..as_nhi value and attempts to append\nit to query",
               "location": "query",
               "type": "string"
             },
@@ -141,42 +164,26 @@
               "type": "string"
             },
             "hq": {
-              "description": "Appends the extra query terms to the query.",
+              "description": "Appends the extra hidden query terms to the query.",
               "location": "query",
               "type": "string"
             },
             "imgColorType": {
-              "description": "Returns black and white, grayscale, or color images: mono, gray, and color.",
+              "description": "Returns black and white, grayscale, transparent-background or color images:\nmono, gray, trans, and color.",
               "enum": [
-                "color",
+                "imgColorTypeUndefined",
+                "mono",
                 "gray",
-                "mono"
-              ],
-              "enumDescriptions": [
                 "color",
-                "gray",
-                "mono"
+                "trans"
               ],
               "location": "query",
               "type": "string"
             },
             "imgDominantColor": {
-              "description": "Returns images of a specific dominant color: red, orange, yellow, green, teal, blue, purple, pink, white, gray, black and brown.",
+              "description": "Returns images of a specific dominant color: red, orange, yellow, green,\nteal, blue, purple, pink, white, gray, black and brown.",
               "enum": [
-                "black",
-                "blue",
-                "brown",
-                "gray",
-                "green",
-                "orange",
-                "pink",
-                "purple",
-                "red",
-                "teal",
-                "white",
-                "yellow"
-              ],
-              "enumDescriptions": [
+                "imgDominantColorUndefined",
                 "black",
                 "blue",
                 "brown",
@@ -194,43 +201,30 @@
               "type": "string"
             },
             "imgSize": {
-              "description": "Returns images of a specified size, where size can be one of: icon, small, medium, large, xlarge, xxlarge, and huge.",
+              "description": "Returns images of a specified size, where size can be one of: icon, small,\nmedium, large, xlarge, xxlarge, and huge.",
               "enum": [
-                "huge",
-                "icon",
-                "large",
-                "medium",
-                "small",
-                "xlarge",
-                "xxlarge"
-              ],
-              "enumDescriptions": [
-                "huge",
-                "icon",
-                "large",
-                "medium",
-                "small",
-                "xlarge",
-                "xxlarge"
+                "imgSizeUndefined",
+                "HUGE",
+                "ICON",
+                "LARGE",
+                "MEDIUM",
+                "SMALL",
+                "XLARGE",
+                "XXLARGE"
               ],
               "location": "query",
               "type": "string"
             },
             "imgType": {
-              "description": "Returns images of a type, which can be one of: clipart, face, lineart, news, and photo.",
+              "description": "Returns images of a type, which can be one of: clipart, face, lineart,\nstock, photo, and animated.",
               "enum": [
+                "imgTypeUndefined",
                 "clipart",
                 "face",
                 "lineart",
-                "news",
-                "photo"
-              ],
-              "enumDescriptions": [
-                "clipart",
-                "face",
-                "lineart",
-                "news",
-                "photo"
+                "stock",
+                "photo",
+                "animated"
               ],
               "location": "query",
               "type": "string"
@@ -241,131 +235,49 @@
               "type": "string"
             },
             "lowRange": {
-              "description": "Creates a range in form as_nlo value..as_nhi value and attempts to append it to query",
+              "description": "Creates a range in form as_nlo value..as_nhi value and attempts to append\nit to query",
               "location": "query",
               "type": "string"
             },
             "lr": {
               "description": "The language restriction for the search results",
-              "enum": [
-                "lang_ar",
-                "lang_bg",
-                "lang_ca",
-                "lang_cs",
-                "lang_da",
-                "lang_de",
-                "lang_el",
-                "lang_en",
-                "lang_es",
-                "lang_et",
-                "lang_fi",
-                "lang_fr",
-                "lang_hr",
-                "lang_hu",
-                "lang_id",
-                "lang_is",
-                "lang_it",
-                "lang_iw",
-                "lang_ja",
-                "lang_ko",
-                "lang_lt",
-                "lang_lv",
-                "lang_nl",
-                "lang_no",
-                "lang_pl",
-                "lang_pt",
-                "lang_ro",
-                "lang_ru",
-                "lang_sk",
-                "lang_sl",
-                "lang_sr",
-                "lang_sv",
-                "lang_tr",
-                "lang_zh-CN",
-                "lang_zh-TW"
-              ],
-              "enumDescriptions": [
-                "Arabic",
-                "Bulgarian",
-                "Catalan",
-                "Czech",
-                "Danish",
-                "German",
-                "Greek",
-                "English",
-                "Spanish",
-                "Estonian",
-                "Finnish",
-                "French",
-                "Croatian",
-                "Hungarian",
-                "Indonesian",
-                "Icelandic",
-                "Italian",
-                "Hebrew",
-                "Japanese",
-                "Korean",
-                "Lithuanian",
-                "Latvian",
-                "Dutch",
-                "Norwegian",
-                "Polish",
-                "Portuguese",
-                "Romanian",
-                "Russian",
-                "Slovak",
-                "Slovenian",
-                "Serbian",
-                "Swedish",
-                "Turkish",
-                "Chinese (Simplified)",
-                "Chinese (Traditional)"
-              ],
               "location": "query",
               "type": "string"
             },
             "num": {
-              "default": "10",
               "description": "Number of search results to return",
-              "format": "uint32",
+              "format": "int32",
               "location": "query",
               "type": "integer"
             },
             "orTerms": {
-              "description": "Provides additional search terms to check for in a document, where each document in the search results must contain at least one of the additional search terms",
+              "description": "Provides additional search terms to check for in a document, where each\ndocument in the search results must contain at least one of the additional\nsearch terms",
               "location": "query",
               "type": "string"
             },
             "q": {
               "description": "Query",
               "location": "query",
-              "required": true,
               "type": "string"
             },
             "relatedSite": {
-              "description": "Specifies that all search results should be pages that are related to the specified URL",
+              "description": "Specifies that all search results should be pages that are related to the\nspecified URL",
               "location": "query",
               "type": "string"
             },
             "rights": {
-              "description": "Filters based on licensing. Supported values include: cc_publicdomain, cc_attribute, cc_sharealike, cc_noncommercial, cc_nonderived and combinations of these.",
+              "description": "Filters based on licensing. Supported values include: cc_publicdomain,\ncc_attribute, cc_sharealike, cc_noncommercial, cc_nonderived and\ncombinations of these.\nSee https://wiki.creativecommons.org/wiki/CC_Search_integration for\ntypical combinations.",
               "location": "query",
               "type": "string"
             },
             "safe": {
-              "default": "off",
-              "description": "Search safety level",
+              "description": "Search safety level (active, off) (high, medium are same as active)",
               "enum": [
+                "safeUndefined",
                 "active",
                 "high",
                 "medium",
                 "off"
-              ],
-              "enumDescriptions": [
-                "Enables safe search filtering.",
-                "(Deprecated) Same as active.",
-                "(Deprecated) Same as active.",
-                "Disables safe search filtering."
               ],
               "location": "query",
               "type": "string"
@@ -373,10 +285,8 @@
             "searchType": {
               "description": "Specifies the search type: image.",
               "enum": [
+                "searchTypeUndefined",
                 "image"
-              ],
-              "enumDescriptions": [
-                "custom image search"
               ],
               "location": "query",
               "type": "string"
@@ -387,14 +297,11 @@
               "type": "string"
             },
             "siteSearchFilter": {
-              "description": "Controls whether to include or exclude results from the site named in the as_sitesearch parameter",
+              "description": "Controls whether to include (i) or exclude (e) results from the site named\nin the siteSearch parameter",
               "enum": [
+                "siteSearchFilterUndefined",
                 "e",
                 "i"
-              ],
-              "enumDescriptions": [
-                "exclude",
-                "include"
               ],
               "location": "query",
               "type": "string"
@@ -411,418 +318,271 @@
               "type": "integer"
             }
           },
-          "path": "v1",
+          "path": "customsearch/v1",
           "response": {
             "$ref": "Search"
           }
         }
-      },
-      "resources": {
-        "siterestrict": {
-          "methods": {
-            "list": {
-              "description": "Returns metadata about the search performed, metadata about the custom search engine used for the search, and the search results. Uses a small set of url patterns.",
-              "httpMethod": "GET",
-              "id": "search.cse.siterestrict.list",
-              "parameterOrder": [
-                "q"
+      }
+    },
+    "siterestrict": {
+      "methods": {
+        "list": {
+          "description": "Returns metadata about the search performed, metadata about the custom\nsearch engine used for the search, and the search results. Uses a small set\nof url patterns.",
+          "flatPath": "customsearch/v1/siterestrict",
+          "httpMethod": "GET",
+          "id": "search.cse.siterestrict.list",
+          "parameterOrder": [],
+          "parameters": {
+            "c2coff": {
+              "description": "Turns off the translation between zh-CN and zh-TW.",
+              "location": "query",
+              "type": "string"
+            },
+            "cr": {
+              "description": "Country restrict(s).",
+              "location": "query",
+              "type": "string"
+            },
+            "cx": {
+              "description": "The custom search engine ID to scope this search query",
+              "location": "query",
+              "type": "string"
+            },
+            "dateRestrict": {
+              "description": "Specifies all search results are from a time period",
+              "location": "query",
+              "type": "string"
+            },
+            "exactTerms": {
+              "description": "Identifies a phrase that all documents in the search results must contain",
+              "location": "query",
+              "type": "string"
+            },
+            "excludeTerms": {
+              "description": "Identifies a word or phrase that should not appear in any documents in the\nsearch results",
+              "location": "query",
+              "type": "string"
+            },
+            "fileType": {
+              "description": "Returns images of a specified type. Some of the allowed values are: bmp,\ngif, png, jpg, svg, pdf, ...",
+              "location": "query",
+              "type": "string"
+            },
+            "filter": {
+              "description": "Controls turning on (1) or off (0) the duplicate content filter.",
+              "location": "query",
+              "type": "string"
+            },
+            "gl": {
+              "description": "Geolocation of end user.",
+              "location": "query",
+              "type": "string"
+            },
+            "googlehost": {
+              "description": "The local Google domain to use to perform the search.",
+              "location": "query",
+              "type": "string"
+            },
+            "highRange": {
+              "description": "Creates a range in form as_nlo value..as_nhi value and attempts to append\nit to query",
+              "location": "query",
+              "type": "string"
+            },
+            "hl": {
+              "description": "Sets the user interface language.",
+              "location": "query",
+              "type": "string"
+            },
+            "hq": {
+              "description": "Appends the extra hidden query terms to the query.",
+              "location": "query",
+              "type": "string"
+            },
+            "imgColorType": {
+              "description": "Returns black and white, grayscale, transparent-background or color images:\nmono, gray, trans, and color.",
+              "enum": [
+                "imgColorTypeUndefined",
+                "mono",
+                "gray",
+                "color",
+                "trans"
               ],
-              "parameters": {
-                "c2coff": {
-                  "description": "Turns off the translation between zh-CN and zh-TW.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "cr": {
-                  "description": "Country restrict(s).",
-                  "location": "query",
-                  "type": "string"
-                },
-                "cx": {
-                  "description": "The custom search engine ID to scope this search query",
-                  "location": "query",
-                  "type": "string"
-                },
-                "dateRestrict": {
-                  "description": "Specifies all search results are from a time period",
-                  "location": "query",
-                  "type": "string"
-                },
-                "exactTerms": {
-                  "description": "Identifies a phrase that all documents in the search results must contain",
-                  "location": "query",
-                  "type": "string"
-                },
-                "excludeTerms": {
-                  "description": "Identifies a word or phrase that should not appear in any documents in the search results",
-                  "location": "query",
-                  "type": "string"
-                },
-                "fileType": {
-                  "description": "Returns images of a specified type. Some of the allowed values are: bmp, gif, png, jpg, svg, pdf, ...",
-                  "location": "query",
-                  "type": "string"
-                },
-                "filter": {
-                  "description": "Controls turning on or off the duplicate content filter.",
-                  "enum": [
-                    "0",
-                    "1"
-                  ],
-                  "enumDescriptions": [
-                    "Turns off duplicate content filter.",
-                    "Turns on duplicate content filter."
-                  ],
-                  "location": "query",
-                  "type": "string"
-                },
-                "gl": {
-                  "description": "Geolocation of end user.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "googlehost": {
-                  "description": "The local Google domain to use to perform the search.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "highRange": {
-                  "description": "Creates a range in form as_nlo value..as_nhi value and attempts to append it to query",
-                  "location": "query",
-                  "type": "string"
-                },
-                "hl": {
-                  "description": "Sets the user interface language.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "hq": {
-                  "description": "Appends the extra query terms to the query.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "imgColorType": {
-                  "description": "Returns black and white, grayscale, or color images: mono, gray, and color.",
-                  "enum": [
-                    "color",
-                    "gray",
-                    "mono"
-                  ],
-                  "enumDescriptions": [
-                    "color",
-                    "gray",
-                    "mono"
-                  ],
-                  "location": "query",
-                  "type": "string"
-                },
-                "imgDominantColor": {
-                  "description": "Returns images of a specific dominant color: red, orange, yellow, green, teal, blue, purple, pink, white, gray, black and brown.",
-                  "enum": [
-                    "black",
-                    "blue",
-                    "brown",
-                    "gray",
-                    "green",
-                    "orange",
-                    "pink",
-                    "purple",
-                    "red",
-                    "teal",
-                    "white",
-                    "yellow"
-                  ],
-                  "enumDescriptions": [
-                    "black",
-                    "blue",
-                    "brown",
-                    "gray",
-                    "green",
-                    "orange",
-                    "pink",
-                    "purple",
-                    "red",
-                    "teal",
-                    "white",
-                    "yellow"
-                  ],
-                  "location": "query",
-                  "type": "string"
-                },
-                "imgSize": {
-                  "description": "Returns images of a specified size, where size can be one of: icon, small, medium, large, xlarge, xxlarge, and huge.",
-                  "enum": [
-                    "huge",
-                    "icon",
-                    "large",
-                    "medium",
-                    "small",
-                    "xlarge",
-                    "xxlarge"
-                  ],
-                  "enumDescriptions": [
-                    "huge",
-                    "icon",
-                    "large",
-                    "medium",
-                    "small",
-                    "xlarge",
-                    "xxlarge"
-                  ],
-                  "location": "query",
-                  "type": "string"
-                },
-                "imgType": {
-                  "description": "Returns images of a type, which can be one of: clipart, face, lineart, news, and photo.",
-                  "enum": [
-                    "clipart",
-                    "face",
-                    "lineart",
-                    "news",
-                    "photo"
-                  ],
-                  "enumDescriptions": [
-                    "clipart",
-                    "face",
-                    "lineart",
-                    "news",
-                    "photo"
-                  ],
-                  "location": "query",
-                  "type": "string"
-                },
-                "linkSite": {
-                  "description": "Specifies that all search results should contain a link to a particular URL",
-                  "location": "query",
-                  "type": "string"
-                },
-                "lowRange": {
-                  "description": "Creates a range in form as_nlo value..as_nhi value and attempts to append it to query",
-                  "location": "query",
-                  "type": "string"
-                },
-                "lr": {
-                  "description": "The language restriction for the search results",
-                  "enum": [
-                    "lang_ar",
-                    "lang_bg",
-                    "lang_ca",
-                    "lang_cs",
-                    "lang_da",
-                    "lang_de",
-                    "lang_el",
-                    "lang_en",
-                    "lang_es",
-                    "lang_et",
-                    "lang_fi",
-                    "lang_fr",
-                    "lang_hr",
-                    "lang_hu",
-                    "lang_id",
-                    "lang_is",
-                    "lang_it",
-                    "lang_iw",
-                    "lang_ja",
-                    "lang_ko",
-                    "lang_lt",
-                    "lang_lv",
-                    "lang_nl",
-                    "lang_no",
-                    "lang_pl",
-                    "lang_pt",
-                    "lang_ro",
-                    "lang_ru",
-                    "lang_sk",
-                    "lang_sl",
-                    "lang_sr",
-                    "lang_sv",
-                    "lang_tr",
-                    "lang_zh-CN",
-                    "lang_zh-TW"
-                  ],
-                  "enumDescriptions": [
-                    "Arabic",
-                    "Bulgarian",
-                    "Catalan",
-                    "Czech",
-                    "Danish",
-                    "German",
-                    "Greek",
-                    "English",
-                    "Spanish",
-                    "Estonian",
-                    "Finnish",
-                    "French",
-                    "Croatian",
-                    "Hungarian",
-                    "Indonesian",
-                    "Icelandic",
-                    "Italian",
-                    "Hebrew",
-                    "Japanese",
-                    "Korean",
-                    "Lithuanian",
-                    "Latvian",
-                    "Dutch",
-                    "Norwegian",
-                    "Polish",
-                    "Portuguese",
-                    "Romanian",
-                    "Russian",
-                    "Slovak",
-                    "Slovenian",
-                    "Serbian",
-                    "Swedish",
-                    "Turkish",
-                    "Chinese (Simplified)",
-                    "Chinese (Traditional)"
-                  ],
-                  "location": "query",
-                  "type": "string"
-                },
-                "num": {
-                  "default": "10",
-                  "description": "Number of search results to return",
-                  "format": "uint32",
-                  "location": "query",
-                  "type": "integer"
-                },
-                "orTerms": {
-                  "description": "Provides additional search terms to check for in a document, where each document in the search results must contain at least one of the additional search terms",
-                  "location": "query",
-                  "type": "string"
-                },
-                "q": {
-                  "description": "Query",
-                  "location": "query",
-                  "required": true,
-                  "type": "string"
-                },
-                "relatedSite": {
-                  "description": "Specifies that all search results should be pages that are related to the specified URL",
-                  "location": "query",
-                  "type": "string"
-                },
-                "rights": {
-                  "description": "Filters based on licensing. Supported values include: cc_publicdomain, cc_attribute, cc_sharealike, cc_noncommercial, cc_nonderived and combinations of these.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "safe": {
-                  "default": "off",
-                  "description": "Search safety level",
-                  "enum": [
-                    "high",
-                    "medium",
-                    "off"
-                  ],
-                  "enumDescriptions": [
-                    "Enables highest level of safe search filtering.",
-                    "Enables moderate safe search filtering.",
-                    "Disables safe search filtering."
-                  ],
-                  "location": "query",
-                  "type": "string"
-                },
-                "searchType": {
-                  "description": "Specifies the search type: image.",
-                  "enum": [
-                    "image"
-                  ],
-                  "enumDescriptions": [
-                    "custom image search"
-                  ],
-                  "location": "query",
-                  "type": "string"
-                },
-                "siteSearch": {
-                  "description": "Specifies all search results should be pages from a given site",
-                  "location": "query",
-                  "type": "string"
-                },
-                "siteSearchFilter": {
-                  "description": "Controls whether to include or exclude results from the site named in the as_sitesearch parameter",
-                  "enum": [
-                    "e",
-                    "i"
-                  ],
-                  "enumDescriptions": [
-                    "exclude",
-                    "include"
-                  ],
-                  "location": "query",
-                  "type": "string"
-                },
-                "sort": {
-                  "description": "The sort expression to apply to the results",
-                  "location": "query",
-                  "type": "string"
-                },
-                "start": {
-                  "description": "The index of the first result to return",
-                  "format": "uint32",
-                  "location": "query",
-                  "type": "integer"
-                }
-              },
-              "path": "v1/siterestrict",
-              "response": {
-                "$ref": "Search"
-              }
+              "location": "query",
+              "type": "string"
+            },
+            "imgDominantColor": {
+              "description": "Returns images of a specific dominant color: red, orange, yellow, green,\nteal, blue, purple, pink, white, gray, black and brown.",
+              "enum": [
+                "imgDominantColorUndefined",
+                "black",
+                "blue",
+                "brown",
+                "gray",
+                "green",
+                "orange",
+                "pink",
+                "purple",
+                "red",
+                "teal",
+                "white",
+                "yellow"
+              ],
+              "location": "query",
+              "type": "string"
+            },
+            "imgSize": {
+              "description": "Returns images of a specified size, where size can be one of: icon, small,\nmedium, large, xlarge, xxlarge, and huge.",
+              "enum": [
+                "imgSizeUndefined",
+                "HUGE",
+                "ICON",
+                "LARGE",
+                "MEDIUM",
+                "SMALL",
+                "XLARGE",
+                "XXLARGE"
+              ],
+              "location": "query",
+              "type": "string"
+            },
+            "imgType": {
+              "description": "Returns images of a type, which can be one of: clipart, face, lineart,\nstock, photo, and animated.",
+              "enum": [
+                "imgTypeUndefined",
+                "clipart",
+                "face",
+                "lineart",
+                "stock",
+                "photo",
+                "animated"
+              ],
+              "location": "query",
+              "type": "string"
+            },
+            "linkSite": {
+              "description": "Specifies that all search results should contain a link to a particular URL",
+              "location": "query",
+              "type": "string"
+            },
+            "lowRange": {
+              "description": "Creates a range in form as_nlo value..as_nhi value and attempts to append\nit to query",
+              "location": "query",
+              "type": "string"
+            },
+            "lr": {
+              "description": "The language restriction for the search results",
+              "location": "query",
+              "type": "string"
+            },
+            "num": {
+              "description": "Number of search results to return",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "orTerms": {
+              "description": "Provides additional search terms to check for in a document, where each\ndocument in the search results must contain at least one of the additional\nsearch terms",
+              "location": "query",
+              "type": "string"
+            },
+            "q": {
+              "description": "Query",
+              "location": "query",
+              "type": "string"
+            },
+            "relatedSite": {
+              "description": "Specifies that all search results should be pages that are related to the\nspecified URL",
+              "location": "query",
+              "type": "string"
+            },
+            "rights": {
+              "description": "Filters based on licensing. Supported values include: cc_publicdomain,\ncc_attribute, cc_sharealike, cc_noncommercial, cc_nonderived and\ncombinations of these.\nSee https://wiki.creativecommons.org/wiki/CC_Search_integration for\ntypical combinations.",
+              "location": "query",
+              "type": "string"
+            },
+            "safe": {
+              "description": "Search safety level (active, off) (high, medium are same as active)",
+              "enum": [
+                "safeUndefined",
+                "active",
+                "high",
+                "medium",
+                "off"
+              ],
+              "location": "query",
+              "type": "string"
+            },
+            "searchType": {
+              "description": "Specifies the search type: image.",
+              "enum": [
+                "searchTypeUndefined",
+                "image"
+              ],
+              "location": "query",
+              "type": "string"
+            },
+            "siteSearch": {
+              "description": "Specifies all search results should be pages from a given site",
+              "location": "query",
+              "type": "string"
+            },
+            "siteSearchFilter": {
+              "description": "Controls whether to include (i) or exclude (e) results from the site named\nin the siteSearch parameter",
+              "enum": [
+                "siteSearchFilterUndefined",
+                "e",
+                "i"
+              ],
+              "location": "query",
+              "type": "string"
+            },
+            "sort": {
+              "description": "The sort expression to apply to the results",
+              "location": "query",
+              "type": "string"
+            },
+            "start": {
+              "description": "The index of the first result to return",
+              "format": "uint32",
+              "location": "query",
+              "type": "integer"
             }
+          },
+          "path": "customsearch/v1/siterestrict",
+          "response": {
+            "$ref": "Search"
           }
         }
       }
     }
   },
-  "revision": "20181001",
-  "rootUrl": "https://www.googleapis.com/",
+  "revision": "20200408",
+  "rootUrl": "https://customsearch.googleapis.com/",
   "schemas": {
-    "Context": {
-      "id": "Context",
-      "properties": {
-        "facets": {
-          "items": {
-            "items": {
-              "properties": {
-                "anchor": {
-                  "type": "string"
-                },
-                "label": {
-                  "type": "string"
-                },
-                "label_with_op": {
-                  "type": "string"
-                }
-              },
-              "type": "object"
-            },
-            "type": "array"
-          },
-          "type": "array"
-        },
-        "title": {
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "Promotion": {
+      "description": "Promotion result.",
       "id": "Promotion",
       "properties": {
         "bodyLines": {
+          "description": "An array of block objects for this promotion. See Google WebSearch Protocol\nreference for more information.",
           "items": {
+            "description": "Block object belonging to a promotion.",
             "properties": {
               "htmlTitle": {
+                "description": "The block object's text in HTML, if it has text.",
                 "type": "string"
               },
               "link": {
+                "description": "The anchor text of the block object's link, if it has a link.",
                 "type": "string"
               },
               "title": {
+                "description": "The block object's text, if it has text.",
                 "type": "string"
               },
               "url": {
+                "description": "The URL of the block object's link, if it has one.",
                 "type": "string"
               }
             },
@@ -831,21 +591,27 @@
           "type": "array"
         },
         "displayLink": {
+          "description": "An abridged version of this search's result URL, e.g. www.example.com.",
           "type": "string"
         },
         "htmlTitle": {
+          "description": "The title of the promotion, in HTML.",
           "type": "string"
         },
         "image": {
+          "description": "Image belonging to a promotion.",
           "properties": {
             "height": {
+              "description": "Image height in pixels.",
               "format": "int32",
               "type": "integer"
             },
             "source": {
+              "description": "URL of the image for this promotion link.",
               "type": "string"
             },
             "width": {
+              "description": "Image width in pixels.",
               "format": "int32",
               "type": "integer"
             }
@@ -853,181 +619,81 @@
           "type": "object"
         },
         "link": {
+          "description": "The URL of the promotion.",
           "type": "string"
         },
         "title": {
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "Query": {
-      "id": "Query",
-      "properties": {
-        "count": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "cr": {
-          "type": "string"
-        },
-        "cx": {
-          "type": "string"
-        },
-        "dateRestrict": {
-          "type": "string"
-        },
-        "disableCnTwTranslation": {
-          "type": "string"
-        },
-        "exactTerms": {
-          "type": "string"
-        },
-        "excludeTerms": {
-          "type": "string"
-        },
-        "fileType": {
-          "type": "string"
-        },
-        "filter": {
-          "type": "string"
-        },
-        "gl": {
-          "type": "string"
-        },
-        "googleHost": {
-          "type": "string"
-        },
-        "highRange": {
-          "type": "string"
-        },
-        "hl": {
-          "type": "string"
-        },
-        "hq": {
-          "type": "string"
-        },
-        "imgColorType": {
-          "type": "string"
-        },
-        "imgDominantColor": {
-          "type": "string"
-        },
-        "imgSize": {
-          "type": "string"
-        },
-        "imgType": {
-          "type": "string"
-        },
-        "inputEncoding": {
-          "type": "string"
-        },
-        "language": {
-          "type": "string"
-        },
-        "linkSite": {
-          "type": "string"
-        },
-        "lowRange": {
-          "type": "string"
-        },
-        "orTerms": {
-          "type": "string"
-        },
-        "outputEncoding": {
-          "type": "string"
-        },
-        "relatedSite": {
-          "type": "string"
-        },
-        "rights": {
-          "type": "string"
-        },
-        "safe": {
-          "type": "string"
-        },
-        "searchTerms": {
-          "type": "string"
-        },
-        "searchType": {
-          "type": "string"
-        },
-        "siteSearch": {
-          "type": "string"
-        },
-        "siteSearchFilter": {
-          "type": "string"
-        },
-        "sort": {
-          "type": "string"
-        },
-        "startIndex": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "startPage": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "title": {
-          "type": "string"
-        },
-        "totalResults": {
-          "format": "int64",
+          "description": "The title of the promotion.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "Result": {
+      "description": "A custom search result.",
       "id": "Result",
       "properties": {
         "cacheId": {
+          "description": "Indicates the ID of Google's cached version of the search result.",
           "type": "string"
         },
         "displayLink": {
+          "description": "An abridged version of this search result’s URL, e.g. www.example.com.",
           "type": "string"
         },
         "fileFormat": {
+          "description": "The file format of the search result.",
           "type": "string"
         },
         "formattedUrl": {
+          "description": "The URL displayed after the snippet for each search result.",
           "type": "string"
         },
         "htmlFormattedUrl": {
+          "description": "The HTML-formatted URL displayed after the snippet for each search result.",
           "type": "string"
         },
         "htmlSnippet": {
+          "description": "The snippet of the search result, in HTML.",
           "type": "string"
         },
         "htmlTitle": {
+          "description": "The title of the search result, in HTML.",
           "type": "string"
         },
         "image": {
+          "description": "Image belonging to a custom search result.",
           "properties": {
             "byteSize": {
+              "description": "The size of the image, in pixels.",
               "format": "int32",
               "type": "integer"
             },
             "contextLink": {
+              "description": "A URL pointing to the webpage hosting the image.",
               "type": "string"
             },
             "height": {
+              "description": "The height of the image, in pixels.",
               "format": "int32",
               "type": "integer"
             },
             "thumbnailHeight": {
+              "description": "The height of the thumbnail image, in pixels.",
               "format": "int32",
               "type": "integer"
             },
             "thumbnailLink": {
+              "description": "A URL to the thumbnail image.",
               "type": "string"
             },
             "thumbnailWidth": {
+              "description": "The width of the thumbnail image, in pixels.",
               "format": "int32",
               "type": "integer"
             },
             "width": {
+              "description": "The width of the image, in pixels.",
               "format": "int32",
               "type": "integer"
             }
@@ -1035,19 +701,24 @@
           "type": "object"
         },
         "kind": {
-          "default": "customsearch#result",
+          "description": "A unique identifier for the type of current object. For this API, it is\ncustomsearch#result.",
           "type": "string"
         },
         "labels": {
+          "description": "Encapsulates all information about refinement labels.",
           "items": {
+            "description": "Refinement label associated with a custom search result.",
             "properties": {
               "displayName": {
+                "description": "The display name of a refinement label. This is the name you should\ndisplay in your user interface.",
                 "type": "string"
               },
               "label_with_op": {
+                "description": "Refinement label and the associated refinement operation.",
                 "type": "string"
               },
               "name": {
+                "description": "The name of a refinement label, which you can use to refine searches.\nDon't display this in your user interface; instead, use displayName.",
                 "type": "string"
               }
             },
@@ -1056,101 +727,588 @@
           "type": "array"
         },
         "link": {
+          "description": "The full URL to which the search result is pointing, e.g.\nhttp://www.example.com/foo/bar.",
           "type": "string"
         },
         "mime": {
+          "description": "The MIME type of the search result.",
           "type": "string"
         },
         "pagemap": {
           "additionalProperties": {
-            "items": {
-              "additionalProperties": {
-                "type": "any"
-              },
-              "type": "object"
-            },
-            "type": "array"
+            "description": "Properties of the object.",
+            "type": "any"
           },
+          "description": "Contains PageMap information for this search result.",
           "type": "object"
         },
         "snippet": {
+          "description": "The snippet of the search result, in plain text.",
           "type": "string"
         },
         "title": {
+          "description": "The title of the search result, in plain text.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "Search": {
+      "description": "Response to a custom search request.",
       "id": "Search",
       "properties": {
         "context": {
-          "$ref": "Context"
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Metadata and refinements associated with the given search engine.",
+          "type": "object"
         },
         "items": {
+          "description": "The current set of custom search results.",
           "items": {
             "$ref": "Result"
           },
           "type": "array"
         },
         "kind": {
-          "default": "customsearch#search",
+          "description": "Unique identifier for the type of current object. For this API, it is\ncustomsearch#search.",
           "type": "string"
         },
         "promotions": {
+          "description": "The set of promotions. Present only if the custom search engine's\nconfiguration files define any promotions for the given query.",
           "items": {
             "$ref": "Promotion"
           },
           "type": "array"
         },
         "queries": {
-          "additionalProperties": {
-            "items": {
-              "$ref": "Query"
+          "description": "Query metadata for the previous, current, and next pages of results.",
+          "properties": {
+            "nextPage": {
+              "description": "Metadata representing the next page of results, if applicable.",
+              "items": {
+                "description": "Custom search request metadata.",
+                "properties": {
+                  "count": {
+                    "description": "Number of search results returned in this set.",
+                    "format": "int32",
+                    "type": "integer"
+                  },
+                  "cr": {
+                    "description": "Restricts search results to documents originating in a particular\ncountry. You may use Boolean operators in the cr parameter's value.",
+                    "type": "string"
+                  },
+                  "cx": {
+                    "description": "The identifier of a custom search engine created using the Custom Search\nControl Panel, if specified in request. This is a custom property not\ndefined in the OpenSearch spec.",
+                    "type": "string"
+                  },
+                  "dateRestrict": {
+                    "description": "Restricts results to URLs based on date. Supported values include:\nd[number]: requests results from the specified number of past days.\nw[number]: requests results from the specified number of past weeks.\nm[number]: requests results from the specified number of past months.\ny[number]: requests results from the specified number of past years.",
+                    "type": "string"
+                  },
+                  "disableCnTwTranslation": {
+                    "description": "Enables or disables the Simplified and Traditional Chinese Search\nfeature. Supported values are: 0: enabled (default) 1: disabled",
+                    "type": "string"
+                  },
+                  "exactTerms": {
+                    "description": "Identifies a phrase that all documents in the search results must\ncontain.",
+                    "type": "string"
+                  },
+                  "excludeTerms": {
+                    "description": "Identifies a word or phrase that should not appear in any documents in\nthe search results.",
+                    "type": "string"
+                  },
+                  "fileType": {
+                    "description": "Restricts results to files of a specified extension. Filetypes supported\nby Google include: Adobe Portable Document Format (pdf) Adobe PostScript\n(ps) Lotus 1-2-3 (wk1, wk2, wk3, wk4, wk5, wki, wks, wku) Lotus WordPro\n(lwp) Macwrite (mw) Microsoft Excel (xls) Microsoft PowerPoint (ppt)\nMicrosoft Word (doc)\nMicrosoft Works (wks, wps, wdb)\nMicrosoft Write (wri)\nRich Text Format (rtf)\nShockwave Flash (swf)\nText (ans, txt).",
+                    "type": "string"
+                  },
+                  "filter": {
+                    "description": "Activates or deactivates the automatic filtering of Google search\nresults. The default value for the filter parameter is 1, which indicates\nthat the feature is enabled. Valid values for this parameter are: 0:\nDisabled 1: Enabled",
+                    "type": "string"
+                  },
+                  "gl": {
+                    "description": "Boosts search results whose country of origin matches the parameter\nvalue. Specifying a gl parameter value in WebSearch requests should\nimprove the relevance of results. This is particularly true for\ninternational customers and, even more specifically, for customers in\nEnglish-speaking countries other than the United States.",
+                    "type": "string"
+                  },
+                  "googleHost": {
+                    "description": "Specifies the Google domain (for example, google.com, google.de, or\ngoogle.fr) to which the search should be limited.",
+                    "type": "string"
+                  },
+                  "highRange": {
+                    "description": "Specifies the ending value for a search range. Use cse:lowRange and\ncse:highrange to append an inclusive search range of lowRange...highRange\nto the query.",
+                    "type": "string"
+                  },
+                  "hl": {
+                    "description": "Specifies the interface language (host language) of your user interface.\nExplicitly setting this parameter improves the performance and the\nquality of your search results.",
+                    "type": "string"
+                  },
+                  "hq": {
+                    "description": "Appends the specified query terms to the query, as if they were combined\nwith a logical AND operator.",
+                    "type": "string"
+                  },
+                  "imgColorType": {
+                    "description": "Restricts results to images of a specified color type. Supported values\nare: mono (black and white) gray (grayscale) color (color)",
+                    "type": "string"
+                  },
+                  "imgDominantColor": {
+                    "description": "Restricts results to images with a specific dominant color. Supported\nvalues are: red orange yellow green teal blue purple pink white gray\nblack\nbrown",
+                    "type": "string"
+                  },
+                  "imgSize": {
+                    "description": "Restricts results to images of a specified size. Supported values are:\nicon (small)\nsmall|medium|large|xlarge (medium)\nxxlarge (large)\nhuge (extra-large)",
+                    "type": "string"
+                  },
+                  "imgType": {
+                    "description": "Restricts results to images of a specified type. Supported values are:\nclipart (Clip art)\nface (Face)\nlineart (Line drawing)\nphoto (Photo)\nanimated (Animated)\nstock (Stock)",
+                    "type": "string"
+                  },
+                  "inputEncoding": {
+                    "description": "The character encoding supported for search requests.",
+                    "type": "string"
+                  },
+                  "language": {
+                    "description": "The language of the search results.",
+                    "type": "string"
+                  },
+                  "linkSite": {
+                    "description": "Specifies that all results should contain a link to a specific URL.",
+                    "type": "string"
+                  },
+                  "lowRange": {
+                    "description": "Specifies the starting value for a search range. Use cse:lowRange and\ncse:highrange to append an inclusive search range of lowRange...highRange\nto the query.",
+                    "type": "string"
+                  },
+                  "orTerms": {
+                    "description": "Provides additional search terms to check for in a document, where each\ndocument in the search results must contain at least one of the\nadditional search terms. You can also use the Boolean OR query term for\nthis type of query.",
+                    "type": "string"
+                  },
+                  "outputEncoding": {
+                    "description": "The character encoding supported for search results.",
+                    "type": "string"
+                  },
+                  "relatedSite": {
+                    "description": "Specifies that all search results should be pages that are related to the\nspecified URL. The parameter value should be a URL.",
+                    "type": "string"
+                  },
+                  "rights": {
+                    "description": "Filters based on licensing. Supported values include:\ncc_publicdomain\ncc_attribute\ncc_sharealike\ncc_noncommercial\ncc_nonderived",
+                    "type": "string"
+                  },
+                  "safe": {
+                    "description": "Specifies the  SafeSearch level used for filtering out adult results.\nThis is a custom property not defined in the OpenSearch spec. Valid\nparameter values are: off: Disable SafeSearch active: Enable SafeSearch",
+                    "type": "string"
+                  },
+                  "searchTerms": {
+                    "description": "The search terms entered by the user.",
+                    "type": "string"
+                  },
+                  "searchType": {
+                    "description": "Allowed values are web or image. If unspecified, results are limited to\nwebpages.",
+                    "type": "string"
+                  },
+                  "siteSearch": {
+                    "description": "Restricts results to URLs from a specified site.",
+                    "type": "string"
+                  },
+                  "siteSearchFilter": {
+                    "description": "Specifies whether to include or exclude results from the site named in\nthe sitesearch parameter. Supported values are: i: include content from\nsite e: exclude content from site",
+                    "type": "string"
+                  },
+                  "sort": {
+                    "description": "Specifies that results should be sorted according to the specified\nexpression. For example, sort by date.",
+                    "type": "string"
+                  },
+                  "startIndex": {
+                    "description": "The index of the current set of search results into the total set of\nresults, where the index of the first result is 1.",
+                    "format": "int32",
+                    "type": "integer"
+                  },
+                  "startPage": {
+                    "description": "The page number of this set of results, where the page length is set by\nthe count property.",
+                    "format": "int32",
+                    "type": "integer"
+                  },
+                  "title": {
+                    "description": "A description of the query.",
+                    "type": "string"
+                  },
+                  "totalResults": {
+                    "description": "Estimated number of total search results. May not be accurate.",
+                    "format": "int64",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
             },
-            "type": "array"
+            "previousPage": {
+              "description": "Metadata representing the previous page of results, if applicable.",
+              "items": {
+                "description": "Custom search request metadata.",
+                "properties": {
+                  "count": {
+                    "description": "Number of search results returned in this set.",
+                    "format": "int32",
+                    "type": "integer"
+                  },
+                  "cr": {
+                    "description": "Restricts search results to documents originating in a particular\ncountry. You may use Boolean operators in the cr parameter's value.",
+                    "type": "string"
+                  },
+                  "cx": {
+                    "description": "The identifier of a custom search engine created using the Custom Search\nControl Panel, if specified in request. This is a custom property not\ndefined in the OpenSearch spec.",
+                    "type": "string"
+                  },
+                  "dateRestrict": {
+                    "description": "Restricts results to URLs based on date. Supported values include:\nd[number]: requests results from the specified number of past days.\nw[number]: requests results from the specified number of past weeks.\nm[number]: requests results from the specified number of past months.\ny[number]: requests results from the specified number of past years.",
+                    "type": "string"
+                  },
+                  "disableCnTwTranslation": {
+                    "description": "Enables or disables the Simplified and Traditional Chinese Search\nfeature. Supported values are: 0: enabled (default) 1: disabled",
+                    "type": "string"
+                  },
+                  "exactTerms": {
+                    "description": "Identifies a phrase that all documents in the search results must\ncontain.",
+                    "type": "string"
+                  },
+                  "excludeTerms": {
+                    "description": "Identifies a word or phrase that should not appear in any documents in\nthe search results.",
+                    "type": "string"
+                  },
+                  "fileType": {
+                    "description": "Restricts results to files of a specified extension. Filetypes supported\nby Google include: Adobe Portable Document Format (pdf) Adobe PostScript\n(ps) Lotus 1-2-3 (wk1, wk2, wk3, wk4, wk5, wki, wks, wku) Lotus WordPro\n(lwp) Macwrite (mw) Microsoft Excel (xls) Microsoft PowerPoint (ppt)\nMicrosoft Word (doc)\nMicrosoft Works (wks, wps, wdb)\nMicrosoft Write (wri)\nRich Text Format (rtf)\nShockwave Flash (swf)\nText (ans, txt).",
+                    "type": "string"
+                  },
+                  "filter": {
+                    "description": "Activates or deactivates the automatic filtering of Google search\nresults. The default value for the filter parameter is 1, which indicates\nthat the feature is enabled. Valid values for this parameter are: 0:\nDisabled 1: Enabled",
+                    "type": "string"
+                  },
+                  "gl": {
+                    "description": "Boosts search results whose country of origin matches the parameter\nvalue. Specifying a gl parameter value in WebSearch requests should\nimprove the relevance of results. This is particularly true for\ninternational customers and, even more specifically, for customers in\nEnglish-speaking countries other than the United States.",
+                    "type": "string"
+                  },
+                  "googleHost": {
+                    "description": "Specifies the Google domain (for example, google.com, google.de, or\ngoogle.fr) to which the search should be limited.",
+                    "type": "string"
+                  },
+                  "highRange": {
+                    "description": "Specifies the ending value for a search range. Use cse:lowRange and\ncse:highrange to append an inclusive search range of lowRange...highRange\nto the query.",
+                    "type": "string"
+                  },
+                  "hl": {
+                    "description": "Specifies the interface language (host language) of your user interface.\nExplicitly setting this parameter improves the performance and the\nquality of your search results.",
+                    "type": "string"
+                  },
+                  "hq": {
+                    "description": "Appends the specified query terms to the query, as if they were combined\nwith a logical AND operator.",
+                    "type": "string"
+                  },
+                  "imgColorType": {
+                    "description": "Restricts results to images of a specified color type. Supported values\nare: mono (black and white) gray (grayscale) color (color)",
+                    "type": "string"
+                  },
+                  "imgDominantColor": {
+                    "description": "Restricts results to images with a specific dominant color. Supported\nvalues are: red orange yellow green teal blue purple pink white gray\nblack\nbrown",
+                    "type": "string"
+                  },
+                  "imgSize": {
+                    "description": "Restricts results to images of a specified size. Supported values are:\nicon (small)\nsmall|medium|large|xlarge (medium)\nxxlarge (large)\nhuge (extra-large)",
+                    "type": "string"
+                  },
+                  "imgType": {
+                    "description": "Restricts results to images of a specified type. Supported values are:\nclipart (Clip art)\nface (Face)\nlineart (Line drawing)\nphoto (Photo)\nanimated (Animated)\nstock (Stock)",
+                    "type": "string"
+                  },
+                  "inputEncoding": {
+                    "description": "The character encoding supported for search requests.",
+                    "type": "string"
+                  },
+                  "language": {
+                    "description": "The language of the search results.",
+                    "type": "string"
+                  },
+                  "linkSite": {
+                    "description": "Specifies that all results should contain a link to a specific URL.",
+                    "type": "string"
+                  },
+                  "lowRange": {
+                    "description": "Specifies the starting value for a search range. Use cse:lowRange and\ncse:highrange to append an inclusive search range of lowRange...highRange\nto the query.",
+                    "type": "string"
+                  },
+                  "orTerms": {
+                    "description": "Provides additional search terms to check for in a document, where each\ndocument in the search results must contain at least one of the\nadditional search terms. You can also use the Boolean OR query term for\nthis type of query.",
+                    "type": "string"
+                  },
+                  "outputEncoding": {
+                    "description": "The character encoding supported for search results.",
+                    "type": "string"
+                  },
+                  "relatedSite": {
+                    "description": "Specifies that all search results should be pages that are related to the\nspecified URL. The parameter value should be a URL.",
+                    "type": "string"
+                  },
+                  "rights": {
+                    "description": "Filters based on licensing. Supported values include:\ncc_publicdomain\ncc_attribute\ncc_sharealike\ncc_noncommercial\ncc_nonderived",
+                    "type": "string"
+                  },
+                  "safe": {
+                    "description": "Specifies the  SafeSearch level used for filtering out adult results.\nThis is a custom property not defined in the OpenSearch spec. Valid\nparameter values are: off: Disable SafeSearch active: Enable SafeSearch",
+                    "type": "string"
+                  },
+                  "searchTerms": {
+                    "description": "The search terms entered by the user.",
+                    "type": "string"
+                  },
+                  "searchType": {
+                    "description": "Allowed values are web or image. If unspecified, results are limited to\nwebpages.",
+                    "type": "string"
+                  },
+                  "siteSearch": {
+                    "description": "Restricts results to URLs from a specified site.",
+                    "type": "string"
+                  },
+                  "siteSearchFilter": {
+                    "description": "Specifies whether to include or exclude results from the site named in\nthe sitesearch parameter. Supported values are: i: include content from\nsite e: exclude content from site",
+                    "type": "string"
+                  },
+                  "sort": {
+                    "description": "Specifies that results should be sorted according to the specified\nexpression. For example, sort by date.",
+                    "type": "string"
+                  },
+                  "startIndex": {
+                    "description": "The index of the current set of search results into the total set of\nresults, where the index of the first result is 1.",
+                    "format": "int32",
+                    "type": "integer"
+                  },
+                  "startPage": {
+                    "description": "The page number of this set of results, where the page length is set by\nthe count property.",
+                    "format": "int32",
+                    "type": "integer"
+                  },
+                  "title": {
+                    "description": "A description of the query.",
+                    "type": "string"
+                  },
+                  "totalResults": {
+                    "description": "Estimated number of total search results. May not be accurate.",
+                    "format": "int64",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "request": {
+              "description": "Metadata representing the current request.",
+              "items": {
+                "description": "Custom search request metadata.",
+                "properties": {
+                  "count": {
+                    "description": "Number of search results returned in this set.",
+                    "format": "int32",
+                    "type": "integer"
+                  },
+                  "cr": {
+                    "description": "Restricts search results to documents originating in a particular\ncountry. You may use Boolean operators in the cr parameter's value.",
+                    "type": "string"
+                  },
+                  "cx": {
+                    "description": "The identifier of a custom search engine created using the Custom Search\nControl Panel, if specified in request. This is a custom property not\ndefined in the OpenSearch spec.",
+                    "type": "string"
+                  },
+                  "dateRestrict": {
+                    "description": "Restricts results to URLs based on date. Supported values include:\nd[number]: requests results from the specified number of past days.\nw[number]: requests results from the specified number of past weeks.\nm[number]: requests results from the specified number of past months.\ny[number]: requests results from the specified number of past years.",
+                    "type": "string"
+                  },
+                  "disableCnTwTranslation": {
+                    "description": "Enables or disables the Simplified and Traditional Chinese Search\nfeature. Supported values are: 0: enabled (default) 1: disabled",
+                    "type": "string"
+                  },
+                  "exactTerms": {
+                    "description": "Identifies a phrase that all documents in the search results must\ncontain.",
+                    "type": "string"
+                  },
+                  "excludeTerms": {
+                    "description": "Identifies a word or phrase that should not appear in any documents in\nthe search results.",
+                    "type": "string"
+                  },
+                  "fileType": {
+                    "description": "Restricts results to files of a specified extension. Filetypes supported\nby Google include: Adobe Portable Document Format (pdf) Adobe PostScript\n(ps) Lotus 1-2-3 (wk1, wk2, wk3, wk4, wk5, wki, wks, wku) Lotus WordPro\n(lwp) Macwrite (mw) Microsoft Excel (xls) Microsoft PowerPoint (ppt)\nMicrosoft Word (doc)\nMicrosoft Works (wks, wps, wdb)\nMicrosoft Write (wri)\nRich Text Format (rtf)\nShockwave Flash (swf)\nText (ans, txt).",
+                    "type": "string"
+                  },
+                  "filter": {
+                    "description": "Activates or deactivates the automatic filtering of Google search\nresults. The default value for the filter parameter is 1, which indicates\nthat the feature is enabled. Valid values for this parameter are: 0:\nDisabled 1: Enabled",
+                    "type": "string"
+                  },
+                  "gl": {
+                    "description": "Boosts search results whose country of origin matches the parameter\nvalue. Specifying a gl parameter value in WebSearch requests should\nimprove the relevance of results. This is particularly true for\ninternational customers and, even more specifically, for customers in\nEnglish-speaking countries other than the United States.",
+                    "type": "string"
+                  },
+                  "googleHost": {
+                    "description": "Specifies the Google domain (for example, google.com, google.de, or\ngoogle.fr) to which the search should be limited.",
+                    "type": "string"
+                  },
+                  "highRange": {
+                    "description": "Specifies the ending value for a search range. Use cse:lowRange and\ncse:highrange to append an inclusive search range of lowRange...highRange\nto the query.",
+                    "type": "string"
+                  },
+                  "hl": {
+                    "description": "Specifies the interface language (host language) of your user interface.\nExplicitly setting this parameter improves the performance and the\nquality of your search results.",
+                    "type": "string"
+                  },
+                  "hq": {
+                    "description": "Appends the specified query terms to the query, as if they were combined\nwith a logical AND operator.",
+                    "type": "string"
+                  },
+                  "imgColorType": {
+                    "description": "Restricts results to images of a specified color type. Supported values\nare: mono (black and white) gray (grayscale) color (color)",
+                    "type": "string"
+                  },
+                  "imgDominantColor": {
+                    "description": "Restricts results to images with a specific dominant color. Supported\nvalues are: red orange yellow green teal blue purple pink white gray\nblack\nbrown",
+                    "type": "string"
+                  },
+                  "imgSize": {
+                    "description": "Restricts results to images of a specified size. Supported values are:\nicon (small)\nsmall|medium|large|xlarge (medium)\nxxlarge (large)\nhuge (extra-large)",
+                    "type": "string"
+                  },
+                  "imgType": {
+                    "description": "Restricts results to images of a specified type. Supported values are:\nclipart (Clip art)\nface (Face)\nlineart (Line drawing)\nphoto (Photo)\nanimated (Animated)\nstock (Stock)",
+                    "type": "string"
+                  },
+                  "inputEncoding": {
+                    "description": "The character encoding supported for search requests.",
+                    "type": "string"
+                  },
+                  "language": {
+                    "description": "The language of the search results.",
+                    "type": "string"
+                  },
+                  "linkSite": {
+                    "description": "Specifies that all results should contain a link to a specific URL.",
+                    "type": "string"
+                  },
+                  "lowRange": {
+                    "description": "Specifies the starting value for a search range. Use cse:lowRange and\ncse:highrange to append an inclusive search range of lowRange...highRange\nto the query.",
+                    "type": "string"
+                  },
+                  "orTerms": {
+                    "description": "Provides additional search terms to check for in a document, where each\ndocument in the search results must contain at least one of the\nadditional search terms. You can also use the Boolean OR query term for\nthis type of query.",
+                    "type": "string"
+                  },
+                  "outputEncoding": {
+                    "description": "The character encoding supported for search results.",
+                    "type": "string"
+                  },
+                  "relatedSite": {
+                    "description": "Specifies that all search results should be pages that are related to the\nspecified URL. The parameter value should be a URL.",
+                    "type": "string"
+                  },
+                  "rights": {
+                    "description": "Filters based on licensing. Supported values include:\ncc_publicdomain\ncc_attribute\ncc_sharealike\ncc_noncommercial\ncc_nonderived",
+                    "type": "string"
+                  },
+                  "safe": {
+                    "description": "Specifies the  SafeSearch level used for filtering out adult results.\nThis is a custom property not defined in the OpenSearch spec. Valid\nparameter values are: off: Disable SafeSearch active: Enable SafeSearch",
+                    "type": "string"
+                  },
+                  "searchTerms": {
+                    "description": "The search terms entered by the user.",
+                    "type": "string"
+                  },
+                  "searchType": {
+                    "description": "Allowed values are web or image. If unspecified, results are limited to\nwebpages.",
+                    "type": "string"
+                  },
+                  "siteSearch": {
+                    "description": "Restricts results to URLs from a specified site.",
+                    "type": "string"
+                  },
+                  "siteSearchFilter": {
+                    "description": "Specifies whether to include or exclude results from the site named in\nthe sitesearch parameter. Supported values are: i: include content from\nsite e: exclude content from site",
+                    "type": "string"
+                  },
+                  "sort": {
+                    "description": "Specifies that results should be sorted according to the specified\nexpression. For example, sort by date.",
+                    "type": "string"
+                  },
+                  "startIndex": {
+                    "description": "The index of the current set of search results into the total set of\nresults, where the index of the first result is 1.",
+                    "format": "int32",
+                    "type": "integer"
+                  },
+                  "startPage": {
+                    "description": "The page number of this set of results, where the page length is set by\nthe count property.",
+                    "format": "int32",
+                    "type": "integer"
+                  },
+                  "title": {
+                    "description": "A description of the query.",
+                    "type": "string"
+                  },
+                  "totalResults": {
+                    "description": "Estimated number of total search results. May not be accurate.",
+                    "format": "int64",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
           },
           "type": "object"
         },
         "searchInformation": {
+          "description": "Metadata about a search operation.",
           "properties": {
             "formattedSearchTime": {
+              "description": "The time taken for the server to return search results, formatted\naccording to locale style.",
               "type": "string"
             },
             "formattedTotalResults": {
+              "description": "The total number of search results, formatted according to locale style.",
               "type": "string"
             },
             "searchTime": {
+              "description": "The time taken for the server to return search results.",
               "format": "double",
               "type": "number"
             },
             "totalResults": {
-              "format": "int64",
+              "description": "The total number of search results returned by the query.",
               "type": "string"
             }
           },
           "type": "object"
         },
         "spelling": {
+          "description": "Spell correction information for a query.",
           "properties": {
             "correctedQuery": {
+              "description": "The corrected query.",
               "type": "string"
             },
             "htmlCorrectedQuery": {
+              "description": "The corrected query, formatted in HTML.",
               "type": "string"
             }
           },
           "type": "object"
         },
         "url": {
+          "description": "OpenSearch template and URL.",
           "properties": {
             "template": {
-              "default": "https://www.googleapis.com/customsearch/v1?q={searchTerms}\u0026num={count?}\u0026start={startIndex?}\u0026lr={language?}\u0026safe={safe?}\u0026cx={cx?}\u0026sort={sort?}\u0026filter={filter?}\u0026gl={gl?}\u0026cr={cr?}\u0026googlehost={googleHost?}\u0026c2coff={disableCnTwTranslation?}\u0026hq={hq?}\u0026hl={hl?}\u0026siteSearch={siteSearch?}\u0026siteSearchFilter={siteSearchFilter?}\u0026exactTerms={exactTerms?}\u0026excludeTerms={excludeTerms?}\u0026linkSite={linkSite?}\u0026orTerms={orTerms?}\u0026relatedSite={relatedSite?}\u0026dateRestrict={dateRestrict?}\u0026lowRange={lowRange?}\u0026highRange={highRange?}\u0026searchType={searchType}\u0026fileType={fileType?}\u0026rights={rights?}\u0026imgSize={imgSize?}\u0026imgType={imgType?}\u0026imgColorType={imgColorType?}\u0026imgDominantColor={imgDominantColor?}\u0026alt=json",
+              "description": "The actual OpenSearch template for this API.",
               "type": "string"
             },
             "type": {
-              "default": "application/json",
+              "description": "The MIME type of the OpenSearch URL template for the Custom Search API.",
               "type": "string"
             }
           },
@@ -1160,7 +1318,8 @@
       "type": "object"
     }
   },
-  "servicePath": "customsearch/",
-  "title": "CustomSearch API",
-  "version": "v1"
+  "servicePath": "",
+  "title": "Custom Search API",
+  "version": "v1",
+  "version_module": true
 }

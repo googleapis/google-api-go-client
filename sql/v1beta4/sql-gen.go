@@ -39,10 +39,6 @@
 //   sqlService, err := sql.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
-//
-// Deprecated: please use "google.golang.org/api/sqladmin/v1beta4" instead. This
-// client was accidentally generated under the wrong package. The correct package
-// is "sqladmin". This client will be removed in a future release.
 package sql // import "google.golang.org/api/sql/v1beta4"
 
 import (
@@ -217,7 +213,6 @@ type OperationsService struct {
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.Instances = NewProjectsInstancesService(s)
-	rs.Locations = NewProjectsLocationsService(s)
 	return rs
 }
 
@@ -225,8 +220,6 @@ type ProjectsService struct {
 	s *Service
 
 	Instances *ProjectsInstancesService
-
-	Locations *ProjectsLocationsService
 }
 
 func NewProjectsInstancesService(s *Service) *ProjectsInstancesService {
@@ -235,27 +228,6 @@ func NewProjectsInstancesService(s *Service) *ProjectsInstancesService {
 }
 
 type ProjectsInstancesService struct {
-	s *Service
-}
-
-func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
-	rs := &ProjectsLocationsService{s: s}
-	rs.Instances = NewProjectsLocationsInstancesService(s)
-	return rs
-}
-
-type ProjectsLocationsService struct {
-	s *Service
-
-	Instances *ProjectsLocationsInstancesService
-}
-
-func NewProjectsLocationsInstancesService(s *Service) *ProjectsLocationsInstancesService {
-	rs := &ProjectsLocationsInstancesService{s: s}
-	return rs
-}
-
-type ProjectsLocationsInstancesService struct {
 	s *Service
 }
 
@@ -368,9 +340,9 @@ func (s *ApiWarning) MarshalJSON() ([]byte, error) {
 
 // BackupConfiguration: Database instance backup configuration.
 type BackupConfiguration struct {
-	// BinaryLogEnabled: Whether binary log is enabled. If backup
-	// configuration is disabled, binary
-	// log must be disabled as well.
+	// BinaryLogEnabled: (MySQL only) Whether binary log is enabled. If
+	// backup configuration is
+	// disabled, binarylog must be disabled as well.
 	BinaryLogEnabled bool `json:"binaryLogEnabled,omitempty"`
 
 	// Enabled: Whether this configuration is enabled.
@@ -834,6 +806,7 @@ type DatabaseInstance struct {
 	// Express.
 	//   "SQLSERVER_2017_WEB" - The database version is SQL Server 2017 Web.
 	//   "POSTGRES_10" - The database version is PostgreSQL 10.
+	//   "POSTGRES_12" - The database version is PostgreSQL 12.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 
 	// DiskEncryptionConfiguration: Disk encryption configuration specific
@@ -1571,6 +1544,7 @@ type Flag struct {
 	// Express.
 	//   "SQLSERVER_2017_WEB" - The database version is SQL Server 2017 Web.
 	//   "POSTGRES_10" - The database version is PostgreSQL 10.
+	//   "POSTGRES_12" - The database version is PostgreSQL 12.
 	AppliesTo []string `json:"appliesTo,omitempty"`
 
 	// InBeta: Whether or not the flag is considered in beta.
@@ -3008,8 +2982,8 @@ type Settings struct {
 	// instances only.
 	AuthorizedGaeApplications []string `json:"authorizedGaeApplications,omitempty"`
 
-	// AvailabilityType: Availability type (PostgreSQL instances only).
-	// Potential values:
+	// AvailabilityType: Availability type (PostgreSQL and MySQL instances
+	// only). Potential values:
 	// <br><code>ZONAL</code>: The instance serves data from only one
 	// zone.
 	// Outages in that zone affect data accessibility.
@@ -3206,6 +3180,11 @@ type SqlExternalSyncSettingError struct {
 	//   "INCOMPATIBLE_DATABASE_VERSION"
 	//   "REPLICA_ALREADY_SETUP"
 	//   "INSUFFICIENT_PRIVILEGE"
+	//   "UNSUPPORTED_MIGRATION_TYPE" - Unsupported migration type.
+	//   "NO_PGLOGICAL_INSTALLED" - No pglogical extension installed on
+	// databases, applicable for postgres.
+	//   "PGLOGICAL_NODE_ALREADY_EXISTS" - pglogical node already exists on
+	// databases, applicable for postgres.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Detail") to
@@ -3877,17 +3856,6 @@ func (r *BackupRunsService) Delete(project string, instance string, id int64) *B
 	return c
 }
 
-// ResourceName sets the optional parameter "resourceName": The name of
-// the backupRun to
-// delete.
-// Format:
-// projects/{project}/locations/{location}/instances/{ins
-// tance}/backupRuns/{backupRun}
-func (c *BackupRunsDeleteCall) ResourceName(resourceName string) *BackupRunsDeleteCall {
-	c.urlParams_.Set("resourceName", resourceName)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3915,7 +3883,7 @@ func (c *BackupRunsDeleteCall) Header() http.Header {
 
 func (c *BackupRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4004,11 +3972,6 @@ func (c *BackupRunsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
-	//     },
-	//     "resourceName": {
-	//       "description": "The name of the backupRun to delete.\nFormat:\nprojects/{project}/locations/{location}/instances/{instance}/backupRuns/{backupRun}",
-	//       "location": "query",
-	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns/{id}",
@@ -4042,17 +4005,6 @@ func (r *BackupRunsService) Get(project string, instance string, id int64) *Back
 	c.project = project
 	c.instance = instance
 	c.id = id
-	return c
-}
-
-// ResourceName sets the optional parameter "resourceName": Name of the
-// resource
-// backupRun.
-// Format:
-// projects/{project}/locations/{location}/instances/{
-// instance}/backupRuns/{backupRun}
-func (c *BackupRunsGetCall) ResourceName(resourceName string) *BackupRunsGetCall {
-	c.urlParams_.Set("resourceName", resourceName)
 	return c
 }
 
@@ -4093,7 +4045,7 @@ func (c *BackupRunsGetCall) Header() http.Header {
 
 func (c *BackupRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4185,11 +4137,6 @@ func (c *BackupRunsGetCall) Do(opts ...googleapi.CallOption) (*BackupRun, error)
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
-	//     },
-	//     "resourceName": {
-	//       "description": "Name of the resource backupRun.\nFormat:\nprojects/{project}/locations/{location}/instances/{instance}/backupRuns/{backupRun}",
-	//       "location": "query",
-	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns/{id}",
@@ -4227,14 +4174,6 @@ func (r *BackupRunsService) Insert(project string, instance string, backuprun *B
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL should create this backupRun.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *BackupRunsInsertCall) Parent(parent string) *BackupRunsInsertCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4262,7 +4201,7 @@ func (c *BackupRunsInsertCall) Header() http.Header {
 
 func (c *BackupRunsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4342,11 +4281,6 @@ func (c *BackupRunsInsertCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL should create this backupRun.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
@@ -4407,14 +4341,6 @@ func (c *BackupRunsListCall) PageToken(pageToken string) *BackupRunsListCall {
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent, which owns
-// this collection of backupRuns.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *BackupRunsListCall) Parent(parent string) *BackupRunsListCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4452,7 +4378,7 @@ func (c *BackupRunsListCall) Header() http.Header {
 
 func (c *BackupRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4541,11 +4467,6 @@ func (c *BackupRunsListCall) Do(opts ...googleapi.CallOption) (*BackupRunsListRe
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent, which owns this collection of backupRuns.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
@@ -4607,17 +4528,6 @@ func (r *DatabasesService) Delete(project string, instance string, database stri
 	return c
 }
 
-// ResourceName sets the optional parameter "resourceName": The name of
-// the database to
-// delete.
-// Format:
-// projects/{project}/locations/{location}/instances/{ins
-// tance}/databases/{database}
-func (c *DatabasesDeleteCall) ResourceName(resourceName string) *DatabasesDeleteCall {
-	c.urlParams_.Set("resourceName", resourceName)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4645,7 +4555,7 @@ func (c *DatabasesDeleteCall) Header() http.Header {
 
 func (c *DatabasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4733,11 +4643,6 @@ func (c *DatabasesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
-	//     },
-	//     "resourceName": {
-	//       "description": "The name of the database to delete.\nFormat:\nprojects/{project}/locations/{location}/instances/{instance}/databases/{database}",
-	//       "location": "query",
-	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}",
@@ -4773,17 +4678,6 @@ func (r *DatabasesService) Get(project string, instance string, database string)
 	c.project = project
 	c.instance = instance
 	c.database = database
-	return c
-}
-
-// ResourceName sets the optional parameter "resourceName": Name of the
-// resource
-// database.
-// Format:
-// projects/{project}/locations/{location}/instances/{i
-// nstance}/databases/{database}
-func (c *DatabasesGetCall) ResourceName(resourceName string) *DatabasesGetCall {
-	c.urlParams_.Set("resourceName", resourceName)
 	return c
 }
 
@@ -4824,7 +4718,7 @@ func (c *DatabasesGetCall) Header() http.Header {
 
 func (c *DatabasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4915,11 +4809,6 @@ func (c *DatabasesGetCall) Do(opts ...googleapi.CallOption) (*Database, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
-	//     },
-	//     "resourceName": {
-	//       "description": "Name of the resource database.\nFormat:\nprojects/{project}/locations/{location}/instances/{instance}/databases/{database}",
-	//       "location": "query",
-	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}",
@@ -4957,14 +4846,6 @@ func (r *DatabasesService) Insert(project string, instance string, database *Dat
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL should add this database.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *DatabasesInsertCall) Parent(parent string) *DatabasesInsertCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4992,7 +4873,7 @@ func (c *DatabasesInsertCall) Header() http.Header {
 
 func (c *DatabasesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5072,11 +4953,6 @@ func (c *DatabasesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL should add this database.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
@@ -5119,14 +4995,6 @@ func (r *DatabasesService) List(project string, instance string) *DatabasesListC
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent, which owns
-// this collection of databases.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *DatabasesListCall) Parent(parent string) *DatabasesListCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5164,7 +5032,7 @@ func (c *DatabasesListCall) Header() http.Header {
 
 func (c *DatabasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5242,11 +5110,6 @@ func (c *DatabasesListCall) Do(opts ...googleapi.CallOption) (*DatabasesListResp
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent, which owns this collection of databases.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
@@ -5281,34 +5144,13 @@ type DatabasesPatchCall struct {
 
 // Patch: Partially updates a resource containing information about a
 // database inside
-// a Cloud SQL instance. This method supports patch
-// semantics.
-// <aside
-// class="caution"><strong>Caution:</strong> This is not a partial
-// update, so
-// you must include values for all the settings that you want to retain.
-// For
-// partial updates, use
-// <a
-// href="/sql/docs/db_path/admin-api/rest/v1beta4/instances/update">up
-// date</a>.</aside>
+// a Cloud SQL instance. This method supports patch semantics.
 func (r *DatabasesService) Patch(project string, instance string, database string, database2 *Database) *DatabasesPatchCall {
 	c := &DatabasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.instance = instance
 	c.database = database
 	c.database2 = database2
-	return c
-}
-
-// ResourceName sets the optional parameter "resourceName": The name of
-// the database for Cloud SQL to
-// update.
-// Format:
-// projects/{project}/locations/{location}/instances/{ins
-// tance}/databases/{database}
-func (c *DatabasesPatchCall) ResourceName(resourceName string) *DatabasesPatchCall {
-	c.urlParams_.Set("resourceName", resourceName)
 	return c
 }
 
@@ -5339,7 +5181,7 @@ func (c *DatabasesPatchCall) Header() http.Header {
 
 func (c *DatabasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5405,7 +5247,7 @@ func (c *DatabasesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Partially updates a resource containing information about a database inside\na Cloud SQL instance. This method supports patch semantics.\n\u003caside\nclass=\"caution\"\u003e\u003cstrong\u003eCaution:\u003c/strong\u003e This is not a partial update, so\nyou must include values for all the settings that you want to retain. For\npartial updates, use \u003ca\nhref=\"/sql/docs/db_path/admin-api/rest/v1beta4/instances/update\"\u003eupdate\u003c/a\u003e.\u003c/aside\u003e",
+	//   "description": "Partially updates a resource containing information about a database inside\na Cloud SQL instance. This method supports patch semantics.",
 	//   "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}",
 	//   "httpMethod": "PATCH",
 	//   "id": "sql.databases.patch",
@@ -5431,11 +5273,6 @@ func (c *DatabasesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "resourceName": {
-	//       "description": "The name of the database for Cloud SQL to update.\nFormat:\nprojects/{project}/locations/{location}/instances/{instance}/databases/{database}",
-	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -5479,17 +5316,6 @@ func (r *DatabasesService) Update(project string, instance string, database stri
 	return c
 }
 
-// ResourceName sets the optional parameter "resourceName": The name of
-// the database for Cloud SQL to
-// update.
-// Format:
-// projects/{project}/locations/{location}/instances/{ins
-// tance}/databases/{database}
-func (c *DatabasesUpdateCall) ResourceName(resourceName string) *DatabasesUpdateCall {
-	c.urlParams_.Set("resourceName", resourceName)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5517,7 +5343,7 @@ func (c *DatabasesUpdateCall) Header() http.Header {
 
 func (c *DatabasesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5610,11 +5436,6 @@ func (c *DatabasesUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
-	//     },
-	//     "resourceName": {
-	//       "description": "The name of the database for Cloud SQL to update.\nFormat:\nprojects/{project}/locations/{location}/instances/{instance}/databases/{database}",
-	//       "location": "query",
-	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}",
@@ -5694,7 +5515,7 @@ func (c *FlagsListCall) Header() http.Header {
 
 func (c *FlagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5804,14 +5625,6 @@ func (r *InstancesService) AddServerCa(project string, instance string) *Instanc
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL should add this server CA.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *InstancesAddServerCaCall) Parent(parent string) *InstancesAddServerCaCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5839,7 +5652,7 @@ func (c *InstancesAddServerCaCall) Header() http.Header {
 
 func (c *InstancesAddServerCaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5914,11 +5727,6 @@ func (c *InstancesAddServerCaCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL should add this server CA.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
@@ -5951,20 +5759,13 @@ type InstancesCloneCall struct {
 }
 
 // Clone: Creates a Cloud SQL instance as a clone of the source
-// instance.
+// instance. Using this
+// operation might cause your instance to restart.
 func (r *InstancesService) Clone(project string, instance string, instancesclonerequest *InstancesCloneRequest) *InstancesCloneCall {
 	c := &InstancesCloneCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.instance = instance
 	c.instancesclonerequest = instancesclonerequest
-	return c
-}
-
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL should clone this instance.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *InstancesCloneCall) Parent(parent string) *InstancesCloneCall {
-	c.urlParams_.Set("parent", parent)
 	return c
 }
 
@@ -5995,7 +5796,7 @@ func (c *InstancesCloneCall) Header() http.Header {
 
 func (c *InstancesCloneCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6060,7 +5861,7 @@ func (c *InstancesCloneCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a Cloud SQL instance as a clone of the source instance.",
+	//   "description": "Creates a Cloud SQL instance as a clone of the source instance. Using this\noperation might cause your instance to restart.",
 	//   "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/clone",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.clone",
@@ -6073,11 +5874,6 @@ func (c *InstancesCloneCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//       "description": "The ID of the Cloud SQL instance to be cloned (source). This does not\ninclude the project ID.",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL should clone this instance.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "project": {
@@ -6121,14 +5917,6 @@ func (r *InstancesService) Delete(project string, instance string) *InstancesDel
 	return c
 }
 
-// ResourceName sets the optional parameter "resourceName": The name of
-// database instance to delete.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *InstancesDeleteCall) ResourceName(resourceName string) *InstancesDeleteCall {
-	c.urlParams_.Set("resourceName", resourceName)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6156,7 +5944,7 @@ func (c *InstancesDeleteCall) Header() http.Header {
 
 func (c *InstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6236,11 +6024,6 @@ func (c *InstancesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
-	//     },
-	//     "resourceName": {
-	//       "description": "The name of database instance to delete.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}",
@@ -6278,14 +6061,6 @@ func (r *InstancesService) DemoteMaster(project string, instance string, instanc
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL demotes this master database instance.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *InstancesDemoteMasterCall) Parent(parent string) *InstancesDemoteMasterCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6313,7 +6088,7 @@ func (c *InstancesDemoteMasterCall) Header() http.Header {
 
 func (c *InstancesDemoteMasterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6393,11 +6168,6 @@ func (c *InstancesDemoteMasterCall) Do(opts ...googleapi.CallOption) (*Operation
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL demotes this master database instance.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "ID of the project that contains the instance.",
 	//       "location": "path",
@@ -6443,14 +6213,6 @@ func (r *InstancesService) Export(project string, instance string, instancesexpo
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL exports this database instance.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *InstancesExportCall) Parent(parent string) *InstancesExportCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6478,7 +6240,7 @@ func (c *InstancesExportCall) Header() http.Header {
 
 func (c *InstancesExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6558,11 +6320,6 @@ func (c *InstancesExportCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL exports this database instance.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the project that contains the instance to be exported.",
 	//       "location": "path",
@@ -6597,21 +6354,13 @@ type InstancesFailoverCall struct {
 }
 
 // Failover: Failover the instance to its failover replica instance.
+// Using this
+// operation might cause your instance to restart.
 func (r *InstancesService) Failover(project string, instance string, instancesfailoverrequest *InstancesFailoverRequest) *InstancesFailoverCall {
 	c := &InstancesFailoverCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.instance = instance
 	c.instancesfailoverrequest = instancesfailoverrequest
-	return c
-}
-
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL sends this database instance during a
-// failover.
-// Format:
-// projects/{project}/locations/{location}/instances/{instance}
-func (c *InstancesFailoverCall) Parent(parent string) *InstancesFailoverCall {
-	c.urlParams_.Set("parent", parent)
 	return c
 }
 
@@ -6642,7 +6391,7 @@ func (c *InstancesFailoverCall) Header() http.Header {
 
 func (c *InstancesFailoverCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6707,7 +6456,7 @@ func (c *InstancesFailoverCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Failover the instance to its failover replica instance.",
+	//   "description": "Failover the instance to its failover replica instance. Using this\noperation might cause your instance to restart.",
 	//   "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/failover",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.failover",
@@ -6720,11 +6469,6 @@ func (c *InstancesFailoverCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL sends this database instance during a\nfailover. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "project": {
@@ -6770,14 +6514,6 @@ func (r *InstancesService) Get(project string, instance string) *InstancesGetCal
 	return c
 }
 
-// ResourceName sets the optional parameter "resourceName": Name of the
-// resource database instance.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *InstancesGetCall) ResourceName(resourceName string) *InstancesGetCall {
-	c.urlParams_.Set("resourceName", resourceName)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6815,7 +6551,7 @@ func (c *InstancesGetCall) Header() http.Header {
 
 func (c *InstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6898,11 +6634,6 @@ func (c *InstancesGetCall) Do(opts ...googleapi.CallOption) (*DatabaseInstance, 
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
-	//     },
-	//     "resourceName": {
-	//       "description": "Name of the resource database instance.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}",
@@ -6940,14 +6671,6 @@ func (r *InstancesService) Import(project string, instance string, instancesimpo
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL imports this database instance.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *InstancesImportCall) Parent(parent string) *InstancesImportCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6975,7 +6698,7 @@ func (c *InstancesImportCall) Header() http.Header {
 
 func (c *InstancesImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7055,11 +6778,6 @@ func (c *InstancesImportCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL imports this database instance.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
@@ -7100,14 +6818,6 @@ func (r *InstancesService) Insert(project string, databaseinstance *DatabaseInst
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL creates this database instance.
-// Format: projects/{project}/locations/{location}
-func (c *InstancesInsertCall) Parent(parent string) *InstancesInsertCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7135,7 +6845,7 @@ func (c *InstancesInsertCall) Header() http.Header {
 
 func (c *InstancesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7207,11 +6917,6 @@ func (c *InstancesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//     "project"
 	//   ],
 	//   "parameters": {
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL creates this database instance.\nFormat: projects/{project}/locations/{location}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the project to which the newly created Cloud SQL instances\nshould belong.",
 	//       "location": "path",
@@ -7289,14 +6994,6 @@ func (c *InstancesListCall) PageToken(pageToken string) *InstancesListCall {
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent, which owns
-// this collection of database instances.
-// Format: projects/{project}/locations/{location}
-func (c *InstancesListCall) Parent(parent string) *InstancesListCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7334,7 +7031,7 @@ func (c *InstancesListCall) Header() http.Header {
 
 func (c *InstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7420,11 +7117,6 @@ func (c *InstancesListCall) Do(opts ...googleapi.CallOption) (*InstancesListResp
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent, which owns this collection of database instances.\nFormat: projects/{project}/locations/{location}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the project for which to list Cloud SQL instances.",
 	//       "location": "path",
@@ -7493,14 +7185,6 @@ func (r *InstancesService) ListServerCas(project string, instance string) *Insta
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent, which owns
-// this collection of server CAs.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *InstancesListServerCasCall) Parent(parent string) *InstancesListServerCasCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7538,7 +7222,7 @@ func (c *InstancesListServerCasCall) Header() http.Header {
 
 func (c *InstancesListServerCasCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7616,11 +7300,6 @@ func (c *InstancesListServerCasCall) Do(opts ...googleapi.CallOption) (*Instance
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent, which owns this collection of server CAs.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
@@ -7662,14 +7341,6 @@ func (r *InstancesService) Patch(project string, instance string, databaseinstan
 	return c
 }
 
-// ResourceName sets the optional parameter "resourceName": The name of
-// the database instance for Cloud SQL to update.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *InstancesPatchCall) ResourceName(resourceName string) *InstancesPatchCall {
-	c.urlParams_.Set("resourceName", resourceName)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7697,7 +7368,7 @@ func (c *InstancesPatchCall) Header() http.Header {
 
 func (c *InstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7782,11 +7453,6 @@ func (c *InstancesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
-	//     },
-	//     "resourceName": {
-	//       "description": "The name of the database instance for Cloud SQL to update.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}",
@@ -7817,18 +7483,11 @@ type InstancesPromoteReplicaCall struct {
 
 // PromoteReplica: Promotes the read replica instance to be a
 // stand-alone Cloud SQL instance.
+// Using this operation might cause your instance to restart.
 func (r *InstancesService) PromoteReplica(project string, instance string) *InstancesPromoteReplicaCall {
 	c := &InstancesPromoteReplicaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.instance = instance
-	return c
-}
-
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL promotes this replica database
-// instance. Format: projects/{project}/locations/{location}
-func (c *InstancesPromoteReplicaCall) Parent(parent string) *InstancesPromoteReplicaCall {
-	c.urlParams_.Set("parent", parent)
 	return c
 }
 
@@ -7859,7 +7518,7 @@ func (c *InstancesPromoteReplicaCall) Header() http.Header {
 
 func (c *InstancesPromoteReplicaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7919,7 +7578,7 @@ func (c *InstancesPromoteReplicaCall) Do(opts ...googleapi.CallOption) (*Operati
 	}
 	return ret, nil
 	// {
-	//   "description": "Promotes the read replica instance to be a stand-alone Cloud SQL instance.",
+	//   "description": "Promotes the read replica instance to be a stand-alone Cloud SQL instance.\nUsing this operation might cause your instance to restart.",
 	//   "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/promoteReplica",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.promoteReplica",
@@ -7932,11 +7591,6 @@ func (c *InstancesPromoteReplicaCall) Do(opts ...googleapi.CallOption) (*Operati
 	//       "description": "Cloud SQL read replica instance name.",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL promotes this replica database\ninstance. Format: projects/{project}/locations/{location}",
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "project": {
@@ -7979,14 +7633,6 @@ func (r *InstancesService) ResetSslConfig(project string, instance string) *Inst
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL resets this SSL config.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *InstancesResetSslConfigCall) Parent(parent string) *InstancesResetSslConfigCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8014,7 +7660,7 @@ func (c *InstancesResetSslConfigCall) Header() http.Header {
 
 func (c *InstancesResetSslConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8089,11 +7735,6 @@ func (c *InstancesResetSslConfigCall) Do(opts ...googleapi.CallOption) (*Operati
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL resets this SSL config.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
@@ -8132,14 +7773,6 @@ func (r *InstancesService) Restart(project string, instance string) *InstancesRe
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL restarts this database instance.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *InstancesRestartCall) Parent(parent string) *InstancesRestartCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8167,7 +7800,7 @@ func (c *InstancesRestartCall) Header() http.Header {
 
 func (c *InstancesRestartCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8242,11 +7875,6 @@ func (c *InstancesRestartCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL restarts this database instance.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the project that contains the instance to be restarted.",
 	//       "location": "path",
@@ -8278,22 +7906,14 @@ type InstancesRestoreBackupCall struct {
 	header_                       http.Header
 }
 
-// RestoreBackup: Restores a backup of a Cloud SQL instance.
+// RestoreBackup: Restores a backup of a Cloud SQL instance. Using this
+// operation might cause
+// your instance to restart.
 func (r *InstancesService) RestoreBackup(project string, instance string, instancesrestorebackuprequest *InstancesRestoreBackupRequest) *InstancesRestoreBackupCall {
 	c := &InstancesRestoreBackupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.instance = instance
 	c.instancesrestorebackuprequest = instancesrestorebackuprequest
-	return c
-}
-
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL restores this database instance from
-// backup.
-// Format:
-// projects/{project}/locations/{location}/instances/{instance}
-func (c *InstancesRestoreBackupCall) Parent(parent string) *InstancesRestoreBackupCall {
-	c.urlParams_.Set("parent", parent)
 	return c
 }
 
@@ -8324,7 +7944,7 @@ func (c *InstancesRestoreBackupCall) Header() http.Header {
 
 func (c *InstancesRestoreBackupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8389,7 +8009,7 @@ func (c *InstancesRestoreBackupCall) Do(opts ...googleapi.CallOption) (*Operatio
 	}
 	return ret, nil
 	// {
-	//   "description": "Restores a backup of a Cloud SQL instance.",
+	//   "description": "Restores a backup of a Cloud SQL instance. Using this operation might cause\nyour instance to restart.",
 	//   "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/restoreBackup",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.restoreBackup",
@@ -8402,11 +8022,6 @@ func (c *InstancesRestoreBackupCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL restores this database instance from\nbackup. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "project": {
@@ -8454,14 +8069,6 @@ func (r *InstancesService) RotateServerCa(project string, instance string, insta
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL rotates these server CAs.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *InstancesRotateServerCaCall) Parent(parent string) *InstancesRotateServerCaCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8489,7 +8096,7 @@ func (c *InstancesRotateServerCaCall) Header() http.Header {
 
 func (c *InstancesRotateServerCaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8569,11 +8176,6 @@ func (c *InstancesRotateServerCaCall) Do(opts ...googleapi.CallOption) (*Operati
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL rotates these server CAs.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
@@ -8615,16 +8217,6 @@ func (r *InstancesService) StartReplica(project string, instance string) *Instan
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL starts this database instance
-// replication.
-// Format:
-// projects/{project}/locations/{location}/instances/{instance}
-func (c *InstancesStartReplicaCall) Parent(parent string) *InstancesStartReplicaCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8652,7 +8244,7 @@ func (c *InstancesStartReplicaCall) Header() http.Header {
 
 func (c *InstancesStartReplicaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8727,11 +8319,6 @@ func (c *InstancesStartReplicaCall) Do(opts ...googleapi.CallOption) (*Operation
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL starts this database instance\nreplication. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "ID of the project that contains the read replica.",
 	//       "location": "path",
@@ -8770,16 +8357,6 @@ func (r *InstancesService) StopReplica(project string, instance string) *Instanc
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL stops this database instance
-// replication.
-// Format:
-// projects/{project}/locations/{location}/instances/{instance}
-func (c *InstancesStopReplicaCall) Parent(parent string) *InstancesStopReplicaCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8807,7 +8384,7 @@ func (c *InstancesStopReplicaCall) Header() http.Header {
 
 func (c *InstancesStopReplicaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8882,11 +8459,6 @@ func (c *InstancesStopReplicaCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL stops this database instance\nreplication. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "ID of the project that contains the read replica.",
 	//       "location": "path",
@@ -8927,14 +8499,6 @@ func (r *InstancesService) TruncateLog(project string, instance string, instance
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL truncates this log.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *InstancesTruncateLogCall) Parent(parent string) *InstancesTruncateLogCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8962,7 +8526,7 @@ func (c *InstancesTruncateLogCall) Header() http.Header {
 
 func (c *InstancesTruncateLogCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9042,11 +8606,6 @@ func (c *InstancesTruncateLogCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL truncates this log.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the Cloud SQL project.",
 	//       "location": "path",
@@ -9081,20 +8640,14 @@ type InstancesUpdateCall struct {
 	header_          http.Header
 }
 
-// Update: Updates settings of a Cloud SQL instance.
+// Update: Updates settings of a Cloud SQL instance. Using this
+// operation might cause
+// your instance to restart.
 func (r *InstancesService) Update(project string, instance string, databaseinstance *DatabaseInstance) *InstancesUpdateCall {
 	c := &InstancesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.instance = instance
 	c.databaseinstance = databaseinstance
-	return c
-}
-
-// ResourceName sets the optional parameter "resourceName": The name of
-// the database instance for Cloud SQL to update.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *InstancesUpdateCall) ResourceName(resourceName string) *InstancesUpdateCall {
-	c.urlParams_.Set("resourceName", resourceName)
 	return c
 }
 
@@ -9125,7 +8678,7 @@ func (c *InstancesUpdateCall) Header() http.Header {
 
 func (c *InstancesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9190,7 +8743,7 @@ func (c *InstancesUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates settings of a Cloud SQL instance.",
+	//   "description": "Updates settings of a Cloud SQL instance. Using this operation might cause\nyour instance to restart.",
 	//   "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}",
 	//   "httpMethod": "PUT",
 	//   "id": "sql.instances.update",
@@ -9209,11 +8762,6 @@ func (c *InstancesUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "resourceName": {
-	//       "description": "The name of the database instance for Cloud SQL to update.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -9250,15 +8798,6 @@ func (r *OperationsService) Get(project string, operation string) *OperationsGet
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.operation = operation
-	return c
-}
-
-// ResourceName sets the optional parameter "resourceName": The name of
-// the operation for Cloud SQL to get.
-// Format:
-// projects/{project}/locations/{location}/operations/{operation}
-func (c *OperationsGetCall) ResourceName(resourceName string) *OperationsGetCall {
-	c.urlParams_.Set("resourceName", resourceName)
 	return c
 }
 
@@ -9299,7 +8838,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9382,11 +8921,6 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
-	//     },
-	//     "resourceName": {
-	//       "description": "The name of the operation for Cloud SQL to get.\nFormat: projects/{project}/locations/{location}/operations/{operation}",
-	//       "location": "query",
-	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/operations/{operation}",
@@ -9444,17 +8978,6 @@ func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
 	return c
 }
 
-// Parent sets the optional parameter "parent": Indirect parent. The
-// direct parent should combine with the instance name,
-// which owns this collection of
-// operations.
-// Format:
-// projects/{project}/locations/{location}
-func (c *OperationsListCall) Parent(parent string) *OperationsListCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -9492,7 +9015,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9578,11 +9101,6 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*OperationsListRe
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "Indirect parent. The direct parent should combine with the instance name,\nwhich owns this collection of operations.\nFormat:\nprojects/{project}/locations/{location}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
@@ -9645,16 +9163,6 @@ func (r *ProjectsInstancesService) RescheduleMaintenance(project string, instanc
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL reshedule this database instance's
-// maintenance.
-// Format:
-// projects/{project}/locations/{location}/instances/{instance}
-func (c *ProjectsInstancesRescheduleMaintenanceCall) Parent(parent string) *ProjectsInstancesRescheduleMaintenanceCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -9682,7 +9190,7 @@ func (c *ProjectsInstancesRescheduleMaintenanceCall) Header() http.Header {
 
 func (c *ProjectsInstancesRescheduleMaintenanceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9762,11 +9270,6 @@ func (c *ProjectsInstancesRescheduleMaintenanceCall) Do(opts ...googleapi.CallOp
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL reshedule this database instance's\nmaintenance. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "ID of the project that contains the instance.",
 	//       "location": "path",
@@ -9808,16 +9311,6 @@ func (r *ProjectsInstancesService) StartExternalSync(project string, instance st
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL starts this database instance
-// external sync.
-// Format:
-// projects/{project}/locations/{location}/instances/{instance}
-func (c *ProjectsInstancesStartExternalSyncCall) Parent(parent string) *ProjectsInstancesStartExternalSyncCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // SyncMode sets the optional parameter "syncMode": External sync mode
 //
 // Possible values:
@@ -9856,7 +9349,7 @@ func (c *ProjectsInstancesStartExternalSyncCall) Header() http.Header {
 
 func (c *ProjectsInstancesStartExternalSyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9931,11 +9424,6 @@ func (c *ProjectsInstancesStartExternalSyncCall) Do(opts ...googleapi.CallOption
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL starts this database instance\nexternal sync. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "ID of the project that contains the first generation instance.",
 	//       "location": "path",
@@ -9985,16 +9473,6 @@ func (r *ProjectsInstancesService) VerifyExternalSyncSettings(project string, in
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL verifies this database instance
-// external sync settings.
-// Format:
-// projects/{project}/locations/{location}/instances/{instance}
-func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) Parent(parent string) *ProjectsInstancesVerifyExternalSyncSettingsCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // SyncMode sets the optional parameter "syncMode": External sync mode
 //
 // Possible values:
@@ -10040,7 +9518,7 @@ func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) Header() http.Header {
 
 func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10117,11 +9595,6 @@ func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) Do(opts ...googleapi.C
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL verifies this database instance\nexternal sync settings. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
@@ -10145,539 +9618,6 @@ func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) Do(opts ...googleapi.C
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/verifyExternalSyncSettings",
-	//   "response": {
-	//     "$ref": "SqlInstancesVerifyExternalSyncSettingsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/sqlservice.admin"
-	//   ]
-	// }
-
-}
-
-// method id "sql.projects.locations.instances.rescheduleMaintenance":
-
-type ProjectsLocationsInstancesRescheduleMaintenanceCall struct {
-	s                                            *Service
-	parent                                       string
-	sqlinstancesreschedulemaintenancerequestbody *SqlInstancesRescheduleMaintenanceRequestBody
-	urlParams_                                   gensupport.URLParams
-	ctx_                                         context.Context
-	header_                                      http.Header
-}
-
-// RescheduleMaintenance: Reschedules the maintenance on the given
-// instance.
-func (r *ProjectsLocationsInstancesService) RescheduleMaintenance(parent string, sqlinstancesreschedulemaintenancerequestbody *SqlInstancesRescheduleMaintenanceRequestBody) *ProjectsLocationsInstancesRescheduleMaintenanceCall {
-	c := &ProjectsLocationsInstancesRescheduleMaintenanceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.sqlinstancesreschedulemaintenancerequestbody = sqlinstancesreschedulemaintenancerequestbody
-	return c
-}
-
-// Instance sets the optional parameter "instance": Cloud SQL instance
-// ID. This does not include the project ID.
-func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) Instance(instance string) *ProjectsLocationsInstancesRescheduleMaintenanceCall {
-	c.urlParams_.Set("instance", instance)
-	return c
-}
-
-// Project sets the optional parameter "project": ID of the project that
-// contains the instance.
-func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) Project(project string) *ProjectsLocationsInstancesRescheduleMaintenanceCall {
-	c.urlParams_.Set("project", project)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesRescheduleMaintenanceCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) Context(ctx context.Context) *ProjectsLocationsInstancesRescheduleMaintenanceCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.sqlinstancesreschedulemaintenancerequestbody)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "sql/v1beta4/{+parent}/rescheduleMaintenance")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "sql.projects.locations.instances.rescheduleMaintenance" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Reschedules the maintenance on the given instance.",
-	//   "flatPath": "sql/v1beta4/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/rescheduleMaintenance",
-	//   "httpMethod": "POST",
-	//   "id": "sql.projects.locations.instances.rescheduleMaintenance",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "instance": {
-	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL reshedule this database instance's\nmaintenance. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "project": {
-	//       "description": "ID of the project that contains the instance.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "sql/v1beta4/{+parent}/rescheduleMaintenance",
-	//   "request": {
-	//     "$ref": "SqlInstancesRescheduleMaintenanceRequestBody"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/sqlservice.admin"
-	//   ]
-	// }
-
-}
-
-// method id "sql.projects.locations.instances.startExternalSync":
-
-type ProjectsLocationsInstancesStartExternalSyncCall struct {
-	s          *Service
-	parent     string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// StartExternalSync: Start External master migration.
-func (r *ProjectsLocationsInstancesService) StartExternalSync(parent string) *ProjectsLocationsInstancesStartExternalSyncCall {
-	c := &ProjectsLocationsInstancesStartExternalSyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Instance sets the optional parameter "instance": Cloud SQL instance
-// ID. This does not include the project ID.
-func (c *ProjectsLocationsInstancesStartExternalSyncCall) Instance(instance string) *ProjectsLocationsInstancesStartExternalSyncCall {
-	c.urlParams_.Set("instance", instance)
-	return c
-}
-
-// Project sets the optional parameter "project": ID of the project that
-// contains the first generation instance.
-func (c *ProjectsLocationsInstancesStartExternalSyncCall) Project(project string) *ProjectsLocationsInstancesStartExternalSyncCall {
-	c.urlParams_.Set("project", project)
-	return c
-}
-
-// SyncMode sets the optional parameter "syncMode": External sync mode
-//
-// Possible values:
-//   "EXTERNAL_SYNC_MODE_UNSPECIFIED"
-//   "ONLINE"
-//   "OFFLINE"
-func (c *ProjectsLocationsInstancesStartExternalSyncCall) SyncMode(syncMode string) *ProjectsLocationsInstancesStartExternalSyncCall {
-	c.urlParams_.Set("syncMode", syncMode)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsInstancesStartExternalSyncCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesStartExternalSyncCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsInstancesStartExternalSyncCall) Context(ctx context.Context) *ProjectsLocationsInstancesStartExternalSyncCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsInstancesStartExternalSyncCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsInstancesStartExternalSyncCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "sql/v1beta4/{+parent}/startExternalSync")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "sql.projects.locations.instances.startExternalSync" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsInstancesStartExternalSyncCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Start External master migration.",
-	//   "flatPath": "sql/v1beta4/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/startExternalSync",
-	//   "httpMethod": "POST",
-	//   "id": "sql.projects.locations.instances.startExternalSync",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "instance": {
-	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL starts this database instance\nexternal sync. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "project": {
-	//       "description": "ID of the project that contains the first generation instance.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "syncMode": {
-	//       "description": "External sync mode",
-	//       "enum": [
-	//         "EXTERNAL_SYNC_MODE_UNSPECIFIED",
-	//         "ONLINE",
-	//         "OFFLINE"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "sql/v1beta4/{+parent}/startExternalSync",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/sqlservice.admin"
-	//   ]
-	// }
-
-}
-
-// method id "sql.projects.locations.instances.verifyExternalSyncSettings":
-
-type ProjectsLocationsInstancesVerifyExternalSyncSettingsCall struct {
-	s          *Service
-	parent     string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// VerifyExternalSyncSettings: Verify External master external sync
-// settings.
-func (r *ProjectsLocationsInstancesService) VerifyExternalSyncSettings(parent string) *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall {
-	c := &ProjectsLocationsInstancesVerifyExternalSyncSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Instance sets the optional parameter "instance": Cloud SQL instance
-// ID. This does not include the project ID.
-func (c *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall) Instance(instance string) *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall {
-	c.urlParams_.Set("instance", instance)
-	return c
-}
-
-// Project sets the optional parameter "project": Project ID of the
-// project that contains the instance.
-func (c *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall) Project(project string) *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall {
-	c.urlParams_.Set("project", project)
-	return c
-}
-
-// SyncMode sets the optional parameter "syncMode": External sync mode
-//
-// Possible values:
-//   "EXTERNAL_SYNC_MODE_UNSPECIFIED"
-//   "ONLINE"
-//   "OFFLINE"
-func (c *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall) SyncMode(syncMode string) *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall {
-	c.urlParams_.Set("syncMode", syncMode)
-	return c
-}
-
-// VerifyConnectionOnly sets the optional parameter
-// "verifyConnectionOnly": Flag to enable verifying connection only
-func (c *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall) VerifyConnectionOnly(verifyConnectionOnly bool) *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall {
-	c.urlParams_.Set("verifyConnectionOnly", fmt.Sprint(verifyConnectionOnly))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall) Context(ctx context.Context) *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "sql/v1beta4/{+parent}/verifyExternalSyncSettings")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "sql.projects.locations.instances.verifyExternalSyncSettings" call.
-// Exactly one of *SqlInstancesVerifyExternalSyncSettingsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *SqlInstancesVerifyExternalSyncSettingsResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsInstancesVerifyExternalSyncSettingsCall) Do(opts ...googleapi.CallOption) (*SqlInstancesVerifyExternalSyncSettingsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &SqlInstancesVerifyExternalSyncSettingsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Verify External master external sync settings.",
-	//   "flatPath": "sql/v1beta4/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/verifyExternalSyncSettings",
-	//   "httpMethod": "POST",
-	//   "id": "sql.projects.locations.instances.verifyExternalSyncSettings",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "instance": {
-	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL verifies this database instance\nexternal sync settings. Format:\nprojects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "project": {
-	//       "description": "Project ID of the project that contains the instance.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "syncMode": {
-	//       "description": "External sync mode",
-	//       "enum": [
-	//         "EXTERNAL_SYNC_MODE_UNSPECIFIED",
-	//         "ONLINE",
-	//         "OFFLINE"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "verifyConnectionOnly": {
-	//       "description": "Flag to enable verifying connection only",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "sql/v1beta4/{+parent}/verifyExternalSyncSettings",
 	//   "response": {
 	//     "$ref": "SqlInstancesVerifyExternalSyncSettingsResponse"
 	//   },
@@ -10716,14 +9656,6 @@ func (r *SslCertsService) CreateEphemeral(project string, instance string, sslce
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL creates this ephemeral certificate.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *SslCertsCreateEphemeralCall) Parent(parent string) *SslCertsCreateEphemeralCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -10751,7 +9683,7 @@ func (c *SslCertsCreateEphemeralCall) Header() http.Header {
 
 func (c *SslCertsCreateEphemeralCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10831,11 +9763,6 @@ func (c *SslCertsCreateEphemeralCall) Do(opts ...googleapi.CallOption) (*SslCert
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL creates this ephemeral certificate.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the Cloud SQL project.",
 	//       "location": "path",
@@ -10881,17 +9808,6 @@ func (r *SslCertsService) Delete(project string, instance string, sha1Fingerprin
 	return c
 }
 
-// ResourceName sets the optional parameter "resourceName": The name of
-// SSL certificate to
-// delete.
-// Format:
-// projects/{project}/locations/{location}/instances/{ins
-// tance}/sslCerts/{sslCert}
-func (c *SslCertsDeleteCall) ResourceName(resourceName string) *SslCertsDeleteCall {
-	c.urlParams_.Set("resourceName", resourceName)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -10919,7 +9835,7 @@ func (c *SslCertsDeleteCall) Header() http.Header {
 
 func (c *SslCertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11002,11 +9918,6 @@ func (c *SslCertsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "resourceName": {
-	//       "description": "The name of SSL certificate to delete.\nFormat:\nprojects/{project}/locations/{location}/instances/{instance}/sslCerts/{sslCert}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "sha1Fingerprint": {
 	//       "description": "Sha1 FingerPrint.",
 	//       "location": "path",
@@ -11052,17 +9963,6 @@ func (r *SslCertsService) Get(project string, instance string, sha1Fingerprint s
 	return c
 }
 
-// ResourceName sets the optional parameter "resourceName": Name of the
-// resource ssl
-// certificate.
-// Format:
-// projects/{project}/locations/{location}/instances
-// /{instance}/sslCerts/{sslCert}
-func (c *SslCertsGetCall) ResourceName(resourceName string) *SslCertsGetCall {
-	c.urlParams_.Set("resourceName", resourceName)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -11100,7 +10000,7 @@ func (c *SslCertsGetCall) Header() http.Header {
 
 func (c *SslCertsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11186,11 +10086,6 @@ func (c *SslCertsGetCall) Do(opts ...googleapi.CallOption) (*SslCert, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "resourceName": {
-	//       "description": "Name of the resource ssl certificate.\nFormat:\nprojects/{project}/locations/{location}/instances/{instance}/sslCerts/{sslCert}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "sha1Fingerprint": {
 	//       "description": "Sha1 FingerPrint.",
 	//       "location": "path",
@@ -11235,14 +10130,6 @@ func (r *SslCertsService) Insert(project string, instance string, sslcertsinsert
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL creates this SSL certificate.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *SslCertsInsertCall) Parent(parent string) *SslCertsInsertCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -11270,7 +10157,7 @@ func (c *SslCertsInsertCall) Header() http.Header {
 
 func (c *SslCertsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11350,11 +10237,6 @@ func (c *SslCertsInsertCall) Do(opts ...googleapi.CallOption) (*SslCertsInsertRe
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL creates this SSL certificate.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
@@ -11397,14 +10279,6 @@ func (r *SslCertsService) List(project string, instance string) *SslCertsListCal
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent, which owns
-// this collection of SSL certificates.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *SslCertsListCall) Parent(parent string) *SslCertsListCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -11442,7 +10316,7 @@ func (c *SslCertsListCall) Header() http.Header {
 
 func (c *SslCertsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11518,11 +10392,6 @@ func (c *SslCertsListCall) Do(opts ...googleapi.CallOption) (*SslCertsListRespon
 	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The parent, which owns this collection of SSL certificates.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "project": {
@@ -11603,7 +10472,7 @@ func (c *TiersListCall) Header() http.Header {
 
 func (c *TiersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11725,15 +10594,6 @@ func (c *UsersDeleteCall) Name(name string) *UsersDeleteCall {
 	return c
 }
 
-// ResourceName sets the optional parameter "resourceName": The name of
-// the user to delete.
-// Format:
-// projects/{project}/locations/{location}/instances/{instance}/users
-func (c *UsersDeleteCall) ResourceName(resourceName string) *UsersDeleteCall {
-	c.urlParams_.Set("resourceName", resourceName)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -11761,7 +10621,7 @@ func (c *UsersDeleteCall) Header() http.Header {
 
 func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11851,11 +10711,6 @@ func (c *UsersDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
-	//     },
-	//     "resourceName": {
-	//       "description": "The name of the user to delete.\nFormat: projects/{project}/locations/{location}/instances/{instance}/users",
-	//       "location": "query",
-	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/users",
@@ -11891,14 +10746,6 @@ func (r *UsersService) Insert(project string, instance string, user *User) *User
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource
-// where Cloud SQL creates this user.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *UsersInsertCall) Parent(parent string) *UsersInsertCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -11926,7 +10773,7 @@ func (c *UsersInsertCall) Header() http.Header {
 
 func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12006,11 +10853,6 @@ func (c *UsersInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent resource where Cloud SQL creates this user.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
@@ -12053,14 +10895,6 @@ func (r *UsersService) List(project string, instance string) *UsersListCall {
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent, which owns
-// this collection of users.
-// Format: projects/{project}/locations/{location}/instances/{instance}
-func (c *UsersListCall) Parent(parent string) *UsersListCall {
-	c.urlParams_.Set("parent", parent)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -12098,7 +10932,7 @@ func (c *UsersListCall) Header() http.Header {
 
 func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12176,11 +11010,6 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*UsersListResponse, er
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "parent": {
-	//       "description": "The parent, which owns this collection of users.\nFormat: projects/{project}/locations/{location}/instances/{instance}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "project": {
 	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
@@ -12235,15 +11064,6 @@ func (c *UsersUpdateCall) Name(name string) *UsersUpdateCall {
 	return c
 }
 
-// ResourceName sets the optional parameter "resourceName": The name of
-// the user for Cloud SQL to update.
-// Format:
-// projects/{project}/locations/{location}/instances/{instance}/users
-func (c *UsersUpdateCall) ResourceName(resourceName string) *UsersUpdateCall {
-	c.urlParams_.Set("resourceName", resourceName)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -12271,7 +11091,7 @@ func (c *UsersUpdateCall) Header() http.Header {
 
 func (c *UsersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12365,11 +11185,6 @@ func (c *UsersUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "resourceName": {
-	//       "description": "The name of the user for Cloud SQL to update.\nFormat: projects/{project}/locations/{location}/instances/{instance}/users",
-	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

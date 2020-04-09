@@ -22,6 +22,7 @@
   },
   "id": "composer:v1beta1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://composer.mtls.googleapis.com/",
   "name": "composer",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -400,7 +401,7 @@
       }
     }
   },
-  "revision": "20200219",
+  "revision": "20200313",
   "rootUrl": "https://composer.googleapis.com/",
   "schemas": {
     "AllowedIpRange": {
@@ -776,7 +777,11 @@
           "type": "boolean"
         },
         "masterIpv4CidrBlock": {
-          "description": "The IP range in CIDR notation to use for the hosted master network. This\nrange is used for assigning internal IP addresses to the cluster\nmaster or set of masters and to the internal load balancer virtual IP.\nThis range must not overlap with any other ranges in use\nwithin the cluster's network. If left blank, the default value of\n'172.16.0.0/28' is used.",
+          "description": "Optional. The CIDR block from which IPv4 range for GKE master will be reserved. If\nleft blank, the default value of '172.16.0.0/23' is used.",
+          "type": "string"
+        },
+        "masterIpv4ReservedRange": {
+          "description": "Output only. The IP range in CIDR notation to use for the hosted master network. This\nrange is used for assigning internal IP addresses to the cluster\nmaster or set of masters and to the internal load balancer virtual IP.\nThis range must not overlap with any other ranges in use\nwithin the cluster's network.",
           "type": "string"
         }
       },
@@ -786,6 +791,10 @@
       "description": "The configuration information for configuring a Private IP Cloud Composer\nenvironment.",
       "id": "PrivateEnvironmentConfig",
       "properties": {
+        "cloudSqlIpv4CidrBlock": {
+          "description": "Optional. The CIDR block from which IP range in tenant project will be reserved for\nCloud SQL. Needs to be disjoint from web_server_ipv4_cidr_block",
+          "type": "string"
+        },
         "enablePrivateEnvironment": {
           "description": "Optional. If `true`, a Private IP Cloud Composer environment is created.\nIf this field is true, `use_ip_aliases` must be true.",
           "type": "boolean"
@@ -793,6 +802,14 @@
         "privateClusterConfig": {
           "$ref": "PrivateClusterConfig",
           "description": "Optional. Configuration for the private GKE cluster for a Private IP\nCloud Composer environment."
+        },
+        "webServerIpv4CidrBlock": {
+          "description": "Optional. The CIDR block from which IP range for web server will be reserved. Needs\nto be disjoint from private_cluster_config.master_ipv4_cidr_block and\ncloud_sql_ipv4_cidr_block.",
+          "type": "string"
+        },
+        "webServerIpv4ReservedRange": {
+          "description": "Output only. The IP range reserved for the tenant project's App Engine VMs.",
+          "type": "string"
         }
       },
       "type": "object"

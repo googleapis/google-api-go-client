@@ -14,7 +14,7 @@
   "description": "Reports and modifies your advertising data in DoubleClick Search (for example, campaigns, ad groups, keywords, and conversions).",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/doubleclick-search/",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/V7jM5EsXc58zTkN0gQqOa8rHpsw\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/l7HhIqym_On_FzLotqB2Z1GmY6A\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -190,87 +190,6 @@
             "https://www.googleapis.com/auth/doubleclicksearch"
           ]
         },
-        "patch": {
-          "description": "Updates a batch of conversions in DoubleClick Search. This method supports patch semantics.",
-          "httpMethod": "PATCH",
-          "id": "doubleclicksearch.conversion.patch",
-          "parameterOrder": [
-            "advertiserId",
-            "agencyId",
-            "endDate",
-            "engineAccountId",
-            "rowCount",
-            "startDate",
-            "startRow"
-          ],
-          "parameters": {
-            "advertiserId": {
-              "description": "Numeric ID of the advertiser.",
-              "format": "int64",
-              "location": "query",
-              "required": true,
-              "type": "string"
-            },
-            "agencyId": {
-              "description": "Numeric ID of the agency.",
-              "format": "int64",
-              "location": "query",
-              "required": true,
-              "type": "string"
-            },
-            "endDate": {
-              "description": "Last date (inclusive) on which to retrieve conversions. Format is yyyymmdd.",
-              "format": "int32",
-              "location": "query",
-              "maximum": "99991231",
-              "minimum": "20091101",
-              "required": true,
-              "type": "integer"
-            },
-            "engineAccountId": {
-              "description": "Numeric ID of the engine account.",
-              "format": "int64",
-              "location": "query",
-              "required": true,
-              "type": "string"
-            },
-            "rowCount": {
-              "description": "The number of conversions to return per call.",
-              "format": "int32",
-              "location": "query",
-              "maximum": "1000",
-              "minimum": "1",
-              "required": true,
-              "type": "integer"
-            },
-            "startDate": {
-              "description": "First date (inclusive) on which to retrieve conversions. Format is yyyymmdd.",
-              "format": "int32",
-              "location": "query",
-              "maximum": "99991231",
-              "minimum": "20091101",
-              "required": true,
-              "type": "integer"
-            },
-            "startRow": {
-              "description": "The 0-based starting index for retrieving conversions results.",
-              "format": "uint32",
-              "location": "query",
-              "required": true,
-              "type": "integer"
-            }
-          },
-          "path": "conversion",
-          "request": {
-            "$ref": "ConversionList"
-          },
-          "response": {
-            "$ref": "ConversionList"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/doubleclicksearch"
-          ]
-        },
         "update": {
           "description": "Updates a batch of conversions in DoubleClick Search.",
           "httpMethod": "PUT",
@@ -431,7 +350,7 @@
       }
     }
   },
-  "revision": "20190821",
+  "revision": "20200331",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Availability": {

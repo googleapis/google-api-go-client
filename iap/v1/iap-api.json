@@ -487,9 +487,20 @@
       }
     }
   },
-  "revision": "20200309",
+  "revision": "20200327",
   "rootUrl": "https://iap.googleapis.com/",
   "schemas": {
+    "AccessDeniedPageSettings": {
+      "description": "Custom content configuration for access denied page.\nIAP allows customers to define a custom URI to use as the error page when\naccess is denied to users. If IAP prevents access to this page, the default\nIAP error page will be displayed instead.",
+      "id": "AccessDeniedPageSettings",
+      "properties": {
+        "accessDeniedPageUri": {
+          "description": "The URI to be redirected to when access is denied.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "AccessSettings": {
       "description": "Access related settings for IAP protected apps.",
       "id": "AccessSettings",
@@ -505,6 +516,10 @@
         "oauthSettings": {
           "$ref": "OAuthSettings",
           "description": "Settings to configure IAP's OAuth behavior."
+        },
+        "policyDelegationSettings": {
+          "$ref": "PolicyDelegationSettings",
+          "description": "Settings to configure Policy delegation for apps hosted in tenant projects.\nINTERNAL_ONLY."
         }
       },
       "type": "object"
@@ -513,6 +528,10 @@
       "description": "Wrapper over application specific settings for IAP.",
       "id": "ApplicationSettings",
       "properties": {
+        "accessDeniedPageSettings": {
+          "$ref": "AccessDeniedPageSettings",
+          "description": "Customization for Access Denied page."
+        },
         "csmSettings": {
           "$ref": "CsmSettings",
           "description": "Settings to configure IAP's behavior for a CSM mesh."
@@ -766,10 +785,75 @@
       },
       "type": "object"
     },
+    "PolicyDelegationSettings": {
+      "description": "PolicyDelegationConfig allows google-internal teams to use IAP for apps\nhosted in a tenant project. Using these settings, the app can delegate\npermission check to happen against the linked customer project.\nThis is only ever supposed to be used by google internal teams, hence the\nrestriction on the proto.",
+      "id": "PolicyDelegationSettings",
+      "properties": {
+        "iamPermission": {
+          "description": "Permission to check in IAM.",
+          "type": "string"
+        },
+        "iamServiceName": {
+          "description": "The DNS name of the service (e.g. \"resourcemanager.googleapis.com\").\nThis should be the domain name part of the full resource names (see\nhttps://aip.dev/122#full-resource-names), which is usually\nthe same as IamServiceSpec.service of the service where the resource type\nis defined.",
+          "type": "string"
+        },
+        "policyName": {
+          "$ref": "PolicyName",
+          "description": "Policy name to be checked"
+        },
+        "resource": {
+          "$ref": "Resource",
+          "description": "IAM resource to check permission on"
+        }
+      },
+      "type": "object"
+    },
+    "PolicyName": {
+      "id": "PolicyName",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "region": {
+          "description": "For Cloud IAM:\nThe location of the Policy.\nMust be empty or \"global\" for Policies owned by global IAM.  Must name a\nregion from prodspec/cloud-iam-cloudspec for Regional IAM Policies, see\nhttp://go/iam-faq#where-is-iam-currently-deployed.\n\nFor Local IAM:\nThis field should be set to \"local\".",
+          "type": "string"
+        },
+        "type": {
+          "description": "Valid values for type might be 'gce', 'gcs', 'project', 'account' etc.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ResetIdentityAwareProxyClientSecretRequest": {
       "description": "The request sent to ResetIdentityAwareProxyClientSecret.",
       "id": "ResetIdentityAwareProxyClientSecretRequest",
       "properties": {},
+      "type": "object"
+    },
+    "Resource": {
+      "id": "Resource",
+      "properties": {
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The service defined labels of the resource on which the conditions will be\nevaluated. The semantics - including the key names - are vague to IAM.\nIf the effective condition has a reference to a `resource.labels[foo]`\nconstruct, IAM consults with this map to retrieve the values associated\nwith `foo` key for Conditions evaluation. If the provided key is not found\nin the labels map, the condition would evaluate to false.\n\nThis field is in limited use. If your intended use case is not expected\nto express resource.labels attribute in IAM Conditions, leave this field\nempty. Before planning on using this attribute please:\n* Read go/iam-conditions-labels-comm and ensure your service can meet the\n  data availability and management requirements.\n* Talk to iam-conditions-eng@ about your use case.",
+          "type": "object"
+        },
+        "name": {
+          "description": "Name of the resource on which conditions will be evaluated.\nMust use the Relative Resource Name of the resource, which is the URI\npath of the resource without the leading \"/\". Examples are\n\"projects/_/buckets/[BUCKET-ID]\" for storage buckets or\n\"projects/[PROJECT-ID]/global/firewalls/[FIREWALL-ID]\" for a firewall.\n\nThis field is required for evaluating conditions with rules on resource\nnames. For a `list` permission check, the resource.name value must be set\nto the parent resource. If the parent resource is a project, this field\nshould be left unset.",
+          "type": "string"
+        },
+        "service": {
+          "description": "The name of the service this resource belongs to. It is configured using\nthe official_service_name of the Service as defined in service\nconfigurations under //configs/cloud/resourcetypes.\nFor example, the official_service_name of cloud resource manager service\nis set as 'cloudresourcemanager.googleapis.com' according to\n//configs/cloud/resourcetypes/google/cloud/resourcemanager/prod.yaml",
+          "type": "string"
+        },
+        "type": {
+          "description": "The public resource type name of the resource on which conditions will be\nevaluated. It is configured using the official_name of the ResourceType as\ndefined in service configurations under //configs/cloud/resourcetypes.\nFor example, the official_name for GCP projects is set as\n'cloudresourcemanager.googleapis.com/Project' according to\n//configs/cloud/resourcetypes/google/cloud/resourcemanager/prod.yaml\nFor details see go/iam-conditions-integration-guide.",
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "SetIamPolicyRequest": {

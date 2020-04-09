@@ -317,7 +317,7 @@
       }
     }
   },
-  "revision": "20200304",
+  "revision": "20200405",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {
@@ -573,7 +573,7 @@
       "id": "Image",
       "properties": {
         "aspectRatio": {
-          "description": "The aspect ratio of this image (width/height). This field allows clients\nto reserve the right height for the image while waiting for it to load.\nIt's not meant to override the native aspect ratio of the image.\nIf unset, server will fill it by prefetching the image.",
+          "description": "The aspect ratio of this image (width/height). This field allows clients\nto reserve the right height for the image while waiting for it to load.\nIt's not meant to override the native aspect ratio of the image.\nIf unset, the server fills it by prefetching the image.",
           "format": "double",
           "type": "number"
         },

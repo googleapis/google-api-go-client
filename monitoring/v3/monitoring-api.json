@@ -21,7 +21,7 @@
   "baseUrl": "https://monitoring.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Monitoring",
-  "description": "Manages your Stackdriver Monitoring data and configurations. Most projects must be associated with a Stackdriver account, with a few exceptions as noted on the individual method pages. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the Stackdriver Monitoring documentation.",
+  "description": "Manages your Cloud Monitoring data and configurations. Most projects must be associated with a Workspace, with a few exceptions as noted on the individual method pages. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the Cloud Monitoring documentation.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/monitoring/api/",
   "fullyEncodeReservedExpansion": true,
@@ -622,7 +622,7 @@
               ]
             },
             "get": {
-              "description": "Gets a single metric descriptor. This method does not require a Stackdriver account.",
+              "description": "Gets a single metric descriptor. This method does not require a Workspace.",
               "flatPath": "v3/projects/{projectsId}/metricDescriptors/{metricDescriptorsId}",
               "httpMethod": "GET",
               "id": "monitoring.projects.metricDescriptors.get",
@@ -650,7 +650,7 @@
               ]
             },
             "list": {
-              "description": "Lists metric descriptors that match a filter. This method does not require a Stackdriver account.",
+              "description": "Lists metric descriptors that match a filter. This method does not require a Workspace.",
               "flatPath": "v3/projects/{projectsId}/metricDescriptors",
               "httpMethod": "GET",
               "id": "monitoring.projects.metricDescriptors.list",
@@ -698,7 +698,7 @@
         "monitoredResourceDescriptors": {
           "methods": {
             "get": {
-              "description": "Gets a single monitored resource descriptor. This method does not require a Stackdriver account.",
+              "description": "Gets a single monitored resource descriptor. This method does not require a Workspace.",
               "flatPath": "v3/projects/{projectsId}/monitoredResourceDescriptors/{monitoredResourceDescriptorsId}",
               "httpMethod": "GET",
               "id": "monitoring.projects.monitoredResourceDescriptors.get",
@@ -726,7 +726,7 @@
               ]
             },
             "list": {
-              "description": "Lists monitored resource descriptors that match a filter. This method does not require a Stackdriver account.",
+              "description": "Lists monitored resource descriptors that match a filter. This method does not require a Workspace.",
               "flatPath": "v3/projects/{projectsId}/monitoredResourceDescriptors",
               "httpMethod": "GET",
               "id": "monitoring.projects.monitoredResourceDescriptors.list",
@@ -1134,7 +1134,7 @@
               ]
             },
             "list": {
-              "description": "Lists time series that match a filter. This method does not require a Stackdriver account.",
+              "description": "Lists time series that match a filter. This method does not require a Workspace.",
               "flatPath": "v3/projects/{projectsId}/timeSeries",
               "httpMethod": "GET",
               "id": "monitoring.projects.timeSeries.list",
@@ -1254,6 +1254,36 @@
               "path": "v3/{+name}/timeSeries",
               "response": {
                 "$ref": "ListTimeSeriesResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/monitoring",
+                "https://www.googleapis.com/auth/monitoring.read"
+              ]
+            },
+            "query": {
+              "description": "Queries time series using the time series query language. This method does not require a Workspace.",
+              "flatPath": "v3/projects/{projectsId}/timeSeries:query",
+              "httpMethod": "POST",
+              "id": "monitoring.projects.timeSeries.query",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v3/{+name}/timeSeries:query",
+              "request": {
+                "$ref": "QueryTimeSeriesRequest"
+              },
+              "response": {
+                "$ref": "QueryTimeSeriesResponse"
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
@@ -1539,7 +1569,7 @@
               "type": "string"
             },
             "parent": {
-              "description": "Required. Resource name of the parent containing the listed services, either a project or Stackdriver Account (workspace). The formats are:\nprojects/[PROJECT_ID_OR_NUMBER]\nworkspaces/[HOST_PROJECT_ID]\n",
+              "description": "Required. Resource name of the parent containing the listed services, either a project or a Monitoring Workspace. The formats are:\nprojects/[PROJECT_ID_OR_NUMBER]\nworkspaces/[HOST_PROJECT_ID_OR_NUMBER]\n",
               "location": "path",
               "pattern": "^[^/]+/[^/]+$",
               "required": true,
@@ -1566,7 +1596,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "Resource name for this Service. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID}\n",
+              "description": "Resource name for this Service. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]\n",
               "location": "path",
               "pattern": "^[^/]+/[^/]+/services/[^/]+$",
               "required": true,
@@ -1718,7 +1748,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. Resource name of the parent Service. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]\n",
+                  "description": "Required. Resource name of the parent containing the listed SLOs, either a project or a Monitoring Workspace. The formats are:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]\nworkspaces/[HOST_PROJECT_ID_OR_NUMBER]/services/-\n",
                   "location": "path",
                   "pattern": "^[^/]+/[^/]+/services/[^/]+$",
                   "required": true,
@@ -1818,11 +1848,11 @@
       }
     }
   },
-  "revision": "20200219",
+  "revision": "20200329",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
-      "description": "Describes how to combine multiple time series to provide a different view of the data. Aggregation of time series is done in two steps. First, each time series in the set is aligned to the same time interval boundaries, then the set of time series is optionally reduced in number.Alignment consists of applying the per_series_aligner operation to each time series after its data has been divided into regular alignment_period time intervals. This process takes all of the data points in an alignment period, applies a mathematical transformation such as averaging, minimum, maximum, delta, etc., and converts them into a single data point per period.Reduction is when the aligned and transformed time series can optionally be combined, reducing the number of time series through similar mathematical transformations. Reduction involves applying a cross_series_reducer to all the time series, optionally sorting the time series into subsets with group_by_fields, and applying the reducer to each subset.The raw time series data can contain a huge amount of information from multiple sources. Alignment and reduction transforms this mass of data into a more manageable and representative collection of data, for example \"the 95% latency across the average of all tasks in a cluster\". This representative data can be more easily graphed and comprehended, and the individual time series data is still available for later drilldown. For more details, see Aggregating Time Series.",
+      "description": "Describes how to combine multiple time series to provide a different view of the data. Aggregation of time series is done in two steps. First, each time series in the set is aligned to the same time interval boundaries, then the set of time series is optionally reduced in number.Alignment consists of applying the per_series_aligner operation to each time series after its data has been divided into regular alignment_period time intervals. This process takes all of the data points in an alignment period, applies a mathematical transformation such as averaging, minimum, maximum, delta, etc., and converts them into a single data point per period.Reduction is when the aligned and transformed time series can optionally be combined, reducing the number of time series through similar mathematical transformations. Reduction involves applying a cross_series_reducer to all the time series, optionally sorting the time series into subsets with group_by_fields, and applying the reducer to each subset.The raw time series data can contain a huge amount of information from multiple sources. Alignment and reduction transforms this mass of data into a more manageable and representative collection of data, for example \"the 95% latency across the average of all tasks in a cluster\". This representative data can be more easily graphed and comprehended, and the individual time series data is still available for later drilldown. For more details, see Filtering and aggregation (https://cloud.google.com/monitoring/api/v3/aggregation).",
       "id": "Aggregation",
       "properties": {
         "alignmentPeriod": {
@@ -1923,7 +1953,7 @@
       "type": "object"
     },
     "AlertPolicy": {
-      "description": "A description of the conditions under which some aspect of your system is considered to be \"unhealthy\" and the ways to notify people or services about this state. For an overview of alert policies, see Introduction to Alerting.",
+      "description": "A description of the conditions under which some aspect of your system is considered to be \"unhealthy\" and the ways to notify people or services about this state. For an overview of alert policies, see Introduction to Alerting (https://cloud.google.com/monitoring/alerts/).",
       "id": "AlertPolicy",
       "properties": {
         "combiner": {
@@ -2246,6 +2276,10 @@
           "$ref": "MetricThreshold",
           "description": "A condition that compares a time series against a threshold."
         },
+        "conditionTimeSeriesQueryLanguage": {
+          "$ref": "TimeSeriesQueryLanguageCondition",
+          "description": "A condition that uses the Monitoring Query Language to define alerts. If set, no other conditions can be present."
+        },
         "displayName": {
           "description": "A short name or phrase used to identify the condition in dashboards, notifications, and incidents. To avoid confusion, don't use the same display name for multiple conditions in the same policy.",
           "type": "string"
@@ -2375,7 +2409,7 @@
       "id": "Distribution",
       "properties": {
         "bucketCounts": {
-          "description": "Required in the Stackdriver Monitoring API v3. The values for each bucket specified in bucket_options. The sum of the values in bucketCounts must equal the value in the count field of the Distribution object. The order of the bucket counts follows the numbering schemes described for the three bucket types. The underflow bucket has number 0; the finite buckets, if any, have numbers 1 through N-2; and the overflow bucket has number N-1. The size of bucket_counts must not be greater than N. If the size is less than N, then the remaining buckets are assigned values of zero.",
+          "description": "Required in the Cloud Monitoring API v3. The values for each bucket specified in bucket_options. The sum of the values in bucketCounts must equal the value in the count field of the Distribution object. The order of the bucket counts follows the numbering schemes described for the three bucket types. The underflow bucket has number 0; the finite buckets, if any, have numbers 1 through N-2; and the overflow bucket has number N-1. The size of bucket_counts must not be greater than N. If the size is less than N, then the remaining buckets are assigned values of zero.",
           "items": {
             "format": "int64",
             "type": "string"
@@ -2384,7 +2418,7 @@
         },
         "bucketOptions": {
           "$ref": "BucketOptions",
-          "description": "Required in the Stackdriver Monitoring API v3. Defines the histogram bucket boundaries."
+          "description": "Required in the Cloud Monitoring API v3. Defines the histogram bucket boundaries."
         },
         "count": {
           "description": "The number of values in the population. Must be non-negative. This value must equal the sum of the values in bucket_counts if a histogram is provided.",
@@ -2405,7 +2439,7 @@
         },
         "range": {
           "$ref": "Range",
-          "description": "If specified, contains the range of the population values. The field must not be present if the count is zero. This field is presently ignored by the Stackdriver Monitoring API v3."
+          "description": "If specified, contains the range of the population values. The field must not be present if the count is zero. This field is presently ignored by the Cloud Monitoring API v3."
         },
         "sumOfSquaredDeviation": {
           "description": "The sum of squared deviations from the mean of the values in the population. For values x_i this is:\nSum[i=1..n]((x_i - mean)^2)\nKnuth, \"The Art of Computer Programming\", Vol. 2, page 323, 3rd edition describes Welford's method for accumulating this sum in one pass.If count is zero then this field must be zero.",
@@ -2833,6 +2867,26 @@
       },
       "type": "object"
     },
+    "LabelValue": {
+      "description": "A label value.",
+      "id": "LabelValue",
+      "properties": {
+        "boolValue": {
+          "description": "A bool label value.",
+          "type": "boolean"
+        },
+        "int64Value": {
+          "description": "An int64 label value.",
+          "format": "int64",
+          "type": "string"
+        },
+        "stringValue": {
+          "description": "A string label value.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "LatencyCriteria": {
       "description": "Parameters for a latency threshold SLI.",
       "id": "LatencyCriteria",
@@ -3142,7 +3196,7 @@
       "id": "MetricAbsence",
       "properties": {
         "aggregations": {
-          "description": "Specifies the alignment of data points in individual time series as well as how to combine the retrieved time series together (such as when aggregating multiple streams on each resource to a single stream for each resource or when aggregating streams across all members of a group of resrouces). Multiple aggregations are applied in the order specified.This field is similar to the one in the ListTimeSeries request. It is advisable to use the ListTimeSeries method when debugging this field.",
+          "description": "Specifies the alignment of data points in individual time series as well as how to combine the retrieved time series together (such as when aggregating multiple streams on each resource to a single stream for each resource or when aggregating streams across all members of a group of resrouces). Multiple aggregations are applied in the order specified.This field is similar to the one in the ListTimeSeries request (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list). It is advisable to use the ListTimeSeries method when debugging this field.",
           "items": {
             "$ref": "Aggregation"
           },
@@ -3154,7 +3208,7 @@
           "type": "string"
         },
         "filter": {
-          "description": "A filter (https://cloud.google.com/monitoring/api/v3/filters) that identifies which time series should be compared with the threshold.The filter is similar to the one that is specified in the ListTimeSeries request (that call is useful to verify the time series that will be retrieved / processed) and must specify the metric type and optionally may contain restrictions on resource type, resource labels, and metric labels. This field may not exceed 2048 Unicode characters in length.",
+          "description": "A filter (https://cloud.google.com/monitoring/api/v3/filters) that identifies which time series should be compared with the threshold.The filter is similar to the one that is specified in the ListTimeSeries request (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list) (that call is useful to verify the time series that will be retrieved / processed) and must specify the metric type and optionally may contain restrictions on resource type, resource labels, and metric labels. This field may not exceed 2048 Unicode characters in length.",
           "type": "string"
         },
         "trigger": {
@@ -3187,6 +3241,8 @@
           "description": "Optional. The launch stage of the metric definition.",
           "enum": [
             "LAUNCH_STAGE_UNSPECIFIED",
+            "UNIMPLEMENTED",
+            "PRELAUNCH",
             "EARLY_ACCESS",
             "ALPHA",
             "BETA",
@@ -3195,6 +3251,8 @@
           ],
           "enumDescriptions": [
             "Do not use this default value.",
+            "The feature is not yet implemented. Users can not use it.",
+            "Prelaunch features are hidden from users and are only visible internally.",
             "Early Access features are limited to a closed group of testers. To use these features, you must sign up in advance and sign a Trusted Tester agreement (which includes confidentiality provisions). These features may be unstable, changed in backward-incompatible ways, and are not guaranteed to be released.",
             "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects whitelisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
             "Beta is the point at which we are ready to open a release for any customer to use. There are no SLA or technical support obligations in a Beta release. Products will be complete from a feature perspective, but may have some open outstanding issues. Beta releases are suitable for limited production use cases.",
@@ -3280,6 +3338,8 @@
           "description": "Deprecated. Must use the MetricDescriptor.launch_stage instead.",
           "enum": [
             "LAUNCH_STAGE_UNSPECIFIED",
+            "UNIMPLEMENTED",
+            "PRELAUNCH",
             "EARLY_ACCESS",
             "ALPHA",
             "BETA",
@@ -3288,6 +3348,8 @@
           ],
           "enumDescriptions": [
             "Do not use this default value.",
+            "The feature is not yet implemented. Users can not use it.",
+            "Prelaunch features are hidden from users and are only visible internally.",
             "Early Access features are limited to a closed group of testers. To use these features, you must sign up in advance and sign a Trusted Tester agreement (which includes confidentiality provisions). These features may be unstable, changed in backward-incompatible ways, and are not guaranteed to be released.",
             "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects whitelisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
             "Beta is the point at which we are ready to open a release for any customer to use. There are no SLA or technical support obligations in a Beta release. Products will be complete from a feature perspective, but may have some open outstanding issues. Beta releases are suitable for limited production use cases.",
@@ -3324,7 +3386,7 @@
       "id": "MetricThreshold",
       "properties": {
         "aggregations": {
-          "description": "Specifies the alignment of data points in individual time series as well as how to combine the retrieved time series together (such as when aggregating multiple streams on each resource to a single stream for each resource or when aggregating streams across all members of a group of resrouces). Multiple aggregations are applied in the order specified.This field is similar to the one in the ListTimeSeries request. It is advisable to use the ListTimeSeries method when debugging this field.",
+          "description": "Specifies the alignment of data points in individual time series as well as how to combine the retrieved time series together (such as when aggregating multiple streams on each resource to a single stream for each resource or when aggregating streams across all members of a group of resrouces). Multiple aggregations are applied in the order specified.This field is similar to the one in the ListTimeSeries request (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list). It is advisable to use the ListTimeSeries method when debugging this field.",
           "items": {
             "$ref": "Aggregation"
           },
@@ -3369,7 +3431,7 @@
           "type": "string"
         },
         "filter": {
-          "description": "A filter (https://cloud.google.com/monitoring/api/v3/filters) that identifies which time series should be compared with the threshold.The filter is similar to the one that is specified in the ListTimeSeries request (that call is useful to verify the time series that will be retrieved / processed) and must specify the metric type and optionally may contain restrictions on resource type, resource labels, and metric labels. This field may not exceed 2048 Unicode characters in length.",
+          "description": "A filter (https://cloud.google.com/monitoring/api/v3/filters) that identifies which time series should be compared with the threshold.The filter is similar to the one that is specified in the ListTimeSeries request (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list) (that call is useful to verify the time series that will be retrieved / processed) and must specify the metric type and optionally may contain restrictions on resource type, resource labels, and metric labels. This field may not exceed 2048 Unicode characters in length.",
           "type": "string"
         },
         "thresholdValue": {
@@ -3425,6 +3487,8 @@
           "description": "Optional. The launch stage of the monitored resource definition.",
           "enum": [
             "LAUNCH_STAGE_UNSPECIFIED",
+            "UNIMPLEMENTED",
+            "PRELAUNCH",
             "EARLY_ACCESS",
             "ALPHA",
             "BETA",
@@ -3433,6 +3497,8 @@
           ],
           "enumDescriptions": [
             "Do not use this default value.",
+            "The feature is not yet implemented. Users can not use it.",
+            "Prelaunch features are hidden from users and are only visible internally.",
             "Early Access features are limited to a closed group of testers. To use these features, you must sign up in advance and sign a Trusted Tester agreement (which includes confidentiality provisions). These features may be unstable, changed in backward-incompatible ways, and are not guaranteed to be released.",
             "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects whitelisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
             "Beta is the point at which we are ready to open a release for any customer to use. There are no SLA or technical support obligations in a Beta release. Products will be complete from a feature perspective, but may have some open outstanding issues. Beta releases are suitable for limited production use cases.",
@@ -3568,6 +3634,8 @@
           "description": "The product launch stage for channels of this type.",
           "enum": [
             "LAUNCH_STAGE_UNSPECIFIED",
+            "UNIMPLEMENTED",
+            "PRELAUNCH",
             "EARLY_ACCESS",
             "ALPHA",
             "BETA",
@@ -3576,6 +3644,8 @@
           ],
           "enumDescriptions": [
             "Do not use this default value.",
+            "The feature is not yet implemented. Users can not use it.",
+            "Prelaunch features are hidden from users and are only visible internally.",
             "Early Access features are limited to a closed group of testers. To use these features, you must sign up in advance and sign a Trusted Tester agreement (which includes confidentiality provisions). These features may be unstable, changed in backward-incompatible ways, and are not guaranteed to be released.",
             "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects whitelisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
             "Beta is the point at which we are ready to open a release for any customer to use. There are no SLA or technical support obligations in a Beta release. Products will be complete from a feature perspective, but may have some open outstanding issues. Beta releases are suitable for limited production use cases.",
@@ -3649,6 +3719,73 @@
       },
       "type": "object"
     },
+    "PointData": {
+      "description": "A point's value columns and time interval. Each point has one or more point values corresponding to the entries in point_descriptors field in the TimeSeriesDescriptor associated with this object.",
+      "id": "PointData",
+      "properties": {
+        "timeInterval": {
+          "$ref": "TimeInterval",
+          "description": "The time interval associated with the point."
+        },
+        "values": {
+          "description": "The values that make up the point.",
+          "items": {
+            "$ref": "TypedValue"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "QueryTimeSeriesRequest": {
+      "description": "The QueryTimeSeries request.",
+      "id": "QueryTimeSeriesRequest",
+      "properties": {
+        "pageSize": {
+          "description": "A positive number that is the maximum number of time_series_data to return.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "pageToken": {
+          "description": "If this field is not empty then it must contain the nextPageToken value returned by a previous call to this method. Using this field causes the method to return additional results from the previous method call.",
+          "type": "string"
+        },
+        "query": {
+          "description": "Required. The query in the monitoring query language format. The default time zone is in UTC.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "QueryTimeSeriesResponse": {
+      "description": "The QueryTimeSeries response.",
+      "id": "QueryTimeSeriesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as page_token in the next call to this method.",
+          "type": "string"
+        },
+        "partialErrors": {
+          "description": "Query execution errors that may have caused the time series data returned to be incomplete. The available data will be available in the response.",
+          "items": {
+            "$ref": "Status"
+          },
+          "type": "array"
+        },
+        "timeSeriesData": {
+          "description": "The time series data.",
+          "items": {
+            "$ref": "TimeSeriesData"
+          },
+          "type": "array"
+        },
+        "timeSeriesDescriptor": {
+          "$ref": "TimeSeriesDescriptor",
+          "description": "The descriptor for the time series data."
+        }
+      },
+      "type": "object"
+    },
     "Range": {
       "description": "The range of the population values.",
       "id": "Range",
@@ -3713,7 +3850,7 @@
       "type": "object"
     },
     "Service": {
-      "description": "A Service is a discrete, autonomous, and network-accessible unit, designed to solve an individual concern (Wikipedia (https://en.wikipedia.org/wiki/Service-orientation)). In Stackdriver Monitoring, a Service acts as the root resource under which operational aspects of the service are accessible.",
+      "description": "A Service is a discrete, autonomous, and network-accessible unit, designed to solve an individual concern (Wikipedia (https://en.wikipedia.org/wiki/Service-orientation)). In Cloud Monitoring, a Service acts as the root resource under which operational aspects of the service are accessible.",
       "id": "Service",
       "properties": {
         "appEngine": {
@@ -3741,7 +3878,7 @@
           "description": "Type used for Istio services scoped to an Istio mesh."
         },
         "name": {
-          "description": "Resource name for this Service. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID}\n",
+          "description": "Resource name for this Service. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]\n",
           "type": "string"
         },
         "telemetry": {
@@ -3976,6 +4113,63 @@
       },
       "type": "object"
     },
+    "TimeSeriesData": {
+      "description": "Represents the values of a time series associated with a TimeSeriesDescriptor.",
+      "id": "TimeSeriesData",
+      "properties": {
+        "labelValues": {
+          "description": "The values of the labels in the time series identifier, given in the same order as the label_descriptors field of the TimeSeriesDescriptor associated with this object. Each value must have a value of the type given in the corresponding entry of label_descriptors.",
+          "items": {
+            "$ref": "LabelValue"
+          },
+          "type": "array"
+        },
+        "pointData": {
+          "description": "The points in the time series.",
+          "items": {
+            "$ref": "PointData"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "TimeSeriesDescriptor": {
+      "description": "A descriptor for the labels and points in a timeseries.",
+      "id": "TimeSeriesDescriptor",
+      "properties": {
+        "labelDescriptors": {
+          "description": "Descriptors for the labels.",
+          "items": {
+            "$ref": "LabelDescriptor"
+          },
+          "type": "array"
+        },
+        "pointDescriptors": {
+          "description": "Descriptors for the point data value columns.",
+          "items": {
+            "$ref": "ValueDescriptor"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "TimeSeriesQueryLanguageCondition": {
+      "description": "A condition type that allows alert policies to be defined using Monitoring Query Language.",
+      "id": "TimeSeriesQueryLanguageCondition",
+      "properties": {
+        "query": {
+          "description": "Monitoring Query Language query that generates time series data and describes a condition for alerting on that data.",
+          "type": "string"
+        },
+        "summary": {
+          "description": "A short explanation of what the query represents. For example:\"Error ratio exceeds 15% for \u003e5% of servers in \u003e2 regions\"",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "TimeSeriesRatio": {
       "description": "A TimeSeriesRatio specifies two TimeSeries to use for computing the good_service / total_service ratio. The specified TimeSeries must have ValueType = DOUBLE or ValueType = INT64 and must have MetricKind =\nDELTA or MetricKind = CUMULATIVE. The TimeSeriesRatio must specify exactly two of good, bad, and total, and the relationship good_service +\nbad_service = total_service will be assumed.",
       "id": "TimeSeriesRatio",
@@ -4202,6 +4396,55 @@
       },
       "type": "object"
     },
+    "ValueDescriptor": {
+      "description": "A descriptor for the value columns in a data point.",
+      "id": "ValueDescriptor",
+      "properties": {
+        "key": {
+          "description": "The value key.",
+          "type": "string"
+        },
+        "metricKind": {
+          "description": "The value stream kind.",
+          "enum": [
+            "METRIC_KIND_UNSPECIFIED",
+            "GAUGE",
+            "DELTA",
+            "CUMULATIVE"
+          ],
+          "enumDescriptions": [
+            "Do not use this default value.",
+            "An instantaneous measurement of a value.",
+            "The change in a value during a time interval.",
+            "A value accumulated over a time interval. Cumulative measurements in a time series should have the same start time and increasing end times, until an event resets the cumulative value to zero and sets a new start time for the following points."
+          ],
+          "type": "string"
+        },
+        "valueType": {
+          "description": "The value type.",
+          "enum": [
+            "VALUE_TYPE_UNSPECIFIED",
+            "BOOL",
+            "INT64",
+            "DOUBLE",
+            "STRING",
+            "DISTRIBUTION",
+            "MONEY"
+          ],
+          "enumDescriptions": [
+            "Do not use this default value.",
+            "The value is a boolean. This value type can be used only if the metric kind is GAUGE.",
+            "The value is a signed 64-bit integer.",
+            "The value is a double precision floating point number.",
+            "The value is a text string. This value type can be used only if the metric kind is GAUGE.",
+            "The value is a Distribution.",
+            "The value is money."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "VerifyNotificationChannelRequest": {
       "description": "The VerifyNotificationChannel request.",
       "id": "VerifyNotificationChannelRequest",
@@ -4243,7 +4486,7 @@
     }
   },
   "servicePath": "",
-  "title": "Stackdriver Monitoring API",
+  "title": "Cloud Monitoring API",
   "version": "v3",
   "version_module": true
 }

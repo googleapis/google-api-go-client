@@ -1458,7 +1458,7 @@
       }
     }
   },
-  "revision": "20200307",
+  "revision": "20200328",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -2478,7 +2478,7 @@
           "type": "boolean"
         },
         "regions": {
-          "description": "Optional. The list of regions where the model is going to be deployed.\nCurrently only one region per model is supported.\nDefaults to 'us-central1' if nothing is set.\nSee the \u003ca href=\"/ml-engine/docs/tensorflow/regions\"\u003eavailable regions\u003c/a\u003e\nfor AI Platform services.\nNote:\n*   No matter where a model is deployed, it can always be accessed by\n    users from anywhere, both for online and batch prediction.\n*   The region for a batch prediction job is set by the region field when\n    submitting the batch prediction job and does not take its value from\n    this field.",
+          "description": "Optional. The list of regions where the model is going to be deployed.\nOnly one region per model is supported.\nDefaults to 'us-central1' if nothing is set.\nSee the \u003ca href=\"/ml-engine/docs/tensorflow/regions\"\u003eavailable regions\u003c/a\u003e\nfor AI Platform services.\nNote:\n*   No matter where a model is deployed, it can always be accessed by\n    users from anywhere, both for online and batch prediction.\n*   The region for a batch prediction job is set by the region field when\n    submitting the batch prediction job and does not take its value from\n    this field.",
           "items": {
             "type": "string"
           },
@@ -2760,10 +2760,10 @@
       "properties": {
         "acceleratorConfig": {
           "$ref": "GoogleCloudMlV1__AcceleratorConfig",
-          "description": "Represents the type and number of accelerators used by the replica.\n[Learn about restrictions on accelerator configurations for\ntraining.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-machine-types-with-gpu)"
+          "description": "Represents the type and number of accelerators used by the replica.\n[Learn about restrictions on accelerator configurations for\ntraining.](/ai-platform/training/docs/using-gpus#compute-engine-machine-types-with-gpu)"
         },
         "imageUri": {
-          "description": "The Docker image to run on the replica. This image must be in Container\nRegistry. Learn more about [configuring custom\ncontainers](/ml-engine/docs/distributed-training-containers).",
+          "description": "The Docker image to run on the replica. This image must be in Container\nRegistry. Learn more about [configuring custom\ncontainers](/ai-platform/training/docs/distributed-training-containers).",
           "type": "string"
         },
         "tpuTfVersion": {
@@ -2990,7 +2990,7 @@
       "id": "GoogleCloudMlV1__TrainingInput",
       "properties": {
         "args": {
-          "description": "Optional. Command line arguments to pass to the program.",
+          "description": "Optional. Arguments passed to the training.\n- If it is a python package training:\n  It will be passed as command line argument to the program.\n- If it is a custom container training,\n  It will be passed as an argument to the custom container\n  image.",
           "items": {
             "type": "string"
           },
@@ -2999,6 +2999,19 @@
         "encryptionConfig": {
           "$ref": "GoogleCloudMlV1__EncryptionConfig",
           "description": "Custom encryption key options for a training job. If this is set,\nthen all resources created by the training job will be encrypted with the\nprovided encryption key."
+        },
+        "evaluatorConfig": {
+          "$ref": "GoogleCloudMlV1__ReplicaConfig",
+          "description": "Optional. The configuration for evaluators.\n\nYou should only set `evaluatorConfig.acceleratorConfig` if\n`evaluatorType` is set to a Compute Engine machine type. [Learn\nabout restrictions on accelerator configurations for\ntraining.](/ai-platform/training/docs/using-gpus#compute-engine-machine-types-with-gpu)\n\nSet `evaluatorConfig.imageUri` only if you build a custom image for\nyour evaluator. If `evaluatorConfig.imageUri` has not been\nset, AI Platform uses the value of `masterConfig.imageUri` .\nLearn more about [configuring custom\ncontainers](/ai-platform/training/docs/distributed-training-containers)."
+        },
+        "evaluatorCount": {
+          "description": "Optional. The number of evaluator replicas to use for the training job.\nEach replica in the cluster will be of the type specified in\n`evaluator_type`.\n\nThis value can only be used when `scale_tier` is set to `CUSTOM`. If you\nset this value, you must also set `evaluator_type`.\n\nThe default value is zero.",
+          "format": "int64",
+          "type": "string"
+        },
+        "evaluatorType": {
+          "description": "Optional. Specifies the type of virtual machine to use for your training\njob's evaluator nodes.\n\nThe supported values are the same as those described in the entry for\n`masterType`.\n\nThis value must be consistent with the category of machine type that\n`masterType` uses. In other words, both must be Compute Engine machine\ntypes or both must be legacy machine types.\n\nThis value must be present when `scaleTier` is set to `CUSTOM` and\n`evaluatorCount` is greater than zero.",
+          "type": "string"
         },
         "hyperparameters": {
           "$ref": "GoogleCloudMlV1__HyperparameterSpec",
@@ -3010,7 +3023,7 @@
         },
         "masterConfig": {
           "$ref": "GoogleCloudMlV1__ReplicaConfig",
-          "description": "Optional. The configuration for your master worker.\n\nYou should only set `masterConfig.acceleratorConfig` if `masterType` is set\nto a Compute Engine machine type. Learn about [restrictions on accelerator\nconfigurations for\ntraining.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-machine-types-with-gpu)\n\nSet `masterConfig.imageUri` only if you build a custom image. Only one of\n`masterConfig.imageUri` and `runtimeVersion` should be set. Learn more\nabout [configuring custom\ncontainers](/ml-engine/docs/distributed-training-containers)."
+          "description": "Optional. The configuration for your master worker.\n\nYou should only set `masterConfig.acceleratorConfig` if `masterType` is set\nto a Compute Engine machine type. Learn about [restrictions on accelerator\nconfigurations for\ntraining.](/ai-platform/training/docs/using-gpus#compute-engine-machine-types-with-gpu)\n\nSet `masterConfig.imageUri` only if you build a custom image. Only one of\n`masterConfig.imageUri` and `runtimeVersion` should be set. Learn more\nabout [configuring custom\ncontainers](/ai-platform/training/docs/distributed-training-containers)."
         },
         "masterType": {
           "description": "Optional. Specifies the type of virtual machine to use for your training\njob's master worker. You must specify this field when `scaleTier` is set to\n`CUSTOM`.\n\nYou can use certain Compute Engine machine types directly in this field.\nThe following types are supported:\n\n- `n1-standard-4`\n- `n1-standard-8`\n- `n1-standard-16`\n- `n1-standard-32`\n- `n1-standard-64`\n- `n1-standard-96`\n- `n1-highmem-2`\n- `n1-highmem-4`\n- `n1-highmem-8`\n- `n1-highmem-16`\n- `n1-highmem-32`\n- `n1-highmem-64`\n- `n1-highmem-96`\n- `n1-highcpu-16`\n- `n1-highcpu-32`\n- `n1-highcpu-64`\n- `n1-highcpu-96`\n\nLearn more about [using Compute Engine machine\ntypes](/ml-engine/docs/machine-types#compute-engine-machine-types).\n\nAlternatively, you can use the following legacy machine types:\n\n- `standard`\n- `large_model`\n- `complex_model_s`\n- `complex_model_m`\n- `complex_model_l`\n- `standard_gpu`\n- `complex_model_m_gpu`\n- `complex_model_l_gpu`\n- `standard_p100`\n- `complex_model_m_p100`\n- `standard_v100`\n- `large_model_v100`\n- `complex_model_m_v100`\n- `complex_model_l_v100`\n\nLearn more about [using legacy machine\ntypes](/ml-engine/docs/machine-types#legacy-machine-types).\n\nFinally, if you want to use a TPU for training, specify `cloud_tpu` in this\nfield. Learn more about the [special configuration options for training\nwith\nTPUs](/ml-engine/docs/tensorflow/using-tpus#configuring_a_custom_tpu_machine).",
@@ -3025,10 +3038,10 @@
         },
         "parameterServerConfig": {
           "$ref": "GoogleCloudMlV1__ReplicaConfig",
-          "description": "Optional. The configuration for parameter servers.\n\nYou should only set `parameterServerConfig.acceleratorConfig` if\n`parameterServerConfigType` is set to a Compute Engine machine type. [Learn\nabout restrictions on accelerator configurations for\ntraining.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-machine-types-with-gpu)\n\nSet `parameterServerConfig.imageUri` only if you build a custom image for\nyour parameter server. If `parameterServerConfig.imageUri` has not been\nset, AI Platform uses the value of `masterConfig.imageUri`.\nLearn more about [configuring custom\ncontainers](/ml-engine/docs/distributed-training-containers)."
+          "description": "Optional. The configuration for parameter servers.\n\nYou should only set `parameterServerConfig.acceleratorConfig` if\n`parameterServerType` is set to a Compute Engine machine type. [Learn\nabout restrictions on accelerator configurations for\ntraining.](/ai-platform/training/docs/using-gpus#compute-engine-machine-types-with-gpu)\n\nSet `parameterServerConfig.imageUri` only if you build a custom image for\nyour parameter server. If `parameterServerConfig.imageUri` has not been\nset, AI Platform uses the value of `masterConfig.imageUri` .\nLearn more about [configuring custom\ncontainers](/ai-platform/training/docs/distributed-training-containers)."
         },
         "parameterServerCount": {
-          "description": "Optional. The number of parameter server replicas to use for the training\njob. Each replica in the cluster will be of the type specified in\n`parameter_server_type`.\n\nThis value can only be used when `scale_tier` is set to `CUSTOM`.If you\nset this value, you must also set `parameter_server_type`.\n\nThe default value is zero.",
+          "description": "Optional. The number of parameter server replicas to use for the training\njob. Each replica in the cluster will be of the type specified in\n`parameter_server_type`.\n\nThis value can only be used when `scale_tier` is set to `CUSTOM`. If you\nset this value, you must also set `parameter_server_type`.\n\nThe default value is zero.",
           "format": "int64",
           "type": "string"
         },
@@ -3066,7 +3079,7 @@
             "A single worker instance. This tier is suitable for learning how to use\nCloud ML, and for experimenting with new models using small datasets.",
             "Many workers and a few parameter servers.",
             "A large number of workers with many parameter servers.",
-            "A single worker instance [with a\nGPU](/ml-engine/docs/tensorflow/using-gpus).",
+            "A single worker instance [with a\nGPU](/ai-platform/training/docs/using-gpus).",
             "A single worker instance with a\n[Cloud TPU](/ml-engine/docs/tensorflow/using-tpus).",
             "The CUSTOM tier is not a set tier, but rather enables you to use your\nown cluster specification. When you use this tier, set values to\nconfigure your processing cluster according to these guidelines:\n\n*   You _must_ set `TrainingInput.masterType` to specify the type\n    of machine to use for your master node. This is the only required\n    setting.\n\n*   You _may_ set `TrainingInput.workerCount` to specify the number of\n    workers to use. If you specify one or more workers, you _must_ also\n    set `TrainingInput.workerType` to specify the type of machine to use\n    for your worker nodes.\n\n*   You _may_ set `TrainingInput.parameterServerCount` to specify the\n    number of parameter servers to use. If you specify one or more\n    parameter servers, you _must_ also set\n    `TrainingInput.parameterServerType` to specify the type of machine to\n    use for your parameter servers.\n\nNote that all of your workers must use the same machine type, which can\nbe different from your parameter server type and master type. Your\nparameter servers must likewise use the same machine type, which can be\ndifferent from your worker type and master type."
           ],
@@ -3077,12 +3090,12 @@
           "description": "Optional. Scheduling options for a training job."
         },
         "useChiefInTfConfig": {
-          "description": "Optional. Use 'chief' instead of 'master' in TF_CONFIG when Custom\nContainer is used and evaluator is not specified.\n\nDefaults to false.",
+          "description": "Optional. Use `chief` instead of `master` in the `TF_CONFIG` environment\nvariable when training with a custom container. Defaults to `false`. [Learn\nmore about this\nfield.](/ai-platform/training/docs/distributed-training-details#chief-versus-master)\n\nThis field has no effect for training jobs that don't use a custom\ncontainer.",
           "type": "boolean"
         },
         "workerConfig": {
           "$ref": "GoogleCloudMlV1__ReplicaConfig",
-          "description": "Optional. The configuration for workers.\n\nYou should only set `workerConfig.acceleratorConfig` if `workerType` is set\nto a Compute Engine machine type. [Learn about restrictions on accelerator\nconfigurations for\ntraining.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-machine-types-with-gpu)\n\nSet `workerConfig.imageUri` only if you build a custom image for your\nworker. If `workerConfig.imageUri` has not been set, AI Platform uses\nthe value of `masterConfig.imageUri`. Learn more about\n[configuring custom\ncontainers](/ml-engine/docs/distributed-training-containers)."
+          "description": "Optional. The configuration for workers.\n\nYou should only set `workerConfig.acceleratorConfig` if `workerType` is set\nto a Compute Engine machine type. [Learn about restrictions on accelerator\nconfigurations for\ntraining.](/ai-platform/training/docs/using-gpus#compute-engine-machine-types-with-gpu)\n\nSet `workerConfig.imageUri` only if you build a custom image for your\nworker. If `workerConfig.imageUri` has not been set, AI Platform uses\nthe value of `masterConfig.imageUri` .\nLearn more about [configuring custom\ncontainers](/ai-platform/training/docs/distributed-training-containers)."
         },
         "workerCount": {
           "description": "Optional. The number of worker replicas to use for the training job. Each\nreplica in the cluster will be of the type specified in `worker_type`.\n\nThis value can only be used when `scale_tier` is set to `CUSTOM`. If you\nset this value, you must also set `worker_type`.\n\nThe default value is zero.",

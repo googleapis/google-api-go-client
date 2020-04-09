@@ -606,7 +606,7 @@
                       "type": "string"
                     },
                     "readTime": {
-                      "description": "Reads the version of the document at the given time.\nThis may not be older than 60 seconds.",
+                      "description": "Reads the version of the document at the given time.\nThis may not be older than 270 seconds.",
                       "format": "google-datetime",
                       "location": "query",
                       "type": "string"
@@ -673,7 +673,7 @@
                       "type": "string"
                     },
                     "readTime": {
-                      "description": "Reads documents as they were at the given time.\nThis may not be older than 60 seconds.",
+                      "description": "Reads documents as they were at the given time.\nThis may not be older than 270 seconds.",
                       "format": "google-datetime",
                       "location": "query",
                       "type": "string"
@@ -1102,7 +1102,7 @@
       }
     }
   },
-  "revision": "20200215",
+  "revision": "20200311",
   "rootUrl": "https://firestore.googleapis.com/",
   "schemas": {
     "ArrayValue": {
@@ -1139,7 +1139,7 @@
           "description": "Starts a new transaction and reads the documents.\nDefaults to a read-only transaction.\nThe new transaction ID will be returned as the first response in the\nstream."
         },
         "readTime": {
-          "description": "Reads documents as they were at the given time.\nThis may not be older than 60 seconds.",
+          "description": "Reads documents as they were at the given time.\nThis may not be older than 270 seconds.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -2430,7 +2430,7 @@
           "description": "Starts a new transaction and reads the documents.\nDefaults to a read-only transaction.\nThe new transaction ID will be returned as the first response in the\nstream."
         },
         "readTime": {
-          "description": "Reads documents as they were at the given time.\nThis may not be older than 60 seconds.",
+          "description": "Reads documents as they were at the given time.\nThis may not be older than 270 seconds.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -2751,6 +2751,13 @@
         "updateMask": {
           "$ref": "DocumentMask",
           "description": "The fields to update in this write.\n\nThis field can be set only when the operation is `update`.\nIf the mask is not set for an `update` and the document exists, any\nexisting data will be overwritten.\nIf the mask is set and the document on the server has fields not covered by\nthe mask, they are left unchanged.\nFields referenced in the mask, but not present in the input document, are\ndeleted from the document on the server.\nThe field paths in this mask must not contain a reserved field name."
+        },
+        "updateTransforms": {
+          "description": "The transforms to perform after update.\n\nThis field can be set only when the operation is `update`. If present, this\nwrite is equivalent to performing `update` and `transform` to the same\ndocument atomically and in order.",
+          "items": {
+            "$ref": "FieldTransform"
+          },
+          "type": "array"
         }
       },
       "type": "object"

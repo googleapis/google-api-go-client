@@ -8,14 +8,14 @@
       }
     }
   },
-  "basePath": "/toolresults/v1beta3/projects/",
-  "baseUrl": "https://www.googleapis.com/toolresults/v1beta3/projects/",
+  "basePath": "/toolresults/v1beta3/",
+  "baseUrl": "https://www.googleapis.com/toolresults/v1beta3/",
   "batchPath": "batch/toolresults/v1beta3",
   "canonicalName": "Tool Results",
   "description": "Reads and publishes results from Firebase Test Lab.",
   "discoveryVersion": "v1",
   "documentationLink": "https://firebase.google.com/docs/test-lab/",
-  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/CBEJ9kxU4IEf68udooTm0hfyOkw\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/GVvRFdhUY7vVs0qY7tKh73H_wrk\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -89,7 +89,7 @@
               "type": "string"
             }
           },
-          "path": "{projectId}/settings",
+          "path": "projects/{projectId}/settings",
           "response": {
             "$ref": "ProjectSettings"
           },
@@ -112,7 +112,7 @@
               "type": "string"
             }
           },
-          "path": "{projectId}:initializeSettings",
+          "path": "projects/{projectId}:initializeSettings",
           "response": {
             "$ref": "ProjectSettings"
           },
@@ -144,7 +144,7 @@
                   "type": "string"
                 }
               },
-              "path": "{projectId}/histories",
+              "path": "projects/{projectId}/histories",
               "request": {
                 "$ref": "History"
               },
@@ -177,7 +177,7 @@
                   "type": "string"
                 }
               },
-              "path": "{projectId}/histories/{historyId}",
+              "path": "projects/{projectId}/histories/{historyId}",
               "response": {
                 "$ref": "History"
               },
@@ -216,7 +216,7 @@
                   "type": "string"
                 }
               },
-              "path": "{projectId}/histories",
+              "path": "projects/{projectId}/histories",
               "response": {
                 "$ref": "ListHistoriesResponse"
               },
@@ -255,7 +255,7 @@
                       "type": "string"
                     }
                   },
-                  "path": "{projectId}/histories/{historyId}/executions",
+                  "path": "projects/{projectId}/histories/{historyId}/executions",
                   "request": {
                     "$ref": "Execution"
                   },
@@ -295,7 +295,7 @@
                       "type": "string"
                     }
                   },
-                  "path": "{projectId}/histories/{historyId}/executions/{executionId}",
+                  "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}",
                   "response": {
                     "$ref": "Execution"
                   },
@@ -336,7 +336,7 @@
                       "type": "string"
                     }
                   },
-                  "path": "{projectId}/histories/{historyId}/executions",
+                  "path": "projects/{projectId}/histories/{historyId}/executions",
                   "response": {
                     "$ref": "ListExecutionsResponse"
                   },
@@ -378,7 +378,7 @@
                       "type": "string"
                     }
                   },
-                  "path": "{projectId}/histories/{historyId}/executions/{executionId}",
+                  "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}",
                   "request": {
                     "$ref": "Execution"
                   },
@@ -429,7 +429,7 @@
                           "type": "string"
                         }
                       },
-                      "path": "{projectId}/histories/{historyId}/executions/{executionId}/clusters/{clusterId}",
+                      "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}/clusters/{clusterId}",
                       "response": {
                         "$ref": "ScreenshotCluster"
                       }
@@ -463,7 +463,7 @@
                           "type": "string"
                         }
                       },
-                      "path": "{projectId}/histories/{historyId}/executions/{executionId}/clusters",
+                      "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}/clusters",
                       "response": {
                         "$ref": "ListScreenshotClustersResponse"
                       }
@@ -508,7 +508,7 @@
                           "type": "string"
                         }
                       },
-                      "path": "{projectId}/histories/{historyId}/executions/{executionId}/environments/{environmentId}",
+                      "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}/environments/{environmentId}",
                       "response": {
                         "$ref": "Environment"
                       },
@@ -556,7 +556,7 @@
                           "type": "string"
                         }
                       },
-                      "path": "{projectId}/histories/{historyId}/executions/{executionId}/environments",
+                      "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}/environments",
                       "response": {
                         "$ref": "ListEnvironmentsResponse"
                       },
@@ -568,6 +568,34 @@
                 },
                 "steps": {
                   "methods": {
+                    "accessibilityClusters": {
+                      "description": "Lists accessibility clusters for a given Step\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project - INVALID_ARGUMENT - if the request is malformed - FAILED_PRECONDITION - if an argument in the request happens to be invalid; e.g. if the locale format is incorrect - NOT_FOUND - if the containing Step does not exist",
+                      "httpMethod": "GET",
+                      "id": "toolresults.projects.histories.executions.steps.accessibilityClusters",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "locale": {
+                          "description": "The accepted format is the canonical Unicode format with hyphen as a delimiter. Language must be lowercase, Language Script - Capitalized, Region - UPPERCASE. See http://www.unicode.org/reports/tr35/#Unicode_locale_identifier for details.\n\nRequired.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "A full resource name of the step. For example, projects/my-project/histories/bh.1234567890abcdef/executions/ 1234567890123456789/steps/bs.1234567890abcdef\n\nRequired.",
+                          "location": "path",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "{+name}:accessibilityClusters",
+                      "response": {
+                        "$ref": "ListStepAccessibilityClustersResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
                     "create": {
                       "description": "Creates a Step.\n\nThe returned Step will have the id set.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write to project - INVALID_ARGUMENT - if the request is malformed - FAILED_PRECONDITION - if the step is too large (more than 10Mib) - NOT_FOUND - if the containing Execution does not exist",
                       "httpMethod": "POST",
@@ -602,7 +630,7 @@
                           "type": "string"
                         }
                       },
-                      "path": "{projectId}/histories/{historyId}/executions/{executionId}/steps",
+                      "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}/steps",
                       "request": {
                         "$ref": "Step"
                       },
@@ -649,7 +677,7 @@
                           "type": "string"
                         }
                       },
-                      "path": "{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}",
+                      "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}",
                       "response": {
                         "$ref": "Step"
                       },
@@ -693,7 +721,7 @@
                           "type": "string"
                         }
                       },
-                      "path": "{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfMetricsSummary",
+                      "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfMetricsSummary",
                       "response": {
                         "$ref": "PerfMetricsSummary"
                       },
@@ -741,7 +769,7 @@
                           "type": "string"
                         }
                       },
-                      "path": "{projectId}/histories/{historyId}/executions/{executionId}/steps",
+                      "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}/steps",
                       "response": {
                         "$ref": "ListStepsResponse"
                       },
@@ -790,7 +818,7 @@
                           "type": "string"
                         }
                       },
-                      "path": "{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}",
+                      "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}",
                       "request": {
                         "$ref": "Step"
                       },
@@ -837,7 +865,7 @@
                           "type": "string"
                         }
                       },
-                      "path": "{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}:publishXunitXmlFiles",
+                      "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}:publishXunitXmlFiles",
                       "request": {
                         "$ref": "PublishXunitXmlFilesRequest"
                       },
@@ -888,7 +916,7 @@
                               "type": "string"
                             }
                           },
-                          "path": "{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfMetricsSummary",
+                          "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfMetricsSummary",
                           "request": {
                             "$ref": "PerfMetricsSummary"
                           },
@@ -939,7 +967,7 @@
                               "type": "string"
                             }
                           },
-                          "path": "{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries",
+                          "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries",
                           "request": {
                             "$ref": "PerfSampleSeries"
                           },
@@ -993,7 +1021,7 @@
                               "type": "string"
                             }
                           },
-                          "path": "{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries/{sampleSeriesId}",
+                          "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries/{sampleSeriesId}",
                           "response": {
                             "$ref": "PerfSampleSeries"
                           },
@@ -1057,7 +1085,7 @@
                               "type": "string"
                             }
                           },
-                          "path": "{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries",
+                          "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries",
                           "response": {
                             "$ref": "ListPerfSampleSeriesResponse"
                           },
@@ -1112,7 +1140,7 @@
                                   "type": "string"
                                 }
                               },
-                              "path": "{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries/{sampleSeriesId}/samples:batchCreate",
+                              "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries/{sampleSeriesId}/samples:batchCreate",
                               "request": {
                                 "$ref": "BatchCreatePerfSamplesRequest"
                               },
@@ -1177,7 +1205,7 @@
                                   "type": "string"
                                 }
                               },
-                              "path": "{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries/{sampleSeriesId}/samples",
+                              "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries/{sampleSeriesId}/samples",
                               "response": {
                                 "$ref": "ListPerfSamplesResponse"
                               },
@@ -1234,7 +1262,7 @@
                               "type": "string"
                             }
                           },
-                          "path": "{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/testCases/{testCaseId}",
+                          "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/testCases/{testCaseId}",
                           "response": {
                             "$ref": "TestCase"
                           },
@@ -1289,7 +1317,7 @@
                               "type": "string"
                             }
                           },
-                          "path": "{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/testCases",
+                          "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/testCases",
                           "response": {
                             "$ref": "ListTestCasesResponse"
                           },
@@ -1348,7 +1376,7 @@
                               "type": "string"
                             }
                           },
-                          "path": "{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/thumbnails",
+                          "path": "projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/thumbnails",
                           "response": {
                             "$ref": "ListStepThumbnailsResponse"
                           },
@@ -1367,7 +1395,7 @@
       }
     }
   },
-  "revision": "20191203",
+  "revision": "20200402",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AndroidAppInfo": {
@@ -2085,6 +2113,24 @@
       },
       "type": "object"
     },
+    "ListStepAccessibilityClustersResponse": {
+      "description": "Response message for AccessibilityService.ListStepAccessibilityClusters.",
+      "id": "ListStepAccessibilityClustersResponse",
+      "properties": {
+        "clusters": {
+          "description": "A sequence of accessibility suggestions, grouped into clusters. Within the sequence, clusters that belong to the same SuggestionCategory should be adjacent. Within each category, clusters should be ordered by their SuggestionPriority (ERRORs first). The categories should be ordered by their highest priority cluster.",
+          "items": {
+            "$ref": "SuggestionClusterProto"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "A full resource name of the step. For example, projects/my-project/histories/bh.1234567890abcdef/executions/ 1234567890123456789/steps/bs.1234567890abcdef\n\nAlways presents.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ListStepThumbnailsResponse": {
       "description": "A response containing the thumbnails in a step.",
       "id": "ListStepThumbnailsResponse",
@@ -2431,6 +2477,33 @@
       },
       "type": "object"
     },
+    "RegionProto": {
+      "description": "A rectangular region.",
+      "id": "RegionProto",
+      "properties": {
+        "heightPx": {
+          "description": "The height, in pixels. Always set.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "leftPx": {
+          "description": "The left side of the rectangle, in pixels. Always set.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "topPx": {
+          "description": "The top of the rectangle, in pixels. Always set.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "widthPx": {
+          "description": "The width, in pixels. Always set.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "ResultsStorage": {
       "description": "The storage for test results.",
       "id": "ResultsStorage",
@@ -2442,6 +2515,17 @@
         "xunitXmlFile": {
           "$ref": "FileReference",
           "description": "The path to the Xunit XML file."
+        }
+      },
+      "type": "object"
+    },
+    "SafeHtmlProto": {
+      "description": "IMPORTANT: It is unsafe to accept this message from an untrusted source, since it's trivial for an attacker to forge serialized messages that don't fulfill the type's safety contract -- for example, it could contain attacker controlled script. A system which receives a SafeHtmlProto implicitly trusts the producer of the SafeHtmlProto. So, it's generally safe to return this message in RPC responses, but generally unsafe to accept it in RPC requests.",
+      "id": "SafeHtmlProto",
+      "properties": {
+        "privateDoNotAccessOrElseSafeHtmlWrappedValue": {
+          "description": "IMPORTANT: Never set or read this field, even from tests, it is private. See documentation at the top of .proto file for programming language packages with which to create or read this message.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2684,6 +2768,97 @@
         "otherNativeCrash": {
           "description": "If a native process other than the app crashed.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "SuggestionClusterProto": {
+      "description": "A set of similar suggestions that we suspect are closely related.\n\nThis proto and most of the nested protos are branched from foxandcrown.prelaunchreport.service.SuggestionClusterProto, replacing PLR's dependencies with FTL's.",
+      "id": "SuggestionClusterProto",
+      "properties": {
+        "category": {
+          "description": "Category in which these types of suggestions should appear. Always set.",
+          "enum": [
+            "contentLabeling",
+            "implementation",
+            "lowContrast",
+            "touchTargetSize",
+            "unknownCategory"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "suggestions": {
+          "description": "A sequence of suggestions. All of the suggestions within a cluster must have the same SuggestionPriority and belong to the same SuggestionCategory. Suggestions with the same screenshot URL should be adjacent.",
+          "items": {
+            "$ref": "SuggestionProto"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SuggestionProto": {
+      "id": "SuggestionProto",
+      "properties": {
+        "helpUrl": {
+          "description": "Reference to a help center article concerning this type of suggestion. Always set.",
+          "type": "string"
+        },
+        "longMessage": {
+          "$ref": "SafeHtmlProto",
+          "description": "Message, in the user's language, explaining the suggestion, which may contain markup. Always set."
+        },
+        "priority": {
+          "description": "Relative importance of a suggestion. Always set.",
+          "enum": [
+            "error",
+            "info",
+            "unknownPriority",
+            "warning"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "pseudoResourceId": {
+          "description": "A somewhat human readable identifier of the source view, if it does not have a resource_name. This is a path within the accessibility hierarchy, an element with resource name; similar to an XPath.",
+          "type": "string"
+        },
+        "region": {
+          "$ref": "RegionProto",
+          "description": "Region within the screenshot that is relevant to this suggestion. Optional."
+        },
+        "resourceName": {
+          "description": "Reference to a view element, identified by its resource name, if it has one.",
+          "type": "string"
+        },
+        "screenId": {
+          "description": "ID of the screen for the suggestion. It is used for getting the corresponding screenshot path. For example, screen_id \"1\" corresponds to \"1.png\" file in GCS. Always set.",
+          "type": "string"
+        },
+        "secondaryPriority": {
+          "description": "Relative importance of a suggestion as compared with other suggestions that have the same priority and category. This is a meaningless value that can be used to order suggestions that are in the same category and have the same priority. The larger values have higher priority (i.e., are more important). Optional.",
+          "format": "double",
+          "type": "number"
+        },
+        "shortMessage": {
+          "$ref": "SafeHtmlProto",
+          "description": "Concise message, in the user's language, representing the suggestion, which may contain markup. Always set."
+        },
+        "title": {
+          "description": "General title for the suggestion, in the user's language, without markup. Always set.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3086,7 +3261,7 @@
       "type": "object"
     }
   },
-  "servicePath": "toolresults/v1beta3/projects/",
+  "servicePath": "toolresults/v1beta3/",
   "title": "Cloud Tool Results API",
   "version": "v1beta3"
 }

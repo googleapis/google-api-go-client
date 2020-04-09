@@ -380,14 +380,14 @@ type Account struct {
 	// process of being linked with the Merchant Center account.
 	GoogleMyBusinessLink *AccountGoogleMyBusinessLink `json:"googleMyBusinessLink,omitempty"`
 
-	// Id: Merchant Center account ID.
+	// Id: Required for update. Merchant Center account ID.
 	Id uint64 `json:"id,omitempty,string"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#account".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Display name for the account.
+	// Name: Required. Display name for the account.
 	Name string `json:"name,omitempty"`
 
 	// SellerId: Client-specific, locally-unique, internal ID for the child
@@ -492,6 +492,10 @@ type AccountAdsLink struct {
 	// Re-uploading a link with deprecated status inactive is equivalent to
 	// not submitting the link at all and will delete the link if it was
 	// active or cancel the link request if it was pending.
+	//
+	// Acceptable values are:
+	// - "active"
+	// - "pending"
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdsId") to
@@ -592,6 +596,10 @@ type AccountGoogleMyBusinessLink struct {
 
 	// Status: Status of the link between this Merchant Center account and
 	// the GMB account.
+	//
+	// Acceptable values are:
+	// - "active"
+	// - "pending"
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GmbEmail") to
@@ -714,6 +722,11 @@ type AccountStatusAccountLevelIssue struct {
 	Id string `json:"id,omitempty"`
 
 	// Severity: Severity of the issue.
+	//
+	// Acceptable values are:
+	// - "critical"
+	// - "error"
+	// - "suggestion"
 	Severity string `json:"severity,omitempty"`
 
 	// Title: Short description of the issue.
@@ -794,6 +807,10 @@ func (s *AccountStatusItemLevelIssue) MarshalJSON() ([]byte, error) {
 
 type AccountStatusProducts struct {
 	// Channel: The channel the data applies to.
+	//
+	// Acceptable values are:
+	// - "local"
+	// - "online"
 	Channel string `json:"channel,omitempty"`
 
 	// Country: The country the data applies to.
@@ -870,8 +887,8 @@ func (s *AccountStatusStatistics) MarshalJSON() ([]byte, error) {
 // AccountTax: The tax settings of a merchant account. All methods
 // require the admin role.
 type AccountTax struct {
-	// AccountId: The ID of the account to which these account tax settings
-	// belong.
+	// AccountId: Required. The ID of the account to which these account tax
+	// settings belong.
 	AccountId uint64 `json:"accountId,omitempty,string"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -916,8 +933,8 @@ type AccountTaxTaxRule struct {
 	// Country: Country code in which tax is applicable.
 	Country string `json:"country,omitempty"`
 
-	// LocationId: State (or province) is which the tax is applicable,
-	// described by its location ID (also called criteria ID).
+	// LocationId: Required. State (or province) is which the tax is
+	// applicable, described by its location ID (also called criteria ID).
 	LocationId uint64 `json:"locationId,omitempty,string"`
 
 	// RatePercent: Explicit tax rate in percent, represented as a floating
@@ -1157,6 +1174,14 @@ type AccountsCustomBatchRequestEntry struct {
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
 	// Method: The method of the batch entry.
+	//
+	// Acceptable values are:
+	// - "claimWebsite"
+	// - "delete"
+	// - "get"
+	// - "insert"
+	// - "link"
+	// - "update"
 	Method string `json:"method,omitempty"`
 
 	// Overwrite: Only applicable if the method is claimwebsite. Indicates
@@ -1190,9 +1215,18 @@ func (s *AccountsCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
 type AccountsCustomBatchRequestEntryLinkRequest struct {
 	// Action: Action to perform for this link. The "request" action is only
 	// available to select merchants.
+	//
+	// Acceptable values are:
+	// - "approve"
+	// - "remove"
+	// - "request"
 	Action string `json:"action,omitempty"`
 
 	// LinkType: Type of the link between the two accounts.
+	//
+	// Acceptable values are:
+	// - "channelPartner"
+	// - "eCommercePlatform"
 	LinkType string `json:"linkType,omitempty"`
 
 	// LinkedAccountId: The ID of the linked account.
@@ -1302,9 +1336,18 @@ func (s *AccountsCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
 type AccountsLinkRequest struct {
 	// Action: Action to perform for this link. The "request" action is only
 	// available to select merchants.
+	//
+	// Acceptable values are:
+	// - "approve"
+	// - "remove"
+	// - "request"
 	Action string `json:"action,omitempty"`
 
 	// LinkType: Type of the link between the two accounts.
+	//
+	// Acceptable values are:
+	// - "channelPartner"
+	// - "eCommercePlatform"
 	LinkType string `json:"linkType,omitempty"`
 
 	// LinkedAccountId: The ID of the linked account.
@@ -1487,7 +1530,10 @@ type AccountstatusesCustomBatchRequestEntry struct {
 	// MerchantId: The ID of the managing account.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
-	// Method: The method (get).
+	// Method: The method of the batch entry.
+	//
+	// Acceptable values are:
+	// - "get"
 	Method string `json:"method,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
@@ -1666,6 +1712,11 @@ type AccounttaxCustomBatchRequestEntry struct {
 	// MerchantId: The ID of the managing account.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
+	// Method: The method of the batch entry.
+	//
+	// Acceptable values are:
+	// - "get"
+	// - "update"
 	Method string `json:"method,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
@@ -1988,6 +2039,22 @@ type CustomerReturnReason struct {
 	Description string `json:"description,omitempty"`
 
 	// ReasonCode: Code of the return reason.
+	//
+	// Acceptable values are:
+	// - "betterPriceFound"
+	// - "changedMind"
+	// - "damagedOrDefectiveItem"
+	// - "didNotMatchDescription"
+	// - "doesNotFit"
+	// - "expiredItem"
+	// - "incorrectItemReceived"
+	// - "noLongerNeeded"
+	// - "notSpecified"
+	// - "orderedWrongItem"
+	// - "other"
+	// - "qualityNotExpected"
+	// - "receivedTooLate"
+	// - "undeliverable"
 	ReasonCode string `json:"reasonCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -2056,28 +2123,34 @@ type Datafeed struct {
 	// attributes are defined in the data feed.
 	AttributeLanguage string `json:"attributeLanguage,omitempty"`
 
-	// ContentType: The type of data feed. For product inventory feeds, only
-	// feeds for local stores, not online stores, are supported.
+	// ContentType: Required. The type of data feed. For product inventory
+	// feeds, only feeds for local stores, not online stores, are
+	// supported.
+	//
+	// Acceptable values are:
+	// - "local products"
+	// - "product inventory"
+	// - "products"
 	ContentType string `json:"contentType,omitempty"`
 
 	// FetchSchedule: Fetch schedule for the feed file.
 	FetchSchedule *DatafeedFetchSchedule `json:"fetchSchedule,omitempty"`
 
-	// FileName: The filename of the feed. All feeds must have a unique file
-	// name.
+	// FileName: Required. The filename of the feed. All feeds must have a
+	// unique file name.
 	FileName string `json:"fileName,omitempty"`
 
 	// Format: Format of the feed file.
 	Format *DatafeedFormat `json:"format,omitempty"`
 
-	// Id: The ID of the data feed.
+	// Id: Required for update. The ID of the data feed.
 	Id int64 `json:"id,omitempty,string"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#datafeed".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: A descriptive name of the data feed.
+	// Name: Required for insert. A descriptive name of the data feed.
 	Name string `json:"name,omitempty"`
 
 	// Targets: The targets this feed should apply to (country, language,
@@ -2147,7 +2220,17 @@ type DatafeedFetchSchedule struct {
 	// Username: An optional user name for fetch_url.
 	Username string `json:"username,omitempty"`
 
-	// Weekday: The day of the week the feed file should be fetched.
+	// Weekday: The day of the week the feed file should be
+	// fetched.
+	//
+	// Acceptable values are:
+	// - "monday"
+	// - "tuesday"
+	// - "wednesday"
+	// - "thursday"
+	// - "friday"
+	// - "saturday"
+	// - "sunday"
 	Weekday string `json:"weekday,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DayOfMonth") to
@@ -2177,15 +2260,31 @@ type DatafeedFormat struct {
 	// ColumnDelimiter: Delimiter for the separation of values in a
 	// delimiter-separated values feed. If not specified, the delimiter will
 	// be auto-detected. Ignored for non-DSV data feeds.
+	//
+	// Acceptable values are:
+	// - "pipe"
+	// - "tab"
+	// - "tilde"
 	ColumnDelimiter string `json:"columnDelimiter,omitempty"`
 
 	// FileEncoding: Character encoding scheme of the data feed. If not
 	// specified, the encoding will be auto-detected.
+	//
+	// Acceptable values are:
+	// - "latin-1"
+	// - "utf-16be"
+	// - "utf-16le"
+	// - "utf-8"
+	// - "windows-1252"
 	FileEncoding string `json:"fileEncoding,omitempty"`
 
 	// QuotingMode: Specifies how double quotes are interpreted. If not
 	// specified, the mode will be auto-detected. Ignored for non-DSV data
 	// feeds.
+	//
+	// Acceptable values are:
+	// - "normal character"
+	// - "value quoting"
 	QuotingMode string `json:"quotingMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ColumnDelimiter") to
@@ -2244,6 +2343,15 @@ type DatafeedStatus struct {
 	LastUploadDate string `json:"lastUploadDate,omitempty"`
 
 	// ProcessingStatus: The processing status of the feed.
+	//
+	// Acceptable values are:
+	// - ""failure": The feed could not be processed or all items had
+	// errors."
+	// - "in progress": The feed is being processed.
+	// - "none": The feed has not yet been processed. For example, a feed
+	// that has never been uploaded will have this processing status.
+	// - "success": The feed was processed successfully, though some items
+	// might have had errors.
 	ProcessingStatus string `json:"processingStatus,omitempty"`
 
 	// Warnings: The list of errors occurring in the feed.
@@ -2439,6 +2547,14 @@ type DatafeedsCustomBatchRequestEntry struct {
 	// MerchantId: The ID of the managing account.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
+	// Method: The method of the batch entry.
+	//
+	// Acceptable values are:
+	// - "delete"
+	// - "fetchNow"
+	// - "get"
+	// - "insert"
+	// - "update"
 	Method string `json:"method,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BatchId") to
@@ -2654,6 +2770,10 @@ type DatafeedstatusesCustomBatchRequestEntry struct {
 	// MerchantId: The ID of the managing account.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
+	// Method: The method of the batch entry.
+	//
+	// Acceptable values are:
+	// - "get"
 	Method string `json:"method,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BatchId") to
@@ -3126,6 +3246,16 @@ type HolidaysHoliday struct {
 	Id string `json:"id,omitempty"`
 
 	// Type: The holiday type. Always present.
+	//
+	// Acceptable values are:
+	// - "Christmas"
+	// - "Easter"
+	// - "Father's Day"
+	// - "Halloween"
+	// - "Independence Day (USA)"
+	// - "Mother's Day"
+	// - "Thanksgiving"
+	// - "Valentine's Day"
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CountryCode") to
@@ -3219,6 +3349,9 @@ type InvoiceSummaryAdditionalChargeSummary struct {
 	TotalAmount *Amount `json:"totalAmount,omitempty"`
 
 	// Type: [required] Type of the additional charge.
+	//
+	// Acceptable values are:
+	// - "shipping"
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TotalAmount") to
@@ -3245,7 +3378,13 @@ func (s *InvoiceSummaryAdditionalChargeSummary) MarshalJSON() ([]byte, error) {
 }
 
 type LiaAboutPageSettings struct {
-	// Status: The status of the verification process for the About page.
+	// Status: The status of the verification process for the About
+	// page.
+	//
+	// Acceptable values are:
+	// - "active"
+	// - "inactive"
+	// - "pending"
 	Status string `json:"status,omitempty"`
 
 	// Url: The URL for the About page.
@@ -3278,7 +3417,7 @@ type LiaCountrySettings struct {
 	// About: The settings for the About page.
 	About *LiaAboutPageSettings `json:"about,omitempty"`
 
-	// Country: CLDR country code (e.g. "US").
+	// Country: Required. CLDR country code (e.g. "US").
 	Country string `json:"country,omitempty"`
 
 	// HostedLocalStorefrontActive: The status of the "Merchant hosted local
@@ -3331,9 +3470,19 @@ type LiaInventorySettings struct {
 
 	// InventoryVerificationContactStatus: The status of the verification
 	// contact.
+	//
+	// Acceptable values are:
+	// - "active"
+	// - "inactive"
+	// - "pending"
 	InventoryVerificationContactStatus string `json:"inventoryVerificationContactStatus,omitempty"`
 
 	// Status: The status of the inventory verification process.
+	//
+	// Acceptable values are:
+	// - "active"
+	// - "inactive"
+	// - "pending"
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -3366,6 +3515,11 @@ type LiaOnDisplayToOrderSettings struct {
 	ShippingCostPolicyUrl string `json:"shippingCostPolicyUrl,omitempty"`
 
 	// Status: The status of the ?On display to order? feature.
+	//
+	// Acceptable values are:
+	// - "active"
+	// - "inactive"
+	// - "pending"
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -3523,6 +3677,15 @@ type LiasettingsCustomBatchRequestEntry struct {
 	// MerchantId: The ID of the managing account.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
+	// Method: The method of the batch entry.
+	//
+	// Acceptable values are:
+	// - "get"
+	// - "getAccessibleGmbAccounts"
+	// - "requestGmbAccess"
+	// - "requestInventoryVerification"
+	// - "setInventoryVerificationContact"
+	// - "update"
 	Method string `json:"method,omitempty"`
 
 	// PosDataProviderId: The ID of POS data provider. Required only for
@@ -3877,9 +4040,19 @@ func (s *LiasettingsSetPosDataProviderResponse) MarshalJSON() ([]byte, error) {
 
 type LinkService struct {
 	// Service: Service provided to or by the linked account.
+	//
+	// Acceptable values are:
+	// - "shoppingActionsOrderManagement"
+	// - "shoppingActionsProductManagement"
+	// - "shoppingAdsProductManagement"
 	Service string `json:"service,omitempty"`
 
 	// Status: Status of the link
+	//
+	// Acceptable values are:
+	// - "active"
+	// - "inactive"
+	// - "pending"
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Service") to
@@ -3974,7 +4147,7 @@ type LocalInventory struct {
 	// specified as 'null' if undecided.
 	SalePriceEffectiveDate string `json:"salePriceEffectiveDate,omitempty"`
 
-	// StoreCode: Store code of this local inventory resource.
+	// StoreCode: Required. Store code of this local inventory resource.
 	StoreCode string `json:"storeCode,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4044,6 +4217,9 @@ type LocalinventoryCustomBatchRequestEntry struct {
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
 	// Method: Method of the batch request entry.
+	//
+	// Acceptable values are:
+	// - "insert"
 	Method string `json:"method,omitempty"`
 
 	// ProductId: The ID of the product for which to update local inventory.
@@ -4290,6 +4466,13 @@ type MerchantOrderReturnItem struct {
 	ReturnShipmentIds []string `json:"returnShipmentIds,omitempty"`
 
 	// State: State of the item.
+	//
+	// Acceptable values are:
+	// - "canceled"
+	// - "new"
+	// - "received"
+	// - "refunded"
+	// - "rejected"
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -4358,6 +4541,12 @@ type Order struct {
 	NetTaxAmount *Price `json:"netTaxAmount,omitempty"`
 
 	// PaymentStatus: The status of the payment.
+	//
+	// Acceptable values are:
+	// - "paymentCaptured"
+	// - "paymentRejected"
+	// - "paymentSecured"
+	// - "pendingAuthorization"
 	PaymentStatus string `json:"paymentStatus,omitempty"`
 
 	// PickupDetails: Pickup details for shipments of type pickup.
@@ -4407,10 +4596,25 @@ type Order struct {
 	ShippingCostTax *Price `json:"shippingCostTax,omitempty"`
 
 	// Status: The status of the order.
+	//
+	// Acceptable values are:
+	// - "canceled"
+	// - "delivered"
+	// - "inProgress"
+	// - "partiallyDelivered"
+	// - "partiallyReturned"
+	// - "partiallyShipped"
+	// - "pendingShipment"
+	// - "returned"
+	// - "shipped"
 	Status string `json:"status,omitempty"`
 
 	// TaxCollector: The party responsible for collecting and remitting
 	// taxes.
+	//
+	// Acceptable values are:
+	// - "marketplaceFacilitator"
+	// - "merchant"
 	TaxCollector string `json:"taxCollector,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4498,6 +4702,14 @@ func (s *OrderAddress) MarshalJSON() ([]byte, error) {
 
 type OrderCancellation struct {
 	// Actor: The actor that created the cancellation.
+	//
+	// Acceptable values are:
+	// - "customer"
+	// - "googleBot"
+	// - "googleCustomerService"
+	// - "googlePayments"
+	// - "googleSabre"
+	// - "merchant"
 	Actor string `json:"actor,omitempty"`
 
 	// CreationDate: Date on which the cancellation has been created, in ISO
@@ -4511,6 +4723,36 @@ type OrderCancellation struct {
 	// with a noInventory reason will lead to the removal of the product
 	// from Shopping Actions until you make an update to that product. This
 	// will not affect your Shopping ads.
+	//
+	// Acceptable values are:
+	// - "autoPostInternal"
+	// - "autoPostInvalidBillingAddress"
+	// - "autoPostNoInventory"
+	// - "autoPostPriceError"
+	// - "autoPostUndeliverableShippingAddress"
+	// - "couponAbuse"
+	// - "customerCanceled"
+	// - "customerInitiatedCancel"
+	// - "customerSupportRequested"
+	// - "failToPushOrderGoogleError"
+	// - "failToPushOrderMerchantError"
+	// - "failToPushOrderMerchantFulfillmentError"
+	// - "failToPushOrderToMerchant"
+	// - "failToPushOrderToMerchantOutOfStock"
+	// - "invalidCoupon"
+	// - "malformedShippingAddress"
+	// - "merchantDidNotShipOnTime"
+	// - "noInventory"
+	// - "orderTimeout"
+	// - "other"
+	// - "paymentAbuse"
+	// - "paymentDeclined"
+	// - "priceError"
+	// - "returnRefundAbuse"
+	// - "shippingPriceError"
+	// - "taxError"
+	// - "undeliverableShippingAddress"
+	// - "unsupportedPoBoxAddress"
 	Reason string `json:"reason,omitempty"`
 
 	// ReasonText: The explanation of the reason.
@@ -4618,6 +4860,10 @@ type OrderCustomerMarketingRightsInfo struct {
 	// in their most recent order, they can be subscribed to marketing
 	// emails. Customers who have chosen denied must not be subscribed, or
 	// must be unsubscribed if already opted-in.
+	//
+	// Acceptable values are:
+	// - "denied"
+	// - "granted"
 	ExplicitMarketingPreference string `json:"explicitMarketingPreference,omitempty"`
 
 	// LastUpdatedTimestamp: Timestamp when last time marketing preference
@@ -4777,6 +5023,9 @@ type OrderLineItemAdjustment struct {
 	TaxAdjustment *Price `json:"taxAdjustment,omitempty"`
 
 	// Type: Type of this adjustment.
+	//
+	// Acceptable values are:
+	// - "promotion"
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PriceAdjustment") to
@@ -4808,6 +5057,11 @@ type OrderLineItemProduct struct {
 	Brand string `json:"brand,omitempty"`
 
 	// Condition: Condition or state of the item.
+	//
+	// Acceptable values are:
+	// - "new"
+	// - "refurbished"
+	// - "used"
 	Condition string `json:"condition,omitempty"`
 
 	// ContentLanguage: The two-letter ISO 639-1 language code for the item.
@@ -4938,13 +5192,13 @@ func (s *OrderLineItemProductVariantAttribute) MarshalJSON() ([]byte, error) {
 }
 
 type OrderLineItemReturnInfo struct {
-	// DaysToReturn: How many days later the item can be returned.
+	// DaysToReturn: Required. How many days later the item can be returned.
 	DaysToReturn int64 `json:"daysToReturn,omitempty"`
 
-	// IsReturnable: Whether the item is returnable.
+	// IsReturnable: Required. Whether the item is returnable.
 	IsReturnable bool `json:"isReturnable,omitempty"`
 
-	// PolicyUrl: URL of the item return policy.
+	// PolicyUrl: Required. URL of the item return policy.
 	PolicyUrl string `json:"policyUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DaysToReturn") to
@@ -4971,17 +5225,21 @@ func (s *OrderLineItemReturnInfo) MarshalJSON() ([]byte, error) {
 }
 
 type OrderLineItemShippingDetails struct {
-	// DeliverByDate: The delivery by date, in ISO 8601 format.
+	// DeliverByDate: Required. The delivery by date, in ISO 8601 format.
 	DeliverByDate string `json:"deliverByDate,omitempty"`
 
-	// Method: Details of the shipping method.
+	// Method: Required. Details of the shipping method.
 	Method *OrderLineItemShippingDetailsMethod `json:"method,omitempty"`
 
-	// ShipByDate: The ship by date, in ISO 8601 format.
+	// ShipByDate: Required. The ship by date, in ISO 8601 format.
 	ShipByDate string `json:"shipByDate,omitempty"`
 
 	// Type: Type of shipment. Indicates whether deliveryDetails or
 	// pickupDetails is applicable for this shipment.
+	//
+	// Acceptable values are:
+	// - "delivery"
+	// - "pickup"
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeliverByDate") to
@@ -5012,13 +5270,13 @@ type OrderLineItemShippingDetailsMethod struct {
 	// shipments[].carrier for a list of acceptable values.
 	Carrier string `json:"carrier,omitempty"`
 
-	// MaxDaysInTransit: Maximum transit time.
+	// MaxDaysInTransit: Required. Maximum transit time.
 	MaxDaysInTransit int64 `json:"maxDaysInTransit,omitempty"`
 
-	// MethodName: The name of the shipping method.
+	// MethodName: Required. The name of the shipping method.
 	MethodName string `json:"methodName,omitempty"`
 
-	// MinDaysInTransit: Minimum transit time.
+	// MinDaysInTransit: Required. Minimum transit time.
 	MinDaysInTransit int64 `json:"minDaysInTransit,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Carrier") to
@@ -5156,12 +5414,16 @@ type OrderPromotion struct {
 	// "2020-01-02T09:00:00Z".
 	EndTime string `json:"endTime,omitempty"`
 
-	// Funder: The party funding the promotion. Only merchant is supported
-	// for orders.createtestorder.
+	// Funder: Required. The party funding the promotion. Only merchant is
+	// supported for orders.createtestorder.
+	//
+	// Acceptable values are:
+	// - "google"
+	// - "merchant"
 	Funder string `json:"funder,omitempty"`
 
-	// MerchantPromotionId: This field is used to identify promotions within
-	// merchants' own systems.
+	// MerchantPromotionId: Required. This field is used to identify
+	// promotions within merchants' own systems.
 	MerchantPromotionId string `json:"merchantPromotionId,omitempty"`
 
 	// PriceValue: Estimated discount applied to price. Amount is pre-tax or
@@ -5177,19 +5439,39 @@ type OrderPromotion struct {
 	// "2020-01-02T09:00:00Z".
 	StartTime string `json:"startTime,omitempty"`
 
-	// Subtype: The category of the promotion. Only moneyOff is supported
-	// for orders.createtestorder.
+	// Subtype: Required. The category of the promotion. Only moneyOff is
+	// supported for orders.createtestorder.
+	//
+	// Acceptable values are:
+	// - "buyMGetMoneyOff"
+	// - "buyMGetNMoneyOff"
+	// - "buyMGetNPercentOff"
+	// - "buyMGetPercentOff"
+	// - "freeGift"
+	// - "freeGiftWithItemId"
+	// - "freeGiftWithValue"
+	// - "freeShippingOvernight"
+	// - "freeShippingStandard"
+	// - "freeShippingTwoDay"
+	// - "moneyOff"
+	// - "percentOff"
+	// - "rewardPoints"
+	// - "salePrice"
 	Subtype string `json:"subtype,omitempty"`
 
 	// TaxValue: Estimated discount applied to tax (if allowed by law). Do
 	// not provide for orders.createtestorder.
 	TaxValue *Price `json:"taxValue,omitempty"`
 
-	// Title: The title of the promotion.
+	// Title: Required. The title of the promotion.
 	Title string `json:"title,omitempty"`
 
-	// Type: The scope of the promotion. Only product is supported for
-	// orders.createtestorder.
+	// Type: Required. The scope of the promotion. Only product is supported
+	// for orders.createtestorder.
+	//
+	// Acceptable values are:
+	// - "product"
+	// - "shipping"
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApplicableItems") to
@@ -5221,7 +5503,8 @@ type OrderPromotionItem struct {
 	// orders.createtestorder.
 	LineItemId string `json:"lineItemId,omitempty"`
 
-	// OfferId: Offer ID of a product. Only for orders.createtestorder.
+	// OfferId: Required. Offer ID of a product. Only for
+	// orders.createtestorder.
 	OfferId string `json:"offerId,omitempty"`
 
 	// ProductId: orders.createtestorder.
@@ -5256,6 +5539,14 @@ func (s *OrderPromotionItem) MarshalJSON() ([]byte, error) {
 
 type OrderRefund struct {
 	// Actor: The actor that created the refund.
+	//
+	// Acceptable values are:
+	// - "customer"
+	// - "googleBot"
+	// - "googleCustomerService"
+	// - "googlePayments"
+	// - "googleSabre"
+	// - "merchant"
 	Actor string `json:"actor,omitempty"`
 
 	// Amount: The amount that is refunded.
@@ -5266,6 +5557,52 @@ type OrderRefund struct {
 	CreationDate string `json:"creationDate,omitempty"`
 
 	// Reason: The reason for the refund.
+	//
+	// Acceptable values are:
+	// - "adjustment"
+	// - "autoPostInternal"
+	// - "autoPostInvalidBillingAddress"
+	// - "autoPostNoInventory"
+	// - "autoPostPriceError"
+	// - "autoPostUndeliverableShippingAddress"
+	// - "couponAbuse"
+	// - "courtesyAdjustment"
+	// - "customerCanceled"
+	// - "customerDiscretionaryReturn"
+	// - "customerInitiatedMerchantCancel"
+	// - "customerSupportRequested"
+	// - "deliveredLateByCarrier"
+	// - "deliveredTooLate"
+	// - "expiredItem"
+	// - "failToPushOrderGoogleError"
+	// - "failToPushOrderMerchantError"
+	// - "failToPushOrderMerchantFulfillmentError"
+	// - "failToPushOrderToMerchant"
+	// - "failToPushOrderToMerchantOutOfStock"
+	// - "feeAdjustment"
+	// - "invalidCoupon"
+	// - "lateShipmentCredit"
+	// - "malformedShippingAddress"
+	// - "merchantDidNotShipOnTime"
+	// - "noInventory"
+	// - "orderTimeout"
+	// - "other"
+	// - "paymentAbuse"
+	// - "paymentDeclined"
+	// - "priceAdjustment"
+	// - "priceError"
+	// - "productArrivedDamaged"
+	// - "productNotAsDescribed"
+	// - "promoReallocation"
+	// - "qualityNotAsExpected"
+	// - "returnRefundAbuse"
+	// - "shippingCostAdjustment"
+	// - "shippingPriceError"
+	// - "taxAdjustment"
+	// - "taxError"
+	// - "undeliverableShippingAddress"
+	// - "unsupportedPoBoxAddress"
+	// - "wrongProductShipped"
 	Reason string `json:"reason,omitempty"`
 
 	// ReasonText: The explanation of the reason.
@@ -5393,6 +5730,14 @@ func (s *OrderReportTransaction) MarshalJSON() ([]byte, error) {
 
 type OrderReturn struct {
 	// Actor: The actor that created the refund.
+	//
+	// Acceptable values are:
+	// - "customer"
+	// - "googleBot"
+	// - "googleCustomerService"
+	// - "googlePayments"
+	// - "googleSabre"
+	// - "merchant"
 	Actor string `json:"actor,omitempty"`
 
 	// CreationDate: Date on which the item has been created, in ISO 8601
@@ -5403,6 +5748,21 @@ type OrderReturn struct {
 	Quantity int64 `json:"quantity,omitempty"`
 
 	// Reason: The reason for the return.
+	//
+	// Acceptable values are:
+	// - "customerDiscretionaryReturn"
+	// - "customerInitiatedMerchantCancel"
+	// - "deliveredTooLate"
+	// - "expiredItem"
+	// - "invalidCoupon"
+	// - "malformedShippingAddress"
+	// - "other"
+	// - "productArrivedDamaged"
+	// - "productNotAsDescribed"
+	// - "qualityNotAsExpected"
+	// - "undeliverableShippingAddress"
+	// - "unsupportedPoBoxAddress"
+	// - "wrongProductShipped"
 	Reason string `json:"reason,omitempty"`
 
 	// ReasonText: The explanation of the reason.
@@ -5498,6 +5858,12 @@ type OrderShipment struct {
 	ShipmentGroupId string `json:"shipmentGroupId,omitempty"`
 
 	// Status: The status of the shipment.
+	//
+	// Acceptable values are:
+	// - "delivered"
+	// - "readyForPickup"
+	// - "shipped"
+	// - "undeliverable"
 	Status string `json:"status,omitempty"`
 
 	// TrackingId: The tracking ID for the shipment.
@@ -5606,6 +5972,10 @@ func (s *OrderinvoicesCreateChargeInvoiceRequest) MarshalJSON() ([]byte, error) 
 
 type OrderinvoicesCreateChargeInvoiceResponse struct {
 	// ExecutionStatus: The status of the execution.
+	//
+	// Acceptable values are:
+	// - "duplicate"
+	// - "executed"
 	ExecutionStatus string `json:"executionStatus,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -5685,6 +6055,10 @@ func (s *OrderinvoicesCreateRefundInvoiceRequest) MarshalJSON() ([]byte, error) 
 
 type OrderinvoicesCreateRefundInvoiceResponse struct {
 	// ExecutionStatus: The status of the execution.
+	//
+	// Acceptable values are:
+	// - "duplicate"
+	// - "executed"
 	ExecutionStatus string `json:"executionStatus,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -5724,6 +6098,52 @@ type OrderinvoicesCustomBatchRequestEntryCreateRefundInvoiceRefundOption struct 
 	Description string `json:"description,omitempty"`
 
 	// Reason: [required] Reason for the refund.
+	//
+	// Acceptable values are:
+	// - "adjustment"
+	// - "autoPostInternal"
+	// - "autoPostInvalidBillingAddress"
+	// - "autoPostNoInventory"
+	// - "autoPostPriceError"
+	// - "autoPostUndeliverableShippingAddress"
+	// - "couponAbuse"
+	// - "courtesyAdjustment"
+	// - "customerCanceled"
+	// - "customerDiscretionaryReturn"
+	// - "customerInitiatedMerchantCancel"
+	// - "customerSupportRequested"
+	// - "deliveredLateByCarrier"
+	// - "deliveredTooLate"
+	// - "expiredItem"
+	// - "failToPushOrderGoogleError"
+	// - "failToPushOrderMerchantError"
+	// - "failToPushOrderMerchantFulfillmentError"
+	// - "failToPushOrderToMerchant"
+	// - "failToPushOrderToMerchantOutOfStock"
+	// - "feeAdjustment"
+	// - "invalidCoupon"
+	// - "lateShipmentCredit"
+	// - "malformedShippingAddress"
+	// - "merchantDidNotShipOnTime"
+	// - "noInventory"
+	// - "orderTimeout"
+	// - "other"
+	// - "paymentAbuse"
+	// - "paymentDeclined"
+	// - "priceAdjustment"
+	// - "priceError"
+	// - "productArrivedDamaged"
+	// - "productNotAsDescribed"
+	// - "promoReallocation"
+	// - "qualityNotAsExpected"
+	// - "returnRefundAbuse"
+	// - "shippingCostAdjustment"
+	// - "shippingPriceError"
+	// - "taxAdjustment"
+	// - "taxError"
+	// - "undeliverableShippingAddress"
+	// - "unsupportedPoBoxAddress"
+	// - "wrongProductShipped"
 	Reason string `json:"reason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -5754,6 +6174,21 @@ type OrderinvoicesCustomBatchRequestEntryCreateRefundInvoiceReturnOption struct 
 	Description string `json:"description,omitempty"`
 
 	// Reason: [required] Reason for the return.
+	//
+	// Acceptable values are:
+	// - "customerDiscretionaryReturn"
+	// - "customerInitiatedMerchantCancel"
+	// - "deliveredTooLate"
+	// - "expiredItem"
+	// - "invalidCoupon"
+	// - "malformedShippingAddress"
+	// - "other"
+	// - "productArrivedDamaged"
+	// - "productNotAsDescribed"
+	// - "qualityNotAsExpected"
+	// - "undeliverableShippingAddress"
+	// - "unsupportedPoBoxAddress"
+	// - "wrongProductShipped"
 	Reason string `json:"reason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -5925,6 +6360,10 @@ func (s *OrdersAcknowledgeRequest) MarshalJSON() ([]byte, error) {
 
 type OrdersAcknowledgeResponse struct {
 	// ExecutionStatus: The status of the execution.
+	//
+	// Acceptable values are:
+	// - "duplicate"
+	// - "executed"
 	ExecutionStatus string `json:"executionStatus,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -6008,6 +6447,18 @@ type OrdersCancelLineItemRequest struct {
 	Quantity int64 `json:"quantity,omitempty"`
 
 	// Reason: The reason for the cancellation.
+	//
+	// Acceptable values are:
+	// - "customerInitiatedCancel"
+	// - "invalidCoupon"
+	// - "malformedShippingAddress"
+	// - "noInventory"
+	// - "other"
+	// - "priceError"
+	// - "shippingPriceError"
+	// - "taxError"
+	// - "undeliverableShippingAddress"
+	// - "unsupportedPoBoxAddress"
 	Reason string `json:"reason,omitempty"`
 
 	// ReasonText: The explanation of the reason.
@@ -6038,6 +6489,10 @@ func (s *OrdersCancelLineItemRequest) MarshalJSON() ([]byte, error) {
 
 type OrdersCancelLineItemResponse struct {
 	// ExecutionStatus: The status of the execution.
+	//
+	// Acceptable values are:
+	// - "duplicate"
+	// - "executed"
 	ExecutionStatus string `json:"executionStatus,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -6078,6 +6533,18 @@ type OrdersCancelRequest struct {
 	OperationId string `json:"operationId,omitempty"`
 
 	// Reason: The reason for the cancellation.
+	//
+	// Acceptable values are:
+	// - "customerInitiatedCancel"
+	// - "invalidCoupon"
+	// - "malformedShippingAddress"
+	// - "noInventory"
+	// - "other"
+	// - "priceError"
+	// - "shippingPriceError"
+	// - "taxError"
+	// - "undeliverableShippingAddress"
+	// - "unsupportedPoBoxAddress"
 	Reason string `json:"reason,omitempty"`
 
 	// ReasonText: The explanation of the reason.
@@ -6108,6 +6575,10 @@ func (s *OrdersCancelRequest) MarshalJSON() ([]byte, error) {
 
 type OrdersCancelResponse struct {
 	// ExecutionStatus: The status of the execution.
+	//
+	// Acceptable values are:
+	// - "duplicate"
+	// - "executed"
 	ExecutionStatus string `json:"executionStatus,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -6144,6 +6615,11 @@ func (s *OrdersCancelResponse) MarshalJSON() ([]byte, error) {
 
 type OrdersCancelTestOrderByCustomerRequest struct {
 	// Reason: The reason for the cancellation.
+	//
+	// Acceptable values are:
+	// - "changedMind"
+	// - "orderedWrongItem"
+	// - "other"
 	Reason string `json:"reason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Reason") to
@@ -6215,6 +6691,13 @@ type OrdersCreateTestOrderRequest struct {
 	// TemplateName: The test order template to use. Specify as an
 	// alternative to testOrder as a shortcut for retrieving a template and
 	// then creating an order using that template.
+	//
+	// Acceptable values are:
+	// - "template1"
+	// - "template1a"
+	// - "template1b"
+	// - "template2"
+	// - "template3"
 	TemplateName string `json:"templateName,omitempty"`
 
 	// TestOrder: The test order to create.
@@ -6376,8 +6859,8 @@ type OrdersCustomBatchRequestEntryShipLineItemsShipmentInfo struct {
 	// values.
 	Carrier string `json:"carrier,omitempty"`
 
-	// ShipmentId: The ID of the shipment. This is assigned by the merchant
-	// and is unique to each shipment.
+	// ShipmentId: Required. The ID of the shipment. This is assigned by the
+	// merchant and is unique to each shipment.
 	ShipmentId string `json:"shipmentId,omitempty"`
 
 	// TrackingId: The tracking ID for the shipment.
@@ -6497,6 +6980,21 @@ type OrdersInStoreRefundLineItemRequest struct {
 	Quantity int64 `json:"quantity,omitempty"`
 
 	// Reason: The reason for the return.
+	//
+	// Acceptable values are:
+	// - "customerDiscretionaryReturn"
+	// - "customerInitiatedMerchantCancel"
+	// - "deliveredTooLate"
+	// - "expiredItem"
+	// - "invalidCoupon"
+	// - "malformedShippingAddress"
+	// - "other"
+	// - "productArrivedDamaged"
+	// - "productNotAsDescribed"
+	// - "qualityNotAsExpected"
+	// - "undeliverableShippingAddress"
+	// - "unsupportedPoBoxAddress"
+	// - "wrongProductShipped"
 	Reason string `json:"reason,omitempty"`
 
 	// ReasonText: The explanation of the reason.
@@ -6530,6 +7028,10 @@ func (s *OrdersInStoreRefundLineItemRequest) MarshalJSON() ([]byte, error) {
 
 type OrdersInStoreRefundLineItemResponse struct {
 	// ExecutionStatus: The status of the execution.
+	//
+	// Acceptable values are:
+	// - "duplicate"
+	// - "executed"
 	ExecutionStatus string `json:"executionStatus,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -6619,6 +7121,13 @@ type OrdersRejectReturnLineItemRequest struct {
 	Quantity int64 `json:"quantity,omitempty"`
 
 	// Reason: The reason for the return.
+	//
+	// Acceptable values are:
+	// - "damagedOrUsed"
+	// - "missingComponent"
+	// - "notEligible"
+	// - "other"
+	// - "outOfReturnWindow"
 	Reason string `json:"reason,omitempty"`
 
 	// ReasonText: The explanation of the reason.
@@ -6649,6 +7158,10 @@ func (s *OrdersRejectReturnLineItemRequest) MarshalJSON() ([]byte, error) {
 
 type OrdersRejectReturnLineItemResponse struct {
 	// ExecutionStatus: The status of the execution.
+	//
+	// Acceptable values are:
+	// - "duplicate"
+	// - "executed"
 	ExecutionStatus string `json:"executionStatus,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -6705,6 +7218,21 @@ type OrdersReturnRefundLineItemRequest struct {
 	Quantity int64 `json:"quantity,omitempty"`
 
 	// Reason: The reason for the return.
+	//
+	// Acceptable values are:
+	// - "customerDiscretionaryReturn"
+	// - "customerInitiatedMerchantCancel"
+	// - "deliveredTooLate"
+	// - "expiredItem"
+	// - "invalidCoupon"
+	// - "malformedShippingAddress"
+	// - "other"
+	// - "productArrivedDamaged"
+	// - "productNotAsDescribed"
+	// - "qualityNotAsExpected"
+	// - "undeliverableShippingAddress"
+	// - "unsupportedPoBoxAddress"
+	// - "wrongProductShipped"
 	Reason string `json:"reason,omitempty"`
 
 	// ReasonText: The explanation of the reason.
@@ -6740,6 +7268,10 @@ func (s *OrdersReturnRefundLineItemRequest) MarshalJSON() ([]byte, error) {
 
 type OrdersReturnRefundLineItemResponse struct {
 	// ExecutionStatus: The status of the execution.
+	//
+	// Acceptable values are:
+	// - "duplicate"
+	// - "executed"
 	ExecutionStatus string `json:"executionStatus,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -6815,6 +7347,10 @@ func (s *OrdersSetLineItemMetadataRequest) MarshalJSON() ([]byte, error) {
 
 type OrdersSetLineItemMetadataResponse struct {
 	// ExecutionStatus: The status of the execution.
+	//
+	// Acceptable values are:
+	// - "duplicate"
+	// - "executed"
 	ExecutionStatus string `json:"executionStatus,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -6891,6 +7427,10 @@ func (s *OrdersShipLineItemsRequest) MarshalJSON() ([]byte, error) {
 
 type OrdersShipLineItemsResponse struct {
 	// ExecutionStatus: The status of the execution.
+	//
+	// Acceptable values are:
+	// - "duplicate"
+	// - "executed"
 	ExecutionStatus string `json:"executionStatus,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -6978,6 +7518,10 @@ func (s *OrdersUpdateLineItemShippingDetailsRequest) MarshalJSON() ([]byte, erro
 
 type OrdersUpdateLineItemShippingDetailsResponse struct {
 	// ExecutionStatus: The status of the execution.
+	//
+	// Acceptable values are:
+	// - "duplicate"
+	// - "executed"
 	ExecutionStatus string `json:"executionStatus,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -7047,6 +7591,10 @@ func (s *OrdersUpdateMerchantOrderIdRequest) MarshalJSON() ([]byte, error) {
 
 type OrdersUpdateMerchantOrderIdResponse struct {
 	// ExecutionStatus: The status of the execution.
+	//
+	// Acceptable values are:
+	// - "duplicate"
+	// - "executed"
 	ExecutionStatus string `json:"executionStatus,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -7099,7 +7647,12 @@ type OrdersUpdateShipmentRequest struct {
 	// ShipmentId: The ID of the shipment.
 	ShipmentId string `json:"shipmentId,omitempty"`
 
-	// Status: New status for the shipment. Not updated if missing.
+	// Status: New status for the shipment. Not updated if
+	// missing.
+	//
+	// Acceptable values are:
+	// - "delivered"
+	// - "undeliverable"
 	Status string `json:"status,omitempty"`
 
 	// TrackingId: The tracking ID for the shipment. Not updated if missing.
@@ -7130,6 +7683,10 @@ func (s *OrdersUpdateShipmentRequest) MarshalJSON() ([]byte, error) {
 
 type OrdersUpdateShipmentResponse struct {
 	// ExecutionStatus: The status of the execution.
+	//
+	// Acceptable values are:
+	// - "duplicate"
+	// - "executed"
 	ExecutionStatus string `json:"executionStatus,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -7268,6 +7825,14 @@ type PosCustomBatchRequestEntry struct {
 	// MerchantId: The ID of the POS data provider.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
+	// Method: The method of the batch entry.
+	//
+	// Acceptable values are:
+	// - "delete"
+	// - "get"
+	// - "insert"
+	// - "inventory"
+	// - "sale"
 	Method string `json:"method,omitempty"`
 
 	// Sale: The sale information to submit. Set this only if the method is
@@ -7452,33 +8017,35 @@ func (s *PosDataProvidersPosDataProvider) MarshalJSON() ([]byte, error) {
 // PosInventory: The absolute quantity of an item available at the given
 // store.
 type PosInventory struct {
-	// ContentLanguage: The two-letter ISO 639-1 language code for the item.
+	// ContentLanguage: Required. The two-letter ISO 639-1 language code for
+	// the item.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 
 	// Gtin: Global Trade Item Number.
 	Gtin string `json:"gtin,omitempty"`
 
-	// ItemId: A unique identifier for the item.
+	// ItemId: Required. A unique identifier for the item.
 	ItemId string `json:"itemId,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#posInventory".
 	Kind string `json:"kind,omitempty"`
 
-	// Price: The current price of the item.
+	// Price: Required. The current price of the item.
 	Price *Price `json:"price,omitempty"`
 
-	// Quantity: The available quantity of the item.
+	// Quantity: Required. The available quantity of the item.
 	Quantity int64 `json:"quantity,omitempty,string"`
 
-	// StoreCode: The identifier of the merchant's store. Either a storeCode
-	// inserted via the API or the code of the store in Google My Business.
+	// StoreCode: Required. The identifier of the merchant's store. Either a
+	// storeCode inserted via the API or the code of the store in Google My
+	// Business.
 	StoreCode string `json:"storeCode,omitempty"`
 
-	// TargetCountry: The CLDR territory code for the item.
+	// TargetCountry: Required. The CLDR territory code for the item.
 	TargetCountry string `json:"targetCountry,omitempty"`
 
-	// Timestamp: The inventory timestamp, in ISO 8601 format.
+	// Timestamp: Required. The inventory timestamp, in ISO 8601 format.
 	Timestamp string `json:"timestamp,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContentLanguage") to
@@ -7506,29 +8073,31 @@ func (s *PosInventory) MarshalJSON() ([]byte, error) {
 }
 
 type PosInventoryRequest struct {
-	// ContentLanguage: The two-letter ISO 639-1 language code for the item.
+	// ContentLanguage: Required. The two-letter ISO 639-1 language code for
+	// the item.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 
 	// Gtin: Global Trade Item Number.
 	Gtin string `json:"gtin,omitempty"`
 
-	// ItemId: A unique identifier for the item.
+	// ItemId: Required. A unique identifier for the item.
 	ItemId string `json:"itemId,omitempty"`
 
-	// Price: The current price of the item.
+	// Price: Required. The current price of the item.
 	Price *Price `json:"price,omitempty"`
 
-	// Quantity: The available quantity of the item.
+	// Quantity: Required. The available quantity of the item.
 	Quantity int64 `json:"quantity,omitempty,string"`
 
-	// StoreCode: The identifier of the merchant's store. Either a storeCode
-	// inserted via the API or the code of the store in Google My Business.
+	// StoreCode: Required. The identifier of the merchant's store. Either a
+	// storeCode inserted via the API or the code of the store in Google My
+	// Business.
 	StoreCode string `json:"storeCode,omitempty"`
 
-	// TargetCountry: The CLDR territory code for the item.
+	// TargetCountry: Required. The CLDR territory code for the item.
 	TargetCountry string `json:"targetCountry,omitempty"`
 
-	// Timestamp: The inventory timestamp, in ISO 8601 format.
+	// Timestamp: Required. The inventory timestamp, in ISO 8601 format.
 	Timestamp string `json:"timestamp,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContentLanguage") to
@@ -7556,33 +8125,35 @@ func (s *PosInventoryRequest) MarshalJSON() ([]byte, error) {
 }
 
 type PosInventoryResponse struct {
-	// ContentLanguage: The two-letter ISO 639-1 language code for the item.
+	// ContentLanguage: Required. The two-letter ISO 639-1 language code for
+	// the item.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 
 	// Gtin: Global Trade Item Number.
 	Gtin string `json:"gtin,omitempty"`
 
-	// ItemId: A unique identifier for the item.
+	// ItemId: Required. A unique identifier for the item.
 	ItemId string `json:"itemId,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#posInventoryResponse".
 	Kind string `json:"kind,omitempty"`
 
-	// Price: The current price of the item.
+	// Price: Required. The current price of the item.
 	Price *Price `json:"price,omitempty"`
 
-	// Quantity: The available quantity of the item.
+	// Quantity: Required. The available quantity of the item.
 	Quantity int64 `json:"quantity,omitempty,string"`
 
-	// StoreCode: The identifier of the merchant's store. Either a storeCode
-	// inserted via the API or the code of the store in Google My Business.
+	// StoreCode: Required. The identifier of the merchant's store. Either a
+	// storeCode inserted via the API or the code of the store in Google My
+	// Business.
 	StoreCode string `json:"storeCode,omitempty"`
 
-	// TargetCountry: The CLDR territory code for the item.
+	// TargetCountry: Required. The CLDR territory code for the item.
 	TargetCountry string `json:"targetCountry,omitempty"`
 
-	// Timestamp: The inventory timestamp, in ISO 8601 format.
+	// Timestamp: Required. The inventory timestamp, in ISO 8601 format.
 	Timestamp string `json:"timestamp,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -7650,37 +8221,39 @@ func (s *PosListResponse) MarshalJSON() ([]byte, error) {
 // PosSale: The change of the available quantity of an item at the given
 // store.
 type PosSale struct {
-	// ContentLanguage: The two-letter ISO 639-1 language code for the item.
+	// ContentLanguage: Required. The two-letter ISO 639-1 language code for
+	// the item.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 
 	// Gtin: Global Trade Item Number.
 	Gtin string `json:"gtin,omitempty"`
 
-	// ItemId: A unique identifier for the item.
+	// ItemId: Required. A unique identifier for the item.
 	ItemId string `json:"itemId,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#posSale".
 	Kind string `json:"kind,omitempty"`
 
-	// Price: The price of the item.
+	// Price: Required. The price of the item.
 	Price *Price `json:"price,omitempty"`
 
-	// Quantity: The relative change of the available quantity. Negative for
-	// items returned.
+	// Quantity: Required. The relative change of the available quantity.
+	// Negative for items returned.
 	Quantity int64 `json:"quantity,omitempty,string"`
 
 	// SaleId: A unique ID to group items from the same sale event.
 	SaleId string `json:"saleId,omitempty"`
 
-	// StoreCode: The identifier of the merchant's store. Either a storeCode
-	// inserted via the API or the code of the store in Google My Business.
+	// StoreCode: Required. The identifier of the merchant's store. Either a
+	// storeCode inserted via the API or the code of the store in Google My
+	// Business.
 	StoreCode string `json:"storeCode,omitempty"`
 
-	// TargetCountry: The CLDR territory code for the item.
+	// TargetCountry: Required. The CLDR territory code for the item.
 	TargetCountry string `json:"targetCountry,omitempty"`
 
-	// Timestamp: The inventory timestamp, in ISO 8601 format.
+	// Timestamp: Required. The inventory timestamp, in ISO 8601 format.
 	Timestamp string `json:"timestamp,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContentLanguage") to
@@ -7708,33 +8281,35 @@ func (s *PosSale) MarshalJSON() ([]byte, error) {
 }
 
 type PosSaleRequest struct {
-	// ContentLanguage: The two-letter ISO 639-1 language code for the item.
+	// ContentLanguage: Required. The two-letter ISO 639-1 language code for
+	// the item.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 
 	// Gtin: Global Trade Item Number.
 	Gtin string `json:"gtin,omitempty"`
 
-	// ItemId: A unique identifier for the item.
+	// ItemId: Required. A unique identifier for the item.
 	ItemId string `json:"itemId,omitempty"`
 
-	// Price: The price of the item.
+	// Price: Required. The price of the item.
 	Price *Price `json:"price,omitempty"`
 
-	// Quantity: The relative change of the available quantity. Negative for
-	// items returned.
+	// Quantity: Required. The relative change of the available quantity.
+	// Negative for items returned.
 	Quantity int64 `json:"quantity,omitempty,string"`
 
 	// SaleId: A unique ID to group items from the same sale event.
 	SaleId string `json:"saleId,omitempty"`
 
-	// StoreCode: The identifier of the merchant's store. Either a storeCode
-	// inserted via the API or the code of the store in Google My Business.
+	// StoreCode: Required. The identifier of the merchant's store. Either a
+	// storeCode inserted via the API or the code of the store in Google My
+	// Business.
 	StoreCode string `json:"storeCode,omitempty"`
 
-	// TargetCountry: The CLDR territory code for the item.
+	// TargetCountry: Required. The CLDR territory code for the item.
 	TargetCountry string `json:"targetCountry,omitempty"`
 
-	// Timestamp: The inventory timestamp, in ISO 8601 format.
+	// Timestamp: Required. The inventory timestamp, in ISO 8601 format.
 	Timestamp string `json:"timestamp,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContentLanguage") to
@@ -7762,37 +8337,39 @@ func (s *PosSaleRequest) MarshalJSON() ([]byte, error) {
 }
 
 type PosSaleResponse struct {
-	// ContentLanguage: The two-letter ISO 639-1 language code for the item.
+	// ContentLanguage: Required. The two-letter ISO 639-1 language code for
+	// the item.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 
 	// Gtin: Global Trade Item Number.
 	Gtin string `json:"gtin,omitempty"`
 
-	// ItemId: A unique identifier for the item.
+	// ItemId: Required. A unique identifier for the item.
 	ItemId string `json:"itemId,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#posSaleResponse".
 	Kind string `json:"kind,omitempty"`
 
-	// Price: The price of the item.
+	// Price: Required. The price of the item.
 	Price *Price `json:"price,omitempty"`
 
-	// Quantity: The relative change of the available quantity. Negative for
-	// items returned.
+	// Quantity: Required. The relative change of the available quantity.
+	// Negative for items returned.
 	Quantity int64 `json:"quantity,omitempty,string"`
 
 	// SaleId: A unique ID to group items from the same sale event.
 	SaleId string `json:"saleId,omitempty"`
 
-	// StoreCode: The identifier of the merchant's store. Either a storeCode
-	// inserted via the API or the code of the store in Google My Business.
+	// StoreCode: Required. The identifier of the merchant's store. Either a
+	// storeCode inserted via the API or the code of the store in Google My
+	// Business.
 	StoreCode string `json:"storeCode,omitempty"`
 
-	// TargetCountry: The CLDR territory code for the item.
+	// TargetCountry: Required. The CLDR territory code for the item.
 	TargetCountry string `json:"targetCountry,omitempty"`
 
-	// Timestamp: The inventory timestamp, in ISO 8601 format.
+	// Timestamp: Required. The inventory timestamp, in ISO 8601 format.
 	Timestamp string `json:"timestamp,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -7829,10 +8406,11 @@ type PosStore struct {
 	// string "content#posStore".
 	Kind string `json:"kind,omitempty"`
 
-	// StoreAddress: The street address of the store.
+	// StoreAddress: Required. The street address of the store.
 	StoreAddress string `json:"storeAddress,omitempty"`
 
-	// StoreCode: A store identifier that is unique for the given merchant.
+	// StoreCode: Required. A store identifier that is unique for the given
+	// merchant.
 	StoreCode string `json:"storeCode,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -8001,7 +8579,11 @@ type Product struct {
 	// Brand: Brand of the item.
 	Brand string `json:"brand,omitempty"`
 
-	// Channel: The item's channel (online or local).
+	// Channel: Required. The item's channel (online or local).
+	//
+	// Acceptable values are:
+	// - "local"
+	// - "online"
 	Channel string `json:"channel,omitempty"`
 
 	// Color: Color of the item.
@@ -8010,7 +8592,8 @@ type Product struct {
 	// Condition: Condition or state of the item.
 	Condition string `json:"condition,omitempty"`
 
-	// ContentLanguage: The two-letter ISO 639-1 language code for the item.
+	// ContentLanguage: Required. The two-letter ISO 639-1 language code for
+	// the item.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 
 	// CostOfGoodsSold: Cost of goods sold. Used for gross profit reporting.
@@ -8159,10 +8742,11 @@ type Product struct {
 	// multipack.
 	Multipack int64 `json:"multipack,omitempty,string"`
 
-	// OfferId: A unique identifier for the item. Leading and trailing
-	// whitespaces are stripped and multiple whitespaces are replaced by a
-	// single whitespace upon submission. Only valid unicode characters are
-	// accepted. See the products feed specification for details.
+	// OfferId: Required. A unique identifier for the item. Leading and
+	// trailing whitespaces are stripped and multiple whitespaces are
+	// replaced by a single whitespace upon submission. Only valid unicode
+	// characters are accepted. See the products feed specification for
+	// details.
 	// Note: Content API methods that operate on products take the REST ID
 	// of the product, not this identifier.
 	OfferId string `json:"offerId,omitempty"`
@@ -8222,10 +8806,16 @@ type Product struct {
 	// same itemGroupId value (see size definition).
 	Sizes []string `json:"sizes,omitempty"`
 
-	// Source: The source of the offer, i.e., how the offer was created.
+	// Source: The source of the offer, i.e., how the offer was
+	// created.
+	//
+	// Acceptable values are:
+	// - "api"
+	// - "crawl"
+	// - "feed"
 	Source string `json:"source,omitempty"`
 
-	// TargetCountry: The CLDR territory code for the item.
+	// TargetCountry: Required. The CLDR territory code for the item.
 	TargetCountry string `json:"targetCountry,omitempty"`
 
 	// TaxCategory: The tax category of the product, used to configure
@@ -8782,6 +9372,12 @@ type ProductsCustomBatchRequestEntry struct {
 	// MerchantId: The ID of the managing account.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
+	// Method: The method of the batch entry.
+	//
+	// Acceptable values are:
+	// - "delete"
+	// - "get"
+	// - "insert"
 	Method string `json:"method,omitempty"`
 
 	// Product: The product to insert. Only required if the method is
@@ -8970,6 +9566,10 @@ type ProductstatusesCustomBatchRequestEntry struct {
 	// MerchantId: The ID of the managing account.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
+	// Method: The method of the batch entry.
+	//
+	// Acceptable values are:
+	// - "get"
 	Method string `json:"method,omitempty"`
 
 	// ProductId: The ID of the product whose status to get.
@@ -9212,6 +9812,52 @@ type RefundReason struct {
 	Description string `json:"description,omitempty"`
 
 	// ReasonCode: Code of the refund reason.
+	//
+	// Acceptable values are:
+	// - "adjustment"
+	// - "autoPostInternal"
+	// - "autoPostInvalidBillingAddress"
+	// - "autoPostNoInventory"
+	// - "autoPostPriceError"
+	// - "autoPostUndeliverableShippingAddress"
+	// - "couponAbuse"
+	// - "courtesyAdjustment"
+	// - "customerCanceled"
+	// - "customerDiscretionaryReturn"
+	// - "customerInitiatedMerchantCancel"
+	// - "customerSupportRequested"
+	// - "deliveredLateByCarrier"
+	// - "deliveredTooLate"
+	// - "expiredItem"
+	// - "failToPushOrderGoogleError"
+	// - "failToPushOrderMerchantError"
+	// - "failToPushOrderMerchantFulfillmentError"
+	// - "failToPushOrderToMerchant"
+	// - "failToPushOrderToMerchantOutOfStock"
+	// - "feeAdjustment"
+	// - "invalidCoupon"
+	// - "lateShipmentCredit"
+	// - "malformedShippingAddress"
+	// - "merchantDidNotShipOnTime"
+	// - "noInventory"
+	// - "orderTimeout"
+	// - "other"
+	// - "paymentAbuse"
+	// - "paymentDeclined"
+	// - "priceAdjustment"
+	// - "priceError"
+	// - "productArrivedDamaged"
+	// - "productNotAsDescribed"
+	// - "promoReallocation"
+	// - "qualityNotAsExpected"
+	// - "returnRefundAbuse"
+	// - "shippingCostAdjustment"
+	// - "shippingPriceError"
+	// - "taxAdjustment"
+	// - "taxError"
+	// - "undeliverableShippingAddress"
+	// - "unsupportedPoBoxAddress"
+	// - "wrongProductShipped"
 	ReasonCode string `json:"reasonCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -9331,6 +9977,10 @@ type RegionalinventoryCustomBatchRequestEntry struct {
 	// MerchantId: The ID of the managing account.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
+	// Method: Method of the batch request entry.
+	//
+	// Acceptable values are:
+	// - "insert"
 	Method string `json:"method,omitempty"`
 
 	// ProductId: The ID of the product for which to update price and
@@ -9439,22 +10089,23 @@ func (s *RegionalinventoryCustomBatchResponseEntry) MarshalJSON() ([]byte, error
 
 // ReturnAddress: Return address resource.
 type ReturnAddress struct {
-	// Address: The address.
+	// Address: Required. The address.
 	Address *ReturnAddressAddress `json:"address,omitempty"`
 
-	// Country: The country of sale where the return address is applicable.
+	// Country: Required. The country of sale where the return address is
+	// applicable.
 	Country string `json:"country,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#returnAddress".
 	Kind string `json:"kind,omitempty"`
 
-	// Label: The user-defined label of the return address. For the default
-	// address, use the label "default".
+	// Label: Required. The user-defined label of the return address. For
+	// the default address, use the label "default".
 	Label string `json:"label,omitempty"`
 
-	// PhoneNumber: The merchant's contact phone number regarding the
-	// return.
+	// PhoneNumber: Required. The merchant's contact phone number regarding
+	// the return.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
 
 	// ReturnAddressId: Return address ID generated by Google.
@@ -9535,24 +10186,25 @@ func (s *ReturnAddressAddress) MarshalJSON() ([]byte, error) {
 
 // ReturnPolicy: Return policy resource.
 type ReturnPolicy struct {
-	// Country: The country of sale where the return policy is applicable.
+	// Country: Required. The country of sale where the return policy is
+	// applicable.
 	Country string `json:"country,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#returnPolicy".
 	Kind string `json:"kind,omitempty"`
 
-	// Label: The user-defined label of the return policy. For the default
-	// policy, use the label "default".
+	// Label: Required. The user-defined label of the return policy. For the
+	// default policy, use the label "default".
 	Label string `json:"label,omitempty"`
 
-	// Name: The name of the policy as shown in Merchant Center.
+	// Name: Required. The name of the policy as shown in Merchant Center.
 	Name string `json:"name,omitempty"`
 
 	// NonFreeReturnReasons: Return reasons that will incur return fees.
 	NonFreeReturnReasons []string `json:"nonFreeReturnReasons,omitempty"`
 
-	// Policy: The policy.
+	// Policy: Required. The policy.
 	Policy *ReturnPolicyPolicy `json:"policy,omitempty"`
 
 	// ReturnPolicyId: Return policy ID generated by Google.
@@ -9589,9 +10241,10 @@ func (s *ReturnPolicy) MarshalJSON() ([]byte, error) {
 }
 
 type ReturnPolicyPolicy struct {
-	// LastReturnDate: Last day for returning the items. In ISO 8601 format.
-	// When specifying the return window like this, set the policy type to
-	// "lastReturnDate". Use this for seasonal overrides only.
+	// LastReturnDate: Required. Last day for returning the items. In ISO
+	// 8601 format. When specifying the return window like this, set the
+	// policy type to "lastReturnDate". Use this for seasonal overrides
+	// only.
 	LastReturnDate string `json:"lastReturnDate,omitempty"`
 
 	// NumberOfDays: The number of days items can be returned after
@@ -9610,6 +10263,12 @@ type ReturnPolicyPolicy struct {
 	// returns. Exceptions may be made for electronics or non-returnable
 	// items such as food, perishables, and living things. A policy of less
 	// than 30 days can only be applied to those items.
+	//
+	// Acceptable values are:
+	// - "lastReturnDate"
+	// - "lifetimeReturns"
+	// - "noReturns"
+	// - "numberOfDaysAfterDelivery"
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LastReturnDate") to
@@ -9637,17 +10296,19 @@ func (s *ReturnPolicyPolicy) MarshalJSON() ([]byte, error) {
 }
 
 type ReturnPolicySeasonalOverride struct {
-	// EndDate: Last day on which the override applies. In ISO 8601 format.
+	// EndDate: Required. Last day on which the override applies. In ISO
+	// 8601 format.
 	EndDate string `json:"endDate,omitempty"`
 
-	// Name: The name of the seasonal override as shown in Merchant Center.
+	// Name: Required. The name of the seasonal override as shown in
+	// Merchant Center.
 	Name string `json:"name,omitempty"`
 
-	// Policy: The policy which is in effect during that time.
+	// Policy: Required. The policy which is in effect during that time.
 	Policy *ReturnPolicyPolicy `json:"policy,omitempty"`
 
-	// StartDate: First day on which the override applies. In ISO 8601
-	// format.
+	// StartDate: Required. First day on which the override applies. In ISO
+	// 8601 format.
 	StartDate string `json:"startDate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndDate") to
@@ -9683,6 +10344,11 @@ type ReturnShipment struct {
 	DeliveryDate string `json:"deliveryDate,omitempty"`
 
 	// ReturnMethodType: Type of the return method.
+	//
+	// Acceptable values are:
+	// - "byMail"
+	// - "contactCustomerSupport"
+	// - "returnless"
 	ReturnMethodType string `json:"returnMethodType,omitempty"`
 
 	// ShipmentId: Shipment ID generated by Google.
@@ -9698,6 +10364,12 @@ type ReturnShipment struct {
 	ShippingDate string `json:"shippingDate,omitempty"`
 
 	// State: State of the shipment.
+	//
+	// Acceptable values are:
+	// - "completed"
+	// - "new"
+	// - "shipped"
+	// - "undeliverable"
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreationDate") to
@@ -9757,6 +10429,12 @@ type ReturnaddressCustomBatchRequestEntry struct {
 	// MerchantId: The Merchant Center account ID.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
+	// Method: Method of the batch request entry.
+	//
+	// Acceptable values are:
+	// - "delete"
+	// - "get"
+	// - "insert"
 	Method string `json:"method,omitempty"`
 
 	// ReturnAddress: The return address to submit. Set this only if the
@@ -9934,6 +10612,12 @@ type ReturnpolicyCustomBatchRequestEntry struct {
 	// MerchantId: The Merchant Center account ID.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
+	// Method: Method of the batch request entry.
+	//
+	// Acceptable values are:
+	// - "delete"
+	// - "get"
+	// - "insert"
 	Method string `json:"method,omitempty"`
 
 	// ReturnPolicy: The return policy to submit. Set this only if the
@@ -10120,6 +10804,11 @@ type Service struct {
 	DeliveryTime *DeliveryTime `json:"deliveryTime,omitempty"`
 
 	// Eligibility: Eligibility for this service.
+	//
+	// Acceptable values are:
+	// - "All scenarios"
+	// - "All scenarios except Shopping Actions"
+	// - "Shopping Actions"
 	Eligibility string `json:"eligibility,omitempty"`
 
 	// MinimumOrderValue: Minimum order value for this service. If set,
@@ -10143,7 +10832,12 @@ type Service struct {
 	// overlap.
 	RateGroups []*RateGroup `json:"rateGroups,omitempty"`
 
-	// ShipmentType: Type of locations this service ships orders to.
+	// ShipmentType: Type of locations this service ships orders
+	// to.
+	//
+	// Acceptable values are:
+	// - "delivery"
+	// - "pickup"
 	ShipmentType string `json:"shipmentType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Active") to
@@ -10249,6 +10943,38 @@ func (s *ShipmentInvoiceLineItemInvoice) MarshalJSON() ([]byte, error) {
 
 type ShipmentTrackingInfo struct {
 	// Carrier: The shipping carrier that handles the package.
+	//
+	// Acceptable values are:
+	// - "boxtal"
+	// - "bpost"
+	// - "chronopost"
+	// - "colisPrive"
+	// - "colissimo"
+	// - "cxt"
+	// - "deliv"
+	// - "dhl"
+	// - "dpd"
+	// - "dynamex"
+	// - "eCourier"
+	// - "easypost"
+	// - "efw"
+	// - "fedex"
+	// - "fedexSmartpost"
+	// - "geodis"
+	// - "gls"
+	// - "googleCourier"
+	// - "gsx"
+	// - "jdLogistics"
+	// - "laPoste"
+	// - "lasership"
+	// - "manual"
+	// - "mpx"
+	// - "onTrac"
+	// - "other"
+	// - "tnt"
+	// - "uds"
+	// - "ups"
+	// - "usps"
 	Carrier string `json:"carrier,omitempty"`
 
 	// TrackingNumber: The tracking number for the package.
@@ -10360,6 +11086,11 @@ type ShippingsettingsCustomBatchRequestEntry struct {
 	// MerchantId: The ID of the managing account.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
+	// Method: The method of the batch entry.
+	//
+	// Acceptable values are:
+	// - "get"
+	// - "update"
 	Method string `json:"method,omitempty"`
 
 	// ShippingSettings: The account shipping settings to update. Only
@@ -10655,39 +11386,72 @@ type TestOrder struct {
 	// string "content#testOrder".
 	Kind string `json:"kind,omitempty"`
 
-	// LineItems: Line items that are ordered. At least one line item must
-	// be provided.
+	// LineItems: Required. Line items that are ordered. At least one line
+	// item must be provided.
 	LineItems []*TestOrderLineItem `json:"lineItems,omitempty"`
 
 	// NotificationMode: Determines if test order must be pulled by merchant
 	// or pushed to merchant via push integration.
+	//
+	// Acceptable values are:
+	// - "checkoutIntegration"
+	// - "merchantPull"
 	NotificationMode string `json:"notificationMode,omitempty"`
 
-	// PredefinedBillingAddress: The billing address.
+	// PredefinedBillingAddress: Required. The billing address.
+	//
+	// Acceptable values are:
+	// - "dwight"
+	// - "jim"
+	// - "pam"
 	PredefinedBillingAddress string `json:"predefinedBillingAddress,omitempty"`
 
-	// PredefinedDeliveryAddress: Identifier of one of the predefined
-	// delivery addresses for the delivery.
+	// PredefinedDeliveryAddress: Required. Identifier of one of the
+	// predefined delivery addresses for the delivery.
+	//
+	// Acceptable values are:
+	// - "dwight"
+	// - "jim"
+	// - "pam"
 	PredefinedDeliveryAddress string `json:"predefinedDeliveryAddress,omitempty"`
 
-	// PredefinedEmail: Email address of the customer.
+	// PredefinedEmail: Required. Email address of the customer.
+	//
+	// Acceptable values are:
+	// - "pog.dwight.schrute@gmail.com"
+	// - "pog.jim.halpert@gmail.com"
+	// - "penpog.pam.beesly@gmail.comding"
 	PredefinedEmail string `json:"predefinedEmail,omitempty"`
 
 	// PredefinedPickupDetails: Identifier of one of the predefined pickup
 	// details. Required for orders containing line items with shipping type
 	// pickup.
+	//
+	// Acceptable values are:
+	// - "dwight"
+	// - "jim"
+	// - "pam"
 	PredefinedPickupDetails string `json:"predefinedPickupDetails,omitempty"`
 
 	// Promotions: Promotions associated with the order.
 	Promotions []*OrderPromotion `json:"promotions,omitempty"`
 
-	// ShippingCost: The price of shipping for all items. Shipping tax is
-	// automatically calculated for orders where marketplace facilitator tax
-	// laws are applicable. Otherwise, tax settings from Merchant Center are
-	// applied. Note that shipping is not taxed in certain states.
+	// ShippingCost: Required. The price of shipping for all items. Shipping
+	// tax is automatically calculated for orders where marketplace
+	// facilitator tax laws are applicable. Otherwise, tax settings from
+	// Merchant Center are applied. Note that shipping is not taxed in
+	// certain states.
 	ShippingCost *Price `json:"shippingCost,omitempty"`
 
-	// ShippingOption: The requested shipping option.
+	// ShippingOption: Required. The requested shipping option.
+	//
+	// Acceptable values are:
+	// - "economy"
+	// - "expedited"
+	// - "oneDay"
+	// - "sameDay"
+	// - "standard"
+	// - "twoDay"
 	ShippingOption string `json:"shippingOption,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EnableOrderinvoices")
@@ -10715,16 +11479,17 @@ func (s *TestOrder) MarshalJSON() ([]byte, error) {
 }
 
 type TestOrderLineItem struct {
-	// Product: Product data from the time of the order placement.
+	// Product: Required. Product data from the time of the order placement.
 	Product *TestOrderLineItemProduct `json:"product,omitempty"`
 
-	// QuantityOrdered: Number of items ordered.
+	// QuantityOrdered: Required. Number of items ordered.
 	QuantityOrdered int64 `json:"quantityOrdered,omitempty"`
 
-	// ReturnInfo: Details of the return policy for the line item.
+	// ReturnInfo: Required. Details of the return policy for the line item.
 	ReturnInfo *OrderLineItemReturnInfo `json:"returnInfo,omitempty"`
 
-	// ShippingDetails: Details of the requested shipping for the line item.
+	// ShippingDetails: Required. Details of the requested shipping for the
+	// line item.
 	ShippingDetails *OrderLineItemShippingDetails `json:"shippingDetails,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Product") to
@@ -10751,13 +11516,21 @@ func (s *TestOrderLineItem) MarshalJSON() ([]byte, error) {
 }
 
 type TestOrderLineItemProduct struct {
-	// Brand: Brand of the item.
+	// Brand: Required. Brand of the item.
 	Brand string `json:"brand,omitempty"`
 
-	// Condition: Condition or state of the item.
+	// Condition: Required. Condition or state of the item.
+	//
+	// Acceptable values are:
+	// - "new"
 	Condition string `json:"condition,omitempty"`
 
-	// ContentLanguage: The two-letter ISO 639-1 language code for the item.
+	// ContentLanguage: Required. The two-letter ISO 639-1 language code for
+	// the item.
+	//
+	// Acceptable values are:
+	// - "en"
+	// - "fr"
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 
 	// Fees: Fees for the item. Optional.
@@ -10766,7 +11539,7 @@ type TestOrderLineItemProduct struct {
 	// Gtin: Global Trade Item Number (GTIN) of the item. Optional.
 	Gtin string `json:"gtin,omitempty"`
 
-	// ImageLink: URL of an image of the item.
+	// ImageLink: Required. URL of an image of the item.
 	ImageLink string `json:"imageLink,omitempty"`
 
 	// ItemGroupId: Shared identifier for all variants of the same product.
@@ -10776,19 +11549,19 @@ type TestOrderLineItemProduct struct {
 	// Mpn: Manufacturer Part Number (MPN) of the item. Optional.
 	Mpn string `json:"mpn,omitempty"`
 
-	// OfferId: An identifier of the item.
+	// OfferId: Required. An identifier of the item.
 	OfferId string `json:"offerId,omitempty"`
 
-	// Price: The price for the product. Tax is automatically calculated for
-	// orders where marketplace facilitator tax laws are applicable.
-	// Otherwise, tax settings from Merchant Center are applied.
+	// Price: Required. The price for the product. Tax is automatically
+	// calculated for orders where marketplace facilitator tax laws are
+	// applicable. Otherwise, tax settings from Merchant Center are applied.
 	Price *Price `json:"price,omitempty"`
 
-	// TargetCountry: The CLDR territory code of the target country of the
-	// product.
+	// TargetCountry: Required. The CLDR territory code of the target
+	// country of the product.
 	TargetCountry string `json:"targetCountry,omitempty"`
 
-	// Title: The title of the product.
+	// Title: Required. The title of the product.
 	Title string `json:"title,omitempty"`
 
 	// VariantAttributes: Variant attributes for the item. Optional.
@@ -10957,6 +11730,9 @@ type UnitInvoiceAdditionalCharge struct {
 	AdditionalChargeAmount *Amount `json:"additionalChargeAmount,omitempty"`
 
 	// Type: [required] Type of the additional charge.
+	//
+	// Acceptable values are:
+	// - "shipping"
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -10993,6 +11769,11 @@ type UnitInvoiceTaxLine struct {
 	TaxName string `json:"taxName,omitempty"`
 
 	// TaxType: [required] Type of the tax.
+	//
+	// Acceptable values are:
+	// - "otherFee"
+	// - "otherFeeTax"
+	// - "sales"
 	TaxType string `json:"taxType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TaxAmount") to
@@ -11070,10 +11851,14 @@ func (s *Value) MarshalJSON() ([]byte, error) {
 }
 
 type Weight struct {
-	// Unit: The weight unit.
+	// Unit: Required. The weight unit.
+	//
+	// Acceptable values are:
+	// - "kg"
+	// - "lb"
 	Unit string `json:"unit,omitempty"`
 
-	// Value: The weight represented as a number.
+	// Value: Required. The weight represented as a number.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Unit") to
@@ -11152,7 +11937,7 @@ func (c *AccountsAuthinfoCall) Header() http.Header {
 
 func (c *AccountsAuthinfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11280,7 +12065,7 @@ func (c *AccountsClaimwebsiteCall) Header() http.Header {
 
 func (c *AccountsClaimwebsiteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11424,7 +12209,7 @@ func (c *AccountsCustombatchCall) Header() http.Header {
 
 func (c *AccountsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11555,7 +12340,7 @@ func (c *AccountsDeleteCall) Header() http.Header {
 
 func (c *AccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11684,7 +12469,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11827,7 +12612,7 @@ func (c *AccountsInsertCall) Header() http.Header {
 
 func (c *AccountsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11969,7 +12754,7 @@ func (c *AccountsLinkCall) Header() http.Header {
 
 func (c *AccountsLinkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12140,7 +12925,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12332,7 +13117,7 @@ func (c *AccountsListlinksCall) Header() http.Header {
 
 func (c *AccountsListlinksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12509,7 +13294,7 @@ func (c *AccountsUpdateCall) Header() http.Header {
 
 func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12656,7 +13441,7 @@ func (c *AccountstatusesCustombatchCall) Header() http.Header {
 
 func (c *AccountstatusesCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12801,7 +13586,7 @@ func (c *AccountstatusesGetCall) Header() http.Header {
 
 func (c *AccountstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12983,7 +13768,7 @@ func (c *AccountstatusesListCall) Header() http.Header {
 
 func (c *AccountstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13154,7 +13939,7 @@ func (c *AccounttaxCustombatchCall) Header() http.Header {
 
 func (c *AccounttaxCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13289,7 +14074,7 @@ func (c *AccounttaxGetCall) Header() http.Header {
 
 func (c *AccounttaxGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13456,7 +14241,7 @@ func (c *AccounttaxListCall) Header() http.Header {
 
 func (c *AccounttaxListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13624,7 +14409,7 @@ func (c *AccounttaxUpdateCall) Header() http.Header {
 
 func (c *AccounttaxUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13771,7 +14556,7 @@ func (c *DatafeedsCustombatchCall) Header() http.Header {
 
 func (c *DatafeedsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13896,7 +14681,7 @@ func (c *DatafeedsDeleteCall) Header() http.Header {
 
 func (c *DatafeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14009,7 +14794,7 @@ func (c *DatafeedsFetchnowCall) Header() http.Header {
 
 func (c *DatafeedsFetchnowCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14161,7 +14946,7 @@ func (c *DatafeedsGetCall) Header() http.Header {
 
 func (c *DatafeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14305,7 +15090,7 @@ func (c *DatafeedsInsertCall) Header() http.Header {
 
 func (c *DatafeedsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14468,7 +15253,7 @@ func (c *DatafeedsListCall) Header() http.Header {
 
 func (c *DatafeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14637,7 +15422,7 @@ func (c *DatafeedsUpdateCall) Header() http.Header {
 
 func (c *DatafeedsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14784,7 +15569,7 @@ func (c *DatafeedstatusesCustombatchCall) Header() http.Header {
 
 func (c *DatafeedstatusesCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14941,7 +15726,7 @@ func (c *DatafeedstatusesGetCall) Header() http.Header {
 
 func (c *DatafeedstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15118,7 +15903,7 @@ func (c *DatafeedstatusesListCall) Header() http.Header {
 
 func (c *DatafeedstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15283,7 +16068,7 @@ func (c *LiasettingsCustombatchCall) Header() http.Header {
 
 func (c *LiasettingsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15418,7 +16203,7 @@ func (c *LiasettingsGetCall) Header() http.Header {
 
 func (c *LiasettingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15573,7 +16358,7 @@ func (c *LiasettingsGetaccessiblegmbaccountsCall) Header() http.Header {
 
 func (c *LiasettingsGetaccessiblegmbaccountsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15742,7 +16527,7 @@ func (c *LiasettingsListCall) Header() http.Header {
 
 func (c *LiasettingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15916,7 +16701,7 @@ func (c *LiasettingsListposdataprovidersCall) Header() http.Header {
 
 func (c *LiasettingsListposdataprovidersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16038,7 +16823,7 @@ func (c *LiasettingsRequestgmbaccessCall) Header() http.Header {
 
 func (c *LiasettingsRequestgmbaccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16189,7 +16974,7 @@ func (c *LiasettingsRequestinventoryverificationCall) Header() http.Header {
 
 func (c *LiasettingsRequestinventoryverificationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16344,7 +17129,7 @@ func (c *LiasettingsSetinventoryverificationcontactCall) Header() http.Header {
 
 func (c *LiasettingsSetinventoryverificationcontactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16531,7 +17316,7 @@ func (c *LiasettingsSetposdataproviderCall) Header() http.Header {
 
 func (c *LiasettingsSetposdataproviderCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16692,7 +17477,7 @@ func (c *LiasettingsUpdateCall) Header() http.Header {
 
 func (c *LiasettingsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16839,7 +17624,7 @@ func (c *LocalinventoryCustombatchCall) Header() http.Header {
 
 func (c *LocalinventoryCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16967,7 +17752,7 @@ func (c *LocalinventoryInsertCall) Header() http.Header {
 
 func (c *LocalinventoryInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17117,7 +17902,7 @@ func (c *OrderinvoicesCreatechargeinvoiceCall) Header() http.Header {
 
 func (c *OrderinvoicesCreatechargeinvoiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17272,7 +18057,7 @@ func (c *OrderinvoicesCreaterefundinvoiceCall) Header() http.Header {
 
 func (c *OrderinvoicesCreaterefundinvoiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17454,7 +18239,7 @@ func (c *OrderreportsListdisbursementsCall) Header() http.Header {
 
 func (c *OrderreportsListdisbursementsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17668,7 +18453,7 @@ func (c *OrderreportsListtransactionsCall) Header() http.Header {
 
 func (c *OrderreportsListtransactionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17866,7 +18651,7 @@ func (c *OrderreturnsGetCall) Header() http.Header {
 
 func (c *OrderreturnsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18060,7 +18845,7 @@ func (c *OrderreturnsListCall) Header() http.Header {
 
 func (c *OrderreturnsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18251,7 +19036,7 @@ func (c *OrdersAcknowledgeCall) Header() http.Header {
 
 func (c *OrdersAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18399,7 +19184,7 @@ func (c *OrdersAdvancetestorderCall) Header() http.Header {
 
 func (c *OrdersAdvancetestorderCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18540,7 +19325,7 @@ func (c *OrdersCancelCall) Header() http.Header {
 
 func (c *OrdersCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18689,7 +19474,7 @@ func (c *OrdersCancellineitemCall) Header() http.Header {
 
 func (c *OrdersCancellineitemCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18839,7 +19624,7 @@ func (c *OrdersCanceltestorderbycustomerCall) Header() http.Header {
 
 func (c *OrdersCanceltestorderbycustomerCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18987,7 +19772,7 @@ func (c *OrdersCreatetestorderCall) Header() http.Header {
 
 func (c *OrdersCreatetestorderCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19128,7 +19913,7 @@ func (c *OrdersCreatetestreturnCall) Header() http.Header {
 
 func (c *OrdersCreatetestreturnCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19286,7 +20071,7 @@ func (c *OrdersGetCall) Header() http.Header {
 
 func (c *OrdersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19439,7 +20224,7 @@ func (c *OrdersGetbymerchantorderidCall) Header() http.Header {
 
 func (c *OrdersGetbymerchantorderidCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19601,7 +20386,7 @@ func (c *OrdersGettestordertemplateCall) Header() http.Header {
 
 func (c *OrdersGettestordertemplateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19774,7 +20559,7 @@ func (c *OrdersInstorerefundlineitemCall) Header() http.Header {
 
 func (c *OrdersInstorerefundlineitemCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20007,7 +20792,7 @@ func (c *OrdersListCall) Header() http.Header {
 
 func (c *OrdersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20227,7 +21012,7 @@ func (c *OrdersRejectreturnlineitemCall) Header() http.Header {
 
 func (c *OrdersRejectreturnlineitemCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20378,7 +21163,7 @@ func (c *OrdersReturnrefundlineitemCall) Header() http.Header {
 
 func (c *OrdersReturnrefundlineitemCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20533,7 +21318,7 @@ func (c *OrdersSetlineitemmetadataCall) Header() http.Header {
 
 func (c *OrdersSetlineitemmetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20683,7 +21468,7 @@ func (c *OrdersShiplineitemsCall) Header() http.Header {
 
 func (c *OrdersShiplineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20833,7 +21618,7 @@ func (c *OrdersUpdatelineitemshippingdetailsCall) Header() http.Header {
 
 func (c *OrdersUpdatelineitemshippingdetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20985,7 +21770,7 @@ func (c *OrdersUpdatemerchantorderidCall) Header() http.Header {
 
 func (c *OrdersUpdatemerchantorderidCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21136,7 +21921,7 @@ func (c *OrdersUpdateshipmentCall) Header() http.Header {
 
 func (c *OrdersUpdateshipmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21281,7 +22066,7 @@ func (c *PosCustombatchCall) Header() http.Header {
 
 func (c *PosCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21407,7 +22192,7 @@ func (c *PosDeleteCall) Header() http.Header {
 
 func (c *PosDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21540,7 +22325,7 @@ func (c *PosGetCall) Header() http.Header {
 
 func (c *PosGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21693,7 +22478,7 @@ func (c *PosInsertCall) Header() http.Header {
 
 func (c *PosInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21843,7 +22628,7 @@ func (c *PosInventoryCall) Header() http.Header {
 
 func (c *PosInventoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22002,7 +22787,7 @@ func (c *PosListCall) Header() http.Header {
 
 func (c *PosListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22147,7 +22932,7 @@ func (c *PosSaleCall) Header() http.Header {
 
 func (c *PosSaleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22294,7 +23079,7 @@ func (c *ProductsCustombatchCall) Header() http.Header {
 
 func (c *ProductsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22425,7 +23210,7 @@ func (c *ProductsDeleteCall) Header() http.Header {
 
 func (c *ProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22553,7 +23338,7 @@ func (c *ProductsGetCall) Header() http.Header {
 
 func (c *ProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22704,7 +23489,7 @@ func (c *ProductsInsertCall) Header() http.Header {
 
 func (c *ProductsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22875,7 +23660,7 @@ func (c *ProductsListCall) Header() http.Header {
 
 func (c *ProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23040,7 +23825,7 @@ func (c *ProductstatusesCustombatchCall) Header() http.Header {
 
 func (c *ProductstatusesCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23184,7 +23969,7 @@ func (c *ProductstatusesGetCall) Header() http.Header {
 
 func (c *ProductstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23365,7 +24150,7 @@ func (c *ProductstatusesListCall) Header() http.Header {
 
 func (c *ProductstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23547,7 +24332,7 @@ func (c *PubsubnotificationsettingsGetCall) Header() http.Header {
 
 func (c *PubsubnotificationsettingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23683,7 +24468,7 @@ func (c *PubsubnotificationsettingsUpdateCall) Header() http.Header {
 
 func (c *PubsubnotificationsettingsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23821,7 +24606,7 @@ func (c *RegionalinventoryCustombatchCall) Header() http.Header {
 
 func (c *RegionalinventoryCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23950,7 +24735,7 @@ func (c *RegionalinventoryInsertCall) Header() http.Header {
 
 func (c *RegionalinventoryInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24096,7 +24881,7 @@ func (c *ReturnaddressCustombatchCall) Header() http.Header {
 
 func (c *ReturnaddressCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24221,7 +25006,7 @@ func (c *ReturnaddressDeleteCall) Header() http.Header {
 
 func (c *ReturnaddressDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24343,7 +25128,7 @@ func (c *ReturnaddressGetCall) Header() http.Header {
 
 func (c *ReturnaddressGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24485,7 +25270,7 @@ func (c *ReturnaddressInsertCall) Header() http.Header {
 
 func (c *ReturnaddressInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24655,7 +25440,7 @@ func (c *ReturnaddressListCall) Header() http.Header {
 
 func (c *ReturnaddressListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24825,7 +25610,7 @@ func (c *ReturnpolicyCustombatchCall) Header() http.Header {
 
 func (c *ReturnpolicyCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24950,7 +25735,7 @@ func (c *ReturnpolicyDeleteCall) Header() http.Header {
 
 func (c *ReturnpolicyDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25072,7 +25857,7 @@ func (c *ReturnpolicyGetCall) Header() http.Header {
 
 func (c *ReturnpolicyGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25214,7 +25999,7 @@ func (c *ReturnpolicyInsertCall) Header() http.Header {
 
 func (c *ReturnpolicyInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25362,7 +26147,7 @@ func (c *ReturnpolicyListCall) Header() http.Header {
 
 func (c *ReturnpolicyListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25495,7 +26280,7 @@ func (c *ShippingsettingsCustombatchCall) Header() http.Header {
 
 func (c *ShippingsettingsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25631,7 +26416,7 @@ func (c *ShippingsettingsGetCall) Header() http.Header {
 
 func (c *ShippingsettingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25784,7 +26569,7 @@ func (c *ShippingsettingsGetsupportedcarriersCall) Header() http.Header {
 
 func (c *ShippingsettingsGetsupportedcarriersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25929,7 +26714,7 @@ func (c *ShippingsettingsGetsupportedholidaysCall) Header() http.Header {
 
 func (c *ShippingsettingsGetsupportedholidaysCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26075,7 +26860,7 @@ func (c *ShippingsettingsGetsupportedpickupservicesCall) Header() http.Header {
 
 func (c *ShippingsettingsGetsupportedpickupservicesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26236,7 +27021,7 @@ func (c *ShippingsettingsListCall) Header() http.Header {
 
 func (c *ShippingsettingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26404,7 +27189,7 @@ func (c *ShippingsettingsUpdateCall) Header() http.Header {
 
 func (c *ShippingsettingsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

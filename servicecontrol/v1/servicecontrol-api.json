@@ -197,7 +197,7 @@
       }
     }
   },
-  "revision": "20200224",
+  "revision": "20200330",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -653,7 +653,7 @@
           "type": "string"
         },
         "serviceRolloutId": {
-          "description": "Unimplemented. The current service rollout id used to process the request.",
+          "description": "The current service rollout id used to process the request.",
           "type": "string"
         }
       },
@@ -1497,7 +1497,7 @@
           "type": "string"
         },
         "serviceRolloutId": {
-          "description": "Unimplemented. The current service rollout id used to process the request.",
+          "description": "The current service rollout id used to process the request.",
           "type": "string"
         }
       },

@@ -323,6 +323,10 @@ type EnvironmentConfig struct {
 	// used to run this environment.
 	NodeCount int64 `json:"nodeCount,omitempty"`
 
+	// PrivateEnvironmentConfig: The configuration used for the Private IP
+	// Cloud Composer environment.
+	PrivateEnvironmentConfig *PrivateEnvironmentConfig `json:"privateEnvironmentConfig,omitempty"`
+
 	// SoftwareConfig: The configuration settings for software inside the
 	// environment.
 	SoftwareConfig *SoftwareConfig `json:"softwareConfig,omitempty"`
@@ -346,6 +350,100 @@ type EnvironmentConfig struct {
 
 func (s *EnvironmentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod EnvironmentConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IPAllocationPolicy: Configuration for controlling how IPs are
+// allocated in the
+// GKE cluster running the Apache Airflow software.
+type IPAllocationPolicy struct {
+	// ClusterIpv4CidrBlock: Optional. The IP address range used to allocate
+	// IP addresses to pods in
+	// the GKE cluster.
+	//
+	// This field is applicable only when `use_ip_aliases` is true.
+	//
+	// Set to blank to have GKE choose a range with the default size.
+	//
+	// Set to /netmask (e.g. `/14`) to have GKE choose a range with a
+	// specific
+	// netmask.
+	//
+	// Set to
+	// a
+	// [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
+	//
+	// notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
+	// (e.g.
+	// `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific
+	// range
+	// to use.
+	ClusterIpv4CidrBlock string `json:"clusterIpv4CidrBlock,omitempty"`
+
+	// ClusterSecondaryRangeName: Optional. The name of the GKE cluster's
+	// secondary range used to allocate
+	// IP addresses to pods.
+	//
+	// This field is applicable only when `use_ip_aliases` is true.
+	ClusterSecondaryRangeName string `json:"clusterSecondaryRangeName,omitempty"`
+
+	// ServicesIpv4CidrBlock: Optional. The IP address range of the services
+	// IP addresses in this
+	// GKE cluster.
+	//
+	// This field is applicable only when `use_ip_aliases` is true.
+	//
+	// Set to blank to have GKE choose a range with the default size.
+	//
+	// Set to /netmask (e.g. `/14`) to have GKE choose a range with a
+	// specific
+	// netmask.
+	//
+	// Set to
+	// a
+	// [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
+	//
+	// notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
+	// (e.g.
+	// `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific
+	// range
+	// to use.
+	ServicesIpv4CidrBlock string `json:"servicesIpv4CidrBlock,omitempty"`
+
+	// ServicesSecondaryRangeName: Optional. The name of the services'
+	// secondary range used to allocate
+	// IP addresses to the GKE cluster.
+	//
+	// This field is applicable only when `use_ip_aliases` is true.
+	ServicesSecondaryRangeName string `json:"servicesSecondaryRangeName,omitempty"`
+
+	// UseIpAliases: Optional. Whether or not to enable Alias IPs in the GKE
+	// cluster.
+	// If `true`, a VPC-native cluster is created.
+	UseIpAliases bool `json:"useIpAliases,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ClusterIpv4CidrBlock") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterIpv4CidrBlock") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IPAllocationPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod IPAllocationPolicy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -508,6 +606,10 @@ type NodeConfig struct {
 	// size is 20GB.
 	// If unspecified, defaults to 100GB. Cannot be updated.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty"`
+
+	// IpAllocationPolicy: Optional. The configuration for controlling how
+	// IPs are allocated in the GKE cluster.
+	IpAllocationPolicy *IPAllocationPolicy `json:"ipAllocationPolicy,omitempty"`
 
 	// Location: Optional. The Compute Engine
 	// [zone](/compute/docs/regions-zones) in which
@@ -793,6 +895,112 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PrivateClusterConfig: Configuration options for the private GKE
+// cluster in a Cloud Composer
+// environment.
+type PrivateClusterConfig struct {
+	// EnablePrivateEndpoint: Optional. If `true`, access to the public
+	// endpoint of the GKE cluster is
+	// denied.
+	EnablePrivateEndpoint bool `json:"enablePrivateEndpoint,omitempty"`
+
+	// MasterIpv4CidrBlock: Optional. The CIDR block from which IPv4 range
+	// for GKE master will be reserved. If
+	// left blank, the default value of '172.16.0.0/23' is used.
+	MasterIpv4CidrBlock string `json:"masterIpv4CidrBlock,omitempty"`
+
+	// MasterIpv4ReservedRange: Output only. The IP range in CIDR notation
+	// to use for the hosted master network. This
+	// range is used for assigning internal IP addresses to the GKE
+	// cluster
+	// master or set of masters and to the internal load balancer virtual
+	// IP.
+	// This range must not overlap with any other ranges in use
+	// within the cluster's network.
+	MasterIpv4ReservedRange string `json:"masterIpv4ReservedRange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnablePrivateEndpoint") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnablePrivateEndpoint") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrivateClusterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PrivateClusterConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrivateEnvironmentConfig: The configuration information for
+// configuring a Private IP Cloud Composer
+// environment.
+type PrivateEnvironmentConfig struct {
+	// CloudSqlIpv4CidrBlock: Optional. The CIDR block from which IP range
+	// in tenant project will be reserved for
+	// Cloud SQL. Needs to be disjoint from `web_server_ipv4_cidr_block`.
+	CloudSqlIpv4CidrBlock string `json:"cloudSqlIpv4CidrBlock,omitempty"`
+
+	// EnablePrivateEnvironment: Optional. If `true`, a Private IP Cloud
+	// Composer environment is created.
+	// If this field is set to true, `IPAllocationPolicy.use_ip_aliases`
+	// must be
+	// set to true.
+	EnablePrivateEnvironment bool `json:"enablePrivateEnvironment,omitempty"`
+
+	// PrivateClusterConfig: Optional. Configuration for the private GKE
+	// cluster for a Private IP
+	// Cloud Composer environment.
+	PrivateClusterConfig *PrivateClusterConfig `json:"privateClusterConfig,omitempty"`
+
+	// WebServerIpv4CidrBlock: Optional. The CIDR block from which IP range
+	// for web server will be reserved. Needs
+	// to be disjoint from `private_cluster_config.master_ipv4_cidr_block`
+	// and
+	// `cloud_sql_ipv4_cidr_block`.
+	WebServerIpv4CidrBlock string `json:"webServerIpv4CidrBlock,omitempty"`
+
+	// WebServerIpv4ReservedRange: Output only. The IP range reserved for
+	// the tenant project's App Engine VMs.
+	WebServerIpv4ReservedRange string `json:"webServerIpv4ReservedRange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CloudSqlIpv4CidrBlock") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CloudSqlIpv4CidrBlock") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrivateEnvironmentConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PrivateEnvironmentConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SoftwareConfig: Specifies the selection and configuration of software
 // inside the environment.
 type SoftwareConfig struct {
@@ -1032,7 +1240,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1170,7 +1378,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1311,7 +1519,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1469,7 +1677,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1807,7 +2015,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1976,7 +2184,7 @@ func (c *ProjectsLocationsImageVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2147,7 +2355,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2292,7 +2500,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2473,7 +2681,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -424,7 +424,7 @@
       }
     }
   },
-  "revision": "20200228",
+  "revision": "20200327",
   "rootUrl": "https://clouddebugger.googleapis.com/",
   "schemas": {
     "AliasContext": {
@@ -455,7 +455,7 @@
       "type": "object"
     },
     "Breakpoint": {
-      "description": "Represents the breakpoint specification, status and results.",
+      "description": "------------------------------------------------------------------------------\n## Breakpoint (the resource)\n\nRepresents the breakpoint specification, status and results.",
       "id": "Breakpoint",
       "properties": {
         "action": {

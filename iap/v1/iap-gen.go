@@ -178,6 +178,42 @@ type V1Service struct {
 	s *Service
 }
 
+// AccessDeniedPageSettings: Custom content configuration for access
+// denied page.
+// IAP allows customers to define a custom URI to use as the error page
+// when
+// access is denied to users. If IAP prevents access to this page, the
+// default
+// IAP error page will be displayed instead.
+type AccessDeniedPageSettings struct {
+	// AccessDeniedPageUri: The URI to be redirected to when access is
+	// denied.
+	AccessDeniedPageUri string `json:"accessDeniedPageUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessDeniedPageUri")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessDeniedPageUri") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccessDeniedPageSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessDeniedPageSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AccessSettings: Access related settings for IAP protected apps.
 type AccessSettings struct {
 	// CorsSettings: Configuration to allow cross-origin requests via IAP.
@@ -189,6 +225,11 @@ type AccessSettings struct {
 
 	// OauthSettings: Settings to configure IAP's OAuth behavior.
 	OauthSettings *OAuthSettings `json:"oauthSettings,omitempty"`
+
+	// PolicyDelegationSettings: Settings to configure Policy delegation for
+	// apps hosted in tenant projects.
+	// INTERNAL_ONLY.
+	PolicyDelegationSettings *PolicyDelegationSettings `json:"policyDelegationSettings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CorsSettings") to
 	// unconditionally include in API requests. By default, fields with
@@ -216,23 +257,28 @@ func (s *AccessSettings) MarshalJSON() ([]byte, error) {
 // ApplicationSettings: Wrapper over application specific settings for
 // IAP.
 type ApplicationSettings struct {
+	// AccessDeniedPageSettings: Customization for Access Denied page.
+	AccessDeniedPageSettings *AccessDeniedPageSettings `json:"accessDeniedPageSettings,omitempty"`
+
 	// CsmSettings: Settings to configure IAP's behavior for a CSM mesh.
 	CsmSettings *CsmSettings `json:"csmSettings,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CsmSettings") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AccessDeniedPageSettings") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CsmSettings") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AccessDeniedPageSettings")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1050,9 +1096,197 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PolicyDelegationSettings: PolicyDelegationConfig allows
+// google-internal teams to use IAP for apps
+// hosted in a tenant project. Using these settings, the app can
+// delegate
+// permission check to happen against the linked customer project.
+// This is only ever supposed to be used by google internal teams, hence
+// the
+// restriction on the proto.
+type PolicyDelegationSettings struct {
+	// IamPermission: Permission to check in IAM.
+	IamPermission string `json:"iamPermission,omitempty"`
+
+	// IamServiceName: The DNS name of the service (e.g.
+	// "resourcemanager.googleapis.com").
+	// This should be the domain name part of the full resource names
+	// (see
+	// https://aip.dev/122#full-resource-names), which is usually
+	// the same as IamServiceSpec.service of the service where the resource
+	// type
+	// is defined.
+	IamServiceName string `json:"iamServiceName,omitempty"`
+
+	// PolicyName: Policy name to be checked
+	PolicyName *PolicyName `json:"policyName,omitempty"`
+
+	// Resource: IAM resource to check permission on
+	Resource *Resource `json:"resource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IamPermission") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IamPermission") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyDelegationSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyDelegationSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type PolicyName struct {
+	Id string `json:"id,omitempty"`
+
+	// Region: For Cloud IAM:
+	// The location of the Policy.
+	// Must be empty or "global" for Policies owned by global IAM.  Must
+	// name a
+	// region from prodspec/cloud-iam-cloudspec for Regional IAM Policies,
+	// see
+	// http://go/iam-faq#where-is-iam-currently-deployed.
+	//
+	// For Local IAM:
+	// This field should be set to "local".
+	Region string `json:"region,omitempty"`
+
+	// Type: Valid values for type might be 'gce', 'gcs', 'project',
+	// 'account' etc.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyName) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyName
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ResetIdentityAwareProxyClientSecretRequest: The request sent to
 // ResetIdentityAwareProxyClientSecret.
 type ResetIdentityAwareProxyClientSecretRequest struct {
+}
+
+type Resource struct {
+	// Labels: The service defined labels of the resource on which the
+	// conditions will be
+	// evaluated. The semantics - including the key names - are vague to
+	// IAM.
+	// If the effective condition has a reference to a
+	// `resource.labels[foo]`
+	// construct, IAM consults with this map to retrieve the values
+	// associated
+	// with `foo` key for Conditions evaluation. If the provided key is not
+	// found
+	// in the labels map, the condition would evaluate to false.
+	//
+	// This field is in limited use. If your intended use case is not
+	// expected
+	// to express resource.labels attribute in IAM Conditions, leave this
+	// field
+	// empty. Before planning on using this attribute please:
+	// * Read go/iam-conditions-labels-comm and ensure your service can meet
+	// the
+	//   data availability and management requirements.
+	// * Talk to iam-conditions-eng@ about your use case.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Name of the resource on which conditions will be
+	// evaluated.
+	// Must use the Relative Resource Name of the resource, which is the
+	// URI
+	// path of the resource without the leading "/". Examples
+	// are
+	// "projects/_/buckets/[BUCKET-ID]" for storage buckets
+	// or
+	// "projects/[PROJECT-ID]/global/firewalls/[FIREWALL-ID]" for a
+	// firewall.
+	//
+	// This field is required for evaluating conditions with rules on
+	// resource
+	// names. For a `list` permission check, the resource.name value must be
+	// set
+	// to the parent resource. If the parent resource is a project, this
+	// field
+	// should be left unset.
+	Name string `json:"name,omitempty"`
+
+	// Service: The name of the service this resource belongs to. It is
+	// configured using
+	// the official_service_name of the Service as defined in
+	// service
+	// configurations under //configs/cloud/resourcetypes.
+	// For example, the official_service_name of cloud resource manager
+	// service
+	// is set as 'cloudresourcemanager.googleapis.com' according
+	// to
+	// //configs/cloud/resourcetypes/google/cloud/resourcemanager/prod.yam
+	// l
+	Service string `json:"service,omitempty"`
+
+	// Type: The public resource type name of the resource on which
+	// conditions will be
+	// evaluated. It is configured using the official_name of the
+	// ResourceType as
+	// defined in service configurations under
+	// //configs/cloud/resourcetypes.
+	// For example, the official_name for GCP projects is set
+	// as
+	// 'cloudresourcemanager.googleapis.com/Project' according
+	// to
+	// //configs/cloud/resourcetypes/google/cloud/resourcemanager/prod.yam
+	// l
+	// For details see go/iam-conditions-integration-guide.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Labels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Resource) MarshalJSON() ([]byte, error) {
+	type NoMethod Resource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -1216,7 +1450,7 @@ func (c *ProjectsBrandsCreateCall) Header() http.Header {
 
 func (c *ProjectsBrandsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1365,7 +1599,7 @@ func (c *ProjectsBrandsGetCall) Header() http.Header {
 
 func (c *ProjectsBrandsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1509,7 +1743,7 @@ func (c *ProjectsBrandsListCall) Header() http.Header {
 
 func (c *ProjectsBrandsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1648,7 +1882,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsCreateCall) Header() http.Header
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1790,7 +2024,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsDeleteCall) Header() http.Header
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1932,7 +2166,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsGetCall) Header() http.Header {
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2100,7 +2334,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) Header() http.Header {
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2270,7 +2504,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Header() http.H
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2416,7 +2650,7 @@ func (c *V1GetIamPolicyCall) Header() http.Header {
 
 func (c *V1GetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2566,7 +2800,7 @@ func (c *V1GetIapSettingsCall) Header() http.Header {
 
 func (c *V1GetIapSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2707,7 +2941,7 @@ func (c *V1SetIamPolicyCall) Header() http.Header {
 
 func (c *V1SetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2853,7 +3087,7 @@ func (c *V1TestIamPermissionsCall) Header() http.Header {
 
 func (c *V1TestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3006,7 +3240,7 @@ func (c *V1UpdateIapSettingsCall) Header() http.Header {
 
 func (c *V1UpdateIapSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -247,6 +247,12 @@
                       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
                       "required": true,
                       "type": "string"
+                    },
+                    "readMask": {
+                      "description": "Optional. Read mask is used for a more granular control over what the API returns. By\nit includes all fields in Queue except for stats.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
                     }
                   },
                   "path": "v2beta2/{+name}",
@@ -787,7 +793,7 @@
       }
     }
   },
-  "revision": "20200210",
+  "revision": "20200331",
   "rootUrl": "https://cloudtasks.googleapis.com/",
   "schemas": {
     "AcknowledgeTaskRequest": {

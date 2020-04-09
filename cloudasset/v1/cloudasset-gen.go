@@ -467,16 +467,16 @@ type BigQueryDestination struct {
 	// result
 	// should be exported. If this dataset does not exist, the export call
 	// returns
-	// an error.
+	// an INVALID_ARGUMENT error.
 	Dataset string `json:"dataset,omitempty"`
 
 	// Force: If the destination table already exists and this flag is
 	// `TRUE`, the
 	// table will be overwritten by the contents of assets snapshot. If the
 	// flag
-	// is not set and the destination table already exists, the export
-	// call
-	// returns an error.
+	// is `FALSE` or unset and the destination table already exists, the
+	// export
+	// call returns an INVALID_ARGUMEMT error.
 	Force bool `json:"force,omitempty"`
 
 	// Table: Required. The BigQuery table to which the snapshot result
@@ -827,7 +827,7 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // The asset feed must be created within a project, organization,
 // or
 // folder. Supported destinations are:
-// Cloud Pub/Sub topics.
+// Pub/Sub topics.
 type Feed struct {
 	// AssetNames: A list of the full names of the assets to receive
 	// updates. You must specify
@@ -920,7 +920,7 @@ func (s *Feed) MarshalJSON() ([]byte, error) {
 
 // FeedOutputConfig: Output configuration for asset feed destination.
 type FeedOutputConfig struct {
-	// PubsubDestination: Destination on Cloud Pubsub.
+	// PubsubDestination: Destination on Pub/Sub.
 	PubsubDestination *PubsubDestination `json:"pubsubDestination,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PubsubDestination")
@@ -2364,9 +2364,9 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PubsubDestination: A Cloud Pubsub destination.
+// PubsubDestination: A Pub/Sub destination.
 type PubsubDestination struct {
-	// Topic: The name of the Cloud Pub/Sub topic to publish to.
+	// Topic: The name of the Pub/Sub topic to publish to.
 	// For example: `projects/PROJECT_ID/topics/TOPIC_ID`.
 	Topic string `json:"topic,omitempty"`
 
@@ -2691,7 +2691,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2829,7 +2829,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2970,7 +2970,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3114,7 +3114,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3249,7 +3249,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3402,7 +3402,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3611,7 +3611,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3781,7 +3781,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

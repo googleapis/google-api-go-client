@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/BD94sc-dTZbQlj3kncdlRya8SqE\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/4LB2xyDuShFcAwfdsvXJqDirMa4\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2553,7 +2553,7 @@
       }
     }
   },
-  "revision": "20200223",
+  "revision": "20200331",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -3055,7 +3055,7 @@
           "description": "Default price cannot be zero. In-app products can never be free. Default price is always in the developer's Checkout merchant currency."
         },
         "gracePeriod": {
-          "description": "Grace period of the subscription, specified in ISO 8601 format. It will allow developers to give their subscribers a grace period when the payment for the new recurrence period is declined. Acceptable values = \"P3D\" (three days) and \"P7D\" (seven days)",
+          "description": "Grace period of the subscription, specified in ISO 8601 format. It will allow developers to give their subscribers a grace period when the payment for the new recurrence period is declined. Acceptable values = \"P3D\" (three days), \"P7D\" (seven days), \"P14D\" (fourteen days), and \"P30D\" (thirty days)",
           "type": "string"
         },
         "listings": {

@@ -1428,7 +1428,7 @@
       }
     }
   },
-  "revision": "20191211",
+  "revision": "20200324",
   "rootUrl": "https://bigquery.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
@@ -2365,6 +2365,10 @@
           "$ref": "MultiClassClassificationMetrics",
           "description": "Populated for multi-class classification/classifier models."
         },
+        "rankingMetrics": {
+          "$ref": "RankingMetrics",
+          "description": "[Alpha] Populated for implicit feedback type matrix factorization\nmodels."
+        },
         "regressionMetrics": {
           "$ref": "RegressionMetrics",
           "description": "Populated for regression models and explicit feedback type matrix\nfactorization models."
@@ -2880,11 +2884,11 @@
       "id": "JobConfigurationExtract",
       "properties": {
         "compression": {
-          "description": "[Optional] The compression type to use for exported files. Possible values include GZIP, DEFLATE, SNAPPY, and NONE. The default value is NONE. DEFLATE and SNAPPY are only supported for Avro.",
+          "description": "[Optional] The compression type to use for exported files. Possible values include GZIP, DEFLATE, SNAPPY, and NONE. The default value is NONE. DEFLATE and SNAPPY are only supported for Avro. Not applicable when extracting models.",
           "type": "string"
         },
         "destinationFormat": {
-          "description": "[Optional] The exported file format. Possible values include CSV, NEWLINE_DELIMITED_JSON and AVRO. The default value is CSV. Tables with nested or repeated fields cannot be exported as CSV.",
+          "description": "[Optional] The exported file format. Possible values include CSV, NEWLINE_DELIMITED_JSON or AVRO for tables and ML_TF_SAVED_MODEL or ML_XGBOOST_BOOSTER for models. The default value for tables is CSV. Tables with nested or repeated fields cannot be exported as CSV. The default value for models is ML_TF_SAVED_MODEL.",
           "type": "string"
         },
         "destinationUri": {
@@ -2899,12 +2903,12 @@
           "type": "array"
         },
         "fieldDelimiter": {
-          "description": "[Optional] Delimiter to use between fields in the exported data. Default is ','",
+          "description": "[Optional] Delimiter to use between fields in the exported data. Default is ','. Not applicable when extracting models.",
           "type": "string"
         },
         "printHeader": {
           "default": "true",
-          "description": "[Optional] Whether to print out a header row in the results. Default is true.",
+          "description": "[Optional] Whether to print out a header row in the results. Default is true. Not applicable when extracting models.",
           "type": "boolean"
         },
         "sourceModel": {
@@ -2916,7 +2920,7 @@
           "description": "A reference to the table being exported."
         },
         "useAvroLogicalTypes": {
-          "description": "[Optional] If destinationFormat is set to \"AVRO\", this flag indicates whether to enable extracting applicable column types (such as TIMESTAMP) to their corresponding AVRO logical types (timestamp-micros), instead of only using their raw types (avro-long).",
+          "description": "[Optional] If destinationFormat is set to \"AVRO\", this flag indicates whether to enable extracting applicable column types (such as TIMESTAMP) to their corresponding AVRO logical types (timestamp-micros), instead of only using their raw types (avro-long). Not applicable when extracting models.",
           "type": "boolean"
         }
       },
@@ -3064,6 +3068,13 @@
         "clustering": {
           "$ref": "Clustering",
           "description": "[Beta] Clustering specification for the destination table. Must be specified with time-based partitioning, data in the table will be first partitioned and subsequently clustered."
+        },
+        "connectionProperties": {
+          "description": "Connection properties.",
+          "items": {
+            "type": "any"
+          },
+          "type": "array"
         },
         "createDisposition": {
           "description": "[Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion.",
@@ -3360,6 +3371,10 @@
           "description": "[Output-only] Name of the primary reservation assigned to this job. Note that this could be different than reservations reported in the reservation usage field if parent reservations were used to execute this job.",
           "type": "string"
         },
+        "rowLevelSecurityStatistics": {
+          "$ref": "RowLevelSecurityStatistics",
+          "description": "[Output-only] [Preview] Statistics for row-level security. Present only for query and extract jobs."
+        },
         "scriptStatistics": {
           "$ref": "ScriptStatistics",
           "description": "[Output-only] Statistics for a child job of a script."
@@ -3394,6 +3409,11 @@
           "description": "[Output-only] Whether the query result was fetched from the query cache.",
           "type": "boolean"
         },
+        "ddlAffectedRowAccessPolicyCount": {
+          "description": "[Output-only] [Preview] The number of row access policies affected by a DDL statement. Present only for DROP ALL ROW ACCESS POLICIES queries.",
+          "format": "int64",
+          "type": "string"
+        },
         "ddlOperationPerformed": {
           "description": "The DDL operation performed, possibly dependent on the pre-existence of the DDL target. Possible values (new values might be added in the future): \"CREATE\": The query created the DDL target. \"SKIP\": No-op. Example cases: the query is CREATE TABLE IF NOT EXISTS while the table already exists, or the query is DROP TABLE IF EXISTS while the table does not exist. \"REPLACE\": The query replaced the DDL target. Example case: the query is CREATE OR REPLACE TABLE, and the table already exists. \"DROP\": The query deleted the DDL target.",
           "type": "string"
@@ -3402,9 +3422,13 @@
           "$ref": "RoutineReference",
           "description": "The DDL target routine. Present only for CREATE/DROP FUNCTION/PROCEDURE queries."
         },
+        "ddlTargetRowAccessPolicy": {
+          "$ref": "RowAccessPolicyReference",
+          "description": "[Output-only] [Preview] The DDL target row access policy. Present only for CREATE/DROP ROW ACCESS POLICY queries."
+        },
         "ddlTargetTable": {
           "$ref": "TableReference",
-          "description": "The DDL target table. Present only for CREATE/DROP TABLE/VIEW queries."
+          "description": "[Output-only] The DDL target table. Present only for CREATE/DROP TABLE/VIEW and DROP ALL ROW ACCESS POLICIES queries."
         },
         "estimatedBytesProcessed": {
           "description": "[Output-only] The original estimate of bytes processed for the job.",
@@ -3740,14 +3764,28 @@
             "LINEAR_REGRESSION",
             "LOGISTIC_REGRESSION",
             "KMEANS",
-            "TENSORFLOW"
+            "MATRIX_FACTORIZATION",
+            "DNN_CLASSIFIER",
+            "TENSORFLOW",
+            "DNN_REGRESSOR",
+            "BOOSTED_TREE_REGRESSOR",
+            "BOOSTED_TREE_CLASSIFIER",
+            "AUTOML_REGRESSOR",
+            "AUTOML_CLASSIFIER"
           ],
           "enumDescriptions": [
             "",
             "Linear regression model.",
             "Logistic regression based classification model.",
             "K-means clustering model.",
-            "[Beta] An imported TensorFlow model."
+            "Matrix factorization model.",
+            "DNN classifier model.",
+            "[Beta] An imported TensorFlow model.",
+            "DNN regressor model.",
+            "Boosted tree regressor model.",
+            "Boosted tree classifier model.",
+            "AutoML Tables regression model.",
+            "AutoML Tables classification model."
           ],
           "type": "string"
         },
@@ -3973,6 +4011,13 @@
     "QueryRequest": {
       "id": "QueryRequest",
       "properties": {
+        "connectionProperties": {
+          "description": "Connection properties.",
+          "items": {
+            "type": "any"
+          },
+          "type": "array"
+        },
         "defaultDataset": {
           "$ref": "DatasetReference",
           "description": "[Optional] Specifies the default datasetId and projectId to assume for any unqualified table names in the query. If not set, all table names in the query string must be qualified in the format 'datasetId.tableId'."
@@ -4159,6 +4204,33 @@
       },
       "type": "object"
     },
+    "RankingMetrics": {
+      "description": "Evaluation metrics used by weighted-ALS models specified by\nfeedback_type=implicit.",
+      "id": "RankingMetrics",
+      "properties": {
+        "averageRank": {
+          "description": "Determines the goodness of a ranking by computing the percentile rank\nfrom the predicted confidence and dividing it by the original rank.",
+          "format": "double",
+          "type": "number"
+        },
+        "meanAveragePrecision": {
+          "description": "Calculates a precision per user for all the items by ranking them and\nthen averages all the precisions across all the users.",
+          "format": "double",
+          "type": "number"
+        },
+        "meanSquaredError": {
+          "description": "Similar to the mean squared error computed in regression and explicit\nrecommendation models except instead of computing the rating directly,\nthe output from evaluate is computed against a preference which is 1 or 0\ndepending on if the rating exists or not.",
+          "format": "double",
+          "type": "number"
+        },
+        "normalizedDiscountedCumulativeGain": {
+          "description": "A metric to determine the goodness of a ranking calculated from the\npredicted confidence by comparing it to an ideal rank measured by the\noriginal ratings.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "RegressionMetrics": {
       "description": "Evaluation metrics for regression and explicit feedback type matrix\nfactorization models.",
       "id": "RegressionMetrics",
@@ -4302,6 +4374,38 @@
             "$ref": "Entry"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "RowAccessPolicyReference": {
+      "id": "RowAccessPolicyReference",
+      "properties": {
+        "datasetId": {
+          "description": "[Required] The ID of the dataset containing this row access policy.",
+          "type": "string"
+        },
+        "policyId": {
+          "description": "[Required] The ID of the row access policy. The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum length is 256 characters.",
+          "type": "string"
+        },
+        "projectId": {
+          "description": "[Required] The ID of the project containing this row access policy.",
+          "type": "string"
+        },
+        "tableId": {
+          "description": "[Required] The ID of the table containing this row access policy.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RowLevelSecurityStatistics": {
+      "id": "RowLevelSecurityStatistics",
+      "properties": {
+        "rowLevelSecurityApplied": {
+          "description": "[Output-only] [Preview] Whether any accessed data was protected by row access policies.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -4929,6 +5033,11 @@
     "TrainingOptions": {
       "id": "TrainingOptions",
       "properties": {
+        "batchSize": {
+          "description": "Batch size for dnn models.",
+          "format": "int64",
+          "type": "string"
+        },
         "dataSplitColumn": {
           "description": "The column to split data with. This column won't be used as a\nfeature.\n1. When data_split_method is CUSTOM, the corresponding column should\nbe boolean. The rows with true value tag are eval data, and the false\nare training data.\n2. When data_split_method is SEQ, the first DATA_SPLIT_EVAL_FRACTION\nrows (from smallest to largest) in the corresponding column are used\nas training data, and the rest are eval data. It respects the order\nin Orderable data types:\nhttps://cloud.google.com/bigquery/docs/reference/standard-sql/data-types#data-type-properties",
           "type": "string"
@@ -4972,9 +5081,36 @@
           ],
           "type": "string"
         },
+        "dropout": {
+          "description": "Dropout probability for dnn models.",
+          "format": "double",
+          "type": "number"
+        },
         "earlyStop": {
           "description": "Whether to stop early when the loss doesn't improve significantly\nany more (compared to min_relative_progress). Used only for iterative\ntraining algorithms.",
           "type": "boolean"
+        },
+        "feedbackType": {
+          "description": "Feedback type that specifies which algorithm to run for matrix\nfactorization.",
+          "enum": [
+            "FEEDBACK_TYPE_UNSPECIFIED",
+            "IMPLICIT",
+            "EXPLICIT"
+          ],
+          "enumDescriptions": [
+            "",
+            "Use weighted-als for implicit feedback problems.",
+            "Use nonweighted-als for explicit feedback problems."
+          ],
+          "type": "string"
+        },
+        "hiddenUnits": {
+          "description": "Hidden units for dnn models.",
+          "items": {
+            "format": "int64",
+            "type": "string"
+          },
+          "type": "array"
         },
         "initialLearnRate": {
           "description": "Specifies the initial learning rate for the line search learn rate\nstrategy.",
@@ -4987,6 +5123,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "itemColumn": {
+          "description": "Item column specified for matrix factorization models.",
+          "type": "string"
         },
         "kmeansInitializationColumn": {
           "description": "The column used to provide the initial centroids for kmeans algorithm\nwhen kmeans_initialization_method is CUSTOM.",
@@ -5064,8 +5204,18 @@
           "format": "int64",
           "type": "string"
         },
+        "maxTreeDepth": {
+          "description": "Maximum depth of a tree for boosted tree models.",
+          "format": "int64",
+          "type": "string"
+        },
         "minRelativeProgress": {
           "description": "When early_stop is true, stops training when accuracy improvement is\nless than 'min_relative_progress'. Used only for iterative training\nalgorithms.",
+          "format": "double",
+          "type": "number"
+        },
+        "minSplitLoss": {
+          "description": "Minimum split loss for boosted tree models.",
           "format": "double",
           "type": "number"
         },
@@ -5075,6 +5225,11 @@
         },
         "numClusters": {
           "description": "Number of clusters for clustering models.",
+          "format": "int64",
+          "type": "string"
+        },
+        "numFactors": {
+          "description": "Num factors specified for matrix factorization models.",
           "format": "int64",
           "type": "string"
         },
@@ -5091,6 +5246,20 @@
             "Uses a normal equation to solve linear regression problem."
           ],
           "type": "string"
+        },
+        "subsample": {
+          "description": "Subsample fraction of the training data to grow tree to prevent\noverfitting for boosted tree models.",
+          "format": "double",
+          "type": "number"
+        },
+        "userColumn": {
+          "description": "User column specified for matrix factorization models.",
+          "type": "string"
+        },
+        "walsAlpha": {
+          "description": "Hyperparameter for matrix factoration when implicit feedback type is\nspecified.",
+          "format": "double",
+          "type": "number"
         },
         "warmStart": {
           "description": "Whether to train a model from the last checkpoint.",

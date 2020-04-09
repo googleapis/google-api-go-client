@@ -307,7 +307,7 @@
       }
     }
   },
-  "revision": "20200310",
+  "revision": "20200408",
   "rootUrl": "https://remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -916,7 +916,7 @@
           "type": "string"
         },
         "dockerPrepStartTime": {
-          "description": "The timestamp when docker prepartion begins.",
+          "description": "The timestamp when docker preparation begins.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -1032,7 +1032,8 @@
             "DOCKER_UNKNOWN_ERROR",
             "DOCKER_CREATE_COMPUTE_SYSTEM_ERROR",
             "DOCKER_PREPARELAYER_ERROR",
-            "DOCKER_INCOMPATIBLE_OS_ERROR"
+            "DOCKER_INCOMPATIBLE_OS_ERROR",
+            "DOCKER_CREATE_RUNTIME_FILE_NOT_FOUND"
           ],
           "enumDescriptions": [
             "The command succeeded.",
@@ -1066,7 +1067,8 @@
             "The command failed with unknown docker errors.",
             "Docker failed to run containers with CreateComputeSystem error.",
             "Docker failed to run containers with hcsshim::PrepareLayer error.",
-            "Docker incompatible operating system error."
+            "Docker incompatible operating system error.",
+            "Docker failed to create OCI runtime because of file not found."
           ],
           "type": "string"
         },
@@ -1408,7 +1410,7 @@
           "description": "Specifies the properties, such as machine type and disk size, used for\ncreating workers in a worker pool."
         },
         "workerCount": {
-          "description": "The desired number of workers in the worker pool. Must be a value between\n0 and 1000.",
+          "description": "The desired number of workers in the worker pool. Must be a value between\n0 and 15000.",
           "format": "int64",
           "type": "string"
         }

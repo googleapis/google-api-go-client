@@ -38,7 +38,7 @@
   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/drive/",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/-XxMq2i4ndZ5nSnB1AGLfyYh3Zg\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/UEl2PHBvsMjh3TSXQxSnNlF4wSs\"",
   "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -3442,7 +3442,7 @@
       }
     }
   },
-  "revision": "20200303",
+  "revision": "20200326",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {
@@ -4836,7 +4836,7 @@
               "type": "string"
             },
             "rotation": {
-              "description": "The rotation in clockwise degrees from the image's original orientation.",
+              "description": "The number of clockwise 90 degree rotations applied from the image's original orientation.",
               "format": "int32",
               "type": "integer"
             },
@@ -5028,6 +5028,20 @@
         "sharingUser": {
           "$ref": "User",
           "description": "User that shared the item with the current user, if available."
+        },
+        "shortcutDetails": {
+          "description": "Shortcut file details. Only populated for shortcut files, which have the mimeType field set to application/vnd.google-apps.shortcut.",
+          "properties": {
+            "targetId": {
+              "description": "The ID of the file that this shortcut points to.",
+              "type": "string"
+            },
+            "targetMimeType": {
+              "description": "The MIME type of the file that this shortcut points to. The value of this field is a snapshot of the target's MIME type, captured when the shortcut is created.",
+              "type": "string"
+            }
+          },
+          "type": "object"
         },
         "spaces": {
           "description": "The list of spaces which contain the file. Supported values are 'drive', 'appDataFolder' and 'photos'.",
@@ -5309,7 +5323,7 @@
                 "type": "boolean"
               },
               "inheritedFrom": {
-                "description": "The ID of the item from which this permission is inherited. This is an output-only field and is only populated for members of the shared drive.",
+                "description": "The ID of the item from which this permission is inherited. This is an output-only field.",
                 "type": "string"
               },
               "permissionType": {

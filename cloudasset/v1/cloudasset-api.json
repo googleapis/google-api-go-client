@@ -357,7 +357,7 @@
       }
     }
   },
-  "revision": "20200309",
+  "revision": "20200330",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -473,11 +473,11 @@
       "id": "BigQueryDestination",
       "properties": {
         "dataset": {
-          "description": "Required. The BigQuery dataset in format\n\"projects/projectId/datasets/datasetId\", to which the snapshot result\nshould be exported. If this dataset does not exist, the export call returns\nan error.",
+          "description": "Required. The BigQuery dataset in format\n\"projects/projectId/datasets/datasetId\", to which the snapshot result\nshould be exported. If this dataset does not exist, the export call returns\nan INVALID_ARGUMENT error.",
           "type": "string"
         },
         "force": {
-          "description": "If the destination table already exists and this flag is `TRUE`, the\ntable will be overwritten by the contents of assets snapshot. If the flag\nis not set and the destination table already exists, the export call\nreturns an error.",
+          "description": "If the destination table already exists and this flag is `TRUE`, the\ntable will be overwritten by the contents of assets snapshot. If the flag\nis `FALSE` or unset and the destination table already exists, the export\ncall returns an INVALID_ARGUMEMT error.",
           "type": "boolean"
         },
         "table": {
@@ -595,7 +595,7 @@
       "type": "object"
     },
     "Feed": {
-      "description": "An asset feed used to export asset updates to a destinations.\nAn asset feed filter controls what updates are exported.\nThe asset feed must be created within a project, organization, or\nfolder. Supported destinations are:\nCloud Pub/Sub topics.",
+      "description": "An asset feed used to export asset updates to a destinations.\nAn asset feed filter controls what updates are exported.\nThe asset feed must be created within a project, organization, or\nfolder. Supported destinations are:\nPub/Sub topics.",
       "id": "Feed",
       "properties": {
         "assetNames": {
@@ -647,7 +647,7 @@
       "properties": {
         "pubsubDestination": {
           "$ref": "PubsubDestination",
-          "description": "Destination on Cloud Pubsub."
+          "description": "Destination on Pub/Sub."
         }
       },
       "type": "object"
@@ -1214,11 +1214,11 @@
       "type": "object"
     },
     "PubsubDestination": {
-      "description": "A Cloud Pubsub destination.",
+      "description": "A Pub/Sub destination.",
       "id": "PubsubDestination",
       "properties": {
         "topic": {
-          "description": "The name of the Cloud Pub/Sub topic to publish to.\nFor example: `projects/PROJECT_ID/topics/TOPIC_ID`.",
+          "description": "The name of the Pub/Sub topic to publish to.\nFor example: `projects/PROJECT_ID/topics/TOPIC_ID`.",
           "type": "string"
         }
       },

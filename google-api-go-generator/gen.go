@@ -130,6 +130,10 @@ func main() {
 		errors  = []error{}
 	)
 	for _, api := range getAPIs() {
+		// TODO(codyoss): re-enable once discovery doc can provide a meaningful request body for `google.protobuf.Struct`
+		if api.ID == "apigee:v1" {
+			continue
+		}
 		apiIds = append(apiIds, api.ID)
 		if !api.want() {
 			continue

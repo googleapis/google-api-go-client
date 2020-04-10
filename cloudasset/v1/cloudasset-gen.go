@@ -1411,9 +1411,6 @@ type GoogleIdentityAccesscontextmanagerV1AccessLevel struct {
 	// Basic: A `BasicLevel` composed of `Conditions`.
 	Basic *GoogleIdentityAccesscontextmanagerV1BasicLevel `json:"basic,omitempty"`
 
-	// CreateTime: Output only. Time the `AccessLevel` was created in UTC.
-	CreateTime string `json:"createTime,omitempty"`
-
 	// Custom: A `CustomLevel` written in the Common Expression Language.
 	Custom *GoogleIdentityAccesscontextmanagerV1CustomLevel `json:"custom,omitempty"`
 
@@ -1432,9 +1429,6 @@ type GoogleIdentityAccesscontextmanagerV1AccessLevel struct {
 
 	// Title: Human readable title. Must be unique within the Policy.
 	Title string `json:"title,omitempty"`
-
-	// UpdateTime: Output only. Time the `AccessLevel` was updated in UTC.
-	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Basic") to
 	// unconditionally include in API requests. By default, fields with
@@ -1470,9 +1464,6 @@ func (s *GoogleIdentityAccesscontextmanagerV1AccessLevel) MarshalJSON() ([]byte,
 // restrictions it specifies apply to all projects within an
 // organization.
 type GoogleIdentityAccesscontextmanagerV1AccessPolicy struct {
-	// CreateTime: Output only. Time the `AccessPolicy` was created in UTC.
-	CreateTime string `json:"createTime,omitempty"`
-
 	// Etag: Output only. An opaque identifier for the current version of
 	// the
 	// `AccessPolicy`. This will always be a strongly validated etag,
@@ -1498,10 +1489,7 @@ type GoogleIdentityAccesscontextmanagerV1AccessPolicy struct {
 	// Title: Required. Human readable title. Does not affect behavior.
 	Title string `json:"title,omitempty"`
 
-	// UpdateTime: Output only. Time the `AccessPolicy` was updated in UTC.
-	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1509,8 +1497,8 @@ type GoogleIdentityAccesscontextmanagerV1AccessPolicy struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Etag") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1856,10 +1844,6 @@ func (s *GoogleIdentityAccesscontextmanagerV1OsConstraint) MarshalJSON() ([]byte
 // Perimeter
 // Bridges.
 type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
-	// CreateTime: Output only. Time the `ServicePerimeter` was created in
-	// UTC.
-	CreateTime string `json:"createTime,omitempty"`
-
 	// Description: Description of the `ServicePerimeter` and its use. Does
 	// not affect
 	// behavior.
@@ -1907,10 +1891,6 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	// Title: Human readable title. Must be unique within the Policy.
 	Title string `json:"title,omitempty"`
 
-	// UpdateTime: Output only. Time the `ServicePerimeter` was updated in
-	// UTC.
-	UpdateTime string `json:"updateTime,omitempty"`
-
 	// UseExplicitDryRunSpec: Use explicit dry run spec flag. Ordinarily, a
 	// dry-run spec implicitly
 	// exists  for all Service Perimeters, and that spec is identical to
@@ -1932,7 +1912,7 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	// fields in the spec are set to non-default values.
 	UseExplicitDryRunSpec bool `json:"useExplicitDryRunSpec,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1940,10 +1920,10 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2691,7 +2671,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2829,7 +2809,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2970,7 +2950,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3114,7 +3094,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3249,7 +3229,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3402,7 +3382,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3611,7 +3591,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3781,7 +3761,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

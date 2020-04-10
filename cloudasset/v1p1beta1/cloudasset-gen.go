@@ -884,6 +884,11 @@ type StandardResourceMetadata struct {
 	// DisplayName: The display name of this resource.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// Location: Location can be "global", regional like "us-east1", or
+	// zonal like
+	// "us-west1-b".
+	Location string `json:"location,omitempty"`
+
 	// Name: The full resource name. For
 	// example:
 	// `//compute.googleapis.com/projects/my_project_123/zones/zone1
@@ -1023,7 +1028,7 @@ func (c *IamPoliciesSearchAllCall) Header() http.Header {
 
 func (c *IamPoliciesSearchAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1263,7 +1268,7 @@ func (c *ResourcesSearchAllCall) Header() http.Header {
 
 func (c *ResourcesSearchAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200318")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

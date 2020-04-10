@@ -207,7 +207,7 @@
       }
     }
   },
-  "revision": "20200330",
+  "revision": "20200403",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -442,6 +442,10 @@
         },
         "displayName": {
           "description": "The display name of this resource.",
+          "type": "string"
+        },
+        "location": {
+          "description": "Location can be \"global\", regional like \"us-east1\", or zonal like\n\"us-west1-b\".",
           "type": "string"
         },
         "name": {

@@ -2242,7 +2242,7 @@
       }
     }
   },
-  "revision": "20200323",
+  "revision": "20200407",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2641,7 +2641,10 @@
             "RUNNING",
             "ERROR",
             "DELETING",
-            "UPDATING"
+            "UPDATING",
+            "STOPPING",
+            "STOPPED",
+            "STARTING"
           ],
           "enumDescriptions": [
             "The cluster state is unknown.",
@@ -2649,7 +2652,10 @@
             "The cluster is currently running and healthy. It is ready for use.",
             "The cluster encountered an error. It is not ready for use.",
             "The cluster is being deleted. It cannot be used.",
-            "The cluster is being updated. It continues to accept and process jobs."
+            "The cluster is being updated. It continues to accept and process jobs.",
+            "The cluster is being stopped. It cannot be used.",
+            "The cluster is currently stopped. It is not ready for use.",
+            "The cluster is being started. It is not ready for use."
           ],
           "type": "string"
         },
@@ -2989,7 +2995,7 @@
           "description": "Optional. Disk option config settings."
         },
         "imageUri": {
-          "description": "Optional. The Compute Engine image resource used for cluster instances. It can be specified or may be inferred from SoftwareConfig.image_version.",
+          "description": "Optional. The Compute Engine image resource used for cluster instances.The URI can represent an image or image family.Image examples:\nhttps://www.googleapis.com/compute/beta/projects/[project_id]/global/images/[image-id]\nprojects/[project_id]/global/images/[image-id]\nimage-idImage family examples. Dataproc will use the most recent image from the family:\nhttps://www.googleapis.com/compute/beta/projects/[project_id]/global/images/family/[custom-image-family-name]\nprojects/[project_id]/global/images/family/[custom-image-family-name]If the URI is unspecified, it will be inferred from SoftwareConfig.image_version or the system default.",
           "type": "string"
         },
         "instanceNames": {
@@ -3081,10 +3087,12 @@
           "type": "string"
         },
         "hadoopJob": {
-          "$ref": "HadoopJob"
+          "$ref": "HadoopJob",
+          "description": "Optional. Job is a Hadoop job."
         },
         "hiveJob": {
-          "$ref": "HiveJob"
+          "$ref": "HiveJob",
+          "description": "Optional. Job is a Hive job."
         },
         "jobUuid": {
           "description": "Output only. A UUID that uniquely identifies a job within the project over time. This is in contrast to a user-settable reference.job_id that may be reused over time.",
@@ -3098,17 +3106,20 @@
           "type": "object"
         },
         "pigJob": {
-          "$ref": "PigJob"
+          "$ref": "PigJob",
+          "description": "Optional. Job is a Pig job."
         },
         "placement": {
           "$ref": "JobPlacement",
           "description": "Required. Job information, including how, when, and where to run the job."
         },
         "prestoJob": {
-          "$ref": "PrestoJob"
+          "$ref": "PrestoJob",
+          "description": "Optional. Job is a Presto job."
         },
         "pysparkJob": {
-          "$ref": "PySparkJob"
+          "$ref": "PySparkJob",
+          "description": "Optional. Job is a PySpark job."
         },
         "reference": {
           "$ref": "JobReference",
@@ -3119,13 +3130,16 @@
           "description": "Optional. Job scheduling configuration."
         },
         "sparkJob": {
-          "$ref": "SparkJob"
+          "$ref": "SparkJob",
+          "description": "Optional. Job is a Spark job."
         },
         "sparkRJob": {
-          "$ref": "SparkRJob"
+          "$ref": "SparkRJob",
+          "description": "Optional. Job is a SparkR job."
         },
         "sparkSqlJob": {
-          "$ref": "SparkSqlJob"
+          "$ref": "SparkSqlJob",
+          "description": "Optional. Job is a SparkSql job."
         },
         "status": {
           "$ref": "JobStatus",
@@ -3299,7 +3313,7 @@
           "type": "string"
         },
         "enableKerberos": {
-          "description": "Optional. Flag to indicate whether to Kerberize the cluster.",
+          "description": "Optional. Flag to indicate whether to Kerberize the cluster (default: false). Set this field to true to enable Kerberos on a cluster.",
           "type": "boolean"
         },
         "kdcDbKeyUri": {
@@ -3730,7 +3744,7 @@
       "type": "object"
     },
     "PrestoJob": {
-      "description": "A Dataproc job for running Presto (https://prestosql.io/) queries",
+      "description": "A Dataproc job for running Presto (https://prestosql.io/) queries. IMPORTANT: The Dataproc Presto Optional Component must be enabled when the cluster is created to submit a Presto job to the cluster.",
       "id": "PrestoJob",
       "properties": {
         "clientTags": {
@@ -3924,7 +3938,9 @@
           "enumDescriptions": [
             "Unspecified component.",
             "The Anaconda python distribution.",
+            "Docker",
             "The Druid query engine.",
+            "Flink",
             "HBase.",
             "The Hive Web HCatalog (the REST service for accessing HCatalog).",
             "The Jupyter Notebook.",
@@ -3939,7 +3955,9 @@
             "enum": [
               "COMPONENT_UNSPECIFIED",
               "ANACONDA",
+              "DOCKER",
               "DRUID",
+              "FLINK",
               "HBASE",
               "HIVE_WEBHCAT",
               "JUPYTER",

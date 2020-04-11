@@ -1320,14 +1320,14 @@ type WeekDayOfMonth struct {
 	// DayOfWeek: Required. A day of the week.
 	//
 	// Possible values:
-	//   "DAY_OF_WEEK_UNSPECIFIED" - The unspecified day-of-week.
-	//   "MONDAY" - The day-of-week of Monday.
-	//   "TUESDAY" - The day-of-week of Tuesday.
-	//   "WEDNESDAY" - The day-of-week of Wednesday.
-	//   "THURSDAY" - The day-of-week of Thursday.
-	//   "FRIDAY" - The day-of-week of Friday.
-	//   "SATURDAY" - The day-of-week of Saturday.
-	//   "SUNDAY" - The day-of-week of Sunday.
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
 	DayOfWeek string `json:"dayOfWeek,omitempty"`
 
 	// WeekOrdinal: Required. Week number in a month. 1-4 indicates the 1st
@@ -1363,14 +1363,14 @@ type WeeklySchedule struct {
 	// DayOfWeek: Required. Day of the week.
 	//
 	// Possible values:
-	//   "DAY_OF_WEEK_UNSPECIFIED" - The unspecified day-of-week.
-	//   "MONDAY" - The day-of-week of Monday.
-	//   "TUESDAY" - The day-of-week of Tuesday.
-	//   "WEDNESDAY" - The day-of-week of Wednesday.
-	//   "THURSDAY" - The day-of-week of Thursday.
-	//   "FRIDAY" - The day-of-week of Friday.
-	//   "SATURDAY" - The day-of-week of Saturday.
-	//   "SUNDAY" - The day-of-week of Sunday.
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
 	DayOfWeek string `json:"dayOfWeek,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DayOfWeek") to
@@ -1650,7 +1650,7 @@ func (c *ProjectsPatchDeploymentsCreateCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200409")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1793,7 +1793,7 @@ func (c *ProjectsPatchDeploymentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200409")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1934,7 +1934,7 @@ func (c *ProjectsPatchDeploymentsGetCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200409")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2093,7 +2093,7 @@ func (c *ProjectsPatchDeploymentsListCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200409")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2262,7 +2262,7 @@ func (c *ProjectsPatchJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200409")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2402,7 +2402,7 @@ func (c *ProjectsPatchJobsExecuteCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsExecuteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200409")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2553,7 +2553,7 @@ func (c *ProjectsPatchJobsGetCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200409")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2721,7 +2721,7 @@ func (c *ProjectsPatchJobsListCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200409")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2927,7 +2927,7 @@ func (c *ProjectsPatchJobsInstanceDetailsListCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsInstanceDetailsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200409")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

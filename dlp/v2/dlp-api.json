@@ -3215,7 +3215,7 @@
       }
     }
   },
-  "revision": "20200329",
+  "revision": "20200405",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -4757,7 +4757,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "The labels associated with this `Finding`.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: \\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?.\n\nLabel values must be between 0 and 63 characters long and must conform\nto the regular expression (\\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?)?.\n\nNo more than 10 labels can be associated with a given finding.\n\nExample: \u003ccode\u003e\"environment\" : \"production\"\u003c/code\u003e\nExample: \u003ccode\u003e\"pipeline\" : \"etl\"\u003c/code\u003e",
+          "description": "The labels associated with this `Finding`.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: `[a-z]([-a-z0-9]*[a-z0-9])?`.\n\nLabel values must be between 0 and 63 characters long and must conform\nto the regular expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`.\n\nNo more than 10 labels can be associated with a given finding.\n\nExamples:\n* `\"environment\" : \"production\"`\n* `\"pipeline\" : \"etl\"`",
           "type": "object"
         },
         "likelihood": {
@@ -4908,7 +4908,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels to represent user provided metadata about the data being inspected.\nIf configured by the job, some key values may be required.\nThe labels associated with `Finding`'s produced by hybrid\ninspection.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: \\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?.\n\nLabel values must be between 0 and 63 characters long and must conform\nto the regular expression (\\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?)?.\n\nNo more than 10 labels can be associated with a given finding.\n\nExample: \u003ccode\u003e\"environment\" : \"production\"\u003c/code\u003e\nExample: \u003ccode\u003e\"pipeline\" : \"etl\"\u003c/code\u003e",
+          "description": "Labels to represent user provided metadata about the data being inspected.\nIf configured by the job, some key values may be required.\nThe labels associated with `Finding`'s produced by hybrid\ninspection.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: `[a-z]([-a-z0-9]*[a-z0-9])?`.\n\nLabel values must be between 0 and 63 characters long and must conform\nto the regular expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`.\n\nNo more than 10 labels can be associated with a given finding.\n\nExamples:\n* `\"environment\" : \"production\"`\n* `\"pipeline\" : \"etl\"`",
           "type": "object"
         },
         "rowOffset": {
@@ -4985,11 +4985,11 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "To organize findings, these labels will be added to each finding.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: \\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?.\n\nLabel values must be between 0 and 63 characters long and must conform\nto the regular expression (\\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?)?.\n\nNo more than 10 labels can be associated with a given finding.\n\nExample: \u003ccode\u003e\"environment\" : \"production\"\u003c/code\u003e\nExample: \u003ccode\u003e\"pipeline\" : \"etl\"\u003c/code\u003e",
+          "description": "To organize findings, these labels will be added to each finding.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: `[a-z]([-a-z0-9]*[a-z0-9])?`.\n\nLabel values must be between 0 and 63 characters long and must conform\nto the regular expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`.\n\nNo more than 10 labels can be associated with a given finding.\n\nExamples:\n* `\"environment\" : \"production\"`\n* `\"pipeline\" : \"etl\"`",
           "type": "object"
         },
         "requiredFindingLabelKeys": {
-          "description": "These are labels that each inspection request must include within their\n'finding_labels' map. Request may contain others, but any missing one of\nthese will be rejected.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: \\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?.\n\nNo more than 10 keys can be required.",
+          "description": "These are labels that each inspection request must include within their\n'finding_labels' map. Request may contain others, but any missing one of\nthese will be rejected.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: `[a-z]([-a-z0-9]*[a-z0-9])?`.\n\nNo more than 10 keys can be required.",
           "items": {
             "type": "string"
           },
@@ -5040,7 +5040,7 @@
       "id": "GooglePrivacyDlpV2InfoType",
       "properties": {
         "name": {
-          "description": "Name of the information type. Either a name of your choosing when\ncreating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying\na built-in type. InfoType names should conform to the pattern\n[a-zA-Z0-9_]{1,64}.",
+          "description": "Name of the information type. Either a name of your choosing when\ncreating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying\na built-in type. InfoType names should conform to the pattern\n`[a-zA-Z0-9_]{1,64}`.",
           "type": "string"
         }
       },

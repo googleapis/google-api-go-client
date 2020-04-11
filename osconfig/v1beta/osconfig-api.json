@@ -599,7 +599,7 @@
       }
     }
   },
-  "revision": "20200305",
+  "revision": "20200403",
   "rootUrl": "https://osconfig.googleapis.com/",
   "schemas": {
     "AptRepository": {
@@ -2025,14 +2025,14 @@
             "SUNDAY"
           ],
           "enumDescriptions": [
-            "The unspecified day-of-week.",
-            "The day-of-week of Monday.",
-            "The day-of-week of Tuesday.",
-            "The day-of-week of Wednesday.",
-            "The day-of-week of Thursday.",
-            "The day-of-week of Friday.",
-            "The day-of-week of Saturday.",
-            "The day-of-week of Sunday."
+            "The day of the week is unspecified.",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
           ],
           "type": "string"
         },
@@ -2061,14 +2061,14 @@
             "SUNDAY"
           ],
           "enumDescriptions": [
-            "The unspecified day-of-week.",
-            "The day-of-week of Monday.",
-            "The day-of-week of Tuesday.",
-            "The day-of-week of Wednesday.",
-            "The day-of-week of Thursday.",
-            "The day-of-week of Friday.",
-            "The day-of-week of Saturday.",
-            "The day-of-week of Sunday."
+            "The day of the week is unspecified.",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
           ],
           "type": "string"
         }

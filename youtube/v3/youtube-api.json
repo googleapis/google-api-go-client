@@ -33,7 +33,7 @@
   "description": "Supports core YouTube features, such as uploading videos, creating and managing playlists, searching for content, and much more.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/youtube/v3",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/2iM-es-rN0zq6Fv4g5JsLKzvFto\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/VfSXoeTZJSDEPlJ9LkqjGCjn5wo\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/youtube-16.png",
     "x32": "https://www.google.com/images/icons/product/youtube-32.png"
@@ -3597,7 +3597,7 @@
       }
     }
   },
-  "revision": "20200320",
+  "revision": "20200402",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AccessPolicy": {
@@ -7432,6 +7432,9 @@
         },
         "enableAutoStart": {
           "description": "This setting indicates whether auto start is enabled for this broadcast.",
+          "type": "boolean"
+        },
+        "enableAutoStop": {
           "type": "boolean"
         },
         "enableClosedCaptions": {

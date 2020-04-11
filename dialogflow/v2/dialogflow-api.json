@@ -1403,7 +1403,7 @@
                       "type": "string"
                     },
                     "name": {
-                      "description": "The unique identifier of this intent.\nRequired for Intents.UpdateIntent and Intents.BatchUpdateIntents\nmethods.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
+                      "description": "Optional. The unique identifier of this intent.\nRequired for Intents.UpdateIntent and Intents.BatchUpdateIntents\nmethods.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent/intents/[^/]+$",
                       "required": true,
@@ -2010,7 +2010,7 @@
       }
     }
   },
-  "revision": "20200329",
+  "revision": "20200408",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -2251,7 +2251,6 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2BatchUpdateIntentsRequest": {
-      "description": "The request message for Intents.BatchUpdateIntents.",
       "id": "GoogleCloudDialogflowV2BatchUpdateIntentsRequest",
       "properties": {
         "intentBatchInline": {
@@ -2364,7 +2363,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2DetectIntentRequest": {
-      "description": "Requests and responses for custom methods.\nThe request to detect user's intent.",
+      "description": "The request to detect user's intent.",
       "id": "GoogleCloudDialogflowV2DetectIntentRequest",
       "properties": {
         "inputAudio": {
@@ -2744,7 +2743,7 @@
         "defaultResponsePlatforms": {
           "description": "Optional. The list of platforms for which the first responses will be\ncopied from the messages in PLATFORM_UNSPECIFIED (i.e. default platform).",
           "enumDescriptions": [
-            "Not specified.",
+            "Default platform.",
             "Facebook.",
             "Slack.",
             "Telegram.",
@@ -2752,7 +2751,7 @@
             "Skype.",
             "Line.",
             "Viber.",
-            "Actions on Google.\nWhen using Actions on Google, you can choose one of the specific\nIntent.Message types that mention support for Actions on Google,\nor you can use the advanced Intent.Message.payload field.\nThe payload field provides access to AoG features not available in the\nspecific message types.\nIf using the Intent.Message.payload field, it should have a structure\nsimilar to the JSON message shown here. For more information, see\n[Actions on Google Webhook\nFormat](https://developers.google.com/actions/dialogflow/webhook)\n\u003cpre\u003e{\n  \"expectUserResponse\": true,\n  \"isSsml\": false,\n  \"noInputPrompts\": [],\n  \"richResponse\": {\n    \"items\": [\n      {\n        \"simpleResponse\": {\n          \"displayText\": \"hi\",\n          \"textToSpeech\": \"hello\"\n        }\n      }\n    ],\n    \"suggestions\": [\n      {\n        \"title\": \"Say this\"\n      },\n      {\n        \"title\": \"or this\"\n      }\n    ]\n  },\n  \"systemIntent\": {\n    \"data\": {\n      \"@type\": \"type.googleapis.com/google.actions.v2.OptionValueSpec\",\n      \"listSelect\": {\n        \"items\": [\n          {\n            \"optionInfo\": {\n              \"key\": \"key1\",\n              \"synonyms\": [\n                \"key one\"\n              ]\n            },\n            \"title\": \"must not be empty, but unique\"\n          },\n          {\n            \"optionInfo\": {\n              \"key\": \"key2\",\n              \"synonyms\": [\n                \"key two\"\n              ]\n            },\n            \"title\": \"must not be empty, but unique\"\n          }\n        ]\n      }\n    },\n    \"intent\": \"actions.intent.OPTION\"\n  }\n}\u003c/pre\u003e",
+            "Google Assistant\nSee [Dialogflow webhook\nformat](https://developers.google.com/assistant/actions/build/json/dialogflow-webhook-json)",
             "Google Hangouts."
           ],
           "items": {
@@ -2813,7 +2812,7 @@
           "type": "boolean"
         },
         "name": {
-          "description": "The unique identifier of this intent.\nRequired for Intents.UpdateIntent and Intents.BatchUpdateIntents\nmethods.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
+          "description": "Optional. The unique identifier of this intent.\nRequired for Intents.UpdateIntent and Intents.BatchUpdateIntents\nmethods.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
           "type": "string"
         },
         "outputContexts": {
@@ -2901,7 +2900,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2IntentMessage": {
-      "description": "Corresponds to the `Response` field in the Dialogflow console.",
+      "description": "A rich response message.\nCorresponds to the intent `Response` field in the Dialogflow console.\nFor more information, see\n[Rich response\nmessages](https://cloud.google.com/dialogflow/docs/intents-rich-messages).",
       "id": "GoogleCloudDialogflowV2IntentMessage",
       "properties": {
         "basicCard": {
@@ -2941,7 +2940,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Returns a response containing a custom, platform-specific payload.\nSee the Intent.Message.Platform type for a description of the\nstructure that may be required for your platform.",
+          "description": "A custom platform-specific response.",
           "type": "object"
         },
         "platform": {
@@ -2959,7 +2958,7 @@
             "GOOGLE_HANGOUTS"
           ],
           "enumDescriptions": [
-            "Not specified.",
+            "Default platform.",
             "Facebook.",
             "Slack.",
             "Telegram.",
@@ -2967,7 +2966,7 @@
             "Skype.",
             "Line.",
             "Viber.",
-            "Actions on Google.\nWhen using Actions on Google, you can choose one of the specific\nIntent.Message types that mention support for Actions on Google,\nor you can use the advanced Intent.Message.payload field.\nThe payload field provides access to AoG features not available in the\nspecific message types.\nIf using the Intent.Message.payload field, it should have a structure\nsimilar to the JSON message shown here. For more information, see\n[Actions on Google Webhook\nFormat](https://developers.google.com/actions/dialogflow/webhook)\n\u003cpre\u003e{\n  \"expectUserResponse\": true,\n  \"isSsml\": false,\n  \"noInputPrompts\": [],\n  \"richResponse\": {\n    \"items\": [\n      {\n        \"simpleResponse\": {\n          \"displayText\": \"hi\",\n          \"textToSpeech\": \"hello\"\n        }\n      }\n    ],\n    \"suggestions\": [\n      {\n        \"title\": \"Say this\"\n      },\n      {\n        \"title\": \"or this\"\n      }\n    ]\n  },\n  \"systemIntent\": {\n    \"data\": {\n      \"@type\": \"type.googleapis.com/google.actions.v2.OptionValueSpec\",\n      \"listSelect\": {\n        \"items\": [\n          {\n            \"optionInfo\": {\n              \"key\": \"key1\",\n              \"synonyms\": [\n                \"key one\"\n              ]\n            },\n            \"title\": \"must not be empty, but unique\"\n          },\n          {\n            \"optionInfo\": {\n              \"key\": \"key2\",\n              \"synonyms\": [\n                \"key two\"\n              ]\n            },\n            \"title\": \"must not be empty, but unique\"\n          }\n        ]\n      }\n    },\n    \"intent\": \"actions.intent.OPTION\"\n  }\n}\u003c/pre\u003e",
+            "Google Assistant\nSee [Dialogflow webhook\nformat](https://developers.google.com/assistant/actions/build/json/dialogflow-webhook-json)",
             "Google Hangouts."
           ],
           "type": "string"
@@ -3794,7 +3793,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Optional. This field is set to the value of the `QueryParameters.payload`\nfield passed in the request. Some integrations that query a Dialogflow\nagent may provide additional information in the payload.\n\nIn particular for the Telephony Gateway this field has the form:\n\u003cpre\u003e{\n \"telephony\": {\n   \"caller_id\": \"+18558363987\"\n }\n}\u003c/pre\u003e\nNote: The caller ID field (`caller_id`) will be redacted for Standard\nEdition agents and populated with the caller ID in [E.164\nformat](https://en.wikipedia.org/wiki/E.164) for Enterprise Edition agents.",
+          "description": "Optional. This field is set to the value of the `QueryParameters.payload`\nfield passed in the request. Some integrations that query a Dialogflow\nagent may provide additional information in the payload.\n\nIn particular, for the Dialogflow Phone Gateway integration, this field has\nthe form:\n\u003cpre\u003e{\n \"telephony\": {\n   \"caller_id\": \"+18558363987\"\n }\n}\u003c/pre\u003e\nNote: The caller ID field (`caller_id`) will be redacted for Standard\nEdition agents and populated with the caller ID in [E.164\nformat](https://en.wikipedia.org/wiki/E.164) for Enterprise Edition agents.",
           "type": "object"
         },
         "source": {
@@ -3879,7 +3878,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "This field can be used to pass custom data into the webhook\nassociated with the agent. Arbitrary JSON objects are supported.",
+          "description": "This field can be used to pass custom data to your webhook.\nArbitrary JSON objects are supported.\nIf supplied, the value is used to populate the\n`WebhookRequest.original_detect_intent_request.payload`\nfield sent to your webhook.",
           "type": "object"
         },
         "resetContexts": {
@@ -4300,7 +4299,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Optional. This value is passed directly to `QueryResult.webhook_payload`.\nSee the related `fulfillment_messages[i].payload field`, which may be used\nas an alternative to this field.\n\nThis field can be used for Actions on Google responses.\nIt should have a structure similar to the JSON message shown here. For more\ninformation, see\n[Actions on Google Webhook\nFormat](https://developers.google.com/actions/dialogflow/webhook)\n\u003cpre\u003e{\n  \"google\": {\n    \"expectUserResponse\": true,\n    \"richResponse\": {\n      \"items\": [\n        {\n          \"simpleResponse\": {\n            \"textToSpeech\": \"this is a simple response\"\n          }\n        }\n      ]\n    }\n  }\n}\u003c/pre\u003e",
+          "description": "Optional. This field can be used to pass custom data from your webhook to the API\ncaller. Arbitrary JSON objects are supported.\nWhen provided, Dialogflow uses this field to populate\n`QueryResult.webhook_payload` sent to the API caller.\nThis field is also used by the\n[Google Assistant\nintegration](https://cloud.google.com/dialogflow/docs/integrations/aog)\nfor rich response messages.\nSee the format definition at [Google Assistant Dialogflow webhook\nformat](https://developers.google.com/assistant/actions/build/json/dialogflow-webhook-json)",
           "type": "object"
         },
         "sessionEntityTypes": {
@@ -4537,7 +4536,7 @@
             "Skype.",
             "Line.",
             "Viber.",
-            "Actions on Google.\nWhen using Actions on Google, you can choose one of the specific\nIntent.Message types that mention support for Actions on Google,\nor you can use the advanced Intent.Message.payload field.\nThe payload field provides access to AoG features not available in the\nspecific message types.\nIf using the Intent.Message.payload field, it should have a structure\nsimilar to the JSON message shown here. For more information, see\n[Actions on Google Webhook\nFormat](https://developers.google.com/actions/dialogflow/webhook)\n\u003cpre\u003e{\n  \"expectUserResponse\": true,\n  \"isSsml\": false,\n  \"noInputPrompts\": [],\n  \"richResponse\": {\n    \"items\": [\n      {\n        \"simpleResponse\": {\n          \"displayText\": \"hi\",\n          \"textToSpeech\": \"hello\"\n        }\n      }\n    ],\n    \"suggestions\": [\n      {\n        \"title\": \"Say this\"\n      },\n      {\n        \"title\": \"or this\"\n      }\n    ]\n  },\n  \"systemIntent\": {\n    \"data\": {\n      \"@type\": \"type.googleapis.com/google.actions.v2.OptionValueSpec\",\n      \"listSelect\": {\n        \"items\": [\n          {\n            \"optionInfo\": {\n              \"key\": \"key1\",\n              \"synonyms\": [\n                \"key one\"\n              ]\n            },\n            \"title\": \"must not be empty, but unique\"\n          },\n          {\n            \"optionInfo\": {\n              \"key\": \"key2\",\n              \"synonyms\": [\n                \"key two\"\n              ]\n            },\n            \"title\": \"must not be empty, but unique\"\n          }\n        ]\n      }\n    },\n    \"intent\": \"actions.intent.OPTION\"\n  }\n}\u003c/pre\u003e",
+            "Google Assistant\nSee [Dialogflow webhook\nformat](https://developers.google.com/assistant/actions/build/json/dialogflow-webhook-json)",
             "Telephony Gateway.",
             "Google Hangouts."
           ],
@@ -4722,7 +4721,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Returns a response containing a custom, platform-specific payload.\nSee the Intent.Message.Platform type for a description of the\nstructure that may be required for your platform.",
+          "description": "A custom platform-specific response.",
           "type": "object"
         },
         "platform": {
@@ -4749,7 +4748,7 @@
             "Skype.",
             "Line.",
             "Viber.",
-            "Actions on Google.\nWhen using Actions on Google, you can choose one of the specific\nIntent.Message types that mention support for Actions on Google,\nor you can use the advanced Intent.Message.payload field.\nThe payload field provides access to AoG features not available in the\nspecific message types.\nIf using the Intent.Message.payload field, it should have a structure\nsimilar to the JSON message shown here. For more information, see\n[Actions on Google Webhook\nFormat](https://developers.google.com/actions/dialogflow/webhook)\n\u003cpre\u003e{\n  \"expectUserResponse\": true,\n  \"isSsml\": false,\n  \"noInputPrompts\": [],\n  \"richResponse\": {\n    \"items\": [\n      {\n        \"simpleResponse\": {\n          \"displayText\": \"hi\",\n          \"textToSpeech\": \"hello\"\n        }\n      }\n    ],\n    \"suggestions\": [\n      {\n        \"title\": \"Say this\"\n      },\n      {\n        \"title\": \"or this\"\n      }\n    ]\n  },\n  \"systemIntent\": {\n    \"data\": {\n      \"@type\": \"type.googleapis.com/google.actions.v2.OptionValueSpec\",\n      \"listSelect\": {\n        \"items\": [\n          {\n            \"optionInfo\": {\n              \"key\": \"key1\",\n              \"synonyms\": [\n                \"key one\"\n              ]\n            },\n            \"title\": \"must not be empty, but unique\"\n          },\n          {\n            \"optionInfo\": {\n              \"key\": \"key2\",\n              \"synonyms\": [\n                \"key two\"\n              ]\n            },\n            \"title\": \"must not be empty, but unique\"\n          }\n        ]\n      }\n    },\n    \"intent\": \"actions.intent.OPTION\"\n  }\n}\u003c/pre\u003e",
+            "Google Assistant\nSee [Dialogflow webhook\nformat](https://developers.google.com/assistant/actions/build/json/dialogflow-webhook-json)",
             "Telephony Gateway.",
             "Google Hangouts."
           ],
@@ -5815,7 +5814,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Optional. This field is set to the value of the `QueryParameters.payload`\nfield passed in the request. Some integrations that query a Dialogflow\nagent may provide additional information in the payload.\n\nIn particular for the Telephony Gateway this field has the form:\n\u003cpre\u003e{\n \"telephony\": {\n   \"caller_id\": \"+18558363987\"\n }\n}\u003c/pre\u003e\nNote: The caller ID field (`caller_id`) will be redacted for Standard\nEdition agents and populated with the caller ID in [E.164\nformat](https://en.wikipedia.org/wiki/E.164) for Enterprise Edition agents.",
+          "description": "Optional. This field is set to the value of the `QueryParameters.payload`\nfield passed in the request. Some integrations that query a Dialogflow\nagent may provide additional information in the payload.\n\nIn particular, for the Dialogflow Phone Gateway integration, this field has\nthe form:\n\u003cpre\u003e{\n \"telephony\": {\n   \"caller_id\": \"+18558363987\"\n }\n}\u003c/pre\u003e\nNote: The caller ID field (`caller_id`) will be redacted for Standard\nEdition agents and populated with the caller ID in [E.164\nformat](https://en.wikipedia.org/wiki/E.164) for Enterprise Edition agents.",
           "type": "object"
         },
         "source": {
@@ -6045,7 +6044,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Optional. This value is passed directly to `QueryResult.webhook_payload`.\nSee the related `fulfillment_messages[i].payload field`, which may be used\nas an alternative to this field.\n\nThis field can be used for Actions on Google responses.\nIt should have a structure similar to the JSON message shown here. For more\ninformation, see\n[Actions on Google Webhook\nFormat](https://developers.google.com/actions/dialogflow/webhook)\n\u003cpre\u003e{\n  \"google\": {\n    \"expectUserResponse\": true,\n    \"richResponse\": {\n      \"items\": [\n        {\n          \"simpleResponse\": {\n            \"textToSpeech\": \"this is a simple response\"\n          }\n        }\n      ]\n    }\n  }\n}\u003c/pre\u003e",
+          "description": "Optional. This field can be used to pass custom data from your webhook to the API\ncaller. Arbitrary JSON objects are supported.\nWhen provided, Dialogflow uses this field to populate\n`QueryResult.webhook_payload` sent to the API caller.\nThis field is also used by the\n[Google Assistant\nintegration](https://cloud.google.com/dialogflow/docs/integrations/aog)\nfor rich response messages.\nSee the format definition at [Google Assistant Dialogflow webhook\nformat](https://developers.google.com/assistant/actions/build/json/dialogflow-webhook-json)",
           "type": "object"
         },
         "sessionEntityTypes": {

@@ -931,6 +931,8 @@ var pointerFields = []fieldName{
 	{api: "servicecontrol:v1", schema: "MetricValue", field: "DoubleValue"},
 	{api: "servicecontrol:v1", schema: "MetricValue", field: "Int64Value"},
 	{api: "servicecontrol:v1", schema: "MetricValue", field: "StringValue"},
+	{api: "slides:v1", schema: "Range", field: "EndIndex"},
+	{api: "slides:v1", schema: "Range", field: "StartIndex"},
 	{api: "sqladmin:v1beta4", schema: "Settings", field: "StorageAutoResize"},
 	{api: "storage:v1", schema: "BucketLifecycleRuleCondition", field: "IsLive"},
 	{api: "storage:v1beta2", schema: "BucketLifecycleRuleCondition", field: "IsLive"},

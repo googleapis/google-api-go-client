@@ -4339,7 +4339,7 @@
       }
     }
   },
-  "revision": "20200408",
+  "revision": "20200417",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2AnnotatedMessagePart": {
@@ -4407,7 +4407,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Optional. The collection of parameters associated with this context.\n\nDepending on your protocol or client library language, this is a\nmap, associative array, symbol table, dictionary, or JSON object\ncomposed of a collection of (MapKey, MapValue) pairs:\n\n-   MapKey type: string\n-   MapKey value: parameter name\n-   MapValue type:\n    -   If parameter's entity type is a composite entity: map\n    -   Else: string\n-   MapValue value:\n    -   If parameter's entity type is a composite entity:\n        map from composite entity property names to property values\n    -   Else: parameter value",
+          "description": "Optional. The collection of parameters associated with this context.\n\nDepending on your protocol or client library language, this is a\nmap, associative array, symbol table, dictionary, or JSON object\ncomposed of a collection of (MapKey, MapValue) pairs:\n\n-   MapKey type: string\n-   MapKey value: parameter name\n-   MapValue type:\n    -   If parameter's entity type is a composite entity: map\n    -   Else: string or number, depending on parameter value type\n-   MapValue value:\n    -   If parameter's entity type is a composite entity:\n        map from composite entity property names to property values\n    -   Else: parameter value",
           "type": "object"
         }
       },
@@ -4541,7 +4541,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The collection of parameters associated with the event.",
+          "description": "The collection of parameters associated with the event.\n\nDepending on your protocol or client library language, this is a\nmap, associative array, symbol table, dictionary, or JSON object\ncomposed of a collection of (MapKey, MapValue) pairs:\n\n-   MapKey type: string\n-   MapKey value: parameter name\n-   MapValue type:\n    -   If parameter's entity type is a composite entity: map\n    -   Else: string or number, depending on parameter value type\n-   MapValue value:\n    -   If parameter's entity type is a composite entity:\n        map from composite entity property names to property values\n    -   Else: parameter value",
           "type": "object"
         }
       },
@@ -5608,7 +5608,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The collection of extracted parameters.",
+          "description": "The collection of extracted parameters.\n\nDepending on your protocol or client library language, this is a\nmap, associative array, symbol table, dictionary, or JSON object\ncomposed of a collection of (MapKey, MapValue) pairs:\n\n-   MapKey type: string\n-   MapKey value: parameter name\n-   MapValue type:\n    -   If parameter's entity type is a composite entity: map\n    -   Else: string or number, depending on parameter value type\n-   MapValue value:\n    -   If parameter's entity type is a composite entity:\n        map from composite entity property names to property values\n    -   Else: parameter value",
           "type": "object"
         },
         "queryText": {
@@ -6094,7 +6094,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Optional. The collection of parameters associated with this context.\n\nDepending on your protocol or client library language, this is a\nmap, associative array, symbol table, dictionary, or JSON object\ncomposed of a collection of (MapKey, MapValue) pairs:\n\n-   MapKey type: string\n-   MapKey value: parameter name\n-   MapValue type:\n    -   If parameter's entity type is a composite entity: map\n    -   Else: string\n-   MapValue value:\n    -   If parameter's entity type is a composite entity:\n        map from composite entity property names to property values\n    -   Else: parameter value",
+          "description": "Optional. The collection of parameters associated with this context.\n\nDepending on your protocol or client library language, this is a\nmap, associative array, symbol table, dictionary, or JSON object\ncomposed of a collection of (MapKey, MapValue) pairs:\n\n-   MapKey type: string\n-   MapKey value: parameter name\n-   MapValue type:\n    -   If parameter's entity type is a composite entity: map\n    -   Else: string or number, depending on parameter value type\n-   MapValue value:\n    -   If parameter's entity type is a composite entity:\n        map from composite entity property names to property values\n    -   Else: parameter value",
           "type": "object"
         }
       },
@@ -6316,7 +6316,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The collection of parameters associated with the event.",
+          "description": "The collection of parameters associated with the event.\n\nDepending on your protocol or client library language, this is a\nmap, associative array, symbol table, dictionary, or JSON object\ncomposed of a collection of (MapKey, MapValue) pairs:\n\n-   MapKey type: string\n-   MapKey value: parameter name\n-   MapValue type:\n    -   If parameter's entity type is a composite entity: map\n    -   Else: string or number, depending on parameter value type\n-   MapValue value:\n    -   If parameter's entity type is a composite entity:\n        map from composite entity property names to property values\n    -   Else: parameter value",
           "type": "object"
         }
       },
@@ -8166,7 +8166,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The collection of extracted parameters.",
+          "description": "The collection of extracted parameters.\n\nDepending on your protocol or client library language, this is a\nmap, associative array, symbol table, dictionary, or JSON object\ncomposed of a collection of (MapKey, MapValue) pairs:\n\n-   MapKey type: string\n-   MapKey value: parameter name\n-   MapValue type:\n    -   If parameter's entity type is a composite entity: map\n    -   Else: string or number, depending on parameter value type\n-   MapValue value:\n    -   If parameter's entity type is a composite entity:\n        map from composite entity property names to property values\n    -   Else: parameter value",
           "type": "object"
         },
         "queryText": {

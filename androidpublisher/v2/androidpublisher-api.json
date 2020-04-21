@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/k6ve9mvJLQYNtOLJVCwlyhkSP30\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/pojeTTIIYC5DgmWgumRjk5quG4k\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -680,7 +680,7 @@
         "deobfuscationfiles": {
           "methods": {
             "upload": {
-              "description": "Uploads the deobfuscation file of the specified APK. If a deobfuscation file already exists, it will be replaced.",
+              "description": "Uploads the deobfuscation file of the specified APK. If a deobfuscation or symbolication file already exists, it will be replaced. See https://developer.android.com/studio/build/shrink-code to learn more about deobfuscation files.",
               "httpMethod": "POST",
               "id": "androidpublisher.edits.deobfuscationfiles.upload",
               "mediaUpload": {
@@ -715,9 +715,11 @@
                 },
                 "deobfuscationFileType": {
                   "enum": [
+                    "nativeCode",
                     "proguard"
                   ],
                   "enumDescriptions": [
+                    "",
                     ""
                   ],
                   "location": "path",
@@ -731,7 +733,7 @@
                   "type": "string"
                 },
                 "packageName": {
-                  "description": "Unique identifier of the Android app for which the deobfuscatiuon files are being uploaded; for example, \"com.spiffygame\".",
+                  "description": "Unique identifier of the Android app for which the deobfuscation files are being uploaded; for example, \"com.spiffygame\".",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2483,7 +2485,7 @@
       }
     }
   },
-  "revision": "20200331",
+  "revision": "20200414",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {

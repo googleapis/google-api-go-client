@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/4LB2xyDuShFcAwfdsvXJqDirMa4\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/e9QbjguJUWiyIoFDOZcKDj_qd1A\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -420,7 +420,7 @@
         "deobfuscationfiles": {
           "methods": {
             "upload": {
-              "description": "Uploads the deobfuscation file of the specified APK. If a deobfuscation file already exists, it will be replaced.",
+              "description": "Uploads the deobfuscation file of the specified APK. If a deobfuscation or symbolication file already exists, it will be replaced. See https://developer.android.com/studio/build/shrink-code to learn more about deobfuscation files.",
               "httpMethod": "POST",
               "id": "androidpublisher.edits.deobfuscationfiles.upload",
               "mediaUpload": {
@@ -455,9 +455,11 @@
                 },
                 "deobfuscationFileType": {
                   "enum": [
+                    "nativeCode",
                     "proguard"
                   ],
                   "enumDescriptions": [
+                    "",
                     ""
                   ],
                   "location": "path",
@@ -471,7 +473,7 @@
                   "type": "string"
                 },
                 "packageName": {
-                  "description": "Unique identifier of the Android app for which the deobfuscatiuon files are being uploaded; for example, \"com.spiffygame\".",
+                  "description": "Unique identifier of the Android app for which the deobfuscation files are being uploaded; for example, \"com.spiffygame\".",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2553,7 +2555,7 @@
       }
     }
   },
-  "revision": "20200331",
+  "revision": "20200414",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -3789,7 +3791,7 @@
           "$ref": "CountryTargeting"
         },
         "inAppUpdatePriority": {
-          "description": "In-app update priority of the release. All newly added APKs in the release will be considered at this priority. in_app_update_priority can take values between [0, 5]. 5 is the highest priority. Default priority is 0. See https://developer.android.com/guide/playcore/in-app-updates.",
+          "description": "In-app update priority of the release. All newly added APKs in the release will be considered at this priority. in_app_update_priority can take values between [0, 5]. 5 is the highest priority. Default priority is 0. in_app_update_priority can not be updated once the release is rolled out. See https://developer.android.com/guide/playcore/in-app-updates.",
           "format": "int32",
           "type": "integer"
         },

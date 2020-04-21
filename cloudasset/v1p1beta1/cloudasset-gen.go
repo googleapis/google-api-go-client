@@ -1028,7 +1028,7 @@ func (c *IamPoliciesSearchAllCall) Header() http.Header {
 
 func (c *IamPoliciesSearchAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1115,7 +1115,7 @@ func (c *IamPoliciesSearchAllCall) Do(opts ...googleapi.CallOption) (*SearchAllI
 	//       "type": "string"
 	//     },
 	//     "scope": {
-	//       "description": "Required. The relative name of an asset. The search is limited to the resources\nwithin the `scope`. The allowed value must be:\n* Organization number (such as \"organizations/123\")\n* Folder number(such as \"folders/1234\")\n* Project number (such as \"projects/12345\")",
+	//       "description": "Required. The relative name of an asset. The search is limited to the resources\nwithin the `scope`. The allowed value must be:\n* Organization number (such as \"organizations/123\")\n* Folder number(such as \"folders/1234\")\n* Project number (such as \"projects/12345\")\n* Project id (such as \"projects/abc\")",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -1268,7 +1268,7 @@ func (c *ResourcesSearchAllCall) Header() http.Header {
 
 func (c *ResourcesSearchAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1366,7 +1366,7 @@ func (c *ResourcesSearchAllCall) Do(opts ...googleapi.CallOption) (*SearchAllRes
 	//       "type": "string"
 	//     },
 	//     "scope": {
-	//       "description": "Required. The relative name of an asset. The search is limited to the resources\nwithin the `scope`. The allowed value must be:\n* Organization number (such as \"organizations/123\")\n* Folder number(such as \"folders/1234\")\n* Project number (such as \"projects/12345\")",
+	//       "description": "Required. The relative name of an asset. The search is limited to the resources\nwithin the `scope`. The allowed value must be:\n* Organization number (such as \"organizations/123\")\n* Folder number(such as \"folders/1234\")\n* Project number (such as \"projects/12345\")\n* Project id (such as \"projects/abc\")",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,

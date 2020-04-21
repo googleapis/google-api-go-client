@@ -550,7 +550,7 @@
       }
     }
   },
-  "revision": "20200401",
+  "revision": "20200411",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "AndroidAttributes": {
@@ -684,6 +684,121 @@
         "deviceUser": {
           "$ref": "DeviceUser",
           "description": "Resultant DeviceUser object for the action."
+        }
+      },
+      "type": "object"
+    },
+    "ClientState": {
+      "description": "Resource representing ClientState and supports updates from API users",
+      "id": "ClientState",
+      "properties": {
+        "assetTags": {
+          "description": "The caller can specify asset tags for this resource",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "complianceState": {
+          "description": "The compliance state of the resource as specified by the API client.",
+          "enum": [
+            "COMPLIANCE_STATE_UNSPECIFIED",
+            "COMPLIANT",
+            "NON_COMPLIANT"
+          ],
+          "enumDescriptions": [
+            "The compliance state of the resource is unknown or unspecified.",
+            "Device is compliant with third party policies",
+            "Device is not compliant with third party policies"
+          ],
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Output only. The time the client state data was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "customId": {
+          "description": "This field may be used to store a unique identifier for the API resource\nwithin which these CustomAttributes are a field.",
+          "type": "string"
+        },
+        "etag": {
+          "description": "The token that needs to be passed back for\nconcurrency control in updates. Token needs to be passed back\nin UpdateRequest",
+          "type": "string"
+        },
+        "healthScore": {
+          "description": "The Health score of the resource",
+          "enum": [
+            "HEALTH_SCORE_UNSPECIFIED",
+            "VERY_POOR",
+            "POOR",
+            "NEUTRAL",
+            "GOOD",
+            "VERY_GOOD"
+          ],
+          "enumDescriptions": [
+            "Default value",
+            "The object is in very poor health as defined by the caller.",
+            "The object is in poor health as defined by the caller.",
+            "The object health is neither good nor poor, as defined by the caller.",
+            "The object is in good health as defined by the caller.",
+            "The object is in very good health as defined by the caller."
+          ],
+          "type": "string"
+        },
+        "keyValuePairs": {
+          "additionalProperties": {
+            "$ref": "CustomAttributeValue"
+          },
+          "description": "The map of key-value attributes stored by callers specific to a\ndevice. The total serialized length of this map may not exceed 10KB. No\nlimit is placed on the number of attributes in a map.",
+          "type": "object"
+        },
+        "lastUpdateTime": {
+          "description": "Output only. The time the client state data was last updated.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "managed": {
+          "description": "The management state of the resource as specified by the API client.",
+          "enum": [
+            "MANAGED_STATE_UNSPECIFIED",
+            "MANAGED",
+            "UNMANAGED"
+          ],
+          "enumDescriptions": [
+            "The management state of the resource is unknown or unspecified.",
+            "The resource is managed.",
+            "The resource is not managed."
+          ],
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. [Resource name](https://cloud.google.com/apis/design/resource_names) of\nthe ClientState in format:\n`devices/{device_id}/deviceUsers/{device_user_id}/clientState/{partner_id}`,\nwhere partner_id corresponds to the partner storing the data.",
+          "type": "string"
+        },
+        "scoreReason": {
+          "description": "A descriptive cause of the health score.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CustomAttributeValue": {
+      "description": "Additional custom attribute values may be one of these types",
+      "id": "CustomAttributeValue",
+      "properties": {
+        "boolValue": {
+          "description": "Represents a boolean value.",
+          "type": "boolean"
+        },
+        "numberValue": {
+          "description": "Represents a double value.",
+          "format": "double",
+          "type": "number"
+        },
+        "stringValue": {
+          "description": "Represents a string value.",
+          "type": "string"
         }
       },
       "type": "object"

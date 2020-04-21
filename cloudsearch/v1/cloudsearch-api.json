@@ -766,7 +766,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Name of the Item to start a resumable upload.\nFormat: datasources/{source_id}/items/{item_id}.",
+                      "description": "Name of the Item to start a resumable upload.\nFormat: datasources/{source_id}/items/{item_id}.\nThe maximum length is 1536 bytes.",
                       "location": "path",
                       "pattern": "^datasources/[^/]+/items/[^/]+$",
                       "required": true,
@@ -1805,7 +1805,7 @@
       }
     }
   },
-  "revision": "20200331",
+  "revision": "20200407",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {

@@ -268,7 +268,7 @@
               ]
             },
             "setIamPolicy": {
-              "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
+              "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
               "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}:setIamPolicy",
               "httpMethod": "POST",
               "id": "runtimeconfig.projects.configs.setIamPolicy",
@@ -297,7 +297,7 @@
               ]
             },
             "testIamPermissions": {
-              "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+              "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
               "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}:testIamPermissions",
               "httpMethod": "POST",
               "id": "runtimeconfig.projects.configs.testIamPermissions",
@@ -385,7 +385,7 @@
                   ]
                 },
                 "testIamPermissions": {
-                  "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+                  "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
                   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/operations/{operationsId}:testIamPermissions",
                   "httpMethod": "POST",
                   "id": "runtimeconfig.projects.configs.operations.testIamPermissions",
@@ -556,7 +556,7 @@
                   ]
                 },
                 "testIamPermissions": {
-                  "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+                  "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
                   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/variables/{variablesId}:testIamPermissions",
                   "httpMethod": "POST",
                   "id": "runtimeconfig.projects.configs.variables.testIamPermissions",
@@ -770,7 +770,7 @@
                   ]
                 },
                 "testIamPermissions": {
-                  "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+                  "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
                   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/waiters/{waitersId}:testIamPermissions",
                   "httpMethod": "POST",
                   "id": "runtimeconfig.projects.configs.waiters.testIamPermissions",
@@ -805,7 +805,7 @@
       }
     }
   },
-  "revision": "20200224",
+  "revision": "20200413",
   "rootUrl": "https://runtimeconfig.googleapis.com/",
   "schemas": {
     "Binding": {

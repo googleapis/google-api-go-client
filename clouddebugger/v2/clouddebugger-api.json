@@ -144,6 +144,11 @@
                     "debuggeeId"
                   ],
                   "parameters": {
+                    "agentId": {
+                      "description": "Identifies the agent.\nThis is the ID returned in the RegisterDebuggee response.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "debuggeeId": {
                       "description": "Required. Identifies the debuggee.",
                       "location": "path",
@@ -393,6 +398,16 @@
                     "debuggeeId"
                   ],
                   "parameters": {
+                    "canaryOption": {
+                      "description": "The canary option set by the user upon setting breakpoint.",
+                      "enum": [
+                        "CANARY_OPTION_UNSPECIFIED",
+                        "CANARY_OPTION_TRY_ENABLE",
+                        "CANARY_OPTION_TRY_DISABLE"
+                      ],
+                      "location": "query",
+                      "type": "string"
+                    },
                     "clientVersion": {
                       "description": "Required. The client version making the call.\nSchema: `domain/type/version` (e.g., `google.com/intellij/v1`).",
                       "location": "query",
@@ -424,7 +439,7 @@
       }
     }
   },
-  "revision": "20200327",
+  "revision": "20200410",
   "rootUrl": "https://clouddebugger.googleapis.com/",
   "schemas": {
     "AliasContext": {
@@ -468,6 +483,11 @@
             "Capture stack frame and variables and update the breakpoint.\nThe data is only captured once. After that the breakpoint is set\nin a final state.",
             "Log each breakpoint hit. The breakpoint remains active until\ndeleted or expired."
           ],
+          "type": "string"
+        },
+        "canaryExpireTime": {
+          "description": "The deadline for the breakpoint to stay in CANARY_ACTIVE state. The value\nis meaningless when the breakpoint is not in CANARY_ACTIVE state.",
+          "format": "google-datetime",
           "type": "string"
         },
         "condition": {
@@ -541,6 +561,24 @@
             "$ref": "StackFrame"
           },
           "type": "array"
+        },
+        "state": {
+          "description": "The current state of the breakpoint.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "STATE_CANARY_PENDING_AGENTS",
+            "STATE_CANARY_ACTIVE",
+            "STATE_ROLLING_TO_ALL",
+            "STATE_IS_FINAL"
+          ],
+          "enumDescriptions": [
+            "Breakpoint state UNSPECIFIED.",
+            "Enabling canary but no agents are available.",
+            "Enabling canary and successfully assigning canary agents.",
+            "Breakpoint rolling out to all agents.",
+            "Breakpoint is hit/complete/failed."
+          ],
+          "type": "string"
         },
         "status": {
           "$ref": "StatusMessage",
@@ -619,6 +657,24 @@
       "properties": {
         "agentVersion": {
           "description": "Version ID of the agent.\nSchema: `domain/language-platform/vmajor.minor` (for example\n`google.com/java-gcp/v1.1`).",
+          "type": "string"
+        },
+        "canaryMode": {
+          "description": "Used when setting breakpoint canary for this debuggee.",
+          "enum": [
+            "CANARY_MODE_UNSPECIFIED",
+            "CANARY_MODE_ALWAYS_ENABLED",
+            "CANARY_MODE_ALWAYS_DISABLED",
+            "CANARY_MODE_DEFAULT_ENABLED",
+            "CANARY_MODE_DEFAULT_DISABLED"
+          ],
+          "enumDescriptions": [
+            "Before \"use_breakpoint_canary\" is deprecated:\n  CANARY_MODE_UNSPECIFIED = use_breakpoint_canary ?\n                            CANARY_MODE_DEFAULT_ENABLED :\n                            CANARY_MODE_DEFAULT_DISABLED;\nAfter \"use_breakpoint_canary\" is deprecated:\n  CANARY_MODE_UNSPECIFIED = CANARY_MODE_DEFAULT_ENABLED;",
+            "Always enable breakpoint canary regardless of the value of breakpoint's\ncanary option.",
+            "Always disable breakpoint canary regardless of the value of breakpoint's\ncanary option.",
+            "Depends on the breakpoint's canary option. Enable canary by default if\nthe breakpoint's canary option is not specified.",
+            "Depends on the breakpoint's canary option. Disable canary by default if\nthe breakpoint's canary option is not specified."
+          ],
           "type": "string"
         },
         "description": {
@@ -852,6 +908,10 @@
       "description": "Response for registering a debuggee.",
       "id": "RegisterDebuggeeResponse",
       "properties": {
+        "agentId": {
+          "description": "A unique ID generated for the agent.\nEach RegisterDebuggee request will generate a new agent ID.",
+          "type": "string"
+        },
         "debuggee": {
           "$ref": "Debuggee",
           "description": "Debuggee resource.\nThe field `id` is guaranteed to be set (in addition to the echoed fields).\nIf the field `is_disabled` is set to `true`, the agent should disable\nitself by removing all breakpoints and detaching from the application.\nIt should however continue to poll `RegisterDebuggee` until reenabled."
@@ -978,6 +1038,7 @@
             "BREAKPOINT_CONDITION",
             "BREAKPOINT_EXPRESSION",
             "BREAKPOINT_AGE",
+            "BREAKPOINT_CANARY_FAILED",
             "VARIABLE_NAME",
             "VARIABLE_VALUE"
           ],
@@ -987,6 +1048,7 @@
             "Status applies to the breakpoint and is related to its condition.",
             "Status applies to the breakpoint and is related to its expressions.",
             "Status applies to the breakpoint and is related to its age.",
+            "Status applies to the breakpoint when the breakpoint failed to exit the\ncanary state.",
             "Status applies to the entire variable.",
             "Status applies to variable value (variable name is valid)."
           ],

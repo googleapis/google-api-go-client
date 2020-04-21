@@ -4736,7 +4736,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4902,7 +4902,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5091,7 +5091,7 @@ func (c *ProjectsLocationsDatasetsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5256,7 +5256,7 @@ func (c *ProjectsLocationsDatasetsDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5398,7 +5398,7 @@ func (c *ProjectsLocationsDatasetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5539,7 +5539,7 @@ func (c *ProjectsLocationsDatasetsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5704,7 +5704,7 @@ func (c *ProjectsLocationsDatasetsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5869,7 +5869,7 @@ func (c *ProjectsLocationsDatasetsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6047,7 +6047,7 @@ func (c *ProjectsLocationsDatasetsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6198,7 +6198,7 @@ func (c *ProjectsLocationsDatasetsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6348,7 +6348,7 @@ func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6518,7 +6518,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresGetIamPolicyCall) Header() htt
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6664,7 +6664,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresSetIamPolicyCall) Header() htt
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6814,7 +6814,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresTestIamPermissionsCall) Header
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6962,7 +6962,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7124,7 +7124,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeidentifyCall) Header() http.Heade
 
 func (c *ProjectsLocationsDatasetsDicomStoresDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7264,7 +7264,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7403,7 +7403,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7552,7 +7552,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7717,7 +7717,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7869,7 +7869,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8046,7 +8046,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8229,7 +8229,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8390,7 +8390,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8515,7 +8515,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall) Header() http.
 
 func (c *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8641,7 +8641,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) Header() http
 
 func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8757,7 +8757,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8904,7 +8904,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9024,7 +9024,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9167,7 +9167,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9323,7 +9323,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall) Header
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9449,7 +9449,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall) Header() 
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9575,7 +9575,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall) Head
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9700,7 +9700,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall) Header(
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9818,7 +9818,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) Header()
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9932,7 +9932,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) Header() h
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10089,7 +10089,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall) 
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10215,7 +10215,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall) He
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10341,7 +10341,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10456,7 +10456,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) H
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10613,7 +10613,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInsta
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10742,7 +10742,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetad
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10869,7 +10869,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRende
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10996,7 +10996,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFramesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11125,7 +11125,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRenderedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11245,7 +11245,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11401,7 +11401,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeidentifyCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11540,7 +11540,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11691,7 +11691,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11840,7 +11840,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12005,7 +12005,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12145,7 +12145,7 @@ type ProjectsLocationsDatasetsFhirStoresImportCall struct {
 // violates
 // referential integrity.
 //
-// The import process does not trigger PubSub notification or
+// The import process does not trigger Cloud Pub/Sub notification or
 // BigQuery
 // streaming update, regardless of how those are configured on the FHIR
 // store.
@@ -12260,7 +12260,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12324,7 +12324,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresImportCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Import resources to the FHIR store by loading data from the specified\nsources. This method is optimized to load large quantities of data using\nimport semantics that ignore some FHIR store configuration options and are\nnot suitable for all use cases. It is primarily intended to load data into\nan empty FHIR store that is not being used by other clients. In cases\nwhere this method is not appropriate, consider using ExecuteBundle to\nload data.\n\nEvery resource in the input must contain a client-supplied ID, and will be\nstored using that ID regardless of the\nenable_update_create setting on the FHIR\nstore.\n\nThe import process does not enforce referential integrity, regardless of\nthe\ndisable_referential_integrity\nsetting on the FHIR store. This allows the import of resources with\narbitrary interdependencies without considering grouping or ordering, but\nif the input data contains invalid references or if some resources fail to\nbe imported, the FHIR store might be left in a state that violates\nreferential integrity.\n\nThe import process does not trigger PubSub notification or BigQuery\nstreaming update, regardless of how those are configured on the FHIR store.\n\nIf a resource with the specified ID already exists, the most recent\nversion of the resource is overwritten without creating a new historical\nversion, regardless of the\ndisable_resource_versioning\nsetting on the FHIR store. If transient failures occur during the import,\nit is possible that successfully imported resources will be overwritten\nmore than once.\n\nThe import operation is idempotent unless the input data contains multiple\nvalid resources with the same ID but different contents. In that case,\nafter the import completes, the store will contain exactly one resource\nwith that ID but there is no ordering guarantee on which version of the\ncontents it will have. The operation result counters do not count\nduplicate IDs as an error and will count one success for each resource in\nthe input, which might result in a success count larger than the number\nof resources in the FHIR store. This often occurs when importing data\norganized in bundles produced by Patient-everything\nwhere each bundle contains its own copy of a resource such as Practitioner\nthat might be referred to by many patients.\n\nIf some resources fail to import, for example due to parsing errors,\nsuccessfully imported resources are not rolled back.\n\nThe location and format of the input data is specified by the parameters\nbelow. Note that if no format is specified, this method assumes the\n`BUNDLE` format. When using the `BUNDLE` format this method ignores the\n`Bundle.type` field, except that `history` bundles are rejected, and does\nnot apply any of the bundle processing semantics for batch or transaction\nbundles. Unlike in ExecuteBundle, transaction bundles are not executed\nas a single transaction and bundle-internal references are not rewritten.\nThe bundle is treated as a collection of resources to be written as\nprovided in `Bundle.entry.resource`, ignoring `Bundle.entry.request`. As\nan example, this allows the import of `searchset` bundles produced by a\nFHIR search or\nPatient-everything operation.\n\nThis method returns an Operation that can\nbe used to track the status of the import by calling\nGetOperation.\n\nImmediate fatal errors appear in the\nerror field, errors are also logged\nto Stackdriver (see [Viewing\nlogs](/healthcare/docs/how-tos/stackdriver-logging)). Otherwise, when the\noperation finishes, a detailed response of type ImportResourcesResponse\nis returned in the response field.\nThe metadata field type for this\noperation is OperationMetadata.",
+	//   "description": "Import resources to the FHIR store by loading data from the specified\nsources. This method is optimized to load large quantities of data using\nimport semantics that ignore some FHIR store configuration options and are\nnot suitable for all use cases. It is primarily intended to load data into\nan empty FHIR store that is not being used by other clients. In cases\nwhere this method is not appropriate, consider using ExecuteBundle to\nload data.\n\nEvery resource in the input must contain a client-supplied ID, and will be\nstored using that ID regardless of the\nenable_update_create setting on the FHIR\nstore.\n\nThe import process does not enforce referential integrity, regardless of\nthe\ndisable_referential_integrity\nsetting on the FHIR store. This allows the import of resources with\narbitrary interdependencies without considering grouping or ordering, but\nif the input data contains invalid references or if some resources fail to\nbe imported, the FHIR store might be left in a state that violates\nreferential integrity.\n\nThe import process does not trigger Cloud Pub/Sub notification or BigQuery\nstreaming update, regardless of how those are configured on the FHIR store.\n\nIf a resource with the specified ID already exists, the most recent\nversion of the resource is overwritten without creating a new historical\nversion, regardless of the\ndisable_resource_versioning\nsetting on the FHIR store. If transient failures occur during the import,\nit is possible that successfully imported resources will be overwritten\nmore than once.\n\nThe import operation is idempotent unless the input data contains multiple\nvalid resources with the same ID but different contents. In that case,\nafter the import completes, the store will contain exactly one resource\nwith that ID but there is no ordering guarantee on which version of the\ncontents it will have. The operation result counters do not count\nduplicate IDs as an error and will count one success for each resource in\nthe input, which might result in a success count larger than the number\nof resources in the FHIR store. This often occurs when importing data\norganized in bundles produced by Patient-everything\nwhere each bundle contains its own copy of a resource such as Practitioner\nthat might be referred to by many patients.\n\nIf some resources fail to import, for example due to parsing errors,\nsuccessfully imported resources are not rolled back.\n\nThe location and format of the input data is specified by the parameters\nbelow. Note that if no format is specified, this method assumes the\n`BUNDLE` format. When using the `BUNDLE` format this method ignores the\n`Bundle.type` field, except that `history` bundles are rejected, and does\nnot apply any of the bundle processing semantics for batch or transaction\nbundles. Unlike in ExecuteBundle, transaction bundles are not executed\nas a single transaction and bundle-internal references are not rewritten.\nThe bundle is treated as a collection of resources to be written as\nprovided in `Bundle.entry.resource`, ignoring `Bundle.entry.request`. As\nan example, this allows the import of `searchset` bundles produced by a\nFHIR search or\nPatient-everything operation.\n\nThis method returns an Operation that can\nbe used to track the status of the import by calling\nGetOperation.\n\nImmediate fatal errors appear in the\nerror field, errors are also logged\nto Stackdriver (see [Viewing\nlogs](/healthcare/docs/how-tos/stackdriver-logging)). Otherwise, when the\noperation finishes, a detailed response of type ImportResourcesResponse\nis returned in the response field.\nThe metadata field type for this\noperation is OperationMetadata.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:import",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.import",
@@ -12437,7 +12437,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12620,7 +12620,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12883,7 +12883,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresSearchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12995,7 +12995,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13145,7 +13145,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall) Header() htt
 
 func (c *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13231,6 +13231,386 @@ func (c *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall) Do(opts ...g
 	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.fhirStores.fhir.ConceptMap-search-translate":
+
+type ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ConceptMapSearchTranslate: Translates a code from one value set to
+// another by searching for
+// appropriate concept maps.
+//
+// Implements the FHIR standard $translate
+// operation
+// ([DSTU2](https://www.hl7.org/fhir/DSTU2/operation-conceptmap
+// -translate.html),
+// [STU3](https://www.hl7.org/fhir/STU3/operation-conce
+// ptmap-translate.html),
+// [R4](https://www.hl7.org/fhir/R4/operation-conc
+// eptmap-translate.html)).
+//
+// On success, the response body contains a JSON-encoded
+// representation
+// of a FHIR Parameters resource, which includes the translation
+// result.
+// Errors generated by the FHIR store contain a
+// JSON-encoded
+// `OperationOutcome` resource describing the reason for the error. If
+// the
+// request cannot be mapped to a valid API method on a FHIR store, a
+// generic
+// GCP error might be returned instead.
+func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ConceptMapSearchTranslate(parent string) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall {
+	c := &ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Code sets the optional parameter "code": The code to translate.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) Code(code string) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall {
+	c.urlParams_.Set("code", code)
+	return c
+}
+
+// ConceptMapVersion sets the optional parameter "conceptMapVersion":
+// The version of the concept map to use. If unset, the most current
+// version
+// is used.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) ConceptMapVersion(conceptMapVersion string) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall {
+	c.urlParams_.Set("conceptMapVersion", conceptMapVersion)
+	return c
+}
+
+// Source sets the optional parameter "source": The source value set of
+// the concept map to be used. If unset, target is
+// used to search for concept maps.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) Source(source string) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall {
+	c.urlParams_.Set("source", source)
+	return c
+}
+
+// System sets the optional parameter "system": The system for the code
+// to be translated.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) System(system string) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall {
+	c.urlParams_.Set("system", system)
+	return c
+}
+
+// Target sets the optional parameter "target": The target value set of
+// the concept map to be used. If unset, source is
+// used to search for concept maps.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) Target(target string) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall {
+	c.urlParams_.Set("target", target)
+	return c
+}
+
+// Url sets the optional parameter "url": The canonical url of the
+// concept map to use. If unset, the source and
+// target is used to search for concept maps.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) Url(url string) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall {
+	c.urlParams_.Set("url", url)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/fhir/ConceptMap/$translate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.ConceptMap-search-translate" call.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+	// {
+	//   "description": "Translates a code from one value set to another by searching for\nappropriate concept maps.\n\nImplements the FHIR standard $translate operation\n([DSTU2](https://www.hl7.org/fhir/DSTU2/operation-conceptmap-translate.html),\n[STU3](https://www.hl7.org/fhir/STU3/operation-conceptmap-translate.html),\n[R4](https://www.hl7.org/fhir/R4/operation-conceptmap-translate.html)).\n\nOn success, the response body contains a JSON-encoded representation\nof a FHIR Parameters resource, which includes the translation result.\nErrors generated by the FHIR store contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/ConceptMap/$translate",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.ConceptMap-search-translate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "code": {
+	//       "description": "The code to translate.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "conceptMapVersion": {
+	//       "description": "The version of the concept map to use. If unset, the most current version\nis used.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "The name for the FHIR store containing the concept map(s) to use for the\ntranslation.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "The source value set of the concept map to be used. If unset, target is\nused to search for concept maps.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "system": {
+	//       "description": "The system for the code to be translated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "target": {
+	//       "description": "The target value set of the concept map to be used. If unset, source is\nused to search for concept maps.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "url": {
+	//       "description": "The canonical url of the concept map to use. If unset, the source and\ntarget is used to search for concept maps.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/fhir/ConceptMap/$translate",
+	//   "response": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.fhirStores.fhir.ConceptMap-translate":
+
+type ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ConceptMapTranslate: Translates a code from one value set to another
+// using a concept map.
+//
+// Implements the FHIR standard $translate
+// operation
+// ([DSTU2](https://www.hl7.org/fhir/DSTU2/operation-conceptmap
+// -translate.html),
+// [STU3](https://www.hl7.org/fhir/STU3/operation-conce
+// ptmap-translate.html),
+// [R4](https://www.hl7.org/fhir/R4/operation-conc
+// eptmap-translate.html)).
+//
+// On success, the response body contains a JSON-encoded
+// representation
+// of a FHIR Parameters resource, which includes the translation
+// result.
+// Errors generated by the FHIR store contain a
+// JSON-encoded
+// `OperationOutcome` resource describing the reason for the error. If
+// the
+// request cannot be mapped to a valid API method on a FHIR store, a
+// generic
+// GCP error might be returned instead.
+func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ConceptMapTranslate(name string) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall {
+	c := &ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Code sets the optional parameter "code": The code to translate.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall) Code(code string) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall {
+	c.urlParams_.Set("code", code)
+	return c
+}
+
+// ConceptMapVersion sets the optional parameter "conceptMapVersion":
+// The version of the concept map to use. If unset, the most current
+// version
+// is used.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall) ConceptMapVersion(conceptMapVersion string) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall {
+	c.urlParams_.Set("conceptMapVersion", conceptMapVersion)
+	return c
+}
+
+// System sets the optional parameter "system": The system for the code
+// to be translated.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall) System(system string) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall {
+	c.urlParams_.Set("system", system)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}/$translate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.ConceptMap-translate" call.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+	// {
+	//   "description": "Translates a code from one value set to another using a concept map.\n\nImplements the FHIR standard $translate operation\n([DSTU2](https://www.hl7.org/fhir/DSTU2/operation-conceptmap-translate.html),\n[STU3](https://www.hl7.org/fhir/STU3/operation-conceptmap-translate.html),\n[R4](https://www.hl7.org/fhir/R4/operation-conceptmap-translate.html)).\n\nOn success, the response body contains a JSON-encoded representation\nof a FHIR Parameters resource, which includes the translation result.\nErrors generated by the FHIR store contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/ConceptMap/{ConceptMapId}/$translate",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.ConceptMap-translate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "code": {
+	//       "description": "The code to translate.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "conceptMapVersion": {
+	//       "description": "The version of the concept map to use. If unset, the most current version\nis used.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The URL for the concept map to use for the translation.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/ConceptMap/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "system": {
+	//       "description": "The system for the code to be translated.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}/$translate",
+	//   "response": {
+	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -13349,7 +13729,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirObservationLastnCall) Header() h
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirObservationLastnCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13416,8 +13796,22 @@ type ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall struct {
 	header_      http.Header
 }
 
-// PatientEverything: On success, the response body will contain a
-// JSON-encoded representation
+// PatientEverything: Retrieves all the resources directly referenced by
+// a patient, as well as
+// all of the resources in the patient compartment.
+//
+// Implements the FHIR extended operation
+// Patient-everything
+// ([DSTU2](http://hl7.org/implement/standards/fhir/DS
+// TU2/patient-operations.html#everything),
+// [STU3](http://hl7.org/impleme
+// nt/standards/fhir/STU3/patient-operations.html#everything),
+// [R4](http:
+// //hl7.org/implement/standards/fhir/R4/patient-operations.html#everythi
+// ng)).
+//
+// On success, the response body will contain a JSON-encoded
+// representation
 // of a `Bundle` resource of type `searchset`, containing the results of
 // the
 // operation.
@@ -13510,7 +13904,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Header() 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13539,7 +13933,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Do(opts .
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "On success, the response body will contain a JSON-encoded representation\nof a `Bundle` resource of type `searchset`, containing the results of the\noperation.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
+	//   "description": "Retrieves all the resources directly referenced by a patient, as well as\nall of the resources in the patient compartment.\n\nImplements the FHIR extended operation Patient-everything\n([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/patient-operations.html#everything),\n[STU3](http://hl7.org/implement/standards/fhir/STU3/patient-operations.html#everything),\n[R4](http://hl7.org/implement/standards/fhir/R4/patient-operations.html#everything)).\n\nOn success, the response body will contain a JSON-encoded representation\nof a `Bundle` resource of type `searchset`, containing the results of the\noperation.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/Patient/{PatientId}/$everything",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.Patient-everything",
@@ -13637,7 +14031,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall) Header() http
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13806,7 +14200,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall) Header() http.
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13932,7 +14326,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall) Header() 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14115,7 +14509,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall) Header() h
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14272,7 +14666,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall) Header() 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14426,7 +14820,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14552,7 +14946,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirDeleteCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14703,7 +15097,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall) Header() http
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14891,7 +15285,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirHistoryCall) Header() http.Heade
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15043,7 +15437,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatchCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15185,7 +15579,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15379,7 +15773,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15520,7 +15914,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15652,7 +16046,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirVreadCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirVreadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15763,7 +16157,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15908,7 +16302,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16049,7 +16443,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16214,7 +16608,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16392,7 +16786,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16575,7 +16969,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16726,7 +17120,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16876,7 +17270,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17026,7 +17420,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17164,7 +17558,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17320,7 +17714,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17471,7 +17865,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17716,7 +18110,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17926,7 +18320,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18089,7 +18483,7 @@ func (c *ProjectsLocationsDatasetsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18242,7 +18636,7 @@ func (c *ProjectsLocationsDatasetsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18423,7 +18817,7 @@ func (c *ProjectsLocationsDatasetsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

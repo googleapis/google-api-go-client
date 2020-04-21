@@ -192,7 +192,7 @@
       }
     }
   },
-  "revision": "20200407",
+  "revision": "20200417",
   "rootUrl": "https://homegraph.googleapis.com/",
   "schemas": {
     "AgentDeviceId": {
@@ -254,11 +254,11 @@
           "description": "Names given to this device by your smart home Action."
         },
         "notificationSupportedByAgent": {
-          "description": "Indicates whether your smart home Action will report notifications\nto Google for this device via ReportStateAndNotification.\n\nIf your smart home Action enables users to control device notifications,\nyou should update this field and call RequestSyncDevices.",
+          "description": "Indicates whether your smart home Action will report notifications\nto Google for this device via\nReportStateAndNotification.\n\nIf your smart home Action enables users to control device notifications,\nyou should update this field and call\nRequestSyncDevices.",
           "type": "boolean"
         },
         "otherDeviceIds": {
-          "description": "Alternate IDs associated with this device.\nThis is used to identify cloud synced devices enabled for\n[local\nexecution](https://developers.google.com/assistant/smarthome/concepts/local).",
+          "description": "Alternate IDs associated with this device.\nThis is used to identify cloud synced devices enabled for [local\nfulfillment](https://developers.google.com/assistant/smarthome/concepts/local).",
           "items": {
             "$ref": "AgentOtherDeviceId"
           },
@@ -284,7 +284,7 @@
           "type": "string"
         },
         "willReportState": {
-          "description": "Indicates whether your smart home Action will report state of this device\nto Google via ReportStateAndNotification.",
+          "description": "Indicates whether your smart home Action will report state of this device\nto Google via\nReportStateAndNotification.",
           "type": "boolean"
         }
       },

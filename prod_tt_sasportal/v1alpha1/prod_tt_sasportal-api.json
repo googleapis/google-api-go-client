@@ -346,7 +346,7 @@
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "The maximum number of devices to return in the response.",
+                  "description": "The maximum number of devices to return in the response.\nIf empty or zero, all devices will be listed.\nMust be in the range [0, 1000].",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
@@ -937,7 +937,7 @@
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "The maximum number of devices to return in the response.",
+                  "description": "The maximum number of devices to return in the response.\nIf empty or zero, all devices will be listed.\nMust be in the range [0, 1000].",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
@@ -1364,7 +1364,7 @@
                       "type": "string"
                     },
                     "pageSize": {
-                      "description": "The maximum number of devices to return in the response.",
+                      "description": "The maximum number of devices to return in the response.\nIf empty or zero, all devices will be listed.\nMust be in the range [0, 1000].",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
@@ -1523,7 +1523,7 @@
       }
     }
   },
-  "revision": "20200407",
+  "revision": "20200420",
   "rootUrl": "https://prod-tt-sasportal.googleapis.com/",
   "schemas": {
     "SasPortalAssignment": {
@@ -1836,6 +1836,13 @@
             "The grant has expired."
           ],
           "type": "string"
+        },
+        "suspensionReason": {
+          "description": "If the grant is suspended, the reason(s) for suspension.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -1960,6 +1967,10 @@
         "antennaModel": {
           "description": "If an external antenna is used, the antenna model is optionally\nprovided in this field. The string has a maximum length of 128\noctets.",
           "type": "string"
+        },
+        "cpeCbsdIndication": {
+          "description": "If present, this parameter specifies whether the CBSD is a CPE-CBSD or not.",
+          "type": "boolean"
         },
         "eirpCapability": {
           "description": "This parameter is the maximum device EIRP in units of dBm/10MHz\nand is an integer with a value between -127 and +47 (dBm/10 MHz)\ninclusive. If not included, SAS interprets it as maximum\nallowable EIRP in units of dBm/10MHz for device category.",

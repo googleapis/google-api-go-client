@@ -333,7 +333,7 @@ func (s *GoogleApi__HttpBody) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudMlV1AutomatedStoppingConfigDecayCurveAutomatedStoppingConfig struct {
-	// UseElapsedTime: True if measurement.elapsed_time is used as the
+	// UseElapsedTime: If true, measurement.elapsed_time is used as the
 	// x-axis of each
 	// Trials Decay Curve. Otherwise, Measurement.steps will be used as
 	// the
@@ -375,13 +375,13 @@ func (s *GoogleCloudMlV1AutomatedStoppingConfigDecayCurveAutomatedStoppingConfig
 // objective
 // values reported by the trial in each measurement.
 type GoogleCloudMlV1AutomatedStoppingConfigMedianAutomatedStoppingConfig struct {
-	// UseElapsedTime: True if median automated stopping rule applies
-	// on
-	// measurement.use_elapsed_time. it means that elapsed_time field
+	// UseElapsedTime: If true, the median automated stopping rule applies
+	// to
+	// measurement.use_elapsed_time, which means the elapsed_time field
 	// of
-	// latest measurement of current trial is used to compute median
-	// objective
-	// value for each completed trials.
+	// the current trial's
+	// latest measurement is used to compute the median objective
+	// value for each completed trial.
 	UseElapsedTime bool `json:"useElapsedTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "UseElapsedTime") to
@@ -869,7 +869,8 @@ func (s *GoogleCloudMlV1StudyConfigParameterSpec) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleCloudMlV1TrialParameter: A message representing a parameter to
-// be tuned.
+// be tuned. Contains the name of
+// the parameter and the suggested value to use for this trial.
 type GoogleCloudMlV1TrialParameter struct {
 	// FloatValue: Must be set if ParameterType is DOUBLE or DISCRETE.
 	FloatValue float64 `json:"floatValue,omitempty"`
@@ -1233,13 +1234,13 @@ func (s *GoogleCloudMlV1__Capability) MarshalJSON() ([]byte, error) {
 // CheckTrialEarlyStoppingState
 // request.
 type GoogleCloudMlV1__CheckTrialEarlyStoppingStateMetatdata struct {
-	// CreateTime: The time operation was submitted.
+	// CreateTime: The time at which the operation was submitted.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Study: The name of the study that the trial belongs to.
 	Study string `json:"study,omitempty"`
 
-	// Trial: The Trial name.
+	// Trial: The trial name.
 	Trial string `json:"trial,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
@@ -1277,13 +1278,13 @@ type GoogleCloudMlV1__CheckTrialEarlyStoppingStateRequest struct {
 // CheckTrialEarlyStoppingState
 // request.
 type GoogleCloudMlV1__CheckTrialEarlyStoppingStateResponse struct {
-	// EndTime: The time operation processing completed.
+	// EndTime: The time at which operation processing completed.
 	EndTime string `json:"endTime,omitempty"`
 
 	// ShouldStop: True if the Trial should stop.
 	ShouldStop bool `json:"shouldStop,omitempty"`
 
-	// StartTime: The time operation was started.
+	// StartTime: The time at which the operation was started.
 	StartTime string `json:"startTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
@@ -1319,7 +1320,7 @@ type GoogleCloudMlV1__CompleteTrialRequest struct {
 	// previously reported measurement as the final-measurement
 	FinalMeasurement *GoogleCloudMlV1__Measurement `json:"finalMeasurement,omitempty"`
 
-	// InfeasibleReason: Optional. A human readable reason why the Trial was
+	// InfeasibleReason: Optional. A human readable reason why the trial was
 	// infeasible. This should
 	// only be provided if `trial_infeasible` is true.
 	InfeasibleReason string `json:"infeasibleReason,omitempty"`
@@ -1386,12 +1387,13 @@ func (s *GoogleCloudMlV1__Config) MarshalJSON() ([]byte, error) {
 // configuration that can be applied to
 // a resource.
 type GoogleCloudMlV1__EncryptionConfig struct {
-	// KmsKeyName: The Cloud KMS resource identifier of the customer managed
+	// KmsKeyName: The Cloud KMS resource identifier of the customer-managed
 	// encryption key
-	// used to protect a resource, such as a training job. Has the
-	// form:
-	// `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKe
-	// ys/my-key`.
+	// used to protect a resource, such as a training job. It has the
+	// following
+	// format:
+	// `projects/{PROJECT_ID}/locations/{REGION}/keyRings/{
+	// KEY_RING_NAME}/cryptoKeys/{KEY_NAME}`
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
@@ -1983,7 +1985,7 @@ func (s *GoogleCloudMlV1__ListModelsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudMlV1__ListStudiesResponse struct {
-	// Studies: The Studies associated with the project.
+	// Studies: The studies associated with the project.
 	Studies []*GoogleCloudMlV1__Study `json:"studies,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2151,10 +2153,11 @@ func (s *GoogleCloudMlV1__ManualScaling) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudMlV1__Measurement: A message representing a Measurement.
+// GoogleCloudMlV1__Measurement: A message representing a measurement.
 type GoogleCloudMlV1__Measurement struct {
-	// ElapsedTime: Time that the Trial has been running at the point of
-	// this Measurement.
+	// ElapsedTime: Output only. Time that the trial has been running at the
+	// point of
+	// this measurement.
 	ElapsedTime string `json:"elapsedTime,omitempty"`
 
 	// Metrics: Provides a list of metrics that act as inputs into the
@@ -2995,7 +2998,7 @@ type GoogleCloudMlV1__StopTrialRequest struct {
 
 // GoogleCloudMlV1__Study: A message representing a Study.
 type GoogleCloudMlV1__Study struct {
-	// CreateTime: Output only. Time that the study was created.
+	// CreateTime: Output only. Time at which the study was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// InactiveReason: Output only. A human readable reason why the Study is
@@ -3065,6 +3068,7 @@ type GoogleCloudMlV1__StudyConfig struct {
 	// unpromising Trials.
 	AutomatedStoppingConfig *GoogleCloudMlV1__AutomatedStoppingConfig `json:"automatedStoppingConfig,omitempty"`
 
+	// Metrics: Metric specs for the study.
 	Metrics []*GoogleCloudMlV1StudyConfigMetricSpec `json:"metrics,omitempty"`
 
 	// Parameters: Required. The set of parameters to tune.
@@ -3176,10 +3180,10 @@ func (s *GoogleCloudMlV1__SuggestTrialsRequest) MarshalJSON() ([]byte, error) {
 // in the response field of a completed
 // google.longrunning.Operation associated with a SuggestTrials request.
 type GoogleCloudMlV1__SuggestTrialsResponse struct {
-	// EndTime: The time operation processing completed.
+	// EndTime: The time at which operation processing completed.
 	EndTime string `json:"endTime,omitempty"`
 
-	// StartTime: The time operation was started.
+	// StartTime: The time at which the operation was started.
 	StartTime string `json:"startTime,omitempty"`
 
 	// StudyState: The state of the study.
@@ -3193,7 +3197,7 @@ type GoogleCloudMlV1__SuggestTrialsResponse struct {
 	// or max_trial_count is reached.
 	StudyState string `json:"studyState,omitempty"`
 
-	// Trials: A list of Trials.
+	// Trials: A list of trials.
 	Trials []*GoogleCloudMlV1__Trial `json:"trials,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
@@ -3229,19 +3233,30 @@ func (s *GoogleCloudMlV1__SuggestTrialsResponse) MarshalJSON() ([]byte, error) {
 // [submitting
 // a training job](/ai-platform/training/docs/training-jobs).
 type GoogleCloudMlV1__TrainingInput struct {
-	// Args: Optional. Arguments passed to the training.
-	// - If it is a python package training:
-	//   It will be passed as command line argument to the program.
-	// - If it is a custom container training,
-	//   It will be passed as an argument to the custom container
-	//   image.
+	// Args: Optional. Command-line arguments passed to the training
+	// application when it
+	// starts. If your job uses a custom container, then the arguments are
+	// passed
+	// to the container's <a class="external"
+	// target="_blank"
+	// href="https://docs.docker.com/engine/reference/builder
+	// /#entrypoint">
+	// `ENTRYPOINT`</a> command.
 	Args []string `json:"args,omitempty"`
 
-	// EncryptionConfig: Custom encryption key options for a training job.
-	// If this is set,
-	// then all resources created by the training job will be encrypted with
+	// EncryptionConfig: Optional. Options for using customer-managed
+	// encryption keys (CMEK) to
+	// protect resources created by a training job, instead of using
+	// Google's
+	// default encryption. If this is set, then all resources created by
 	// the
-	// provided encryption key.
+	// training job will be encrypted with the customer-managed encryption
+	// key
+	// that you specify.
+	//
+	// [Learn how and when to use CMEK with AI
+	// Platform
+	// Training](/ai-platform/training/docs/cmek).
 	EncryptionConfig *GoogleCloudMlV1__EncryptionConfig `json:"encryptionConfig,omitempty"`
 
 	// EvaluatorConfig: Optional. The configuration for evaluators.
@@ -3257,8 +3272,8 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// Set `evaluatorConfig.imageUri` only if you build a custom image
 	// for
 	// your evaluator. If `evaluatorConfig.imageUri` has not been
-	// set, AI Platform uses the value of `masterConfig.imageUri` .
-	// Learn more about [configuring
+	// set, AI Platform uses the value of `masterConfig.imageUri`. Learn
+	// more about [configuring
 	// custom
 	// containers](/ai-platform/training/docs/distributed-training-con
 	// tainers).
@@ -3416,8 +3431,8 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// for
 	// your parameter server. If `parameterServerConfig.imageUri` has not
 	// been
-	// set, AI Platform uses the value of `masterConfig.imageUri` .
-	// Learn more about [configuring
+	// set, AI Platform uses the value of `masterConfig.imageUri`. Learn
+	// more about [configuring
 	// custom
 	// containers](/ai-platform/training/docs/distributed-training-con
 	// tainers).
@@ -3581,8 +3596,7 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// your
 	// worker. If `workerConfig.imageUri` has not been set, AI Platform
 	// uses
-	// the value of `masterConfig.imageUri` .
-	// Learn more about [configuring
+	// the value of `masterConfig.imageUri`. Learn more about [configuring
 	// custom
 	// containers](/ai-platform/training/docs/distributed-training-con
 	// tainers).
@@ -3724,21 +3738,22 @@ func (s *GoogleCloudMlV1__TrainingOutput) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleCloudMlV1__Trial: A message representing a Trial.
+// GoogleCloudMlV1__Trial: A message representing a trial.
 type GoogleCloudMlV1__Trial struct {
 	// ClientId: Output only. The identifier of the client that originally
 	// requested this trial.
 	ClientId string `json:"clientId,omitempty"`
 
-	// EndTime: Output only. Time the Trial's status changed to COMPLETED.
+	// EndTime: Output only. Time at which the trial's status changed to
+	// COMPLETED.
 	EndTime string `json:"endTime,omitempty"`
 
-	// FinalMeasurement: The final Measurement containing the objective
+	// FinalMeasurement: The final measurement containing the objective
 	// value.
 	FinalMeasurement *GoogleCloudMlV1__Measurement `json:"finalMeasurement,omitempty"`
 
 	// InfeasibleReason: Output only. A human readable string describing why
-	// the Trial is
+	// the trial is
 	// infeasible. This should only be set if trial_infeasible is true.
 	InfeasibleReason string `json:"infeasibleReason,omitempty"`
 
@@ -3751,29 +3766,29 @@ type GoogleCloudMlV1__Trial struct {
 	// Name: Output only. Name of the trial assigned by the service.
 	Name string `json:"name,omitempty"`
 
-	// Parameters: The parameters of the Trial.
+	// Parameters: The parameters of the trial.
 	Parameters []*GoogleCloudMlV1TrialParameter `json:"parameters,omitempty"`
 
-	// StartTime: Output only. Time the Trial was started.
+	// StartTime: Output only. Time at which the trial was started.
 	StartTime string `json:"startTime,omitempty"`
 
 	// State: The detailed state of a trial.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The trial state is unspecified.
-	//   "REQUESTED" - Indicates that a specific Trial has been requested,
+	//   "REQUESTED" - Indicates that a specific trial has been requested,
 	// but it has not yet
 	// been suggested by the service.
-	//   "ACTIVE" - Indicates that the Trial has been suggested.
-	//   "COMPLETED" - Indicates that the Trial is done, and either has a
+	//   "ACTIVE" - Indicates that the trial has been suggested.
+	//   "COMPLETED" - Indicates that the trial is done, and either has a
 	// final_measurement
 	// set, or is marked as trial_infeasible.
-	//   "STOPPING" - Indicates that the Trial should stop according to the
+	//   "STOPPING" - Indicates that the trial should stop according to the
 	// service.
 	State string `json:"state,omitempty"`
 
-	// TrialInfeasible: Output only. True if the parameters in this trial
-	// should not be attempted again.
+	// TrialInfeasible: Output only. If true, the parameters in this trial
+	// are not attempted again.
 	TrialInfeasible bool `json:"trialInfeasible,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5078,7 +5093,7 @@ func (c *ProjectsExplainCall) Header() http.Header {
 
 func (c *ProjectsExplainCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5233,7 +5248,7 @@ func (c *ProjectsGetConfigCall) Header() http.Header {
 
 func (c *ProjectsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5373,7 +5388,7 @@ func (c *ProjectsPredictCall) Header() http.Header {
 
 func (c *ProjectsPredictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5518,7 +5533,7 @@ func (c *ProjectsJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5658,7 +5673,7 @@ func (c *ProjectsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5807,7 +5822,7 @@ func (c *ProjectsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5973,7 +5988,7 @@ func (c *ProjectsJobsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6170,7 +6185,7 @@ func (c *ProjectsJobsListCall) Header() http.Header {
 
 func (c *ProjectsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6375,7 +6390,7 @@ func (c *ProjectsJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6526,7 +6541,7 @@ func (c *ProjectsJobsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6676,7 +6691,7 @@ func (c *ProjectsJobsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsJobsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6828,7 +6843,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6997,7 +7012,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7181,7 +7196,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7326,7 +7341,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7469,7 +7484,7 @@ func (c *ProjectsLocationsStudiesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7612,7 +7627,7 @@ func (c *ProjectsLocationsStudiesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7753,7 +7768,7 @@ func (c *ProjectsLocationsStudiesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7897,7 +7912,7 @@ func (c *ProjectsLocationsStudiesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7999,8 +8014,8 @@ type ProjectsLocationsStudiesTrialsAddMeasurementCall struct {
 }
 
 // AddMeasurement: Adds a measurement of the objective metrics to a
-// Trial. This measurement
-// is assumed to have been taken before the Trial is complete.
+// trial. This measurement
+// is assumed to have been taken before the trial is complete.
 func (r *ProjectsLocationsStudiesTrialsService) AddMeasurement(name string, googlecloudmlv1__addtrialmeasurementrequest *GoogleCloudMlV1__AddTrialMeasurementRequest) *ProjectsLocationsStudiesTrialsAddMeasurementCall {
 	c := &ProjectsLocationsStudiesTrialsAddMeasurementCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8035,7 +8050,7 @@ func (c *ProjectsLocationsStudiesTrialsAddMeasurementCall) Header() http.Header 
 
 func (c *ProjectsLocationsStudiesTrialsAddMeasurementCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8099,7 +8114,7 @@ func (c *ProjectsLocationsStudiesTrialsAddMeasurementCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds a measurement of the objective metrics to a Trial. This measurement\nis assumed to have been taken before the Trial is complete.",
+	//   "description": "Adds a measurement of the objective metrics to a trial. This measurement\nis assumed to have been taken before the trial is complete.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}:addMeasurement",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.locations.studies.trials.addMeasurement",
@@ -8140,7 +8155,11 @@ type ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall struct {
 	header_                                              http.Header
 }
 
-// CheckEarlyStoppingState: Checks whether a trial should stop or not.
+// CheckEarlyStoppingState: Checks  whether a trial should stop or not.
+// Returns a
+// long-running operation. When the operation is successful,
+// it will contain a
+// CheckTrialEarlyStoppingStateResponse.
 func (r *ProjectsLocationsStudiesTrialsService) CheckEarlyStoppingState(name string, googlecloudmlv1__checktrialearlystoppingstaterequest *GoogleCloudMlV1__CheckTrialEarlyStoppingStateRequest) *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall {
 	c := &ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8175,7 +8194,7 @@ func (c *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall) Header() htt
 
 func (c *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8239,7 +8258,7 @@ func (c *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Checks whether a trial should stop or not.",
+	//   "description": "Checks  whether a trial should stop or not. Returns a\nlong-running operation. When the operation is successful,\nit will contain a\nCheckTrialEarlyStoppingStateResponse.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}:checkEarlyStoppingState",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.locations.studies.trials.checkEarlyStoppingState",
@@ -8280,7 +8299,7 @@ type ProjectsLocationsStudiesTrialsCompleteCall struct {
 	header_                               http.Header
 }
 
-// Complete: Marks a Trial as complete.
+// Complete: Marks a trial as complete.
 func (r *ProjectsLocationsStudiesTrialsService) Complete(name string, googlecloudmlv1__completetrialrequest *GoogleCloudMlV1__CompleteTrialRequest) *ProjectsLocationsStudiesTrialsCompleteCall {
 	c := &ProjectsLocationsStudiesTrialsCompleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8315,7 +8334,7 @@ func (c *ProjectsLocationsStudiesTrialsCompleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsCompleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8379,7 +8398,7 @@ func (c *ProjectsLocationsStudiesTrialsCompleteCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Marks a Trial as complete.",
+	//   "description": "Marks a trial as complete.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}:complete",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.locations.studies.trials.complete",
@@ -8388,7 +8407,7 @@ func (c *ProjectsLocationsStudiesTrialsCompleteCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The trial name.",
+	//       "description": "Required. The trial name.metat",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+/trials/[^/]+$",
 	//       "required": true,
@@ -8420,7 +8439,7 @@ type ProjectsLocationsStudiesTrialsCreateCall struct {
 	header_                http.Header
 }
 
-// Create: Adds a user provided trial to a Study.
+// Create: Adds a user provided trial to a study.
 func (r *ProjectsLocationsStudiesTrialsService) Create(parent string, googlecloudmlv1__trial *GoogleCloudMlV1__Trial) *ProjectsLocationsStudiesTrialsCreateCall {
 	c := &ProjectsLocationsStudiesTrialsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8455,7 +8474,7 @@ func (c *ProjectsLocationsStudiesTrialsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8519,7 +8538,7 @@ func (c *ProjectsLocationsStudiesTrialsCreateCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds a user provided trial to a Study.",
+	//   "description": "Adds a user provided trial to a study.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.locations.studies.trials.create",
@@ -8559,7 +8578,7 @@ type ProjectsLocationsStudiesTrialsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a Trial.
+// Delete: Deletes a trial.
 func (r *ProjectsLocationsStudiesTrialsService) Delete(name string) *ProjectsLocationsStudiesTrialsDeleteCall {
 	c := &ProjectsLocationsStudiesTrialsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8593,7 +8612,7 @@ func (c *ProjectsLocationsStudiesTrialsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8652,7 +8671,7 @@ func (c *ProjectsLocationsStudiesTrialsDeleteCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a Trial.",
+	//   "description": "Deletes a trial.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "ml.projects.locations.studies.trials.delete",
@@ -8690,7 +8709,7 @@ type ProjectsLocationsStudiesTrialsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a Trial.
+// Get: Gets a trial.
 func (r *ProjectsLocationsStudiesTrialsService) Get(name string) *ProjectsLocationsStudiesTrialsGetCall {
 	c := &ProjectsLocationsStudiesTrialsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8734,7 +8753,7 @@ func (c *ProjectsLocationsStudiesTrialsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8796,7 +8815,7 @@ func (c *ProjectsLocationsStudiesTrialsGetCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a Trial.",
+	//   "description": "Gets a trial.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.locations.studies.trials.get",
@@ -8834,7 +8853,7 @@ type ProjectsLocationsStudiesTrialsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the trials associated with a Study.
+// List: Lists the trials associated with a study.
 func (r *ProjectsLocationsStudiesTrialsService) List(parent string) *ProjectsLocationsStudiesTrialsListCall {
 	c := &ProjectsLocationsStudiesTrialsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8878,7 +8897,7 @@ func (c *ProjectsLocationsStudiesTrialsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8941,7 +8960,7 @@ func (c *ProjectsLocationsStudiesTrialsListCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the trials associated with a Study.",
+	//   "description": "Lists the trials associated with a study.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.locations.studies.trials.list",
@@ -9014,7 +9033,7 @@ func (c *ProjectsLocationsStudiesTrialsStopCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9119,9 +9138,12 @@ type ProjectsLocationsStudiesTrialsSuggestCall struct {
 	header_                               http.Header
 }
 
-// Suggest: Returns a long-running operation associated with the
-// generation of trial
-// suggestions.
+// Suggest: Adds one or more trials to a study, with parameter
+// values
+// suggested by AI Platform Optimizer. Returns a long-running
+// operation associated with the generation of trial suggestions.
+// When this long-running operation succeeds, it will contain
+// a SuggestTrialsResponse.
 func (r *ProjectsLocationsStudiesTrialsService) Suggest(parent string, googlecloudmlv1__suggesttrialsrequest *GoogleCloudMlV1__SuggestTrialsRequest) *ProjectsLocationsStudiesTrialsSuggestCall {
 	c := &ProjectsLocationsStudiesTrialsSuggestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9156,7 +9178,7 @@ func (c *ProjectsLocationsStudiesTrialsSuggestCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsSuggestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9220,7 +9242,7 @@ func (c *ProjectsLocationsStudiesTrialsSuggestCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a long-running operation associated with the generation of trial\nsuggestions.",
+	//   "description": "Adds one or more trials to a study, with parameter values\nsuggested by AI Platform Optimizer. Returns a long-running\noperation associated with the generation of trial suggestions.\nWhen this long-running operation succeeds, it will contain\na SuggestTrialsResponse.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials:suggest",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.locations.studies.trials.suggest",
@@ -9302,7 +9324,7 @@ func (c *ProjectsModelsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9445,7 +9467,7 @@ func (c *ProjectsModelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9590,7 +9612,7 @@ func (c *ProjectsModelsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9756,7 +9778,7 @@ func (c *ProjectsModelsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9944,7 +9966,7 @@ func (c *ProjectsModelsListCall) Header() http.Header {
 
 func (c *ProjectsModelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10147,7 +10169,7 @@ func (c *ProjectsModelsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10298,7 +10320,7 @@ func (c *ProjectsModelsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10448,7 +10470,7 @@ func (c *ProjectsModelsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsModelsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10602,7 +10624,7 @@ func (c *ProjectsModelsVersionsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10748,7 +10770,7 @@ func (c *ProjectsModelsVersionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10896,7 +10918,7 @@ func (c *ProjectsModelsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11080,7 +11102,7 @@ func (c *ProjectsModelsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11288,7 +11310,7 @@ func (c *ProjectsModelsVersionsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11445,7 +11467,7 @@ func (c *ProjectsModelsVersionsSetDefaultCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsSetDefaultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11600,7 +11622,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11745,7 +11767,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11926,7 +11948,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

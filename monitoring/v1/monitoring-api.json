@@ -275,7 +275,7 @@
       }
     }
   },
-  "revision": "20200329",
+  "revision": "20200416",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -980,6 +980,10 @@
         "pickTimeSeriesFilter": {
           "$ref": "PickTimeSeriesFilter",
           "description": "Ranking based time series filter."
+        },
+        "secondaryAggregation": {
+          "$ref": "Aggregation",
+          "description": "Apply a second aggregation after aggregation is applied."
         }
       },
       "type": "object"

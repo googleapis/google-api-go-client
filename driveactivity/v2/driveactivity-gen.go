@@ -1348,7 +1348,7 @@ type QueryDriveActivityRequest struct {
 
 	// ConsolidationStrategy: Details on how to consolidate related actions
 	// that make up the activity. If
-	// not set, then related actions will not be consolidated.
+	// not set, then related actions are not consolidated.
 	ConsolidationStrategy *ConsolidationStrategy `json:"consolidationStrategy,omitempty"`
 
 	// Filter: The filtering for items returned from this query request. The
@@ -1382,9 +1382,9 @@ type QueryDriveActivityRequest struct {
 	// "items/ITEM_ID".
 	ItemName string `json:"itemName,omitempty"`
 
-	// PageSize: The requested number of activity to return. If not set, a
+	// PageSize: The requested number of activities to return. If not set, a
 	// default value
-	// will be used.
+	// is used.
 	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: The next_page_token value returned from a previous
@@ -1929,7 +1929,7 @@ func (c *ActivityQueryCall) Header() http.Header {
 
 func (c *ActivityQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

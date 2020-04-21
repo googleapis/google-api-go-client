@@ -183,13 +183,6 @@ type Empty struct {
 // cross-site scripting (XSS) vulnerability in an App Engine application
 // is a
 // finding.
-//
-// When adding a new field hidden behind a visibility label, ensure it
-// is also
-// hidden from
-// Notifications:
-// http://google3/java/com/google/cloud/security/riskdashb
-// oard/notification/actions/streaming/FindingTranslator.java?l=26
 type Finding struct {
 	// Category: The additional taxonomy group within findings from a given
 	// source.
@@ -1170,7 +1163,7 @@ func (c *OrganizationsOperationsCancelCall) Header() http.Header {
 
 func (c *OrganizationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1306,7 +1299,7 @@ func (c *OrganizationsOperationsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1451,7 +1444,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1632,7 +1625,7 @@ func (c *OrganizationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

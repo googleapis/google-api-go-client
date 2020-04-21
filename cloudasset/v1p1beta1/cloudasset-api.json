@@ -133,7 +133,7 @@
               "type": "string"
             },
             "scope": {
-              "description": "Required. The relative name of an asset. The search is limited to the resources\nwithin the `scope`. The allowed value must be:\n* Organization number (such as \"organizations/123\")\n* Folder number(such as \"folders/1234\")\n* Project number (such as \"projects/12345\")",
+              "description": "Required. The relative name of an asset. The search is limited to the resources\nwithin the `scope`. The allowed value must be:\n* Organization number (such as \"organizations/123\")\n* Folder number(such as \"folders/1234\")\n* Project number (such as \"projects/12345\")\n* Project id (such as \"projects/abc\")",
               "location": "path",
               "pattern": "^[^/]+/[^/]+$",
               "required": true,
@@ -189,7 +189,7 @@
               "type": "string"
             },
             "scope": {
-              "description": "Required. The relative name of an asset. The search is limited to the resources\nwithin the `scope`. The allowed value must be:\n* Organization number (such as \"organizations/123\")\n* Folder number(such as \"folders/1234\")\n* Project number (such as \"projects/12345\")",
+              "description": "Required. The relative name of an asset. The search is limited to the resources\nwithin the `scope`. The allowed value must be:\n* Organization number (such as \"organizations/123\")\n* Folder number(such as \"folders/1234\")\n* Project number (such as \"projects/12345\")\n* Project id (such as \"projects/abc\")",
               "location": "path",
               "pattern": "^[^/]+/[^/]+$",
               "required": true,
@@ -207,7 +207,7 @@
       }
     }
   },
-  "revision": "20200403",
+  "revision": "20200410",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "AuditConfig": {

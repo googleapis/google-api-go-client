@@ -185,7 +185,7 @@
     "services": {
       "methods": {
         "create": {
-          "description": "Creates a new managed service.\nPlease note one producer project can own no more than 20 services.\n\nOperation\u003cresponse: ManagedService\u003e",
+          "description": "Creates a new managed service.\n\nA managed service is immutable, and is subject to mandatory 30-day\ndata retention. You cannot move a service or recreate it within 30 days\nafter deletion.\n\nOne producer project can own no more than 500 services. For security and\nreliability purposes, a production service should be hosted in a\ndedicated producer project.\n\nOperation\u003cresponse: ManagedService\u003e",
           "flatPath": "v1/services",
           "httpMethod": "POST",
           "id": "servicemanagement.services.create",
@@ -877,7 +877,7 @@
       }
     }
   },
-  "revision": "20200406",
+  "revision": "20200411",
   "rootUrl": "https://servicemanagement.googleapis.com/",
   "schemas": {
     "Advice": {

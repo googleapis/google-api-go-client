@@ -11,35 +11,61 @@
       }
     }
   },
-  "basePath": "/blogger/v3/",
-  "baseUrl": "https://www.googleapis.com/blogger/v3/",
-  "batchPath": "batch/blogger/v3",
-  "description": "API for access to the data within Blogger.",
+  "basePath": "",
+  "baseUrl": "https://blogger.googleapis.com/",
+  "batchPath": "batch",
+  "canonicalName": "Blogger",
+  "description": "The Blogger API provides access to posts, comments and pages of a\n    Blogger blog.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/blogger/docs/3.0/getting_started",
-  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/ZujdoJRm6kuBsmre3ZNQniFSnUA\"",
+  "fullyEncodeReservedExpansion": true,
   "icons": {
-    "x16": "https://www.google.com/images/icons/product/blogger-16.png",
-    "x32": "https://www.google.com/images/icons/product/blogger-32.png"
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
   },
   "id": "blogger:v3",
   "kind": "discovery#restDescription",
-  "labels": [
-    "limited_availability"
-  ],
+  "mtlsRootUrl": "https://blogger.mtls.googleapis.com/",
   "name": "blogger",
   "ownerDomain": "google.com",
   "ownerName": "Google",
   "parameters": {
-    "alt": {
-      "default": "json",
-      "description": "Data format for the response.",
+    "$.xgafv": {
+      "description": "V1 error format.",
       "enum": [
-        "json"
+        "1",
+        "2"
       ],
       "enumDescriptions": [
-        "Responses with Content-Type of application/json"
+        "v1 error format",
+        "v2 error format"
       ],
+      "location": "query",
+      "type": "string"
+    },
+    "access_token": {
+      "description": "OAuth access token.",
+      "location": "query",
+      "type": "string"
+    },
+    "alt": {
+      "default": "json",
+      "description": "Data format for response.",
+      "enum": [
+        "json",
+        "media",
+        "proto"
+      ],
+      "enumDescriptions": [
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf"
+      ],
+      "location": "query",
+      "type": "string"
+    },
+    "callback": {
+      "description": "JSONP",
       "location": "query",
       "type": "string"
     },
@@ -65,12 +91,17 @@
       "type": "boolean"
     },
     "quotaUser": {
-      "description": "An opaque string that represents a user for quota purposes. Must not exceed 40 characters.",
+      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
       "location": "query",
       "type": "string"
     },
-    "userIp": {
-      "description": "Deprecated. Please use quotaUser instead.",
+    "uploadType": {
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      "location": "query",
+      "type": "string"
+    },
+    "upload_protocol": {
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
       "location": "query",
       "type": "string"
     }
@@ -80,7 +111,8 @@
     "blogUserInfos": {
       "methods": {
         "get": {
-          "description": "Gets one blog and user info pair by blogId and userId.",
+          "description": "Gets one blog and user info pair by blog id and user id.",
+          "flatPath": "v3/users/{userId}/blogs/{blogId}",
           "httpMethod": "GET",
           "id": "blogger.blogUserInfos.get",
           "parameterOrder": [
@@ -89,25 +121,22 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "The ID of the blog to get.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "maxPosts": {
-              "description": "Maximum number of posts to pull back with the blog.",
               "format": "uint32",
               "location": "query",
               "type": "integer"
             },
             "userId": {
-              "description": "ID of the user whose blogs are to be fetched. Either the word 'self' or the user's profile identifier.",
               "location": "path",
               "required": true,
               "type": "string"
             }
           },
-          "path": "users/{userId}/blogs/{blogId}",
+          "path": "v3/users/{userId}/blogs/{blogId}",
           "response": {
             "$ref": "BlogUserInfo"
           },
@@ -121,7 +150,8 @@
     "blogs": {
       "methods": {
         "get": {
-          "description": "Gets one blog by ID.",
+          "description": "Gets a blog by id.",
+          "flatPath": "v3/blogs/{blogId}",
           "httpMethod": "GET",
           "id": "blogger.blogs.get",
           "parameterOrder": [
@@ -129,34 +159,27 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "The ID of the blog to get.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "maxPosts": {
-              "description": "Maximum number of posts to pull back with the blog.",
               "format": "uint32",
               "location": "query",
               "type": "integer"
             },
             "view": {
-              "description": "Access level with which to view the blog. Note that some fields require elevated access.",
               "enum": [
-                "ADMIN",
+                "VIEW_TYPE_UNSPECIFIED",
+                "READER",
                 "AUTHOR",
-                "READER"
-              ],
-              "enumDescriptions": [
-                "Admin level detail.",
-                "Author level detail.",
-                "Reader level detail."
+                "ADMIN"
               ],
               "location": "query",
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}",
+          "path": "v3/blogs/{blogId}",
           "response": {
             "$ref": "Blog"
           },
@@ -166,7 +189,8 @@
           ]
         },
         "getByUrl": {
-          "description": "Retrieve a Blog by URL.",
+          "description": "Gets a blog by url.",
+          "flatPath": "v3/blogs/byurl",
           "httpMethod": "GET",
           "id": "blogger.blogs.getByUrl",
           "parameterOrder": [
@@ -174,28 +198,22 @@
           ],
           "parameters": {
             "url": {
-              "description": "The URL of the blog to retrieve.",
               "location": "query",
               "required": true,
               "type": "string"
             },
             "view": {
-              "description": "Access level with which to view the blog. Note that some fields require elevated access.",
               "enum": [
-                "ADMIN",
+                "VIEW_TYPE_UNSPECIFIED",
+                "READER",
                 "AUTHOR",
-                "READER"
-              ],
-              "enumDescriptions": [
-                "Admin level detail.",
-                "Author level detail.",
-                "Reader level detail."
+                "ADMIN"
               ],
               "location": "query",
               "type": "string"
             }
           },
-          "path": "blogs/byurl",
+          "path": "v3/blogs/byurl",
           "response": {
             "$ref": "Blog"
           },
@@ -205,7 +223,8 @@
           ]
         },
         "listByUser": {
-          "description": "Retrieves a list of blogs, possibly filtered.",
+          "description": "Lists blogs by user.",
+          "flatPath": "v3/users/{userId}/blogs",
           "httpMethod": "GET",
           "id": "blogger.blogs.listByUser",
           "parameterOrder": [
@@ -213,21 +232,15 @@
           ],
           "parameters": {
             "fetchUserInfo": {
-              "description": "Whether the response is a list of blogs with per-user information instead of just blogs.",
               "location": "query",
               "type": "boolean"
             },
             "role": {
-              "description": "User access types for blogs to include in the results, e.g. AUTHOR will return blogs where the user has author level access. If no roles are specified, defaults to ADMIN and AUTHOR roles.",
               "enum": [
-                "ADMIN",
+                "VIEW_TYPE_UNSPECIFIED",
+                "READER",
                 "AUTHOR",
-                "READER"
-              ],
-              "enumDescriptions": [
-                "Admin role - Blogs where the user has Admin level access.",
-                "Author role - Blogs where the user has Author level access.",
-                "Reader role - Blogs where the user has Reader level access (to a private blog)."
+                "ADMIN"
               ],
               "location": "query",
               "repeated": true,
@@ -235,42 +248,32 @@
             },
             "status": {
               "default": "LIVE",
-              "description": "Blog statuses to include in the result (default: Live blogs only). Note that ADMIN access is required to view deleted blogs.",
+              "description": "Default value of status is LIVE.",
               "enum": [
-                "DELETED",
-                "LIVE"
-              ],
-              "enumDescriptions": [
-                "Blog has been deleted by an administrator.",
-                "Blog is currently live."
+                "LIVE",
+                "DELETED"
               ],
               "location": "query",
               "repeated": true,
               "type": "string"
             },
             "userId": {
-              "description": "ID of the user whose blogs are to be fetched. Either the word 'self' or the user's profile identifier.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "view": {
-              "description": "Access level with which to view the blogs. Note that some fields require elevated access.",
               "enum": [
-                "ADMIN",
+                "VIEW_TYPE_UNSPECIFIED",
+                "READER",
                 "AUTHOR",
-                "READER"
-              ],
-              "enumDescriptions": [
-                "Admin level detail.",
-                "Author level detail.",
-                "Reader level detail."
+                "ADMIN"
               ],
               "location": "query",
               "type": "string"
             }
           },
-          "path": "users/{userId}/blogs",
+          "path": "v3/users/{userId}/blogs",
           "response": {
             "$ref": "BlogList"
           },
@@ -284,7 +287,8 @@
     "comments": {
       "methods": {
         "approve": {
-          "description": "Marks a comment as not spam.",
+          "description": "Marks a comment as not spam by blog id, post id and comment id.",
+          "flatPath": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}/approve",
           "httpMethod": "POST",
           "id": "blogger.comments.approve",
           "parameterOrder": [
@@ -294,25 +298,22 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "The ID of the Blog.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "commentId": {
-              "description": "The ID of the comment to mark as not spam.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "postId": {
-              "description": "The ID of the Post.",
               "location": "path",
               "required": true,
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/posts/{postId}/comments/{commentId}/approve",
+          "path": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}/approve",
           "response": {
             "$ref": "Comment"
           },
@@ -321,7 +322,8 @@
           ]
         },
         "delete": {
-          "description": "Delete a comment by ID.",
+          "description": "Deletes a comment by blog id, post id and comment id.",
+          "flatPath": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}",
           "httpMethod": "DELETE",
           "id": "blogger.comments.delete",
           "parameterOrder": [
@@ -331,31 +333,29 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "The ID of the Blog.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "commentId": {
-              "description": "The ID of the comment to delete.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "postId": {
-              "description": "The ID of the Post.",
               "location": "path",
               "required": true,
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/posts/{postId}/comments/{commentId}",
+          "path": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}",
           "scopes": [
             "https://www.googleapis.com/auth/blogger"
           ]
         },
         "get": {
-          "description": "Gets one comment by ID.",
+          "description": "Gets a comment by id.",
+          "flatPath": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}",
           "httpMethod": "GET",
           "id": "blogger.comments.get",
           "parameterOrder": [
@@ -365,40 +365,32 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "ID of the blog to containing the comment.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "commentId": {
-              "description": "The ID of the comment to get.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "postId": {
-              "description": "ID of the post to fetch posts from.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "view": {
-              "description": "Access level for the requested comment (default: READER). Note that some comments will require elevated permissions, for example comments where the parent posts which is in a draft state, or comments that are pending moderation.",
               "enum": [
-                "ADMIN",
+                "VIEW_TYPE_UNSPECIFIED",
+                "READER",
                 "AUTHOR",
-                "READER"
-              ],
-              "enumDescriptions": [
-                "Admin level detail",
-                "Author level detail",
-                "Admin level detail"
+                "ADMIN"
               ],
               "location": "query",
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/posts/{postId}/comments/{commentId}",
+          "path": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}",
           "response": {
             "$ref": "Comment"
           },
@@ -408,7 +400,8 @@
           ]
         },
         "list": {
-          "description": "Retrieves the comments for a post, possibly filtered.",
+          "description": "Lists comments.",
+          "flatPath": "v3/blogs/{blogId}/posts/{postId}/comments",
           "httpMethod": "GET",
           "id": "blogger.comments.list",
           "parameterOrder": [
@@ -417,79 +410,58 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "ID of the blog to fetch comments from.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "endDate": {
-              "description": "Latest date of comment to fetch, a date-time with RFC 3339 formatting.",
-              "format": "date-time",
               "location": "query",
               "type": "string"
             },
             "fetchBodies": {
-              "description": "Whether the body content of the comments is included.",
               "location": "query",
               "type": "boolean"
             },
             "maxResults": {
-              "description": "Maximum number of comments to include in the result.",
               "format": "uint32",
               "location": "query",
               "type": "integer"
             },
             "pageToken": {
-              "description": "Continuation token if request is paged.",
               "location": "query",
               "type": "string"
             },
             "postId": {
-              "description": "ID of the post to fetch posts from.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "startDate": {
-              "description": "Earliest date of comment to fetch, a date-time with RFC 3339 formatting.",
-              "format": "date-time",
               "location": "query",
               "type": "string"
             },
             "status": {
               "enum": [
-                "emptied",
-                "live",
-                "pending",
-                "spam"
-              ],
-              "enumDescriptions": [
-                "Comments that have had their content removed",
-                "Comments that are publicly visible",
-                "Comments that are awaiting administrator approval",
-                "Comments marked as spam by the administrator"
+                "LIVE",
+                "EMPTIED",
+                "PENDING",
+                "SPAM"
               ],
               "location": "query",
-              "repeated": true,
               "type": "string"
             },
             "view": {
-              "description": "Access level with which to view the returned result. Note that some fields require elevated access.",
               "enum": [
-                "ADMIN",
+                "VIEW_TYPE_UNSPECIFIED",
+                "READER",
                 "AUTHOR",
-                "READER"
-              ],
-              "enumDescriptions": [
-                "Admin level detail",
-                "Author level detail",
-                "Reader level detail"
+                "ADMIN"
               ],
               "location": "query",
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/posts/{postId}/comments",
+          "path": "v3/blogs/{blogId}/posts/{postId}/comments",
           "response": {
             "$ref": "CommentList"
           },
@@ -499,7 +471,8 @@
           ]
         },
         "listByBlog": {
-          "description": "Retrieves the comments for a blog, across all posts, possibly filtered.",
+          "description": "Lists comments by blog.",
+          "flatPath": "v3/blogs/{blogId}/comments",
           "httpMethod": "GET",
           "id": "blogger.comments.listByBlog",
           "parameterOrder": [
@@ -507,58 +480,44 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "ID of the blog to fetch comments from.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "endDate": {
-              "description": "Latest date of comment to fetch, a date-time with RFC 3339 formatting.",
-              "format": "date-time",
               "location": "query",
               "type": "string"
             },
             "fetchBodies": {
-              "description": "Whether the body content of the comments is included.",
               "location": "query",
               "type": "boolean"
             },
             "maxResults": {
-              "description": "Maximum number of comments to include in the result.",
               "format": "uint32",
               "location": "query",
               "type": "integer"
             },
             "pageToken": {
-              "description": "Continuation token if request is paged.",
               "location": "query",
               "type": "string"
             },
             "startDate": {
-              "description": "Earliest date of comment to fetch, a date-time with RFC 3339 formatting.",
-              "format": "date-time",
               "location": "query",
               "type": "string"
             },
             "status": {
               "enum": [
-                "emptied",
-                "live",
-                "pending",
-                "spam"
-              ],
-              "enumDescriptions": [
-                "Comments that have had their content removed",
-                "Comments that are publicly visible",
-                "Comments that are awaiting administrator approval",
-                "Comments marked as spam by the administrator"
+                "LIVE",
+                "EMPTIED",
+                "PENDING",
+                "SPAM"
               ],
               "location": "query",
               "repeated": true,
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/comments",
+          "path": "v3/blogs/{blogId}/comments",
           "response": {
             "$ref": "CommentList"
           },
@@ -568,7 +527,8 @@
           ]
         },
         "markAsSpam": {
-          "description": "Marks a comment as spam.",
+          "description": "Marks a comment as spam by blog id, post id and comment id.",
+          "flatPath": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}/spam",
           "httpMethod": "POST",
           "id": "blogger.comments.markAsSpam",
           "parameterOrder": [
@@ -578,25 +538,22 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "The ID of the Blog.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "commentId": {
-              "description": "The ID of the comment to mark as spam.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "postId": {
-              "description": "The ID of the Post.",
               "location": "path",
               "required": true,
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/posts/{postId}/comments/{commentId}/spam",
+          "path": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}/spam",
           "response": {
             "$ref": "Comment"
           },
@@ -605,7 +562,8 @@
           ]
         },
         "removeContent": {
-          "description": "Removes the content of a comment.",
+          "description": "Removes the content of a comment by blog id, post id and comment id.",
+          "flatPath": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}/removecontent",
           "httpMethod": "POST",
           "id": "blogger.comments.removeContent",
           "parameterOrder": [
@@ -615,25 +573,22 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "The ID of the Blog.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "commentId": {
-              "description": "The ID of the comment to delete content from.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "postId": {
-              "description": "The ID of the Post.",
               "location": "path",
               "required": true,
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/posts/{postId}/comments/{commentId}/removecontent",
+          "path": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}/removecontent",
           "response": {
             "$ref": "Comment"
           },
@@ -646,7 +601,8 @@
     "pageViews": {
       "methods": {
         "get": {
-          "description": "Retrieve pageview stats for a Blog.",
+          "description": "Gets page views by blog id.",
+          "flatPath": "v3/blogs/{blogId}/pageviews",
           "httpMethod": "GET",
           "id": "blogger.pageViews.get",
           "parameterOrder": [
@@ -654,28 +610,22 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "The ID of the blog to get.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "range": {
               "enum": [
+                "all",
                 "30DAYS",
-                "7DAYS",
-                "all"
-              ],
-              "enumDescriptions": [
-                "Page view counts from the last thirty days.",
-                "Page view counts from the last seven days.",
-                "Total page view counts from all time."
+                "7DAYS"
               ],
               "location": "query",
               "repeated": true,
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/pageviews",
+          "path": "v3/blogs/{blogId}/pageviews",
           "response": {
             "$ref": "Pageviews"
           },
@@ -688,7 +638,8 @@
     "pages": {
       "methods": {
         "delete": {
-          "description": "Delete a page by ID.",
+          "description": "Deletes a page by blog id and page id.",
+          "flatPath": "v3/blogs/{blogId}/pages/{pageId}",
           "httpMethod": "DELETE",
           "id": "blogger.pages.delete",
           "parameterOrder": [
@@ -697,25 +648,24 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "The ID of the Blog.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "pageId": {
-              "description": "The ID of the Page.",
               "location": "path",
               "required": true,
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/pages/{pageId}",
+          "path": "v3/blogs/{blogId}/pages/{pageId}",
           "scopes": [
             "https://www.googleapis.com/auth/blogger"
           ]
         },
         "get": {
-          "description": "Gets one blog page by ID.",
+          "description": "Gets a page by blog id and page id.",
+          "flatPath": "v3/blogs/{blogId}/pages/{pageId}",
           "httpMethod": "GET",
           "id": "blogger.pages.get",
           "parameterOrder": [
@@ -724,33 +674,27 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "ID of the blog containing the page.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "pageId": {
-              "description": "The ID of the page to get.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "view": {
               "enum": [
-                "ADMIN",
+                "VIEW_TYPE_UNSPECIFIED",
+                "READER",
                 "AUTHOR",
-                "READER"
-              ],
-              "enumDescriptions": [
-                "Admin level detail",
-                "Author level detail",
-                "Reader level detail"
+                "ADMIN"
               ],
               "location": "query",
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/pages/{pageId}",
+          "path": "v3/blogs/{blogId}/pages/{pageId}",
           "response": {
             "$ref": "Page"
           },
@@ -760,7 +704,8 @@
           ]
         },
         "insert": {
-          "description": "Add a page.",
+          "description": "Inserts a page.",
+          "flatPath": "v3/blogs/{blogId}/pages",
           "httpMethod": "POST",
           "id": "blogger.pages.insert",
           "parameterOrder": [
@@ -768,18 +713,16 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "ID of the blog to add the page to.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "isDraft": {
-              "description": "Whether to create the page as a draft (default: false).",
               "location": "query",
               "type": "boolean"
             }
           },
-          "path": "blogs/{blogId}/pages",
+          "path": "v3/blogs/{blogId}/pages",
           "request": {
             "$ref": "Page"
           },
@@ -791,7 +734,8 @@
           ]
         },
         "list": {
-          "description": "Retrieves the pages for a blog, optionally including non-LIVE statuses.",
+          "description": "Lists pages.",
+          "flatPath": "v3/blogs/{blogId}/pages",
           "httpMethod": "GET",
           "id": "blogger.pages.list",
           "parameterOrder": [
@@ -799,57 +743,44 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "ID of the blog to fetch Pages from.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "fetchBodies": {
-              "description": "Whether to retrieve the Page bodies.",
               "location": "query",
               "type": "boolean"
             },
             "maxResults": {
-              "description": "Maximum number of Pages to fetch.",
               "format": "uint32",
               "location": "query",
               "type": "integer"
             },
             "pageToken": {
-              "description": "Continuation token if the request is paged.",
               "location": "query",
               "type": "string"
             },
             "status": {
               "enum": [
-                "draft",
-                "live"
-              ],
-              "enumDescriptions": [
-                "Draft (unpublished) Pages",
-                "Pages that are publicly visible"
+                "LIVE",
+                "DRAFT"
               ],
               "location": "query",
               "repeated": true,
               "type": "string"
             },
             "view": {
-              "description": "Access level with which to view the returned result. Note that some fields require elevated access.",
               "enum": [
-                "ADMIN",
+                "VIEW_TYPE_UNSPECIFIED",
+                "READER",
                 "AUTHOR",
-                "READER"
-              ],
-              "enumDescriptions": [
-                "Admin level detail",
-                "Author level detail",
-                "Reader level detail"
+                "ADMIN"
               ],
               "location": "query",
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/pages",
+          "path": "v3/blogs/{blogId}/pages",
           "response": {
             "$ref": "PageList"
           },
@@ -859,7 +790,8 @@
           ]
         },
         "patch": {
-          "description": "Update a page. This method supports patch semantics.",
+          "description": "Patches a page.",
+          "flatPath": "v3/blogs/{blogId}/pages/{pageId}",
           "httpMethod": "PATCH",
           "id": "blogger.pages.patch",
           "parameterOrder": [
@@ -868,29 +800,25 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "The ID of the Blog.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "pageId": {
-              "description": "The ID of the Page.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "publish": {
-              "description": "Whether a publish action should be performed when the page is updated (default: false).",
               "location": "query",
               "type": "boolean"
             },
             "revert": {
-              "description": "Whether a revert action should be performed when the page is updated (default: false).",
               "location": "query",
               "type": "boolean"
             }
           },
-          "path": "blogs/{blogId}/pages/{pageId}",
+          "path": "v3/blogs/{blogId}/pages/{pageId}",
           "request": {
             "$ref": "Page"
           },
@@ -902,7 +830,8 @@
           ]
         },
         "publish": {
-          "description": "Publishes a draft page.",
+          "description": "Publishes a page.",
+          "flatPath": "v3/blogs/{blogId}/pages/{pageId}/publish",
           "httpMethod": "POST",
           "id": "blogger.pages.publish",
           "parameterOrder": [
@@ -911,19 +840,17 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "The ID of the blog.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "pageId": {
-              "description": "The ID of the page.",
               "location": "path",
               "required": true,
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/pages/{pageId}/publish",
+          "path": "v3/blogs/{blogId}/pages/{pageId}/publish",
           "response": {
             "$ref": "Page"
           },
@@ -932,7 +859,8 @@
           ]
         },
         "revert": {
-          "description": "Revert a published or scheduled page to draft state.",
+          "description": "Reverts a published or scheduled page to draft state.",
+          "flatPath": "v3/blogs/{blogId}/pages/{pageId}/revert",
           "httpMethod": "POST",
           "id": "blogger.pages.revert",
           "parameterOrder": [
@@ -941,19 +869,17 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "The ID of the blog.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "pageId": {
-              "description": "The ID of the page.",
               "location": "path",
               "required": true,
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/pages/{pageId}/revert",
+          "path": "v3/blogs/{blogId}/pages/{pageId}/revert",
           "response": {
             "$ref": "Page"
           },
@@ -962,7 +888,8 @@
           ]
         },
         "update": {
-          "description": "Update a page.",
+          "description": "Updates a page by blog id and page id.",
+          "flatPath": "v3/blogs/{blogId}/pages/{pageId}",
           "httpMethod": "PUT",
           "id": "blogger.pages.update",
           "parameterOrder": [
@@ -971,29 +898,25 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "The ID of the Blog.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "pageId": {
-              "description": "The ID of the Page.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "publish": {
-              "description": "Whether a publish action should be performed when the page is updated (default: false).",
               "location": "query",
               "type": "boolean"
             },
             "revert": {
-              "description": "Whether a revert action should be performed when the page is updated (default: false).",
               "location": "query",
               "type": "boolean"
             }
           },
-          "path": "blogs/{blogId}/pages/{pageId}",
+          "path": "v3/blogs/{blogId}/pages/{pageId}",
           "request": {
             "$ref": "Page"
           },
@@ -1009,7 +932,8 @@
     "postUserInfos": {
       "methods": {
         "get": {
-          "description": "Gets one post and user info pair, by post ID and user ID. The post user info contains per-user information about the post, such as access rights, specific to the user.",
+          "description": "Gets one post and user info pair, by post_id and user_id.",
+          "flatPath": "v3/users/{userId}/blogs/{blogId}/posts/{postId}",
           "httpMethod": "GET",
           "id": "blogger.postUserInfos.get",
           "parameterOrder": [
@@ -1019,31 +943,27 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "The ID of the blog.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "maxComments": {
-              "description": "Maximum number of comments to pull back on a post.",
               "format": "uint32",
               "location": "query",
               "type": "integer"
             },
             "postId": {
-              "description": "The ID of the post to get.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "userId": {
-              "description": "ID of the user for the per-user information to be fetched. Either the word 'self' or the user's profile identifier.",
               "location": "path",
               "required": true,
               "type": "string"
             }
           },
-          "path": "users/{userId}/blogs/{blogId}/posts/{postId}",
+          "path": "v3/users/{userId}/blogs/{blogId}/posts/{postId}",
           "response": {
             "$ref": "PostUserInfo"
           },
@@ -1053,7 +973,8 @@
           ]
         },
         "list": {
-          "description": "Retrieves a list of post and post user info pairs, possibly filtered. The post user info contains per-user information about the post, such as access rights, specific to the user.",
+          "description": "Lists post and user info pairs.",
+          "flatPath": "v3/users/{userId}/blogs/{blogId}/posts",
           "httpMethod": "GET",
           "id": "blogger.postUserInfos.list",
           "parameterOrder": [
@@ -1062,97 +983,73 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "ID of the blog to fetch posts from.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "endDate": {
-              "description": "Latest post date to fetch, a date-time with RFC 3339 formatting.",
-              "format": "date-time",
               "location": "query",
               "type": "string"
             },
             "fetchBodies": {
               "default": "false",
-              "description": "Whether the body content of posts is included. Default is false.",
               "location": "query",
               "type": "boolean"
             },
             "labels": {
-              "description": "Comma-separated list of labels to search for.",
               "location": "query",
               "type": "string"
             },
             "maxResults": {
-              "description": "Maximum number of posts to fetch.",
               "format": "uint32",
               "location": "query",
               "type": "integer"
             },
             "orderBy": {
               "default": "PUBLISHED",
-              "description": "Sort order applied to search results. Default is published.",
               "enum": [
-                "published",
-                "updated"
-              ],
-              "enumDescriptions": [
-                "Order by the date the post was published",
-                "Order by the date the post was last updated"
+                "ORDER_BY_UNSPECIFIED",
+                "PUBLISHED",
+                "UPDATED"
               ],
               "location": "query",
               "type": "string"
             },
             "pageToken": {
-              "description": "Continuation token if the request is paged.",
               "location": "query",
               "type": "string"
             },
             "startDate": {
-              "description": "Earliest post date to fetch, a date-time with RFC 3339 formatting.",
-              "format": "date-time",
               "location": "query",
               "type": "string"
             },
             "status": {
               "enum": [
-                "draft",
-                "live",
-                "scheduled"
-              ],
-              "enumDescriptions": [
-                "Draft posts",
-                "Published posts",
-                "Posts that are scheduled to publish in future."
+                "LIVE",
+                "DRAFT",
+                "SCHEDULED"
               ],
               "location": "query",
               "repeated": true,
               "type": "string"
             },
             "userId": {
-              "description": "ID of the user for the per-user information to be fetched. Either the word 'self' or the user's profile identifier.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "view": {
-              "description": "Access level with which to view the returned result. Note that some fields require elevated access.",
               "enum": [
-                "ADMIN",
+                "VIEW_TYPE_UNSPECIFIED",
+                "READER",
                 "AUTHOR",
-                "READER"
-              ],
-              "enumDescriptions": [
-                "Admin level detail",
-                "Author level detail",
-                "Reader level detail"
+                "ADMIN"
               ],
               "location": "query",
               "type": "string"
             }
           },
-          "path": "users/{userId}/blogs/{blogId}/posts",
+          "path": "v3/users/{userId}/blogs/{blogId}/posts",
           "response": {
             "$ref": "PostUserInfosList"
           },
@@ -1166,7 +1063,8 @@
     "posts": {
       "methods": {
         "delete": {
-          "description": "Delete a post by ID.",
+          "description": "Deletes a post by blog id and post id.",
+          "flatPath": "v3/blogs/{blogId}/posts/{postId}",
           "httpMethod": "DELETE",
           "id": "blogger.posts.delete",
           "parameterOrder": [
@@ -1175,25 +1073,24 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "The ID of the Blog.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "postId": {
-              "description": "The ID of the Post.",
               "location": "path",
               "required": true,
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/posts/{postId}",
+          "path": "v3/blogs/{blogId}/posts/{postId}",
           "scopes": [
             "https://www.googleapis.com/auth/blogger"
           ]
         },
         "get": {
-          "description": "Get a post by ID.",
+          "description": "Gets a post by blog id and post id",
+          "flatPath": "v3/blogs/{blogId}/posts/{postId}",
           "httpMethod": "GET",
           "id": "blogger.posts.get",
           "parameterOrder": [
@@ -1202,51 +1099,41 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "ID of the blog to fetch the post from.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "fetchBody": {
               "default": "true",
-              "description": "Whether the body content of the post is included (default: true). This should be set to false when the post bodies are not required, to help minimize traffic.",
               "location": "query",
               "type": "boolean"
             },
             "fetchImages": {
-              "description": "Whether image URL metadata for each post is included (default: false).",
               "location": "query",
               "type": "boolean"
             },
             "maxComments": {
-              "description": "Maximum number of comments to pull back on a post.",
               "format": "uint32",
               "location": "query",
               "type": "integer"
             },
             "postId": {
-              "description": "The ID of the post",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "view": {
-              "description": "Access level with which to view the returned result. Note that some fields require elevated access.",
               "enum": [
-                "ADMIN",
+                "VIEW_TYPE_UNSPECIFIED",
+                "READER",
                 "AUTHOR",
-                "READER"
-              ],
-              "enumDescriptions": [
-                "Admin level detail",
-                "Author level detail",
-                "Reader level detail"
+                "ADMIN"
               ],
               "location": "query",
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/posts/{postId}",
+          "path": "v3/blogs/{blogId}/posts/{postId}",
           "response": {
             "$ref": "Post"
           },
@@ -1256,7 +1143,8 @@
           ]
         },
         "getByPath": {
-          "description": "Retrieve a Post by Path.",
+          "description": "Gets a post by path.",
+          "flatPath": "v3/blogs/{blogId}/posts/bypath",
           "httpMethod": "GET",
           "id": "blogger.posts.getByPath",
           "parameterOrder": [
@@ -1265,40 +1153,32 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "ID of the blog to fetch the post from.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "maxComments": {
-              "description": "Maximum number of comments to pull back on a post.",
               "format": "uint32",
               "location": "query",
               "type": "integer"
             },
             "path": {
-              "description": "Path of the Post to retrieve.",
               "location": "query",
               "required": true,
               "type": "string"
             },
             "view": {
-              "description": "Access level with which to view the returned result. Note that some fields require elevated access.",
               "enum": [
-                "ADMIN",
+                "VIEW_TYPE_UNSPECIFIED",
+                "READER",
                 "AUTHOR",
-                "READER"
-              ],
-              "enumDescriptions": [
-                "Admin level detail",
-                "Author level detail",
-                "Reader level detail"
+                "ADMIN"
               ],
               "location": "query",
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/posts/bypath",
+          "path": "v3/blogs/{blogId}/posts/bypath",
           "response": {
             "$ref": "Post"
           },
@@ -1308,7 +1188,8 @@
           ]
         },
         "insert": {
-          "description": "Add a post.",
+          "description": "Inserts a post.",
+          "flatPath": "v3/blogs/{blogId}/posts",
           "httpMethod": "POST",
           "id": "blogger.posts.insert",
           "parameterOrder": [
@@ -1316,29 +1197,25 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "ID of the blog to add the post to.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "fetchBody": {
               "default": "true",
-              "description": "Whether the body content of the post is included with the result (default: true).",
               "location": "query",
               "type": "boolean"
             },
             "fetchImages": {
-              "description": "Whether image URL metadata for each post is included in the returned result (default: false).",
               "location": "query",
               "type": "boolean"
             },
             "isDraft": {
-              "description": "Whether to create the post as a draft (default: false).",
               "location": "query",
               "type": "boolean"
             }
           },
-          "path": "blogs/{blogId}/posts",
+          "path": "v3/blogs/{blogId}/posts",
           "request": {
             "$ref": "Post"
           },
@@ -1350,7 +1227,8 @@
           ]
         },
         "list": {
-          "description": "Retrieves a list of posts, possibly filtered.",
+          "description": "Lists posts.",
+          "flatPath": "v3/blogs/{blogId}/posts",
           "httpMethod": "GET",
           "id": "blogger.posts.list",
           "parameterOrder": [
@@ -1358,97 +1236,72 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "ID of the blog to fetch posts from.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "endDate": {
-              "description": "Latest post date to fetch, a date-time with RFC 3339 formatting.",
-              "format": "date-time",
               "location": "query",
               "type": "string"
             },
             "fetchBodies": {
               "default": "true",
-              "description": "Whether the body content of posts is included (default: true). This should be set to false when the post bodies are not required, to help minimize traffic.",
               "location": "query",
               "type": "boolean"
             },
             "fetchImages": {
-              "description": "Whether image URL metadata for each post is included.",
               "location": "query",
               "type": "boolean"
             },
             "labels": {
-              "description": "Comma-separated list of labels to search for.",
               "location": "query",
               "type": "string"
             },
             "maxResults": {
-              "description": "Maximum number of posts to fetch.",
               "format": "uint32",
               "location": "query",
               "type": "integer"
             },
             "orderBy": {
               "default": "PUBLISHED",
-              "description": "Sort search results",
               "enum": [
-                "published",
-                "updated"
-              ],
-              "enumDescriptions": [
-                "Order by the date the post was published",
-                "Order by the date the post was last updated"
+                "ORDER_BY_UNSPECIFIED",
+                "PUBLISHED",
+                "UPDATED"
               ],
               "location": "query",
               "type": "string"
             },
             "pageToken": {
-              "description": "Continuation token if the request is paged.",
               "location": "query",
               "type": "string"
             },
             "startDate": {
-              "description": "Earliest post date to fetch, a date-time with RFC 3339 formatting.",
-              "format": "date-time",
               "location": "query",
               "type": "string"
             },
             "status": {
-              "description": "Statuses to include in the results.",
               "enum": [
-                "draft",
-                "live",
-                "scheduled"
-              ],
-              "enumDescriptions": [
-                "Draft (non-published) posts.",
-                "Published posts",
-                "Posts that are scheduled to publish in the future."
+                "LIVE",
+                "DRAFT",
+                "SCHEDULED"
               ],
               "location": "query",
               "repeated": true,
               "type": "string"
             },
             "view": {
-              "description": "Access level with which to view the returned result. Note that some fields require escalated access.",
               "enum": [
-                "ADMIN",
+                "VIEW_TYPE_UNSPECIFIED",
+                "READER",
                 "AUTHOR",
-                "READER"
-              ],
-              "enumDescriptions": [
-                "Admin level detail",
-                "Author level detail",
-                "Reader level detail"
+                "ADMIN"
               ],
               "location": "query",
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/posts",
+          "path": "v3/blogs/{blogId}/posts",
           "response": {
             "$ref": "PostList"
           },
@@ -1458,7 +1311,8 @@
           ]
         },
         "patch": {
-          "description": "Update a post. This method supports patch semantics.",
+          "description": "Patches a post.",
+          "flatPath": "v3/blogs/{blogId}/posts/{postId}",
           "httpMethod": "PATCH",
           "id": "blogger.posts.patch",
           "parameterOrder": [
@@ -1467,46 +1321,39 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "The ID of the Blog.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "fetchBody": {
               "default": "true",
-              "description": "Whether the body content of the post is included with the result (default: true).",
               "location": "query",
               "type": "boolean"
             },
             "fetchImages": {
-              "description": "Whether image URL metadata for each post is included in the returned result (default: false).",
               "location": "query",
               "type": "boolean"
             },
             "maxComments": {
-              "description": "Maximum number of comments to retrieve with the returned post.",
               "format": "uint32",
               "location": "query",
               "type": "integer"
             },
             "postId": {
-              "description": "The ID of the Post.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "publish": {
-              "description": "Whether a publish action should be performed when the post is updated (default: false).",
               "location": "query",
               "type": "boolean"
             },
             "revert": {
-              "description": "Whether a revert action should be performed when the post is updated (default: false).",
               "location": "query",
               "type": "boolean"
             }
           },
-          "path": "blogs/{blogId}/posts/{postId}",
+          "path": "v3/blogs/{blogId}/posts/{postId}",
           "request": {
             "$ref": "Post"
           },
@@ -1518,7 +1365,8 @@
           ]
         },
         "publish": {
-          "description": "Publishes a draft post, optionally at the specific time of the given publishDate parameter.",
+          "description": "Publishes a post.",
+          "flatPath": "v3/blogs/{blogId}/posts/{postId}/publish",
           "httpMethod": "POST",
           "id": "blogger.posts.publish",
           "parameterOrder": [
@@ -1527,25 +1375,21 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "The ID of the Blog.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "postId": {
-              "description": "The ID of the Post.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "publishDate": {
-              "description": "Optional date and time to schedule the publishing of the Blog. If no publishDate parameter is given, the post is either published at the a previously saved schedule date (if present), or the current time. If a future date is given, the post will be scheduled to be published.",
-              "format": "date-time",
               "location": "query",
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/posts/{postId}/publish",
+          "path": "v3/blogs/{blogId}/posts/{postId}/publish",
           "response": {
             "$ref": "Post"
           },
@@ -1554,7 +1398,8 @@
           ]
         },
         "revert": {
-          "description": "Revert a published or scheduled post to draft state.",
+          "description": "Reverts a published or scheduled post to draft state.",
+          "flatPath": "v3/blogs/{blogId}/posts/{postId}/revert",
           "httpMethod": "POST",
           "id": "blogger.posts.revert",
           "parameterOrder": [
@@ -1563,19 +1408,17 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "The ID of the Blog.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "postId": {
-              "description": "The ID of the Post.",
               "location": "path",
               "required": true,
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/posts/{postId}/revert",
+          "path": "v3/blogs/{blogId}/posts/{postId}/revert",
           "response": {
             "$ref": "Post"
           },
@@ -1584,7 +1427,8 @@
           ]
         },
         "search": {
-          "description": "Search for a post.",
+          "description": "Searches for posts matching given query terms in the specified blog.",
+          "flatPath": "v3/blogs/{blogId}/posts/search",
           "httpMethod": "GET",
           "id": "blogger.posts.search",
           "parameterOrder": [
@@ -1593,39 +1437,32 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "ID of the blog to fetch the post from.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "fetchBodies": {
               "default": "true",
-              "description": "Whether the body content of posts is included (default: true). This should be set to false when the post bodies are not required, to help minimize traffic.",
               "location": "query",
               "type": "boolean"
             },
             "orderBy": {
               "default": "PUBLISHED",
-              "description": "Sort search results",
               "enum": [
-                "published",
-                "updated"
-              ],
-              "enumDescriptions": [
-                "Order by the date the post was published",
-                "Order by the date the post was last updated"
+                "ORDER_BY_UNSPECIFIED",
+                "PUBLISHED",
+                "UPDATED"
               ],
               "location": "query",
               "type": "string"
             },
             "q": {
-              "description": "Query terms to search this blog for matching posts.",
               "location": "query",
               "required": true,
               "type": "string"
             }
           },
-          "path": "blogs/{blogId}/posts/search",
+          "path": "v3/blogs/{blogId}/posts/search",
           "response": {
             "$ref": "PostList"
           },
@@ -1635,7 +1472,8 @@
           ]
         },
         "update": {
-          "description": "Update a post.",
+          "description": "Updates a post by blog id and post id.",
+          "flatPath": "v3/blogs/{blogId}/posts/{postId}",
           "httpMethod": "PUT",
           "id": "blogger.posts.update",
           "parameterOrder": [
@@ -1644,46 +1482,39 @@
           ],
           "parameters": {
             "blogId": {
-              "description": "The ID of the Blog.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "fetchBody": {
               "default": "true",
-              "description": "Whether the body content of the post is included with the result (default: true).",
               "location": "query",
               "type": "boolean"
             },
             "fetchImages": {
-              "description": "Whether image URL metadata for each post is included in the returned result (default: false).",
               "location": "query",
               "type": "boolean"
             },
             "maxComments": {
-              "description": "Maximum number of comments to retrieve with the returned post.",
               "format": "uint32",
               "location": "query",
               "type": "integer"
             },
             "postId": {
-              "description": "The ID of the Post.",
               "location": "path",
               "required": true,
               "type": "string"
             },
             "publish": {
-              "description": "Whether a publish action should be performed when the post is updated (default: false).",
               "location": "query",
               "type": "boolean"
             },
             "revert": {
-              "description": "Whether a revert action should be performed when the post is updated (default: false).",
               "location": "query",
               "type": "boolean"
             }
           },
-          "path": "blogs/{blogId}/posts/{postId}",
+          "path": "v3/blogs/{blogId}/posts/{postId}",
           "request": {
             "$ref": "Post"
           },
@@ -1699,7 +1530,8 @@
     "users": {
       "methods": {
         "get": {
-          "description": "Gets one user by ID.",
+          "description": "Gets one user by user_id.",
+          "flatPath": "v3/users/{userId}",
           "httpMethod": "GET",
           "id": "blogger.users.get",
           "parameterOrder": [
@@ -1707,13 +1539,12 @@
           ],
           "parameters": {
             "userId": {
-              "description": "The ID of the user to get.",
               "location": "path",
               "required": true,
               "type": "string"
             }
           },
-          "path": "users/{userId}",
+          "path": "v3/users/{userId}",
           "response": {
             "$ref": "User"
           },
@@ -1725,14 +1556,14 @@
       }
     }
   },
-  "revision": "20190917",
-  "rootUrl": "https://www.googleapis.com/",
+  "revision": "20200419",
+  "rootUrl": "https://blogger.googleapis.com/",
   "schemas": {
     "Blog": {
       "id": "Blog",
       "properties": {
         "customMetaData": {
-          "description": "The JSON custom meta-data for the Blog",
+          "description": "The JSON custom meta-data for the Blog.",
           "type": "string"
         },
         "description": {
@@ -1744,8 +1575,7 @@
           "type": "string"
         },
         "kind": {
-          "default": "blogger#blog",
-          "description": "The kind of this entry. Always blogger#blog",
+          "description": "The kind of this entry. Always blogger#blog.",
           "type": "string"
         },
         "locale": {
@@ -1809,7 +1639,6 @@
         },
         "published": {
           "description": "RFC 3339 date-time when this blog was published.",
-          "format": "date-time",
           "type": "string"
         },
         "selfLink": {
@@ -1818,11 +1647,18 @@
         },
         "status": {
           "description": "The status of the blog.",
+          "enum": [
+            "LIVE",
+            "DELETED"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
           "type": "string"
         },
         "updated": {
           "description": "RFC 3339 date-time when this blog was last updated.",
-          "format": "date-time",
           "type": "string"
         },
         "url": {
@@ -1836,7 +1672,7 @@
       "id": "BlogList",
       "properties": {
         "blogUserInfos": {
-          "description": "Admin level list of blog per-user information",
+          "description": "Admin level list of blog per-user information.",
           "items": {
             "$ref": "BlogUserInfo"
           },
@@ -1850,8 +1686,7 @@
           "type": "array"
         },
         "kind": {
-          "default": "blogger#blogList",
-          "description": "The kind of this entity. Always blogger#blogList",
+          "description": "The kind of this entity. Always blogger#blogList.",
           "type": "string"
         }
       },
@@ -1861,7 +1696,7 @@
       "id": "BlogPerUserInfo",
       "properties": {
         "blogId": {
-          "description": "ID of the Blog resource",
+          "description": "ID of the Blog resource.",
           "type": "string"
         },
         "hasAdminAccess": {
@@ -1869,20 +1704,31 @@
           "type": "boolean"
         },
         "kind": {
-          "default": "blogger#blogPerUserInfo",
-          "description": "The kind of this entity. Always blogger#blogPerUserInfo",
+          "description": "The kind of this entity. Always blogger#blogPerUserInfo.",
           "type": "string"
         },
         "photosAlbumKey": {
-          "description": "The Photo Album Key for the user when adding photos to the blog",
+          "description": "The Photo Album Key for the user when adding photos to the blog.",
           "type": "string"
         },
         "role": {
-          "description": "Access permissions that the user has for the blog (ADMIN, AUTHOR, or READER).",
+          "description": "Access permissions that the user has for the blog (ADMIN, AUTHOR, or\nREADER).",
+          "enum": [
+            "VIEW_TYPE_UNSPECIFIED",
+            "READER",
+            "AUTHOR",
+            "ADMIN"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            ""
+          ],
           "type": "string"
         },
         "userId": {
-          "description": "ID of the User",
+          "description": "ID of the User.",
           "type": "string"
         }
       },
@@ -1900,8 +1746,7 @@
           "description": "Information about a User for the Blog."
         },
         "kind": {
-          "default": "blogger#blogUserInfo",
-          "description": "The kind of this entity. Always blogger#blogUserInfo",
+          "description": "The kind of this entity. Always blogger#blogUserInfo.",
           "type": "string"
         }
       },
@@ -1918,21 +1763,21 @@
               "type": "string"
             },
             "id": {
-              "description": "The identifier of the Comment creator.",
+              "description": "The identifier of the creator.",
               "type": "string"
             },
             "image": {
-              "description": "The comment creator's avatar.",
+              "description": "The creator's avatar.",
               "properties": {
                 "url": {
-                  "description": "The comment creator's avatar URL.",
+                  "description": "The creator's avatar URL.",
                   "type": "string"
                 }
               },
               "type": "object"
             },
             "url": {
-              "description": "The URL of the Comment creator's Profile page.",
+              "description": "The URL of the creator's Profile page.",
               "type": "string"
             }
           },
@@ -1967,8 +1812,7 @@
           "type": "object"
         },
         "kind": {
-          "default": "blogger#comment",
-          "description": "The kind of this entry. Always blogger#comment",
+          "description": "The kind of this entry. Always blogger#comment.",
           "type": "string"
         },
         "post": {
@@ -1983,7 +1827,6 @@
         },
         "published": {
           "description": "RFC 3339 date-time when this comment was published.",
-          "format": "date-time",
           "type": "string"
         },
         "selfLink": {
@@ -1991,12 +1834,23 @@
           "type": "string"
         },
         "status": {
-          "description": "The status of the comment (only populated for admin users)",
+          "description": "The status of the comment (only populated for admin users).",
+          "enum": [
+            "LIVE",
+            "EMPTIED",
+            "PENDING",
+            "SPAM"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            ""
+          ],
           "type": "string"
         },
         "updated": {
           "description": "RFC 3339 date-time when this comment was last updated.",
-          "format": "date-time",
           "type": "string"
         }
       },
@@ -2017,8 +1871,7 @@
           "type": "array"
         },
         "kind": {
-          "default": "blogger#commentList",
-          "description": "The kind of this entry. Always blogger#commentList",
+          "description": "The kind of this entry. Always blogger#commentList.",
           "type": "string"
         },
         "nextPageToken": {
@@ -2043,21 +1896,21 @@
               "type": "string"
             },
             "id": {
-              "description": "The identifier of the Page creator.",
+              "description": "The identifier of the creator.",
               "type": "string"
             },
             "image": {
-              "description": "The page author's avatar.",
+              "description": "The creator's avatar.",
               "properties": {
                 "url": {
-                  "description": "The page author's avatar URL.",
+                  "description": "The creator's avatar URL.",
                   "type": "string"
                 }
               },
               "type": "object"
             },
             "url": {
-              "description": "The URL of the Page creator's Profile page.",
+              "description": "The URL of the creator's Profile page.",
               "type": "string"
             }
           },
@@ -2086,13 +1939,11 @@
           "type": "string"
         },
         "kind": {
-          "default": "blogger#page",
-          "description": "The kind of this entity. Always blogger#page",
+          "description": "The kind of this entity. Always blogger#page.",
           "type": "string"
         },
         "published": {
           "description": "RFC 3339 date-time when this Page was published.",
-          "format": "date-time",
           "type": "string"
         },
         "selfLink": {
@@ -2101,15 +1952,22 @@
         },
         "status": {
           "description": "The status of the page for admin resources (either LIVE or DRAFT).",
+          "enum": [
+            "LIVE",
+            "DRAFT"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
           "type": "string"
         },
         "title": {
-          "description": "The title of this entity. This is the name displayed in the Admin user interface.",
+          "description": "The title of this entity. This is the name displayed in the Admin user\ninterface.",
           "type": "string"
         },
         "updated": {
           "description": "RFC 3339 date-time when this Page was last updated.",
-          "format": "date-time",
           "type": "string"
         },
         "url": {
@@ -2134,8 +1992,7 @@
           "type": "array"
         },
         "kind": {
-          "default": "blogger#pageList",
-          "description": "The kind of this entity. Always blogger#pageList",
+          "description": "The kind of this entity. Always blogger#pageList.",
           "type": "string"
         },
         "nextPageToken": {
@@ -2149,7 +2006,7 @@
       "id": "Pageviews",
       "properties": {
         "blogId": {
-          "description": "Blog Id",
+          "description": "Blog Id.",
           "type": "string"
         },
         "counts": {
@@ -2157,12 +2014,22 @@
           "items": {
             "properties": {
               "count": {
-                "description": "Count of page views for the given time range",
+                "description": "Count of page views for the given time range.",
                 "format": "int64",
                 "type": "string"
               },
               "timeRange": {
-                "description": "Time range the given count applies to",
+                "description": "Time range the given count applies to.",
+                "enum": [
+                  "ALL_TIME",
+                  "THIRTY_DAYS",
+                  "SEVEN_DAYS"
+                ],
+                "enumDescriptions": [
+                  "",
+                  "",
+                  ""
+                ],
                 "type": "string"
               }
             },
@@ -2171,8 +2038,7 @@
           "type": "array"
         },
         "kind": {
-          "default": "blogger#page_views",
-          "description": "The kind of this entry. Always blogger#page_views",
+          "description": "The kind of this entry. Always blogger#page_views.",
           "type": "string"
         }
       },
@@ -2189,21 +2055,21 @@
               "type": "string"
             },
             "id": {
-              "description": "The identifier of the Post creator.",
+              "description": "The identifier of the creator.",
               "type": "string"
             },
             "image": {
-              "description": "The Post author's avatar.",
+              "description": "The creator's avatar.",
               "properties": {
                 "url": {
-                  "description": "The Post author's avatar URL.",
+                  "description": "The creator's avatar URL.",
                   "type": "string"
                 }
               },
               "type": "object"
             },
             "url": {
-              "description": "The URL of the Post creator's Profile page.",
+              "description": "The URL of the creator's Profile page.",
               "type": "string"
             }
           },
@@ -2248,8 +2114,7 @@
           "type": "array"
         },
         "kind": {
-          "default": "blogger#post",
-          "description": "The kind of this entity. Always blogger#post",
+          "description": "The kind of this entity. Always blogger#post.",
           "type": "string"
         },
         "labels": {
@@ -2285,11 +2150,20 @@
         },
         "published": {
           "description": "RFC 3339 date-time when this Post was published.",
-          "format": "date-time",
           "type": "string"
         },
         "readerComments": {
           "description": "Comment control and display setting for readers of this post.",
+          "enum": [
+            "ALLOW",
+            "DONT_ALLOW_SHOW_EXISTING",
+            "DONT_ALLOW_HIDE_EXISTING"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
           "type": "string"
         },
         "replies": {
@@ -2319,7 +2193,17 @@
           "type": "string"
         },
         "status": {
-          "description": "Status of the post. Only set for admin-level requests",
+          "description": "Status of the post. Only set for admin-level requests.",
+          "enum": [
+            "LIVE",
+            "DRAFT",
+            "SCHEDULED"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
           "type": "string"
         },
         "title": {
@@ -2332,7 +2216,6 @@
         },
         "updated": {
           "description": "RFC 3339 date-time when this Post was last updated.",
-          "format": "date-time",
           "type": "string"
         },
         "url": {
@@ -2357,12 +2240,15 @@
           "type": "array"
         },
         "kind": {
-          "default": "blogger#postList",
-          "description": "The kind of this entity. Always blogger#postList",
+          "description": "The kind of this entity. Always blogger#postList.",
           "type": "string"
         },
         "nextPageToken": {
           "description": "Pagination token to fetch the next page, if one exists.",
+          "type": "string"
+        },
+        "prevPageToken": {
+          "description": "Pagination token to fetch the previous page, if one exists.",
           "type": "string"
         }
       },
@@ -2380,8 +2266,7 @@
           "type": "boolean"
         },
         "kind": {
-          "default": "blogger#postPerUserInfo",
-          "description": "The kind of this entity. Always blogger#postPerUserInfo",
+          "description": "The kind of this entity. Always blogger#postPerUserInfo.",
           "type": "string"
         },
         "postId": {
@@ -2399,8 +2284,7 @@
       "id": "PostUserInfo",
       "properties": {
         "kind": {
-          "default": "blogger#postUserInfo",
-          "description": "The kind of this entity. Always blogger#postUserInfo",
+          "description": "The kind of this entity. Always blogger#postUserInfo.",
           "type": "string"
         },
         "post": {
@@ -2425,8 +2309,7 @@
           "type": "array"
         },
         "kind": {
-          "default": "blogger#postUserInfosList",
-          "description": "The kind of this entity. Always blogger#postList",
+          "description": "The kind of this entity. Always blogger#postList.",
           "type": "string"
         },
         "nextPageToken": {
@@ -2455,7 +2338,6 @@
         },
         "created": {
           "description": "The timestamp of when this profile was created, in seconds since epoch.",
-          "format": "date-time",
           "type": "string"
         },
         "displayName": {
@@ -2467,23 +2349,22 @@
           "type": "string"
         },
         "kind": {
-          "default": "blogger#user",
-          "description": "The kind of this entity. Always blogger#user",
+          "description": "The kind of this entity. Always blogger#user.",
           "type": "string"
         },
         "locale": {
           "description": "This user's locale",
           "properties": {
             "country": {
-              "description": "The user's country setting.",
+              "description": "The country this blog's locale is set to.",
               "type": "string"
             },
             "language": {
-              "description": "The user's language setting.",
+              "description": "The language this blog is authored in.",
               "type": "string"
             },
             "variant": {
-              "description": "The user's language variant setting.",
+              "description": "The language variant this blog is authored in.",
               "type": "string"
             }
           },
@@ -2501,7 +2382,7 @@
       "type": "object"
     }
   },
-  "servicePath": "blogger/v3/",
-  "title": "Blogger API",
+  "servicePath": "",
+  "title": "Blogger API v3",
   "version": "v3"
 }

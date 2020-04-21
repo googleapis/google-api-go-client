@@ -1399,7 +1399,7 @@ func (c *ProjectsConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1543,7 +1543,7 @@ func (c *ProjectsConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1685,7 +1685,7 @@ func (c *ProjectsConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1851,7 +1851,7 @@ func (c *ProjectsConfigsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsConfigsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2018,7 +2018,7 @@ func (c *ProjectsConfigsListCall) Header() http.Header {
 
 func (c *ProjectsConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2155,8 +2155,8 @@ type ProjectsConfigsSetIamPolicyCall struct {
 // resource. Replaces any
 // existing policy.
 //
-// Can return Public Errors: NOT_FOUND, INVALID_ARGUMENT and
-// PERMISSION_DENIED
+// Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`
+// errors.
 func (r *ProjectsConfigsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsConfigsSetIamPolicyCall {
 	c := &ProjectsConfigsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2191,7 +2191,7 @@ func (c *ProjectsConfigsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsConfigsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2255,7 +2255,7 @@ func (c *ProjectsConfigsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
+	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "runtimeconfig.projects.configs.setIamPolicy",
@@ -2301,7 +2301,7 @@ type ProjectsConfigsTestIamPermissionsCall struct {
 // specified resource.
 // If the resource does not exist, this will return an empty set
 // of
-// permissions, not a NOT_FOUND error.
+// permissions, not a `NOT_FOUND` error.
 //
 // Note: This operation is designed to be used for building
 // permission-aware
@@ -2342,7 +2342,7 @@ func (c *ProjectsConfigsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsConfigsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2406,7 +2406,7 @@ func (c *ProjectsConfigsTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "runtimeconfig.projects.configs.testIamPermissions",
@@ -2484,7 +2484,7 @@ func (c *ProjectsConfigsUpdateCall) Header() http.Header {
 
 func (c *ProjectsConfigsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2638,7 +2638,7 @@ func (c *ProjectsConfigsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsConfigsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2743,7 +2743,7 @@ type ProjectsConfigsOperationsTestIamPermissionsCall struct {
 // specified resource.
 // If the resource does not exist, this will return an empty set
 // of
-// permissions, not a NOT_FOUND error.
+// permissions, not a `NOT_FOUND` error.
 //
 // Note: This operation is designed to be used for building
 // permission-aware
@@ -2784,7 +2784,7 @@ func (c *ProjectsConfigsOperationsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsConfigsOperationsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2848,7 +2848,7 @@ func (c *ProjectsConfigsOperationsTestIamPermissionsCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/operations/{operationsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "runtimeconfig.projects.configs.operations.testIamPermissions",
@@ -2953,7 +2953,7 @@ func (c *ProjectsConfigsVariablesCreateCall) Header() http.Header {
 
 func (c *ProjectsConfigsVariablesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3113,7 +3113,7 @@ func (c *ProjectsConfigsVariablesDeleteCall) Header() http.Header {
 
 func (c *ProjectsConfigsVariablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3260,7 +3260,7 @@ func (c *ProjectsConfigsVariablesGetCall) Header() http.Header {
 
 func (c *ProjectsConfigsVariablesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3448,7 +3448,7 @@ func (c *ProjectsConfigsVariablesListCall) Header() http.Header {
 
 func (c *ProjectsConfigsVariablesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3595,7 +3595,7 @@ type ProjectsConfigsVariablesTestIamPermissionsCall struct {
 // specified resource.
 // If the resource does not exist, this will return an empty set
 // of
-// permissions, not a NOT_FOUND error.
+// permissions, not a `NOT_FOUND` error.
 //
 // Note: This operation is designed to be used for building
 // permission-aware
@@ -3636,7 +3636,7 @@ func (c *ProjectsConfigsVariablesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsConfigsVariablesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3700,7 +3700,7 @@ func (c *ProjectsConfigsVariablesTestIamPermissionsCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/variables/{variablesId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "runtimeconfig.projects.configs.variables.testIamPermissions",
@@ -3777,7 +3777,7 @@ func (c *ProjectsConfigsVariablesUpdateCall) Header() http.Header {
 
 func (c *ProjectsConfigsVariablesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3939,7 +3939,7 @@ func (c *ProjectsConfigsVariablesWatchCall) Header() http.Header {
 
 func (c *ProjectsConfigsVariablesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4106,7 +4106,7 @@ func (c *ProjectsConfigsWaitersCreateCall) Header() http.Header {
 
 func (c *ProjectsConfigsWaitersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4250,7 +4250,7 @@ func (c *ProjectsConfigsWaitersDeleteCall) Header() http.Header {
 
 func (c *ProjectsConfigsWaitersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4392,7 +4392,7 @@ func (c *ProjectsConfigsWaitersGetCall) Header() http.Header {
 
 func (c *ProjectsConfigsWaitersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4553,7 +4553,7 @@ func (c *ProjectsConfigsWaitersListCall) Header() http.Header {
 
 func (c *ProjectsConfigsWaitersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4690,7 +4690,7 @@ type ProjectsConfigsWaitersTestIamPermissionsCall struct {
 // specified resource.
 // If the resource does not exist, this will return an empty set
 // of
-// permissions, not a NOT_FOUND error.
+// permissions, not a `NOT_FOUND` error.
 //
 // Note: This operation is designed to be used for building
 // permission-aware
@@ -4731,7 +4731,7 @@ func (c *ProjectsConfigsWaitersTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsConfigsWaitersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4795,7 +4795,7 @@ func (c *ProjectsConfigsWaitersTestIamPermissionsCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/waiters/{waitersId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "runtimeconfig.projects.configs.waiters.testIamPermissions",

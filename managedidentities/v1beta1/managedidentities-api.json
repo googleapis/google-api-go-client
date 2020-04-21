@@ -493,7 +493,7 @@
                       ]
                     },
                     "setIamPolicy": {
-                      "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
+                      "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/global/domains/{domainsId}:setIamPolicy",
                       "httpMethod": "POST",
                       "id": "managedidentities.projects.locations.global.domains.setIamPolicy",
@@ -521,7 +521,7 @@
                       ]
                     },
                     "testIamPermissions": {
-                      "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+                      "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/global/domains/{domainsId}:testIamPermissions",
                       "httpMethod": "POST",
                       "id": "managedidentities.projects.locations.global.domains.testIamPermissions",
@@ -708,7 +708,7 @@
       }
     }
   },
-  "revision": "20200326",
+  "revision": "20200415",
   "rootUrl": "https://managedidentities.googleapis.com/",
   "schemas": {
     "AttachTrustRequest": {

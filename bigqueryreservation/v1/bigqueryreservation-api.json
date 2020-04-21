@@ -803,7 +803,7 @@
       }
     }
   },
-  "revision": "20200403",
+  "revision": "20200410",
   "rootUrl": "https://bigqueryreservation.googleapis.com/",
   "schemas": {
     "Assignment": {
@@ -871,7 +871,7 @@
       "type": "object"
     },
     "CapacityCommitment": {
-      "description": "Capacity commitment is a way to purchase compute capacity for BigQuery jobs\n(in the form of slots) with some committed period of usage. Monthly and\nannual commitments renew by default. Only flex commitments can be removed. In\norder to remove monthly or annual commitments, their plan needs to be changed\nto flex first.\n\nA capacity commitment resource exists as a child resource of the admin\nproject.",
+      "description": "Capacity commitment is a way to purchase compute capacity for BigQuery jobs\n(in the form of slots) with some committed period of usage. Annual\ncommitments renew by default. Commitments can be removed after their\ncommitment end time passes. In order to remove annual commitment, its plan\nneeds to be changed to monthly or flex first.\n\nA capacity commitment resource exists as a child resource of the admin\nproject.",
       "id": "CapacityCommitment",
       "properties": {
         "commitmentEndTime": {
@@ -898,8 +898,8 @@
           "enumDescriptions": [
             "Invalid plan value. Requests with this value will be rejected with\nerror code `google.rpc.Code.INVALID_ARGUMENT`.",
             "Flex commitments have committed period of 1 minute after becoming ACTIVE.\nAfter that, they are not in a committed period anymore and can be removed\nany time.",
-            "Monthly commitments have a committed period of 30 days after becoming\nACTIVE.",
-            "Annual commitments have a committed period of 365 days after becoming\nACTIVE."
+            "Monthly commitments have a committed period of 30 days after becoming\nACTIVE. After that, they are not in a committed period anymore and can be\nremoved any time.",
+            "Annual commitments have a committed period of 365 days after becoming\nACTIVE. After that they are converted to a new commitment based on the\nrenewal_plan."
           ],
           "type": "string"
         },
@@ -914,8 +914,8 @@
           "enumDescriptions": [
             "Invalid plan value. Requests with this value will be rejected with\nerror code `google.rpc.Code.INVALID_ARGUMENT`.",
             "Flex commitments have committed period of 1 minute after becoming ACTIVE.\nAfter that, they are not in a committed period anymore and can be removed\nany time.",
-            "Monthly commitments have a committed period of 30 days after becoming\nACTIVE.",
-            "Annual commitments have a committed period of 365 days after becoming\nACTIVE."
+            "Monthly commitments have a committed period of 30 days after becoming\nACTIVE. After that, they are not in a committed period anymore and can be\nremoved any time.",
+            "Annual commitments have a committed period of 365 days after becoming\nACTIVE. After that they are converted to a new commitment based on the\nrenewal_plan."
           ],
           "type": "string"
         },

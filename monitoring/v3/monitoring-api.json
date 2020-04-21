@@ -1848,7 +1848,7 @@
       }
     }
   },
-  "revision": "20200329",
+  "revision": "20200416",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -2275,10 +2275,6 @@
         "conditionThreshold": {
           "$ref": "MetricThreshold",
           "description": "A condition that compares a time series against a threshold."
-        },
-        "conditionTimeSeriesQueryLanguage": {
-          "$ref": "TimeSeriesQueryLanguageCondition",
-          "description": "A condition that uses the Monitoring Query Language to define alerts. If set, no other conditions can be present."
         },
         "displayName": {
           "description": "A short name or phrase used to identify the condition in dashboards, notifications, and incidents. To avoid confusion, don't use the same display name for multiple conditions in the same policy.",
@@ -4151,21 +4147,6 @@
             "$ref": "ValueDescriptor"
           },
           "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "TimeSeriesQueryLanguageCondition": {
-      "description": "A condition type that allows alert policies to be defined using Monitoring Query Language.",
-      "id": "TimeSeriesQueryLanguageCondition",
-      "properties": {
-        "query": {
-          "description": "Monitoring Query Language query that generates time series data and describes a condition for alerting on that data.",
-          "type": "string"
-        },
-        "summary": {
-          "description": "A short explanation of what the query represents. For example:\"Error ratio exceeds 15% for \u003e5% of servers in \u003e2 regions\"",
-          "type": "string"
         }
       },
       "type": "object"

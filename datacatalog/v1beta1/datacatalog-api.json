@@ -108,7 +108,7 @@
     "catalog": {
       "methods": {
         "search": {
-          "description": "Searches Data Catalog for multiple resources like entries, tags that\nmatch a query.\n\nThis is a custom method\n(https://cloud.google.com/apis/design/custom_methods) and does not return\nthe complete resource, only the resource identifier and high level\nfields. Clients can subsequentally call `Get` methods.\n\nNote that Data Catalog search queries do not guarantee full recall. Query\nresults that match your query may not be returned, even in subsequent\nresult pages. Also note that results returned (and not returned) can vary\nacross repeated search queries.\n\nSee [Data Catalog Search\nSyntax](/data-catalog/docs/how-to/search-reference) for more information.",
+          "description": "Searches Data Catalog for multiple resources like entries, tags that\nmatch a query.\n\nThis is a custom method\n(https://cloud.google.com/apis/design/custom_methods) and does not return\nthe complete resource, only the resource identifier and high level\nfields. Clients can subsequentally call `Get` methods.\n\nNote that Data Catalog search queries do not guarantee full recall. Query\nresults that match your query may not be returned, even in subsequent\nresult pages. Also note that results returned (and not returned) can vary\nacross repeated search queries.\n\nSee [Data Catalog Search\nSyntax](https://cloud.google.com/data-catalog/docs/how-to/search-reference)\nfor more information.",
           "flatPath": "v1beta1/catalog:search",
           "httpMethod": "POST",
           "id": "datacatalog.catalog.search",
@@ -142,7 +142,7 @@
               "type": "string"
             },
             "sqlResource": {
-              "description": "The SQL name of the entry. SQL names are case-sensitive.\n\nExamples:\n\n  * `cloud_pubsub.project_id.topic_id`\n  * ``pubsub.project_id.`topic.id.with.dots` ``\n  * `bigquery.table.project_id.dataset_id.table_id`\n  * `bigquery.dataset.project_id.dataset_id`\n  * `datacatalog.entry.project_id.location_id.entry_group_id.entry_id`\n\n`*_id`s shoud satisfy the standard SQL rules for identifiers.\nhttps://cloud.google.com/bigquery/docs/reference/standard-sql/lexical.",
+              "description": "The SQL name of the entry. SQL names are case-sensitive.\n\nExamples:\n\n  * `pubsub.project_id.topic_id`\n  * ``pubsub.project_id.`topic.id.with.dots` ``\n  * `bigquery.table.project_id.dataset_id.table_id`\n  * `bigquery.dataset.project_id.dataset_id`\n  * `datacatalog.entry.project_id.location_id.entry_group_id.entry_id`\n\n`*_id`s shoud satisfy the standard SQL rules for identifiers.\nhttps://cloud.google.com/bigquery/docs/reference/standard-sql/lexical.",
               "location": "query",
               "type": "string"
             }
@@ -164,7 +164,7 @@
             "entryGroups": {
               "methods": {
                 "create": {
-                  "description": "A maximum of 10,000 entry groups may be created per organization across all\nlocations.\n\nUsers should enable the Data Catalog API in the project identified by\nthe `parent` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+                  "description": "A maximum of 10,000 entry groups may be created per organization across all\nlocations.\n\nUsers should enable the Data Catalog API in the project identified by\nthe `parent` parameter (see [Data Catalog Resource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups",
                   "httpMethod": "POST",
                   "id": "datacatalog.projects.locations.entryGroups.create",
@@ -197,7 +197,7 @@
                   ]
                 },
                 "delete": {
-                  "description": "Deletes an EntryGroup. Only entry groups that do not contain entries can be\ndeleted. Users should enable the Data Catalog API in the project\nidentified by the `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+                  "description": "Deletes an EntryGroup. Only entry groups that do not contain entries can be\ndeleted. Users should enable the Data Catalog API in the project\nidentified by the `name` parameter (see [Data Catalog Resource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}",
                   "httpMethod": "DELETE",
                   "id": "datacatalog.projects.locations.entryGroups.delete",
@@ -322,7 +322,7 @@
                   ]
                 },
                 "patch": {
-                  "description": "Updates an EntryGroup. The user should enable the Data Catalog API in the\nproject identified by the `entry_group.name` parameter (see [Data Catalog\nResource Project] (/data-catalog/docs/concepts/resource-project) for more\ninformation).",
+                  "description": "Updates an EntryGroup. The user should enable the Data Catalog API in the\nproject identified by the `entry_group.name` parameter (see [Data Catalog\nResource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}",
                   "httpMethod": "PATCH",
                   "id": "datacatalog.projects.locations.entryGroups.patch",
@@ -416,7 +416,7 @@
                 "entries": {
                   "methods": {
                     "create": {
-                      "description": "Creates an entry. Only entries of 'FILESET' type or user-specified type can\nbe created.\n\nUsers should enable the Data Catalog API in the project identified by\nthe `parent` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).\n\nA maximum of 100,000 entries may be created per entry group.",
+                      "description": "Creates an entry. Only entries of 'FILESET' type or user-specified type can\nbe created.\n\nUsers should enable the Data Catalog API in the project identified by\nthe `parent` parameter (see [Data Catalog Resource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).\n\nA maximum of 100,000 entries may be created per entry group.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries",
                       "httpMethod": "POST",
                       "id": "datacatalog.projects.locations.entryGroups.entries.create",
@@ -449,7 +449,7 @@
                       ]
                     },
                     "delete": {
-                      "description": "Deletes an existing entry. Only entries created through\nCreateEntry\nmethod can be deleted.\nUsers should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+                      "description": "Deletes an existing entry. Only entries created through\nCreateEntry\nmethod can be deleted.\nUsers should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}",
                       "httpMethod": "DELETE",
                       "id": "datacatalog.projects.locations.entryGroups.entries.delete",
@@ -569,7 +569,7 @@
                       ]
                     },
                     "patch": {
-                      "description": "Updates an existing entry.\nUsers should enable the Data Catalog API in the project identified by\nthe `entry.name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+                      "description": "Updates an existing entry.\nUsers should enable the Data Catalog API in the project identified by\nthe `entry.name` parameter (see [Data Catalog Resource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}",
                       "httpMethod": "PATCH",
                       "id": "datacatalog.projects.locations.entryGroups.entries.patch",
@@ -635,7 +635,7 @@
                     "tags": {
                       "methods": {
                         "create": {
-                          "description": "Creates a tag on an Entry.\nNote: The project identified by the `parent` parameter for the\n[tag](/data-catalog/docs/reference/rest/v1beta1/projects.locations.entryGroups.entries.tags/create#path-parameters)\nand the\n[tag\ntemplate](/data-catalog/docs/reference/rest/v1beta1/projects.locations.tagTemplates/create#path-parameters)\nused to create the tag must be from the same organization.",
+                          "description": "Creates a tag on an Entry.\nNote: The project identified by the `parent` parameter for the\n[tag](https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.entryGroups.entries.tags/create#path-parameters)\nand the\n[tag\ntemplate](https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.tagTemplates/create#path-parameters)\nused to create the tag must be from the same organization.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}/tags",
                           "httpMethod": "POST",
                           "id": "datacatalog.projects.locations.entryGroups.entries.tags.create",
@@ -764,7 +764,7 @@
                 "tags": {
                   "methods": {
                     "create": {
-                      "description": "Creates a tag on an Entry.\nNote: The project identified by the `parent` parameter for the\n[tag](/data-catalog/docs/reference/rest/v1beta1/projects.locations.entryGroups.entries.tags/create#path-parameters)\nand the\n[tag\ntemplate](/data-catalog/docs/reference/rest/v1beta1/projects.locations.tagTemplates/create#path-parameters)\nused to create the tag must be from the same organization.",
+                      "description": "Creates a tag on an Entry.\nNote: The project identified by the `parent` parameter for the\n[tag](https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.entryGroups.entries.tags/create#path-parameters)\nand the\n[tag\ntemplate](https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.tagTemplates/create#path-parameters)\nused to create the tag must be from the same organization.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/tags",
                       "httpMethod": "POST",
                       "id": "datacatalog.projects.locations.entryGroups.tags.create",
@@ -893,7 +893,7 @@
             "tagTemplates": {
               "methods": {
                 "create": {
-                  "description": "Creates a tag template. The user should enable the Data Catalog API in\nthe project identified by the `parent` parameter (see [Data Catalog\nResource Project](/data-catalog/docs/concepts/resource-project) for more\ninformation).",
+                  "description": "Creates a tag template. The user should enable the Data Catalog API in\nthe project identified by the `parent` parameter (see [Data Catalog\nResource\nProject](https://cloud.google.com/data-catalog/docs/concepts/resource-project)\nfor more information).",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates",
                   "httpMethod": "POST",
                   "id": "datacatalog.projects.locations.tagTemplates.create",
@@ -902,7 +902,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. The name of the project and the template location\n[region](/compute/docs/regions-zones/#available).\nNOTE: Currently, only the `us-central1 region` is supported.\n\nExample:\n\n* projects/{project_id}/locations/us-central1",
+                      "description": "Required. The name of the project and the template location\n[region](https://cloud.google.com/data-catalog/docs/concepts/regions.\n\nExample:\n\n* projects/{project_id}/locations/us-central1",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -926,7 +926,7 @@
                   ]
                 },
                 "delete": {
-                  "description": "Deletes a tag template and all tags using the template.\nUsers should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+                  "description": "Deletes a tag template and all tags using the template.\nUsers should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}",
                   "httpMethod": "DELETE",
                   "id": "datacatalog.projects.locations.tagTemplates.delete",
@@ -1009,7 +1009,7 @@
                   ]
                 },
                 "patch": {
-                  "description": "Updates a tag template. This method cannot be used to update the fields of\na template. The tag template fields are represented as separate resources\nand should be updated using their own create/update/delete methods.\nUsers should enable the Data Catalog API in the project identified by\nthe `tag_template.name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+                  "description": "Updates a tag template. This method cannot be used to update the fields of\na template. The tag template fields are represented as separate resources\nand should be updated using their own create/update/delete methods.\nUsers should enable the Data Catalog API in the project identified by\nthe `tag_template.name` parameter (see [Data Catalog Resource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}",
                   "httpMethod": "PATCH",
                   "id": "datacatalog.projects.locations.tagTemplates.patch",
@@ -1103,7 +1103,7 @@
                 "fields": {
                   "methods": {
                     "create": {
-                      "description": "Creates a field in a tag template. The user should enable the Data Catalog\nAPI in the project identified by the `parent` parameter (see\n[Data Catalog Resource\nProject](/data-catalog/docs/concepts/resource-project) for more\ninformation).",
+                      "description": "Creates a field in a tag template. The user should enable the Data Catalog\nAPI in the project identified by the `parent` parameter (see\n[Data Catalog Resource\nProject](https://cloud.google.com/data-catalog/docs/concepts/resource-project)\nfor more information).",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}/fields",
                       "httpMethod": "POST",
                       "id": "datacatalog.projects.locations.tagTemplates.fields.create",
@@ -1112,7 +1112,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "Required. The name of the project and the template location\n[region](/compute/docs/regions-zones/#available).\nNOTE: Currently, only the `us-central1 region` is supported.\n\nExample:\n\n* projects/{project_id}/locations/us-central1/tagTemplates/{tag_template_id}",
+                          "description": "Required. The name of the project and the template location\n[region](https://cloud.google.com/data-catalog/docs/concepts/regions).\n\nExample:\n\n* projects/{project_id}/locations/us-central1/tagTemplates/{tag_template_id}",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+$",
                           "required": true,
@@ -1136,7 +1136,7 @@
                       ]
                     },
                     "delete": {
-                      "description": "Deletes a field in a tag template and all uses of that field.\nUsers should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+                      "description": "Deletes a field in a tag template and all uses of that field.\nUsers should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}/fields/{fieldsId}",
                       "httpMethod": "DELETE",
                       "id": "datacatalog.projects.locations.tagTemplates.fields.delete",
@@ -1166,7 +1166,7 @@
                       ]
                     },
                     "patch": {
-                      "description": "Updates a field in a tag template. This method cannot be used to update the\nfield type. Users should enable the Data Catalog API in the project\nidentified by the `name` parameter (see [Data Catalog Resource Project]\n(/data-catalog/docs/concepts/resource-project) for more information).",
+                      "description": "Updates a field in a tag template. This method cannot be used to update the\nfield type. Users should enable the Data Catalog API in the project\nidentified by the `name` parameter (see [Data Catalog Resource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}/fields/{fieldsId}",
                       "httpMethod": "PATCH",
                       "id": "datacatalog.projects.locations.tagTemplates.fields.patch",
@@ -1200,7 +1200,7 @@
                       ]
                     },
                     "rename": {
-                      "description": "Renames a field in a tag template. The user should enable the Data Catalog\nAPI in the project identified by the `name` parameter (see [Data Catalog\nResource Project](/data-catalog/docs/concepts/resource-project) for more\ninformation).",
+                      "description": "Renames a field in a tag template. The user should enable the Data Catalog\nAPI in the project identified by the `name` parameter (see [Data Catalog\nResource\nProject](https://cloud.google.com/data-catalog/docs/concepts/resource-project)\nfor more information).",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}/fields/{fieldsId}:rename",
                       "httpMethod": "POST",
                       "id": "datacatalog.projects.locations.tagTemplates.fields.rename",
@@ -1774,7 +1774,7 @@
       }
     }
   },
-  "revision": "20200402",
+  "revision": "20200414",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -1834,7 +1834,7 @@
       "properties": {
         "options": {
           "$ref": "GetPolicyOptions",
-          "description": "OPTIONAL: A `GetPolicyOptions` object for specifying options to\n`GetIamPolicy`. This field is only used by Cloud IAM."
+          "description": "OPTIONAL: A `GetPolicyOptions` object for specifying options to\n`GetIamPolicy`."
         }
       },
       "type": "object"
@@ -1996,7 +1996,7 @@
           "enumDescriptions": [
             "Default unknown type.",
             "Output only. The type of entry that has a GoogleSQL schema, including\nlogical views.",
-            "Output only. The type of models.",
+            "Output only. The type of models.\nhttps://cloud.google.com/bigquery-ml/docs/bigqueryml-intro",
             "Output only. An entry type which is used for streaming entries. Example:\nPub/Sub topic.",
             "An entry type which is a set of files or objects. Example:\nCloud Storage fileset."
           ],
@@ -2344,7 +2344,7 @@
           "type": "string"
         },
         "query": {
-          "description": "Required. The query string in search query syntax. The query must be non-empty.\n\nQuery strings can be simple as \"x\" or more qualified as:\n\n* name:x\n* column:x\n* description:y\n\nNote: Query tokens need to have a minimum of 3 characters for substring\nmatching to work correctly. See [Data Catalog Search\nSyntax](/data-catalog/docs/how-to/search-reference) for more information.",
+          "description": "Required. The query string in search query syntax. The query must be non-empty.\n\nQuery strings can be simple as \"x\" or more qualified as:\n\n* name:x\n* column:x\n* description:y\n\nNote: Query tokens need to have a minimum of 3 characters for substring\nmatching to work correctly. See [Data Catalog Search\nSyntax](https://cloud.google.com/data-catalog/docs/how-to/search-reference)\nfor more information.",
           "type": "string"
         },
         "scope": {
@@ -2510,7 +2510,7 @@
       "type": "object"
     },
     "GoogleCloudDatacatalogV1beta1Tag": {
-      "description": "Tags are used to attach custom metadata to Data Catalog resources. Tags\nconform to the specifications within their tag template.\n\nSee [Data Catalog IAM](/data-catalog/docs/concepts/iam) for information on\nthe permissions needed to create or view tags.",
+      "description": "Tags are used to attach custom metadata to Data Catalog resources. Tags\nconform to the specifications within their tag template.\n\nSee [Data Catalog\nIAM](https://cloud.google.com/data-catalog/docs/concepts/iam) for information\non the permissions needed to create or view tags.",
       "id": "GoogleCloudDatacatalogV1beta1Tag",
       "properties": {
         "column": {
@@ -2589,7 +2589,7 @@
       "type": "object"
     },
     "GoogleCloudDatacatalogV1beta1TagTemplate": {
-      "description": "A tag template defines a tag, which can have one or more typed fields.\nThe template is used to create and attach the tag to GCP resources.\n[Tag template roles](/iam/docs/understanding-roles#data-catalog-roles)\nprovide permissions to create, edit, and use the template (see, for example,\nthe [TagTemplate User](/data-catalog/docs/how-to/template-user) role, which\nincludes permission to use the tag template to tag resources.",
+      "description": "A tag template defines a tag, which can have one or more typed fields.\nThe template is used to create and attach the tag to GCP resources.\n[Tag template\nroles](https://cloud.google.com/iam/docs/understanding-roles#data-catalog-roles)\nprovide permissions to create, edit, and use the template. See, for example,\nthe [TagTemplate\nUser](https://cloud.google.com/data-catalog/docs/how-to/template-user) role,\nwhich includes permission to use the tag template to tag resources.",
       "id": "GoogleCloudDatacatalogV1beta1TagTemplate",
       "properties": {
         "displayName": {

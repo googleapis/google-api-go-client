@@ -2569,18 +2569,34 @@ func (s *GoogleDevtoolsRemotebuildexecutionAdminV1alphaListWorkerPoolsResponse) 
 // GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateInstanceRequest:
 // The request used for `UpdateInstance`.
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateInstanceRequest struct {
-	// LoggingEnabled: Whether to enable Stackdriver logging for this
-	// instance.
+	// Instance: Specifies the instance to update.
+	Instance *GoogleDevtoolsRemotebuildexecutionAdminV1alphaInstance `json:"instance,omitempty"`
+
+	// LoggingEnabled: Deprecated, use instance.logging_enabled
+	// instead.
+	// Whether to enable Stackdriver logging for this instance.
 	LoggingEnabled bool `json:"loggingEnabled,omitempty"`
 
-	// Name: Name of the instance to update.
+	// Name: Deprecated, use instance.Name instead.
+	// Name of the instance to update.
 	// Format: `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
 	Name string `json:"name,omitempty"`
 
-	// UpdateMask: The fields to update.
+	// UpdateMask: The update mask applies to instance. For the `FieldMask`
+	// definition,
+	// see
+	// https://developers.google.com/protocol-buffers/docs/reference/goog
+	// le.protobuf#fieldmask
+	// If an empty update_mask is provided, only the non-default valued
+	// field in
+	// the worker pool field will be updated. Note that in order to update a
+	// field
+	// to the default value (zero, false, empty string) an explicit
+	// update_mask
+	// must be provided.
 	UpdateMask string `json:"updateMask,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "LoggingEnabled") to
+	// ForceSendFields is a list of field names (e.g. "Instance") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2588,13 +2604,12 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateInstanceRequest struct 
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "LoggingEnabled") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Instance") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3749,7 +3764,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3942,7 +3957,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4139,7 +4154,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4283,7 +4298,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4461,7 +4476,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4647,7 +4662,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

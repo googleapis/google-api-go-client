@@ -387,6 +387,154 @@ func (s *CancelWipeDeviceUserResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ClientState: Resource representing ClientState and supports updates
+// from API users
+type ClientState struct {
+	// AssetTags: The caller can specify asset tags for this resource
+	AssetTags []string `json:"assetTags,omitempty"`
+
+	// ComplianceState: The compliance state of the resource as specified by
+	// the API client.
+	//
+	// Possible values:
+	//   "COMPLIANCE_STATE_UNSPECIFIED" - The compliance state of the
+	// resource is unknown or unspecified.
+	//   "COMPLIANT" - Device is compliant with third party policies
+	//   "NON_COMPLIANT" - Device is not compliant with third party policies
+	ComplianceState string `json:"complianceState,omitempty"`
+
+	// CreateTime: Output only. The time the client state data was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// CustomId: This field may be used to store a unique identifier for the
+	// API resource
+	// within which these CustomAttributes are a field.
+	CustomId string `json:"customId,omitempty"`
+
+	// Etag: The token that needs to be passed back for
+	// concurrency control in updates. Token needs to be passed back
+	// in UpdateRequest
+	Etag string `json:"etag,omitempty"`
+
+	// HealthScore: The Health score of the resource
+	//
+	// Possible values:
+	//   "HEALTH_SCORE_UNSPECIFIED" - Default value
+	//   "VERY_POOR" - The object is in very poor health as defined by the
+	// caller.
+	//   "POOR" - The object is in poor health as defined by the caller.
+	//   "NEUTRAL" - The object health is neither good nor poor, as defined
+	// by the caller.
+	//   "GOOD" - The object is in good health as defined by the caller.
+	//   "VERY_GOOD" - The object is in very good health as defined by the
+	// caller.
+	HealthScore string `json:"healthScore,omitempty"`
+
+	// KeyValuePairs: The map of key-value attributes stored by callers
+	// specific to a
+	// device. The total serialized length of this map may not exceed 10KB.
+	// No
+	// limit is placed on the number of attributes in a map.
+	KeyValuePairs map[string]CustomAttributeValue `json:"keyValuePairs,omitempty"`
+
+	// LastUpdateTime: Output only. The time the client state data was last
+	// updated.
+	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
+
+	// Managed: The management state of the resource as specified by the API
+	// client.
+	//
+	// Possible values:
+	//   "MANAGED_STATE_UNSPECIFIED" - The management state of the resource
+	// is unknown or unspecified.
+	//   "MANAGED" - The resource is managed.
+	//   "UNMANAGED" - The resource is not managed.
+	Managed string `json:"managed,omitempty"`
+
+	// Name: Output only. [Resource
+	// name](https://cloud.google.com/apis/design/resource_names) of
+	// the ClientState in
+	// format:
+	// `devices/{device_id}/deviceUsers/{device_user_id}/clientState/
+	// {partner_id}`,
+	// where partner_id corresponds to the partner storing the data.
+	Name string `json:"name,omitempty"`
+
+	// ScoreReason: A descriptive cause of the health score.
+	ScoreReason string `json:"scoreReason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AssetTags") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssetTags") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClientState) MarshalJSON() ([]byte, error) {
+	type NoMethod ClientState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomAttributeValue: Additional custom attribute values may be one
+// of these types
+type CustomAttributeValue struct {
+	// BoolValue: Represents a boolean value.
+	BoolValue bool `json:"boolValue,omitempty"`
+
+	// NumberValue: Represents a double value.
+	NumberValue float64 `json:"numberValue,omitempty"`
+
+	// StringValue: Represents a string value.
+	StringValue string `json:"stringValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BoolValue") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomAttributeValue) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomAttributeValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *CustomAttributeValue) UnmarshalJSON(data []byte) error {
+	type NoMethod CustomAttributeValue
+	var s1 struct {
+		NumberValue gensupport.JSONFloat64 `json:"numberValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.NumberValue = float64(s1.NumberValue)
+	return nil
+}
+
 // Device: Represents a Device known to Google Cloud, independent of the
 // device
 // ownership, type, and whether it is assigned or in use by a user.
@@ -1691,7 +1839,7 @@ func (c *GroupsCreateCall) Header() http.Header {
 
 func (c *GroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1828,7 +1976,7 @@ func (c *GroupsDeleteCall) Header() http.Header {
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1970,7 +2118,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2169,7 +2317,7 @@ func (c *GroupsListCall) Header() http.Header {
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2387,7 +2535,7 @@ func (c *GroupsLookupCall) Header() http.Header {
 
 func (c *GroupsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2531,7 +2679,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2747,7 +2895,7 @@ func (c *GroupsSearchCall) Header() http.Header {
 
 func (c *GroupsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2918,7 +3066,7 @@ func (c *GroupsMembershipsCreateCall) Header() http.Header {
 
 func (c *GroupsMembershipsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3057,7 +3205,7 @@ func (c *GroupsMembershipsDeleteCall) Header() http.Header {
 
 func (c *GroupsMembershipsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3199,7 +3347,7 @@ func (c *GroupsMembershipsGetCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3390,7 +3538,7 @@ func (c *GroupsMembershipsListCall) Header() http.Header {
 
 func (c *GroupsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3616,7 +3764,7 @@ func (c *GroupsMembershipsLookupCall) Header() http.Header {
 
 func (c *GroupsMembershipsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3764,7 +3912,7 @@ func (c *GroupsMembershipsModifyMembershipRolesCall) Header() http.Header {
 
 func (c *GroupsMembershipsModifyMembershipRolesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

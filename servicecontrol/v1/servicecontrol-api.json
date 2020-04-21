@@ -197,7 +197,7 @@
       }
     }
   },
-  "revision": "20200330",
+  "revision": "20200410",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -1389,14 +1389,16 @@
             "NORMAL",
             "BEST_EFFORT",
             "CHECK_ONLY",
-            "QUERY_ONLY"
+            "QUERY_ONLY",
+            "ADJUST_ONLY"
           ],
           "enumDescriptions": [
             "Guard against implicit default. Must not be used.",
             "For AllocateQuota request, allocates quota for the amount specified in\nthe service configuration or specified using the quota metrics. If the\namount is higher than the available quota, allocation error will be\nreturned and no quota will be allocated.\nIf multiple quotas are part of the request, and one fails, none of the\nquotas are allocated or released.",
             "The operation allocates quota for the amount specified in the service\nconfiguration or specified using the quota metrics. If the amount is\nhigher than the available quota, request does not fail but all available\nquota will be allocated.\nFor rate quota, BEST_EFFORT will continue to deduct from other groups\neven if one does not have enough quota. For allocation, it will find the\nminimum available amount across all groups and deduct that amount from\nall the affected groups.",
             "For AllocateQuota request, only checks if there is enough quota\navailable and does not change the available quota. No lock is placed on\nthe available quota either.",
-            "Unimplemented. When used in AllocateQuotaRequest, this returns the\neffective quota limit(s) in the response, and no quota check will be\nperformed. Not supported for other requests, and even for\nAllocateQuotaRequest, this is currently supported only for whitelisted\nservices."
+            "Unimplemented. When used in AllocateQuotaRequest, this returns the\neffective quota limit(s) in the response, and no quota check will be\nperformed. Not supported for other requests, and even for\nAllocateQuotaRequest, this is currently supported only for whitelisted\nservices.",
+            "The operation allocates quota for the amount specified in the service\nconfiguration or specified using the quota metrics. If the requested\namount is higher than the available quota, request does not fail and\nremaining quota would become negative (going over the limit)\nNot supported for Rate Quota."
           ],
           "type": "string"
         }

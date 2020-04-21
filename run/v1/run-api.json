@@ -1942,7 +1942,7 @@
       }
     }
   },
-  "revision": "20200327",
+  "revision": "20200415",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -2528,25 +2528,6 @@
       },
       "type": "object"
     },
-    "Handler": {
-      "description": "Cloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nHandler defines a specific action that should be taken",
-      "id": "Handler",
-      "properties": {
-        "exec": {
-          "$ref": "ExecAction",
-          "description": "(Optional)\n\nCloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nOne and only one of the following should be specified.\nExec specifies the action to take."
-        },
-        "httpGet": {
-          "$ref": "HTTPGetAction",
-          "description": "(Optional)\n\nCloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nHTTPGet specifies the http request to perform."
-        },
-        "tcpSocket": {
-          "$ref": "TCPSocketAction",
-          "description": "(Optional)\n\nCloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nTCPSocket specifies an action involving a TCP port.\nTCP hooks not yet supported"
-        }
-      },
-      "type": "object"
-    },
     "IntOrString": {
       "description": "IntOrString is a type that can hold an int32 or a string.  When used in\nJSON or YAML marshalling and unmarshalling, it produces or consumes the\ninner type.  This allows you to have, for example, a JSON field that can\naccept a name or number.",
       "id": "IntOrString",
@@ -3046,14 +3027,18 @@
       "description": "Cloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nProbe describes a health check to be performed against a container to\ndetermine whether it is alive or ready to receive traffic.",
       "id": "Probe",
       "properties": {
+        "exec": {
+          "$ref": "ExecAction",
+          "description": "(Optional)\n\nCloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nOne and only one of the following should be specified.\nExec specifies the action to take.\n\nA field inlined from the Handler message."
+        },
         "failureThreshold": {
           "description": "(Optional)\n\nCloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nMinimum consecutive failures for the probe to be considered failed after\nhaving succeeded. Defaults to 3. Minimum value is 1.",
           "format": "int32",
           "type": "integer"
         },
-        "handler": {
-          "$ref": "Handler",
-          "description": "Cloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nThe action taken to determine the health of a container"
+        "httpGet": {
+          "$ref": "HTTPGetAction",
+          "description": "(Optional)\n\nCloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nHTTPGet specifies the http request to perform.\n\nA field inlined from the Handler message."
         },
         "initialDelaySeconds": {
           "description": "(Optional)\n\nCloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nNumber of seconds after the container has started before liveness probes\nare initiated. More info:\nhttps://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
@@ -3069,6 +3054,10 @@
           "description": "(Optional)\n\nCloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nMinimum consecutive successes for the probe to be considered successful\nafter having failed. Defaults to 1. Must be 1 for liveness. Minimum value\nis 1.",
           "format": "int32",
           "type": "integer"
+        },
+        "tcpSocket": {
+          "$ref": "TCPSocketAction",
+          "description": "(Optional)\n\nCloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nTCPSocket specifies an action involving a TCP port.\nTCP hooks not yet supported\n\nA field inlined from the Handler message."
         },
         "timeoutSeconds": {
           "description": "(Optional)\n\nCloud Run fully managed: not supported\n\nCloud Run for Anthos: supported\n\nNumber of seconds after which the probe times out.\nDefaults to 1 second. Minimum value is 1.\nMore info:\nhttps://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
@@ -3519,7 +3508,7 @@
           "description": "REQUIRED: The complete policy to be applied to the `resource`. The size of\nthe policy is limited to a few 10s of KB. An empty policy is a\nvalid policy but certain Cloud Platform services (such as Projects)\nmight reject them."
         },
         "updateMask": {
-          "description": "OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only\nthe fields in the mask will be modified. If no mask is provided, the\nfollowing default mask is used:\npaths: \"bindings, etag\"\nThis field is only used by Cloud IAM.",
+          "description": "OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only\nthe fields in the mask will be modified. If no mask is provided, the\nfollowing default mask is used:\n\n`paths: \"bindings, etag\"`",
           "format": "google-fieldmask",
           "type": "string"
         }

@@ -1735,7 +1735,7 @@
                       ]
                     },
                     "import": {
-                      "description": "Import resources to the FHIR store by loading data from the specified\nsources. This method is optimized to load large quantities of data using\nimport semantics that ignore some FHIR store configuration options and are\nnot suitable for all use cases. It is primarily intended to load data into\nan empty FHIR store that is not being used by other clients. In cases\nwhere this method is not appropriate, consider using ExecuteBundle to\nload data.\n\nEvery resource in the input must contain a client-supplied ID, and will be\nstored using that ID regardless of the\nenable_update_create setting on the FHIR\nstore.\n\nThe import process does not enforce referential integrity, regardless of\nthe\ndisable_referential_integrity\nsetting on the FHIR store. This allows the import of resources with\narbitrary interdependencies without considering grouping or ordering, but\nif the input data contains invalid references or if some resources fail to\nbe imported, the FHIR store might be left in a state that violates\nreferential integrity.\n\nThe import process does not trigger PubSub notification or BigQuery\nstreaming update, regardless of how those are configured on the FHIR store.\n\nIf a resource with the specified ID already exists, the most recent\nversion of the resource is overwritten without creating a new historical\nversion, regardless of the\ndisable_resource_versioning\nsetting on the FHIR store. If transient failures occur during the import,\nit is possible that successfully imported resources will be overwritten\nmore than once.\n\nThe import operation is idempotent unless the input data contains multiple\nvalid resources with the same ID but different contents. In that case,\nafter the import completes, the store will contain exactly one resource\nwith that ID but there is no ordering guarantee on which version of the\ncontents it will have. The operation result counters do not count\nduplicate IDs as an error and will count one success for each resource in\nthe input, which might result in a success count larger than the number\nof resources in the FHIR store. This often occurs when importing data\norganized in bundles produced by Patient-everything\nwhere each bundle contains its own copy of a resource such as Practitioner\nthat might be referred to by many patients.\n\nIf some resources fail to import, for example due to parsing errors,\nsuccessfully imported resources are not rolled back.\n\nThe location and format of the input data is specified by the parameters\nbelow. Note that if no format is specified, this method assumes the\n`BUNDLE` format. When using the `BUNDLE` format this method ignores the\n`Bundle.type` field, except that `history` bundles are rejected, and does\nnot apply any of the bundle processing semantics for batch or transaction\nbundles. Unlike in ExecuteBundle, transaction bundles are not executed\nas a single transaction and bundle-internal references are not rewritten.\nThe bundle is treated as a collection of resources to be written as\nprovided in `Bundle.entry.resource`, ignoring `Bundle.entry.request`. As\nan example, this allows the import of `searchset` bundles produced by a\nFHIR search or\nPatient-everything operation.\n\nThis method returns an Operation that can\nbe used to track the status of the import by calling\nGetOperation.\n\nImmediate fatal errors appear in the\nerror field, errors are also logged\nto Stackdriver (see [Viewing\nlogs](/healthcare/docs/how-tos/stackdriver-logging)). Otherwise, when the\noperation finishes, a detailed response of type ImportResourcesResponse\nis returned in the response field.\nThe metadata field type for this\noperation is OperationMetadata.",
+                      "description": "Import resources to the FHIR store by loading data from the specified\nsources. This method is optimized to load large quantities of data using\nimport semantics that ignore some FHIR store configuration options and are\nnot suitable for all use cases. It is primarily intended to load data into\nan empty FHIR store that is not being used by other clients. In cases\nwhere this method is not appropriate, consider using ExecuteBundle to\nload data.\n\nEvery resource in the input must contain a client-supplied ID, and will be\nstored using that ID regardless of the\nenable_update_create setting on the FHIR\nstore.\n\nThe import process does not enforce referential integrity, regardless of\nthe\ndisable_referential_integrity\nsetting on the FHIR store. This allows the import of resources with\narbitrary interdependencies without considering grouping or ordering, but\nif the input data contains invalid references or if some resources fail to\nbe imported, the FHIR store might be left in a state that violates\nreferential integrity.\n\nThe import process does not trigger Cloud Pub/Sub notification or BigQuery\nstreaming update, regardless of how those are configured on the FHIR store.\n\nIf a resource with the specified ID already exists, the most recent\nversion of the resource is overwritten without creating a new historical\nversion, regardless of the\ndisable_resource_versioning\nsetting on the FHIR store. If transient failures occur during the import,\nit is possible that successfully imported resources will be overwritten\nmore than once.\n\nThe import operation is idempotent unless the input data contains multiple\nvalid resources with the same ID but different contents. In that case,\nafter the import completes, the store will contain exactly one resource\nwith that ID but there is no ordering guarantee on which version of the\ncontents it will have. The operation result counters do not count\nduplicate IDs as an error and will count one success for each resource in\nthe input, which might result in a success count larger than the number\nof resources in the FHIR store. This often occurs when importing data\norganized in bundles produced by Patient-everything\nwhere each bundle contains its own copy of a resource such as Practitioner\nthat might be referred to by many patients.\n\nIf some resources fail to import, for example due to parsing errors,\nsuccessfully imported resources are not rolled back.\n\nThe location and format of the input data is specified by the parameters\nbelow. Note that if no format is specified, this method assumes the\n`BUNDLE` format. When using the `BUNDLE` format this method ignores the\n`Bundle.type` field, except that `history` bundles are rejected, and does\nnot apply any of the bundle processing semantics for batch or transaction\nbundles. Unlike in ExecuteBundle, transaction bundles are not executed\nas a single transaction and bundle-internal references are not rewritten.\nThe bundle is treated as a collection of resources to be written as\nprovided in `Bundle.entry.resource`, ignoring `Bundle.entry.request`. As\nan example, this allows the import of `searchset` bundles produced by a\nFHIR search or\nPatient-everything operation.\n\nThis method returns an Operation that can\nbe used to track the status of the import by calling\nGetOperation.\n\nImmediate fatal errors appear in the\nerror field, errors are also logged\nto Stackdriver (see [Viewing\nlogs](/healthcare/docs/how-tos/stackdriver-logging)). Otherwise, when the\noperation finishes, a detailed response of type ImportResourcesResponse\nis returned in the response field.\nThe metadata field type for this\noperation is OperationMetadata.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:import",
                       "httpMethod": "POST",
                       "id": "healthcare.projects.locations.datasets.fhirStores.import",
@@ -1927,6 +1927,101 @@
                   "resources": {
                     "fhir": {
                       "methods": {
+                        "ConceptMap-search-translate": {
+                          "description": "Translates a code from one value set to another by searching for\nappropriate concept maps.\n\nImplements the FHIR standard $translate operation\n([DSTU2](https://www.hl7.org/fhir/DSTU2/operation-conceptmap-translate.html),\n[STU3](https://www.hl7.org/fhir/STU3/operation-conceptmap-translate.html),\n[R4](https://www.hl7.org/fhir/R4/operation-conceptmap-translate.html)).\n\nOn success, the response body contains a JSON-encoded representation\nof a FHIR Parameters resource, which includes the translation result.\nErrors generated by the FHIR store contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
+                          "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/ConceptMap/$translate",
+                          "httpMethod": "GET",
+                          "id": "healthcare.projects.locations.datasets.fhirStores.fhir.ConceptMap-search-translate",
+                          "parameterOrder": [
+                            "parent"
+                          ],
+                          "parameters": {
+                            "code": {
+                              "description": "The code to translate.",
+                              "location": "query",
+                              "type": "string"
+                            },
+                            "conceptMapVersion": {
+                              "description": "The version of the concept map to use. If unset, the most current version\nis used.",
+                              "location": "query",
+                              "type": "string"
+                            },
+                            "parent": {
+                              "description": "The name for the FHIR store containing the concept map(s) to use for the\ntranslation.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            },
+                            "source": {
+                              "description": "The source value set of the concept map to be used. If unset, target is\nused to search for concept maps.",
+                              "location": "query",
+                              "type": "string"
+                            },
+                            "system": {
+                              "description": "The system for the code to be translated.",
+                              "location": "query",
+                              "type": "string"
+                            },
+                            "target": {
+                              "description": "The target value set of the concept map to be used. If unset, source is\nused to search for concept maps.",
+                              "location": "query",
+                              "type": "string"
+                            },
+                            "url": {
+                              "description": "The canonical url of the concept map to use. If unset, the source and\ntarget is used to search for concept maps.",
+                              "location": "query",
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1beta1/{+parent}/fhir/ConceptMap/$translate",
+                          "response": {
+                            "$ref": "HttpBody"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ]
+                        },
+                        "ConceptMap-translate": {
+                          "description": "Translates a code from one value set to another using a concept map.\n\nImplements the FHIR standard $translate operation\n([DSTU2](https://www.hl7.org/fhir/DSTU2/operation-conceptmap-translate.html),\n[STU3](https://www.hl7.org/fhir/STU3/operation-conceptmap-translate.html),\n[R4](https://www.hl7.org/fhir/R4/operation-conceptmap-translate.html)).\n\nOn success, the response body contains a JSON-encoded representation\nof a FHIR Parameters resource, which includes the translation result.\nErrors generated by the FHIR store contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
+                          "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/ConceptMap/{ConceptMapId}/$translate",
+                          "httpMethod": "GET",
+                          "id": "healthcare.projects.locations.datasets.fhirStores.fhir.ConceptMap-translate",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "code": {
+                              "description": "The code to translate.",
+                              "location": "query",
+                              "type": "string"
+                            },
+                            "conceptMapVersion": {
+                              "description": "The version of the concept map to use. If unset, the most current version\nis used.",
+                              "location": "query",
+                              "type": "string"
+                            },
+                            "name": {
+                              "description": "The URL for the concept map to use for the translation.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/ConceptMap/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            },
+                            "system": {
+                              "description": "The system for the code to be translated.",
+                              "location": "query",
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1beta1/{+name}/$translate",
+                          "response": {
+                            "$ref": "HttpBody"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ]
+                        },
                         "Observation-lastn": {
                           "description": "Retrieves the N most recent `Observation` resources for a subject matching\nsearch criteria specified as query parameters, grouped by\n`Observation.code`, sorted from most recent to oldest.\n\nImplements the FHIR extended operation Observation-lastn\n([STU3](http://hl7.org/implement/standards/fhir/STU3/observation-operations.html#lastn),\n[R4](http://hl7.org/implement/standards/fhir/R4/observation-operations.html#lastn)).\n\nDSTU2 doesn't define the Observation-lastn method, but the server supports\nit the same way it supports STU3.\n\nSearch terms are provided as query parameters following the same pattern as\nthe search method. The following search parameters must\nbe provided:\n\n    - `subject` or `patient` to specify a subject for the Observation.\n    - `code`, `category` or any of the composite parameters that include\n      `code`.\n\nAny other valid Observation search parameters can also be provided. This\noperation accepts an additional query parameter `max`, which specifies N,\nthe maximum number of Observations to return from each group, with a\ndefault of 1.\n\nSearches with over 1000 results are rejected. Results are counted before\ngrouping and limiting the results with `max`. To stay within the limit,\nconstrain these searches using Observation search parameters such as\n`_lastUpdated` or `date`.\n\nOn success, the response body will contain a JSON-encoded representation\nof a `Bundle` resource of type `searchset`, containing the results of the\noperation.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/Observation/$lastn",
@@ -1953,7 +2048,7 @@
                           ]
                         },
                         "Patient-everything": {
-                          "description": "On success, the response body will contain a JSON-encoded representation\nof a `Bundle` resource of type `searchset`, containing the results of the\noperation.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
+                          "description": "Retrieves all the resources directly referenced by a patient, as well as\nall of the resources in the patient compartment.\n\nImplements the FHIR extended operation Patient-everything\n([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/patient-operations.html#everything),\n[STU3](http://hl7.org/implement/standards/fhir/STU3/patient-operations.html#everything),\n[R4](http://hl7.org/implement/standards/fhir/R4/patient-operations.html#everything)).\n\nOn success, the response body will contain a JSON-encoded representation\nof a `Bundle` resource of type `searchset`, containing the results of the\noperation.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/Patient/{PatientId}/$everything",
                           "httpMethod": "GET",
                           "id": "healthcare.projects.locations.datasets.fhirStores.fhir.Patient-everything",
@@ -2996,7 +3091,7 @@
       }
     }
   },
-  "revision": "20200327",
+  "revision": "20200414",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "AuditConfig": {

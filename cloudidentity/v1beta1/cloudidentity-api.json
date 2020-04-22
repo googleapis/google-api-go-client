@@ -550,67 +550,16 @@
       }
     }
   },
-  "revision": "20200411",
+  "revision": "20200418",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "AndroidAttributes": {
       "description": "Resource representing the Android specific attributes of a Device.",
       "id": "AndroidAttributes",
       "properties": {
-        "basebandVersion": {
-          "description": "Baseband version of Android device.",
-          "type": "string"
-        },
-        "bootloaderVersion": {
-          "description": "Device bootloader version. Example: 0.6.7.",
-          "type": "string"
-        },
-        "buildNumber": {
-          "description": "Build number of Android device.",
-          "type": "string"
-        },
-        "enabledDeveloperOptions": {
-          "description": "Whether developer options is enabled on device.",
-          "type": "boolean"
-        },
         "enabledUnknownSources": {
           "description": "Whether applications from unknown sources can be installed on device.",
           "type": "boolean"
-        },
-        "enabledUsbDebugging": {
-          "description": "Whether adb (USB debugging) is enabled on device.",
-          "type": "boolean"
-        },
-        "encryptionState": {
-          "description": "Device encryption state.",
-          "enum": [
-            "ENCRYPTION_STATE_UNSPECIFIED",
-            "UNSUPPORTED_BY_DEVICE",
-            "ENCRYPTED",
-            "NOT_ENCRYPTED"
-          ],
-          "enumDescriptions": [
-            "Encryption Status is not set.",
-            "Device doesn't support encryption.",
-            "Device is encrypted.",
-            "Device is not encrypted."
-          ],
-          "type": "string"
-        },
-        "hardware": {
-          "description": "Device hardware. Example: Sprout.",
-          "type": "string"
-        },
-        "kernelVersion": {
-          "description": "Kernel version of Android device.",
-          "type": "string"
-        },
-        "otherAccounts": {
-          "description": "Domain name for Google accounts on device. Type for other accounts on\ndevice. Will only be populated if |ownership_privilege| is\n|PROFILE_OWNER| or |DEVICE_OWNER|. Does not include the account signed in\nto the device policy app if that account's domain has only one account.\nExamples: \"com.example\", \"xyz.com\".",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
         },
         "ownerProfileAccount": {
           "description": "Whether this account is on an owner/primary profile.\nFor phones, only true for owner profiles. Android 4+ devices\ncan have secondary or restricted user profiles.",
@@ -630,11 +579,6 @@
             "Profile Owner privileges.\nThe account is in a managed corporate profile.",
             "Device Owner privileges on the device."
           ],
-          "type": "string"
-        },
-        "securityPatchTime": {
-          "description": "OS security patch update time on device.",
-          "format": "google-datetime",
           "type": "string"
         },
         "supportsWorkProfile": {
@@ -776,6 +720,20 @@
           "description": "Output only. [Resource name](https://cloud.google.com/apis/design/resource_names) of\nthe ClientState in format:\n`devices/{device_id}/deviceUsers/{device_user_id}/clientState/{partner_id}`,\nwhere partner_id corresponds to the partner storing the data.",
           "type": "string"
         },
+        "ownerType": {
+          "description": "The owner of the ClientState",
+          "enum": [
+            "OWNER_TYPE_UNSPECIFIED",
+            "OWNER_TYPE_CUSTOMER",
+            "OWNER_TYPE_PARTNER"
+          ],
+          "enumDescriptions": [
+            "Unknown owner type",
+            "Customer is the owner",
+            "Partner is the owner"
+          ],
+          "type": "string"
+        },
         "scoreReason": {
           "description": "A descriptive cause of the health score.",
           "type": "string"
@@ -815,8 +773,20 @@
           "description": "Asset tag of the device.",
           "type": "string"
         },
+        "basebandVersion": {
+          "description": "Output only. Baseband version of the device.",
+          "type": "string"
+        },
+        "bootloaderVersion": {
+          "description": "Output only. Device bootloader version. Example: 0.6.7.",
+          "type": "string"
+        },
         "brand": {
           "description": "Output only. Device brand. Example: Samsung.",
+          "type": "string"
+        },
+        "buildNumber": {
+          "description": "Output only. Build number of the device.",
           "type": "string"
         },
         "compromisedState": {
@@ -862,8 +832,36 @@
           ],
           "type": "string"
         },
+        "enabledDeveloperOptions": {
+          "description": "Output only. Whether developer options is enabled on device.",
+          "type": "boolean"
+        },
+        "enabledUsbDebugging": {
+          "description": "Output only. Whether USB debugging is enabled on device.",
+          "type": "boolean"
+        },
+        "encryptionState": {
+          "description": "Output only. Device encryption state.",
+          "enum": [
+            "ENCRYPTION_STATE_UNSPECIFIED",
+            "UNSUPPORTED_BY_DEVICE",
+            "ENCRYPTED",
+            "NOT_ENCRYPTED"
+          ],
+          "enumDescriptions": [
+            "Encryption Status is not set.",
+            "Device doesn't support encryption.",
+            "Device is encrypted.",
+            "Device is not encrypted."
+          ],
+          "type": "string"
+        },
         "imei": {
           "description": "Output only. IMEI number of device if GSM device; empty otherwise.",
+          "type": "string"
+        },
+        "kernelVersion": {
+          "description": "Output only. Kernel version of the device.",
           "type": "string"
         },
         "lastSyncTime": {
@@ -917,6 +915,13 @@
           "description": "Output only. OS version of the device. Example: Android 8.1.0.",
           "type": "string"
         },
+        "otherAccounts": {
+          "description": "Output only. Domain name for Google accounts on device. Type for other accounts on\ndevice. On Android, will only be populated if |ownership_privilege| is\n|PROFILE_OWNER| or |DEVICE_OWNER|. Does not include the account signed in\nto the device policy app if that account's domain has only one account.\nExamples: \"com.example\", \"xyz.com\".",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "ownerType": {
           "description": "Whether the device is owned by the company or an individual",
           "enum": [
@@ -933,6 +938,11 @@
         },
         "releaseVersion": {
           "description": "Output only. OS release version. Example: 6.0.",
+          "type": "string"
+        },
+        "securityPatchTime": {
+          "description": "Output only. OS security patch update time on device.",
+          "format": "google-datetime",
           "type": "string"
         },
         "serialNumber": {

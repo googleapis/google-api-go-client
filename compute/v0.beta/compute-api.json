@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/PeVNOAGb0CTL4FMw70049d9mF9E\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/utZ4QQv7YpiiQXlJorx04WbMMmI\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -1501,7 +1501,7 @@
           ]
         },
         "getHealth": {
-          "description": "Gets the most recent health check results for this BackendService.",
+          "description": "Gets the most recent health check results for this BackendService.\n\nExample request body:\n\n{ \"group\": \"/zones/us-east1-b/instanceGroups/lb-backend-example\" }",
           "httpMethod": "POST",
           "id": "compute.backendServices.getHealth",
           "parameterOrder": [
@@ -13113,7 +13113,7 @@
           ]
         },
         "patch": {
-          "description": "Patch the node group.",
+          "description": "Updates the specified node group.",
           "httpMethod": "PATCH",
           "id": "compute.nodeGroups.patch",
           "parameterOrder": [
@@ -27461,7 +27461,7 @@
       }
     }
   },
-  "revision": "20200311",
+  "revision": "20200331",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -27959,7 +27959,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels to apply to this Address resource. These can be later modified by the setLabels method. Each label key/value must comply with RFC1035. Label values may be empty.",
+          "description": "Labels for this resource. These can only be added or modified by the setLabels method. Each label key/value pair must comply with RFC1035. Label values may be empty.",
           "type": "object"
         },
         "name": {
@@ -32476,7 +32476,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels to apply to this ExternalVpnGateway resource. These can be later modified by the setLabels method. Each label key/value must comply with RFC1035. Label values may be empty.",
+          "description": "Labels for this resource. These can only be added or modified by the setLabels method. Each label key/value pair must comply with RFC1035. Label values may be empty.",
           "type": "object"
         },
         "name": {
@@ -33067,7 +33067,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels to apply to this resource. These can be later modified by the setLabels method. Each label key/value pair must comply with RFC1035. Label values may be empty.",
+          "description": "Labels for this resource. These can only be added or modified by the setLabels method. Each label key/value pair must comply with RFC1035. Label values may be empty.",
           "type": "object"
         },
         "loadBalancingScheme": {
@@ -35962,7 +35962,7 @@
           "type": "array"
         },
         "network": {
-          "description": "The URL of the network to which all instances in the instance group belong.",
+          "description": "[Output Only] The URL of the network to which all instances in the instance group belong. If your instance has multiple network interfaces, then the network and subnetwork fields only refer to the network and subnet used by your primary interface (nic0).",
           "type": "string"
         },
         "region": {
@@ -35979,7 +35979,7 @@
           "type": "integer"
         },
         "subnetwork": {
-          "description": "[Output Only] The URL of the subnetwork to which all instances in the instance group belong.",
+          "description": "[Output Only] The URL of the subnetwork to which all instances in the instance group belong. If your instance has multiple network interfaces, then the network and subnetwork fields only refer to the network and subnet used by your primary interface (nic0).",
           "type": "string"
         },
         "zone": {
@@ -38498,7 +38498,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels to apply to this Interconnect resource. These can be later modified by the setLabels method. Each label key/value must comply with RFC1035. Label values may be empty.",
+          "description": "Labels for this resource. These can only be added or modified by the setLabels method. Each label key/value pair must comply with RFC1035. Label values may be empty.",
           "type": "object"
         },
         "linkType": {
@@ -38680,7 +38680,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels to apply to this InterconnectAttachment resource. These can be later modified by the setLabels method. Each label key/value must comply with RFC1035. Label values may be empty.",
+          "description": "Labels for this resource. These can only be added or modified by the setLabels method. Each label key/value pair must comply with RFC1035. Label values may be empty.",
           "type": "object"
         },
         "name": {
@@ -48000,7 +48000,8 @@
         "network": {
           "annotations": {
             "required": [
-              "compute.routers.insert"
+              "compute.routers.insert",
+              "compute.routers.update"
             ]
           },
           "description": "URI of the network to which this router belongs.",
@@ -49285,7 +49286,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels to apply to this security policy resource. These can be later modified by the setLabels method. Each label key/value must comply with RFC1035. Label values may be empty.",
+          "description": "Labels for this resource. These can only be added or modified by the setLabels method. Each label key/value pair must comply with RFC1035. Label values may be empty.",
           "type": "object"
         },
         "name": {
@@ -53708,7 +53709,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels to apply to this TargetVpnGateway resource. These can be later modified by the setLabels method. Each label key/value must comply with RFC1035. Label values may be empty.",
+          "description": "Labels for this resource. These can only be added or modified by the setLabels method. Each label key/value pair must comply with RFC1035. Label values may be empty.",
           "type": "object"
         },
         "name": {
@@ -54983,7 +54984,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels to apply to this VpnGateway resource. These can be later modified by the setLabels method. Each label key/value must comply with RFC1035. Label values may be empty.",
+          "description": "Labels for this resource. These can only be added or modified by the setLabels method. Each label key/value pair must comply with RFC1035. Label values may be empty.",
           "type": "object"
         },
         "name": {
@@ -55014,7 +55015,7 @@
           "type": "string"
         },
         "vpnInterfaces": {
-          "description": "[Output Only] A list of interfaces on this VPN gateway.",
+          "description": "A list of interfaces on this VPN gateway.",
           "items": {
             "$ref": "VpnGatewayVpnGatewayInterface"
           },
@@ -55346,7 +55347,7 @@
           "type": "integer"
         },
         "ipAddress": {
-          "description": "The external IP address for this VPN gateway interface.",
+          "description": "[Output Only] The external IP address for this VPN gateway interface.",
           "type": "string"
         }
       },
@@ -55495,7 +55496,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels to apply to this VpnTunnel. These can be later modified by the setLabels method. Each label key/value pair must comply with RFC1035. Label values may be empty.",
+          "description": "Labels for this resource. These can only be added or modified by the setLabels method. Each label key/value pair must comply with RFC1035. Label values may be empty.",
           "type": "object"
         },
         "localTrafficSelector": {

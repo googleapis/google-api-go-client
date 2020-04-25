@@ -8,6 +8,9 @@
         "https://www.googleapis.com/auth/contacts.readonly": {
           "description": "See and download your contacts"
         },
+        "https://www.googleapis.com/auth/directory.readonly": {
+          "description": "See and download your organization's GSuite directory"
+        },
         "https://www.googleapis.com/auth/user.addresses.read": {
           "description": "View your street addresses"
         },
@@ -448,6 +451,7 @@
           "scopes": [
             "https://www.googleapis.com/auth/contacts",
             "https://www.googleapis.com/auth/contacts.readonly",
+            "https://www.googleapis.com/auth/directory.readonly",
             "https://www.googleapis.com/auth/user.addresses.read",
             "https://www.googleapis.com/auth/user.birthday.read",
             "https://www.googleapis.com/auth/user.emails.read",
@@ -490,6 +494,7 @@
           "scopes": [
             "https://www.googleapis.com/auth/contacts",
             "https://www.googleapis.com/auth/contacts.readonly",
+            "https://www.googleapis.com/auth/directory.readonly",
             "https://www.googleapis.com/auth/user.addresses.read",
             "https://www.googleapis.com/auth/user.birthday.read",
             "https://www.googleapis.com/auth/user.emails.read",
@@ -640,7 +645,7 @@
       }
     }
   },
-  "revision": "20200407",
+  "revision": "20200420",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {

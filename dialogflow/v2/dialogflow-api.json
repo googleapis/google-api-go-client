@@ -777,6 +777,45 @@
               }
             },
             "environments": {
+              "methods": {
+                "list": {
+                  "description": "Returns the list of all non-draft environments of the specified agent.",
+                  "flatPath": "v2/projects/{projectsId}/agent/environments",
+                  "httpMethod": "GET",
+                  "id": "dialogflow.projects.agent.environments.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "Optional. The maximum number of items to return in a single page. By default 100 and\nat most 1000.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "Optional. The next_page_token value returned from a previous list request.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The agent to list all environments from.\nFormat: `projects/\u003cProject ID\u003e/agent`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/agent$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+parent}/environments",
+                  "response": {
+                    "$ref": "GoogleCloudDialogflowV2ListEnvironmentsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
+                  ]
+                }
+              },
               "resources": {
                 "users": {
                   "resources": {
@@ -2010,7 +2049,7 @@
       }
     }
   },
-  "revision": "20200417",
+  "revision": "20200422",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -2500,6 +2539,46 @@
         },
         "value": {
           "description": "Required. The primary value associated with this entity entry.\nFor example, if the entity type is *vegetable*, the value could be\n*scallions*.\n\nFor `KIND_MAP` entity types:\n\n*   A reference value to be used in place of synonyms.\n\nFor `KIND_LIST` entity types:\n\n*   A string that can contain references to other entity types (with or\n    without aliases).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2Environment": {
+      "description": "Represents an agent environment.",
+      "id": "GoogleCloudDialogflowV2Environment",
+      "properties": {
+        "agentVersion": {
+          "description": "Optional. The agent version loaded into this environment.\nFormat: `projects/\u003cProject ID\u003e/agent/versions/\u003cVersion ID\u003e`.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Optional. The developer-provided description for this environment.\nThe maximum length is 500 characters. If exceeded, the request is rejected.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. The unique identifier of this agent environment.\nFormat: `projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e`.\nFor Environment ID, \"-\" is reserved for 'draft' environment.",
+          "type": "string"
+        },
+        "state": {
+          "description": "Output only. The state of this environment. This field is read-only, i.e., it cannot be\nset by create and update methods.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "STOPPED",
+            "LOADING",
+            "RUNNING"
+          ],
+          "enumDescriptions": [
+            "Not specified. This value is not used.",
+            "Stopped.",
+            "Loading.",
+            "Running."
+          ],
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Output only. The last update time of this environment. This field is read-only, i.e., it\ncannot be set by create and update methods.",
+          "format": "google-datetime",
           "type": "string"
         }
       },
@@ -3672,6 +3751,24 @@
           "description": "The list of agent entity types. There will be a maximum number of items\nreturned based on the page_size field in the request.",
           "items": {
             "$ref": "GoogleCloudDialogflowV2EntityType"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Token to retrieve the next page of results, or empty if there are no\nmore results in the list.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2ListEnvironmentsResponse": {
+      "description": "The response message for Environments.ListEnvironments.",
+      "id": "GoogleCloudDialogflowV2ListEnvironmentsResponse",
+      "properties": {
+        "environments": {
+          "description": "The list of agent environments. There will be a maximum number of items\nreturned based on the page_size field in the request.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2Environment"
           },
           "type": "array"
         },

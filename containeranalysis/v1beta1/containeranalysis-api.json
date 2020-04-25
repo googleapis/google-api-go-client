@@ -853,7 +853,7 @@
       }
     }
   },
-  "revision": "20200221",
+  "revision": "20200417",
   "rootUrl": "https://containeranalysis.googleapis.com/",
   "schemas": {
     "AliasContext": {
@@ -897,6 +897,29 @@
         },
         "names": {
           "description": "Related artifact names. This may be the path to a binary or jar file, or in\nthe case of a container build, the name used to push the container image to\nGoogle Container Registry, as presented to `docker push`. Note that a\nsingle Artifact ID can have multiple names, for example if two tags are\napplied to one image.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ArtifactHashes": {
+      "description": "Defines a hash object for use in Materials and Products.",
+      "id": "ArtifactHashes",
+      "properties": {
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ArtifactRule": {
+      "description": "Defines an object to declare an in-toto artifact rule",
+      "id": "ArtifactRule",
+      "properties": {
+        "artifactRule": {
           "items": {
             "type": "string"
           },
@@ -1139,6 +1162,19 @@
           "description": "Required. Signature of the related `BuildProvenance`. In JSON, this is\nbase-64 encoded.",
           "format": "byte",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ByProducts": {
+      "description": "Defines an object for the byproducts field in in-toto links. The suggested\nfields are \"stderr\", \"stdout\", and \"return-value\".",
+      "id": "ByProducts",
+      "properties": {
+        "customValues": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
         }
       },
       "type": "object"
@@ -1555,7 +1591,8 @@
             "PACKAGE",
             "DEPLOYMENT",
             "DISCOVERY",
-            "ATTESTATION"
+            "ATTESTATION",
+            "INTOTO"
           ],
           "enumDescriptions": [
             "Unknown.",
@@ -1565,7 +1602,8 @@
             "This represents a package installed via a package manager.",
             "The note and occurrence track deployment events.",
             "The note and occurrence track the initial discovery status of a resource.",
-            "This represents a logical \"role\" that can attest to artifacts."
+            "This represents a logical \"role\" that can attest to artifacts.",
+            "This represents an in-toto link."
           ],
           "type": "string"
         }
@@ -1617,6 +1655,19 @@
       "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
       "id": "Empty",
       "properties": {},
+      "type": "object"
+    },
+    "Environment": {
+      "description": "Defines an object for the environment field in in-toto links. The suggested\nfields are \"variables\", \"filesystem\", and \"workdir\".",
+      "id": "Environment",
+      "properties": {
+        "customValues": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      },
       "type": "object"
     },
     "Expr": {
@@ -1779,7 +1830,7 @@
       "properties": {
         "options": {
           "$ref": "GetPolicyOptions",
-          "description": "OPTIONAL: A `GetPolicyOptions` object for specifying options to\n`GetIamPolicy`. This field is only used by Cloud IAM."
+          "description": "OPTIONAL: A `GetPolicyOptions` object for specifying options to\n`GetIamPolicy`."
         }
       },
       "type": "object"
@@ -1872,6 +1923,47 @@
         "derivedImage": {
           "$ref": "Derived",
           "description": "Required. Immutable. The child image derived from the base image."
+        }
+      },
+      "type": "object"
+    },
+    "GrafeasV1beta1IntotoArtifact": {
+      "id": "GrafeasV1beta1IntotoArtifact",
+      "properties": {
+        "hashes": {
+          "$ref": "ArtifactHashes"
+        },
+        "resourceUri": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GrafeasV1beta1IntotoDetails": {
+      "description": "This corresponds to a signed in-toto link - it is made up of one or more\nsignatures and the in-toto link itself. This is used for occurrences of a\nGrafeas in-toto note.",
+      "id": "GrafeasV1beta1IntotoDetails",
+      "properties": {
+        "signatures": {
+          "items": {
+            "$ref": "GrafeasV1beta1IntotoSignature"
+          },
+          "type": "array"
+        },
+        "signed": {
+          "$ref": "Link"
+        }
+      },
+      "type": "object"
+    },
+    "GrafeasV1beta1IntotoSignature": {
+      "description": "A signature object consists of the KeyID used and the signature itself.",
+      "id": "GrafeasV1beta1IntotoSignature",
+      "properties": {
+        "keyid": {
+          "type": "string"
+        },
+        "sig": {
+          "type": "string"
         }
       },
       "type": "object"
@@ -2000,6 +2092,49 @@
       },
       "type": "object"
     },
+    "InToto": {
+      "description": "This contains the fields corresponding to the definition of a software supply\nchain step in an in-toto layout. This information goes into a Grafeas note.",
+      "id": "InToto",
+      "properties": {
+        "expectedCommand": {
+          "description": "This field contains the expected command used to perform the step.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "expectedMaterials": {
+          "description": "The following fields contain in-toto artifact rules identifying the\nartifacts that enter this supply chain step, and exit the supply chain\nstep, i.e. materials and products of the step.",
+          "items": {
+            "$ref": "ArtifactRule"
+          },
+          "type": "array"
+        },
+        "expectedProducts": {
+          "items": {
+            "$ref": "ArtifactRule"
+          },
+          "type": "array"
+        },
+        "signingKeys": {
+          "description": "This field contains the public keys that can be used to verify the\nsignatures on the step metadata.",
+          "items": {
+            "$ref": "SigningKey"
+          },
+          "type": "array"
+        },
+        "stepName": {
+          "description": "This field identifies the name of the step in the supply chain.",
+          "type": "string"
+        },
+        "threshold": {
+          "description": "This field contains a value that indicates the minimum number of keys that\nneed to be used to sign the step's in-toto link.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Installation": {
       "description": "This represents how a particular software package may be installed on a\nsystem.",
       "id": "Installation",
@@ -2083,6 +2218,42 @@
             "https://docs.docker.com/engine/reference/builder/"
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Link": {
+      "description": "This corresponds to an in-toto link.",
+      "id": "Link",
+      "properties": {
+        "byproducts": {
+          "$ref": "ByProducts",
+          "description": "ByProducts are data generated as part of a software supply chain step, but\nare not the actual result of the step."
+        },
+        "command": {
+          "description": "This field contains the full command executed for the step. This can also\nbe empty if links are generated for operations that aren't directly mapped\nto a specific command. Each term in the command is an independent string\nin the list. An example of a command in the in-toto metadata field is:\n\"command\": [\"git\", \"clone\", \"https://github.com/in-toto/demo-project.git\"]",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "environment": {
+          "$ref": "Environment",
+          "description": "This is a field that can be used to capture information about the\nenvironment. It is suggested for this field to contain information that\ndetails environment variables, filesystem information, and the present\nworking directory. The recommended structure of this field is:\n\"environment\": {\n  \"custom_values\": {\n    \"variables\": \"\u003cENV\u003e\",\n    \"filesystem\": \"\u003cFS\u003e\",\n    \"workdir\": \"\u003cCWD\u003e\",\n    \"\u003cANY OTHER RELEVANT FIELDS\u003e\": \"...\"\n  }\n}"
+        },
+        "materials": {
+          "description": "Materials are the supply chain artifacts that go into the step and are used\nfor the operation performed. The key of the map is the path of the artifact\nand the structure contains the recorded hash information. An example is:\n\"materials\": [\n  {\n    \"resource_uri\": \"foo/bar\",\n    \"hashes\": {\n      \"sha256\": \"ebebf...\",\n      \u003cOTHER HASH ALGORITHMS\u003e: \u003cHASH VALUE\u003e\n    }\n  }\n]",
+          "items": {
+            "$ref": "GrafeasV1beta1IntotoArtifact"
+          },
+          "type": "array"
+        },
+        "products": {
+          "description": "Products are the supply chain artifacts generated as a result of the step.\nThe structure is identical to that of materials.",
+          "items": {
+            "$ref": "GrafeasV1beta1IntotoArtifact"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -2212,6 +2383,10 @@
           "format": "google-datetime",
           "type": "string"
         },
+        "intoto": {
+          "$ref": "InToto",
+          "description": "A note describing an in-toto link."
+        },
         "kind": {
           "description": "Output only. The type of analysis. This field can be used as a filter in\nlist requests.",
           "enum": [
@@ -2222,7 +2397,8 @@
             "PACKAGE",
             "DEPLOYMENT",
             "DISCOVERY",
-            "ATTESTATION"
+            "ATTESTATION",
+            "INTOTO"
           ],
           "enumDescriptions": [
             "Unknown.",
@@ -2232,7 +2408,8 @@
             "This represents a package installed via a package manager.",
             "The note and occurrence track deployment events.",
             "The note and occurrence track the initial discovery status of a resource.",
-            "This represents a logical \"role\" that can attest to artifacts."
+            "This represents a logical \"role\" that can attest to artifacts.",
+            "This represents an in-toto link."
           ],
           "type": "string"
         },
@@ -2311,6 +2488,10 @@
           "$ref": "GrafeasV1beta1PackageDetails",
           "description": "Describes the installation of a package on the linked resource."
         },
+        "intoto": {
+          "$ref": "GrafeasV1beta1IntotoDetails",
+          "description": "Describes a specific in-toto link."
+        },
         "kind": {
           "description": "Output only. This explicitly denotes which of the occurrence details are\nspecified. This field can be used as a filter in list requests.",
           "enum": [
@@ -2321,7 +2502,8 @@
             "PACKAGE",
             "DEPLOYMENT",
             "DISCOVERY",
-            "ATTESTATION"
+            "ATTESTATION",
+            "INTOTO"
           ],
           "enumDescriptions": [
             "Unknown.",
@@ -2331,7 +2513,8 @@
             "This represents a package installed via a package manager.",
             "The note and occurrence track deployment events.",
             "The note and occurrence track the initial discovery status of a resource.",
-            "This represents a logical \"role\" that can attest to artifacts."
+            "This represents a logical \"role\" that can attest to artifacts.",
+            "This represents an in-toto link."
           ],
           "type": "string"
         },
@@ -2566,6 +2749,29 @@
         "signature": {
           "description": "The content of the signature, an opaque bytestring.\nThe payload that this signature verifies MUST be unambiguously provided\nwith the Signature during verification. A wrapper message might provide\nthe payload explicitly. Alternatively, a message might have a canonical\nserialization that can always be unambiguously computed to derive the\npayload.",
           "format": "byte",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SigningKey": {
+      "description": "This defines the format used to record keys used in the software supply\nchain. An in-toto link is attested using one or more keys defined in the\nin-toto layout. An example of this is:\n{\n  \"key_id\": \"776a00e29f3559e0141b3b096f696abc6cfb0c657ab40f441132b345b0...\",\n  \"key_type\": \"rsa\",\n  \"public_key_value\": \"-----BEGIN PUBLIC KEY-----\\nMIIBojANBgkqhkiG9w0B...\",\n  \"key_scheme\": \"rsassa-pss-sha256\"\n}\nThe format for in-toto's key definition can be found in section 4.2 of the\nin-toto specification.",
+      "id": "SigningKey",
+      "properties": {
+        "keyId": {
+          "description": "key_id is an identifier for the signing key.",
+          "type": "string"
+        },
+        "keyScheme": {
+          "description": "This field contains the corresponding signature scheme.\nEg: \"rsassa-pss-sha256\".",
+          "type": "string"
+        },
+        "keyType": {
+          "description": "This field identifies the specific signing method. Eg: \"rsa\", \"ed25519\",\nand \"ecdsa\".",
+          "type": "string"
+        },
+        "publicKeyValue": {
+          "description": "This field contains the actual public key.",
           "type": "string"
         }
       },

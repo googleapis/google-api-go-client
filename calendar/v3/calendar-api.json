@@ -26,7 +26,7 @@
   "description": "Manipulates events and other calendar data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/google-apps/calendar/firstapp",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/7Yu8Dg6pIx8hQ9JbwRYcDNjZYUM\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/Fv4LAeLWxiw1CYMPeAMe9_LcOpk\"",
   "icons": {
     "x16": "http://www.google.com/images/icons/product/calendar-16.png",
     "x32": "http://www.google.com/images/icons/product/calendar-32.png"
@@ -1724,7 +1724,7 @@
       }
     }
   },
-  "revision": "20200405",
+  "revision": "20200419",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Acl": {
@@ -2110,7 +2110,7 @@
         },
         "conferenceSolution": {
           "$ref": "ConferenceSolution",
-          "description": "The conference solution, such as Hangouts or Hangouts Meet.\nUnset for a conference with a failed create request.\nEither conferenceSolution and at least one entryPoint, or createRequest is required."
+          "description": "The conference solution, such as Hangouts or Google Meet.\nUnset for a conference with a failed create request.\nEither conferenceSolution and at least one entryPoint, or createRequest is required."
         },
         "createRequest": {
           "$ref": "CreateConferenceRequest",
@@ -2216,7 +2216,7 @@
       "properties": {
         "conferenceSolutionKey": {
           "$ref": "ConferenceSolutionKey",
-          "description": "The conference solution, such as Hangouts or Hangouts Meet."
+          "description": "The conference solution, such as Hangouts or Google Meet."
         },
         "requestId": {
           "description": "The client-generated unique ID for this request.\nClients should regenerate this ID for every new request. If an ID provided is the same as for the previous request, the request is ignored.",
@@ -2325,7 +2325,7 @@
         },
         "conferenceData": {
           "$ref": "ConferenceData",
-          "description": "The conference-related information, such as details of a Hangouts Meet conference. To create new conference details use the createRequest field. To persist your changes, remember to set the conferenceDataVersion request parameter to 1 for all event modification requests."
+          "description": "The conference-related information, such as details of a Google Meet conference. To create new conference details use the createRequest field. To persist your changes, remember to set the conferenceDataVersion request parameter to 1 for all event modification requests."
         },
         "created": {
           "description": "Creation time of the event (as a RFC3339 timestamp). Read-only.",

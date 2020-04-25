@@ -1428,7 +1428,7 @@
       }
     }
   },
-  "revision": "20200324",
+  "revision": "20200415",
   "rootUrl": "https://bigquery.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
@@ -1551,17 +1551,17 @@
       "id": "ArimaFittingMetrics",
       "properties": {
         "aic": {
-          "description": "AIC",
+          "description": "AIC.",
           "format": "double",
           "type": "number"
         },
         "logLikelihood": {
-          "description": "log-likelihood",
+          "description": "Log-likelihood.",
           "format": "double",
           "type": "number"
         },
         "variance": {
-          "description": "variance.",
+          "description": "Variance.",
           "format": "double",
           "type": "number"
         }
@@ -1580,9 +1580,42 @@
           "$ref": "ArimaFittingMetrics",
           "description": "Arima fitting metrics."
         },
+        "hasDrift": {
+          "description": "Whether Arima model fitted with drift or not. It is always false\nwhen d is not 1.",
+          "type": "boolean"
+        },
         "nonSeasonalOrder": {
           "$ref": "ArimaOrder",
           "description": "Non-seasonal order."
+        },
+        "seasonalPeriods": {
+          "description": "Seasonal periods. Repeated because multiple periods are supported\nfor one time series.",
+          "enumDescriptions": [
+            "",
+            "No seasonality",
+            "Daily period, 24 hours.",
+            "Weekly period, 7 days.",
+            "Monthly period, 30 days or irregular.",
+            "Quarterly period, 90 days or irregular.",
+            "Yearly period, 365 days or irregular."
+          ],
+          "items": {
+            "enum": [
+              "SEASONAL_PERIOD_TYPE_UNSPECIFIED",
+              "NO_SEASONALITY",
+              "DAILY",
+              "WEEKLY",
+              "MONTHLY",
+              "QUARTERLY",
+              "YEARLY"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "timeSeriesId": {
+          "description": "The id to indicate different time series.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1627,9 +1660,9 @@
             "No seasonality",
             "Daily period, 24 hours.",
             "Weekly period, 7 days.",
-            "Monthly period, can be as 30 days or irregular.",
-            "Quarterly period, can be as 90 days or irregular.",
-            "Yearly period, can be as 365 days or irregular."
+            "Monthly period, 30 days or irregular.",
+            "Quarterly period, 90 days or irregular.",
+            "Yearly period, 365 days or irregular."
           ],
           "items": {
             "enum": [
@@ -2042,6 +2075,20 @@
             "$ref": "Row"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ConnectionProperty": {
+      "id": "ConnectionProperty",
+      "properties": {
+        "key": {
+          "description": "[Required] Name of the connection property to set.",
+          "type": "string"
+        },
+        "value": {
+          "description": "[Required] Value of the connection property.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2575,10 +2622,6 @@
           "$ref": "GoogleSheetsOptions",
           "description": "[Optional] Additional options if sourceFormat is set to GOOGLE_SHEETS."
         },
-        "hivePartitioningMode": {
-          "description": "[Optional, Trusted Tester] Deprecated, do not use. Please set hivePartitioningOptions instead.",
-          "type": "string"
-        },
         "hivePartitioningOptions": {
           "$ref": "HivePartitioningOptions",
           "description": "[Optional, Trusted Tester] Options to configure hive partitioning support."
@@ -2969,10 +3012,6 @@
           "description": "[Optional] The separator for fields in a CSV file. The separator can be any ISO-8859-1 single-byte character. To use a character in the range 128-255, you must encode the character as UTF8. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. BigQuery also supports the escape sequence \"\\t\" to specify a tab separator. The default value is a comma (',').",
           "type": "string"
         },
-        "hivePartitioningMode": {
-          "description": "[Optional, Trusted Tester] Deprecated, do not use. Please set hivePartitioningOptions instead.",
-          "type": "string"
-        },
         "hivePartitioningOptions": {
           "$ref": "HivePartitioningOptions",
           "description": "[Optional, Trusted Tester] Options to configure hive partitioning support."
@@ -3072,7 +3111,7 @@
         "connectionProperties": {
           "description": "Connection properties.",
           "items": {
-            "type": "any"
+            "$ref": "ConnectionProperty"
           },
           "type": "array"
         },
@@ -4014,7 +4053,7 @@
         "connectionProperties": {
           "description": "Connection properties.",
           "items": {
-            "type": "any"
+            "$ref": "ConnectionProperty"
           },
           "type": "array"
         },

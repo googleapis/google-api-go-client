@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/pojeTTIIYC5DgmWgumRjk5quG4k\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/d1DsaGZzUpO_VvaChZpAEzGh6JA\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -631,7 +631,7 @@
                 "accept": [
                   "application/octet-stream"
                 ],
-                "maxSize": "2GB",
+                "maxSize": "10GB",
                 "protocols": {
                   "resumable": {
                     "multipart": true,
@@ -2485,7 +2485,7 @@
       }
     }
   },
-  "revision": "20200414",
+  "revision": "20200421",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {

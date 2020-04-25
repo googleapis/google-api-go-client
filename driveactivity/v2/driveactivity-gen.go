@@ -1373,7 +1373,7 @@ type QueryDriveActivityRequest struct {
 	//     parentheses.
 	//     Examples:
 	//       - <tt>detail.action_detail_case: RENAME</tt>
-	//       - <tt>detail.action_detail_case:(CREATE UPLOAD)</tt>
+	//       - <tt>detail.action_detail_case:(CREATE EDIT)</tt>
 	//       - <tt>-detail.action_detail_case:MOVE</tt>
 	Filter string `json:"filter,omitempty"`
 
@@ -1929,7 +1929,7 @@ func (c *ActivityQueryCall) Header() http.Header {
 
 func (c *ActivityQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200422")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

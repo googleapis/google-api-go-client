@@ -2796,7 +2796,7 @@
       }
     }
   },
-  "revision": "20200416",
+  "revision": "20200423",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActiveViewVideoViewabilityMetricConfig": {
@@ -4498,20 +4498,20 @@
           ],
           "enumDescriptions": [
             "Type value is not specified or is unknown in this version.",
-            "Standard image creative.",
-            "Expandable creative.",
-            "Video creative.",
-            "Native creative rendered by publishers with assets from advertiser.",
-            "Templated app install mobile creative (banner).",
-            "Square native creative.",
-            "Interstitial creative including both display and video.",
-            "Responsive and expandable Lightbox creative.",
-            "Native app install creative.",
-            "Square native app install creative.",
-            "Audio creative.",
-            "Publisher hosted creative.",
-            "Native video creative.",
-            "Templated app install mobile video creative."
+            "Standard display creative.\n\nCreate and update methods are supported for this creative type if the\nhosting_source is one of the following:\n\n* `HOSTING_SOURCE_HOSTED`\n* `HOSTING_SOURCE_THIRD_PARTY`",
+            "Expandable creative.\n\nCreate and update methods are supported for this creative type if the\nhosting_source is `HOSTING_SOURCE_THIRD_PARTY`",
+            "Video creative.\n\nCreate and update methods are supported for this creative type if the\nhosting_source is one of the following:\n\n* `HOSTING_SOURCE_HOSTED`\n* `HOSTING_SOURCE_THIRD_PARTY`",
+            "Native creative rendered by publishers with assets from advertiser.\n\nCreate and update methods are supported for this creative type if the\nhosting_source is `HOSTING_SOURCE_HOSTED`",
+            "Templated app install mobile creative (banner).\n\nCreate and update methods are **not** supported for this creative type.",
+            "Square native creative.\n\nCreate and update methods are supported for this creative type if the\nhosting_source is `HOSTING_SOURCE_HOSTED`",
+            "Interstitial creative including both display and video.\n\nCreate and update methods are **not** supported for this creative type.",
+            "Responsive and expandable Lightbox creative.\n\nCreate and update methods are **not** supported for this creative type.",
+            "Native app install creative.\n\nCreate and update methods are supported for this creative type if the\nhosting_source is `HOSTING_SOURCE_HOSTED`",
+            "Square native app install creative.\n\nCreate and update methods are supported for this creative type if the\nhosting_source is `HOSTING_SOURCE_HOSTED`",
+            "Audio creative.\n\nCreate and update methods are supported for this creative type if the\nhosting_source is `HOSTING_SOURCE_HOSTED`",
+            "Publisher hosted creative.\n\nCreate and update methods are **not** supported for this creative type.",
+            "Native video creative.\n\nCreate and update methods are supported for this creative type if the\nhosting_source is `HOSTING_SOURCE_HOSTED`",
+            "Templated app install mobile video creative.\n\nCreate and update methods are **not** supported for this creative type."
           ],
           "type": "string"
         },
@@ -4603,10 +4603,10 @@
           ],
           "enumDescriptions": [
             "Hosting source is not specified or is unknown in this version.",
-            "A creative synced from Campaign Manager.",
-            "A creative hosted by a third-party ad server (3PAS).",
-            "A creative created in DV360 and hosted by Campaign Manager.",
-            "A rich media creative created in Studio and hosted by Campaign Manager."
+            "A creative synced from Campaign Manager.\n\nCreate and update methods are **not** supported for this hosting type.",
+            "A creative hosted by a third-party ad server (3PAS).\n\nCreate and update methods are supported for this hosting type if the\ncreative_type is one of the following:\n\n* `CREATIVE_TYPE_EXPANDABLE`\n* `CREATIVE_TYPE_STANDARD`\n* `CREATIVE_TYPE_VIDEO`",
+            "A creative created in DV360 and hosted by Campaign Manager.\n\nCreate and update methods are supported for this hosting type if the\ncreative_type is one of the following:\n\n* `CREATIVE_TYPE_AUDIO`\n* `CREATIVE_TYPE_NATIVE`\n* `CREATIVE_TYPE_NATIVE_APP_INSTALL`\n* `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`\n* `CREATIVE_TYPE_NATIVE_SITE_SQUARE`\n* `CREATIVE_TYPE_NATIVE_VIDEO`\n* `CREATIVE_TYPE_STANDARD`\n* `CREATIVE_TYPE_VIDEO`",
+            "A rich media creative created in Studio and hosted by Campaign Manager.\n\nCreate and update methods are **not** supported for this hosting type."
           ],
           "type": "string"
         },
@@ -4748,20 +4748,20 @@
           ],
           "enumDescriptions": [
             "Type value is not specified or is unknown in this version.",
-            "Standard image creative.",
-            "Expandable creative.",
-            "Video creative.",
-            "Native creative rendered by publishers with assets from advertiser.",
-            "Templated app install mobile creative (banner).",
-            "Square native creative.",
-            "Interstitial creative including both display and video.",
-            "Responsive and expandable Lightbox creative.",
-            "Native app install creative.",
-            "Square native app install creative.",
-            "Audio creative.",
-            "Publisher hosted creative.",
-            "Native video creative.",
-            "Templated app install mobile video creative."
+            "Standard display creative.\n\nCreate and update methods are supported for this creative type if the\nhosting_source is one of the following:\n\n* `HOSTING_SOURCE_HOSTED`\n* `HOSTING_SOURCE_THIRD_PARTY`",
+            "Expandable creative.\n\nCreate and update methods are supported for this creative type if the\nhosting_source is `HOSTING_SOURCE_THIRD_PARTY`",
+            "Video creative.\n\nCreate and update methods are supported for this creative type if the\nhosting_source is one of the following:\n\n* `HOSTING_SOURCE_HOSTED`\n* `HOSTING_SOURCE_THIRD_PARTY`",
+            "Native creative rendered by publishers with assets from advertiser.\n\nCreate and update methods are supported for this creative type if the\nhosting_source is `HOSTING_SOURCE_HOSTED`",
+            "Templated app install mobile creative (banner).\n\nCreate and update methods are **not** supported for this creative type.",
+            "Square native creative.\n\nCreate and update methods are supported for this creative type if the\nhosting_source is `HOSTING_SOURCE_HOSTED`",
+            "Interstitial creative including both display and video.\n\nCreate and update methods are **not** supported for this creative type.",
+            "Responsive and expandable Lightbox creative.\n\nCreate and update methods are **not** supported for this creative type.",
+            "Native app install creative.\n\nCreate and update methods are supported for this creative type if the\nhosting_source is `HOSTING_SOURCE_HOSTED`",
+            "Square native app install creative.\n\nCreate and update methods are supported for this creative type if the\nhosting_source is `HOSTING_SOURCE_HOSTED`",
+            "Audio creative.\n\nCreate and update methods are supported for this creative type if the\nhosting_source is `HOSTING_SOURCE_HOSTED`",
+            "Publisher hosted creative.\n\nCreate and update methods are **not** supported for this creative type.",
+            "Native video creative.\n\nCreate and update methods are supported for this creative type if the\nhosting_source is `HOSTING_SOURCE_HOSTED`",
+            "Templated app install mobile video creative.\n\nCreate and update methods are **not** supported for this creative type."
           ],
           "type": "string"
         },

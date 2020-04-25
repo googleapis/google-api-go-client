@@ -2486,7 +2486,7 @@
       }
     }
   },
-  "revision": "20200409",
+  "revision": "20200423",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -5391,7 +5391,7 @@
       "type": "object"
     },
     "PublisherProfile": {
-      "description": "Note: this resource requires whitelisting for access. Please contact your\naccount manager for access to Marketplace resources.\n\nRepresents a publisher profile in Marketplace.\n\nAll fields are read only. All string fields are free-form text entered by the\npublisher unless noted otherwise.",
+      "description": "Note: this resource requires whitelisting for access. Please contact your\naccount manager for access to Marketplace resources.\n\nRepresents a publisher profile\n(https://support.google.com/admanager/answer/6035806?hl=en) in Marketplace.\n\nAll fields are read only. All string fields are free-form text entered by the\npublisher unless noted otherwise.",
       "id": "PublisherProfile",
       "properties": {
         "audienceDescription": {
@@ -5420,6 +5420,10 @@
         "googlePlusUrl": {
           "description": "URL to publisher's Google+ page.",
           "type": "string"
+        },
+        "isParent": {
+          "description": "Indicates if this profile is the parent profile of the seller. A parent\nprofile represents all the inventory from the seller, as opposed to child\nprofile that is created to brand a portion of inventory. One seller should\nhave only one parent publisher profile, and can have multiple child\nprofiles. Publisher profiles for the same seller will have same value of\nfield google.ads.adexchange.buyer.v2beta1.PublisherProfile.seller.\nSee https://support.google.com/admanager/answer/6035806?hl=en for details.",
+          "type": "boolean"
         },
         "logoUrl": {
           "description": "A Google public URL to the logo for this publisher profile. The logo is\nstored as a PNG, JPG, or GIF image.",

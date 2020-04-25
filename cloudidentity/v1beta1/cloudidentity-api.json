@@ -550,7 +550,7 @@
       }
     }
   },
-  "revision": "20200418",
+  "revision": "20200421",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "AndroidAttributes": {
@@ -721,7 +721,7 @@
           "type": "string"
         },
         "ownerType": {
-          "description": "The owner of the ClientState",
+          "description": "Output only. The owner of the ClientState",
           "enum": [
             "OWNER_TYPE_UNSPECIFIED",
             "OWNER_TYPE_CUSTOMER",

@@ -928,7 +928,7 @@
       }
     }
   },
-  "revision": "20200220",
+  "revision": "20200414",
   "rootUrl": "https://cloudiot.googleapis.com/",
   "schemas": {
     "BindDeviceToGatewayRequest": {
@@ -1291,7 +1291,7 @@
       "properties": {
         "options": {
           "$ref": "GetPolicyOptions",
-          "description": "OPTIONAL: A `GetPolicyOptions` object for specifying options to\n`GetIamPolicy`. This field is only used by Cloud IAM."
+          "description": "OPTIONAL: A `GetPolicyOptions` object for specifying options to\n`GetIamPolicy`."
         }
       },
       "type": "object"

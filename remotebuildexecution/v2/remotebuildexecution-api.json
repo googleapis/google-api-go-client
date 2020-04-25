@@ -447,7 +447,7 @@
       }
     }
   },
-  "revision": "20200416",
+  "revision": "20200421",
   "rootUrl": "https://remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -1655,6 +1655,23 @@
       },
       "type": "object"
     },
+    "GoogleDevtoolsRemotebuildexecutionAdminV1alphaAutoscale": {
+      "description": "Autoscale defines the autoscaling policy of a worker pool.",
+      "id": "GoogleDevtoolsRemotebuildexecutionAdminV1alphaAutoscale",
+      "properties": {
+        "maxSize": {
+          "description": "The maximal number of workers. Must be equal to or greater than min_size.",
+          "format": "int64",
+          "type": "string"
+        },
+        "minSize": {
+          "description": "The minimal number of workers. Must be greater than 0.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateInstanceRequest": {
       "description": "The request used for `CreateInstance`.",
       "id": "GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateInstanceRequest",
@@ -1914,6 +1931,10 @@
       "description": "A worker pool resource in the Remote Build Execution API.",
       "id": "GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerPool",
       "properties": {
+        "autoscale": {
+          "$ref": "GoogleDevtoolsRemotebuildexecutionAdminV1alphaAutoscale",
+          "description": "The autoscale policy to apply on a pool."
+        },
         "name": {
           "description": "WorkerPool resource name formatted as:\n`projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]`.\nname should not be populated when creating a worker pool since it is\nprovided in the `poolId` field.",
           "type": "string"

@@ -3215,7 +3215,7 @@
       }
     }
   },
-  "revision": "20200405",
+  "revision": "20200419",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -6877,7 +6877,7 @@
       "id": "GooglePrivacyDlpV2TableLocation",
       "properties": {
         "rowIndex": {
-          "description": "The zero-based index of the row where the finding is located.",
+          "description": "The zero-based index of the row where the finding is located. Only\npopulated for resources that have a natural ordering, not BigQuery. In\nBigQuery, to identify the row a finding came from, populate\nBigQueryOptions.identifying_fields with your primary key column names and\nwhen you store the findings the value of those columns will be stored\ninside of Finding.",
           "format": "int64",
           "type": "string"
         }

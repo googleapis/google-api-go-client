@@ -128,7 +128,7 @@
       }
     }
   },
-  "revision": "20200310",
+  "revision": "20200413",
   "rootUrl": "https://videointelligence.googleapis.com/",
   "schemas": {
     "GoogleCloudVideointelligenceV1_AnnotateVideoProgress": {
@@ -169,7 +169,7 @@
           "type": "number"
         },
         "name": {
-          "description": "The name of the attribute, i.e. glasses, dark_glasses, mouth_open etc.\nA full list of supported type names will be provided in the document.",
+          "description": "The name of the attribute, for example, glasses, dark_glasses, mouth_open.\nA full list of supported type names will be provided in the document.",
           "type": "string"
         },
         "value": {
@@ -189,7 +189,7 @@
           "type": "number"
         },
         "name": {
-          "description": "The name of this landmark, i.e. left_hand, right_shoulder.",
+          "description": "The name of this landmark, for example, left_hand, right_shoulder.",
           "type": "string"
         },
         "point": {
@@ -204,7 +204,7 @@
       "id": "GoogleCloudVideointelligenceV1_Entity",
       "properties": {
         "description": {
-          "description": "Textual description, e.g. `Fixed-gear bicycle`.",
+          "description": "Textual description, e.g., `Fixed-gear bicycle`.",
           "type": "string"
         },
         "entityId": {
@@ -269,7 +269,7 @@
       "id": "GoogleCloudVideointelligenceV1_LabelAnnotation",
       "properties": {
         "categoryEntities": {
-          "description": "Common categories for the detected entity.\nE.g. when the label is `Terrier` the category is likely `dog`. And in some\ncases there might be more than one categories e.g. `Terrier` could also be\na `pet`.",
+          "description": "Common categories for the detected entity.\nFor example, when the label is `Terrier`, the category is likely `dog`. And\nin some cases there might be more than one categories e.g., `Terrier` could\nalso be a `pet`.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1_Entity"
           },
@@ -474,7 +474,7 @@
           "type": "string"
         },
         "words": {
-          "description": "Output only. A list of word-specific information for each recognized word.\nNote: When `enable_speaker_diarization` is true, you will see all the words\nfrom the beginning of the audio.",
+          "description": "Output only. A list of word-specific information for each recognized word.\nNote: When `enable_speaker_diarization` is set to true, you will see all\nthe words from the beginning of the audio.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1_WordInfo"
           },
@@ -623,7 +623,7 @@
       "id": "GoogleCloudVideointelligenceV1_VideoAnnotationProgress",
       "properties": {
         "feature": {
-          "description": "Specifies which feature is being tracked if the request contains more than\none features.",
+          "description": "Specifies which feature is being tracked if the request contains more than\none feature.",
           "enum": [
             "FEATURE_UNSPECIFIED",
             "LABEL_DETECTION",
@@ -657,7 +657,7 @@
         },
         "segment": {
           "$ref": "GoogleCloudVideointelligenceV1_VideoSegment",
-          "description": "Specifies which segment is being tracked if the request contains more than\none segments."
+          "description": "Specifies which segment is being tracked if the request contains more than\none segment."
         },
         "startTime": {
           "description": "Time when the request was received.",
@@ -714,14 +714,14 @@
           "description": "Video segment on which the annotation is run."
         },
         "segmentLabelAnnotations": {
-          "description": "Topical label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label.",
+          "description": "Topical label annotations on video level or user-specified segment level.\nThere is exactly one element for each unique label.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1_LabelAnnotation"
           },
           "type": "array"
         },
         "segmentPresenceLabelAnnotations": {
-          "description": "Presence label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label. Compared to the\nexisting topical `segment_label_annotations`, this field presents more\nfine-grained, segment-level labels detected in video content and is made\navailable only when the client sets `LabelDetectionConfig.model` to\n\"builtin/latest\" in the request.",
+          "description": "Presence label annotations on video level or user-specified segment level.\nThere is exactly one element for each unique label. Compared to the\nexisting topical `segment_label_annotations`, this field presents more\nfine-grained, segment-level labels detected in video content and is made\navailable only when the client sets `LabelDetectionConfig.model` to\n\"builtin/latest\" in the request.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1_LabelAnnotation"
           },
@@ -851,7 +851,7 @@
           "type": "number"
         },
         "name": {
-          "description": "The name of the attribute, i.e. glasses, dark_glasses, mouth_open etc.\nA full list of supported type names will be provided in the document.",
+          "description": "The name of the attribute, for example, glasses, dark_glasses, mouth_open.\nA full list of supported type names will be provided in the document.",
           "type": "string"
         },
         "value": {
@@ -871,7 +871,7 @@
           "type": "number"
         },
         "name": {
-          "description": "The name of this landmark, i.e. left_hand, right_shoulder.",
+          "description": "The name of this landmark, for example, left_hand, right_shoulder.",
           "type": "string"
         },
         "point": {
@@ -886,7 +886,7 @@
       "id": "GoogleCloudVideointelligenceV1beta2_Entity",
       "properties": {
         "description": {
-          "description": "Textual description, e.g. `Fixed-gear bicycle`.",
+          "description": "Textual description, e.g., `Fixed-gear bicycle`.",
           "type": "string"
         },
         "entityId": {
@@ -951,7 +951,7 @@
       "id": "GoogleCloudVideointelligenceV1beta2_LabelAnnotation",
       "properties": {
         "categoryEntities": {
-          "description": "Common categories for the detected entity.\nE.g. when the label is `Terrier` the category is likely `dog`. And in some\ncases there might be more than one categories e.g. `Terrier` could also be\na `pet`.",
+          "description": "Common categories for the detected entity.\nFor example, when the label is `Terrier`, the category is likely `dog`. And\nin some cases there might be more than one categories e.g., `Terrier` could\nalso be a `pet`.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1beta2_Entity"
           },
@@ -1156,7 +1156,7 @@
           "type": "string"
         },
         "words": {
-          "description": "Output only. A list of word-specific information for each recognized word.\nNote: When `enable_speaker_diarization` is true, you will see all the words\nfrom the beginning of the audio.",
+          "description": "Output only. A list of word-specific information for each recognized word.\nNote: When `enable_speaker_diarization` is set to true, you will see all\nthe words from the beginning of the audio.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1beta2_WordInfo"
           },
@@ -1305,7 +1305,7 @@
       "id": "GoogleCloudVideointelligenceV1beta2_VideoAnnotationProgress",
       "properties": {
         "feature": {
-          "description": "Specifies which feature is being tracked if the request contains more than\none features.",
+          "description": "Specifies which feature is being tracked if the request contains more than\none feature.",
           "enum": [
             "FEATURE_UNSPECIFIED",
             "LABEL_DETECTION",
@@ -1339,7 +1339,7 @@
         },
         "segment": {
           "$ref": "GoogleCloudVideointelligenceV1beta2_VideoSegment",
-          "description": "Specifies which segment is being tracked if the request contains more than\none segments."
+          "description": "Specifies which segment is being tracked if the request contains more than\none segment."
         },
         "startTime": {
           "description": "Time when the request was received.",
@@ -1396,14 +1396,14 @@
           "description": "Video segment on which the annotation is run."
         },
         "segmentLabelAnnotations": {
-          "description": "Topical label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label.",
+          "description": "Topical label annotations on video level or user-specified segment level.\nThere is exactly one element for each unique label.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1beta2_LabelAnnotation"
           },
           "type": "array"
         },
         "segmentPresenceLabelAnnotations": {
-          "description": "Presence label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label. Compared to the\nexisting topical `segment_label_annotations`, this field presents more\nfine-grained, segment-level labels detected in video content and is made\navailable only when the client sets `LabelDetectionConfig.model` to\n\"builtin/latest\" in the request.",
+          "description": "Presence label annotations on video level or user-specified segment level.\nThere is exactly one element for each unique label. Compared to the\nexisting topical `segment_label_annotations`, this field presents more\nfine-grained, segment-level labels detected in video content and is made\navailable only when the client sets `LabelDetectionConfig.model` to\n\"builtin/latest\" in the request.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1beta2_LabelAnnotation"
           },
@@ -1533,7 +1533,7 @@
           "type": "number"
         },
         "name": {
-          "description": "The name of the attribute, i.e. glasses, dark_glasses, mouth_open etc.\nA full list of supported type names will be provided in the document.",
+          "description": "The name of the attribute, for example, glasses, dark_glasses, mouth_open.\nA full list of supported type names will be provided in the document.",
           "type": "string"
         },
         "value": {
@@ -1553,7 +1553,7 @@
           "type": "number"
         },
         "name": {
-          "description": "The name of this landmark, i.e. left_hand, right_shoulder.",
+          "description": "The name of this landmark, for example, left_hand, right_shoulder.",
           "type": "string"
         },
         "point": {
@@ -1568,7 +1568,7 @@
       "id": "GoogleCloudVideointelligenceV1p1beta1_Entity",
       "properties": {
         "description": {
-          "description": "Textual description, e.g. `Fixed-gear bicycle`.",
+          "description": "Textual description, e.g., `Fixed-gear bicycle`.",
           "type": "string"
         },
         "entityId": {
@@ -1633,7 +1633,7 @@
       "id": "GoogleCloudVideointelligenceV1p1beta1_LabelAnnotation",
       "properties": {
         "categoryEntities": {
-          "description": "Common categories for the detected entity.\nE.g. when the label is `Terrier` the category is likely `dog`. And in some\ncases there might be more than one categories e.g. `Terrier` could also be\na `pet`.",
+          "description": "Common categories for the detected entity.\nFor example, when the label is `Terrier`, the category is likely `dog`. And\nin some cases there might be more than one categories e.g., `Terrier` could\nalso be a `pet`.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p1beta1_Entity"
           },
@@ -1838,7 +1838,7 @@
           "type": "string"
         },
         "words": {
-          "description": "Output only. A list of word-specific information for each recognized word.\nNote: When `enable_speaker_diarization` is true, you will see all the words\nfrom the beginning of the audio.",
+          "description": "Output only. A list of word-specific information for each recognized word.\nNote: When `enable_speaker_diarization` is set to true, you will see all\nthe words from the beginning of the audio.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p1beta1_WordInfo"
           },
@@ -1987,7 +1987,7 @@
       "id": "GoogleCloudVideointelligenceV1p1beta1_VideoAnnotationProgress",
       "properties": {
         "feature": {
-          "description": "Specifies which feature is being tracked if the request contains more than\none features.",
+          "description": "Specifies which feature is being tracked if the request contains more than\none feature.",
           "enum": [
             "FEATURE_UNSPECIFIED",
             "LABEL_DETECTION",
@@ -2021,7 +2021,7 @@
         },
         "segment": {
           "$ref": "GoogleCloudVideointelligenceV1p1beta1_VideoSegment",
-          "description": "Specifies which segment is being tracked if the request contains more than\none segments."
+          "description": "Specifies which segment is being tracked if the request contains more than\none segment."
         },
         "startTime": {
           "description": "Time when the request was received.",
@@ -2078,14 +2078,14 @@
           "description": "Video segment on which the annotation is run."
         },
         "segmentLabelAnnotations": {
-          "description": "Topical label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label.",
+          "description": "Topical label annotations on video level or user-specified segment level.\nThere is exactly one element for each unique label.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p1beta1_LabelAnnotation"
           },
           "type": "array"
         },
         "segmentPresenceLabelAnnotations": {
-          "description": "Presence label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label. Compared to the\nexisting topical `segment_label_annotations`, this field presents more\nfine-grained, segment-level labels detected in video content and is made\navailable only when the client sets `LabelDetectionConfig.model` to\n\"builtin/latest\" in the request.",
+          "description": "Presence label annotations on video level or user-specified segment level.\nThere is exactly one element for each unique label. Compared to the\nexisting topical `segment_label_annotations`, this field presents more\nfine-grained, segment-level labels detected in video content and is made\navailable only when the client sets `LabelDetectionConfig.model` to\n\"builtin/latest\" in the request.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p1beta1_LabelAnnotation"
           },
@@ -2223,20 +2223,20 @@
           "type": "array"
         },
         "inputContent": {
-          "description": "The video data bytes.\nIf unset, the input video(s) should be specified via `input_uri`.\nIf set, `input_uri` should be unset.",
+          "description": "The video data bytes.\nIf unset, the input video(s) should be specified via the `input_uri`.\nIf set, `input_uri` must be unset.",
           "format": "byte",
           "type": "string"
         },
         "inputUri": {
-          "description": "Input video location. Currently, only\n[Cloud Storage](https://cloud.google.com/storage/) URIs are\nsupported, which must be specified in the following format:\n`gs://bucket-id/object-id` (other URI formats return\ngoogle.rpc.Code.INVALID_ARGUMENT). For more information, see\n[Request URIs](https://cloud.google.com/storage/docs/request-endpoints).\nA video URI may include wildcards in `object-id`, and thus identify\nmultiple videos. Supported wildcards: '*' to match 0 or more characters;\n'?' to match 1 character. If unset, the input video should be embedded\nin the request as `input_content`. If set, `input_content` should be unset.",
+          "description": "Input video location. Currently, only\n[Cloud Storage](https://cloud.google.com/storage/) URIs are\nsupported. URIs must be specified in the following format:\n`gs://bucket-id/object-id` (other URI formats return\ngoogle.rpc.Code.INVALID_ARGUMENT). For more information, see\n[Request URIs](https://cloud.google.com/storage/docs/request-endpoints).\nTo identify multiple videos, a video URI may include wildcards in the\n`object-id`. Supported wildcards: '*' to match 0 or more characters;\n'?' to match 1 character. If unset, the input video should be embedded\nin the request as `input_content`. If set, `input_content` must be unset.",
           "type": "string"
         },
         "locationId": {
-          "description": "Optional. Cloud region where annotation should take place. Supported cloud\nregions: `us-east1`, `us-west1`, `europe-west1`, `asia-east1`. If no region\nis specified, a region will be determined based on video file location.",
+          "description": "Optional. Cloud region where annotation should take place. Supported cloud\nregions are: `us-east1`, `us-west1`, `europe-west1`, `asia-east1`. If no\nregion is specified, the region will be determined based on video file\nlocation.",
           "type": "string"
         },
         "outputUri": {
-          "description": "Optional. Location where the output (in JSON format) should be stored.\nCurrently, only [Cloud Storage](https://cloud.google.com/storage/)\nURIs are supported, which must be specified in the following format:\n`gs://bucket-id/object-id` (other URI formats return\ngoogle.rpc.Code.INVALID_ARGUMENT). For more information, see\n[Request URIs](https://cloud.google.com/storage/docs/request-endpoints).",
+          "description": "Optional. Location where the output (in JSON format) should be stored.\nCurrently, only [Cloud Storage](https://cloud.google.com/storage/)\nURIs are supported. These must be specified in the following format:\n`gs://bucket-id/object-id` (other URI formats return\ngoogle.rpc.Code.INVALID_ARGUMENT). For more information, see\n[Request URIs](https://cloud.google.com/storage/docs/request-endpoints).",
           "type": "string"
         },
         "videoContext": {
@@ -2270,7 +2270,7 @@
           "type": "number"
         },
         "name": {
-          "description": "The name of the attribute, i.e. glasses, dark_glasses, mouth_open etc.\nA full list of supported type names will be provided in the document.",
+          "description": "The name of the attribute, for example, glasses, dark_glasses, mouth_open.\nA full list of supported type names will be provided in the document.",
           "type": "string"
         },
         "value": {
@@ -2290,7 +2290,7 @@
           "type": "number"
         },
         "name": {
-          "description": "The name of this landmark, i.e. left_hand, right_shoulder.",
+          "description": "The name of this landmark, for example, left_hand, right_shoulder.",
           "type": "string"
         },
         "point": {
@@ -2305,7 +2305,7 @@
       "id": "GoogleCloudVideointelligenceV1p2beta1_Entity",
       "properties": {
         "description": {
-          "description": "Textual description, e.g. `Fixed-gear bicycle`.",
+          "description": "Textual description, e.g., `Fixed-gear bicycle`.",
           "type": "string"
         },
         "entityId": {
@@ -2381,7 +2381,7 @@
       "id": "GoogleCloudVideointelligenceV1p2beta1_LabelAnnotation",
       "properties": {
         "categoryEntities": {
-          "description": "Common categories for the detected entity.\nE.g. when the label is `Terrier` the category is likely `dog`. And in some\ncases there might be more than one categories e.g. `Terrier` could also be\na `pet`.",
+          "description": "Common categories for the detected entity.\nFor example, when the label is `Terrier`, the category is likely `dog`. And\nin some cases there might be more than one categories e.g., `Terrier` could\nalso be a `pet`.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p2beta1_Entity"
           },
@@ -2413,7 +2413,7 @@
       "id": "GoogleCloudVideointelligenceV1p2beta1_LabelDetectionConfig",
       "properties": {
         "frameConfidenceThreshold": {
-          "description": "The confidence threshold we perform filtering on the labels from\nframe-level detection. If not set, it is set to 0.4 by default. The valid\nrange for this threshold is [0.1, 0.9]. Any value set outside of this\nrange will be clipped.\nNote: for best results please follow the default threshold. We will update\nthe default threshold everytime when we release a new model.",
+          "description": "The confidence threshold we perform filtering on the labels from\nframe-level detection. If not set, it is set to 0.4 by default. The valid\nrange for this threshold is [0.1, 0.9]. Any value set outside of this\nrange will be clipped.\nNote: For best results, follow the default threshold. We will update\nthe default threshold everytime when we release a new model.",
           "format": "float",
           "type": "number"
         },
@@ -2438,11 +2438,11 @@
           "type": "string"
         },
         "stationaryCamera": {
-          "description": "Whether the video has been shot from a stationary (i.e. non-moving) camera.\nWhen set to true, might improve detection accuracy for moving objects.\nShould be used with `SHOT_AND_FRAME_MODE` enabled.",
+          "description": "Whether the video has been shot from a stationary (i.e., non-moving)\ncamera. When set to true, might improve detection accuracy for moving\nobjects. Should be used with `SHOT_AND_FRAME_MODE` enabled.",
           "type": "boolean"
         },
         "videoConfidenceThreshold": {
-          "description": "The confidence threshold we perform filtering on the labels from\nvideo-level and shot-level detections. If not set, it is set to 0.3 by\ndefault. The valid range for this threshold is [0.1, 0.9]. Any value set\noutside of this range will be clipped.\nNote: for best results please follow the default threshold. We will update\nthe default threshold everytime when we release a new model.",
+          "description": "The confidence threshold we perform filtering on the labels from\nvideo-level and shot-level detections. If not set, it's set to 0.3 by\ndefault. The valid range for this threshold is [0.1, 0.9]. Any value set\noutside of this range will be clipped.\nNote: For best results, follow the default threshold. We will update\nthe default threshold everytime when we release a new model.",
           "format": "float",
           "type": "number"
         }
@@ -2663,7 +2663,7 @@
           "type": "string"
         },
         "words": {
-          "description": "Output only. A list of word-specific information for each recognized word.\nNote: When `enable_speaker_diarization` is true, you will see all the words\nfrom the beginning of the audio.",
+          "description": "Output only. A list of word-specific information for each recognized word.\nNote: When `enable_speaker_diarization` is set to true, you will see all\nthe words from the beginning of the audio.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p2beta1_WordInfo"
           },
@@ -2712,7 +2712,7 @@
           "type": "boolean"
         },
         "enableSpeakerDiarization": {
-          "description": "Optional. If 'true', enables speaker detection for each recognized word in\nthe top alternative of the recognition result using a speaker_tag provided\nin the WordInfo.\nNote: When this is true, we send all the words from the beginning of the\naudio for the top alternative in every consecutive responses.\nThis is done in order to improve our speaker tags as our models learn to\nidentify the speakers in the conversation over time.",
+          "description": "Optional. If 'true', enables speaker detection for each recognized word in\nthe top alternative of the recognition result using a speaker_tag provided\nin the WordInfo.\nNote: When this is true, we send all the words from the beginning of the\naudio for the top alternative in every consecutive response.\nThis is done in order to improve our speaker tags as our models learn to\nidentify the speakers in the conversation over time.",
           "type": "boolean"
         },
         "enableWordConfidence": {
@@ -2882,7 +2882,7 @@
       "id": "GoogleCloudVideointelligenceV1p2beta1_VideoAnnotationProgress",
       "properties": {
         "feature": {
-          "description": "Specifies which feature is being tracked if the request contains more than\none features.",
+          "description": "Specifies which feature is being tracked if the request contains more than\none feature.",
           "enum": [
             "FEATURE_UNSPECIFIED",
             "LABEL_DETECTION",
@@ -2916,7 +2916,7 @@
         },
         "segment": {
           "$ref": "GoogleCloudVideointelligenceV1p2beta1_VideoSegment",
-          "description": "Specifies which segment is being tracked if the request contains more than\none segments."
+          "description": "Specifies which segment is being tracked if the request contains more than\none segment."
         },
         "startTime": {
           "description": "Time when the request was received.",
@@ -2973,14 +2973,14 @@
           "description": "Video segment on which the annotation is run."
         },
         "segmentLabelAnnotations": {
-          "description": "Topical label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label.",
+          "description": "Topical label annotations on video level or user-specified segment level.\nThere is exactly one element for each unique label.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p2beta1_LabelAnnotation"
           },
           "type": "array"
         },
         "segmentPresenceLabelAnnotations": {
-          "description": "Presence label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label. Compared to the\nexisting topical `segment_label_annotations`, this field presents more\nfine-grained, segment-level labels detected in video content and is made\navailable only when the client sets `LabelDetectionConfig.model` to\n\"builtin/latest\" in the request.",
+          "description": "Presence label annotations on video level or user-specified segment level.\nThere is exactly one element for each unique label. Compared to the\nexisting topical `segment_label_annotations`, this field presents more\nfine-grained, segment-level labels detected in video content and is made\navailable only when the client sets `LabelDetectionConfig.model` to\n\"builtin/latest\" in the request.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p2beta1_LabelAnnotation"
           },
@@ -3199,7 +3199,7 @@
           "type": "number"
         },
         "name": {
-          "description": "The name of the attribute, i.e. glasses, dark_glasses, mouth_open etc.\nA full list of supported type names will be provided in the document.",
+          "description": "The name of the attribute, for example, glasses, dark_glasses, mouth_open.\nA full list of supported type names will be provided in the document.",
           "type": "string"
         },
         "value": {
@@ -3219,7 +3219,7 @@
           "type": "number"
         },
         "name": {
-          "description": "The name of this landmark, i.e. left_hand, right_shoulder.",
+          "description": "The name of this landmark, for example, left_hand, right_shoulder.",
           "type": "string"
         },
         "point": {
@@ -3234,7 +3234,7 @@
       "id": "GoogleCloudVideointelligenceV1p3beta1_Entity",
       "properties": {
         "description": {
-          "description": "Textual description, e.g. `Fixed-gear bicycle`.",
+          "description": "Textual description, e.g., `Fixed-gear bicycle`.",
           "type": "string"
         },
         "entityId": {
@@ -3318,7 +3318,7 @@
       "id": "GoogleCloudVideointelligenceV1p3beta1_LabelAnnotation",
       "properties": {
         "categoryEntities": {
-          "description": "Common categories for the detected entity.\nE.g. when the label is `Terrier` the category is likely `dog`. And in some\ncases there might be more than one categories e.g. `Terrier` could also be\na `pet`.",
+          "description": "Common categories for the detected entity.\nFor example, when the label is `Terrier`, the category is likely `dog`. And\nin some cases there might be more than one categories e.g., `Terrier` could\nalso be a `pet`.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p3beta1_Entity"
           },
@@ -3514,7 +3514,7 @@
       "id": "GoogleCloudVideointelligenceV1p3beta1_PersonDetectionAnnotation",
       "properties": {
         "tracks": {
-          "description": "The trackes that a person is detected.",
+          "description": "The detected tracks of a person.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p3beta1_Track"
           },
@@ -3553,7 +3553,7 @@
           "type": "string"
         },
         "words": {
-          "description": "Output only. A list of word-specific information for each recognized word.\nNote: When `enable_speaker_diarization` is true, you will see all the words\nfrom the beginning of the audio.",
+          "description": "Output only. A list of word-specific information for each recognized word.\nNote: When `enable_speaker_diarization` is set to true, you will see all\nthe words from the beginning of the audio.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p3beta1_WordInfo"
           },
@@ -3589,7 +3589,7 @@
           "description": "Streaming annotation results."
         },
         "annotationResultsUri": {
-          "description": "Cloud Storage URI that stores annotation results of one streaming session.\nIt is a directory that can hold multiple files in JSON format.\nExample uri format:\ngs://bucket_id/object_id/cloud_project_name-session_id",
+          "description": "Google Cloud Storage(GCS) URI that stores annotation results of one\nstreaming session in JSON format.\nIt is the annotation_result_storage_directory\nfrom the request followed by '/cloud_project_number-session_id'.",
           "type": "string"
         },
         "error": {
@@ -3753,7 +3753,7 @@
       "id": "GoogleCloudVideointelligenceV1p3beta1_VideoAnnotationProgress",
       "properties": {
         "feature": {
-          "description": "Specifies which feature is being tracked if the request contains more than\none features.",
+          "description": "Specifies which feature is being tracked if the request contains more than\none feature.",
           "enum": [
             "FEATURE_UNSPECIFIED",
             "LABEL_DETECTION",
@@ -3793,7 +3793,7 @@
         },
         "segment": {
           "$ref": "GoogleCloudVideointelligenceV1p3beta1_VideoSegment",
-          "description": "Specifies which segment is being tracked if the request contains more than\none segments."
+          "description": "Specifies which segment is being tracked if the request contains more than\none segment."
         },
         "startTime": {
           "description": "Time when the request was received.",
@@ -3868,14 +3868,14 @@
           "description": "Video segment on which the annotation is run."
         },
         "segmentLabelAnnotations": {
-          "description": "Topical label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label.",
+          "description": "Topical label annotations on video level or user-specified segment level.\nThere is exactly one element for each unique label.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p3beta1_LabelAnnotation"
           },
           "type": "array"
         },
         "segmentPresenceLabelAnnotations": {
-          "description": "Presence label annotations on video level or user specified segment level.\nThere is exactly one element for each unique label. Compared to the\nexisting topical `segment_label_annotations`, this field presents more\nfine-grained, segment-level labels detected in video content and is made\navailable only when the client sets `LabelDetectionConfig.model` to\n\"builtin/latest\" in the request.",
+          "description": "Presence label annotations on video level or user-specified segment level.\nThere is exactly one element for each unique label. Compared to the\nexisting topical `segment_label_annotations`, this field presents more\nfine-grained, segment-level labels detected in video content and is made\navailable only when the client sets `LabelDetectionConfig.model` to\n\"builtin/latest\" in the request.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p3beta1_LabelAnnotation"
           },

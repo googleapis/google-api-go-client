@@ -279,35 +279,37 @@ type GoogleCloudVideointelligenceV1AnnotateVideoRequest struct {
 	Features []string `json:"features,omitempty"`
 
 	// InputContent: The video data bytes.
-	// If unset, the input video(s) should be specified via `input_uri`.
-	// If set, `input_uri` should be unset.
+	// If unset, the input video(s) should be specified via the
+	// `input_uri`.
+	// If set, `input_uri` must be unset.
 	InputContent string `json:"inputContent,omitempty"`
 
 	// InputUri: Input video location. Currently, only
 	// [Cloud Storage](https://cloud.google.com/storage/) URIs
 	// are
-	// supported, which must be specified in the following
+	// supported. URIs must be specified in the following
 	// format:
 	// `gs://bucket-id/object-id` (other URI formats
 	// return
 	// google.rpc.Code.INVALID_ARGUMENT). For more information, see
 	// [Request
 	// URIs](https://cloud.google.com/storage/docs/request-endpoints).
-	// A video URI may include wildcards in `object-id`, and thus
-	// identify
-	// multiple videos. Supported wildcards: '*' to match 0 or more
+	// To identify multiple videos, a video URI may include wildcards in
+	// the
+	// `object-id`. Supported wildcards: '*' to match 0 or more
 	// characters;
 	// '?' to match 1 character. If unset, the input video should be
 	// embedded
-	// in the request as `input_content`. If set, `input_content` should be
+	// in the request as `input_content`. If set, `input_content` must be
 	// unset.
 	InputUri string `json:"inputUri,omitempty"`
 
 	// LocationId: Optional. Cloud region where annotation should take
 	// place. Supported cloud
-	// regions: `us-east1`, `us-west1`, `europe-west1`, `asia-east1`. If no
-	// region
-	// is specified, a region will be determined based on video file
+	// regions are: `us-east1`, `us-west1`, `europe-west1`, `asia-east1`. If
+	// no
+	// region is specified, the region will be determined based on video
+	// file
 	// location.
 	LocationId string `json:"locationId,omitempty"`
 
@@ -315,7 +317,7 @@ type GoogleCloudVideointelligenceV1AnnotateVideoRequest struct {
 	// should be stored.
 	// Currently, only [Cloud
 	// Storage](https://cloud.google.com/storage/)
-	// URIs are supported, which must be specified in the following
+	// URIs are supported. These must be specified in the following
 	// format:
 	// `gs://bucket-id/object-id` (other URI formats
 	// return
@@ -390,8 +392,8 @@ type GoogleCloudVideointelligenceV1DetectedAttribute struct {
 	// Confidence: Detected attribute confidence. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Name: The name of the attribute, i.e. glasses, dark_glasses,
-	// mouth_open etc.
+	// Name: The name of the attribute, for example, glasses, dark_glasses,
+	// mouth_open.
 	// A full list of supported type names will be provided in the document.
 	Name string `json:"name,omitempty"`
 
@@ -445,7 +447,8 @@ type GoogleCloudVideointelligenceV1DetectedLandmark struct {
 	// 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Name: The name of this landmark, i.e. left_hand, right_shoulder.
+	// Name: The name of this landmark, for example, left_hand,
+	// right_shoulder.
 	Name string `json:"name,omitempty"`
 
 	// Point: The 2D point of the detected landmark using the normalized
@@ -494,7 +497,7 @@ func (s *GoogleCloudVideointelligenceV1DetectedLandmark) UnmarshalJSON(data []by
 // GoogleCloudVideointelligenceV1Entity: Detected entity from video
 // analysis.
 type GoogleCloudVideointelligenceV1Entity struct {
-	// Description: Textual description, e.g. `Fixed-gear bicycle`.
+	// Description: Textual description, e.g., `Fixed-gear bicycle`.
 	Description string `json:"description,omitempty"`
 
 	// EntityId: Opaque entity ID. Some IDs may be available in
@@ -640,11 +643,11 @@ func (s *GoogleCloudVideointelligenceV1ExplicitContentFrame) MarshalJSON() ([]by
 // GoogleCloudVideointelligenceV1LabelAnnotation: Label annotation.
 type GoogleCloudVideointelligenceV1LabelAnnotation struct {
 	// CategoryEntities: Common categories for the detected entity.
-	// E.g. when the label is `Terrier` the category is likely `dog`. And in
-	// some
-	// cases there might be more than one categories e.g. `Terrier` could
-	// also be
-	// a `pet`.
+	// For example, when the label is `Terrier`, the category is likely
+	// `dog`. And
+	// in some cases there might be more than one categories e.g., `Terrier`
+	// could
+	// also be a `pet`.
 	CategoryEntities []*GoogleCloudVideointelligenceV1Entity `json:"categoryEntities,omitempty"`
 
 	// Entity: Detected entity.
@@ -690,7 +693,7 @@ type GoogleCloudVideointelligenceV1LabelDetectionConfig struct {
 	// range for this threshold is [0.1, 0.9]. Any value set outside of
 	// this
 	// range will be clipped.
-	// Note: for best results please follow the default threshold. We will
+	// Note: For best results, follow the default threshold. We will
 	// update
 	// the default threshold everytime when we release a new model.
 	FrameConfidenceThreshold float64 `json:"frameConfidenceThreshold,omitempty"`
@@ -715,20 +718,20 @@ type GoogleCloudVideointelligenceV1LabelDetectionConfig struct {
 	Model string `json:"model,omitempty"`
 
 	// StationaryCamera: Whether the video has been shot from a stationary
-	// (i.e. non-moving) camera.
-	// When set to true, might improve detection accuracy for moving
-	// objects.
-	// Should be used with `SHOT_AND_FRAME_MODE` enabled.
+	// (i.e., non-moving)
+	// camera. When set to true, might improve detection accuracy for
+	// moving
+	// objects. Should be used with `SHOT_AND_FRAME_MODE` enabled.
 	StationaryCamera bool `json:"stationaryCamera,omitempty"`
 
 	// VideoConfidenceThreshold: The confidence threshold we perform
 	// filtering on the labels from
-	// video-level and shot-level detections. If not set, it is set to 0.3
+	// video-level and shot-level detections. If not set, it's set to 0.3
 	// by
 	// default. The valid range for this threshold is [0.1, 0.9]. Any value
 	// set
 	// outside of this range will be clipped.
-	// Note: for best results please follow the default threshold. We will
+	// Note: For best results, follow the default threshold. We will
 	// update
 	// the default threshold everytime when we release a new model.
 	VideoConfidenceThreshold float64 `json:"videoConfidenceThreshold,omitempty"`
@@ -1305,9 +1308,9 @@ type GoogleCloudVideointelligenceV1SpeechRecognitionAlternative struct {
 
 	// Words: Output only. A list of word-specific information for each
 	// recognized word.
-	// Note: When `enable_speaker_diarization` is true, you will see all the
-	// words
-	// from the beginning of the audio.
+	// Note: When `enable_speaker_diarization` is set to true, you will see
+	// all
+	// the words from the beginning of the audio.
 	Words []*GoogleCloudVideointelligenceV1WordInfo `json:"words,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -1424,7 +1427,7 @@ type GoogleCloudVideointelligenceV1SpeechTranscriptionConfig struct {
 	// in the WordInfo.
 	// Note: When this is true, we send all the words from the beginning of
 	// the
-	// audio for the top alternative in every consecutive responses.
+	// audio for the top alternative in every consecutive response.
 	// This is done in order to improve our speaker tags as our models learn
 	// to
 	// identify the speakers in the conversation over time.
@@ -1761,7 +1764,7 @@ func (s *GoogleCloudVideointelligenceV1Track) UnmarshalJSON(data []byte) error {
 type GoogleCloudVideointelligenceV1VideoAnnotationProgress struct {
 	// Feature: Specifies which feature is being tracked if the request
 	// contains more than
-	// one features.
+	// one feature.
 	//
 	// Possible values:
 	//   "FEATURE_UNSPECIFIED" - Unspecified.
@@ -1786,7 +1789,7 @@ type GoogleCloudVideointelligenceV1VideoAnnotationProgress struct {
 
 	// Segment: Specifies which segment is being tracked if the request
 	// contains more than
-	// one segments.
+	// one segment.
 	Segment *GoogleCloudVideointelligenceV1VideoSegment `json:"segment,omitempty"`
 
 	// StartTime: Time when the request was received.
@@ -1849,12 +1852,12 @@ type GoogleCloudVideointelligenceV1VideoAnnotationResults struct {
 	Segment *GoogleCloudVideointelligenceV1VideoSegment `json:"segment,omitempty"`
 
 	// SegmentLabelAnnotations: Topical label annotations on video level or
-	// user specified segment level.
+	// user-specified segment level.
 	// There is exactly one element for each unique label.
 	SegmentLabelAnnotations []*GoogleCloudVideointelligenceV1LabelAnnotation `json:"segmentLabelAnnotations,omitempty"`
 
 	// SegmentPresenceLabelAnnotations: Presence label annotations on video
-	// level or user specified segment level.
+	// level or user-specified segment level.
 	// There is exactly one element for each unique label. Compared to
 	// the
 	// existing topical `segment_label_annotations`, this field presents
@@ -2163,8 +2166,8 @@ type GoogleCloudVideointelligenceV1beta2DetectedAttribute struct {
 	// Confidence: Detected attribute confidence. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Name: The name of the attribute, i.e. glasses, dark_glasses,
-	// mouth_open etc.
+	// Name: The name of the attribute, for example, glasses, dark_glasses,
+	// mouth_open.
 	// A full list of supported type names will be provided in the document.
 	Name string `json:"name,omitempty"`
 
@@ -2219,7 +2222,8 @@ type GoogleCloudVideointelligenceV1beta2DetectedLandmark struct {
 	// 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Name: The name of this landmark, i.e. left_hand, right_shoulder.
+	// Name: The name of this landmark, for example, left_hand,
+	// right_shoulder.
 	Name string `json:"name,omitempty"`
 
 	// Point: The 2D point of the detected landmark using the normalized
@@ -2268,7 +2272,7 @@ func (s *GoogleCloudVideointelligenceV1beta2DetectedLandmark) UnmarshalJSON(data
 // GoogleCloudVideointelligenceV1beta2Entity: Detected entity from video
 // analysis.
 type GoogleCloudVideointelligenceV1beta2Entity struct {
-	// Description: Textual description, e.g. `Fixed-gear bicycle`.
+	// Description: Textual description, e.g., `Fixed-gear bicycle`.
 	Description string `json:"description,omitempty"`
 
 	// EntityId: Opaque entity ID. Some IDs may be available in
@@ -2383,11 +2387,11 @@ func (s *GoogleCloudVideointelligenceV1beta2ExplicitContentFrame) MarshalJSON() 
 // GoogleCloudVideointelligenceV1beta2LabelAnnotation: Label annotation.
 type GoogleCloudVideointelligenceV1beta2LabelAnnotation struct {
 	// CategoryEntities: Common categories for the detected entity.
-	// E.g. when the label is `Terrier` the category is likely `dog`. And in
-	// some
-	// cases there might be more than one categories e.g. `Terrier` could
-	// also be
-	// a `pet`.
+	// For example, when the label is `Terrier`, the category is likely
+	// `dog`. And
+	// in some cases there might be more than one categories e.g., `Terrier`
+	// could
+	// also be a `pet`.
 	CategoryEntities []*GoogleCloudVideointelligenceV1beta2Entity `json:"categoryEntities,omitempty"`
 
 	// Entity: Detected entity.
@@ -2852,9 +2856,9 @@ type GoogleCloudVideointelligenceV1beta2SpeechRecognitionAlternative struct {
 
 	// Words: Output only. A list of word-specific information for each
 	// recognized word.
-	// Note: When `enable_speaker_diarization` is true, you will see all the
-	// words
-	// from the beginning of the audio.
+	// Note: When `enable_speaker_diarization` is set to true, you will see
+	// all
+	// the words from the beginning of the audio.
 	Words []*GoogleCloudVideointelligenceV1beta2WordInfo `json:"words,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -3165,7 +3169,7 @@ func (s *GoogleCloudVideointelligenceV1beta2Track) UnmarshalJSON(data []byte) er
 type GoogleCloudVideointelligenceV1beta2VideoAnnotationProgress struct {
 	// Feature: Specifies which feature is being tracked if the request
 	// contains more than
-	// one features.
+	// one feature.
 	//
 	// Possible values:
 	//   "FEATURE_UNSPECIFIED" - Unspecified.
@@ -3190,7 +3194,7 @@ type GoogleCloudVideointelligenceV1beta2VideoAnnotationProgress struct {
 
 	// Segment: Specifies which segment is being tracked if the request
 	// contains more than
-	// one segments.
+	// one segment.
 	Segment *GoogleCloudVideointelligenceV1beta2VideoSegment `json:"segment,omitempty"`
 
 	// StartTime: Time when the request was received.
@@ -3253,12 +3257,12 @@ type GoogleCloudVideointelligenceV1beta2VideoAnnotationResults struct {
 	Segment *GoogleCloudVideointelligenceV1beta2VideoSegment `json:"segment,omitempty"`
 
 	// SegmentLabelAnnotations: Topical label annotations on video level or
-	// user specified segment level.
+	// user-specified segment level.
 	// There is exactly one element for each unique label.
 	SegmentLabelAnnotations []*GoogleCloudVideointelligenceV1beta2LabelAnnotation `json:"segmentLabelAnnotations,omitempty"`
 
 	// SegmentPresenceLabelAnnotations: Presence label annotations on video
-	// level or user specified segment level.
+	// level or user-specified segment level.
 	// There is exactly one element for each unique label. Compared to
 	// the
 	// existing topical `segment_label_annotations`, this field presents
@@ -3513,8 +3517,8 @@ type GoogleCloudVideointelligenceV1p1beta1DetectedAttribute struct {
 	// Confidence: Detected attribute confidence. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Name: The name of the attribute, i.e. glasses, dark_glasses,
-	// mouth_open etc.
+	// Name: The name of the attribute, for example, glasses, dark_glasses,
+	// mouth_open.
 	// A full list of supported type names will be provided in the document.
 	Name string `json:"name,omitempty"`
 
@@ -3569,7 +3573,8 @@ type GoogleCloudVideointelligenceV1p1beta1DetectedLandmark struct {
 	// 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Name: The name of this landmark, i.e. left_hand, right_shoulder.
+	// Name: The name of this landmark, for example, left_hand,
+	// right_shoulder.
 	Name string `json:"name,omitempty"`
 
 	// Point: The 2D point of the detected landmark using the normalized
@@ -3618,7 +3623,7 @@ func (s *GoogleCloudVideointelligenceV1p1beta1DetectedLandmark) UnmarshalJSON(da
 // GoogleCloudVideointelligenceV1p1beta1Entity: Detected entity from
 // video analysis.
 type GoogleCloudVideointelligenceV1p1beta1Entity struct {
-	// Description: Textual description, e.g. `Fixed-gear bicycle`.
+	// Description: Textual description, e.g., `Fixed-gear bicycle`.
 	Description string `json:"description,omitempty"`
 
 	// EntityId: Opaque entity ID. Some IDs may be available in
@@ -3734,11 +3739,11 @@ func (s *GoogleCloudVideointelligenceV1p1beta1ExplicitContentFrame) MarshalJSON(
 // annotation.
 type GoogleCloudVideointelligenceV1p1beta1LabelAnnotation struct {
 	// CategoryEntities: Common categories for the detected entity.
-	// E.g. when the label is `Terrier` the category is likely `dog`. And in
-	// some
-	// cases there might be more than one categories e.g. `Terrier` could
-	// also be
-	// a `pet`.
+	// For example, when the label is `Terrier`, the category is likely
+	// `dog`. And
+	// in some cases there might be more than one categories e.g., `Terrier`
+	// could
+	// also be a `pet`.
 	CategoryEntities []*GoogleCloudVideointelligenceV1p1beta1Entity `json:"categoryEntities,omitempty"`
 
 	// Entity: Detected entity.
@@ -4203,9 +4208,9 @@ type GoogleCloudVideointelligenceV1p1beta1SpeechRecognitionAlternative struct {
 
 	// Words: Output only. A list of word-specific information for each
 	// recognized word.
-	// Note: When `enable_speaker_diarization` is true, you will see all the
-	// words
-	// from the beginning of the audio.
+	// Note: When `enable_speaker_diarization` is set to true, you will see
+	// all
+	// the words from the beginning of the audio.
 	Words []*GoogleCloudVideointelligenceV1p1beta1WordInfo `json:"words,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -4516,7 +4521,7 @@ func (s *GoogleCloudVideointelligenceV1p1beta1Track) UnmarshalJSON(data []byte) 
 type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationProgress struct {
 	// Feature: Specifies which feature is being tracked if the request
 	// contains more than
-	// one features.
+	// one feature.
 	//
 	// Possible values:
 	//   "FEATURE_UNSPECIFIED" - Unspecified.
@@ -4541,7 +4546,7 @@ type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationProgress struct {
 
 	// Segment: Specifies which segment is being tracked if the request
 	// contains more than
-	// one segments.
+	// one segment.
 	Segment *GoogleCloudVideointelligenceV1p1beta1VideoSegment `json:"segment,omitempty"`
 
 	// StartTime: Time when the request was received.
@@ -4604,12 +4609,12 @@ type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationResults struct {
 	Segment *GoogleCloudVideointelligenceV1p1beta1VideoSegment `json:"segment,omitempty"`
 
 	// SegmentLabelAnnotations: Topical label annotations on video level or
-	// user specified segment level.
+	// user-specified segment level.
 	// There is exactly one element for each unique label.
 	SegmentLabelAnnotations []*GoogleCloudVideointelligenceV1p1beta1LabelAnnotation `json:"segmentLabelAnnotations,omitempty"`
 
 	// SegmentPresenceLabelAnnotations: Presence label annotations on video
-	// level or user specified segment level.
+	// level or user-specified segment level.
 	// There is exactly one element for each unique label. Compared to
 	// the
 	// existing topical `segment_label_annotations`, this field presents
@@ -4864,8 +4869,8 @@ type GoogleCloudVideointelligenceV1p2beta1DetectedAttribute struct {
 	// Confidence: Detected attribute confidence. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Name: The name of the attribute, i.e. glasses, dark_glasses,
-	// mouth_open etc.
+	// Name: The name of the attribute, for example, glasses, dark_glasses,
+	// mouth_open.
 	// A full list of supported type names will be provided in the document.
 	Name string `json:"name,omitempty"`
 
@@ -4920,7 +4925,8 @@ type GoogleCloudVideointelligenceV1p2beta1DetectedLandmark struct {
 	// 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Name: The name of this landmark, i.e. left_hand, right_shoulder.
+	// Name: The name of this landmark, for example, left_hand,
+	// right_shoulder.
 	Name string `json:"name,omitempty"`
 
 	// Point: The 2D point of the detected landmark using the normalized
@@ -4969,7 +4975,7 @@ func (s *GoogleCloudVideointelligenceV1p2beta1DetectedLandmark) UnmarshalJSON(da
 // GoogleCloudVideointelligenceV1p2beta1Entity: Detected entity from
 // video analysis.
 type GoogleCloudVideointelligenceV1p2beta1Entity struct {
-	// Description: Textual description, e.g. `Fixed-gear bicycle`.
+	// Description: Textual description, e.g., `Fixed-gear bicycle`.
 	Description string `json:"description,omitempty"`
 
 	// EntityId: Opaque entity ID. Some IDs may be available in
@@ -5085,11 +5091,11 @@ func (s *GoogleCloudVideointelligenceV1p2beta1ExplicitContentFrame) MarshalJSON(
 // annotation.
 type GoogleCloudVideointelligenceV1p2beta1LabelAnnotation struct {
 	// CategoryEntities: Common categories for the detected entity.
-	// E.g. when the label is `Terrier` the category is likely `dog`. And in
-	// some
-	// cases there might be more than one categories e.g. `Terrier` could
-	// also be
-	// a `pet`.
+	// For example, when the label is `Terrier`, the category is likely
+	// `dog`. And
+	// in some cases there might be more than one categories e.g., `Terrier`
+	// could
+	// also be a `pet`.
 	CategoryEntities []*GoogleCloudVideointelligenceV1p2beta1Entity `json:"categoryEntities,omitempty"`
 
 	// Entity: Detected entity.
@@ -5554,9 +5560,9 @@ type GoogleCloudVideointelligenceV1p2beta1SpeechRecognitionAlternative struct {
 
 	// Words: Output only. A list of word-specific information for each
 	// recognized word.
-	// Note: When `enable_speaker_diarization` is true, you will see all the
-	// words
-	// from the beginning of the audio.
+	// Note: When `enable_speaker_diarization` is set to true, you will see
+	// all
+	// the words from the beginning of the audio.
 	Words []*GoogleCloudVideointelligenceV1p2beta1WordInfo `json:"words,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -5867,7 +5873,7 @@ func (s *GoogleCloudVideointelligenceV1p2beta1Track) UnmarshalJSON(data []byte) 
 type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationProgress struct {
 	// Feature: Specifies which feature is being tracked if the request
 	// contains more than
-	// one features.
+	// one feature.
 	//
 	// Possible values:
 	//   "FEATURE_UNSPECIFIED" - Unspecified.
@@ -5892,7 +5898,7 @@ type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationProgress struct {
 
 	// Segment: Specifies which segment is being tracked if the request
 	// contains more than
-	// one segments.
+	// one segment.
 	Segment *GoogleCloudVideointelligenceV1p2beta1VideoSegment `json:"segment,omitempty"`
 
 	// StartTime: Time when the request was received.
@@ -5955,12 +5961,12 @@ type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationResults struct {
 	Segment *GoogleCloudVideointelligenceV1p2beta1VideoSegment `json:"segment,omitempty"`
 
 	// SegmentLabelAnnotations: Topical label annotations on video level or
-	// user specified segment level.
+	// user-specified segment level.
 	// There is exactly one element for each unique label.
 	SegmentLabelAnnotations []*GoogleCloudVideointelligenceV1p2beta1LabelAnnotation `json:"segmentLabelAnnotations,omitempty"`
 
 	// SegmentPresenceLabelAnnotations: Presence label annotations on video
-	// level or user specified segment level.
+	// level or user-specified segment level.
 	// There is exactly one element for each unique label. Compared to
 	// the
 	// existing topical `segment_label_annotations`, this field presents
@@ -6324,8 +6330,8 @@ type GoogleCloudVideointelligenceV1p3beta1DetectedAttribute struct {
 	// Confidence: Detected attribute confidence. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Name: The name of the attribute, i.e. glasses, dark_glasses,
-	// mouth_open etc.
+	// Name: The name of the attribute, for example, glasses, dark_glasses,
+	// mouth_open.
 	// A full list of supported type names will be provided in the document.
 	Name string `json:"name,omitempty"`
 
@@ -6380,7 +6386,8 @@ type GoogleCloudVideointelligenceV1p3beta1DetectedLandmark struct {
 	// 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Name: The name of this landmark, i.e. left_hand, right_shoulder.
+	// Name: The name of this landmark, for example, left_hand,
+	// right_shoulder.
 	Name string `json:"name,omitempty"`
 
 	// Point: The 2D point of the detected landmark using the normalized
@@ -6429,7 +6436,7 @@ func (s *GoogleCloudVideointelligenceV1p3beta1DetectedLandmark) UnmarshalJSON(da
 // GoogleCloudVideointelligenceV1p3beta1Entity: Detected entity from
 // video analysis.
 type GoogleCloudVideointelligenceV1p3beta1Entity struct {
-	// Description: Textual description, e.g. `Fixed-gear bicycle`.
+	// Description: Textual description, e.g., `Fixed-gear bicycle`.
 	Description string `json:"description,omitempty"`
 
 	// EntityId: Opaque entity ID. Some IDs may be available in
@@ -6577,11 +6584,11 @@ func (s *GoogleCloudVideointelligenceV1p3beta1FaceDetectionAnnotation) MarshalJS
 // annotation.
 type GoogleCloudVideointelligenceV1p3beta1LabelAnnotation struct {
 	// CategoryEntities: Common categories for the detected entity.
-	// E.g. when the label is `Terrier` the category is likely `dog`. And in
-	// some
-	// cases there might be more than one categories e.g. `Terrier` could
-	// also be
-	// a `pet`.
+	// For example, when the label is `Terrier`, the category is likely
+	// `dog`. And
+	// in some cases there might be more than one categories e.g., `Terrier`
+	// could
+	// also be a `pet`.
 	CategoryEntities []*GoogleCloudVideointelligenceV1p3beta1Entity `json:"categoryEntities,omitempty"`
 
 	// Entity: Detected entity.
@@ -7028,7 +7035,7 @@ func (s *GoogleCloudVideointelligenceV1p3beta1ObjectTrackingFrame) MarshalJSON()
 // GoogleCloudVideointelligenceV1p3beta1PersonDetectionAnnotation:
 // Person detection annotation per video.
 type GoogleCloudVideointelligenceV1p3beta1PersonDetectionAnnotation struct {
-	// Tracks: The trackes that a person is detected.
+	// Tracks: The detected tracks of a person.
 	Tracks []*GoogleCloudVideointelligenceV1p3beta1Track `json:"tracks,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Tracks") to
@@ -7121,9 +7128,9 @@ type GoogleCloudVideointelligenceV1p3beta1SpeechRecognitionAlternative struct {
 
 	// Words: Output only. A list of word-specific information for each
 	// recognized word.
-	// Note: When `enable_speaker_diarization` is true, you will see all the
-	// words
-	// from the beginning of the audio.
+	// Note: When `enable_speaker_diarization` is set to true, you will see
+	// all
+	// the words from the beginning of the audio.
 	Words []*GoogleCloudVideointelligenceV1p3beta1WordInfo `json:"words,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -7217,13 +7224,11 @@ type GoogleCloudVideointelligenceV1p3beta1StreamingAnnotateVideoResponse struct 
 	// AnnotationResults: Streaming annotation results.
 	AnnotationResults *GoogleCloudVideointelligenceV1p3beta1StreamingVideoAnnotationResults `json:"annotationResults,omitempty"`
 
-	// AnnotationResultsUri: Cloud Storage URI that stores annotation
-	// results of one streaming session.
-	// It is a directory that can hold multiple files in JSON
-	// format.
-	// Example uri
-	// format:
-	// gs://bucket_id/object_id/cloud_project_name-session_id
+	// AnnotationResultsUri: Google Cloud Storage(GCS) URI that stores
+	// annotation results of one
+	// streaming session in JSON format.
+	// It is the annotation_result_storage_directory
+	// from the request followed by '/cloud_project_number-session_id'.
 	AnnotationResultsUri string `json:"annotationResultsUri,omitempty"`
 
 	// Error: If set, returns a google.rpc.Status message that
@@ -7524,7 +7529,7 @@ func (s *GoogleCloudVideointelligenceV1p3beta1Track) UnmarshalJSON(data []byte) 
 type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationProgress struct {
 	// Feature: Specifies which feature is being tracked if the request
 	// contains more than
-	// one features.
+	// one feature.
 	//
 	// Possible values:
 	//   "FEATURE_UNSPECIFIED" - Unspecified.
@@ -7552,7 +7557,7 @@ type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationProgress struct {
 
 	// Segment: Specifies which segment is being tracked if the request
 	// contains more than
-	// one segments.
+	// one segment.
 	Segment *GoogleCloudVideointelligenceV1p3beta1VideoSegment `json:"segment,omitempty"`
 
 	// StartTime: Time when the request was received.
@@ -7624,12 +7629,12 @@ type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationResults struct {
 	Segment *GoogleCloudVideointelligenceV1p3beta1VideoSegment `json:"segment,omitempty"`
 
 	// SegmentLabelAnnotations: Topical label annotations on video level or
-	// user specified segment level.
+	// user-specified segment level.
 	// There is exactly one element for each unique label.
 	SegmentLabelAnnotations []*GoogleCloudVideointelligenceV1p3beta1LabelAnnotation `json:"segmentLabelAnnotations,omitempty"`
 
 	// SegmentPresenceLabelAnnotations: Presence label annotations on video
-	// level or user specified segment level.
+	// level or user-specified segment level.
 	// There is exactly one element for each unique label. Compared to
 	// the
 	// existing topical `segment_label_annotations`, this field presents
@@ -8063,7 +8068,7 @@ func (c *OperationsProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *OperationsProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200422")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8199,7 +8204,7 @@ func (c *OperationsProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200422")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8344,7 +8349,7 @@ func (c *OperationsProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *OperationsProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200422")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8496,7 +8501,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200422")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8640,7 +8645,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200422")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8785,7 +8790,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200422")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8966,7 +8971,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200422")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9143,7 +9148,7 @@ func (c *VideosAnnotateCall) Header() http.Header {
 
 func (c *VideosAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200421")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200422")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

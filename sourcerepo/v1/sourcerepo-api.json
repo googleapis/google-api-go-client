@@ -31,6 +31,7 @@
   },
   "id": "sourcerepo:v1",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://sourcerepo.mtls.googleapis.com/",
   "name": "sourcerepo",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -213,7 +214,7 @@
                 "name": {
                   "description": "The name of the repo to delete. Values are of the form\n`projects/\u003cproject\u003e/repos/\u003crepo\u003e`.",
                   "location": "path",
-                  "pattern": "^projects/[^/]+/repos/.+$",
+                  "pattern": "^projects/[^/]+/repos/.*$",
                   "required": true,
                   "type": "string"
                 }
@@ -239,7 +240,7 @@
                 "name": {
                   "description": "The name of the requested repository. Values are of the form\n`projects/\u003cproject\u003e/repos/\u003crepo\u003e`.",
                   "location": "path",
-                  "pattern": "^projects/[^/]+/repos/.+$",
+                  "pattern": "^projects/[^/]+/repos/.*$",
                   "required": true,
                   "type": "string"
                 }
@@ -273,7 +274,7 @@
                 "resource": {
                   "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
                   "location": "path",
-                  "pattern": "^projects/[^/]+/repos/.+$",
+                  "pattern": "^projects/[^/]+/repos/.*$",
                   "required": true,
                   "type": "string"
                 }
@@ -340,7 +341,7 @@
                 "name": {
                   "description": "The name of the requested repository. Values are of the form\n`projects/\u003cproject\u003e/repos/\u003crepo\u003e`.",
                   "location": "path",
-                  "pattern": "^projects/[^/]+/repos/.+$",
+                  "pattern": "^projects/[^/]+/repos/.*$",
                   "required": true,
                   "type": "string"
                 }
@@ -368,7 +369,7 @@
                 "resource": {
                   "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
                   "location": "path",
-                  "pattern": "^projects/[^/]+/repos/.+$",
+                  "pattern": "^projects/[^/]+/repos/.*$",
                   "required": true,
                   "type": "string"
                 }
@@ -397,7 +398,7 @@
                 "name": {
                   "description": "The name of the repo to synchronize. Values are of the form\n`projects/\u003cproject\u003e/repos/\u003crepo\u003e`.",
                   "location": "path",
-                  "pattern": "^projects/[^/]+/repos/.+$",
+                  "pattern": "^projects/[^/]+/repos/.*$",
                   "required": true,
                   "type": "string"
                 }
@@ -425,7 +426,7 @@
                 "resource": {
                   "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
                   "location": "path",
-                  "pattern": "^projects/[^/]+/repos/.+$",
+                  "pattern": "^projects/[^/]+/repos/.*$",
                   "required": true,
                   "type": "string"
                 }
@@ -449,7 +450,7 @@
       }
     }
   },
-  "revision": "20200121",
+  "revision": "20200415",
   "rootUrl": "https://sourcerepo.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -745,7 +746,7 @@
           "description": "REQUIRED: The complete policy to be applied to the `resource`. The size of\nthe policy is limited to a few 10s of KB. An empty policy is a\nvalid policy but certain Cloud Platform services (such as Projects)\nmight reject them."
         },
         "updateMask": {
-          "description": "OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only\nthe fields in the mask will be modified. If no mask is provided, the\nfollowing default mask is used:\npaths: \"bindings, etag\"\nThis field is only used by Cloud IAM.",
+          "description": "OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only\nthe fields in the mask will be modified. If no mask is provided, the\nfollowing default mask is used:\n\n`paths: \"bindings, etag\"`",
           "format": "google-fieldmask",
           "type": "string"
         }

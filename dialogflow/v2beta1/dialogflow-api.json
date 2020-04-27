@@ -4417,7 +4417,7 @@
       }
     }
   },
-  "revision": "20200422",
+  "revision": "20200424",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2AnnotatedMessagePart": {
@@ -6258,6 +6258,10 @@
           "description": "Required. The display name of the document. The name must be 1024 bytes or\nless; otherwise, the creation request fails.",
           "type": "string"
         },
+        "enableAutoReload": {
+          "description": "Optional. If true, we try to automatically reload the document every day\n(at a time picked by the system). If false or unspecified, we don't try\nto automatically reload the document.\n\nCurrently you can only enable automatic reload for documents sourced from\na public url, see `source` field for the source types.\n\nReload status can be tracked in `latest_reload_status`. If a reload\nfails, we will keep the document unchanged.\n\nIf a reload fails with internal errors, the system will try to reload the\ndocument on the next day.\nIf a reload fails with non-retriable errors (e.g. PERMISION_DENIED), the\nsystem will not try to reload the document anymore. You need to manually\nreload the document successfully by calling `ReloadDocument` and clear the\nerrors.",
+          "type": "boolean"
+        },
         "knowledgeTypes": {
           "description": "Required. The knowledge type of document content.",
           "enumDescriptions": [
@@ -6275,6 +6279,10 @@
           },
           "type": "array"
         },
+        "latestReloadStatus": {
+          "$ref": "GoogleCloudDialogflowV2beta1DocumentReloadStatus",
+          "description": "Output only. The time and status of the latest reload.\nThis reload may have been triggered automatically or manually\nand may not have succeeded."
+        },
         "mimeType": {
           "description": "Required. The MIME type of this document.",
           "type": "string"
@@ -6286,6 +6294,22 @@
         "rawContent": {
           "description": "The raw content of the document. This field is only permitted for\nEXTRACTIVE_QA and FAQ knowledge types.",
           "format": "byte",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1DocumentReloadStatus": {
+      "description": "The status of a reload attempt.",
+      "id": "GoogleCloudDialogflowV2beta1DocumentReloadStatus",
+      "properties": {
+        "status": {
+          "$ref": "GoogleRpcStatus",
+          "description": "Output only. The status of a reload attempt or the initial load."
+        },
+        "time": {
+          "description": "Output only. The time of a reload attempt.\nThis reload may have been triggered automatically or manually and may\nnot have succeeded.",
+          "format": "google-datetime",
           "type": "string"
         }
       },

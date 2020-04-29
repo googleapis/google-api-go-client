@@ -9,7 +9,6 @@ package http
 
 import (
 	"context"
-	"crypto/tls"
 	"errors"
 	"net/http"
 	"net/url"
@@ -159,27 +158,6 @@ func (t *parameterTransport) RoundTrip(req *http.Request) (*http.Response, error
 
 // Set at init time by dial_appengine.go. If nil, we're not on App Engine.
 var appengineUrlfetchHook func(context.Context) http.RoundTripper
-
-// defaultBaseTransport returns the base HTTP transport.
-// On App Engine, this is urlfetch.Transport.
-// If TLSCertificate is available, return a custom Transport with TLSClientConfig.
-// Otherwise, return http.DefaultTransport.
-func defaultBaseTransport(ctx context.Context, clientCertSource cert.Source) http.RoundTripper {
-	if appengineUrlfetchHook != nil {
-		return appengineUrlfetchHook(ctx)
-	}
-
-	if clientCertSource != nil {
-		// TODO (cbro): copy default transport settings from http.DefaultTransport
-		return &http.Transport{
-			TLSClientConfig: &tls.Config{
-				GetClientCertificate: clientCertSource,
-			},
-		}
-	}
-
-	return http.DefaultTransport
-}
 
 func addOCTransport(trans http.RoundTripper, settings *internal.DialSettings) http.RoundTripper {
 	if settings.TelemetryDisabled {

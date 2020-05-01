@@ -61,6 +61,11 @@ var (
 	serviceTypes = []string{"Service", "APIService"}
 )
 
+var (
+	errOldRevision = errors.New("revision pulled older than local cached revision")
+	errNoDoc       = errors.New("could not read discovery doc")
+)
+
 // API represents an API to generate, as well as its state while it's
 // generating.
 type API struct {
@@ -142,7 +147,10 @@ func main() {
 		matches = append(matches, api)
 		log.Printf("Generating API %s", api.ID)
 		err := api.WriteGeneratedCode()
-		if err != nil && err != errNoDoc {
+		if err == errOldRevision {
+			log.Printf("Old revision found for %s, skipping generation", api.ID)
+			continue
+		} else if err != nil && err != errNoDoc {
 			errors = append(errors, &generateError{api, err})
 			continue
 		}
@@ -283,6 +291,40 @@ func apiFromFile(file string) (*API, error) {
 		doc:       doc,
 	}
 	return a, nil
+}
+
+func checkAndUpdateSpecFile(file string, contents []byte) error {
+	// check if file exists
+	if _, err := os.Stat(file); os.IsNotExist(err) {
+		return writeFile(file, contents)
+	}
+	existing, err := ioutil.ReadFile(file)
+	if err != nil {
+		return err
+	}
+	if err := isNewerRevision(existing, contents); err != nil {
+		return err
+	}
+	return writeFile(file, contents)
+}
+
+// isNewerRevision returns nil if the contents of new has a newer revision than
+// the contents of old.
+func isNewerRevision(old []byte, new []byte) error {
+	type docRevision struct {
+		Revision string `json:"revision"`
+	}
+	var oldDoc, newDoc docRevision
+	if err := json.Unmarshal(old, &oldDoc); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(new, &newDoc); err != nil {
+		return err
+	}
+	if newDoc.Revision < oldDoc.Revision {
+		return errOldRevision
+	}
+	return nil
 }
 
 func writeFile(file string, contents []byte) error {
@@ -496,10 +538,9 @@ func (a *API) JSONFile() string {
 	return filepath.Join(a.SourceDir(), a.Package()+"-api.json")
 }
 
-var errNoDoc = errors.New("could not read discovery doc")
-
 // WriteGeneratedCode generates code for a.
-// It returns errNoDoc if we couldn't read the discovery doc.
+// It returns errNoDoc if we couldn't read the discovery doc or errOldRevision
+// if the API spec file being pulled in is older than the local cache.
 func (a *API) WriteGeneratedCode() error {
 	genfilename := *output
 	jsonBytes := a.jsonBytes()
@@ -509,7 +550,7 @@ func (a *API) WriteGeneratedCode() error {
 		return errNoDoc
 	}
 	if genfilename == "" {
-		if err := writeFile(a.JSONFile(), jsonBytes); err != nil {
+		if err := checkAndUpdateSpecFile(a.JSONFile(), jsonBytes); err != nil {
 			return err
 		}
 		outdir := a.SourceDir()

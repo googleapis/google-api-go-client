@@ -910,7 +910,7 @@
                   "type": "string"
                 },
                 "filter": {
-                  "description": "Allows filtering by insertion order properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `campaignId`\n    - `entityStatus`\n\nExamples:\n\n* All insertion orders under a campaign: `campaignId=\"1234\"`\n* All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` insertion orders\nunder an advertiser:\n`(entityStatus=\"ENTITY_STATUS_ACTIVE\" or\nentityStatus=\"ENTITY_STATUS_PAUSED\")`\n\nThe length of this field should be no more than 500 characters.",
+                  "description": "Allows filtering by insertion order properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `campaignId`\n    - `entityStatus`\n\nExamples:\n\n* All insertion orders under a campaign: `campaignId=\"1234\"`\n* All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` insertion orders\nunder an advertiser:\n`(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR\nentityStatus=\"ENTITY_STATUS_PAUSED\")`\n\nThe length of this field should be no more than 500 characters.",
                   "location": "query",
                   "type": "string"
                 },
@@ -1198,7 +1198,7 @@
                   "type": "string"
                 },
                 "filter": {
-                  "description": "Allows filtering by line item properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `campaignId`\n    - `insertionOrderId`\n    - `entityStatus`\n    - `lineItemType`.\n\nExamples:\n\n* All line items under an insertion order: `insertionOrderId=\"1234\"`\n* All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED`\nand `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line items under an advertiser:\n`(entityStatus=\"ENTITY_STATUS_ACTIVE\" or\nentityStatus=\"ENTITY_STATUS_PAUSED\") AND\nlineItemType=\"LINE_ITEM_TYPE_DISPLAY_DEFAULT\"`\n\nThe length of this field should be no more than 500 characters.",
+                  "description": "Allows filtering by line item properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `campaignId`\n    - `insertionOrderId`\n    - `entityStatus`\n    - `lineItemType`.\n\nExamples:\n\n* All line items under an insertion order: `insertionOrderId=\"1234\"`\n* All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED`\nand `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line items under an advertiser:\n`(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR\nentityStatus=\"ENTITY_STATUS_PAUSED\") AND\nlineItemType=\"LINE_ITEM_TYPE_DISPLAY_DEFAULT\"`\n\nThe length of this field should be no more than 500 characters.",
                   "location": "query",
                   "type": "string"
                 },
@@ -2796,7 +2796,7 @@
       }
     }
   },
-  "revision": "20200423",
+  "revision": "20200430",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActiveViewVideoViewabilityMetricConfig": {
@@ -3190,7 +3190,7 @@
       "type": "object"
     },
     "AppCategoryAssignedTargetingOptionDetails": {
-      "description": "Details for assigned app category targeting option. This will be\npopulated in the details field of an AssignedTargetingOption when\ntargeting_type\nis `TARGETING_TYPE_APP_CATEGORY`.",
+      "description": "Details for assigned app category targeting option. This will be\npopulated in the\napp_category_details field of\nan AssignedTargetingOption when\ntargeting_type\nis `TARGETING_TYPE_APP_CATEGORY`.",
       "id": "AppCategoryAssignedTargetingOptionDetails",
       "properties": {
         "displayName": {
@@ -3209,7 +3209,7 @@
       "type": "object"
     },
     "AppCategoryTargetingOptionDetails": {
-      "description": "Represents a targetable collection of apps. A collection lets you target\ndynamic groups of related apps that are maintained by the platform, for\nexample `All Apps/Google Play/Games`. This will be populated in the\napp_category field when\ntargeting_type is\n`TARGETING_TYPE_APP_CATEGORY`.",
+      "description": "Represents a targetable collection of apps. A collection lets you target\ndynamic groups of related apps that are maintained by the platform, for\nexample `All Apps/Google Play/Games`. This will be populated in the\napp_category_details field when\ntargeting_type is\n`TARGETING_TYPE_APP_CATEGORY`.",
       "id": "AppCategoryTargetingOptionDetails",
       "properties": {
         "displayName": {
@@ -3724,7 +3724,7 @@
       "id": "BulkEditLineItemAssignedTargetingOptionsResponse",
       "properties": {
         "createdAssignedTargetingOptions": {
-          "description": "The list of assigned targeting options that have been successfully created.",
+          "description": "The list of assigned targeting options that have been successfully created.\n\nThis list will be absent if empty.",
           "items": {
             "$ref": "AssignedTargetingOption"
           },
@@ -3737,7 +3737,7 @@
       "id": "BulkListLineItemAssignedTargetingOptionsResponse",
       "properties": {
         "assignedTargetingOptions": {
-          "description": "The list of assigned targeting options.",
+          "description": "The list of assigned targeting options.\n\nThis list will be absent if empty.",
           "items": {
             "$ref": "AssignedTargetingOption"
           },
@@ -5134,7 +5134,7 @@
       "id": "DigitalContentLabelTargetingOptionDetails",
       "properties": {
         "contentRatingTier": {
-          "description": "Output only. An enum for the content label brand safety tiers. Values from\ncontent-labels.txt. Must be kept in sync with\n//contentads/bidder/proto/video_ratings.proto",
+          "description": "Output only. An enum for the content label brand safety tiers.",
           "enum": [
             "CONTENT_RATING_TIER_UNSPECIFIED",
             "CONTENT_RATING_TIER_UNRATED",
@@ -5727,7 +5727,7 @@
       "type": "object"
     },
     "ExchangeTargetingOptionDetails": {
-      "description": "Represents a targetable exchange. This will be populated in the\nexchange_details field\nof a TargetingOption when\ntargeting_type is\n`TAREGTING_TYPE_EXCHANGE`.",
+      "description": "Represents a targetable exchange. This will be populated in the\nexchange_details field\nof a TargetingOption when\ntargeting_type is\n`TARGETING_TYPE_EXCHANGE`.",
       "id": "ExchangeTargetingOptionDetails",
       "properties": {
         "exchange": {
@@ -7511,7 +7511,7 @@
       "id": "ListAdvertisersResponse",
       "properties": {
         "advertisers": {
-          "description": "The list of advertisers.",
+          "description": "The list of advertisers.\n\nThis list will be absent if empty.",
           "items": {
             "$ref": "Advertiser"
           },
@@ -7528,7 +7528,7 @@
       "id": "ListCampaignsResponse",
       "properties": {
         "campaigns": {
-          "description": "The list of campaigns.",
+          "description": "The list of campaigns.\n\nThis list will be absent if empty.",
           "items": {
             "$ref": "Campaign"
           },
@@ -7545,7 +7545,7 @@
       "id": "ListChannelsResponse",
       "properties": {
         "channels": {
-          "description": "The list of channels.",
+          "description": "The list of channels.\n\nThis list will be absent if empty.",
           "items": {
             "$ref": "Channel"
           },
@@ -7562,7 +7562,7 @@
       "id": "ListCombinedAudiencesResponse",
       "properties": {
         "combinedAudiences": {
-          "description": "The list of combined audiences.",
+          "description": "The list of combined audiences.\n\nThis list will be absent if empty.",
           "items": {
             "$ref": "CombinedAudience"
           },
@@ -7579,7 +7579,7 @@
       "id": "ListCreativesResponse",
       "properties": {
         "creatives": {
-          "description": "The list of creatives.",
+          "description": "The list of creatives.\n\nThis list will be absent if empty.",
           "items": {
             "$ref": "Creative"
           },
@@ -7596,7 +7596,7 @@
       "id": "ListCustomListsResponse",
       "properties": {
         "customLists": {
-          "description": "The list of custom lists.",
+          "description": "The list of custom lists.\n\nThis list will be absent if empty.",
           "items": {
             "$ref": "CustomList"
           },
@@ -7613,7 +7613,7 @@
       "id": "ListFirstAndThirdPartyAudiencesResponse",
       "properties": {
         "firstAndThirdPartyAudiences": {
-          "description": "The list of first and third party audiences.",
+          "description": "The list of first and third party audiences. Audience size properties will\nnot be included.\n\nThis list will be absent if empty.",
           "items": {
             "$ref": "FirstAndThirdPartyAudience"
           },
@@ -7630,7 +7630,7 @@
       "id": "ListGoogleAudiencesResponse",
       "properties": {
         "googleAudiences": {
-          "description": "The list of Google audiences.",
+          "description": "The list of Google audiences.\n\nThis list will be absent if empty.",
           "items": {
             "$ref": "GoogleAudience"
           },
@@ -7647,7 +7647,7 @@
       "id": "ListInsertionOrdersResponse",
       "properties": {
         "insertionOrders": {
-          "description": "The list of insertion orders.",
+          "description": "The list of insertion orders.\n\nThis list will be absent if empty.",
           "items": {
             "$ref": "InsertionOrder"
           },
@@ -7665,7 +7665,7 @@
       "id": "ListInventorySourceGroupsResponse",
       "properties": {
         "inventorySourceGroups": {
-          "description": "The list of inventory source groups.",
+          "description": "The list of inventory source groups.\n\nThis list will be absent if empty.",
           "items": {
             "$ref": "InventorySourceGroup"
           },
@@ -7682,7 +7682,7 @@
       "id": "ListInventorySourcesResponse",
       "properties": {
         "inventorySources": {
-          "description": "The list of inventory sources.",
+          "description": "The list of inventory sources.\n\nThis list will be absent if empty.",
           "items": {
             "$ref": "InventorySource"
           },
@@ -7700,7 +7700,7 @@
       "id": "ListLineItemAssignedTargetingOptionsResponse",
       "properties": {
         "assignedTargetingOptions": {
-          "description": "The list of assigned targeting options.",
+          "description": "The list of assigned targeting options.\n\nThis list will be absent if empty.",
           "items": {
             "$ref": "AssignedTargetingOption"
           },
@@ -7717,7 +7717,7 @@
       "id": "ListLineItemsResponse",
       "properties": {
         "lineItems": {
-          "description": "The list of line items.",
+          "description": "The list of line items.\n\nThis list will be absent if empty.",
           "items": {
             "$ref": "LineItem"
           },
@@ -7734,7 +7734,7 @@
       "id": "ListLocationListsResponse",
       "properties": {
         "locationLists": {
-          "description": "The list of location lists.",
+          "description": "The list of location lists.\n\nThis list will be absent if empty.",
           "items": {
             "$ref": "LocationList"
           },
@@ -7752,7 +7752,7 @@
       "id": "ListNegativeKeywordListsResponse",
       "properties": {
         "negativeKeywordLists": {
-          "description": "The list of negative keyword lists.",
+          "description": "The list of negative keyword lists.\n\nThis list will be absent if empty.",
           "items": {
             "$ref": "NegativeKeywordList"
           },
@@ -7774,7 +7774,7 @@
           "type": "string"
         },
         "targetingOptions": {
-          "description": "The list of targeting options.",
+          "description": "The list of targeting options.\n\nThis list will be absent if empty.",
           "items": {
             "$ref": "TargetingOption"
           },
@@ -8054,7 +8054,7 @@
       "type": "object"
     },
     "OperatingSystemTargetingOptionDetails": {
-      "description": "Represents a targetable operating system. This will be populated in the\noperating_system_details field\nof a TargetingOption when\ntargeting_type is\n`TAREGTING_TYPE_OPERATING_SYSTEM`.",
+      "description": "Represents a targetable operating system. This will be populated in the\noperating_system_details field\nof a TargetingOption when\ntargeting_type is\n`TARGETING_TYPE_OPERATING_SYSTEM`.",
       "id": "OperatingSystemTargetingOptionDetails",
       "properties": {
         "displayName": {
@@ -8891,7 +8891,7 @@
       "type": "object"
     },
     "SubExchangeTargetingOptionDetails": {
-      "description": "Represents a targetable sub-exchange. This will be populated in the\nsub_exchange_details field\nof a TargetingOption when\ntargeting_type is\n`TAREGTING_TYPE_SUB_EXCHANGE`.",
+      "description": "Represents a targetable sub-exchange. This will be populated in the\nsub_exchange_details field\nof a TargetingOption when\ntargeting_type is\n`TARGETING_TYPE_SUB_EXCHANGE`.",
       "id": "SubExchangeTargetingOptionDetails",
       "properties": {
         "displayName": {
@@ -9432,7 +9432,7 @@
       "type": "object"
     },
     "ViewabilityAssignedTargetingOptionDetails": {
-      "description": "Assigned viewability targeting option details. This will be populated in the\ndetails field of an AssignedTargetingOption when\ntargeting_type is\n`TARGETING_TYPE_VIEWABILITY`.",
+      "description": "Assigned viewability targeting option details. This will be populated in the\nviewability_details field of\nan AssignedTargetingOption when\ntargeting_type is\n`TARGETING_TYPE_VIEWABILITY`.",
       "id": "ViewabilityAssignedTargetingOptionDetails",
       "properties": {
         "targetingOptionId": {
@@ -9471,7 +9471,7 @@
       "type": "object"
     },
     "ViewabilityTargetingOptionDetails": {
-      "description": "Represents a targetable viewability. This will be populated in the\ndetails field of a TargetingOption when\ntargeting_type is\n`TARGETING_TYPE_VIEWABILITY`.",
+      "description": "Represents a targetable viewability. This will be populated in the\nviewability_details field of a\nTargetingOption when targeting_type is\n`TARGETING_TYPE_VIEWABILITY`.",
       "id": "ViewabilityTargetingOptionDetails",
       "properties": {
         "viewability": {

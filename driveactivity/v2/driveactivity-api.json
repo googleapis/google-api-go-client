@@ -132,7 +132,7 @@
       }
     }
   },
-  "revision": "20200422",
+  "revision": "20200428",
   "rootUrl": "https://driveactivity.googleapis.com/",
   "schemas": {
     "Action": {
@@ -906,12 +906,12 @@
           "type": "string"
         },
         "pageSize": {
-          "description": "The requested number of activities to return. If not set, a default value\nis used.",
+          "description": "The miminum number of activities desired in the response; the server will\nattempt to return at least this quanitity. The server may also return fewer\nactivities if it has a partial response ready before the request times out.\nIf not set, a default value is used.",
           "format": "int32",
           "type": "integer"
         },
         "pageToken": {
-          "description": "The next_page_token value returned from a previous QueryDriveActivity\nrequest, if any.",
+          "description": "The token identifying which page of results to return. Set this to the\nnext_page_token value returned from a previous query to obtain the\nfollowing page of results. If not set, the first page of results will be\nreturned.",
           "type": "string"
         }
       },

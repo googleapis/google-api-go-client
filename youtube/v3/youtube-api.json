@@ -33,7 +33,7 @@
   "description": "Supports core YouTube features, such as uploading videos, creating and managing playlists, searching for content, and much more.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/youtube/v3",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/VfSXoeTZJSDEPlJ9LkqjGCjn5wo\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/IBbZJC0-42113frcDb-NKLWyDMs\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/youtube-16.png",
     "x32": "https://www.google.com/images/icons/product/youtube-32.png"
@@ -835,7 +835,7 @@
               "type": "integer"
             },
             "moderationStatus": {
-              "default": "MODERATION_STATUS_PUBLISHED",
+              "default": "published",
               "description": "Set this parameter to limit the returned comment threads to a particular moderation state.\n\nNote: This parameter is not supported for use in conjunction with the id parameter.",
               "enum": [
                 "heldForReview",
@@ -851,7 +851,7 @@
               "type": "string"
             },
             "order": {
-              "default": "true",
+              "default": "time",
               "description": "The order parameter specifies the order in which the API response should list comment threads. Valid values are: \n- time - Comment threads are ordered by time. This is the default behavior.\n- relevance - Comment threads are ordered by relevance.Note: This parameter is not supported for use in conjunction with the id parameter.",
               "enum": [
                 "relevance",
@@ -881,7 +881,7 @@
               "type": "string"
             },
             "textFormat": {
-              "default": "FORMAT_HTML",
+              "default": "html",
               "description": "Set this parameter's value to html or plainText to instruct the API to return the comments left by users in html formatted or in plain text.",
               "enum": [
                 "html",
@@ -1023,7 +1023,7 @@
               "type": "string"
             },
             "textFormat": {
-              "default": "FORMAT_HTML",
+              "default": "html",
               "description": "This parameter indicates whether the API should return comments formatted as HTML or as plain text.",
               "enum": [
                 "html",
@@ -1454,7 +1454,7 @@
               "type": "string"
             },
             "broadcastType": {
-              "default": "BROADCAST_TYPE_FILTER_EVENT",
+              "default": "event",
               "description": "The broadcastType parameter filters the API response to only include broadcasts with the specified type. This is only compatible with the mine filter for now.",
               "enum": [
                 "all",
@@ -2076,7 +2076,7 @@
               "type": "integer"
             },
             "mode": {
-              "default": "LIST_MEMBERS_MODE_ALL_CURRENT",
+              "default": "all_current",
               "description": "The mode parameter specifies which channel members to return.",
               "enum": [
                 "all_current",
@@ -2559,7 +2559,7 @@
               "type": "string"
             },
             "order": {
-              "default": "SEARCH_SORT_RELEVANCE",
+              "default": "relevance",
               "description": "The order parameter specifies the method that will be used to order resources in the API response.",
               "enum": [
                 "date",
@@ -2624,7 +2624,7 @@
               "type": "string"
             },
             "safeSearch": {
-              "default": "SAFE_SEARCH_MODERATE_FILTERING",
+              "default": "moderate",
               "description": "The safeSearch parameter indicates whether the search results should include restricted content as well as standard content.",
               "enum": [
                 "moderate",
@@ -2798,7 +2798,7 @@
           ],
           "parameters": {
             "filter": {
-              "default": "POLL_NEWEST",
+              "default": "newest",
               "description": "The filter parameter specifies which channel sponsors to return.",
               "enum": [
                 "all",
@@ -2954,7 +2954,7 @@
               "type": "string"
             },
             "order": {
-              "default": "SUBSCRIPTION_ORDER_RELEVANCE",
+              "default": "relevance",
               "description": "The order parameter specifies the method that will be used to sort resources in the API response.",
               "enum": [
                 "alphabetical",
@@ -3597,7 +3597,7 @@
       }
     }
   },
-  "revision": "20200402",
+  "revision": "20200423",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AccessPolicy": {

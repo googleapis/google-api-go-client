@@ -18,7 +18,7 @@
   "description": "The API for Google Play Game Services.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/games/services/",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/ipnHBev9G3y5YTIfVKTHmOpcmks\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/iv04XhP_bk4sRTNmL3Bs6um31tY\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -277,11 +277,6 @@
               "location": "path",
               "required": true,
               "type": "string"
-            },
-            "builtinGameId": {
-              "description": "Override used only by built-in games in Play Games application.",
-              "location": "query",
-              "type": "string"
             }
           },
           "path": "achievements/{achievementId}/unlock",
@@ -296,13 +291,6 @@
           "description": "Updates multiple achievements for the currently authenticated player.",
           "httpMethod": "POST",
           "id": "games.achievements.updateMultiple",
-          "parameters": {
-            "builtinGameId": {
-              "description": "Override used only by built-in games in Play Games application.",
-              "location": "query",
-              "type": "string"
-            }
-          },
           "path": "achievements/updateMultiple",
           "request": {
             "$ref": "AchievementUpdateMultipleRequest"
@@ -365,13 +353,6 @@
           "description": "Indicate that the the currently authenticated user is playing your application.",
           "httpMethod": "POST",
           "id": "games.applications.played",
-          "parameters": {
-            "builtinGameId": {
-              "description": "Override used only by built-in games in Play Games application.",
-              "location": "query",
-              "type": "string"
-            }
-          },
           "path": "applications/played",
           "scopes": [
             "https://www.googleapis.com/auth/games"
@@ -1788,7 +1769,7 @@
       }
     }
   },
-  "revision": "20200330",
+  "revision": "20200416",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AchievementDefinition": {
@@ -1975,7 +1956,7 @@
       "properties": {
         "kind": {
           "default": "games#achievementUpdateMultipleResponse",
-          "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#achievementUpdateListResponse.",
+          "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#achievementUpdateMultipleResponse.",
           "type": "string"
         },
         "updatedAchievements": {
@@ -3108,9 +3089,6 @@
         },
         "playerId": {
           "description": "The ID of the player.",
-          "type": "string"
-        },
-        "playerStattus": {
           "type": "string"
         },
         "profileSettings": {

@@ -810,7 +810,7 @@
       }
     }
   },
-  "revision": "20200312",
+  "revision": "20200424",
   "rootUrl": "https://sheets.googleapis.com/",
   "schemas": {
     "AddBandingRequest": {
@@ -4533,7 +4533,7 @@
           "type": "string"
         },
         "sourceColumnOffset": {
-          "description": "The column offset of the source range that this grouping is based on.\n\nFor example, if the source was `C10:E15`, a `sourceColumnOffset` of `0`\nmeans this group refers to column `C`, whereas the offset `1` would refer\nto column `D`.",
+          "description": "The column offset of the source range that this grouping is based on.\n\nFor example, if the source was `C10:E15`, a `sourceColumnOffset` of `0`\nmeans this group refers to column `C`, whereas the offset `1` would\nrefer to column `D`.",
           "format": "int32",
           "type": "integer"
         },

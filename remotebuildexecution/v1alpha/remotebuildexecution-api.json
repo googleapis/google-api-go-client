@@ -388,7 +388,7 @@
       }
     }
   },
-  "revision": "20200421",
+  "revision": "20200429",
   "rootUrl": "https://admin-remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -1103,7 +1103,8 @@
             "DOCKER_CREATE_COMPUTE_SYSTEM_ERROR",
             "DOCKER_PREPARELAYER_ERROR",
             "DOCKER_INCOMPATIBLE_OS_ERROR",
-            "DOCKER_CREATE_RUNTIME_FILE_NOT_FOUND"
+            "DOCKER_CREATE_RUNTIME_FILE_NOT_FOUND",
+            "DOCKER_CREATE_RUNTIME_PERMISSION_DENIED"
           ],
           "enumDescriptions": [
             "The command succeeded.",
@@ -1138,7 +1139,8 @@
             "Docker failed to run containers with CreateComputeSystem error.",
             "Docker failed to run containers with hcsshim::PrepareLayer error.",
             "Docker incompatible operating system error.",
-            "Docker failed to create OCI runtime because of file not found."
+            "Docker failed to create OCI runtime because of file not found.",
+            "Docker failed to create OCI runtime because of permission denied."
           ],
           "type": "string"
         },

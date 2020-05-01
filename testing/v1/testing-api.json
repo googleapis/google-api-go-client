@@ -273,7 +273,7 @@
       }
     }
   },
-  "revision": "20200226",
+  "revision": "20200429",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -1228,6 +1228,10 @@
         "appBundleId": {
           "description": "Output only. The bundle id for the application under test.",
           "type": "string"
+        },
+        "testSpecialEntitlements": {
+          "description": "The option to test special app entitlements. Setting this would re-sign the\napp having special entitlements with an explicit application-identifier.\nCurrently supports testing aps-environment entitlement.",
+          "type": "boolean"
         },
         "testsZip": {
           "$ref": "FileReference",

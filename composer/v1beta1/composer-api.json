@@ -401,7 +401,7 @@
       }
     }
   },
-  "revision": "20200313",
+  "revision": "20200421",
   "rootUrl": "https://composer.googleapis.com/",
   "schemas": {
     "AllowedIpRange": {
@@ -413,7 +413,7 @@
           "type": "string"
         },
         "value": {
-          "description": "IP address or range, defined using CIDR notation, of requests that this\nrule applies to. You can use the wildcard character \"*\" to match all IPs\nequivalent to \"0/0\" and \"::/0\" together.\nExamples: `192.168.1.1` or `192.168.0.0/16` or `2001:db8::/32`\n          or `2001:0db8:0000:0042:0000:8a2e:0370:7334`.\n\n\n\u003cp\u003eIP range prefixes should be properly truncated. For example,\n`1.2.3.4/24` should be truncated to `1.2.3.0/24`. Similarly, for IPv6,\n`2001:db8::1/32` should be truncated to `2001:db8::/32`.",
+          "description": "IP address or range, defined using CIDR notation, of requests that this\nrule applies to.\nExamples: `192.168.1.1` or `192.168.0.0/16` or `2001:db8::/32`\n          or `2001:0db8:0000:0042:0000:8a2e:0370:7334`.\n\n\n\u003cp\u003eIP range prefixes should be properly truncated. For example,\n`1.2.3.4/24` should be truncated to `1.2.3.0/24`. Similarly, for IPv6,\n`2001:db8::1/32` should be truncated to `2001:db8::/32`.",
           "type": "string"
         }
       },

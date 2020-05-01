@@ -350,7 +350,7 @@
       }
     }
   },
-  "revision": "20200413",
+  "revision": "20200423",
   "rootUrl": "https://videointelligence.googleapis.com/",
   "schemas": {
     "GoogleCloudVideointelligenceV1_AnnotateVideoProgress": {
@@ -505,6 +505,10 @@
             "$ref": "GoogleCloudVideointelligenceV1_ExplicitContentFrame"
           },
           "type": "array"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -580,6 +584,10 @@
             "$ref": "GoogleCloudVideointelligenceV1_LabelSegment"
           },
           "type": "array"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -769,6 +777,10 @@
           "description": "Streaming mode ONLY.\nIn streaming mode, we do not know the end time of a tracked object\nbefore it is completed. Hence, there is no VideoSegment info returned.\nInstead, we provide a unique identifiable integer track_id so that\nthe customers can correlate the results of the ongoing\nObjectTrackAnnotation of the same track_id over time.",
           "format": "int64",
           "type": "string"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -931,6 +943,10 @@
         },
         "text": {
           "description": "The detected text.",
+          "type": "string"
+        },
+        "version": {
+          "description": "Feature version.",
           "type": "string"
         }
       },
@@ -1383,6 +1399,10 @@
             "$ref": "GoogleCloudVideointelligenceV1beta2_ExplicitContentFrame"
           },
           "type": "array"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1447,6 +1467,10 @@
             "$ref": "GoogleCloudVideointelligenceV1beta2_LabelSegment"
           },
           "type": "array"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1595,6 +1619,10 @@
           "description": "Streaming mode ONLY.\nIn streaming mode, we do not know the end time of a tracked object\nbefore it is completed. Hence, there is no VideoSegment info returned.\nInstead, we provide a unique identifiable integer track_id so that\nthe customers can correlate the results of the ongoing\nObjectTrackAnnotation of the same track_id over time.",
           "format": "int64",
           "type": "string"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1669,6 +1697,10 @@
         },
         "text": {
           "description": "The detected text.",
+          "type": "string"
+        },
+        "version": {
+          "description": "Feature version.",
           "type": "string"
         }
       },
@@ -2065,6 +2097,10 @@
             "$ref": "GoogleCloudVideointelligenceV1p1beta1_ExplicitContentFrame"
           },
           "type": "array"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2129,6 +2165,10 @@
             "$ref": "GoogleCloudVideointelligenceV1p1beta1_LabelSegment"
           },
           "type": "array"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2277,6 +2317,10 @@
           "description": "Streaming mode ONLY.\nIn streaming mode, we do not know the end time of a tracked object\nbefore it is completed. Hence, there is no VideoSegment info returned.\nInstead, we provide a unique identifiable integer track_id so that\nthe customers can correlate the results of the ongoing\nObjectTrackAnnotation of the same track_id over time.",
           "format": "int64",
           "type": "string"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2351,6 +2395,10 @@
         },
         "text": {
           "description": "The detected text.",
+          "type": "string"
+        },
+        "version": {
+          "description": "Feature version.",
           "type": "string"
         }
       },
@@ -2747,6 +2795,10 @@
             "$ref": "GoogleCloudVideointelligenceV1p2beta1_ExplicitContentFrame"
           },
           "type": "array"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2811,6 +2863,10 @@
             "$ref": "GoogleCloudVideointelligenceV1p2beta1_LabelSegment"
           },
           "type": "array"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2959,6 +3015,10 @@
           "description": "Streaming mode ONLY.\nIn streaming mode, we do not know the end time of a tracked object\nbefore it is completed. Hence, there is no VideoSegment info returned.\nInstead, we provide a unique identifiable integer track_id so that\nthe customers can correlate the results of the ongoing\nObjectTrackAnnotation of the same track_id over time.",
           "format": "int64",
           "type": "string"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3033,6 +3093,10 @@
         },
         "text": {
           "description": "The detected text.",
+          "type": "string"
+        },
+        "version": {
+          "description": "Feature version.",
           "type": "string"
         }
       },
@@ -3389,6 +3453,10 @@
             "$ref": "GoogleCloudVideointelligenceV1p3beta1_CelebrityTrack"
           },
           "type": "array"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3480,6 +3548,10 @@
             "$ref": "GoogleCloudVideointelligenceV1p3beta1_ExplicitContentFrame"
           },
           "type": "array"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3531,6 +3603,10 @@
             "$ref": "GoogleCloudVideointelligenceV1p3beta1_Track"
           },
           "type": "array"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3563,6 +3639,10 @@
             "$ref": "GoogleCloudVideointelligenceV1p3beta1_LabelSegment"
           },
           "type": "array"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3711,6 +3791,10 @@
           "description": "Streaming mode ONLY.\nIn streaming mode, we do not know the end time of a tracked object\nbefore it is completed. Hence, there is no VideoSegment info returned.\nInstead, we provide a unique identifiable integer track_id so that\nthe customers can correlate the results of the ongoing\nObjectTrackAnnotation of the same track_id over time.",
           "format": "int64",
           "type": "string"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3741,6 +3825,10 @@
             "$ref": "GoogleCloudVideointelligenceV1p3beta1_Track"
           },
           "type": "array"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3866,6 +3954,10 @@
         },
         "text": {
           "description": "The detected text.",
+          "type": "string"
+        },
+        "version": {
+          "description": "Feature version.",
           "type": "string"
         }
       },

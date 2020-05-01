@@ -365,6 +365,9 @@ type GoogleCloudVideointelligenceV1ExplicitContentAnnotation struct {
 	// Frames: All video frames where explicit content was detected.
 	Frames []*GoogleCloudVideointelligenceV1ExplicitContentFrame `json:"frames,omitempty"`
 
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Frames") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -450,6 +453,9 @@ type GoogleCloudVideointelligenceV1LabelAnnotation struct {
 
 	// Segments: All video segments where a label was detected.
 	Segments []*GoogleCloudVideointelligenceV1LabelSegment `json:"segments,omitempty"`
+
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CategoryEntities") to
 	// unconditionally include in API requests. By default, fields with
@@ -808,6 +814,9 @@ type GoogleCloudVideointelligenceV1ObjectTrackingAnnotation struct {
 	// ObjectTrackAnnotation of the same track_id over time.
 	TrackId int64 `json:"trackId,omitempty,string"`
 
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -998,6 +1007,9 @@ type GoogleCloudVideointelligenceV1TextAnnotation struct {
 
 	// Text: The detected text.
 	Text string `json:"text,omitempty"`
+
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Segments") to
 	// unconditionally include in API requests. By default, fields with
@@ -1712,6 +1724,9 @@ type GoogleCloudVideointelligenceV1beta2ExplicitContentAnnotation struct {
 	// Frames: All video frames where explicit content was detected.
 	Frames []*GoogleCloudVideointelligenceV1beta2ExplicitContentFrame `json:"frames,omitempty"`
 
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Frames") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1797,6 +1812,9 @@ type GoogleCloudVideointelligenceV1beta2LabelAnnotation struct {
 
 	// Segments: All video segments where a label was detected.
 	Segments []*GoogleCloudVideointelligenceV1beta2LabelSegment `json:"segments,omitempty"`
+
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CategoryEntities") to
 	// unconditionally include in API requests. By default, fields with
@@ -2156,6 +2174,9 @@ type GoogleCloudVideointelligenceV1beta2ObjectTrackingAnnotation struct {
 	// ObjectTrackAnnotation of the same track_id over time.
 	TrackId int64 `json:"trackId,omitempty,string"`
 
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -2348,6 +2369,9 @@ type GoogleCloudVideointelligenceV1beta2TextAnnotation struct {
 
 	// Text: The detected text.
 	Text string `json:"text,omitempty"`
+
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Segments") to
 	// unconditionally include in API requests. By default, fields with
@@ -3063,6 +3087,9 @@ type GoogleCloudVideointelligenceV1p1beta1ExplicitContentAnnotation struct {
 	// Frames: All video frames where explicit content was detected.
 	Frames []*GoogleCloudVideointelligenceV1p1beta1ExplicitContentFrame `json:"frames,omitempty"`
 
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Frames") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -3149,6 +3176,9 @@ type GoogleCloudVideointelligenceV1p1beta1LabelAnnotation struct {
 
 	// Segments: All video segments where a label was detected.
 	Segments []*GoogleCloudVideointelligenceV1p1beta1LabelSegment `json:"segments,omitempty"`
+
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CategoryEntities") to
 	// unconditionally include in API requests. By default, fields with
@@ -3508,6 +3538,9 @@ type GoogleCloudVideointelligenceV1p1beta1ObjectTrackingAnnotation struct {
 	// ObjectTrackAnnotation of the same track_id over time.
 	TrackId int64 `json:"trackId,omitempty,string"`
 
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -3700,6 +3733,9 @@ type GoogleCloudVideointelligenceV1p1beta1TextAnnotation struct {
 
 	// Text: The detected text.
 	Text string `json:"text,omitempty"`
+
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Segments") to
 	// unconditionally include in API requests. By default, fields with
@@ -4415,6 +4451,9 @@ type GoogleCloudVideointelligenceV1p2beta1ExplicitContentAnnotation struct {
 	// Frames: All video frames where explicit content was detected.
 	Frames []*GoogleCloudVideointelligenceV1p2beta1ExplicitContentFrame `json:"frames,omitempty"`
 
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Frames") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -4501,6 +4540,9 @@ type GoogleCloudVideointelligenceV1p2beta1LabelAnnotation struct {
 
 	// Segments: All video segments where a label was detected.
 	Segments []*GoogleCloudVideointelligenceV1p2beta1LabelSegment `json:"segments,omitempty"`
+
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CategoryEntities") to
 	// unconditionally include in API requests. By default, fields with
@@ -4860,6 +4902,9 @@ type GoogleCloudVideointelligenceV1p2beta1ObjectTrackingAnnotation struct {
 	// ObjectTrackAnnotation of the same track_id over time.
 	TrackId int64 `json:"trackId,omitempty,string"`
 
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -5052,6 +5097,9 @@ type GoogleCloudVideointelligenceV1p2beta1TextAnnotation struct {
 
 	// Text: The detected text.
 	Text string `json:"text,omitempty"`
+
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Segments") to
 	// unconditionally include in API requests. By default, fields with
@@ -5755,6 +5803,9 @@ type GoogleCloudVideointelligenceV1p3beta1CelebrityRecognitionAnnotation struct 
 	// and other detected faces in the video.
 	CelebrityTracks []*GoogleCloudVideointelligenceV1p3beta1CelebrityTrack `json:"celebrityTracks,omitempty"`
 
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CelebrityTracks") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -5971,6 +6022,9 @@ type GoogleCloudVideointelligenceV1p3beta1ExplicitContentAnnotation struct {
 	// Frames: All video frames where explicit content was detected.
 	Frames []*GoogleCloudVideointelligenceV1p3beta1ExplicitContentFrame `json:"frames,omitempty"`
 
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Frames") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -6079,6 +6133,9 @@ type GoogleCloudVideointelligenceV1p3beta1FaceDetectionAnnotation struct {
 	// Tracks: The face tracks with attributes.
 	Tracks []*GoogleCloudVideointelligenceV1p3beta1Track `json:"tracks,omitempty"`
 
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Thumbnail") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -6163,6 +6220,9 @@ type GoogleCloudVideointelligenceV1p3beta1LabelAnnotation struct {
 
 	// Segments: All video segments where a label was detected.
 	Segments []*GoogleCloudVideointelligenceV1p3beta1LabelSegment `json:"segments,omitempty"`
+
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CategoryEntities") to
 	// unconditionally include in API requests. By default, fields with
@@ -6616,6 +6676,9 @@ type GoogleCloudVideointelligenceV1p3beta1ObjectTrackingAnnotation struct {
 	// ObjectTrackAnnotation of the same track_id over time.
 	TrackId int64 `json:"trackId,omitempty,string"`
 
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -6727,6 +6790,9 @@ func (s *GoogleCloudVideointelligenceV1p3beta1ObjectTrackingFrame) MarshalJSON()
 type GoogleCloudVideointelligenceV1p3beta1PersonDetectionAnnotation struct {
 	// Tracks: The detected tracks of a person.
 	Tracks []*GoogleCloudVideointelligenceV1p3beta1Track `json:"tracks,omitempty"`
+
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Tracks") to
 	// unconditionally include in API requests. By default, fields with
@@ -7224,6 +7290,9 @@ type GoogleCloudVideointelligenceV1p3beta1TextAnnotation struct {
 
 	// Text: The detected text.
 	Text string `json:"text,omitempty"`
+
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Segments") to
 	// unconditionally include in API requests. By default, fields with
@@ -8009,7 +8078,7 @@ func (c *VideosAnnotateCall) Header() http.Header {
 
 func (c *VideosAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200425")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200427")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

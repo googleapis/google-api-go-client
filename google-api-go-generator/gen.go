@@ -117,6 +117,11 @@ func (e *compileError) Error() string {
 	return fmt.Sprintf("API %s failed to compile:\n%v", e.api.ID, e.output)
 }
 
+// skipAPIGeneration is a set of APIs to not generate when generating all clients.
+var skipAPIGeneration = map[string]bool{
+	"customsearch:v1": true,
+}
+
 func main() {
 	flag.Parse()
 
@@ -182,6 +187,9 @@ func (a *API) want() bool {
 		if _, err := os.Stat(a.JSONFile()); os.IsNotExist(err) {
 			return false
 		}
+	}
+	if skipAPIGeneration[a.ID] && *apiToGenerate == "*" {
+		return false
 	}
 	return *apiToGenerate == "*" || *apiToGenerate == a.ID
 }

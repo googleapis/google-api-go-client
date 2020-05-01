@@ -27,7 +27,7 @@ func customSearchMain() {
 		log.Fatal(err)
 	}
 
-	resp, err := svc.Cse.List().Q(query).Cx(cx).Do()
+	resp, err := svc.Cse.List(query).Cx(cx).Do()
 	if err != nil {
 		log.Fatal(err)
 	}

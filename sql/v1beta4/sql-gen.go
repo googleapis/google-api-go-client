@@ -39,6 +39,10 @@
 //   sqlService, err := sql.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
+//
+// Deprecated: please use "google.golang.org/api/sqladmin/v1beta4" instead. This
+// client was accidentally generated under the wrong package. The correct package
+// is "sqladmin". This client will be removed in a future release.
 package sql // import "google.golang.org/api/sql/v1beta4"
 
 import (

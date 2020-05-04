@@ -263,6 +263,41 @@ var checkResponseTests = []CheckResponseTest{
 		},
 		"googleapi: Error 400: Bad Request, keyInvalid",
 	},
+	{
+		&http.Response{
+			StatusCode: http.StatusBadRequest,
+		},
+		`{"error": {"code": 400,"message": "The request has errors","status": "INVALID_ARGUMENT","details": [{"@type": "type.googleapis.com/google.rpc.BadRequest","fieldViolations": [{"field": "metadata.name","description": "The revision name must be prefixed by the name of the enclosing Service or Configuration with a trailing -"}]}]}}`,
+		&Error{
+			Code:    http.StatusBadRequest,
+			Message: "The request has errors",
+			Details: []interface{}{
+				map[string]interface{}{
+					"@type": "type.googleapis.com/google.rpc.BadRequest",
+					"fieldViolations": []interface{}{
+						map[string]interface{}{
+							"field":       "metadata.name",
+							"description": "The revision name must be prefixed by the name of the enclosing Service or Configuration with a trailing -",
+						},
+					},
+				},
+			},
+			Body: `{"error": {"code": 400,"message": "The request has errors","status": "INVALID_ARGUMENT","details": [{"@type": "type.googleapis.com/google.rpc.BadRequest","fieldViolations": [{"field": "metadata.name","description": "The revision name must be prefixed by the name of the enclosing Service or Configuration with a trailing -"}]}]}}`,
+		},
+		`googleapi: Error 400: The request has errors
+Details:
+[
+  {
+    "@type": "type.googleapis.com/google.rpc.BadRequest",
+    "fieldViolations": [
+      {
+        "description": "The revision name must be prefixed by the name of the enclosing Service or Configuration with a trailing -",
+        "field": "metadata.name"
+      }
+    ]
+  }
+]`,
+	},
 }
 
 func TestCheckResponse(t *testing.T) {

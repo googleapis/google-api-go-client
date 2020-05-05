@@ -1,3 +1,8 @@
+# v0.15.1
+
+- compute/v1:
+  - Back-port `AllowGlobalAccess` field on `ForwardingRule`
+
 # v0.15.0
 
 - monitoring/v3:

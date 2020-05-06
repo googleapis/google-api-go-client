@@ -229,7 +229,7 @@ func (s *ClassItem) MarshalJSON() ([]byte, error) {
 type CustomClass struct {
 	// CustomClassId: If this custom class is a resource, the
 	// custom_class_id is the resource id
-	// of the CustomClass.
+	// of the CustomClass. Case sensitive.
 	CustomClassId string `json:"customClassId,omitempty"`
 
 	// Items: A collection of class items.
@@ -514,21 +514,20 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // the
 // year (e.g. "i was born in january", "i was born in febuary", ...),
 // use the
-// pre-built $MONTH class improves the likelihood of correctly
+// pre-built `$MONTH` class improves the likelihood of correctly
 // transcribing
 // audio that includes months (e.g. "i was born in $month").
-// To refer to pre-built classes, use the class' symbol prepended with $
-// e.g.
-// $MONTH. To refer to custom classes that were defined inline in the
-// request,
-// set the class's `custom_class_id` to a string unique to all class
-// resources
-// and inline classes. Then use the class' id wrapped in ${...}
-// e.g.
-// "${my-months}". To refer to custom classes resources, use the class'
-// id
-// wrapped in ${} (e.g.
-// ${my-months}).
+// To refer to pre-built classes, use the class' symbol prepended with
+// `$`
+// e.g. `$MONTH`. To refer to custom classes that were defined inline in
+// the
+// request, set the class's `custom_class_id` to a string unique to all
+// class
+// resources and inline classes. Then use the class' id wrapped in
+// $`{...}`
+// e.g. "${my-months}". To refer to custom classes resources, use the
+// class'
+// id wrapped in `${}` (e.g. `${my-months}`).
 type Phrase struct {
 	// Boost: Hint Boost. Overrides the boost set at the phrase set
 	// level.
@@ -1706,7 +1705,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200503")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200504")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1892,7 +1891,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200503")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200504")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2070,7 +2069,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200503")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200504")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2251,7 +2250,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200503")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200504")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2430,7 +2429,7 @@ func (c *SpeechLongrunningrecognizeCall) Header() http.Header {
 
 func (c *SpeechLongrunningrecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200503")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200504")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2557,7 +2556,7 @@ func (c *SpeechRecognizeCall) Header() http.Header {
 
 func (c *SpeechRecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200503")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200504")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

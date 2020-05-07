@@ -1957,6 +1957,9 @@ type GoogleDevtoolsRemotebuildbotCommandStatus struct {
 	// by the underlying
 	// system have been broken. This usually indicates a bug wit the system.
 	//   "ABORTED" - The command was aborted.
+	//   "FAILED_PRECONDITION" - The command failed because the system is
+	// not in a state required for the
+	// command, e.g. the command inputs cannot be found on the server.
 	//   "CLEANUP_ERROR" - The bot failed to do the cleanup, e.g. unable to
 	// delete the command
 	// working directory or the command process.
@@ -2794,6 +2797,9 @@ func (s *GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerConfig) MarshalJSON
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerPool struct {
 	// Autoscale: The autoscale policy to apply on a pool.
 	Autoscale *GoogleDevtoolsRemotebuildexecutionAdminV1alphaAutoscale `json:"autoscale,omitempty"`
+
+	// Channel: Channel specifies the release channel of the pool.
+	Channel string `json:"channel,omitempty"`
 
 	// Name: WorkerPool resource name formatted
 	// as:
@@ -3802,7 +3808,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3995,7 +4001,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4192,7 +4198,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4336,7 +4342,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4514,7 +4520,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4700,7 +4706,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

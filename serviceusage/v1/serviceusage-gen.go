@@ -992,23 +992,39 @@ func (s *BatchGetServicesResponse) MarshalJSON() ([]byte, error) {
 //
 // The following example shows how to configure monitored resources and
 // metrics
-// for billing:
+// for billing, `consumer_destinations` is the only supported
+// destination and
+// the monitored resources need at least one label
+// key
+// `cloud.googleapis.com/location` to indicate the location of the
+// billing
+// usage, using different monitored resources between monitoring and
+// billing is
+// recommended so they can be evolved independently:
+//
 //
 //     monitored_resources:
-//     - type: library.googleapis.com/branch
+//     - type: library.googleapis.com/billing_branch
 //       labels:
-//       - key: /city
-//         description: The city where the library branch is located
-// in.
-//       - key: /name
-//         description: The name of the branch.
+//       - key: cloud.googleapis.com/location
+//         description: |
+//           Predefined label to support billing location restriction.
+//       - key: city
+//         description: |
+//           Custom label to define the city where the library branch is
+// located
+//           in.
+//       - key: name
+//         description: Custom label to define the name of the library
+// branch.
 //     metrics:
 //     - name: library.googleapis.com/book/borrowed_count
 //       metric_kind: DELTA
 //       value_type: INT64
+//       unit: "1"
 //     billing:
 //       consumer_destinations:
-//       - monitored_resource: library.googleapis.com/branch
+//       - monitored_resource: library.googleapis.com/billing_branch
 //         metrics:
 //         - library.googleapis.com/book/borrowed_count
 type Billing struct {
@@ -5394,7 +5410,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5539,7 +5555,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5685,7 +5701,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5872,7 +5888,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6042,7 +6058,7 @@ func (c *ServicesBatchEnableCall) Header() http.Header {
 
 func (c *ServicesBatchEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6165,7 +6181,7 @@ func (r *ServicesService) BatchGet(parent string) *ServicesBatchGetCall {
 // `projects/123/services/serviceusage.googleapis.com` where `123` is
 // the
 // project number.
-// A single request can get a maximum of 20 services at a time.
+// A single request can get a maximum of 30 services at a time.
 func (c *ServicesBatchGetCall) Names(names ...string) *ServicesBatchGetCall {
 	c.urlParams_.SetMulti("names", append([]string{}, names...))
 	return c
@@ -6208,7 +6224,7 @@ func (c *ServicesBatchGetCall) Header() http.Header {
 
 func (c *ServicesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6279,7 +6295,7 @@ func (c *ServicesBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetServic
 	//   ],
 	//   "parameters": {
 	//     "names": {
-	//       "description": "Names of the services to retrieve.\n\nAn example name would be:\n`projects/123/services/serviceusage.googleapis.com` where `123` is the\nproject number.\nA single request can get a maximum of 20 services at a time.",
+	//       "description": "Names of the services to retrieve.\n\nAn example name would be:\n`projects/123/services/serviceusage.googleapis.com` where `123` is the\nproject number.\nA single request can get a maximum of 30 services at a time.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -6360,7 +6376,7 @@ func (c *ServicesDisableCall) Header() http.Header {
 
 func (c *ServicesDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6501,7 +6517,7 @@ func (c *ServicesEnableCall) Header() http.Header {
 
 func (c *ServicesEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6652,7 +6668,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6833,7 +6849,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

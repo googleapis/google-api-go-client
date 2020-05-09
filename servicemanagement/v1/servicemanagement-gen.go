@@ -1047,23 +1047,39 @@ func (s *BackendRule) UnmarshalJSON(data []byte) error {
 //
 // The following example shows how to configure monitored resources and
 // metrics
-// for billing:
+// for billing, `consumer_destinations` is the only supported
+// destination and
+// the monitored resources need at least one label
+// key
+// `cloud.googleapis.com/location` to indicate the location of the
+// billing
+// usage, using different monitored resources between monitoring and
+// billing is
+// recommended so they can be evolved independently:
+//
 //
 //     monitored_resources:
-//     - type: library.googleapis.com/branch
+//     - type: library.googleapis.com/billing_branch
 //       labels:
-//       - key: /city
-//         description: The city where the library branch is located
-// in.
-//       - key: /name
-//         description: The name of the branch.
+//       - key: cloud.googleapis.com/location
+//         description: |
+//           Predefined label to support billing location restriction.
+//       - key: city
+//         description: |
+//           Custom label to define the city where the library branch is
+// located
+//           in.
+//       - key: name
+//         description: Custom label to define the name of the library
+// branch.
 //     metrics:
 //     - name: library.googleapis.com/book/borrowed_count
 //       metric_kind: DELTA
 //       value_type: INT64
+//       unit: "1"
 //     billing:
 //       consumer_destinations:
-//       - monitored_resource: library.googleapis.com/branch
+//       - monitored_resource: library.googleapis.com/billing_branch
 //         metrics:
 //         - library.googleapis.com/book/borrowed_count
 type Billing struct {
@@ -1141,11 +1157,23 @@ func (s *BillingDestination) MarshalJSON() ([]byte, error) {
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding.
-	// NOTE: An unsatisfied condition will not allow user access via
-	// current
-	// binding. Different bindings, including their conditions, are
-	// examined
-	// independently.
+	//
+	// If the condition evaluates to `true`, then this binding applies to
+	// the
+	// current request.
+	//
+	// If the condition evaluates to `false`, then this binding does not
+	// apply to
+	// the current request. However, a different role binding might grant
+	// the same
+	// role to one or more of the members in this binding.
+	//
+	// To learn which resources support conditions in their IAM policies,
+	// see
+	// the
+	// [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/r
+	// esource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -2553,7 +2581,7 @@ func (s *GenerateConfigReportResponse) MarshalJSON() ([]byte, error) {
 type GetIamPolicyRequest struct {
 	// Options: OPTIONAL: A `GetPolicyOptions` object for specifying options
 	// to
-	// `GetIamPolicy`. This field is only used by Cloud IAM.
+	// `GetIamPolicy`.
 	Options *GetPolicyOptions `json:"options,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Options") to
@@ -2593,6 +2621,13 @@ type GetPolicyOptions struct {
 	// Policies without any conditional bindings may specify any valid value
 	// or
 	// leave the field unset.
+	//
+	// To learn which resources support conditions in their IAM policies,
+	// see
+	// the
+	// [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/r
+	// esource-policies).
 	RequestedPolicyVersion int64 `json:"requestedPolicyVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -4737,13 +4772,18 @@ func (s *Page) MarshalJSON() ([]byte, error) {
 // user-created
 // custom role.
 //
-// Optionally, a `binding` can specify a `condition`, which is a
-// logical
-// expression that allows access to a resource only if the expression
-// evaluates
-// to `true`. A condition can add constraints based on attributes of
-// the
-// request, the resource, or both.
+// For some types of Google Cloud resources, a `binding` can also
+// specify a
+// `condition`, which is a logical expression that allows access to a
+// resource
+// only if the expression evaluates to `true`. A condition can add
+// constraints
+// based on attributes of the request, the resource, or both. To learn
+// which
+// resources support conditions in their IAM policies, see the
+// [IAM
+// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+// olicies).
 //
 // **JSON example:**
 //
@@ -4761,7 +4801,9 @@ func (s *Page) MarshalJSON() ([]byte, error) {
 //         },
 //         {
 //           "role": "roles/resourcemanager.organizationViewer",
-//           "members": ["user:eve@example.com"],
+//           "members": [
+//             "user:eve@example.com"
+//           ],
 //           "condition": {
 //             "title": "expirable access",
 //             "description": "Does not grant access after Sep 2020",
@@ -4860,6 +4902,12 @@ type Policy struct {
 	// If a policy does not include any conditions, operations on that
 	// policy may
 	// specify any valid version or leave the field unset.
+	//
+	// To learn which resources support conditions in their IAM policies,
+	// see the
+	// [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5470,8 +5518,8 @@ type SetIamPolicyRequest struct {
 	// the fields in the mask will be modified. If no mask is provided,
 	// the
 	// following default mask is used:
-	// paths: "bindings, etag"
-	// This field is only used by Cloud IAM.
+	//
+	// `paths: "bindings, etag"
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
@@ -6278,7 +6326,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6474,7 +6522,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6652,7 +6700,7 @@ func (c *ServicesCreateCall) Header() http.Header {
 
 func (c *ServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6786,7 +6834,7 @@ func (c *ServicesDeleteCall) Header() http.Header {
 
 func (c *ServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6923,7 +6971,7 @@ func (c *ServicesDisableCall) Header() http.Header {
 
 func (c *ServicesDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7069,7 +7117,7 @@ func (c *ServicesEnableCall) Header() http.Header {
 
 func (c *ServicesEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7224,7 +7272,7 @@ func (c *ServicesGenerateConfigReportCall) Header() http.Header {
 
 func (c *ServicesGenerateConfigReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7363,7 +7411,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7533,7 +7581,7 @@ func (c *ServicesGetConfigCall) Header() http.Header {
 
 func (c *ServicesGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7687,7 +7735,7 @@ func (c *ServicesGetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7884,7 +7932,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8021,8 +8069,8 @@ type ServicesSetIamPolicyCall struct {
 // resource. Replaces any
 // existing policy.
 //
-// Can return Public Errors: NOT_FOUND, INVALID_ARGUMENT and
-// PERMISSION_DENIED
+// Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`
+// errors.
 func (r *ServicesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ServicesSetIamPolicyCall {
 	c := &ServicesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8057,7 +8105,7 @@ func (c *ServicesSetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8121,7 +8169,7 @@ func (c *ServicesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
+	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
 	//   "flatPath": "v1/services/{servicesId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "servicemanagement.services.setIamPolicy",
@@ -8167,7 +8215,7 @@ type ServicesTestIamPermissionsCall struct {
 // specified resource.
 // If the resource does not exist, this will return an empty set
 // of
-// permissions, not a NOT_FOUND error.
+// permissions, not a `NOT_FOUND` error.
 //
 // Note: This operation is designed to be used for building
 // permission-aware
@@ -8208,7 +8256,7 @@ func (c *ServicesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ServicesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8272,7 +8320,7 @@ func (c *ServicesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*Test
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
 	//   "flatPath": "v1/services/{servicesId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "servicemanagement.services.testIamPermissions",
@@ -8357,7 +8405,7 @@ func (c *ServicesUndeleteCall) Header() http.Header {
 
 func (c *ServicesUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8501,7 +8549,7 @@ func (c *ServicesConfigsCreateCall) Header() http.Header {
 
 func (c *ServicesConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8664,7 +8712,7 @@ func (c *ServicesConfigsGetCall) Header() http.Header {
 
 func (c *ServicesConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8844,7 +8892,7 @@ func (c *ServicesConfigsListCall) Header() http.Header {
 
 func (c *ServicesConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9031,7 +9079,7 @@ func (c *ServicesConfigsSubmitCall) Header() http.Header {
 
 func (c *ServicesConfigsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9174,7 +9222,7 @@ func (c *ServicesConsumersGetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesConsumersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9286,8 +9334,8 @@ type ServicesConsumersSetIamPolicyCall struct {
 // resource. Replaces any
 // existing policy.
 //
-// Can return Public Errors: NOT_FOUND, INVALID_ARGUMENT and
-// PERMISSION_DENIED
+// Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`
+// errors.
 func (r *ServicesConsumersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ServicesConsumersSetIamPolicyCall {
 	c := &ServicesConsumersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9322,7 +9370,7 @@ func (c *ServicesConsumersSetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesConsumersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9386,7 +9434,7 @@ func (c *ServicesConsumersSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
+	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
 	//   "flatPath": "v1/services/{servicesId}/consumers/{consumersId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "servicemanagement.services.consumers.setIamPolicy",
@@ -9432,7 +9480,7 @@ type ServicesConsumersTestIamPermissionsCall struct {
 // specified resource.
 // If the resource does not exist, this will return an empty set
 // of
-// permissions, not a NOT_FOUND error.
+// permissions, not a `NOT_FOUND` error.
 //
 // Note: This operation is designed to be used for building
 // permission-aware
@@ -9473,7 +9521,7 @@ func (c *ServicesConsumersTestIamPermissionsCall) Header() http.Header {
 
 func (c *ServicesConsumersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9537,7 +9585,7 @@ func (c *ServicesConsumersTestIamPermissionsCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
 	//   "flatPath": "v1/services/{servicesId}/consumers/{consumersId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "servicemanagement.services.consumers.testIamPermissions",
@@ -9636,7 +9684,7 @@ func (c *ServicesRolloutsCreateCall) Header() http.Header {
 
 func (c *ServicesRolloutsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9787,7 +9835,7 @@ func (c *ServicesRolloutsGetCall) Header() http.Header {
 
 func (c *ServicesRolloutsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9974,7 +10022,7 @@ func (c *ServicesRolloutsListCall) Header() http.Header {
 
 func (c *ServicesRolloutsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

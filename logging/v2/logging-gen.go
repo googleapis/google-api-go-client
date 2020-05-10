@@ -564,11 +564,13 @@ type V2Service struct {
 // exporting data to BigQuery.
 type BigQueryOptions struct {
 	// UsePartitionedTables: Optional. Whether to use BigQuery's partition
-	// tables. By default, Logging creates dated tables based on the log
-	// entries' timestamps, e.g. syslog_20170523. With partitioned tables
-	// the date suffix is no longer present and special query syntax has to
-	// be used instead. In both cases, tables are sharded based on UTC
-	// timezone.
+	// tables (https://cloud.google.com/bigquery/docs/partitioned-tables).
+	// By default, Logging creates dated tables based on the log entries'
+	// timestamps, e.g. syslog_20170523. With partitioned tables the date
+	// suffix is no longer present and special query syntax
+	// (https://cloud.google.com/bigquery/docs/querying-partitioned-tables)
+	// has to be used instead. In both cases, tables are sharded based on
+	// UTC timezone.
 	UsePartitionedTables bool `json:"usePartitionedTables,omitempty"`
 
 	// UsesTimestampColumnPartitioning: Output only. True if new timestamp
@@ -659,7 +661,9 @@ func (s *BucketOptions) MarshalJSON() ([]byte, error) {
 // account, or flexible resource.Note: CMEK for the Logs Router can
 // currently only be configured for GCP organizations. Once configured,
 // it applies to all projects and folders in the GCP organization.See
-// Enabling CMEK for Logs Router for more information.
+// Enabling CMEK for Logs Router
+// (https://cloud.google.com/logging/docs/routing/managed-encryption)
+// for more information.
 type CmekSettings struct {
 	// KmsKeyName: The resource name for the configured Cloud KMS key.KMS
 	// key name format:
@@ -675,8 +679,9 @@ type CmekSettings struct {
 	// was in use when they started. Decryption operations will be completed
 	// using the key that was used at the time of encryption unless access
 	// to that key has been revoked.To disable CMEK for the Logs Router, set
-	// this field to an empty string.See Enabling CMEK for Logs Router for
-	// more information.
+	// this field to an empty string.See Enabling CMEK for Logs Router
+	// (https://cloud.google.com/logging/docs/routing/managed-encryption)
+	// for more information.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
 	// Name: Output only. The resource name of the CMEK settings.
@@ -688,7 +693,9 @@ type CmekSettings struct {
 	// roles/cloudkms.cryptoKeyEncrypterDecrypter to the service account
 	// that the Logs Router will use to access your Cloud KMS key. Use
 	// GetCmekSettings to obtain the service account ID.See Enabling CMEK
-	// for Logs Router for more information.
+	// for Logs Router
+	// (https://cloud.google.com/logging/docs/routing/managed-encryption)
+	// for more information.
 	ServiceAccountId string `json:"serviceAccountId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1089,11 +1096,13 @@ func (s *ListExclusionsResponse) MarshalJSON() ([]byte, error) {
 // ListLogEntriesRequest: The parameters to ListLogEntries.
 type ListLogEntriesRequest struct {
 	// Filter: Optional. A filter that chooses which log entries to return.
-	// See Advanced Logs Queries. Only log entries that match the filter are
-	// returned. An empty filter matches all log entries in the resources
-	// listed in resource_names. Referencing a parent resource that is not
-	// listed in resource_names will cause the filter to return no results.
-	// The maximum length of the filter is 20000 characters.
+	// See Advanced Logs Queries
+	// (https://cloud.google.com/logging/docs/view/advanced-queries). Only
+	// log entries that match the filter are returned. An empty filter
+	// matches all log entries in the resources listed in resource_names.
+	// Referencing a parent resource that is not listed in resource_names
+	// will cause the filter to return no results. The maximum length of the
+	// filter is 20000 characters.
 	Filter string `json:"filter,omitempty"`
 
 	// OrderBy: Optional. How the results should be sorted. Presently, the
@@ -1476,9 +1485,9 @@ type LogEntry struct {
 	// than 1.12.6. For GKE versions 1.12.6 and above, the metadata field
 	// has been deprecated. The Kubernetes pod labels that used to be in
 	// metadata.userLabels will now be present in the labels field with a
-	// key prefix of k8s-pod/. The Stackdriver system labels that were
-	// present in the metadata.systemLabels field will no longer be
-	// available in the LogEntry.
+	// key prefix of k8s-pod/. The system labels that were present in the
+	// metadata.systemLabels field will no longer be available in the
+	// LogEntry.
 	Metadata *MonitoredResourceMetadata `json:"metadata,omitempty"`
 
 	// Operation: Optional. Information about an operation associated with
@@ -1541,7 +1550,8 @@ type LogEntry struct {
 	// log entry, then Logging assigns it the current time. Timestamps have
 	// nanosecond accuracy, but trailing zeros in the fractional seconds
 	// might be omitted when the timestamp is displayed.Incoming log entries
-	// must have timestamps that don't exceed the logs retention period in
+	// must have timestamps that don't exceed the logs retention period
+	// (https://cloud.google.com/logging/quotas#logs_retention_periods) in
 	// the past, and that don't exceed 24 hours in the future. Log entries
 	// outside those time boundaries aren't ingested by Logging.
 	Timestamp string `json:"timestamp,omitempty"`
@@ -1689,12 +1699,14 @@ type LogExclusion struct {
 	// to change the value of this field.
 	Disabled bool `json:"disabled,omitempty"`
 
-	// Filter: Required. An advanced logs filter that matches the log
-	// entries to be excluded. By using the sample function, you can exclude
-	// less than 100% of the matching log entries. For example, the
-	// following query matches 99% of low-severity log entries from Google
-	// Cloud Storage buckets:"resource.type=gcs_bucket severity<ERROR
-	// sample(insertId, 0.99)"
+	// Filter: Required. An advanced logs filter
+	// (https://cloud.google.com/logging/docs/view/advanced-queries) that
+	// matches the log entries to be excluded. By using the sample function
+	// (https://cloud.google.com/logging/docs/view/advanced-queries#sample),
+	// you can exclude less than 100% of the matching log entries. For
+	// example, the following query matches 99% of low-severity log entries
+	// from Google Cloud Storage buckets:"resource.type=gcs_bucket
+	// severity<ERROR sample(insertId, 0.99)"
 	Filter string `json:"filter,omitempty"`
 
 	// Name: Required. A client-assigned identifier, such as
@@ -1808,8 +1820,9 @@ type LogMetric struct {
 	// characters.
 	Description string `json:"description,omitempty"`
 
-	// Filter: Required. An advanced logs filter which is used to match log
-	// entries. Example:
+	// Filter: Required. An advanced logs filter
+	// (https://cloud.google.com/logging/docs/view/advanced_filters) which
+	// is used to match log entries. Example:
 	// "resource.type=gae_app AND severity>=ERROR"
 	// The maximum length of the filter is 20000 characters.
 	Filter string `json:"filter,omitempty"`
@@ -1943,16 +1956,18 @@ type LogSink struct {
 	// /projects/[PROJECT_ID]/topics/[TOPIC_ID]"
 	// The sink's writer_identity, set when the sink is created, must have
 	// permission to write to the destination or else the log entries are
-	// not exported. For more information, see Exporting Logs with Sinks.
+	// not exported. For more information, see Exporting Logs with Sinks
+	// (https://cloud.google.com/logging/docs/api/tasks/exporting-logs).
 	Destination string `json:"destination,omitempty"`
 
 	// Disabled: Optional. If set to True, then this sink is disabled and it
 	// does not export any log entries.
 	Disabled bool `json:"disabled,omitempty"`
 
-	// Filter: Optional. An advanced logs filter. The only exported log
-	// entries are those that are in the resource owning the sink and that
-	// match the filter. For
+	// Filter: Optional. An advanced logs filter
+	// (https://cloud.google.com/logging/docs/view/advanced-queries). The
+	// only exported log entries are those that are in the resource owning
+	// the sink and that match the filter. For
 	// example:
 	// logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity>=ERROR
 	//
@@ -1984,9 +1999,7 @@ type LogSink struct {
 	// alphanumeric.
 	Name string `json:"name,omitempty"`
 
-	// OutputVersionFormat: Deprecated. The log entry format to use for this
-	// sink's exported log entries. The v2 format is used by default and
-	// cannot be changed.
+	// OutputVersionFormat: Deprecated. This field is unused.
 	//
 	// Possible values:
 	//   "VERSION_FORMAT_UNSPECIFIED" - An unspecified format version that
@@ -2005,7 +2018,9 @@ type LogSink struct {
 	// sinks.update based on the value of unique_writer_identity in those
 	// methods.Until you grant this identity write-access to the
 	// destination, log entry exports from this sink will fail. For more
-	// information, see Granting Access for a Resource. Consult the
+	// information, see Granting Access for a Resource
+	// (https://cloud.google.com/iam/docs/granting-roles-to-service-accounts#
+	// granting_access_to_a_service_account_for_a_resource). Consult the
 	// destination service's documentation to determine the appropriate IAM
 	// roles to assign to the identity.
 	WriterIdentity string `json:"writerIdentity,omitempty"`
@@ -2786,10 +2801,14 @@ type WriteLogEntriesRequest struct {
 	// entries that did not supply their own values, the entries earlier in
 	// the list will sort before the entries later in the list. See the
 	// entries.list method.Log entries with timestamps that are more than
-	// the logs retention period in the past or more than 24 hours in the
-	// future will not be available when calling entries.list. However,
-	// those log entries can still be exported with LogSinks.To improve
-	// throughput and to avoid exceeding the quota limit for calls to
+	// the logs retention period
+	// (https://cloud.google.com/logging/quota-policy) in the past or more
+	// than 24 hours in the future will not be available when calling
+	// entries.list. However, those log entries can still be exported with
+	// LogSinks
+	// (https://cloud.google.com/logging/docs/api/tasks/exporting-logs).To
+	// improve throughput and to avoid exceeding the quota limit
+	// (https://cloud.google.com/logging/quota-policy) for calls to
 	// entries.write, you should try to include several log entries in this
 	// list, rather than calling this method for each individual log entry.
 	Entries []*LogEntry `json:"entries,omitempty"`
@@ -2923,7 +2942,7 @@ func (c *BillingAccountsBucketsGetCall) Header() http.Header {
 
 func (c *BillingAccountsBucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3063,7 +3082,7 @@ func (c *BillingAccountsExclusionsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3202,7 +3221,7 @@ func (c *BillingAccountsExclusionsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3344,7 +3363,7 @@ func (c *BillingAccountsExclusionsGetCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3510,7 +3529,7 @@ func (c *BillingAccountsExclusionsListCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3692,7 +3711,7 @@ func (c *BillingAccountsExclusionsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3867,7 +3886,7 @@ func (c *BillingAccountsLocationsBucketsListCall) Header() http.Header {
 
 func (c *BillingAccountsLocationsBucketsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4055,7 +4074,7 @@ func (c *BillingAccountsLocationsBucketsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsLocationsBucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4203,7 +4222,7 @@ func (c *BillingAccountsLogsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4365,7 +4384,7 @@ func (c *BillingAccountsLogsListCall) Header() http.Header {
 
 func (c *BillingAccountsLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4555,7 +4574,7 @@ func (c *BillingAccountsSinksCreateCall) Header() http.Header {
 
 func (c *BillingAccountsSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4700,7 +4719,7 @@ func (c *BillingAccountsSinksDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4842,7 +4861,7 @@ func (c *BillingAccountsSinksGetCall) Header() http.Header {
 
 func (c *BillingAccountsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5008,7 +5027,7 @@ func (c *BillingAccountsSinksListCall) Header() http.Header {
 
 func (c *BillingAccountsSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5212,7 +5231,7 @@ func (c *BillingAccountsSinksPatchCall) Header() http.Header {
 
 func (c *BillingAccountsSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5398,7 +5417,7 @@ func (c *BillingAccountsSinksUpdateCall) Header() http.Header {
 
 func (c *BillingAccountsSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5516,7 +5535,8 @@ type EntriesListCall struct {
 
 // List: Lists log entries. Use this method to retrieve log entries that
 // originated from a project/folder/organization/billing account. For
-// ways to export log entries, see Exporting Logs.
+// ways to export log entries, see Exporting Logs
+// (https://cloud.google.com/logging/docs/export).
 func (r *EntriesService) List(listlogentriesrequest *ListLogEntriesRequest) *EntriesListCall {
 	c := &EntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.listlogentriesrequest = listlogentriesrequest
@@ -5550,7 +5570,7 @@ func (c *EntriesListCall) Header() http.Header {
 
 func (c *EntriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5611,7 +5631,7 @@ func (c *EntriesListCall) Do(opts ...googleapi.CallOption) (*ListLogEntriesRespo
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists log entries. Use this method to retrieve log entries that originated from a project/folder/organization/billing account. For ways to export log entries, see Exporting Logs.",
+	//   "description": "Lists log entries. Use this method to retrieve log entries that originated from a project/folder/organization/billing account. For ways to export log entries, see Exporting Logs (https://cloud.google.com/logging/docs/export).",
 	//   "flatPath": "v2/entries:list",
 	//   "httpMethod": "POST",
 	//   "id": "logging.entries.list",
@@ -5704,7 +5724,7 @@ func (c *EntriesWriteCall) Header() http.Header {
 
 func (c *EntriesWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5835,7 +5855,7 @@ func (c *ExclusionsCreateCall) Header() http.Header {
 
 func (c *ExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5974,7 +5994,7 @@ func (c *ExclusionsDeleteCall) Header() http.Header {
 
 func (c *ExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6116,7 +6136,7 @@ func (c *ExclusionsGetCall) Header() http.Header {
 
 func (c *ExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6282,7 +6302,7 @@ func (c *ExclusionsListCall) Header() http.Header {
 
 func (c *ExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6464,7 +6484,7 @@ func (c *ExclusionsPatchCall) Header() http.Header {
 
 func (c *ExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6613,7 +6633,7 @@ func (c *FoldersExclusionsCreateCall) Header() http.Header {
 
 func (c *FoldersExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6752,7 +6772,7 @@ func (c *FoldersExclusionsDeleteCall) Header() http.Header {
 
 func (c *FoldersExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6894,7 +6914,7 @@ func (c *FoldersExclusionsGetCall) Header() http.Header {
 
 func (c *FoldersExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7060,7 +7080,7 @@ func (c *FoldersExclusionsListCall) Header() http.Header {
 
 func (c *FoldersExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7242,7 +7262,7 @@ func (c *FoldersExclusionsPatchCall) Header() http.Header {
 
 func (c *FoldersExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7398,7 +7418,7 @@ func (c *FoldersLocationsBucketsGetCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7564,7 +7584,7 @@ func (c *FoldersLocationsBucketsListCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7752,7 +7772,7 @@ func (c *FoldersLocationsBucketsPatchCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7900,7 +7920,7 @@ func (c *FoldersLogsDeleteCall) Header() http.Header {
 
 func (c *FoldersLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8062,7 +8082,7 @@ func (c *FoldersLogsListCall) Header() http.Header {
 
 func (c *FoldersLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8252,7 +8272,7 @@ func (c *FoldersSinksCreateCall) Header() http.Header {
 
 func (c *FoldersSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8397,7 +8417,7 @@ func (c *FoldersSinksDeleteCall) Header() http.Header {
 
 func (c *FoldersSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8539,7 +8559,7 @@ func (c *FoldersSinksGetCall) Header() http.Header {
 
 func (c *FoldersSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8705,7 +8725,7 @@ func (c *FoldersSinksListCall) Header() http.Header {
 
 func (c *FoldersSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8909,7 +8929,7 @@ func (c *FoldersSinksPatchCall) Header() http.Header {
 
 func (c *FoldersSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9095,7 +9115,7 @@ func (c *FoldersSinksUpdateCall) Header() http.Header {
 
 func (c *FoldersSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9256,7 +9276,7 @@ func (c *LocationsBucketsGetCall) Header() http.Header {
 
 func (c *LocationsBucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9422,7 +9442,7 @@ func (c *LocationsBucketsListCall) Header() http.Header {
 
 func (c *LocationsBucketsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9610,7 +9630,7 @@ func (c *LocationsBucketsPatchCall) Header() http.Header {
 
 func (c *LocationsBucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9758,7 +9778,7 @@ func (c *LogsDeleteCall) Header() http.Header {
 
 func (c *LogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9920,7 +9940,7 @@ func (c *LogsListCall) Header() http.Header {
 
 func (c *LogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10117,7 +10137,7 @@ func (c *MonitoredResourceDescriptorsListCall) Header() http.Header {
 
 func (c *MonitoredResourceDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10246,7 +10266,9 @@ type OrganizationsGetCmekSettingsCall struct {
 // resource.Note: CMEK for the Logs Router can currently only be
 // configured for GCP organizations. Once configured, it applies to all
 // projects and folders in the GCP organization.See Enabling CMEK for
-// Logs Router for more information.
+// Logs Router
+// (https://cloud.google.com/logging/docs/routing/managed-encryption)
+// for more information.
 func (r *OrganizationsService) GetCmekSettings(name string) *OrganizationsGetCmekSettingsCall {
 	c := &OrganizationsGetCmekSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10290,7 +10312,7 @@ func (c *OrganizationsGetCmekSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetCmekSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10352,7 +10374,7 @@ func (c *OrganizationsGetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*Cm
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Logs Router CMEK settings for the given resource.Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once configured, it applies to all projects and folders in the GCP organization.See Enabling CMEK for Logs Router for more information.",
+	//   "description": "Gets the Logs Router CMEK settings for the given resource.Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once configured, it applies to all projects and folders in the GCP organization.See Enabling CMEK for Logs Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
 	//   "flatPath": "v2/organizations/{organizationsId}/cmekSettings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.organizations.getCmekSettings",
@@ -10401,6 +10423,7 @@ type OrganizationsUpdateCmekSettingsCall struct {
 // account does not have the required
 // roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key,
 // or 3) access to the key is disabled.See Enabling CMEK for Logs Router
+// (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 func (r *OrganizationsService) UpdateCmekSettings(name string, cmeksettings *CmekSettings) *OrganizationsUpdateCmekSettingsCall {
 	c := &OrganizationsUpdateCmekSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10446,7 +10469,7 @@ func (c *OrganizationsUpdateCmekSettingsCall) Header() http.Header {
 
 func (c *OrganizationsUpdateCmekSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10510,7 +10533,7 @@ func (c *OrganizationsUpdateCmekSettingsCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the Logs Router CMEK settings for the given resource.Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once configured, it applies to all projects and folders in the GCP organization.UpdateCmekSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled.See Enabling CMEK for Logs Router for more information.",
+	//   "description": "Updates the Logs Router CMEK settings for the given resource.Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once configured, it applies to all projects and folders in the GCP organization.UpdateCmekSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled.See Enabling CMEK for Logs Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
 	//   "flatPath": "v2/organizations/{organizationsId}/cmekSettings",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.organizations.updateCmekSettings",
@@ -10595,7 +10618,7 @@ func (c *OrganizationsExclusionsCreateCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10734,7 +10757,7 @@ func (c *OrganizationsExclusionsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10876,7 +10899,7 @@ func (c *OrganizationsExclusionsGetCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11042,7 +11065,7 @@ func (c *OrganizationsExclusionsListCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11224,7 +11247,7 @@ func (c *OrganizationsExclusionsPatchCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11380,7 +11403,7 @@ func (c *OrganizationsLocationsBucketsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11546,7 +11569,7 @@ func (c *OrganizationsLocationsBucketsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11734,7 +11757,7 @@ func (c *OrganizationsLocationsBucketsPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11882,7 +11905,7 @@ func (c *OrganizationsLogsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12044,7 +12067,7 @@ func (c *OrganizationsLogsListCall) Header() http.Header {
 
 func (c *OrganizationsLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12234,7 +12257,7 @@ func (c *OrganizationsSinksCreateCall) Header() http.Header {
 
 func (c *OrganizationsSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12379,7 +12402,7 @@ func (c *OrganizationsSinksDeleteCall) Header() http.Header {
 
 func (c *OrganizationsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12521,7 +12544,7 @@ func (c *OrganizationsSinksGetCall) Header() http.Header {
 
 func (c *OrganizationsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12687,7 +12710,7 @@ func (c *OrganizationsSinksListCall) Header() http.Header {
 
 func (c *OrganizationsSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12891,7 +12914,7 @@ func (c *OrganizationsSinksPatchCall) Header() http.Header {
 
 func (c *OrganizationsSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13077,7 +13100,7 @@ func (c *OrganizationsSinksUpdateCall) Header() http.Header {
 
 func (c *OrganizationsSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13231,7 +13254,7 @@ func (c *ProjectsExclusionsCreateCall) Header() http.Header {
 
 func (c *ProjectsExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13370,7 +13393,7 @@ func (c *ProjectsExclusionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13512,7 +13535,7 @@ func (c *ProjectsExclusionsGetCall) Header() http.Header {
 
 func (c *ProjectsExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13678,7 +13701,7 @@ func (c *ProjectsExclusionsListCall) Header() http.Header {
 
 func (c *ProjectsExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13860,7 +13883,7 @@ func (c *ProjectsExclusionsPatchCall) Header() http.Header {
 
 func (c *ProjectsExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14016,7 +14039,7 @@ func (c *ProjectsLocationsBucketsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14182,7 +14205,7 @@ func (c *ProjectsLocationsBucketsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14370,7 +14393,7 @@ func (c *ProjectsLocationsBucketsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14518,7 +14541,7 @@ func (c *ProjectsLogsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14680,7 +14703,7 @@ func (c *ProjectsLogsListCall) Header() http.Header {
 
 func (c *ProjectsLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14850,7 +14873,7 @@ func (c *ProjectsMetricsCreateCall) Header() http.Header {
 
 func (c *ProjectsMetricsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14990,7 +15013,7 @@ func (c *ProjectsMetricsDeleteCall) Header() http.Header {
 
 func (c *ProjectsMetricsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15133,7 +15156,7 @@ func (c *ProjectsMetricsGetCall) Header() http.Header {
 
 func (c *ProjectsMetricsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15299,7 +15322,7 @@ func (c *ProjectsMetricsListCall) Header() http.Header {
 
 func (c *ProjectsMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15469,7 +15492,7 @@ func (c *ProjectsMetricsUpdateCall) Header() http.Header {
 
 func (c *ProjectsMetricsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15631,7 +15654,7 @@ func (c *ProjectsSinksCreateCall) Header() http.Header {
 
 func (c *ProjectsSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15776,7 +15799,7 @@ func (c *ProjectsSinksDeleteCall) Header() http.Header {
 
 func (c *ProjectsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15918,7 +15941,7 @@ func (c *ProjectsSinksGetCall) Header() http.Header {
 
 func (c *ProjectsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16084,7 +16107,7 @@ func (c *ProjectsSinksListCall) Header() http.Header {
 
 func (c *ProjectsSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16288,7 +16311,7 @@ func (c *ProjectsSinksPatchCall) Header() http.Header {
 
 func (c *ProjectsSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16474,7 +16497,7 @@ func (c *ProjectsSinksUpdateCall) Header() http.Header {
 
 func (c *ProjectsSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16646,7 +16669,7 @@ func (c *SinksCreateCall) Header() http.Header {
 
 func (c *SinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16791,7 +16814,7 @@ func (c *SinksDeleteCall) Header() http.Header {
 
 func (c *SinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16933,7 +16956,7 @@ func (c *SinksGetCall) Header() http.Header {
 
 func (c *SinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17099,7 +17122,7 @@ func (c *SinksListCall) Header() http.Header {
 
 func (c *SinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17303,7 +17326,7 @@ func (c *SinksUpdateCall) Header() http.Header {
 
 func (c *SinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17424,7 +17447,9 @@ type V2GetCmekSettingsCall struct {
 // resource.Note: CMEK for the Logs Router can currently only be
 // configured for GCP organizations. Once configured, it applies to all
 // projects and folders in the GCP organization.See Enabling CMEK for
-// Logs Router for more information.
+// Logs Router
+// (https://cloud.google.com/logging/docs/routing/managed-encryption)
+// for more information.
 func (r *V2Service) GetCmekSettings(name string) *V2GetCmekSettingsCall {
 	c := &V2GetCmekSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17468,7 +17493,7 @@ func (c *V2GetCmekSettingsCall) Header() http.Header {
 
 func (c *V2GetCmekSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17530,7 +17555,7 @@ func (c *V2GetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*CmekSettings,
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Logs Router CMEK settings for the given resource.Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once configured, it applies to all projects and folders in the GCP organization.See Enabling CMEK for Logs Router for more information.",
+	//   "description": "Gets the Logs Router CMEK settings for the given resource.Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once configured, it applies to all projects and folders in the GCP organization.See Enabling CMEK for Logs Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/cmekSettings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.getCmekSettings",
@@ -17579,6 +17604,7 @@ type V2UpdateCmekSettingsCall struct {
 // account does not have the required
 // roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key,
 // or 3) access to the key is disabled.See Enabling CMEK for Logs Router
+// (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 func (r *V2Service) UpdateCmekSettings(name string, cmeksettings *CmekSettings) *V2UpdateCmekSettingsCall {
 	c := &V2UpdateCmekSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -17624,7 +17650,7 @@ func (c *V2UpdateCmekSettingsCall) Header() http.Header {
 
 func (c *V2UpdateCmekSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17688,7 +17714,7 @@ func (c *V2UpdateCmekSettingsCall) Do(opts ...googleapi.CallOption) (*CmekSettin
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the Logs Router CMEK settings for the given resource.Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once configured, it applies to all projects and folders in the GCP organization.UpdateCmekSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled.See Enabling CMEK for Logs Router for more information.",
+	//   "description": "Updates the Logs Router CMEK settings for the given resource.Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once configured, it applies to all projects and folders in the GCP organization.UpdateCmekSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled.See Enabling CMEK for Logs Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/cmekSettings",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.updateCmekSettings",

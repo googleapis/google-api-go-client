@@ -233,6 +233,7 @@ type AbortInfo struct {
 	//   "TRACE_TOO_LONG" - Aborted because the number of steps in the trace
 	// exceeding a certain
 	// limit which may be caused by routing loop.
+	//   "INTERNAL_ERROR" - Aborted due to internal server error.
 	Cause string `json:"cause,omitempty"`
 
 	// ResourceUri: URI of the resource that caused the abort.
@@ -418,11 +419,23 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding.
-	// NOTE: An unsatisfied condition will not allow user access via
-	// current
-	// binding. Different bindings, including their conditions, are
-	// examined
-	// independently.
+	//
+	// If the condition evaluates to `true`, then this binding applies to
+	// the
+	// current request.
+	//
+	// If the condition evaluates to `false`, then this binding does not
+	// apply to
+	// the current request. However, a different role binding might grant
+	// the same
+	// role to one or more of the members in this binding.
+	//
+	// To learn which resources support conditions in their IAM policies,
+	// see
+	// the
+	// [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/r
+	// esource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -571,7 +584,7 @@ type ConnectivityTest struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Required. Unique name of the resource using the form:
-	//     `projects/{project_id}/tests/{test_id}`
+	//     `projects/{project_id}/locations/global/connectivityTests/{test}`
 	Name string `json:"name,omitempty"`
 
 	// Protocol: IP Protocol of the test. When not provided, "TCP" is
@@ -1621,7 +1634,7 @@ type OperationMetadata struct {
 
 	// Target: Target of the operation - for
 	// example
-	// projects/project-1/connectivityTests/test-1
+	// projects/project-1/locations/global/connectivityTests/test-1
 	Target string `json:"target,omitempty"`
 
 	// Verb: Name of the verb executed by the operation.
@@ -1665,13 +1678,18 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // user-created
 // custom role.
 //
-// Optionally, a `binding` can specify a `condition`, which is a
-// logical
-// expression that allows access to a resource only if the expression
-// evaluates
-// to `true`. A condition can add constraints based on attributes of
-// the
-// request, the resource, or both.
+// For some types of Google Cloud resources, a `binding` can also
+// specify a
+// `condition`, which is a logical expression that allows access to a
+// resource
+// only if the expression evaluates to `true`. A condition can add
+// constraints
+// based on attributes of the request, the resource, or both. To learn
+// which
+// resources support conditions in their IAM policies, see the
+// [IAM
+// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+// olicies).
 //
 // **JSON example:**
 //
@@ -1689,7 +1707,9 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 //         },
 //         {
 //           "role": "roles/resourcemanager.organizationViewer",
-//           "members": ["user:eve@example.com"],
+//           "members": [
+//             "user:eve@example.com"
+//           ],
 //           "condition": {
 //             "title": "expirable access",
 //             "description": "Does not grant access after Sep 2020",
@@ -1788,6 +1808,12 @@ type Policy struct {
 	// If a policy does not include any conditions, operations on that
 	// policy may
 	// specify any valid version or leave the field unset.
+	//
+	// To learn which resources support conditions in their IAM policies,
+	// see the
+	// [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1933,6 +1959,8 @@ type RouteInfo struct {
 	//   "NEXT_HOP_BLACKHOLE" - Next hop is blackhole; that is, the next hop
 	// either does not exist or is
 	// not running.
+	//   "NEXT_HOP_ILB" - Next hop is the forwarding rule of an Internal
+	// Load Balancer.
 	NextHopType string `json:"nextHopType,omitempty"`
 
 	// Priority: Priority of the route.
@@ -1998,8 +2026,8 @@ type SetIamPolicyRequest struct {
 	// the fields in the mask will be modified. If no mask is provided,
 	// the
 	// following default mask is used:
-	// paths: "bindings, etag"
-	// This field is only used by Cloud IAM.
+	//
+	// `paths: "bindings, etag"
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
@@ -2500,7 +2528,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2666,7 +2694,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2870,7 +2898,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsGlobalConnectivityTestsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3013,7 +3041,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsDeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsGlobalConnectivityTestsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3081,7 +3109,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsDeleteCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Connectivity Test resource name using the form:\n    `projects/{project_id}/connectivityTests/{test_id}`",
+	//       "description": "Required. Connectivity Test resource name using the form:\n    `projects/{project_id}/locations/global/connectivityTests/{test_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/connectivityTests/[^/]+$",
 	//       "required": true,
@@ -3154,7 +3182,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalConnectivityTestsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3277,6 +3305,13 @@ func (r *ProjectsLocationsGlobalConnectivityTestsService) GetIamPolicy(resource 
 // Policies without any conditional bindings may specify any valid value
 // or
 // leave the field unset.
+//
+// To learn which resources support conditions in their IAM policies,
+// see
+// the
+// [IAM
+// documentation](https://cloud.google.com/iam/help/conditions/r
+// esource-policies).
 func (c *ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -3319,7 +3354,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall) Header() http
 
 func (c *ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3390,7 +3425,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.",
+	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.\n\nTo learn which resources support conditions in their IAM policies, see the\n[IAM\ndocumentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -3450,7 +3485,8 @@ func (r *ProjectsLocationsGlobalConnectivityTestsService) List(parent string) *P
 //
 // Examples:
 // - Filter by name:
-//   name = "projects/proj-1/connectivityTests/test-1
+//   name =
+// "projects/proj-1/locations/global/connectivityTests/test-1
 //
 // - Filter by labels:
 //   - Resources that have a key called `foo`
@@ -3520,7 +3556,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsListCall) Header() http.Header 
 
 func (c *ProjectsLocationsGlobalConnectivityTestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3591,7 +3627,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsListCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Lists the `ConnectivityTests` that match the filter expression. A filter\nexpression filters the resources listed in the response. The expression\nmust be of the form `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e` where operators: `\u003c`, `\u003e`,\n`\u003c=`,\n`\u003e=`,\n`!=`, `=`, `:` are supported (colon `:` represents a HAS operator which is\nroughly synonymous with equality). \u003cfield\u003e can refer to a proto or JSON\nfield, or a synthetic field. Field names can be camelCase or snake_case.\n\nExamples:\n- Filter by name:\n  name = \"projects/proj-1/connectivityTests/test-1\n\n- Filter by labels:\n  - Resources that have a key called `foo`\n    labels.foo:*\n  - Resources that have a key called `foo` whose value is `bar`\n    labels.foo = bar",
+	//       "description": "Lists the `ConnectivityTests` that match the filter expression. A filter\nexpression filters the resources listed in the response. The expression\nmust be of the form `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e` where operators: `\u003c`, `\u003e`,\n`\u003c=`,\n`\u003e=`,\n`!=`, `=`, `:` are supported (colon `:` represents a HAS operator which is\nroughly synonymous with equality). \u003cfield\u003e can refer to a proto or JSON\nfield, or a synthetic field. Field names can be camelCase or snake_case.\n\nExamples:\n- Filter by name:\n  name = \"projects/proj-1/locations/global/connectivityTests/test-1\n\n- Filter by labels:\n  - Resources that have a key called `foo`\n    labels.foo:*\n  - Resources that have a key called `foo` whose value is `bar`\n    labels.foo = bar",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3727,7 +3763,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsPatchCall) Header() http.Header
 
 func (c *ProjectsLocationsGlobalConnectivityTestsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3800,7 +3836,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsPatchCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Unique name of the resource using the form:\n    `projects/{project_id}/tests/{test_id}`",
+	//       "description": "Required. Unique name of the resource using the form:\n    `projects/{project_id}/locations/global/connectivityTests/{test}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/connectivityTests/[^/]+$",
 	//       "required": true,
@@ -3891,7 +3927,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsRerunCall) Header() http.Header
 
 func (c *ProjectsLocationsGlobalConnectivityTestsRerunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3964,7 +4000,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsRerunCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Connectivity Test resource name using the form:\n    `projects/{project_id}/connectivityTests/{test_id}`",
+	//       "description": "Required. Connectivity Test resource name using the form:\n    `projects/{project_id}/locations/global/connectivityTests/{test_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/connectivityTests/[^/]+$",
 	//       "required": true,
@@ -4000,8 +4036,8 @@ type ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall struct {
 // resource. Replaces any
 // existing policy.
 //
-// Can return Public Errors: NOT_FOUND, INVALID_ARGUMENT and
-// PERMISSION_DENIED
+// Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`
+// errors.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4036,7 +4072,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall) Header() http
 
 func (c *ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4100,7 +4136,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall) Do(opts ...go
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
+	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/global/connectivityTests/{connectivityTestsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "networkmanagement.projects.locations.global.connectivityTests.setIamPolicy",
@@ -4145,7 +4181,7 @@ type ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall struct {
 // specified resource.
 // If the resource does not exist, this will return an empty set
 // of
-// permissions, not a NOT_FOUND error.
+// permissions, not a `NOT_FOUND` error.
 //
 // Note: This operation is designed to be used for building
 // permission-aware
@@ -4186,7 +4222,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall) Header(
 
 func (c *ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4250,7 +4286,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall) Do(opts
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/global/connectivityTests/{connectivityTestsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "networkmanagement.projects.locations.global.connectivityTests.testIamPermissions",
@@ -4343,7 +4379,7 @@ func (c *ProjectsLocationsGlobalOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4487,7 +4523,7 @@ func (c *ProjectsLocationsGlobalOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4632,7 +4668,7 @@ func (c *ProjectsLocationsGlobalOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4813,7 +4849,7 @@ func (c *ProjectsLocationsGlobalOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200507")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200509")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -13,6 +13,7 @@ import (
 	"strings"
 	"testing"
 
+	"golang.org/x/oauth2"
 	"google.golang.org/api/idtoken"
 	"google.golang.org/api/option"
 )
@@ -36,6 +37,25 @@ func TestNewTokenSource(t *testing.T) {
 	tok.SetAuthHeader(req)
 	if !strings.HasPrefix(req.Header.Get("Authorization"), "Bearer ") {
 		t.Fatalf("token should sign requests with Bearer Authorization header")
+	}
+	validTok, err := idtoken.Validate(context.Background(), tok.AccessToken, aud)
+	if err != nil {
+		t.Fatalf("token validation failed: %v", err)
+	}
+	if validTok.Audience != aud {
+		t.Fatalf("got %q, want %q", validTok.Audience, aud)
+	}
+}
+
+func TestNewClient(t *testing.T) {
+	aud := os.Getenv(envTokenAudience)
+	client, err := idtoken.NewClient(context.Background(), aud, option.WithCredentialsFile(os.Getenv(envCredentialFile)))
+	if err != nil {
+		t.Fatalf("unable to create Client: %v", err)
+	}
+	tok, err := client.Transport.(*oauth2.Transport).Source.Token()
+	if err != nil {
+		t.Fatalf("unable to retrieve Token: %v", err)
 	}
 	validTok, err := idtoken.Validate(context.Background(), tok.AccessToken, aud)
 	if err != nil {

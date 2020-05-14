@@ -412,11 +412,23 @@ func (s *AuthorizationLoggingOptions) MarshalJSON() ([]byte, error) {
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding.
-	// NOTE: An unsatisfied condition will not allow user access via
-	// current
-	// binding. Different bindings, including their conditions, are
-	// examined
-	// independently.
+	//
+	// If the condition evaluates to `true`, then this binding applies to
+	// the
+	// current request.
+	//
+	// If the condition evaluates to `false`, then this binding does not
+	// apply to
+	// the current request. However, a different role binding might grant
+	// the same
+	// role to one or more of the members in this binding.
+	//
+	// To learn which resources support conditions in their IAM policies,
+	// see
+	// the
+	// [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/r
+	// esource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -842,15 +854,15 @@ func (s *DataAccessOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DeployedClusterState: The Game Server Cluster changes made by the
-// Game Server Deployment.
+// DeployedClusterState: The game server cluster changes made by the
+// game server deployment.
 type DeployedClusterState struct {
 	// Cluster: The name of the cluster.
 	Cluster string `json:"cluster,omitempty"`
 
 	// FleetDetails: The details about the Agones fleets and autoscalers
 	// created in the
-	// Game Server Cluster.
+	// game server cluster.
 	FleetDetails []*DeployedFleetDetails `json:"fleetDetails,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cluster") to
@@ -1142,11 +1154,11 @@ type FetchDeploymentStateRequest struct {
 // FetchDeploymentStateResponse: Response message for
 // GameServerDeploymentsService.FetchDeploymentState.
 type FetchDeploymentStateResponse struct {
-	// ClusterState: The state of the Game Server Deployment in each Game
-	// Server Cluster.
+	// ClusterState: The state of the game server deployment in each game
+	// server cluster.
 	ClusterState []*DeployedClusterState `json:"clusterState,omitempty"`
 
-	// Unavailable: List of Locations that could not be reached.
+	// Unavailable: List of locations that could not be reached.
 	Unavailable []string `json:"unavailable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1209,11 +1221,11 @@ func (s *FleetConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GameServerCluster: A Game Server Cluster resource.
+// GameServerCluster: A game server cluster resource.
 type GameServerCluster struct {
-	// ConnectionInfo: Game Server Cluster connection information. This
+	// ConnectionInfo: The game server cluster connection information. This
 	// information is used to
-	// manage Game Server Clusters.
+	// manage game server clusters.
 	ConnectionInfo *GameServerClusterConnectionInfo `json:"connectionInfo,omitempty"`
 
 	// CreateTime: Output only. The creation time.
@@ -1225,12 +1237,12 @@ type GameServerCluster struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Labels: The labels associated with this Game Server Cluster. Each
+	// Labels: The labels associated with this game server cluster. Each
 	// label is a
 	// key-value pair.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Required. The resource name of the Game Server Cluster. Uses
+	// Name: Required. The resource name of the game server cluster. Uses
 	// the
 	// form:
 	//
@@ -1274,14 +1286,14 @@ func (s *GameServerCluster) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GameServerClusterConnectionInfo: The Game Server Cluster connection
+// GameServerClusterConnectionInfo: The game server cluster connection
 // information.
 type GameServerClusterConnectionInfo struct {
 	// GkeClusterReference: Reference to the GKE cluster where the game
 	// servers are installed.
 	GkeClusterReference *GkeClusterReference `json:"gkeClusterReference,omitempty"`
 
-	// Namespace: Namespace designated on the Game Server Cluster where the
+	// Namespace: Namespace designated on the game server cluster where the
 	// Agones game
 	// server instances will be created. Existence of the namespace will
 	// be
@@ -1312,12 +1324,12 @@ func (s *GameServerClusterConnectionInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GameServerConfig: A Game Server Config resource.
+// GameServerConfig: A game server config resource.
 type GameServerConfig struct {
 	// CreateTime: Output only. The creation time.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Description: The description of the Game Server Config.
+	// Description: The description of the game server config.
 	Description string `json:"description,omitempty"`
 
 	// FleetConfigs: FleetConfig contains a list of Agones fleet specs. Only
@@ -1325,12 +1337,12 @@ type GameServerConfig struct {
 	// is allowed.
 	FleetConfigs []*FleetConfig `json:"fleetConfigs,omitempty"`
 
-	// Labels: The labels associated with this Game Server Config. Each
+	// Labels: The labels associated with this game server config. Each
 	// label is a
 	// key-value pair.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: The resource name of the Game Server Config. Uses the
+	// Name: The resource name of the game server config. Uses the
 	// form:
 	//
 	// `projects/{project}/locations/{location}/gameServerDeployments/
@@ -1375,7 +1387,7 @@ func (s *GameServerConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GameServerConfigOverride: A Game Server Config override.
+// GameServerConfigOverride: A game server config override.
 type GameServerConfigOverride struct {
 	// ConfigVersion: The game server config for this override.
 	ConfigVersion string `json:"configVersion,omitempty"`
@@ -1406,24 +1418,24 @@ func (s *GameServerConfigOverride) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GameServerDeployment: A Game Server Deployment resource.
+// GameServerDeployment: A game server deployment resource.
 type GameServerDeployment struct {
 	// CreateTime: Output only. The creation time.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Description: Human readable description of the Game Server
-	// Deployment.
+	// Description: Human readable description of the game server
+	// delpoyment.
 	Description string `json:"description,omitempty"`
 
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Labels: The labels associated with this Game Server Deployment. Each
+	// Labels: The labels associated with this game server deployment. Each
 	// label is a
 	// key-value pair.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: The resource name of the Game Server Deployment. Uses the
+	// Name: The resource name of the game server deployment. Uses the
 	// form:
 	//
 	// `projects/{project}/locations/{location}/gameServerDeployments/
@@ -1465,16 +1477,16 @@ func (s *GameServerDeployment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GameServerDeploymentRollout: The Game Server Deployment Rollout which
+// GameServerDeploymentRollout: The game server deployment rollout which
 // represents the desired rollout
 // state.
 type GameServerDeploymentRollout struct {
 	// CreateTime: Output only. The creation time.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// DefaultGameServerConfig: The default Game Server Config is applied to
-	// all Realms unless overridden
-	// in the Rollout. For
+	// DefaultGameServerConfig: The default game server config is applied to
+	// all realms unless overridden
+	// in the rollout. For
 	// example,
 	//
 	// `projects/my-project/locations/global/gameServerDeployments/
@@ -1484,14 +1496,14 @@ type GameServerDeploymentRollout struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// GameServerConfigOverrides: Contains the Game Server Config Rollout
+	// GameServerConfigOverrides: Contains the game server config rollout
 	// overrides. Overrides are processed
-	// in the order they are listed. Once a match is found for a Realm, the
+	// in the order they are listed. Once a match is found for a realm, the
 	// rest
 	// of the list is not processed.
 	GameServerConfigOverrides []*GameServerConfigOverride `json:"gameServerConfigOverrides,omitempty"`
 
-	// Name: The resource name of the Game Server Deployment Rollout. Uses
+	// Name: The resource name of the game server deployment rollout. Uses
 	// the
 	// form:
 	//
@@ -1604,7 +1616,7 @@ func (s *LabelSelector) MarshalJSON() ([]byte, error) {
 // ListGameServerClustersResponse: Response message for
 // GameServerClustersService.ListGameServerClusters.
 type ListGameServerClustersResponse struct {
-	// GameServerClusters: The list of Game Server Clusters.
+	// GameServerClusters: The list of game server clusters.
 	GameServerClusters []*GameServerCluster `json:"gameServerClusters,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
@@ -1612,7 +1624,7 @@ type ListGameServerClustersResponse struct {
 	// results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Unreachable: List of Locations that could not be reached.
+	// Unreachable: List of locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1646,7 +1658,7 @@ func (s *ListGameServerClustersResponse) MarshalJSON() ([]byte, error) {
 // ListGameServerConfigsResponse: Response message for
 // GameServerConfigsService.ListGameServerConfigs.
 type ListGameServerConfigsResponse struct {
-	// GameServerConfigs: The list of Game Server Configs.
+	// GameServerConfigs: The list of game server configs.
 	GameServerConfigs []*GameServerConfig `json:"gameServerConfigs,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
@@ -1654,7 +1666,7 @@ type ListGameServerConfigsResponse struct {
 	// results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Unreachable: List of Locations that could not be reached.
+	// Unreachable: List of locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1688,7 +1700,7 @@ func (s *ListGameServerConfigsResponse) MarshalJSON() ([]byte, error) {
 // ListGameServerDeploymentsResponse: Response message for
 // GameServerDeploymentsService.ListGameServerDeployments.
 type ListGameServerDeploymentsResponse struct {
-	// GameServerDeployments: The list of Game Server Delpoyments.
+	// GameServerDeployments: The list of game server deployments.
 	GameServerDeployments []*GameServerDeployment `json:"gameServerDeployments,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
@@ -1696,7 +1708,7 @@ type ListGameServerDeploymentsResponse struct {
 	// results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Unreachable: List of Locations that could not be reached.
+	// Unreachable: List of locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1809,10 +1821,10 @@ type ListRealmsResponse struct {
 	// results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Realms: The list of Realms.
+	// Realms: The list of realms.
 	Realms []*Realm `json:"realms,omitempty"`
 
-	// Unreachable: List of Locations that could not be reached.
+	// Unreachable: List of locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2017,7 +2029,7 @@ type OperationMetadata struct {
 	// EndTime: Output only. The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
 
-	// OperationStatus: Output only. Operation status for gameservices API
+	// OperationStatus: Output only. Operation status for Game Services API
 	// operations. Operation status is in
 	// the form of key-value pairs where keys are resource IDs and the
 	// values show
@@ -2128,13 +2140,18 @@ func (s *OperationStatus) MarshalJSON() ([]byte, error) {
 // user-created
 // custom role.
 //
-// Optionally, a `binding` can specify a `condition`, which is a
-// logical
-// expression that allows access to a resource only if the expression
-// evaluates
-// to `true`. A condition can add constraints based on attributes of
-// the
-// request, the resource, or both.
+// For some types of Google Cloud resources, a `binding` can also
+// specify a
+// `condition`, which is a logical expression that allows access to a
+// resource
+// only if the expression evaluates to `true`. A condition can add
+// constraints
+// based on attributes of the request, the resource, or both. To learn
+// which
+// resources support conditions in their IAM policies, see the
+// [IAM
+// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+// olicies).
 //
 // **JSON example:**
 //
@@ -2152,7 +2169,9 @@ func (s *OperationStatus) MarshalJSON() ([]byte, error) {
 //         },
 //         {
 //           "role": "roles/resourcemanager.organizationViewer",
-//           "members": ["user:eve@example.com"],
+//           "members": [
+//             "user:eve@example.com"
+//           ],
 //           "condition": {
 //             "title": "expirable access",
 //             "description": "Does not grant access after Sep 2020",
@@ -2267,6 +2286,12 @@ type Policy struct {
 	// If a policy does not include any conditions, operations on that
 	// policy may
 	// specify any valid version or leave the field unset.
+	//
+	// To learn which resources support conditions in their IAM policies,
+	// see the
+	// [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2375,7 +2400,7 @@ func (s *PreviewDeleteGameServerClusterResponse) MarshalJSON() ([]byte, error) {
 // This has details about the Agones fleet and autoscaler to be
 // actuated.
 type PreviewGameServerDeploymentRolloutResponse struct {
-	// Etag: ETag of the Game Server Deployment.
+	// Etag: ETag of the game server deployment.
 	Etag string `json:"etag,omitempty"`
 
 	// TargetState: The target state.
@@ -2483,29 +2508,29 @@ func (s *PreviewUpdateGameServerClusterResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Realm: A Realm resource.
+// Realm: A realm resource.
 type Realm struct {
 	// CreateTime: Output only. The creation time.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Description: Human readable description of the Realm.
+	// Description: Human readable description of the realm.
 	Description string `json:"description,omitempty"`
 
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Labels: The labels associated with this Realm. Each label is a
+	// Labels: The labels associated with this realm. Each label is a
 	// key-value pair.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: The resource name of the Realm. Uses the
+	// Name: The resource name of the realm. Uses the
 	// form:
 	// `projects/{project}/locations/{location}/realms/{realm}`.
 	// For
 	// example, `projects/my-project/locations/{location}/realms/my-realm`.
 	Name string `json:"name,omitempty"`
 
-	// TimeZone: Required. Time zone where all policies targeting this Realm
+	// TimeZone: Required. Time zone where all policies targeting this realm
 	// are evaluated. The value
 	// of this field must be from the IANA time zone
 	// database:
@@ -2542,9 +2567,9 @@ func (s *Realm) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RealmSelector: The Realm selector, used to match Realm resources.
+// RealmSelector: The realm selector, used to match realm resources.
 type RealmSelector struct {
-	// Realms: List of Realms to match.
+	// Realms: List of realms to match.
 	Realms []string `json:"realms,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Realms") to
@@ -2656,9 +2681,9 @@ type ScalingConfig struct {
 	// Schedules: The schedules to which this Scaling Config applies.
 	Schedules []*Schedule `json:"schedules,omitempty"`
 
-	// Selectors: Labels used to identify the Game Server Clusters to which
+	// Selectors: Labels used to identify the game server clusters to which
 	// this Agones
-	// scaling config applies. A Game Server Cluster is subject to this
+	// scaling config applies. A game server cluster is subject to this
 	// Agones
 	// scaling config if its labels match any of the selector entries.
 	Selectors []*LabelSelector `json:"selectors,omitempty"`
@@ -2711,7 +2736,7 @@ type Schedule struct {
 	// See
 	// https://en.wikipedia.org/wiki/Cron. Cron spec specifies the local
 	// time as
-	// defined by the Realm.
+	// defined by the realm.
 	CronSpec string `json:"cronSpec,omitempty"`
 
 	// EndTime: The end time of the event.
@@ -2789,7 +2814,7 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // SpecSource: Encapsulates Agones fleet spec and Agones autoscaler spec
 // sources.
 type SpecSource struct {
-	// GameServerConfigName: The Game Server Config resource. Uses the
+	// GameServerConfigName: The game server config resource. Uses the
 	// form:
 	//
 	// `projects/{project}/locations/{location}/gameServerDeployments/
@@ -2880,18 +2905,18 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 // TargetDetails: Details about the Agones resources.
 type TargetDetails struct {
-	// FleetDetails: Agones fleet details for Game Server Clusters and Game
-	// Server Deployments.
+	// FleetDetails: Agones fleet details for game server clusters and game
+	// server deployments.
 	FleetDetails []*TargetFleetDetails `json:"fleetDetails,omitempty"`
 
-	// GameServerClusterName: The Game Server Cluster name. Uses the
+	// GameServerClusterName: The game server cluster name. Uses the
 	// form:
 	//
 	// `projects/{project}/locations/{location}/realms/{realm}/gameSer
 	// verClusters/{cluster}`.
 	GameServerClusterName string `json:"gameServerClusterName,omitempty"`
 
-	// GameServerDeploymentName: The Game Server Deployment name. Uses the
+	// GameServerDeploymentName: The game server deployment name. Uses the
 	// form:
 	//
 	// `projects/{project}/locations/{location}/gameServerDeployments/
@@ -3169,7 +3194,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3344,7 +3369,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3486,8 +3511,8 @@ type ProjectsLocationsGameServerDeploymentsCreateCall struct {
 	header_              http.Header
 }
 
-// Create: Creates a new Game Server Deployment in a given project and
-// Location.
+// Create: Creates a new game server deployment in a given project and
+// location.
 func (r *ProjectsLocationsGameServerDeploymentsService) Create(parent string, gameserverdeployment *GameServerDeployment) *ProjectsLocationsGameServerDeploymentsCreateCall {
 	c := &ProjectsLocationsGameServerDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3496,7 +3521,7 @@ func (r *ProjectsLocationsGameServerDeploymentsService) Create(parent string, ga
 }
 
 // DeploymentId sets the optional parameter "deploymentId": Required.
-// The ID of the Game Server Deployment resource to be created.
+// The ID of the game server delpoyment resource to be created.
 func (c *ProjectsLocationsGameServerDeploymentsCreateCall) DeploymentId(deploymentId string) *ProjectsLocationsGameServerDeploymentsCreateCall {
 	c.urlParams_.Set("deploymentId", deploymentId)
 	return c
@@ -3529,7 +3554,7 @@ func (c *ProjectsLocationsGameServerDeploymentsCreateCall) Header() http.Header 
 
 func (c *ProjectsLocationsGameServerDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3593,7 +3618,7 @@ func (c *ProjectsLocationsGameServerDeploymentsCreateCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new Game Server Deployment in a given project and Location.",
+	//   "description": "Creates a new game server deployment in a given project and location.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/gameServerDeployments",
 	//   "httpMethod": "POST",
 	//   "id": "gameservices.projects.locations.gameServerDeployments.create",
@@ -3602,7 +3627,7 @@ func (c *ProjectsLocationsGameServerDeploymentsCreateCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "deploymentId": {
-	//       "description": "Required. The ID of the Game Server Deployment resource to be created.",
+	//       "description": "Required. The ID of the game server delpoyment resource to be created.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3638,7 +3663,7 @@ type ProjectsLocationsGameServerDeploymentsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single Game Server Deployment.
+// Delete: Deletes a single game server deployment.
 func (r *ProjectsLocationsGameServerDeploymentsService) Delete(name string) *ProjectsLocationsGameServerDeploymentsDeleteCall {
 	c := &ProjectsLocationsGameServerDeploymentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3672,7 +3697,7 @@ func (c *ProjectsLocationsGameServerDeploymentsDeleteCall) Header() http.Header 
 
 func (c *ProjectsLocationsGameServerDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3731,7 +3756,7 @@ func (c *ProjectsLocationsGameServerDeploymentsDeleteCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a single Game Server Deployment.",
+	//   "description": "Deletes a single game server deployment.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/gameServerDeployments/{gameServerDeploymentsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "gameservices.projects.locations.gameServerDeployments.delete",
@@ -3740,7 +3765,7 @@ func (c *ProjectsLocationsGameServerDeploymentsDeleteCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Game Server Deployment to delete. Uses the form:\n\n`projects/{project}/locations/{location}/gameServerDeployments/{deployment}`.",
+	//       "description": "Required. The name of the game server delpoyment to delete. Uses the form:\n\n`projects/{project}/locations/{location}/gameServerDeployments/{deployment}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -3770,11 +3795,11 @@ type ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall struct {
 }
 
 // FetchDeploymentState: Retrieves information about the current state
-// of the Game Server
-// Ddeployment. Gathers all the Agones fleets and Agones
+// of the game server
+// deployment. Gathers all the Agones fleets and Agones
 // autoscalers,
-// including fleets running an older version of the Game Server
-// Deployment.
+// including fleets running an older version of the game server
+// deployment.
 func (r *ProjectsLocationsGameServerDeploymentsService) FetchDeploymentState(name string, fetchdeploymentstaterequest *FetchDeploymentStateRequest) *ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall {
 	c := &ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3809,7 +3834,7 @@ func (c *ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall) Header(
 
 func (c *ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3873,7 +3898,7 @@ func (c *ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall) Do(opts
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves information about the current state of the Game Server\nDdeployment. Gathers all the Agones fleets and Agones autoscalers,\nincluding fleets running an older version of the Game Server Deployment.",
+	//   "description": "Retrieves information about the current state of the game server\ndeployment. Gathers all the Agones fleets and Agones autoscalers,\nincluding fleets running an older version of the game server deployment.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/gameServerDeployments/{gameServerDeploymentsId}:fetchDeploymentState",
 	//   "httpMethod": "POST",
 	//   "id": "gameservices.projects.locations.gameServerDeployments.fetchDeploymentState",
@@ -3882,7 +3907,7 @@ func (c *ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall) Do(opts
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Game Server Deployment. Uses the form:\n\n`projects/{project}/locations/{location}/gameServerDeployments/{deployment}`.",
+	//       "description": "Required. The name of the game server delpoyment. Uses the form:\n\n`projects/{project}/locations/{location}/gameServerDeployments/{deployment}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -3914,7 +3939,7 @@ type ProjectsLocationsGameServerDeploymentsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single Game Server Deployment.
+// Get: Gets details of a single game server deployment.
 func (r *ProjectsLocationsGameServerDeploymentsService) Get(name string) *ProjectsLocationsGameServerDeploymentsGetCall {
 	c := &ProjectsLocationsGameServerDeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3958,7 +3983,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGameServerDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4020,7 +4045,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets details of a single Game Server Deployment.",
+	//   "description": "Gets details of a single game server deployment.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/gameServerDeployments/{gameServerDeploymentsId}",
 	//   "httpMethod": "GET",
 	//   "id": "gameservices.projects.locations.gameServerDeployments.get",
@@ -4029,7 +4054,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Game Server Deployment to retrieve. Uses the form:\n\n`projects/{project}/locations/{location}/gameServerDeployments/{deployment}`.",
+	//       "description": "Required. The name of the game server delpoyment to retrieve. Uses the form:\n\n`projects/{project}/locations/{location}/gameServerDeployments/{deployment}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -4081,6 +4106,13 @@ func (r *ProjectsLocationsGameServerDeploymentsService) GetIamPolicy(resource st
 // Policies without any conditional bindings may specify any valid value
 // or
 // leave the field unset.
+//
+// To learn which resources support conditions in their IAM policies,
+// see
+// the
+// [IAM
+// documentation](https://cloud.google.com/iam/help/conditions/r
+// esource-policies).
 func (c *ProjectsLocationsGameServerDeploymentsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsGameServerDeploymentsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -4123,7 +4155,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetIamPolicyCall) Header() http.H
 
 func (c *ProjectsLocationsGameServerDeploymentsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4194,7 +4226,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetIamPolicyCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.",
+	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.\n\nTo learn which resources support conditions in their IAM policies, see the\n[IAM\ndocumentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4229,7 +4261,7 @@ type ProjectsLocationsGameServerDeploymentsGetRolloutCall struct {
 	header_      http.Header
 }
 
-// GetRollout: Gets details a single Game Server Deployment Rollout.
+// GetRollout: Gets details a single game server deployment rollout.
 func (r *ProjectsLocationsGameServerDeploymentsService) GetRollout(name string) *ProjectsLocationsGameServerDeploymentsGetRolloutCall {
 	c := &ProjectsLocationsGameServerDeploymentsGetRolloutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4273,7 +4305,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetRolloutCall) Header() http.Hea
 
 func (c *ProjectsLocationsGameServerDeploymentsGetRolloutCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4335,7 +4367,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetRolloutCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets details a single Game Server Deployment Rollout.",
+	//   "description": "Gets details a single game server deployment rollout.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/gameServerDeployments/{gameServerDeploymentsId}/rollout",
 	//   "httpMethod": "GET",
 	//   "id": "gameservices.projects.locations.gameServerDeployments.getRollout",
@@ -4344,7 +4376,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetRolloutCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Game Server Deployment to retrieve. Uses the form:\n\n`projects/{project}/locations/{location}/gameServerDeployments/{deployment}/rollout`.",
+	//       "description": "Required. The name of the game server delpoyment to retrieve. Uses the form:\n\n`projects/{project}/locations/{location}/gameServerDeployments/{deployment}/rollout`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -4373,7 +4405,7 @@ type ProjectsLocationsGameServerDeploymentsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Game Server Deployments in a given project and Location.
+// List: Lists game server deployments in a given project and location.
 func (r *ProjectsLocationsGameServerDeploymentsService) List(parent string) *ProjectsLocationsGameServerDeploymentsListCall {
 	c := &ProjectsLocationsGameServerDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4397,8 +4429,8 @@ func (c *ProjectsLocationsGameServerDeploymentsListCall) OrderBy(orderBy string)
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return.  If unspecified, server
-// will pick an appropriate default. Server may return fewer items
+// of items to return.  If unspecified, the server
+// will pick an appropriate default. The server may return fewer items
 // than
 // requested. A caller should only rely on response's
 // next_page_token to
@@ -4453,7 +4485,7 @@ func (c *ProjectsLocationsGameServerDeploymentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGameServerDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4516,7 +4548,7 @@ func (c *ProjectsLocationsGameServerDeploymentsListCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists Game Server Deployments in a given project and Location.",
+	//   "description": "Lists game server deployments in a given project and location.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/gameServerDeployments",
 	//   "httpMethod": "GET",
 	//   "id": "gameservices.projects.locations.gameServerDeployments.list",
@@ -4535,7 +4567,7 @@ func (c *ProjectsLocationsGameServerDeploymentsListCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of items to return.  If unspecified, server\nwill pick an appropriate default. Server may return fewer items than\nrequested. A caller should only rely on response's\nnext_page_token to\ndetermine if there are more GameServerDeployments left to be queried.",
+	//       "description": "Optional. The maximum number of items to return.  If unspecified, the server\nwill pick an appropriate default. The server may return fewer items than\nrequested. A caller should only rely on response's\nnext_page_token to\ndetermine if there are more GameServerDeployments left to be queried.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4596,7 +4628,7 @@ type ProjectsLocationsGameServerDeploymentsPatchCall struct {
 	header_              http.Header
 }
 
-// Patch: Patches a Game Server Deployment.
+// Patch: Patches a game server deployment.
 func (r *ProjectsLocationsGameServerDeploymentsService) Patch(name string, gameserverdeployment *GameServerDeployment) *ProjectsLocationsGameServerDeploymentsPatchCall {
 	c := &ProjectsLocationsGameServerDeploymentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4644,7 +4676,7 @@ func (c *ProjectsLocationsGameServerDeploymentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsGameServerDeploymentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4708,7 +4740,7 @@ func (c *ProjectsLocationsGameServerDeploymentsPatchCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Patches a Game Server Deployment.",
+	//   "description": "Patches a game server deployment.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/gameServerDeployments/{gameServerDeploymentsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "gameservices.projects.locations.gameServerDeployments.patch",
@@ -4717,7 +4749,7 @@ func (c *ProjectsLocationsGameServerDeploymentsPatchCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the Game Server Deployment. Uses the form:\n\n`projects/{project}/locations/{location}/gameServerDeployments/{deployment}`.\nFor example,\n\n`projects/my-project/locations/{location}/gameServerDeployments/my-deployment`.",
+	//       "description": "The resource name of the game server deployment. Uses the form:\n\n`projects/{project}/locations/{location}/gameServerDeployments/{deployment}`.\nFor example,\n\n`projects/my-project/locations/{location}/gameServerDeployments/my-deployment`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -4755,9 +4787,9 @@ type ProjectsLocationsGameServerDeploymentsPreviewRolloutCall struct {
 	header_                     http.Header
 }
 
-// PreviewRollout: Previews the Game Server Deployment Rollout. This API
+// PreviewRollout: Previews the game server deployment rollout. This API
 // does not mutate the
-// Rollout resource.
+// rollout resource.
 func (r *ProjectsLocationsGameServerDeploymentsService) PreviewRollout(name string, gameserverdeploymentrollout *GameServerDeploymentRollout) *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall {
 	c := &ProjectsLocationsGameServerDeploymentsPreviewRolloutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4767,7 +4799,7 @@ func (r *ProjectsLocationsGameServerDeploymentsService) PreviewRollout(name stri
 
 // PreviewTime sets the optional parameter "previewTime": The target
 // timestamp to compute the preview. Defaults to the immediately
-// after the proposed Rollout completes.
+// after the proposed rollout completes.
 func (c *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall) PreviewTime(previewTime string) *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall {
 	c.urlParams_.Set("previewTime", previewTime)
 	return c
@@ -4813,7 +4845,7 @@ func (c *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall) Header() http
 
 func (c *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4879,7 +4911,7 @@ func (c *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall) Do(opts ...go
 	}
 	return ret, nil
 	// {
-	//   "description": "Previews the Game Server Deployment Rollout. This API does not mutate the\nRollout resource.",
+	//   "description": "Previews the game server deployment rollout. This API does not mutate the\nrollout resource.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/gameServerDeployments/{gameServerDeploymentsId}/rollout:preview",
 	//   "httpMethod": "PATCH",
 	//   "id": "gameservices.projects.locations.gameServerDeployments.previewRollout",
@@ -4888,14 +4920,14 @@ func (c *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the Game Server Deployment Rollout. Uses the form:\n\n`projects/{project}/locations/{location}/gameServerDeployments/{deployment}/rollout`.\nFor example,\n\n`projects/my-project/locations/{location}/gameServerDeployments/my-deployment/rollout`.",
+	//       "description": "The resource name of the game server deployment rollout. Uses the form:\n\n`projects/{project}/locations/{location}/gameServerDeployments/{deployment}/rollout`.\nFor example,\n\n`projects/my-project/locations/{location}/gameServerDeployments/my-deployment/rollout`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "previewTime": {
-	//       "description": "Optional. The target timestamp to compute the preview. Defaults to the immediately\nafter the proposed Rollout completes.",
+	//       "description": "Optional. The target timestamp to compute the preview. Defaults to the immediately\nafter the proposed rollout completes.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -4972,7 +5004,7 @@ func (c *ProjectsLocationsGameServerDeploymentsSetIamPolicyCall) Header() http.H
 
 func (c *ProjectsLocationsGameServerDeploymentsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5122,7 +5154,7 @@ func (c *ProjectsLocationsGameServerDeploymentsTestIamPermissionsCall) Header() 
 
 func (c *ProjectsLocationsGameServerDeploymentsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5227,7 +5259,7 @@ type ProjectsLocationsGameServerDeploymentsUpdateRolloutCall struct {
 	header_                     http.Header
 }
 
-// UpdateRollout: Patches a single Game Server Deployment Rollout.
+// UpdateRollout: Patches a single game server deployment rollout.
 // The method will not return an error if the update does not affect
 // any
 // existing realms. For example - if the default_game_server_config is
@@ -5284,7 +5316,7 @@ func (c *ProjectsLocationsGameServerDeploymentsUpdateRolloutCall) Header() http.
 
 func (c *ProjectsLocationsGameServerDeploymentsUpdateRolloutCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5348,7 +5380,7 @@ func (c *ProjectsLocationsGameServerDeploymentsUpdateRolloutCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Patches a single Game Server Deployment Rollout.\nThe method will not return an error if the update does not affect any\nexisting realms. For example - if the default_game_server_config is changed\nbut all existing realms use the override, that is valid. Similarly, if a\nnon existing realm is explicitly called out in game_server_config_overrides\nfield, that will also not result in an error.",
+	//   "description": "Patches a single game server deployment rollout.\nThe method will not return an error if the update does not affect any\nexisting realms. For example - if the default_game_server_config is changed\nbut all existing realms use the override, that is valid. Similarly, if a\nnon existing realm is explicitly called out in game_server_config_overrides\nfield, that will also not result in an error.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/gameServerDeployments/{gameServerDeploymentsId}/rollout",
 	//   "httpMethod": "PATCH",
 	//   "id": "gameservices.projects.locations.gameServerDeployments.updateRollout",
@@ -5357,7 +5389,7 @@ func (c *ProjectsLocationsGameServerDeploymentsUpdateRolloutCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the Game Server Deployment Rollout. Uses the form:\n\n`projects/{project}/locations/{location}/gameServerDeployments/{deployment}/rollout`.\nFor example,\n\n`projects/my-project/locations/{location}/gameServerDeployments/my-deployment/rollout`.",
+	//       "description": "The resource name of the game server deployment rollout. Uses the form:\n\n`projects/{project}/locations/{location}/gameServerDeployments/{deployment}/rollout`.\nFor example,\n\n`projects/my-project/locations/{location}/gameServerDeployments/my-deployment/rollout`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -5395,11 +5427,11 @@ type ProjectsLocationsGameServerDeploymentsConfigsCreateCall struct {
 	header_          http.Header
 }
 
-// Create: Creates a new Game Server Config in a given project,
-// Location, and Game
-// Server Deployment. Game Server Configs are immutable, and are not
+// Create: Creates a new game server config in a given project,
+// location, and game
+// server deployment. Game server configs are immutable, and are not
 // applied
-// until referenced in the Game Server Deployment Rollout resource.
+// until referenced in the game server deployment rollout resource.
 func (r *ProjectsLocationsGameServerDeploymentsConfigsService) Create(parent string, gameserverconfig *GameServerConfig) *ProjectsLocationsGameServerDeploymentsConfigsCreateCall {
 	c := &ProjectsLocationsGameServerDeploymentsConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5408,7 +5440,7 @@ func (r *ProjectsLocationsGameServerDeploymentsConfigsService) Create(parent str
 }
 
 // ConfigId sets the optional parameter "configId": Required. The ID of
-// the Game Server Config resource to be created.
+// the game server config resource to be created.
 func (c *ProjectsLocationsGameServerDeploymentsConfigsCreateCall) ConfigId(configId string) *ProjectsLocationsGameServerDeploymentsConfigsCreateCall {
 	c.urlParams_.Set("configId", configId)
 	return c
@@ -5441,7 +5473,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsCreateCall) Header() http.
 
 func (c *ProjectsLocationsGameServerDeploymentsConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5505,7 +5537,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsCreateCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new Game Server Config in a given project, Location, and Game\nServer Deployment. Game Server Configs are immutable, and are not applied\nuntil referenced in the Game Server Deployment Rollout resource.",
+	//   "description": "Creates a new game server config in a given project, location, and game\nserver deployment. Game server configs are immutable, and are not applied\nuntil referenced in the game server deployment rollout resource.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/gameServerDeployments/{gameServerDeploymentsId}/configs",
 	//   "httpMethod": "POST",
 	//   "id": "gameservices.projects.locations.gameServerDeployments.configs.create",
@@ -5514,7 +5546,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsCreateCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "configId": {
-	//       "description": "Required. The ID of the Game Server Config resource to be created.",
+	//       "description": "Required. The ID of the game server config resource to be created.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5550,9 +5582,9 @@ type ProjectsLocationsGameServerDeploymentsConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single Game Server Config. The deletion will fail
-// if the Game
-// Server Config is referenced in a Game Server Deployment Rollout.
+// Delete: Deletes a single game server config. The deletion will fail
+// if the game
+// server config is referenced in a game server deployment rollout.
 func (r *ProjectsLocationsGameServerDeploymentsConfigsService) Delete(name string) *ProjectsLocationsGameServerDeploymentsConfigsDeleteCall {
 	c := &ProjectsLocationsGameServerDeploymentsConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5586,7 +5618,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsDeleteCall) Header() http.
 
 func (c *ProjectsLocationsGameServerDeploymentsConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5645,7 +5677,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsDeleteCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a single Game Server Config. The deletion will fail if the Game\nServer Config is referenced in a Game Server Deployment Rollout.",
+	//   "description": "Deletes a single game server config. The deletion will fail if the game\nserver config is referenced in a game server deployment rollout.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/gameServerDeployments/{gameServerDeploymentsId}/configs/{configsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "gameservices.projects.locations.gameServerDeployments.configs.delete",
@@ -5654,7 +5686,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsDeleteCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Game Server Config to delete. Uses the form:\n\n`projects/{project}/locations/{location}/gameServerDeployments/{deployment}/configs/{config}`.",
+	//       "description": "Required. The name of the game server config to delete. Uses the form:\n\n`projects/{project}/locations/{location}/gameServerDeployments/{deployment}/configs/{config}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+/configs/[^/]+$",
 	//       "required": true,
@@ -5683,7 +5715,7 @@ type ProjectsLocationsGameServerDeploymentsConfigsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single Game Server Config.
+// Get: Gets details of a single game server config.
 func (r *ProjectsLocationsGameServerDeploymentsConfigsService) Get(name string) *ProjectsLocationsGameServerDeploymentsConfigsGetCall {
 	c := &ProjectsLocationsGameServerDeploymentsConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5727,7 +5759,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsGetCall) Header() http.Hea
 
 func (c *ProjectsLocationsGameServerDeploymentsConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5789,7 +5821,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsGetCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets details of a single Game Server Config.",
+	//   "description": "Gets details of a single game server config.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/gameServerDeployments/{gameServerDeploymentsId}/configs/{configsId}",
 	//   "httpMethod": "GET",
 	//   "id": "gameservices.projects.locations.gameServerDeployments.configs.get",
@@ -5798,7 +5830,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsGetCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Game Server Config to retrieve. Uses the form:\n\n`projects/{project}/locations/{location}/gameServerDeployments/{deployment}/configs/{config}`.",
+	//       "description": "Required. The name of the game server config to retrieve. Uses the form:\n\n`projects/{project}/locations/{location}/gameServerDeployments/{deployment}/configs/{config}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+/configs/[^/]+$",
 	//       "required": true,
@@ -5827,9 +5859,9 @@ type ProjectsLocationsGameServerDeploymentsConfigsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Game Server Configs in a given project, Location, and
-// Game Server
-// Deployment.
+// List: Lists game server configs in a given project, location, and
+// game server
+// deployment.
 func (r *ProjectsLocationsGameServerDeploymentsConfigsService) List(parent string) *ProjectsLocationsGameServerDeploymentsConfigsListCall {
 	c := &ProjectsLocationsGameServerDeploymentsConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5865,7 +5897,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsListCall) PageSize(pageSiz
 }
 
 // PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous List request, if any.
+// next_page_token value returned from a previous list request, if any.
 func (c *ProjectsLocationsGameServerDeploymentsConfigsListCall) PageToken(pageToken string) *ProjectsLocationsGameServerDeploymentsConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -5908,7 +5940,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsListCall) Header() http.He
 
 func (c *ProjectsLocationsGameServerDeploymentsConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5970,7 +6002,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsListCall) Do(opts ...googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists Game Server Configs in a given project, Location, and Game Server\nDeployment.",
+	//   "description": "Lists game server configs in a given project, location, and game server\ndeployment.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/gameServerDeployments/{gameServerDeploymentsId}/configs",
 	//   "httpMethod": "GET",
 	//   "id": "gameservices.projects.locations.gameServerDeployments.configs.list",
@@ -5995,7 +6027,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsListCall) Do(opts ...googl
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. The next_page_token value returned from a previous List request, if any.",
+	//       "description": "Optional. The next_page_token value returned from a previous list request, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6102,7 +6134,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6246,7 +6278,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6391,7 +6423,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6572,7 +6604,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6709,7 +6741,7 @@ type ProjectsLocationsRealmsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a new Realm in a given project and Location.
+// Create: Creates a new realm in a given project and location.
 func (r *ProjectsLocationsRealmsService) Create(parent string, realm *Realm) *ProjectsLocationsRealmsCreateCall {
 	c := &ProjectsLocationsRealmsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6718,7 +6750,7 @@ func (r *ProjectsLocationsRealmsService) Create(parent string, realm *Realm) *Pr
 }
 
 // RealmId sets the optional parameter "realmId": Required. The ID of
-// the Realm resource to be created.
+// the realm resource to be created.
 func (c *ProjectsLocationsRealmsCreateCall) RealmId(realmId string) *ProjectsLocationsRealmsCreateCall {
 	c.urlParams_.Set("realmId", realmId)
 	return c
@@ -6751,7 +6783,7 @@ func (c *ProjectsLocationsRealmsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6815,7 +6847,7 @@ func (c *ProjectsLocationsRealmsCreateCall) Do(opts ...googleapi.CallOption) (*O
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new Realm in a given project and Location.",
+	//   "description": "Creates a new realm in a given project and location.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/realms",
 	//   "httpMethod": "POST",
 	//   "id": "gameservices.projects.locations.realms.create",
@@ -6831,7 +6863,7 @@ func (c *ProjectsLocationsRealmsCreateCall) Do(opts ...googleapi.CallOption) (*O
 	//       "type": "string"
 	//     },
 	//     "realmId": {
-	//       "description": "Required. The ID of the Realm resource to be created.",
+	//       "description": "Required. The ID of the realm resource to be created.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6860,7 +6892,7 @@ type ProjectsLocationsRealmsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single Realm.
+// Delete: Deletes a single realm.
 func (r *ProjectsLocationsRealmsService) Delete(name string) *ProjectsLocationsRealmsDeleteCall {
 	c := &ProjectsLocationsRealmsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6894,7 +6926,7 @@ func (c *ProjectsLocationsRealmsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6953,7 +6985,7 @@ func (c *ProjectsLocationsRealmsDeleteCall) Do(opts ...googleapi.CallOption) (*O
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a single Realm.",
+	//   "description": "Deletes a single realm.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/realms/{realmsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "gameservices.projects.locations.realms.delete",
@@ -6962,7 +6994,7 @@ func (c *ProjectsLocationsRealmsDeleteCall) Do(opts ...googleapi.CallOption) (*O
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Realm to delete. Uses the form:\n`projects/{project}/locations/{location}/realms/{realm}`.",
+	//       "description": "Required. The name of the realm to delete. Uses the form:\n`projects/{project}/locations/{location}/realms/{realm}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+$",
 	//       "required": true,
@@ -6991,7 +7023,7 @@ type ProjectsLocationsRealmsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single Realm.
+// Get: Gets details of a single realm.
 func (r *ProjectsLocationsRealmsService) Get(name string) *ProjectsLocationsRealmsGetCall {
 	c := &ProjectsLocationsRealmsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7035,7 +7067,7 @@ func (c *ProjectsLocationsRealmsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7097,7 +7129,7 @@ func (c *ProjectsLocationsRealmsGetCall) Do(opts ...googleapi.CallOption) (*Real
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets details of a single Realm.",
+	//   "description": "Gets details of a single realm.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/realms/{realmsId}",
 	//   "httpMethod": "GET",
 	//   "id": "gameservices.projects.locations.realms.get",
@@ -7106,7 +7138,7 @@ func (c *ProjectsLocationsRealmsGetCall) Do(opts ...googleapi.CallOption) (*Real
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Realm to retrieve. Uses the form:\n`projects/{project}/locations/{location}/realms/{realm}`.",
+	//       "description": "Required. The name of the realm to retrieve. Uses the form:\n`projects/{project}/locations/{location}/realms/{realm}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+$",
 	//       "required": true,
@@ -7135,7 +7167,7 @@ type ProjectsLocationsRealmsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Realms in a given project and Location.
+// List: Lists realms in a given project and location.
 func (r *ProjectsLocationsRealmsService) List(parent string) *ProjectsLocationsRealmsListCall {
 	c := &ProjectsLocationsRealmsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7164,7 +7196,7 @@ func (c *ProjectsLocationsRealmsListCall) OrderBy(orderBy string) *ProjectsLocat
 // than
 // requested. A caller should only rely on response's
 // next_page_token to
-// determine if there are more Realms left to be queried.
+// determine if there are more realms left to be queried.
 func (c *ProjectsLocationsRealmsListCall) PageSize(pageSize int64) *ProjectsLocationsRealmsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -7215,7 +7247,7 @@ func (c *ProjectsLocationsRealmsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7277,7 +7309,7 @@ func (c *ProjectsLocationsRealmsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists Realms in a given project and Location.",
+	//   "description": "Lists realms in a given project and location.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/realms",
 	//   "httpMethod": "GET",
 	//   "id": "gameservices.projects.locations.realms.list",
@@ -7296,7 +7328,7 @@ func (c *ProjectsLocationsRealmsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of items to return.  If unspecified, server\nwill pick an appropriate default. Server may return fewer items than\nrequested. A caller should only rely on response's\nnext_page_token to\ndetermine if there are more Realms left to be queried.",
+	//       "description": "Optional. The maximum number of items to return.  If unspecified, server\nwill pick an appropriate default. Server may return fewer items than\nrequested. A caller should only rely on response's\nnext_page_token to\ndetermine if there are more realms left to be queried.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7357,7 +7389,7 @@ type ProjectsLocationsRealmsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Patches a single Realm.
+// Patch: Patches a single realm.
 func (r *ProjectsLocationsRealmsService) Patch(name string, realm *Realm) *ProjectsLocationsRealmsPatchCall {
 	c := &ProjectsLocationsRealmsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7404,7 +7436,7 @@ func (c *ProjectsLocationsRealmsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7468,7 +7500,7 @@ func (c *ProjectsLocationsRealmsPatchCall) Do(opts ...googleapi.CallOption) (*Op
 	}
 	return ret, nil
 	// {
-	//   "description": "Patches a single Realm.",
+	//   "description": "Patches a single realm.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/realms/{realmsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "gameservices.projects.locations.realms.patch",
@@ -7477,7 +7509,7 @@ func (c *ProjectsLocationsRealmsPatchCall) Do(opts ...googleapi.CallOption) (*Op
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the Realm. Uses the form:\n`projects/{project}/locations/{location}/realms/{realm}`. For\nexample, `projects/my-project/locations/{location}/realms/my-realm`.",
+	//       "description": "The resource name of the realm. Uses the form:\n`projects/{project}/locations/{location}/realms/{realm}`. For\nexample, `projects/my-project/locations/{location}/realms/my-realm`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+$",
 	//       "required": true,
@@ -7515,7 +7547,7 @@ type ProjectsLocationsRealmsPreviewUpdateCall struct {
 	header_    http.Header
 }
 
-// PreviewUpdate: Previews patches to a single Realm.
+// PreviewUpdate: Previews patches to a single realm.
 func (r *ProjectsLocationsRealmsService) PreviewUpdate(name string, realm *Realm) *ProjectsLocationsRealmsPreviewUpdateCall {
 	c := &ProjectsLocationsRealmsPreviewUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7569,7 +7601,7 @@ func (c *ProjectsLocationsRealmsPreviewUpdateCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsPreviewUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7633,7 +7665,7 @@ func (c *ProjectsLocationsRealmsPreviewUpdateCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Previews patches to a single Realm.",
+	//   "description": "Previews patches to a single realm.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/realms/{realmsId}:previewUpdate",
 	//   "httpMethod": "PATCH",
 	//   "id": "gameservices.projects.locations.realms.previewUpdate",
@@ -7642,7 +7674,7 @@ func (c *ProjectsLocationsRealmsPreviewUpdateCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the Realm. Uses the form:\n`projects/{project}/locations/{location}/realms/{realm}`. For\nexample, `projects/my-project/locations/{location}/realms/my-realm`.",
+	//       "description": "The resource name of the realm. Uses the form:\n`projects/{project}/locations/{location}/realms/{realm}`. For\nexample, `projects/my-project/locations/{location}/realms/my-realm`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+$",
 	//       "required": true,
@@ -7696,7 +7728,7 @@ func (r *ProjectsLocationsRealmsGameServerClustersService) Create(parent string,
 }
 
 // GameServerClusterId sets the optional parameter
-// "gameServerClusterId": Required. The ID of the Game Server Cluster
+// "gameServerClusterId": Required. The ID of the game server cluster
 // resource to be created.
 func (c *ProjectsLocationsRealmsGameServerClustersCreateCall) GameServerClusterId(gameServerClusterId string) *ProjectsLocationsRealmsGameServerClustersCreateCall {
 	c.urlParams_.Set("gameServerClusterId", gameServerClusterId)
@@ -7730,7 +7762,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsRealmsGameServerClustersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7803,7 +7835,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersCreateCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "gameServerClusterId": {
-	//       "description": "Required. The ID of the Game Server Cluster resource to be created.",
+	//       "description": "Required. The ID of the game server cluster resource to be created.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7873,7 +7905,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsRealmsGameServerClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7941,7 +7973,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersDeleteCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Game Server Cluster to delete. Uses the form:\n`projects/{project}/locations/{location}/gameServerClusters/{cluster}`.",
+	//       "description": "Required. The name of the game server cluster to delete. Uses the form:\n`projects/{project}/locations/{location}/gameServerClusters/{cluster}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+/gameServerClusters/[^/]+$",
 	//       "required": true,
@@ -8014,7 +8046,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsRealmsGameServerClustersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8085,7 +8117,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersGetCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Game Server Cluster to retrieve. Uses the form:\n\n`projects/{project}/locations/{location}/realms/{realm-id}/gameServerClusters/{cluster}`.",
+	//       "description": "Required. The name of the game server cluster to retrieve. Uses the form:\n\n`projects/{project}/locations/{location}/realms/{realm-id}/gameServerClusters/{cluster}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+/gameServerClusters/[^/]+$",
 	//       "required": true,
@@ -8114,7 +8146,7 @@ type ProjectsLocationsRealmsGameServerClustersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Game Server Clusters in a given project and location.
+// List: Lists game server clusters in a given project and location.
 func (r *ProjectsLocationsRealmsGameServerClustersService) List(parent string) *ProjectsLocationsRealmsGameServerClustersListCall {
 	c := &ProjectsLocationsRealmsGameServerClustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8138,8 +8170,8 @@ func (c *ProjectsLocationsRealmsGameServerClustersListCall) OrderBy(orderBy stri
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return.  If unspecified, server
-// will pick an appropriate default. Server may return fewer items
+// of items to return.  If unspecified, the server
+// will pick an appropriate default. The server may return fewer items
 // than
 // requested. A caller should only rely on response's
 // next_page_token to
@@ -8193,7 +8225,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersListCall) Header() http.Header
 
 func (c *ProjectsLocationsRealmsGameServerClustersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8255,7 +8287,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersListCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists Game Server Clusters in a given project and location.",
+	//   "description": "Lists game server clusters in a given project and location.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/realms/{realmsId}/gameServerClusters",
 	//   "httpMethod": "GET",
 	//   "id": "gameservices.projects.locations.realms.gameServerClusters.list",
@@ -8274,7 +8306,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersListCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of items to return.  If unspecified, server\nwill pick an appropriate default. Server may return fewer items than\nrequested. A caller should only rely on response's\nnext_page_token to\ndetermine if there are more GameServerClusters left to be queried.",
+	//       "description": "Optional. The maximum number of items to return.  If unspecified, the server\nwill pick an appropriate default. The server may return fewer items than\nrequested. A caller should only rely on response's\nnext_page_token to\ndetermine if there are more GameServerClusters left to be queried.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -8383,7 +8415,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsRealmsGameServerClustersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8456,7 +8488,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPatchCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Game Server Cluster. Uses the form:\n\n`projects/{project}/locations/{location}/realms/{realm}/gameServerClusters/{cluster}`.\nFor example,\n\n`projects/my-project/locations/{location}/realms/zanzibar/gameServerClusters/my-onprem-cluster`.",
+	//       "description": "Required. The resource name of the game server cluster. Uses the form:\n\n`projects/{project}/locations/{location}/realms/{realm}/gameServerClusters/{cluster}`.\nFor example,\n\n`projects/my-project/locations/{location}/realms/zanzibar/gameServerClusters/my-onprem-cluster`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+/gameServerClusters/[^/]+$",
 	//       "required": true,
@@ -8505,7 +8537,7 @@ func (r *ProjectsLocationsRealmsGameServerClustersService) PreviewCreate(parent 
 }
 
 // GameServerClusterId sets the optional parameter
-// "gameServerClusterId": Required. The ID of the Game Server Cluster
+// "gameServerClusterId": Required. The ID of the game server cluster
 // resource to be created.
 func (c *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall) GameServerClusterId(gameServerClusterId string) *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall {
 	c.urlParams_.Set("gameServerClusterId", gameServerClusterId)
@@ -8546,7 +8578,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall) Header() ht
 
 func (c *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8620,7 +8652,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "gameServerClusterId": {
-	//       "description": "Required. The ID of the Game Server Cluster resource to be created.",
+	//       "description": "Required. The ID of the game server cluster resource to be created.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8703,7 +8735,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall) Header() ht
 
 func (c *ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8772,7 +8804,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Game Server Cluster to delete. Uses the form:\n`projects/{project}/locations/{location}/gameServerClusters/{cluster}`.",
+	//       "description": "Required. The name of the game server cluster to delete. Uses the form:\n`projects/{project}/locations/{location}/gameServerClusters/{cluster}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+/gameServerClusters/[^/]+$",
 	//       "required": true,
@@ -8862,7 +8894,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall) Header() ht
 
 func (c *ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8936,7 +8968,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Game Server Cluster. Uses the form:\n\n`projects/{project}/locations/{location}/realms/{realm}/gameServerClusters/{cluster}`.\nFor example,\n\n`projects/my-project/locations/{location}/realms/zanzibar/gameServerClusters/my-onprem-cluster`.",
+	//       "description": "Required. The resource name of the game server cluster. Uses the form:\n\n`projects/{project}/locations/{location}/realms/{realm}/gameServerClusters/{cluster}`.\nFor example,\n\n`projects/my-project/locations/{location}/realms/zanzibar/gameServerClusters/my-onprem-cluster`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+/gameServerClusters/[^/]+$",
 	//       "required": true,

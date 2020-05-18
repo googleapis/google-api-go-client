@@ -815,9 +815,10 @@ type CheckError struct {
 	// Subject: Subject to whom this error applies. See the specific code
 	// enum for more
 	// details on this field. For example:
-	//     - “project:<project-id or project-number>”
-	//     - “folder:<folder-id>”
-	//     - “organization:<organization-id>”
+	//
+	// - "project:<project-id or project-number>"
+	// - "folder:<folder-id>"
+	// - "organization:<organization-id>"
 	Subject string `json:"subject,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -3360,7 +3361,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3522,7 +3523,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3683,7 +3684,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200513")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

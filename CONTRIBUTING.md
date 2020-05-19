@@ -24,7 +24,7 @@
 
    Commits will be squashed when they're merged.
 
-@# Formatting
+## Formatting
 
 All code must be formatted with `gofmt` (with the latest Go version) and pass
 `go vet`.

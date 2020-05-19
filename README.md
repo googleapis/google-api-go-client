@@ -101,5 +101,7 @@ if err != nil {
 client := oauth2.NewClient(ctx, ts)
 ```
 
+Testing
+
 See also: [golang.org/x/oauth2/google](https://godoc.org/golang.org/x/oauth2/google) package documentation.
 

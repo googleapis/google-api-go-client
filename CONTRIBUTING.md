@@ -1,5 +1,41 @@
 # Contributing
 
+1. Sign one of the
+[contributor license agreements](#contributor-license-agreements) below.
+1. [Install Go](https://golang.org/doc/install).
+1. Clone the repo:
+
+    `git clone https://github.com/googleapis/google-api-go-client`
+1. Change into the checked out source:
+
+    `cd google-api-go-client`
+1. Fork the repo.
+1. Set your fork as a remote:
+
+    `git remote add fork git@github.com:GITHUB_USERNAME/google-api-go-client.git`
+1. Make changes (see [Formatting](#formatting) and [Style](#style)), commit to
+   your fork. Commit messages should follow the
+   [Go project style](https://github.com/golang/go/wiki/CommitMessage) (e.g.
+   `functions: add gophers codelab`).
+1. Send a pull request with your changes.
+1. A maintainer will review the pull request and make comments. Prefer adding
+   additional commits over ammending and force-pushing since it can be difficult
+   to follow code reviews when the commit history changes.
+
+   Commits will be squashed when they're merged.
+
+# Formatting
+
+All code must be formatted with `gofmt` (with the latest Go version) and pass
+`go vet`.
+
+# Style
+
+Please read and follow https://github.com/golang/go/wiki/CodeReviewComments for
+all Go code in this repo.
+
+# Contributing
+
 1. [Install Go](https://golang.org/dl/).
     1. Ensure that your `GOBIN` directory (by default `$(go env GOPATH)/bin`)
     is in your `PATH`.

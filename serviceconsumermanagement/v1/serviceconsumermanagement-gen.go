@@ -838,54 +838,6 @@ type BackendRule struct {
 	// for more details on the supported values.
 	Protocol string `json:"protocol,omitempty"`
 
-	// RenameTo: Unimplemented. Do not use.
-	//
-	// The new name the selected proto elements should be renamed to.
-	//
-	// The package, the service and the method can all be renamed.
-	// The backend server should implement the renamed proto. However,
-	// clients
-	// should call the original method, and ESF routes the traffic to the
-	// renamed
-	// method.
-	//
-	// HTTP clients should call the URL mapped to the original method.
-	// gRPC and Stubby clients should call the original method with package
-	// name.
-	//
-	// For legacy reasons, ESF allows Stubby clients to call with the
-	// short name (without the package name). However, for API
-	// Versioning(or
-	// multiple methods mapped to the same short name), all Stubby clients
-	// must
-	// call the method's full name with the package name, otherwise the
-	// first one
-	// (selector) wins.
-	//
-	// If this `rename_to` is specified with a trailing `*`, the `selector`
-	// must
-	// be specified with a trailing `*` as well. The all element short
-	// names
-	// matched by the `*` in the selector will be kept in the
-	// `rename_to`.
-	//
-	// For example,
-	//     rename_rules:
-	//     - selector: |-
-	//         google.example.library.v1.*
-	//       rename_to: google.example.library.*
-	//
-	// The selector matches `google.example.library.v1.Library.CreateShelf`
-	// and
-	// `google.example.library.v1.Library.CreateBook`, they will be renamed
-	// to
-	// `google.example.library.Library.CreateShelf`
-	// and
-	// `google.example.library.Library.CreateBook`. It essentially renames
-	// the
-	// proto package name section of the matched proto service and methods.
-	RenameTo string `json:"renameTo,omitempty"`
-
 	// Selector: Selects the methods to which this rule applies.
 	//
 	// Refer to selector for syntax details.
@@ -5711,7 +5663,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5855,7 +5807,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6000,7 +5952,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6181,7 +6133,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6412,7 +6364,7 @@ func (c *ServicesSearchCall) Header() http.Header {
 
 func (c *ServicesSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6592,7 +6544,7 @@ func (c *ServicesTenancyUnitsAddProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsAddProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6758,7 +6710,7 @@ func (c *ServicesTenancyUnitsApplyProjectConfigCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsApplyProjectConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6915,7 +6867,7 @@ func (c *ServicesTenancyUnitsAttachProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsAttachProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7061,7 +7013,7 @@ func (c *ServicesTenancyUnitsCreateCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7203,7 +7155,7 @@ func (c *ServicesTenancyUnitsDeleteCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7350,7 +7302,7 @@ func (c *ServicesTenancyUnitsDeleteProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsDeleteProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7531,7 +7483,7 @@ func (c *ServicesTenancyUnitsListCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7716,7 +7668,7 @@ func (c *ServicesTenancyUnitsRemoveProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsRemoveProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7865,7 +7817,7 @@ func (c *ServicesTenancyUnitsUndeleteProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsUndeleteProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

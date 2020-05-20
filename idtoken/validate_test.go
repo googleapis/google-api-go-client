@@ -18,6 +18,7 @@ import (
 	"math/big"
 	"net/http"
 	"testing"
+	"time"
 
 	"google.golang.org/api/option"
 )
@@ -27,6 +28,14 @@ const (
 	testAudience = "test-audience"
 )
 
+var (
+	expiry int64 = 233431200
+	// one second before the token expires
+	beforeExp = func() time.Time { return time.Unix(233431199, 0) }
+	// one second after the token expires
+	afterExp = func() time.Time { return time.Unix(233431201, 0) }
+)
+
 func TestValidateRS256(t *testing.T) {
 	idToken, pk := createRS256JWT(t)
 	tests := []struct {
@@ -34,11 +43,13 @@ func TestValidateRS256(t *testing.T) {
 		keyID   string
 		n       *big.Int
 		e       int
+		nowFunc func() time.Time
 		wantErr bool
 	}{
-		{name: "works", keyID: keyID, n: pk.N, e: pk.E, wantErr: false},
-		{name: "no matching key", keyID: "5678", n: pk.N, e: pk.E, wantErr: true},
-		{name: "sig does not match", keyID: keyID, n: new(big.Int).SetBytes([]byte("42")), e: 42, wantErr: true},
+		{name: "works", keyID: keyID, n: pk.N, e: pk.E, nowFunc: beforeExp, wantErr: false},
+		{name: "no matching key", keyID: "5678", n: pk.N, e: pk.E, nowFunc: beforeExp, wantErr: true},
+		{name: "sig does not match", keyID: keyID, n: new(big.Int).SetBytes([]byte("42")), e: 42, nowFunc: beforeExp, wantErr: true},
+		{name: "token expired", keyID: keyID, n: pk.N, e: pk.E, nowFunc: afterExp, wantErr: true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -64,7 +75,7 @@ func TestValidateRS256(t *testing.T) {
 					}
 				}),
 			}
-
+			now = tt.nowFunc
 			v, err := NewValidator(context.Background(), option.WithHTTPClient(client))
 			if err != nil {
 				t.Fatalf("NewValidator(...) = %q, want nil", err)
@@ -87,11 +98,13 @@ func TestValidateES256(t *testing.T) {
 		keyID   string
 		x       *big.Int
 		y       *big.Int
+		nowFunc func() time.Time
 		wantErr bool
 	}{
-		{name: "works", keyID: keyID, x: pk.X, y: pk.Y, wantErr: false},
-		{name: "no matching key", keyID: "5678", x: pk.X, y: pk.Y, wantErr: true},
-		{name: "sig does not match", keyID: keyID, x: new(big.Int), y: new(big.Int), wantErr: true},
+		{name: "works", keyID: keyID, x: pk.X, y: pk.Y, nowFunc: beforeExp, wantErr: false},
+		{name: "no matching key", keyID: "5678", x: pk.X, y: pk.Y, nowFunc: beforeExp, wantErr: true},
+		{name: "sig does not match", keyID: keyID, x: new(big.Int), y: new(big.Int), nowFunc: beforeExp, wantErr: true},
+		{name: "token expired", keyID: keyID, x: pk.X, y: pk.Y, nowFunc: afterExp, wantErr: true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -117,7 +130,7 @@ func TestValidateES256(t *testing.T) {
 					}
 				}),
 			}
-
+			now = tt.nowFunc
 			v, err := NewValidator(context.Background(), option.WithHTTPClient(client))
 			if err != nil {
 				t.Fatalf("NewValidator(...) = %q, want nil", err)
@@ -176,6 +189,7 @@ func commonToken(t *testing.T, alg string) *jwt {
 	payload := Payload{
 		Issuer:   "example.com",
 		Audience: testAudience,
+		Expires:  expiry,
 	}
 
 	hb, err := json.Marshal(&header)
